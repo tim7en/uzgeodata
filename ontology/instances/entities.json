@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-28T14:45:29+00:00",
+  "generatedAt": "2026-08-28T14:47:37+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -8590,16 +8590,6 @@
       "latitude": 38.35
     },
     {
-      "id": "uz:station/meteo-38582",
-      "type": "MonitoringStation",
-      "label": "Западный Арнасай",
-      "network": "uzhydromet-meteo",
-      "stationKey": "38582",
-      "stationClass": "Г-1",
-      "longitude": 0.0,
-      "latitude": 0.0
-    },
-    {
       "id": "uz:station/meteo-386663",
       "type": "MonitoringStation",
       "label": "Гузар",
@@ -9288,86 +9278,6 @@
       "stationClass": "M-II",
       "longitude": 71.053289,
       "latitude": 40.4586
-    },
-    {
-      "id": "uz:station/meteo-x02",
-      "type": "MonitoringStation",
-      "label": "Баймурат",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x03",
-      "type": "MonitoringStation",
-      "label": "Гурлен",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x04",
-      "type": "MonitoringStation",
-      "label": "Кызыл-Рават",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-IV",
-      "longitude": 0.0,
-      "latitude": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x05",
-      "type": "MonitoringStation",
-      "label": "Зарафшан",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x06",
-      "type": "MonitoringStation",
-      "label": "Пайшанба",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x07",
-      "type": "MonitoringStation",
-      "label": "Пайарык",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x08",
-      "type": "MonitoringStation",
-      "label": "Чарвак",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "М-IV",
-      "longitude": 0.0,
-      "latitude": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x09",
-      "type": "MonitoringStation",
-      "label": "Газалкент",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "М-IV",
-      "longitude": 0.0,
-      "latitude": 0.0
     }
   ]
 }

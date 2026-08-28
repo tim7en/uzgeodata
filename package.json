@@ -8,6 +8,8 @@
     "build": "vite build",
     "start": "cross-env NODE_ENV=production node server.mjs",
     "preview": "npm run start",
+    "ontology:profile": "python scripts/ontology/profile_external_source.py",
+    "ontology:details": "python scripts/ontology/extract_external_details.py",
     "ontology:build": "python scripts/ontology/build_ontology.py",
     "ontology:validate": "python scripts/ontology/validate_ontology.py",
     "ontology:propose": "python scripts/ontology/propose_assertions.py",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T14:44:40+00:00",
+  "generatedAt": "2026-08-28T14:47:29+00:00",
   "model": "uz:agent/model-tfidf-knn-v1",
   "backend": "tfidf char_wb 3-5grams + knn label propagation",
   "labelledDatasets": 130,
@@ -22,10 +22,10 @@
     "precisionTop1": 0.603
   },
   "proposals": {
-    "total": 120,
-    "observes": 53,
-    "relatedTo": 67,
-    "aboveThreshold": 7
+    "total": 0,
+    "observes": 0,
+    "relatedTo": 0,
+    "aboveThreshold": 0
   },
   "sampleEvaluations": [
     {

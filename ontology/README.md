@@ -31,6 +31,7 @@ Five entity types, and everything relational between them is an assertion.
 | `Distribution` | one concrete encoding of it | the LPKX package, a GeoJSON, a PNG preview |
 | `MapLayer` | what the browser actually draws | `uz:layer/earthquakes` |
 | `Concept` | a term in a controlled vocabulary | `uz:prop/seismicity`, `uz:theme/water` |
+| `MonitoringStation` | a fixed installation that measures | `uz:station/meteo-408724` |
 | `Agent` | anything that can make a claim | the atlas, a rule, a model, a curator |
 
 Separating these four data-side types is the point. A `.lpkx` package is not a
@@ -121,6 +122,45 @@ surface three real data problems: one public catalogue record with no counterpar
 in the private repository, and one repository record whose category (`Atlas`) is a
 format rather than a domain.
 
+## Taking in an external delivery
+
+Data arrives as a folder someone hands over, far too large to copy into the repo
+and with no usable metadata of its own. The intake is three steps and no manual
+cataloguing:
+
+```bash
+npm run ontology:profile -- "C:/Users/User/Desktop/MAPS" \
+    --name maps-drop-2026-08 --out ontology/instances/external/maps-drop.json
+# add a block to ontology/vocab/external-sources.json saying what the files are
+npm run ontology:details       # station coordinates, training-set class balance
+npm run ontology:build
+```
+
+**Profile** measures rather than trusts: driver, CRS, geometry type, feature
+count, fields and extent for every vector file, sheet names and headers for every
+workbook, and a flag against anything the project already holds. It reads headers
+where the format allows, so a 500 MB GeoJSON is scanned, not loaded.
+
+**Map** is the only manual step, and it is deliberately manual: a human decides
+that these files are one dataset, that it observes these properties, and that it
+carries this licence. Those assertions are attributed to `uz:agent/curator`. The
+build measures everything else and attributes it to the pipeline, so the two are
+never confused.
+
+**Reference, don't copy.** External files stay where they are; their distributions
+carry `uz:externalLocation` and no `storedName`. A 1.02 GB package can be
+catalogued, licensed and linked without entering the repository.
+
+Licence and attribution are first-class (`uz:license`, `uz:attributedTo`) because
+ODbL and restricted-internal terms both travel with every derivative made from the
+data, and the portal has to be able to display the credit.
+
+The August 2026 delivery added 34 datasets, 190 monitoring stations and 130
+distributions: an OpenStreetMap extract, a cadastre export, Uzhydromet station
+series, agricultural and fertiliser statistics, and a labelled land-cover training
+set of 198,615 polygons. It also supplied the 1.02 GB package behind atlas
+number 92, which the ontology had been reporting as a dataset with no distribution.
+
 ## Upgrading the model
 
 `propose_assertions.py` isolates the backend in `embed()`, which returns one
@@ -139,6 +179,8 @@ statistics rather than titles.
 ## Commands
 
 ```bash
+npm run ontology:profile -- <folder> --name <id> --out ontology/instances/external/<id>.json
+npm run ontology:details     # station coordinates and class balances from a delivery
 npm run ontology:build       # rebuild the graph from the registries
 npm run ontology:validate    # schema + integrity + guard rails
 npm run ontology:propose     # run the model, write calibrated proposals

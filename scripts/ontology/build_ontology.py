@@ -685,6 +685,7 @@ class GraphBuilder:
 
                 self.assert_external_semantics(ds_id, source, dataset)
                 self.assert_external_stations(ds_id, dataset, stations_by_slug)
+                self.assert_station_gaps(ds_id, dataset)
                 labels = class_labels.get(dataset.get("slug"))
                 if labels:
                     for name, count in labels["classes"].items():

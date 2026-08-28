@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-28T14:45:29+00:00",
+  "generatedAt": "2026-08-28T14:47:37+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -6234,7 +6234,8 @@
       "flags": [
         "attribute-encoding-cp1251",
         "crs-not-wgs84",
-        "station-key-not-wmo-index"
+        "station-key-not-wmo-index",
+        "stations-missing-coordinates"
       ],
       "distributions": 1,
       "related": []
@@ -7672,14 +7673,6 @@
       "lat": 38.35
     },
     {
-      "id": "uz:station/meteo-38582",
-      "label": "Западный Арнасай",
-      "network": "uzhydromet-meteo",
-      "stationClass": "Г-1",
-      "lon": 0.0,
-      "lat": 0.0
-    },
-    {
       "id": "uz:station/meteo-386663",
       "label": "Гузар",
       "network": "uzhydromet-meteo",
@@ -8230,76 +8223,12 @@
       "stationClass": "M-II",
       "lon": 71.053289,
       "lat": 40.4586
-    },
-    {
-      "id": "uz:station/meteo-x02",
-      "label": "Баймурат",
-      "network": "uzhydromet-meteo",
-      "stationClass": "M-II",
-      "lon": 0.0,
-      "lat": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x03",
-      "label": "Гурлен",
-      "network": "uzhydromet-meteo",
-      "stationClass": "M-II",
-      "lon": 0.0,
-      "lat": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x04",
-      "label": "Кызыл-Рават",
-      "network": "uzhydromet-meteo",
-      "stationClass": "M-IV",
-      "lon": 0.0,
-      "lat": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x05",
-      "label": "Зарафшан",
-      "network": "uzhydromet-meteo",
-      "stationClass": "M-II",
-      "lon": 0.0,
-      "lat": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x06",
-      "label": "Пайшанба",
-      "network": "uzhydromet-meteo",
-      "stationClass": "M-II",
-      "lon": 0.0,
-      "lat": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x07",
-      "label": "Пайарык",
-      "network": "uzhydromet-meteo",
-      "stationClass": "M-II",
-      "lon": 0.0,
-      "lat": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x08",
-      "label": "Чарвак",
-      "network": "uzhydromet-meteo",
-      "stationClass": "М-IV",
-      "lon": 0.0,
-      "lat": 0.0
-    },
-    {
-      "id": "uz:station/meteo-x09",
-      "label": "Газалкент",
-      "network": "uzhydromet-meteo",
-      "stationClass": "М-IV",
-      "lon": 0.0,
-      "lat": 0.0
     }
   ],
   "counts": {
     "datasets": 169,
-    "stations": 199,
-    "publishedAssertions": 2362,
+    "stations": 190,
+    "publishedAssertions": 2354,
     "proposedAssertions": 577
   }
 }
