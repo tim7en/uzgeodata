@@ -379,8 +379,8 @@ def bounds_for_geojson(path: Path):
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--rivers", type=Path, default=Path(r"D:\earth_engine\HydroRIVERS_v10_as.gdb"))
-    parser.add_argument("--lakes", type=Path, default=Path(r"D:\earth_engine\HydroLAKES_polys_v10.gdb"))
+    parser.add_argument("--rivers", type=Path, default=Path(r"C:\earth_engine\HydroRIVERS_v10_as.gdb"))
+    parser.add_argument("--lakes", type=Path, default=Path(r"C:\earth_engine\HydroLAKES_polys_v10.gdb"))
     parser.add_argument(
         "--basins",
         type=Path,
