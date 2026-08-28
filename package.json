@@ -14,12 +14,13 @@
     "cross-env": "latest",
     "dotenv": "latest",
     "express": "latest",
+    "leaflet": "^1.9.4",
+    "lucide-react": "latest",
     "multer": "latest",
-    "vite": "latest",
-    "typescript": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "lucide-react": "latest"
-  },
-  "devDependencies": {}
+    "react-leaflet": "^5.0.0",
+    "typescript": "latest",
+    "vite": "latest"
+  }
 }

@@ -12,6 +12,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const storageRoot = path.join(root, 'storage');
 const uploadRoot = path.join(storageRoot, 'uploads');
 const metadataFile = path.join(storageRoot, 'datasets.json');
+const requestsFile = path.join(storageRoot, 'requests.json');
 await fs.mkdir(uploadRoot, { recursive: true });
 
 async function readDatasets() {
@@ -26,6 +27,17 @@ async function writeDatasets(data) {
   const temporary = `${metadataFile}.tmp`;
   await fs.writeFile(temporary, JSON.stringify(data, null, 2));
   await fs.rename(temporary, metadataFile);
+}
+
+async function readRequests() {
+  try { return JSON.parse(await fs.readFile(requestsFile, 'utf8')); }
+  catch (error) { if (error.code === 'ENOENT') return []; throw error; }
+}
+
+async function writeRequests(data) {
+  const temporary = `${requestsFile}.tmp`;
+  await fs.writeFile(temporary, JSON.stringify(data, null, 2));
+  await fs.rename(temporary, requestsFile);
 }
 
 const safeCompare = (a, b) => {
@@ -56,7 +68,7 @@ function authenticated(req, res, next) {
   next();
 }
 
-const allowedExtensions = new Set(['.zip', '.shp', '.shx', '.dbf', '.prj', '.cpg', '.tif', '.tiff', '.img', '.gpkg', '.geojson', '.json', '.csv', '.kml', '.kmz', '.pdf']);
+const allowedExtensions = new Set(['.zip', '.lpkx', '.shp', '.shx', '.dbf', '.prj', '.cpg', '.tif', '.tiff', '.img', '.gpkg', '.geojson', '.json', '.csv', '.kml', '.kmz', '.pdf']);
 const storage = multer.diskStorage({
   destination: uploadRoot,
   filename: (_req, file, callback) => {
@@ -77,6 +89,26 @@ const app = express();
 app.disable('x-powered-by');
 app.use(express.json({ limit: '1mb' }));
 
+const requestWindows = new Map();
+app.post('/api/requests', async (req, res, next) => {
+  try {
+    const now = Date.now();
+    const recent = (requestWindows.get(req.ip) || []).filter(time => now - time < 60 * 60 * 1000);
+    if (recent.length >= 5) return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    const clean = (value, limit = 500) => String(value || '').trim().slice(0, limit);
+    const request = {
+      id: crypto.randomUUID(), name: clean(req.body?.name, 120), email: clean(req.body?.email, 180),
+      organization: clean(req.body?.organization, 180), topic: clean(req.body?.topic, 250),
+      intendedUse: clean(req.body?.intendedUse, 1500), status: 'new', createdAt: new Date().toISOString(),
+    };
+    if (!request.name || !request.topic || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(request.email)) {
+      return res.status(400).json({ error: 'Name, valid email and dataset topic are required.' });
+    }
+    const requests = await readRequests(); requests.unshift(request); await writeRequests(requests);
+    requestWindows.set(req.ip, [...recent, now]); res.status(201).json({ id: request.id, ok: true });
+  } catch (error) { next(error); }
+});
+
 app.post('/api/admin/login', (req, res) => {
   const expectedUser = process.env.ADMIN_USERNAME;
   const expectedPassword = process.env.ADMIN_PASSWORD;
@@ -86,7 +118,7 @@ app.post('/api/admin/login', (req, res) => {
   }
   const token = crypto.randomBytes(32).toString('hex');
   sessions.set(token, { expiresAt: Date.now() + sessionDuration });
-  res.setHeader('Set-Cookie', `${cookieName}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${sessionDuration / 1000}${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`);
+  res.setHeader('Set-Cookie', `${cookieName}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${sessionDuration / 1000}${process.env.COOKIE_SECURE === 'true' ? '; Secure' : ''}`);
   res.json({ ok: true });
 });
 
@@ -105,6 +137,10 @@ app.get('/api/admin/session', (req, res) => {
 
 app.get('/api/admin/datasets', authenticated, async (_req, res, next) => {
   try { res.json(await readDatasets()); } catch (error) { next(error); }
+});
+
+app.get('/api/admin/requests', authenticated, async (_req, res, next) => {
+  try { res.json(await readRequests()); } catch (error) { next(error); }
 });
 
 app.post('/api/admin/datasets', authenticated, (req, res, next) => {
@@ -160,7 +196,9 @@ app.use((error, _req, res, _next) => {
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(root, 'dist')));
-  app.get('*', (_req, res) => res.sendFile(path.join(root, 'dist', 'index.html')));
+  app.use((req, res, next) => req.method === 'GET' && req.accepts('html')
+    ? res.sendFile(path.join(root, 'dist', 'index.html'))
+    : next());
 } else {
   const { createServer } = await import('vite');
   const vite = await createServer({ root, server: { middlewareMode: true }, appType: 'spa' });
