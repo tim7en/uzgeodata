@@ -741,6 +741,17 @@ class GraphBuilder:
             self.add(ds_id, "uz:qualityFlag", value=flag, agent=AGENT_CURATOR, confidence=1.0,
                      status="asserted", method="external-source-mapping", evidence=evidence)
 
+    def assert_station_gaps(self, ds_id: str, dataset: dict) -> None:
+        gap = (self.external_details.get("stationGaps") or {}).get(dataset.get("slug"))
+        if not gap:
+            return
+        self.add(ds_id, "uz:qualityFlag", value="stations-missing-coordinates",
+                 agent=AGENT_PIPELINE, confidence=1.0, status="asserted", method="measurement",
+                 evidence={"source": gap["sourceFile"],
+                           "featureCount": gap["missingCoordinates"],
+                           "note": f"{gap['missingCoordinates']} of {gap['totalRows']} rows carry no "
+                                   "usable coordinate and cannot be mapped"})
+
     def assert_external_stations(self, ds_id: str, dataset: dict, stations_by_slug: dict) -> None:
         for station in stations_by_slug.get(dataset.get("slug"), []):
             self.add_entity({

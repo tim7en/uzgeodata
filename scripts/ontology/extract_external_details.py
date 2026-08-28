@@ -128,6 +128,7 @@ def extract(root: Path, only_source: str | None = None) -> dict:
 
     stations: list[dict] = []
     class_labels: dict[str, dict] = {}
+    gaps: dict[str, dict] = {}
     warnings: list[str] = []
 
     for source in mapping["sources"]:
@@ -164,10 +165,17 @@ def extract(root: Path, only_source: str | None = None) -> dict:
                     continue
                 found = True
                 unkeyed = 0
+                missing_coordinates = 0
                 for row in rows:
                     longitude = coerce_float(row.get(config["xField"]))
                     latitude = coerce_float(row.get(config["yField"]))
                     if longitude is None or latitude is None:
+                        missing_coordinates += 1
+                        continue
+                    if longitude == 0 or latitude == 0:
+                        # Null Island is not in Uzbekistan: a zero coordinate is
+                        # the source's way of saying it never recorded one.
+                        missing_coordinates += 1
                         continue
                     if not (-180 <= longitude <= 180 and -90 <= latitude <= 90):
                         warnings.append(
@@ -199,6 +207,16 @@ def extract(root: Path, only_source: str | None = None) -> dict:
                         "sourceFile": relative,
                     }
                     stations.append(station)
+                if missing_coordinates:
+                    gaps[dataset["slug"]] = {
+                        "missingCoordinates": missing_coordinates,
+                        "sourceFile": relative,
+                        "totalRows": len(rows),
+                    }
+                    warnings.append(
+                        f"{dataset['slug']}: {missing_coordinates} of {len(rows)} stations "
+                        "have no usable coordinates"
+                    )
                 break  # one file per station config is enough
             if not found:
                 warnings.append(f"{dataset['slug']}: no station file could be read")
@@ -222,6 +240,7 @@ def extract(root: Path, only_source: str | None = None) -> dict:
         },
         "warnings": warnings,
         "stations": sorted(unique.values(), key=lambda s: s["id"]),
+        "stationGaps": gaps,
         "classLabels": class_labels,
     }
 

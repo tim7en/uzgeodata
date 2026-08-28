@@ -1,12 +1,14 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-28T14:44:06+00:00",
+  "generatedAt": "2026-08-28T14:46:14+00:00",
   "counts": {
-    "stations": 199,
+    "stations": 190,
     "duplicatesDropped": 0,
     "labelledDatasets": 1
   },
-  "warnings": [],
+  "warnings": [
+    "meteorological-station-network: 9 of 86 stations have no usable coordinates"
+  ],
   "stations": [
     {
       "id": "uz:station/gauge-16004",
@@ -1461,18 +1463,6 @@
       "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
     },
     {
-      "id": "uz:station/meteo-38582",
-      "type": "MonitoringStation",
-      "label": "Западный Арнасай",
-      "network": "uzhydromet-meteo",
-      "stationKey": "38582",
-      "stationClass": "Г-1",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
       "id": "uz:station/meteo-386663",
       "type": "MonitoringStation",
       "label": "Гузар",
@@ -2299,104 +2289,15 @@
       "latitude": 40.4586,
       "datasetSlug": "meteorological-station-network",
       "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
-      "id": "uz:station/meteo-x02",
-      "type": "MonitoringStation",
-      "label": "Баймурат",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
-      "id": "uz:station/meteo-x03",
-      "type": "MonitoringStation",
-      "label": "Гурлен",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
-      "id": "uz:station/meteo-x04",
-      "type": "MonitoringStation",
-      "label": "Кызыл-Рават",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-IV",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
-      "id": "uz:station/meteo-x05",
-      "type": "MonitoringStation",
-      "label": "Зарафшан",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
-      "id": "uz:station/meteo-x06",
-      "type": "MonitoringStation",
-      "label": "Пайшанба",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
-      "id": "uz:station/meteo-x07",
-      "type": "MonitoringStation",
-      "label": "Пайарык",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "M-II",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
-      "id": "uz:station/meteo-x08",
-      "type": "MonitoringStation",
-      "label": "Чарвак",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "М-IV",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
-    },
-    {
-      "id": "uz:station/meteo-x09",
-      "type": "MonitoringStation",
-      "label": "Газалкент",
-      "network": "uzhydromet-meteo",
-      "stationKey": null,
-      "stationClass": "М-IV",
-      "longitude": 0.0,
-      "latitude": 0.0,
-      "datasetSlug": "meteorological-station-network",
-      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp"
     }
   ],
+  "stationGaps": {
+    "meteorological-station-network": {
+      "missingCoordinates": 9,
+      "sourceFile": "Meteostan sheip original/МетеоСтанции.shp",
+      "totalRows": 86
+    }
+  },
   "classLabels": {
     "landcover-training-samples": {
       "field": "class",
