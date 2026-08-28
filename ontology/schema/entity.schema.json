@@ -15,8 +15,8 @@
         "type": "object",
         "required": ["id", "type", "label"],
         "properties": {
-          "id": {"type": "string", "pattern": "^uz:(ds|dist|layer|agent)/[a-z0-9-]+$"},
-          "type": {"enum": ["Dataset", "Distribution", "MapLayer", "Agent"]},
+          "id": {"type": "string", "pattern": "^uz:(ds|dist|layer|station|agent)/[a-z0-9-]+$"},
+          "type": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Agent"]},
           "label": {"type": "string", "minLength": 1},
           "labels": {
             "type": "object",
@@ -43,7 +43,7 @@
             "then": {
               "required": ["role", "format"],
               "properties": {
-                "role": {"enum": ["source-package", "source-document", "web-vector", "web-raster-preview", "raster-polygonized"]},
+                "role": {"enum": ["source-package", "source-document", "web-vector", "web-raster-preview", "raster-polygonized", "external-vector", "external-table", "external-document", "external-archive"]},
                 "format": {"type": "string"},
                 "byteSize": {"type": ["integer", "null"], "minimum": 0},
                 "storedName": {"type": ["string", "null"]},
@@ -63,6 +63,23 @@
                 "legend": {"type": ["object", "null"]}
               }
             }
+          },
+          {
+            "if": {"properties": {"type": {"const": "MonitoringStation"}}},
+            "then": {
+              "required": ["network", "longitude", "latitude"],
+              "properties": {
+                "network": {"type": "string", "description": "Which network operates it, e.g. uzhydromet-meteo, uzhydromet-gauge."},
+                "stationKey": {"type": ["string", "null"], "description": "Identifier used by the operator; null where the source leaves it unset."},
+                "stationClass": {"type": ["string", "null"], "description": "Operator's station category, verbatim."},
+                "longitude": {"type": "number", "minimum": -180, "maximum": 180},
+                "latitude": {"type": "number", "minimum": -90, "maximum": 90}
+              }
+            }
+          },
+          {
+            "if": {"properties": {"type": {"const": "Distribution"}}},
+            "then": {"properties": {"externalPath": {"type": ["string", "null"]}}}
           },
           {
             "if": {"properties": {"type": {"const": "Agent"}}},

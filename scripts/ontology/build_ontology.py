@@ -43,6 +43,7 @@ EXTENT_TOLERANCE_DEG = 0.5
 AGENT_SOURCE = "uz:agent/atlas-source"
 AGENT_PIPELINE = "uz:agent/extraction-pipeline"
 AGENT_RULES = "uz:agent/rule-lexical-v1"
+AGENT_CURATOR = "uz:agent/curator"
 
 # The five layers published to the public map, keyed by the atlas number their
 # extraction script pulls them from (scripts/build_web_layers.py).
@@ -91,6 +92,10 @@ def replace_with_retry(tmp: Path, path: Path, attempts: int = 5) -> None:
             if attempt == attempts - 1:
                 raise
             time.sleep(0.15 * (attempt + 1))
+
+
+def sha_short(text: str, length: int = 6) -> str:
+    return hashlib.sha1(text.encode("utf-8")).hexdigest()[:length]
 
 
 def slugify(text: str, limit: int = 48) -> str:
@@ -161,7 +166,7 @@ class GraphBuilder:
 
     # ------------------------------------------------------------------ identity
 
-    def dataset_id(self, source_key: str, atlas_number, title: str) -> str:
+    def dataset_id(self, source_key: str, atlas_number, title: str, preferred: str = None) -> str:
         """Mint a dataset ID once, then never change it.
 
         atlasNumber alone is not unique (ten PDSI packages share three numbers)
@@ -172,8 +177,11 @@ class GraphBuilder:
         existing = self.identity_map["ids"].get(source_key)
         if existing:
             return existing
-        prefix = f"a{atlas_number}-" if atlas_number is not None else "x-"
-        minted = f"uz:ds/{prefix}{slugify(title)}"
+        if preferred:
+            minted = f"uz:ds/{slugify(preferred)}"
+        else:
+            prefix = f"a{atlas_number}-" if atlas_number is not None else "x-"
+            minted = f"uz:ds/{prefix}{slugify(title)}"
         if minted in set(self.identity_map["ids"].values()):
             minted = f"{minted}-{hashlib.sha1(source_key.encode('utf-8')).hexdigest()[:6]}"
         self.identity_map["ids"][source_key] = minted
@@ -244,6 +252,19 @@ class GraphBuilder:
             if stem:
                 self.repo_by_source_title[stem] = record
 
+        # External deliveries: profiled inventories plus the curator's mapping of
+        # which files make up which dataset.
+        external_dir = root / "ontology" / "instances" / "external"
+        self.inventories = {}
+        for path in sorted(external_dir.glob("*.json")):
+            payload = read_json(path)
+            if payload and payload.get("name") and "files" in payload:
+                self.inventories[payload["name"]] = payload
+        self.external_mapping = read_json(root / "ontology" / "vocab" / "external-sources.json",
+                                          {"sources": []})
+        self.external_details = read_json(external_dir / "details.json",
+                                          {"stations": [], "classLabels": {}})
+
     # ------------------------------------------------------------------ build
 
     def build(self) -> None:
@@ -253,6 +274,7 @@ class GraphBuilder:
         self.build_datasets()
         self.build_derived_distributions()
         self.build_public_layers()
+        self.build_external_sources()
         self.seed_semantics()
         self.merge_preserved_assertions()
 
@@ -524,6 +546,206 @@ class GraphBuilder:
                          agent=AGENT_PIPELINE, confidence=1.0, status="asserted", method="measurement")
                 self.assert_coverage(layer_id, bbox, entry.get("url"))
 
+    # ------------------------------------------------------------------ external deliveries
+
+    ROLE_BY_KIND = {
+        "vector": "external-vector",
+        "raster": "external-vector",
+        "table": "external-table",
+        "document": "external-document",
+        "archive": "external-archive",
+        "other": "external-archive",
+    }
+
+    @staticmethod
+    def match_files(files_by_path: dict, patterns: list) -> list:
+        """A pattern ending in / is a folder prefix; anything else is an exact path."""
+        matched: dict[str, dict] = {}
+        for pattern in patterns:
+            if pattern.endswith("/"):
+                for path, record in files_by_path.items():
+                    if path.startswith(pattern):
+                        matched[path] = record
+            elif pattern in files_by_path:
+                matched[pattern] = files_by_path[pattern]
+        return sorted(matched.items())
+
+    def build_external_sources(self) -> None:
+        """Catalogue deliveries that are referenced in place rather than copied in.
+
+        The mapping in vocab/external-sources.json says which files form a dataset
+        and what it observes - a curator's judgement, asserted as such. Everything
+        else here is measured: extents, fields, feature counts, class balance and
+        station coordinates all come from the profiler and the detail extractor.
+        """
+        stations_by_slug: dict[str, list] = {}
+        for station in self.external_details.get("stations", []):
+            stations_by_slug.setdefault(station["datasetSlug"], []).append(station)
+        class_labels = self.external_details.get("classLabels", {})
+
+        for source in self.external_mapping.get("sources", []):
+            inventory = self.inventories.get(source.get("inventory"))
+            if inventory is None:
+                self.warn(f"external source {source['id']}: inventory "
+                          f"'{source.get('inventory')}' has not been profiled")
+                continue
+            delivery_root = inventory["source"].replace("\\", "/").rstrip("/")
+            files_by_path = {record["path"]: record for record in inventory["files"]}
+
+            for dataset in source["datasets"]:
+                matches = self.match_files(files_by_path, dataset["match"])
+                if not matches:
+                    self.warn(f"external dataset {dataset.get('slug') or dataset.get('attachTo')}: "
+                              f"no files matched in {source['id']}")
+                    continue
+
+                attach_to = dataset.get("attachTo")
+                if attach_to:
+                    if attach_to not in self.entities:
+                        self.warn(f"external source {source['id']}: {attach_to} does not exist")
+                        continue
+                    ds_id = attach_to
+                else:
+                    slug = dataset["slug"]
+                    ds_id = self.dataset_id(f"{source['id']}/{slug}", None, dataset["label"],
+                                            preferred=slug)
+                    self.add_entity({
+                        "id": ds_id,
+                        "type": "Dataset",
+                        "label": dataset["label"],
+                        "labels": {"en": dataset["label"]},
+                        "sourceKey": f"{source['id']}/{slug}",
+                        "atlasNumber": None,
+                        "catalogId": None,
+                        "repositoryId": None,
+                        "description": dataset.get("note") or source.get("note") or "",
+                    })
+
+                extent_asserted = attach_to is not None
+                for path, record in matches:
+                    profile = record.get("profile") or {}
+                    role = "source-package" if attach_to else self.ROLE_BY_KIND.get(
+                        record["kind"], "external-archive")
+                    dist_id = "uz:dist/" + slugify(
+                        f"{ds_id.split('/')[-1]}-{Path(path).stem}-{sha_short(path)}", 60)
+                    self.add_entity({
+                        "id": dist_id,
+                        "type": "Distribution",
+                        "label": record["name"],
+                        "role": role,
+                        "format": (record["suffix"].lstrip(".") or "file").upper(),
+                        "byteSize": record["bytes"],
+                        "storedName": None,
+                        "url": None,
+                        "accessPolicy": source.get("accessPolicy", "internal"),
+                        "externalPath": f"{delivery_root}/{path}",
+                        "featureCount": profile.get("features"),
+                        "crs": profile.get("crs"),
+                    })
+                    self.add(ds_id, "uz:hasDistribution", dist_id, agent=AGENT_CURATOR,
+                             confidence=1.0, status="asserted", method="external-source-mapping",
+                             evidence={"source": f"{source['id']}:{path}"})
+                    self.add(dist_id, "uz:externalLocation", value=f"{delivery_root}/{path}",
+                             agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
+                             method="measurement",
+                             evidence={"source": inventory["name"],
+                                       "note": "referenced in place, not copied into the project"})
+                    for field in profile.get("fields") or []:
+                        self.add(dist_id, "uz:hasField", value=field, agent=AGENT_PIPELINE,
+                                 confidence=1.0, status="asserted", method="measurement")
+
+                    crs = profile.get("crs")
+                    if crs and "4326" not in str(crs):
+                        self.add(ds_id, "uz:qualityFlag", value="crs-not-wgs84",
+                                 agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
+                                 method="measurement",
+                                 evidence={"source": path, "note": f"declared CRS is {crs}; "
+                                                                  "reproject before overlaying"})
+                    bounds = profile.get("bounds")
+                    if bounds and len(bounds) == 4 and not extent_asserted:
+                        self.add(ds_id, "uz:spatialExtent", value=[round(float(b), 5) for b in bounds],
+                                 agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
+                                 method="measurement", evidence={"source": path})
+                        self.assert_coverage(ds_id, bounds, path)
+                        extent_asserted = True
+
+                if attach_to:
+                    continue  # the rest is already stated by the atlas record
+
+                self.assert_external_semantics(ds_id, source, dataset)
+                self.assert_external_stations(ds_id, dataset, stations_by_slug)
+                labels = class_labels.get(dataset.get("slug"))
+                if labels:
+                    for name, count in labels["classes"].items():
+                        self.add(ds_id, "uz:hasClassLabel", value=name, agent=AGENT_PIPELINE,
+                                 confidence=1.0, status="asserted", method="measurement",
+                                 evidence={"source": labels["sourceFile"], "featureCount": count,
+                                           "note": f"{count / labels['total']:.1%} of "
+                                                   f"{labels['total']:,} labelled samples"})
+                    smallest = min(labels["classes"].values())
+                    largest = max(labels["classes"].values())
+                    if smallest * 100 < largest:
+                        self.add(ds_id, "uz:qualityFlag", value="severe-class-imbalance",
+                                 agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
+                                 method="measurement",
+                                 evidence={"source": labels["sourceFile"],
+                                           "score": round(largest / max(smallest, 1), 1),
+                                           "note": "rarest class is more than 100x smaller than the "
+                                                   "commonest; stratify before training"})
+
+    def assert_external_semantics(self, ds_id: str, source: dict, dataset: dict) -> None:
+        evidence = {"source": "external-sources.json",
+                    "note": dataset.get("note") or source.get("note") or "curator mapping"}
+        if dataset.get("theme"):
+            self.add(ds_id, "uz:belongsToTheme", dataset["theme"], agent=AGENT_CURATOR,
+                     confidence=1.0, status="asserted", method="external-source-mapping",
+                     evidence=evidence)
+        if dataset.get("analysis"):
+            self.add(ds_id, "uz:hasAnalysisConcept", dataset["analysis"], agent=AGENT_CURATOR,
+                     confidence=1.0, status="asserted", method="external-source-mapping",
+                     evidence=evidence)
+        for concept in dataset.get("observes", []):
+            self.add(ds_id, "uz:observes", concept, agent=AGENT_CURATOR, confidence=1.0,
+                     status="asserted", method="external-source-mapping", evidence=evidence)
+        for concept in dataset.get("useCases", []):
+            self.add(ds_id, "uz:supportsUseCase", concept, agent=AGENT_CURATOR, confidence=1.0,
+                     status="asserted", method="external-source-mapping", evidence=evidence)
+        for place in dataset.get("places", []):
+            self.add(ds_id, "uz:coversPlace", place, agent=AGENT_CURATOR, confidence=1.0,
+                     status="asserted", method="external-source-mapping", evidence=evidence)
+        interval = dataset.get("temporal") or source.get("temporal")
+        if interval:
+            self.add(ds_id, "uz:temporalCoverage", value=interval, agent=AGENT_CURATOR,
+                     confidence=1.0, status="asserted", method="external-source-mapping",
+                     evidence=evidence)
+        if source.get("license"):
+            self.add(ds_id, "uz:license", value=source["license"], agent=AGENT_CURATOR,
+                     confidence=1.0, status="asserted", method="external-source-mapping",
+                     evidence=evidence)
+        if source.get("attribution"):
+            self.add(ds_id, "uz:attributedTo", value=source["attribution"], agent=AGENT_CURATOR,
+                     confidence=1.0, status="asserted", method="external-source-mapping",
+                     evidence=evidence)
+        for flag in list(source.get("qualityFlags", [])) + list(dataset.get("qualityFlags", [])):
+            self.add(ds_id, "uz:qualityFlag", value=flag, agent=AGENT_CURATOR, confidence=1.0,
+                     status="asserted", method="external-source-mapping", evidence=evidence)
+
+    def assert_external_stations(self, ds_id: str, dataset: dict, stations_by_slug: dict) -> None:
+        for station in stations_by_slug.get(dataset.get("slug"), []):
+            self.add_entity({
+                "id": station["id"],
+                "type": "MonitoringStation",
+                "label": station["label"],
+                "network": station["network"],
+                "stationKey": station.get("stationKey"),
+                "stationClass": station.get("stationClass"),
+                "longitude": station["longitude"],
+                "latitude": station["latitude"],
+            })
+            self.add(ds_id, "uz:operatesStation", station["id"], agent=AGENT_PIPELINE,
+                     confidence=1.0, status="asserted", method="measurement",
+                     evidence={"source": station["sourceFile"]})
+
     @staticmethod
     def geojson_bbox(path: Path):
         if not path.exists():
@@ -581,6 +803,15 @@ class GraphBuilder:
             for alt in concept.get("altLabels", []):
                 label_index.append((normalise_text(alt).strip(), concept["id"], False))
 
+        # Single-valued predicates already settled by the source or by a curator
+        # mapping are not up for re-inference; the rules would otherwise publish a
+        # second value and break cardinality.
+        settled = {
+            (a["subject"], a["predicate"])
+            for a in self.assertions.values()
+            if a["status"] == "asserted"
+        }
+
         datasets = [e for e in self.entities.values() if e["type"] == "Dataset"]
         for dataset in datasets:
             ds_id = dataset["id"]
@@ -618,15 +849,16 @@ class GraphBuilder:
                 )
 
             interval = self.parse_interval(dataset)
-            if interval:
+            if interval and (ds_id, "uz:temporalCoverage") not in settled:
                 self.add(ds_id, "uz:temporalCoverage", value=interval, agent=AGENT_RULES,
                          confidence=0.85, method="year-parse",
                          evidence={"source": "title", "note": "years parsed from the source title"})
 
-            concept_id, weight, terms = self.pick_analysis_concept(haystack, interval)
-            self.add(ds_id, "uz:hasAnalysisConcept", concept_id, agent=AGENT_RULES,
-                     confidence=weight, method="lexical-rule",
-                     evidence={"source": "title", "matchedTerms": terms})
+            if (ds_id, "uz:hasAnalysisConcept") not in settled:
+                concept_id, weight, terms = self.pick_analysis_concept(haystack, interval)
+                self.add(ds_id, "uz:hasAnalysisConcept", concept_id, agent=AGENT_RULES,
+                         confidence=weight, method="lexical-rule",
+                         evidence={"source": "title", "matchedTerms": terms})
 
             observed = {a["object"] for a in self.assertions.values()
                         if a["subject"] == ds_id and a["predicate"] == "uz:observes"}

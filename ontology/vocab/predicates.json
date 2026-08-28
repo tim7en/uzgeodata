@@ -110,6 +110,60 @@
       "mlProposable": false
     },
     {
+      "id": "uz:license",
+      "label": "licence",
+      "definition": "The licence a dataset is held under, as an SPDX-style identifier. Recorded on the dataset because redistribution terms travel with every derivative made from it.",
+      "domain": ["Dataset"],
+      "range": {"kind": "literal", "literalType": "string"},
+      "cardinality": "one",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:attributedTo",
+      "label": "attributed to",
+      "definition": "The attribution string that must be displayed wherever the data is shown. ODbL and similar licences make this a condition of use, not a courtesy.",
+      "domain": ["Dataset"],
+      "range": {"kind": "literal", "literalType": "string"},
+      "cardinality": "one",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:externalLocation",
+      "label": "external location",
+      "definition": "Absolute path of a source asset that is referenced in place rather than copied into the project, so large deliveries can be catalogued without being ingested.",
+      "domain": ["Distribution"],
+      "range": {"kind": "literal", "literalType": "string"},
+      "cardinality": "one",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:measuredAtStation",
+      "label": "measured at station",
+      "definition": "Links a time series to the monitoring station that produced it, which is what turns a spreadsheet of numbers into something mappable.",
+      "domain": ["Dataset"],
+      "range": {"kind": "entity", "entityTypes": ["MonitoringStation"]},
+      "cardinality": "many",
+      "mlProposable": true
+    },
+    {
+      "id": "uz:operatesStation",
+      "label": "operates station",
+      "definition": "Links a station-network dataset to the individual stations it inventories.",
+      "domain": ["Dataset"],
+      "range": {"kind": "entity", "entityTypes": ["MonitoringStation"]},
+      "cardinality": "many",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:hasClassLabel",
+      "label": "has class label",
+      "definition": "A class present in a labelled training dataset, with its sample count in the evidence. Makes class balance a fact in the graph rather than something a modeller has to rediscover.",
+      "domain": ["Dataset"],
+      "range": {"kind": "literal", "literalType": "string"},
+      "cardinality": "many",
+      "mlProposable": false
+    },
+    {
       "id": "uz:qualityFlag",
       "label": "quality flag",
       "definition": "A known defect or caveat, e.g. coverage extending beyond Uzbekistan, or unparseable area values. Kept in the graph so the portal can display caveats instead of hiding them.",

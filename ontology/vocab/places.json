@@ -66,6 +66,21 @@
       "altLabels": ["Аральское море"],
       "definition": "The endorheic basin the two main rivers drain into, and the focus of the region's best-known environmental change.",
       "broader": "uz:place/central-asia"
-    }
+    },
+
+    {"id": "uz:place/karakalpakstan", "prefLabel": "Karakalpakstan", "altLabels": ["Каракалпакстан", "Qoraqalpogiston"], "definition": "Autonomous republic in the north-west, the region most affected by the Aral Sea desiccation.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/andijan", "prefLabel": "Andijan", "altLabels": ["Андижан", "Andijon"], "definition": "Region in the eastern Fergana valley.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/bukhara", "prefLabel": "Bukhara", "altLabels": ["Бухара", "Buxoro"], "definition": "Region in the south-west along the lower Zarafshan.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/fergana", "prefLabel": "Fergana", "altLabels": ["Фергана", "Fargona"], "definition": "Region in the southern Fergana valley.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/jizzakh", "prefLabel": "Jizzakh", "altLabels": ["Джизак", "Djizakh", "Jizzax"], "definition": "Region on the northern slopes of the Turkestan range.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/kashkadarya", "prefLabel": "Kashkadarya", "altLabels": ["Кашкадарья", "Qashqadaryo"], "definition": "Region in the south, on the Kashkadarya river.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/khorezm", "prefLabel": "Khorezm", "altLabels": ["Хорезм", "Xorazm"], "definition": "Irrigated region on the lower Amu Darya.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/namangan", "prefLabel": "Namangan", "altLabels": ["Наманган"], "definition": "Region in the northern Fergana valley.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/navoi", "prefLabel": "Navoi", "altLabels": ["Навои", "Navoiy"], "definition": "Large arid region covering much of the Kyzylkum.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/samarkand", "prefLabel": "Samarkand", "altLabels": ["Самарканд", "Samarqand"], "definition": "Region on the middle Zarafshan.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/surkhandarya", "prefLabel": "Surkhandarya", "altLabels": ["Сурхандарья", "Surxondaryo"], "definition": "Southernmost region, bordering Afghanistan.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/syrdarya", "prefLabel": "Syrdarya", "altLabels": ["Сырдарья", "Sirdaryo"], "definition": "Region on the middle Syr Darya, heavily irrigated.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/tashkent-region", "prefLabel": "Tashkent region", "altLabels": ["Ташкентская область", "Toshkent viloyati"], "definition": "Region surrounding the capital.", "broader": "uz:place/uzbekistan"},
+    {"id": "uz:place/tashkent-city", "prefLabel": "Tashkent city", "altLabels": ["Ташкент", "Toshkent shahri"], "definition": "The capital, a separate administrative unit from the surrounding region.", "broader": "uz:place/uzbekistan"}
   ]
 }

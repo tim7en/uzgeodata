@@ -39,6 +39,33 @@
       "description": "TF-IDF character n-gram model over bilingual titles and field names. Proposes observed properties, analysis concepts and related datasets with calibrated confidence. Replaceable by a satellite-embedding or language-model backend without changing the graph contract."
     },
     {
+      "id": "uz:agent/openstreetmap",
+      "type": "Agent",
+      "label": "OpenStreetMap contributors (Geofabrik extract)",
+      "agentKind": "organisation",
+      "agentVersion": "2014-09-03",
+      "trustTier": "curated",
+      "description": "Crowd-sourced mapping, extracted for Uzbekistan and redistributed by Geofabrik via mapcruzin.com. Licensed ODbL 1.0, which requires attribution and share-alike on derived databases; the licence is recorded on every dataset from this source."
+    },
+    {
+      "id": "uz:agent/uzkad",
+      "type": "Agent",
+      "label": "State cadastre extraction (UZKAD)",
+      "agentKind": "organisation",
+      "agentVersion": "2025-08",
+      "trustTier": "authoritative",
+      "description": "Parcel-level land administration data extracted from the national cadastre system in August 2025. Access is restricted; the geometry is authoritative for legal land units, not for physical land cover."
+    },
+    {
+      "id": "uz:agent/uzhydromet",
+      "type": "Agent",
+      "label": "Uzhydromet",
+      "agentKind": "organisation",
+      "agentVersion": "2022-05-26",
+      "trustTier": "authoritative",
+      "description": "The national hydrometeorological service. Source of the station climate series, the river-gauge inventory and the agricultural statistics transferred in the same delivery."
+    },
+    {
       "id": "uz:agent/curator",
       "type": "Agent",
       "label": "Portal curator",

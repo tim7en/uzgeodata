@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-28T14:15:58+00:00",
+  "generatedAt": "2026-08-28T14:40:48+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -548,6 +548,96 @@
         "prefLabel": "Road density",
         "definition": "Length of road network per unit area.",
         "broader": "uz:theme/infrastructure"
+      },
+      {
+        "id": "uz:prop/road-network",
+        "prefLabel": "Road network",
+        "definition": "Mapped road and highway geometry, as opposed to its density.",
+        "broader": "uz:theme/infrastructure"
+      },
+      {
+        "id": "uz:prop/railway-network",
+        "prefLabel": "Railway network",
+        "definition": "Mapped railway lines and corridors.",
+        "broader": "uz:theme/infrastructure"
+      },
+      {
+        "id": "uz:prop/building-footprint",
+        "prefLabel": "Building footprint",
+        "definition": "Outline of individual buildings at parcel scale.",
+        "broader": "uz:theme/infrastructure"
+      },
+      {
+        "id": "uz:prop/point-of-interest",
+        "prefLabel": "Point of interest",
+        "definition": "Named point features such as facilities, amenities and landmarks.",
+        "broader": "uz:theme/infrastructure"
+      },
+      {
+        "id": "uz:prop/administrative-boundary",
+        "prefLabel": "Administrative boundary",
+        "definition": "Boundary of an administrative unit, used to aggregate statistics.",
+        "broader": "uz:theme/infrastructure"
+      },
+      {
+        "id": "uz:prop/cadastral-parcel",
+        "prefLabel": "Cadastral parcel",
+        "definition": "Land parcel as registered in the state cadastre, the legal unit of land.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/land-tenure",
+        "prefLabel": "Land tenure",
+        "definition": "Who holds land and under what arrangement: state reserve, shared, private, agency-managed.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/sown-area",
+        "prefLabel": "Sown area",
+        "definition": "Area planted to a crop in a season, by district and year.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/gross-harvest",
+        "prefLabel": "Gross harvest",
+        "definition": "Total production harvested, the numerator of yield.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/fertiliser-application",
+        "prefLabel": "Fertiliser application",
+        "definition": "Quantity of mineral or organic fertiliser applied per unit area and year.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/annotation-labels",
+        "prefLabel": "Annotation labels",
+        "definition": "Human- or cadastre-derived class labels attached to geometry, used to train and validate land-cover and land-use models. A machine-learning asset rather than an observation of the environment.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/evapotranspiration",
+        "prefLabel": "Evapotranspiration",
+        "definition": "Water returned to the atmosphere from soil and vegetation, the demand side of the irrigation balance.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/soil-temperature",
+        "prefLabel": "Soil temperature",
+        "definition": "Temperature measured at standard soil depths, a control on germination and evaporation.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/river-discharge",
+        "prefLabel": "River discharge",
+        "definition": "Volume of water passing a gauge per unit time.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/monitoring-station",
+        "prefLabel": "Monitoring station",
+        "definition": "A fixed installation that measures the environment, and the network it belongs to. The anchor that ties a time series to a place.",
+        "broader": "uz:theme/climate"
       }
     ],
     "usecases": [
@@ -650,6 +740,90 @@
         "prefLabel": "Aral Sea basin",
         "definition": "The endorheic basin the two main rivers drain into, and the focus of the region's best-known environmental change.",
         "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/karakalpakstan",
+        "prefLabel": "Karakalpakstan",
+        "definition": "Autonomous republic in the north-west, the region most affected by the Aral Sea desiccation.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/andijan",
+        "prefLabel": "Andijan",
+        "definition": "Region in the eastern Fergana valley.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/bukhara",
+        "prefLabel": "Bukhara",
+        "definition": "Region in the south-west along the lower Zarafshan.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/fergana",
+        "prefLabel": "Fergana",
+        "definition": "Region in the southern Fergana valley.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/jizzakh",
+        "prefLabel": "Jizzakh",
+        "definition": "Region on the northern slopes of the Turkestan range.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/kashkadarya",
+        "prefLabel": "Kashkadarya",
+        "definition": "Region in the south, on the Kashkadarya river.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/khorezm",
+        "prefLabel": "Khorezm",
+        "definition": "Irrigated region on the lower Amu Darya.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/namangan",
+        "prefLabel": "Namangan",
+        "definition": "Region in the northern Fergana valley.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/navoi",
+        "prefLabel": "Navoi",
+        "definition": "Large arid region covering much of the Kyzylkum.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/samarkand",
+        "prefLabel": "Samarkand",
+        "definition": "Region on the middle Zarafshan.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/surkhandarya",
+        "prefLabel": "Surkhandarya",
+        "definition": "Southernmost region, bordering Afghanistan.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/syrdarya",
+        "prefLabel": "Syrdarya",
+        "definition": "Region on the middle Syr Darya, heavily irrigated.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/tashkent-region",
+        "prefLabel": "Tashkent region",
+        "definition": "Region surrounding the capital.",
+        "broader": "uz:place/uzbekistan"
+      },
+      {
+        "id": "uz:place/tashkent-city",
+        "prefLabel": "Tashkent city",
+        "definition": "The capital, a separate administrative unit from the surrounding region.",
+        "broader": "uz:place/uzbekistan"
       }
     ]
   },
@@ -677,6 +851,24 @@
       "label": "Character n-gram similarity model v1",
       "kind": "model",
       "trustTier": "predicted"
+    },
+    {
+      "id": "uz:agent/openstreetmap",
+      "label": "OpenStreetMap contributors (Geofabrik extract)",
+      "kind": "organisation",
+      "trustTier": "curated"
+    },
+    {
+      "id": "uz:agent/uzkad",
+      "label": "State cadastre extraction (UZKAD)",
+      "kind": "organisation",
+      "trustTier": "authoritative"
+    },
+    {
+      "id": "uz:agent/uzhydromet",
+      "label": "Uzhydromet",
+      "kind": "organisation",
+      "trustTier": "authoritative"
     },
     {
       "id": "uz:agent/curator",
@@ -1457,6 +1649,12 @@
           "confidence": 0.8,
           "by": "uz:agent/rule-lexical-v1",
           "reviewed": false
+        },
+        {
+          "concept": "uz:prop/road-network",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
         }
       ],
       "useCases": [],
@@ -2201,7 +2399,7 @@
       "temporal": null,
       "extent": null,
       "flags": [],
-      "distributions": 0,
+      "distributions": 1,
       "related": []
     },
     {
@@ -4864,11 +5062,1203 @@
       "flags": [],
       "distributions": 3,
       "related": []
+    },
+    {
+      "id": "uz:ds/osm-buildings",
+      "label": "OSM building footprints",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/settlement-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/building-footprint",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "extent": [
+        55.97842,
+        37.21164,
+        73.11172,
+        45.15597
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/osm-landuse",
+      "label": "OSM land use",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "extent": [
+        55.97813,
+        37.19822,
+        73.13119,
+        45.17247
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/osm-natural",
+      "label": "OSM natural features",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/land-cover",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "extent": [
+        57.02493,
+        36.95588,
+        73.20087,
+        46.00791
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/osm-places",
+      "label": "OSM populated places",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/settlement-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "extent": [
+        56.19536,
+        37.20111,
+        73.06099,
+        45.1546
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/osm-points",
+      "label": "OSM points of interest",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "extent": [
+        55.97154,
+        37.02959,
+        73.04246,
+        44.8971
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/osm-railways",
+      "label": "OSM railways",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "extent": [
+        55.74277,
+        37.02959,
+        72.99965,
+        45.03026
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/osm-waterways",
+      "label": "OSM waterways",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/surface-water-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/irrigation-canal-network",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning",
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "extent": [
+        57.60774,
+        36.92503,
+        73.43853,
+        44.14296
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-agriculture-fields",
+      "label": "Cadastre: agricultural fields",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/cadastral-parcel",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/cropland-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning",
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        58.57887,
+        37.19834,
+        73.06277,
+        43.74997
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-apartment-housing",
+      "label": "Cadastre: apartment housing parcels",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/building-footprint",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/land-tenure",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        56.19371,
+        37.20322,
+        73.0386,
+        44.76934
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-buildings",
+      "label": "Cadastre: buildings",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        56.0048,
+        37.20267,
+        73.04628,
+        44.89071
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-forest-agency-lands",
+      "label": "Cadastre: forestry agency lands",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/forests-carbon",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/land-tenure",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/forest-cover",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/carbon-accounting",
+        "uz:usecase/conservation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        56.02331,
+        37.21341,
+        73.14705,
+        45.24628
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-private-plots",
+      "label": "Cadastre: private plots",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/land-tenure",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/cadastral-parcel",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        59.19616,
+        38.20811,
+        72.74466,
+        42.66545
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-highways",
+      "label": "Cadastre: highways",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        56.18238,
+        37.20023,
+        73.02663,
+        44.78315
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-land-stock",
+      "label": "Cadastre: land stock",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/cadastral-parcel",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        55.99879,
+        37.19226,
+        73.06243,
+        45.58823
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-non-residential",
+      "label": "Cadastre: non-residential parcels",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/land-tenure",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/building-footprint",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        56.01118,
+        37.20086,
+        73.05241,
+        44.88742
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-protected-areas",
+      "label": "Cadastre: protected areas",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/biodiversity",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/protected-area",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/conservation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        56.02178,
+        38.7073,
+        70.4288,
+        45.58754
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-railways",
+      "label": "Cadastre: railway corridors",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/railway-network",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        60.66698,
+        40.62231,
+        68.72621,
+        41.52499
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-shared-lands",
+      "label": "Cadastre: shared lands",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/land-tenure",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        56.19375,
+        37.20273,
+        73.02005,
+        44.76759
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/cadastre-water",
+      "label": "Cadastre: water objects",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/surface-water-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        58.43274,
+        37.25499,
+        73.05817,
+        43.88291
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/tashkent-city-boundary",
+      "label": "Tashkent city boundary",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/administrative-boundary",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/tashkent-city",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        69.12223,
+        41.16362,
+        69.46989,
+        41.42248
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/landcover-training-samples",
+      "label": "Land-cover training samples",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/state-observation",
+      "observes": [
+        {
+          "concept": "uz:prop/land-cover",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "extent": [
+        55.99879,
+        37.19226,
+        73.14705,
+        45.58823
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication",
+        "severe-class-imbalance"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/meteorological-station-network",
+      "label": "Meteorological station network",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/monitoring-station",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.19899,
+        37.24758,
+        72.91447,
+        45.133
+      ],
+      "flags": [
+        "attribute-encoding-cp1251",
+        "crs-not-wgs84",
+        "station-key-not-wmo-index"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/station-air-temperature-series",
+      "label": "Station air-temperature series",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/monitoring-station",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/air-temperature",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 7,
+      "related": []
+    },
+    {
+      "id": "uz:ds/station-soil-temperature-series",
+      "label": "Station soil-temperature series",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/monitoring-station",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/soil-temperature",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/kamchik-pass-climate-series",
+      "label": "Kamchik pass temperature and precipitation",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/precipitation",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/river-gauge-inventory",
+      "label": "River gauge inventory",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/river-discharge",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction",
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/crop-statistics-2012-2020",
+      "label": "Crop statistics, all and irrigated land, 2012-2020",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/sown-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/gross-harvest",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/crop-yield",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/irrigated-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning",
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [],
+      "temporal": {
+        "start": 2012,
+        "end": 2020
+      },
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 18,
+      "related": []
+    },
+    {
+      "id": "uz:ds/crop-statistics-2005-2011",
+      "label": "Crop statistics, all land, 2005-2011",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/sown-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/gross-harvest",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/crop-yield",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": {
+        "start": 2005,
+        "end": 2011
+      },
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/crop-statistics-irrigated-2005-2011",
+      "label": "Crop statistics, irrigated land, 2005-2011",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/sown-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/gross-harvest",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/crop-yield",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/irrigated-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning"
+      ],
+      "places": [],
+      "temporal": {
+        "start": 2005,
+        "end": 2011
+      },
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/fertiliser-application-2007-2020",
+      "label": "Fertiliser application, 2007-2020",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/fertiliser-application",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [],
+      "temporal": {
+        "start": 2007,
+        "end": 2020
+      },
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 31,
+      "related": []
+    },
+    {
+      "id": "uz:ds/land-use-statistics-2005-2020",
+      "label": "Land-use statistics, 2005-2020",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/cropland-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": {
+        "start": 2005,
+        "end": 2020
+      },
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/regional-evapotranspiration-2020",
+      "label": "Monthly mean evapotranspiration by region, 2020",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/state-observation",
+      "observes": [
+        {
+          "concept": "uz:prop/evapotranspiration",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning",
+        "uz:usecase/irrigation-planning"
+      ],
+      "places": [
+        "uz:place/andijan",
+        "uz:place/bukhara",
+        "uz:place/fergana",
+        "uz:place/jizzakh",
+        "uz:place/karakalpakstan",
+        "uz:place/kashkadarya",
+        "uz:place/khorezm",
+        "uz:place/namangan",
+        "uz:place/navoi",
+        "uz:place/samarkand",
+        "uz:place/surkhandarya",
+        "uz:place/syrdarya",
+        "uz:place/tashkent-region"
+      ],
+      "temporal": {
+        "start": 2020,
+        "end": 2020
+      },
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/uzhydromet-survey-responses",
+      "label": "Survey responses (Uzhydromet transfer)",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/state-observation",
+      "observes": [],
+      "useCases": [],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [
+        "may-contain-personal-data",
+        "out-of-scope-for-the-portal"
+      ],
+      "distributions": 6,
+      "related": []
     }
   ],
   "counts": {
-    "datasets": 135,
-    "publishedAssertions": 1471,
-    "proposedAssertions": 452
+    "datasets": 168,
+    "publishedAssertions": 2282,
+    "proposedAssertions": 468
   }
 }

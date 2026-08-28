@@ -20,7 +20,7 @@
           "definition": {"type": "string", "minLength": 10},
           "domain": {
             "type": "array", "minItems": 1,
-            "items": {"enum": ["Dataset", "Distribution", "MapLayer", "Concept", "Agent"]}
+            "items": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Concept", "Agent"]}
           },
           "range": {
             "type": "object",
@@ -28,7 +28,7 @@
             "additionalProperties": false,
             "properties": {
               "kind": {"enum": ["entity", "concept", "literal"]},
-              "entityTypes": {"type": "array", "items": {"enum": ["Dataset", "Distribution", "MapLayer", "Agent"]}},
+              "entityTypes": {"type": "array", "items": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Agent"]}},
               "schemes": {"type": "array", "items": {"type": "string"}},
               "literalType": {"enum": ["string", "number", "integer", "boolean", "interval", "bbox"]}
             }

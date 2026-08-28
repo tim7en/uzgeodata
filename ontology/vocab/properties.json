@@ -88,6 +88,23 @@
 
     {"id": "uz:prop/settlement-extent", "prefLabel": "Settlement extent", "altLabels": ["built-up", "населённые пункты"], "definition": "Share and footprint of built-up settlement area.", "unit": "percent", "broader": "uz:theme/infrastructure"},
     {"id": "uz:prop/settlement-change", "prefLabel": "Settlement change", "altLabels": ["disappeared settlements", "динамика поселений"], "definition": "Growth, decline or disappearance of settlements over time.", "broader": "uz:theme/infrastructure"},
-    {"id": "uz:prop/road-density", "prefLabel": "Road density", "altLabels": ["дорожная сеть"], "definition": "Length of road network per unit area.", "unit": "km/km2", "broader": "uz:theme/infrastructure"}
+    {"id": "uz:prop/road-density", "prefLabel": "Road density", "altLabels": ["дорожная сеть"], "definition": "Length of road network per unit area.", "unit": "km/km2", "broader": "uz:theme/infrastructure"},
+    {"id": "uz:prop/road-network", "prefLabel": "Road network", "altLabels": ["highways", "автодороги"], "definition": "Mapped road and highway geometry, as opposed to its density.", "broader": "uz:theme/infrastructure"},
+    {"id": "uz:prop/railway-network", "prefLabel": "Railway network", "altLabels": ["railways", "железные дороги"], "definition": "Mapped railway lines and corridors.", "broader": "uz:theme/infrastructure"},
+    {"id": "uz:prop/building-footprint", "prefLabel": "Building footprint", "altLabels": ["buildings", "здания", "постройки"], "definition": "Outline of individual buildings at parcel scale.", "broader": "uz:theme/infrastructure"},
+    {"id": "uz:prop/point-of-interest", "prefLabel": "Point of interest", "altLabels": ["POI", "объекты"], "definition": "Named point features such as facilities, amenities and landmarks.", "broader": "uz:theme/infrastructure"},
+    {"id": "uz:prop/administrative-boundary", "prefLabel": "Administrative boundary", "altLabels": ["borders", "границы"], "definition": "Boundary of an administrative unit, used to aggregate statistics.", "broader": "uz:theme/infrastructure"},
+
+    {"id": "uz:prop/cadastral-parcel", "prefLabel": "Cadastral parcel", "altLabels": ["parcel", "кадастр", "участок"], "definition": "Land parcel as registered in the state cadastre, the legal unit of land.", "broader": "uz:theme/land-agriculture"},
+    {"id": "uz:prop/land-tenure", "prefLabel": "Land tenure", "altLabels": ["ownership", "землевладение", "land stock"], "definition": "Who holds land and under what arrangement: state reserve, shared, private, agency-managed.", "broader": "uz:theme/land-agriculture"},
+    {"id": "uz:prop/sown-area", "prefLabel": "Sown area", "altLabels": ["посевные площади", "экин майдонлари"], "definition": "Area planted to a crop in a season, by district and year.", "unit": "ha", "broader": "uz:theme/land-agriculture"},
+    {"id": "uz:prop/gross-harvest", "prefLabel": "Gross harvest", "altLabels": ["валовой сбор", "ялпи хосил"], "definition": "Total production harvested, the numerator of yield.", "unit": "t", "broader": "uz:theme/land-agriculture"},
+    {"id": "uz:prop/fertiliser-application", "prefLabel": "Fertiliser application", "altLabels": ["удобрение", "fertilizer"], "definition": "Quantity of mineral or organic fertiliser applied per unit area and year.", "unit": "kg/ha", "broader": "uz:theme/land-agriculture"},
+    {"id": "uz:prop/annotation-labels", "prefLabel": "Annotation labels", "altLabels": ["training samples", "labelled polygons"], "definition": "Human- or cadastre-derived class labels attached to geometry, used to train and validate land-cover and land-use models. A machine-learning asset rather than an observation of the environment.", "broader": "uz:theme/land-agriculture"},
+
+    {"id": "uz:prop/evapotranspiration", "prefLabel": "Evapotranspiration", "altLabels": ["ET", "испарение", "эвапотранспирация"], "definition": "Water returned to the atmosphere from soil and vegetation, the demand side of the irrigation balance.", "unit": "mm", "broader": "uz:theme/climate"},
+    {"id": "uz:prop/soil-temperature", "prefLabel": "Soil temperature", "altLabels": ["температура почвы"], "definition": "Temperature measured at standard soil depths, a control on germination and evaporation.", "unit": "degC", "broader": "uz:theme/climate"},
+    {"id": "uz:prop/river-discharge", "prefLabel": "River discharge", "altLabels": ["water discharge", "расход воды", "сток реки"], "definition": "Volume of water passing a gauge per unit time.", "unit": "m3/s", "broader": "uz:theme/water"},
+    {"id": "uz:prop/monitoring-station", "prefLabel": "Monitoring station", "altLabels": ["метеостанция", "gauge", "станция"], "definition": "A fixed installation that measures the environment, and the network it belongs to. The anchor that ties a time series to a place.", "broader": "uz:theme/climate"}
   ]
 }
