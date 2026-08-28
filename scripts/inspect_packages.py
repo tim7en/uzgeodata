@@ -9,7 +9,7 @@ import libarchive
 
 
 def prepare_ntfs_file(output) -> None:
-    """Enable NTFS compression, falling back to sparse allocation for large GIS tables."""
+    """Enable sparse allocation, falling back to NTFS compression for large GIS tables."""
     if os.name != "nt":
         return
     import ctypes
@@ -17,13 +17,15 @@ def prepare_ntfs_file(output) -> None:
 
     handle = msvcrt.get_osfhandle(output.fileno())
     returned = ctypes.c_ulong(0)
-    compression_format_default = ctypes.c_ushort(1)
-    compressed = ctypes.windll.kernel32.DeviceIoControl(
-        handle, 0x0009C040, ctypes.byref(compression_format_default), ctypes.sizeof(compression_format_default),
-        None, 0, ctypes.byref(returned), None,
+    sparse = ctypes.windll.kernel32.DeviceIoControl(
+        handle, 0x000900C4, None, 0, None, 0, ctypes.byref(returned), None,
     )
-    if not compressed:
-        ctypes.windll.kernel32.DeviceIoControl(handle, 0x000900C4, None, 0, None, 0, ctypes.byref(returned), None)
+    if not sparse:
+        compression_format_default = ctypes.c_ushort(1)
+        ctypes.windll.kernel32.DeviceIoControl(
+            handle, 0x0009C040, ctypes.byref(compression_format_default), ctypes.sizeof(compression_format_default),
+            None, 0, ctypes.byref(returned), None,
+        )
 
 
 def extract_package(package: Path, destination: Path) -> None:

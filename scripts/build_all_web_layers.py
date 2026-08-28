@@ -4,11 +4,14 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
+import re
 import shutil
 import warnings
 from pathlib import Path
 
 import geopandas as gpd
+import libarchive
 import matplotlib
 import numpy as np
 import pyogrio
@@ -26,6 +29,7 @@ from matplotlib import colormaps  # noqa: E402
 
 MAX_VECTOR_FEATURES = 50_000
 MAX_RASTER_EDGE = 1800
+GIB = 1024**3
 
 
 def within(child: Path, parent: Path) -> bool:
@@ -41,6 +45,39 @@ def clean_work_folder(folder: Path, working_root: Path) -> None:
         if not within(folder, working_root) or folder.resolve() == working_root.resolve():
             raise RuntimeError(f"Refusing to clean unsafe working folder: {folder}")
         shutil.rmtree(folder)
+
+
+def folder_size(folder: Path) -> int:
+    if not folder.exists():
+        return 0
+    return sum(path.stat().st_size for path in folder.rglob("*") if path.is_file())
+
+
+def expanded_package_size(package: Path) -> int:
+    with libarchive.file_reader(str(package)) as archive:
+        return sum(max(0, int(entry.size or 0)) for entry in archive)
+
+
+def atomic_manifest_write(target: Path, payload: list[dict]) -> None:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.with_suffix(f"{target.suffix}.tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    os.replace(temporary, target)
+
+
+def dataset_item(dataset: dict, package: Path) -> dict:
+    source_key = str(dataset.get("sourceKey") or "")
+    source_title = Path(source_key).stem if source_key else Path(dataset.get("files", [{}])[0].get("originalName", package.stem)).stem
+    match = re.match(r"(\d+)", source_title)
+    return {
+        "atlasNumber": int(match.group(1)) if match else None,
+        "title": dataset.get("title") or source_title,
+        "category": dataset.get("category") or "Other",
+        "access": dataset.get("access") or "Request",
+        "description": dataset.get("description") or "",
+        "sourceTitle": source_title,
+        "package": package.name,
+    }
 
 
 def first_vector(folder: Path) -> tuple[Path, str | None, dict] | None:
@@ -74,7 +111,14 @@ def first_raster(folder: Path) -> Path | None:
 
 
 def useful_fields(data: gpd.GeoDataFrame) -> list[str]:
-    fields = [column for column in data.columns if column != "geometry" and not column.lower().startswith("shape_")]
+    fields = []
+    for column in data.columns:
+        if column == "geometry" or column.lower().startswith("shape_"):
+            continue
+        sample = data[column].dropna().head(50)
+        if any(isinstance(value, (bytes, bytearray, memoryview)) for value in sample):
+            continue
+        fields.append(column)
     preferred_words = ("name", "type", "title", "class", "label", "risk", "region", "place", "date", "year", "mag", "depth", "area", "index", "value")
     preferred = [column for column in fields if any(word in column.lower() for word in preferred_words)]
     text = [column for column in fields if data[column].dtype == "object" and column not in preferred]
@@ -131,7 +175,8 @@ def raster_layer(source_path: Path, target: Path) -> dict:
             rgba = np.dstack([(rgb * 255).astype(np.uint8), (~mask).astype(np.uint8) * 220])
             legend = {"type": "rgb"}
         else:
-            band = values[0].filled(np.nan).astype(np.float64)
+            band = np.asarray(values[0].data, dtype=np.float64)
+            band[mask] = np.nan
             valid = band[~mask & np.isfinite(band)]
             unique = np.unique(valid) if valid.size and valid.size < 2_000_000 else np.unique(valid[:: max(1, valid.size // 500_000)])
             categorical = source.dtypes[0].startswith(("uint", "int")) and len(unique) <= 40
@@ -169,39 +214,133 @@ def preview_layer(folder: Path, target: Path) -> dict:
     return {"kind": "unavailable", "features": 0, "sourceFeatures": 0, "bytes": 0}
 
 
+def archive_preview(package: Path, target: Path, max_bytes: int = 25 * 1024 * 1024) -> dict:
+    """Extract only an embedded package thumbnail without expanding the package."""
+    temporary = target.with_suffix(f"{target.suffix}.tmp")
+    temporary.unlink(missing_ok=True)
+    try:
+        with libarchive.file_reader(str(package)) as archive:
+            for entry in archive:
+                if Path(entry.pathname).name.casefold() != "thumbnail.png":
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                written = 0
+                with temporary.open("wb") as output:
+                    for block in entry.get_blocks():
+                        written += len(block)
+                        if written > max_bytes:
+                            raise RuntimeError("Embedded preview exceeds the 25 MiB safety limit")
+                        output.write(block)
+                os.replace(temporary, target)
+                return {
+                    "kind": "preview", "url": f"/data/layers/{target.name}",
+                    "features": 0, "sourceFeatures": 0, "bytes": target.stat().st_size,
+                    "note": "Preview only: expanded source package exceeds the working-storage limit.",
+                }
+        raise RuntimeError("Expanded package exceeds the working-storage limit and has no embedded preview")
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("source", type=Path)
     parser.add_argument("--catalog", type=Path, default=Path("public/data/archive-catalog.json"))
+    parser.add_argument("--datasets", type=Path, default=Path("storage/datasets.json"))
     parser.add_argument("--output", type=Path, default=Path("public/data/layers"))
+    parser.add_argument("--manifest", type=Path)
     parser.add_argument("--working", type=Path, default=Path("tmp/all-layer-build"))
+    parser.add_argument("--max-output-gb", type=float, default=5.0)
+    parser.add_argument("--max-package-gb", type=float, default=5.0)
+    parser.add_argument("--start", type=int, default=1, help="One-based package index to start from")
+    parser.add_argument("--limit", type=int, help="Maximum number of packages to process")
     args = parser.parse_args()
+    if args.max_output_gb <= 0 or args.max_package_gb <= 0:
+        raise SystemExit("Storage limits must be greater than zero")
     args.output.mkdir(parents=True, exist_ok=True); args.working.mkdir(parents=True, exist_ok=True)
     catalog = json.loads(args.catalog.read_text(encoding="utf-8"))
     by_source = {item["sourceTitle"]: item for item in catalog}
-    manifest = []
+    datasets = json.loads(args.datasets.read_text(encoding="utf-8")) if args.datasets.exists() else []
+    by_stored_name = {
+        file["storedName"]: dataset
+        for dataset in datasets
+        for file in dataset.get("files", [])
+        if file.get("storedName")
+    }
+    manifest_path = args.manifest or args.output.parent / "all-map-layers.json"
+    max_output_bytes = int(args.max_output_gb * GIB)
+    max_package_bytes = int(args.max_package_gb * GIB)
+    output_bytes = folder_size(args.output)
     packages = sorted(args.source.glob("*.lpkx"), key=lambda item: item.name.casefold())
-    for index, package in enumerate(packages, 1):
-        item = by_source[package.stem].copy(); folder = args.working / f"package-{index:03d}"
+    partial_run = args.start != 1 or args.limit is not None
+    existing_manifest = []
+    if partial_run and manifest_path.exists():
+        existing_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest_by_package = {
+        item["package"]: item for item in existing_manifest if item.get("package")
+    }
+    package_order = {package.name: index for index, package in enumerate(packages, 1)}
+    manifest = list(manifest_by_package.values())
+    selected = list(enumerate(packages, 1))[max(0, args.start - 1):]
+    if args.limit is not None:
+        selected = selected[:max(0, args.limit)]
+    for position, (index, package) in enumerate(selected, 1):
+        catalog_match = by_source.get(package.stem)
+        dataset_match = by_stored_name.get(package.name)
+        item = catalog_match.copy() if catalog_match else dataset_item(dataset_match, package) if dataset_match else {
+            "atlasNumber": None, "title": package.stem, "category": "Other", "access": "Request",
+            "description": "", "sourceTitle": package.stem, "package": package.name,
+        }
+        folder = args.working / f"package-{index:03d}"
         try:
-            clean_work_folder(folder, args.working); extract_package(package, folder)
-            vector = first_vector(folder)
-            if vector:
-                generated = vector_layer(*vector, args.output / f"layer-{index:03d}.geojson")
+            expanded_bytes = expanded_package_size(package)
+            if expanded_bytes > max_package_bytes:
+                target = args.output / f"layer-{index:03d}-preview.png"
+                previous_bytes = target.stat().st_size if target.exists() else 0
+                generated = archive_preview(package, target)
+                generated["expandedBytes"] = expanded_bytes
+                generated["workingLimitBytes"] = max_package_bytes
             else:
-                raster = first_raster(folder)
-                generated = raster_layer(raster, args.output / f"layer-{index:03d}.png") if raster else preview_layer(folder, args.output / f"layer-{index:03d}-preview.png")
+                clean_work_folder(folder, args.working); extract_package(package, folder)
+                vector = first_vector(folder)
+                if vector:
+                    target = args.output / f"layer-{index:03d}.geojson"
+                    previous_bytes = target.stat().st_size if target.exists() else 0
+                    generated = vector_layer(*vector, target)
+                else:
+                    raster = first_raster(folder)
+                    target = args.output / (f"layer-{index:03d}.png" if raster else f"layer-{index:03d}-preview.png")
+                    previous_bytes = target.stat().st_size if target.exists() else 0
+                    generated = raster_layer(raster, target) if raster else preview_layer(folder, target)
+            projected_output_bytes = output_bytes - previous_bytes + generated["bytes"]
+            if projected_output_bytes > max_output_bytes:
+                target.unlink(missing_ok=True)
+                raise RuntimeError(
+                    f"Derived output would exceed the {args.max_output_gb:g} GiB store limit"
+                )
+            output_bytes = projected_output_bytes
             item.update(generated); item["status"] = "ready" if generated["kind"] in {"vector", "raster"} else "preview"
-            manifest.append(item)
-            print(f"[{index:03d}/{len(packages)}] {generated['kind']:<7} {item['title']}", flush=True)
+            item["sequence"] = index
+            manifest_by_package[package.name] = item
+            print(f"[{position:03d}/{len(selected)} | atlas {index:03d}/{len(packages)}] {generated['kind']:<7} {item['title']}", flush=True)
         except Exception as error:
             item.update({"kind": "error", "status": "error", "error": str(error), "features": 0, "sourceFeatures": 0, "bytes": 0})
-            manifest.append(item); print(f"[{index:03d}/{len(packages)}] ERROR   {item['title']}: {error}", flush=True)
+            item["sequence"] = index
+            manifest_by_package[package.name] = item
+            print(f"[{position:03d}/{len(selected)} | atlas {index:03d}/{len(packages)}] ERROR   {item['title']}: {error}", flush=True)
         finally:
             clean_work_folder(folder, args.working)
-        (args.output.parent / "all-map-layers.json").write_text(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        manifest = sorted(manifest_by_package.values(), key=lambda entry: package_order.get(entry.get("package"), 10**9))
+        atomic_manifest_write(manifest_path, manifest)
     ready = sum(item["status"] == "ready" for item in manifest)
-    print(json.dumps({"total": len(manifest), "ready": ready, "errors": len(manifest) - ready, "outputMB": round(sum(item["bytes"] for item in manifest) / 1024 / 1024, 2)}, indent=2), flush=True)
+    previews = sum(item["status"] == "preview" for item in manifest)
+    errors = sum(item["status"] == "error" for item in manifest)
+    print(json.dumps({
+        "total": len(manifest), "ready": ready, "previews": previews, "errors": errors,
+        "outputMB": round(output_bytes / 1024 / 1024, 2),
+        "outputLimitGB": args.max_output_gb, "manifest": str(manifest_path),
+    }, indent=2), flush=True)
 
 
 if __name__ == "__main__":
