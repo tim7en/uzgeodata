@@ -171,7 +171,8 @@
          "observes": ["uz:prop/river-discharge", "uz:prop/monitoring-station"],
          "useCases": ["uz:usecase/water-resource-allocation", "uz:usecase/disaster-risk-reduction"],
          "stations": {"network": "uzhydromet-gauge", "sheet": "Лист1", "keyField": "INDEX",
-                      "nameField": "RIVERS", "xField": "X", "yField": "Y", "classField": "LOCATION"},
+                      "nameField": "RIVERS", "xField": "X", "yField": "Y", "classField": "LOCATION",
+                      "labelIncludesClass": true},
          "note": "Gauge list with coordinates, so the discharge series can be mapped. This is the missing link between the hydrological tables and the river network."}
       ]
     },

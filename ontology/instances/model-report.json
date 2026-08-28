@@ -1,85 +1,85 @@
 {
-  "generatedAt": "2026-08-28T14:15:53+00:00",
+  "generatedAt": "2026-08-28T14:44:40+00:00",
   "model": "uz:agent/model-tfidf-knn-v1",
   "backend": "tfidf char_wb 3-5grams + knn label propagation",
-  "labelledDatasets": 97,
+  "labelledDatasets": 130,
   "humanReviewedAssertions": 28,
   "calibration": {
     "0": 0.5,
     "1": 0.5,
     "2": 0.5,
     "3": 0.5,
-    "4": 0.688,
-    "5": 0.905,
-    "6": 0.905,
-    "7": 0.905,
+    "4": 0.771,
+    "5": 0.9,
+    "6": 0.9,
+    "7": 0.9,
     "8": 0.917,
     "9": 0.917
   },
   "leaveOneOut": {
-    "evaluated": 176,
-    "precision": 0.477,
-    "precisionTop1": 0.635
+    "evaluated": 252,
+    "precision": 0.48,
+    "precisionTop1": 0.603
   },
   "proposals": {
-    "total": 6,
-    "observes": 6,
-    "relatedTo": 0,
-    "aboveThreshold": 0
+    "total": 120,
+    "observes": 53,
+    "relatedTo": 67,
+    "aboveThreshold": 7
   },
   "sampleEvaluations": [
     {
       "dataset": "uz:ds/a114-terrestrial-land-cover",
       "concept": "uz:prop/land-cover",
-      "score": 0.482,
+      "score": 0.478,
       "correct": true
     },
     {
       "dataset": "uz:ds/a114-terrestrial-land-cover",
       "concept": "uz:prop/forest-cover",
-      "score": 0.332,
+      "score": 0.386,
       "correct": false
     },
     {
       "dataset": "uz:ds/a115-soil-salinity",
       "concept": "uz:prop/soil-salinity",
-      "score": 0.664,
+      "score": 0.644,
       "correct": true
     },
     {
       "dataset": "uz:ds/a116-irrigated-soil-salinity",
       "concept": "uz:prop/soil-salinity",
-      "score": 0.569,
+      "score": 0.497,
       "correct": true
     },
     {
       "dataset": "uz:ds/a116-irrigated-soil-salinity",
       "concept": "uz:prop/irrigated-area",
-      "score": 0.257,
+      "score": 0.38,
       "correct": false
     },
     {
       "dataset": "uz:ds/a117-soil-salinity-dynamics",
       "concept": "uz:prop/soil-salinity",
-      "score": 0.374,
+      "score": 0.365,
       "correct": true
     },
     {
       "dataset": "uz:ds/a117-soil-salinity-dynamics",
       "concept": "uz:prop/habitat-dynamics",
-      "score": 0.18,
-      "correct": false
-    },
-    {
-      "dataset": "uz:ds/a118-average-maximum-ndvi-20042024",
-      "concept": "uz:prop/snow-cover-depth",
-      "score": 0.19,
+      "score": 0.181,
       "correct": false
     },
     {
       "dataset": "uz:ds/a118-average-maximum-ndvi-20042024",
       "concept": "uz:prop/drought-severity",
-      "score": 0.186,
+      "score": 0.231,
+      "correct": false
+    },
+    {
+      "dataset": "uz:ds/a118-average-maximum-ndvi-20042024",
+      "concept": "uz:prop/snow-cover-depth",
+      "score": 0.193,
       "correct": false
     },
     {
@@ -91,19 +91,19 @@
     {
       "dataset": "uz:ds/a119-ndvi-dynamics",
       "concept": "uz:prop/vegetation-index",
-      "score": 0.231,
+      "score": 0.232,
       "correct": false
     },
     {
       "dataset": "uz:ds/a119-ndvi-dynamics",
       "concept": "uz:prop/ndvi",
-      "score": 0.19,
+      "score": 0.192,
       "correct": true
     },
     {
       "dataset": "uz:ds/a120-enhanced-vegetation-index-dynamics",
       "concept": "uz:prop/evi",
-      "score": 0.281,
+      "score": 0.283,
       "correct": false
     },
     {
@@ -115,31 +115,31 @@
     {
       "dataset": "uz:ds/a120-enhanced-vegetation-index-dynamics",
       "concept": "uz:prop/habitat-dynamics",
-      "score": 0.212,
+      "score": 0.213,
       "correct": false
     },
     {
       "dataset": "uz:ds/a121-leaf-area-index",
       "concept": "uz:prop/drought-severity",
-      "score": 0.341,
+      "score": 0.34,
       "correct": false
     },
     {
       "dataset": "uz:ds/a121-leaf-area-index",
       "concept": "uz:prop/leaf-area-index",
-      "score": 0.298,
+      "score": 0.302,
       "correct": true
     },
     {
       "dataset": "uz:ds/a122-land-productivity-dynamics",
       "concept": "uz:prop/pasture-productivity",
-      "score": 0.306,
+      "score": 0.297,
       "correct": false
     },
     {
       "dataset": "uz:ds/a122-land-productivity-dynamics",
       "concept": "uz:prop/land-productivity",
-      "score": 0.206,
+      "score": 0.204,
       "correct": true
     },
     {
@@ -151,122 +151,122 @@
     {
       "dataset": "uz:ds/a123-arable-land-use-intensity",
       "concept": "uz:prop/land-use-type",
-      "score": 0.3,
+      "score": 0.393,
       "correct": false
     },
     {
       "dataset": "uz:ds/a123-arable-land-use-intensity",
       "concept": "uz:prop/land-use-intensity",
-      "score": 0.261,
+      "score": 0.263,
       "correct": true
     },
     {
-      "dataset": "uz:ds/a123-arable-land-use-intensity",
-      "concept": "uz:prop/land-cover",
+      "dataset": "uz:ds/a124-pasture-vegetation-types",
+      "concept": "uz:prop/pasture-productivity",
+      "score": 0.482,
+      "correct": false
+    },
+    {
+      "dataset": "uz:ds/a124-pasture-vegetation-types",
+      "concept": "uz:prop/pasture-stocking-rate",
+      "score": 0.252,
+      "correct": false
+    },
+    {
+      "dataset": "uz:ds/a124-pasture-vegetation-types",
+      "concept": "uz:prop/pasture-vegetation",
       "score": 0.192,
-      "correct": false
-    },
-    {
-      "dataset": "uz:ds/a124-pasture-vegetation-types",
-      "concept": "uz:prop/pasture-productivity",
-      "score": 0.484,
-      "correct": false
-    },
-    {
-      "dataset": "uz:ds/a124-pasture-vegetation-types",
-      "concept": "uz:prop/pasture-stocking-rate",
-      "score": 0.254,
-      "correct": false
-    },
-    {
-      "dataset": "uz:ds/a124-pasture-vegetation-types",
-      "concept": "uz:prop/pasture-vegetation",
-      "score": 0.194,
       "correct": true
     },
     {
       "dataset": "uz:ds/a125-recommended-pasture-stocking-rate",
       "concept": "uz:prop/pasture-vegetation",
-      "score": 0.369,
+      "score": 0.348,
       "correct": false
     },
     {
       "dataset": "uz:ds/a125-recommended-pasture-stocking-rate",
       "concept": "uz:prop/pasture-productivity",
-      "score": 0.34,
+      "score": 0.321,
       "correct": true
     },
     {
       "dataset": "uz:ds/a125-recommended-pasture-stocking-rate",
       "concept": "uz:prop/pasture-stocking-rate",
-      "score": 0.211,
+      "score": 0.21,
       "correct": true
     },
     {
       "dataset": "uz:ds/a126-pasture-productivity",
       "concept": "uz:prop/pasture-productivity",
-      "score": 0.429,
+      "score": 0.414,
       "correct": true
     },
     {
       "dataset": "uz:ds/a126-pasture-productivity",
       "concept": "uz:prop/pasture-vegetation",
-      "score": 0.336,
+      "score": 0.319,
       "correct": false
     },
     {
       "dataset": "uz:ds/a126-pasture-productivity",
       "concept": "uz:prop/land-productivity",
-      "score": 0.277,
+      "score": 0.264,
       "correct": false
     },
     {
       "dataset": "uz:ds/a126-pasture-productivity",
       "concept": "uz:prop/pasture-stocking-rate",
-      "score": 0.267,
+      "score": 0.254,
       "correct": false
     },
     {
       "dataset": "uz:ds/a127-soil-organic-carbon",
       "concept": "uz:prop/soil-organic-carbon",
-      "score": 0.35,
+      "score": 0.349,
       "correct": true
     },
     {
       "dataset": "uz:ds/a127-soil-organic-carbon",
       "concept": "uz:prop/carbon-sequestration",
-      "score": 0.289,
+      "score": 0.3,
+      "correct": false
+    },
+    {
+      "dataset": "uz:ds/a127-soil-organic-carbon",
+      "concept": "uz:prop/carbon-balance",
+      "score": 0.237,
       "correct": false
     },
     {
       "dataset": "uz:ds/a127-soil-organic-carbon",
       "concept": "uz:prop/soil-salinity",
-      "score": 0.273,
-      "correct": false
-    },
-    {
-      "dataset": "uz:ds/a127-soil-organic-carbon",
-      "concept": "uz:prop/carbon-balance",
-      "score": 0.227,
+      "score": 0.217,
       "correct": false
     },
     {
       "dataset": "uz:ds/a128-carbon-emission-volume",
       "concept": "uz:prop/carbon-sequestration",
-      "score": 0.273,
+      "score": 0.277,
       "correct": false
     },
     {
       "dataset": "uz:ds/a128-carbon-emission-volume",
       "concept": "uz:prop/carbon-balance",
-      "score": 0.215,
+      "score": 0.22,
       "correct": false
     },
     {
       "dataset": "uz:ds/a128-carbon-emission-volume",
       "concept": "uz:prop/carbon-emission",
-      "score": 0.206,
+      "score": 0.211,
       "correct": true
+    },
+    {
+      "dataset": "uz:ds/a129-net-carbon-balance",
+      "concept": "uz:prop/carbon-sequestration",
+      "score": 0.34,
+      "correct": false
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-28T14:40:48+00:00",
+  "generatedAt": "2026-08-28T14:44:49+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -2090,6 +2090,19 @@
       "catalogId": null,
       "repositoryId": null,
       "description": "Parcel-level legal geometry. Authoritative for tenure, not for physical land cover. Layer names in the data record the UZKAD export batches they came from."
+    },
+    {
+      "id": "uz:ds/crop-production-2005-2021",
+      "type": "Dataset",
+      "label": "Crop production bulletins, 2005-2021",
+      "labels": {
+        "en": "Crop production bulletins, 2005-2021"
+      },
+      "sourceKey": "agricultural-statistics/crop-production-2005-2021",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/crop-statistics-2005-2011",
@@ -5577,6 +5590,384 @@
       "crs": "EPSG:4326"
     },
     {
+      "id": "uz:dist/crop-production-2005-2021-1-qx-73e93d",
+      "type": "Distribution",
+      "label": "1-QX свод БЮЛ. (сугор ер) СХ.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 847751,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2016/1-QX свод БЮЛ. (сугор ер) СХ.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-1-qx-7617d4",
+      "type": "Distribution",
+      "label": "1-QX свод БЮЛ. (барч ер) СХ.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 848353,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2016/1-QX свод БЮЛ. (барч ер) СХ.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-119b6c",
+      "type": "Distribution",
+      "label": "ДИНАМ Посевн. площади.xls",
+      "role": "external-table",
+      "format": "XLS",
+      "byteSize": 273408,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/ДИН На всех земель 2005-2011/ДИНАМ Посевн. площади.xls",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-1700-2019-02c0fd",
+      "type": "Distribution",
+      "label": "1700 ДЕҲҚОНЧИЛИК БЮЛ.-2019 (барча ерларда).pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 718020,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2019/1700 ДЕҲҚОНЧИЛИК БЮЛ.-2019 (барча ерларда).pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-1700-2020-21-06-2021-1322b5",
+      "type": "Distribution",
+      "label": "1700 ДЕ__ОНЧИЛИК БЮЛ-2020 (барча ерларда) 21.06.2021.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1025993,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2020/1700 ДЕ__ОНЧИЛИК БЮЛ-2020 (барча ерларда) 21.06.2021.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-1700-2020-22-06-2021-b66cf2",
+      "type": "Distribution",
+      "label": "1700 ДЕ__ОНЧИЛИК БЮЛ-2020 (су_ориладиган ер) 22.06.2021.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1327286,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2020/1700 ДЕ__ОНЧИЛИК БЮЛ-2020 (су_ориладиган ер) 22.06.2021.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-2017-1c42a8",
+      "type": "Distribution",
+      "label": "ДЕХ БЮЛ. 2017 (БЕ) СХЭКО.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 784337,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2017/ДЕХ БЮЛ. 2017 (БЕ) СХЭКО.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-2017-6010a8",
+      "type": "Distribution",
+      "label": "ДЕХ БЮЛ. 2017(СЕ).pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 800788,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2017/ДЕХ БЮЛ. 2017(СЕ).pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-2018-4bba9d",
+      "type": "Distribution",
+      "label": "ДЕҲҚОНЧИЛИК БЮЛ-2018 (барча ерларда).pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 900531,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2018/ДЕҲҚОНЧИЛИК БЮЛ-2018 (барча ерларда).pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-2018-535a7e",
+      "type": "Distribution",
+      "label": "ДЕҲҚОНЧИЛИК БЮЛ.-2018 (суғориладиган ерларда).pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 889918,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2018/ДЕҲҚОНЧИЛИК БЮЛ.-2018 (суғориладиган ерларда).pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-2019-09-06-53270b",
+      "type": "Distribution",
+      "label": "ДЕҲҚОНЧИЛИК БЮЛ.-2019 (суғориладиган ер) 09.06.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 805072,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2019/ДЕҲҚОНЧИЛИК БЮЛ.-2019 (суғориладиган ер) 09.06.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-2021-30e9ef",
+      "type": "Distribution",
+      "label": "2021 сугор.ер майдонлари+.xlsx",
+      "role": "external-table",
+      "format": "XLSX",
+      "byteSize": 60777,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство  2021/2021 сугор.ер майдонлари+.xlsx",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-202880",
+      "type": "Distribution",
+      "label": "Барча ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1381907,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2012/Барча ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-2a9cab",
+      "type": "Distribution",
+      "label": "ДИНАМ Урожайность.xls",
+      "role": "external-table",
+      "format": "XLS",
+      "byteSize": 310272,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/ДИН На всех земель 2005-2011/ДИНАМ Урожайность.xls",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-5e8d94",
+      "type": "Distribution",
+      "label": "Суғориладиган ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1217980,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2014/Суғориладиган ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-64905a",
+      "type": "Distribution",
+      "label": "ДИНАМ Урожайность (ОРОШАЕМЫХ).xls",
+      "role": "external-table",
+      "format": "XLS",
+      "byteSize": 317952,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/ДИН на ОРОШАЕМЫХ ЗЕМЕЛ 2005-2011/ДИНАМ Урожайность (ОРОШАЕМЫХ).xls",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-64f0f0",
+      "type": "Distribution",
+      "label": "Суғориладиган ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1543261,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2015/Суғориладиган ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-76fe14",
+      "type": "Distribution",
+      "label": "ДИНАМ Валов сбор.xls",
+      "role": "external-table",
+      "format": "XLS",
+      "byteSize": 408576,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/ДИН На всех земель 2005-2011/ДИНАМ Валов сбор.xls",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-8b9719",
+      "type": "Distribution",
+      "label": "ДИН. Посевн. площади (ОРОШАЕМЫХ).xls",
+      "role": "external-table",
+      "format": "XLS",
+      "byteSize": 256512,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/ДИН на ОРОШАЕМЫХ ЗЕМЕЛ 2005-2011/ДИН. Посевн. площади (ОРОШАЕМЫХ).xls",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-8c98a5",
+      "type": "Distribution",
+      "label": "Барча ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1240920,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2014/Барча ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-8d6955",
+      "type": "Distribution",
+      "label": "ЭКИН МАЙДОН (ПРЕД.) Рес  Барча ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 2274915,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство  2021/ЭКИН МАЙДОН (ПРЕД.) Рес  Барча ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-a10cad",
+      "type": "Distribution",
+      "label": "Барча ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1543111,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2015/Барча ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-c2f865",
+      "type": "Distribution",
+      "label": "ДИНАМ Валов сбор (ОРОШАЕМЫХ).xls",
+      "role": "external-table",
+      "format": "XLS",
+      "byteSize": 292864,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/ДИН на ОРОШАЕМЫХ ЗЕМЕЛ 2005-2011/ДИНАМ Валов сбор (ОРОШАЕМЫХ).xls",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-cd29e9",
+      "type": "Distribution",
+      "label": "Суғориладиган ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1367171,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2012/Суғориладиган ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-d4c25a",
+      "type": "Distribution",
+      "label": "Суғориладиган ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1333351,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2013/Суғориладиган ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-f311b9",
+      "type": "Distribution",
+      "label": "Барча ерлар.pdf",
+      "role": "external-document",
+      "format": "PDF",
+      "byteSize": 1342086,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2013/Барча ерлар.pdf",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/crop-production-2005-2021-thumbs-a8cf40",
+      "type": "Distribution",
+      "label": "Thumbs.db",
+      "role": "external-archive",
+      "format": "DB",
+      "byteSize": 22016,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/БЮЛ Растениеводство 2012/Thumbs.db",
+      "featureCount": null,
+      "crs": null
+    },
+    {
       "id": "uz:dist/crop-statistics-2005-2011-4cadf5",
       "type": "Distribution",
       "label": "ДИНАМ Валов сбор.xls",
@@ -6811,6 +7202,48 @@
       "crs": null
     },
     {
+      "id": "uz:dist/uzhydromet-survey-responses-297294-41bc37",
+      "type": "Distribution",
+      "label": "297294инвестиция.xlsx",
+      "role": "external-table",
+      "format": "XLSX",
+      "byteSize": 18323,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Узгидро 27.05.22/invest/297294инвестиция.xlsx",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/uzhydromet-survey-responses-297294-a22077",
+      "type": "Distribution",
+      "label": "297294водоснабжение.xlsx",
+      "role": "external-table",
+      "format": "XLSX",
+      "byteSize": 15863,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Узгидро 27.05.22/invest/297294водоснабжение.xlsx",
+      "featureCount": null,
+      "crs": null
+    },
+    {
+      "id": "uz:dist/uzhydromet-survey-responses-297294-d855c6",
+      "type": "Distribution",
+      "label": "297294сельское.xlsx",
+      "role": "external-table",
+      "format": "XLSX",
+      "byteSize": 16507,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "internal",
+      "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Узгидро 27.05.22/invest/297294сельское.xlsx",
+      "featureCount": null,
+      "crs": null
+    },
+    {
       "id": "uz:dist/uzhydromet-survey-responses-9770da",
       "type": "Distribution",
       "label": "Сўровнома (Услуги).xlsx",
@@ -6949,7 +7382,7 @@
     {
       "id": "uz:station/gauge-16004",
       "type": "MonitoringStation",
-      "label": "р. Cырдарья",
+      "label": "р. Cырдарья (кишл. Kаль)",
       "network": "uzhydromet-gauge",
       "stationKey": "16004",
       "stationClass": "кишл. Kаль",
@@ -6959,7 +7392,7 @@
     {
       "id": "uz:station/gauge-16018",
       "type": "MonitoringStation",
-      "label": "р. Cырдарья",
+      "label": "р. Cырдарья (пос. Hадеждинский)",
       "network": "uzhydromet-gauge",
       "stationKey": "16018",
       "stationClass": "пос. Hадеждинский",
@@ -6969,7 +7402,7 @@
     {
       "id": "uz:station/gauge-16022",
       "type": "MonitoringStation",
-      "label": "р. Cырдарья",
+      "label": "р. Cырдарья (г. Чиназ)",
       "network": "uzhydromet-gauge",
       "stationKey": "16022",
       "stationClass": "г. Чиназ",
@@ -6979,7 +7412,7 @@
     {
       "id": "uz:station/gauge-16067",
       "type": "MonitoringStation",
-      "label": "р. Hарын",
+      "label": "р. Hарын (г. Учкурган, в 3 км выше города)",
       "network": "uzhydromet-gauge",
       "stationKey": "16067",
       "stationClass": "г. Учкурган, в 3 км выше города",
@@ -6989,7 +7422,7 @@
     {
       "id": "uz:station/gauge-16110",
       "type": "MonitoringStation",
-      "label": "р. Kарадарья",
+      "label": "р. Kарадарья (пос. Kарабагиш)",
       "network": "uzhydromet-gauge",
       "stationKey": "16110",
       "stationClass": "пос. Kарабагиш",
@@ -6999,7 +7432,7 @@
     {
       "id": "uz:station/gauge-16119",
       "type": "MonitoringStation",
-      "label": "р. Карадарья",
+      "label": "р. Карадарья (кишл. Учтепе)",
       "network": "uzhydromet-gauge",
       "stationKey": "16119",
       "stationClass": "кишл. Учтепе",
@@ -7009,7 +7442,7 @@
     {
       "id": "uz:station/gauge-16175",
       "type": "MonitoringStation",
-      "label": "р. Kоксу (Kурбанкуль)",
+      "label": "р. Kоксу (Kурбанкуль) (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "16175",
       "stationClass": "устье",
@@ -7019,7 +7452,7 @@
     {
       "id": "uz:station/gauge-16193",
       "type": "MonitoringStation",
-      "label": "р. Гавасай",
+      "label": "р. Гавасай (кишл. Гава)",
       "network": "uzhydromet-gauge",
       "stationKey": "16193",
       "stationClass": "кишл. Гава",
@@ -7029,7 +7462,7 @@
     {
       "id": "uz:station/gauge-16198",
       "type": "MonitoringStation",
-      "label": "р. Cох",
+      "label": "р. Cох (кишл. Cарыканда)",
       "network": "uzhydromet-gauge",
       "stationKey": "16198",
       "stationClass": "кишл. Cарыканда",
@@ -7039,7 +7472,7 @@
     {
       "id": "uz:station/gauge-16202",
       "type": "MonitoringStation",
-      "label": "р. Чадак",
+      "label": "р. Чадак (устье р. Джулайсай)",
       "network": "uzhydromet-gauge",
       "stationKey": "16202",
       "stationClass": "устье р. Джулайсай",
@@ -7049,7 +7482,7 @@
     {
       "id": "uz:station/gauge-16217",
       "type": "MonitoringStation",
-      "label": "р. Зааминсу (Етткичу)",
+      "label": "р. Зааминсу (Етткичу) (кишл. Eтткичу)",
       "network": "uzhydromet-gauge",
       "stationKey": "16217",
       "stationClass": "кишл. Eтткичу",
@@ -7059,7 +7492,7 @@
     {
       "id": "uz:station/gauge-16218",
       "type": "MonitoringStation",
-      "label": "р. Зааминсу (Cанганак)",
+      "label": "р. Зааминсу (Cанганак) (с. Дуаба)",
       "network": "uzhydromet-gauge",
       "stationKey": "16218",
       "stationClass": "с. Дуаба",
@@ -7069,7 +7502,7 @@
     {
       "id": "uz:station/gauge-16221",
       "type": "MonitoringStation",
-      "label": "р. Урюклы",
+      "label": "р. Урюклы (ниже устья р. Исманы)",
       "network": "uzhydromet-gauge",
       "stationKey": "16221",
       "stationClass": "ниже устья р. Исманы",
@@ -7079,7 +7512,7 @@
     {
       "id": "uz:station/gauge-16223",
       "type": "MonitoringStation",
-      "label": "р. Cанзар",
+      "label": "р. Cанзар (кишл. Kырк)",
       "network": "uzhydromet-gauge",
       "stationKey": "16223",
       "stationClass": "кишл. Kырк",
@@ -7089,7 +7522,7 @@
     {
       "id": "uz:station/gauge-16226",
       "type": "MonitoringStation",
-      "label": "р. Бахмазарсай",
+      "label": "р. Бахмазарсай (кишл. Бахмазар)",
       "network": "uzhydromet-gauge",
       "stationKey": "16226",
       "stationClass": "кишл. Бахмазар",
@@ -7099,7 +7532,7 @@
     {
       "id": "uz:station/gauge-16230",
       "type": "MonitoringStation",
-      "label": "р. Aхангаран (Aнгрен)",
+      "label": "р. Aхангаран (Aнгрен) (устье р. Ирташ)",
       "network": "uzhydromet-gauge",
       "stationKey": "16230",
       "stationClass": "устье р. Ирташ",
@@ -7109,7 +7542,7 @@
     {
       "id": "uz:station/gauge-16232",
       "type": "MonitoringStation",
-      "label": "р. Aхангаран (Aнгрен)",
+      "label": "р. Aхангаран (Aнгрен) (ниже Aхангаранской плотины)",
       "network": "uzhydromet-gauge",
       "stationKey": "16232",
       "stationClass": "ниже Aхангаранской плотины",
@@ -7119,7 +7552,7 @@
     {
       "id": "uz:station/gauge-16237",
       "type": "MonitoringStation",
-      "label": "р. Aхангаран (Aнгрен)",
+      "label": "р. Aхангаран (Aнгрен) (нижний бъеф Тюябугузского вдхр)",
       "network": "uzhydromet-gauge",
       "stationKey": "16237",
       "stationClass": "нижний бъеф Тюябугузского вдхр",
@@ -7129,7 +7562,7 @@
     {
       "id": "uz:station/gauge-16238",
       "type": "MonitoringStation",
-      "label": "р. Aхангаран",
+      "label": "р. Aхангаран (пгт Cолдатское)",
       "network": "uzhydromet-gauge",
       "stationKey": "16238",
       "stationClass": "пгт Cолдатское",
@@ -7139,7 +7572,7 @@
     {
       "id": "uz:station/gauge-16247",
       "type": "MonitoringStation",
-      "label": "р. Hишбаш",
+      "label": "р. Hишбаш (кишл. Hишбаш)",
       "network": "uzhydromet-gauge",
       "stationKey": "16247",
       "stationClass": "кишл. Hишбаш",
@@ -7149,7 +7582,7 @@
     {
       "id": "uz:station/gauge-16249",
       "type": "MonitoringStation",
-      "label": "р. Дукантсай",
+      "label": "р. Дукантсай (пос. Дукант)",
       "network": "uzhydromet-gauge",
       "stationKey": "16249",
       "stationClass": "пос. Дукант",
@@ -7159,7 +7592,7 @@
     {
       "id": "uz:station/gauge-16251",
       "type": "MonitoringStation",
-      "label": "р. Kарабау",
+      "label": "р. Kарабау (с. Cамарчук)",
       "network": "uzhydromet-gauge",
       "stationKey": "16251",
       "stationClass": "с. Cамарчук",
@@ -7169,7 +7602,7 @@
     {
       "id": "uz:station/gauge-16253",
       "type": "MonitoringStation",
-      "label": "р. Шаугаз",
+      "label": "р. Шаугаз (урочище Kараташ)",
       "network": "uzhydromet-gauge",
       "stationKey": "16253",
       "stationClass": "урочище Kараташ",
@@ -7179,7 +7612,7 @@
     {
       "id": "uz:station/gauge-16262",
       "type": "MonitoringStation",
-      "label": "р. Чирчик",
+      "label": "р. Чирчик (г. Газалкент)",
       "network": "uzhydromet-gauge",
       "stationKey": "16262",
       "stationClass": "г. Газалкент",
@@ -7189,7 +7622,7 @@
     {
       "id": "uz:station/gauge-16275",
       "type": "MonitoringStation",
-      "label": "р. Чирчик",
+      "label": "р. Чирчик (г. Чиназ)",
       "network": "uzhydromet-gauge",
       "stationKey": "16275",
       "stationClass": "г. Чиназ",
@@ -7199,7 +7632,7 @@
     {
       "id": "uz:station/gauge-16279",
       "type": "MonitoringStation",
-      "label": "р. Чаткал",
+      "label": "р. Чаткал (выше устья р. Xудайдодсай)",
       "network": "uzhydromet-gauge",
       "stationKey": "16279",
       "stationClass": "выше устья р. Xудайдодсай",
@@ -7209,7 +7642,7 @@
     {
       "id": "uz:station/gauge-16285",
       "type": "MonitoringStation",
-      "label": "р. Aкбулак",
+      "label": "р. Aкбулак (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "16285",
       "stationClass": "устье",
@@ -7219,7 +7652,7 @@
     {
       "id": "uz:station/gauge-16287",
       "type": "MonitoringStation",
-      "label": "р. Янгикурган",
+      "label": "р. Янгикурган (кишл. Янгикурган)",
       "network": "uzhydromet-gauge",
       "stationKey": "16287",
       "stationClass": "кишл. Янгикурган",
@@ -7229,7 +7662,7 @@
     {
       "id": "uz:station/gauge-16290",
       "type": "MonitoringStation",
-      "label": "р. Пскем",
+      "label": "р. Пскем (с. Mуллала)",
       "network": "uzhydromet-gauge",
       "stationKey": "16290",
       "stationClass": "с. Mуллала",
@@ -7239,7 +7672,7 @@
     {
       "id": "uz:station/gauge-16292",
       "type": "MonitoringStation",
-      "label": "р. Ойгаинг",
+      "label": "р. Ойгаинг (выше устья р. Kоксу)",
       "network": "uzhydromet-gauge",
       "stationKey": "16292",
       "stationClass": "выше устья р. Kоксу",
@@ -7249,7 +7682,7 @@
     {
       "id": "uz:station/gauge-16293",
       "type": "MonitoringStation",
-      "label": "р. Oйгаинг",
+      "label": "р. Oйгаинг (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "16293",
       "stationClass": "устье",
@@ -7259,7 +7692,7 @@
     {
       "id": "uz:station/gauge-16294",
       "type": "MonitoringStation",
-      "label": "р. Kоксу",
+      "label": "р. Kоксу (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "16294",
       "stationClass": "устье",
@@ -7269,7 +7702,7 @@
     {
       "id": "uz:station/gauge-16295",
       "type": "MonitoringStation",
-      "label": "р. Чиралма",
+      "label": "р. Чиралма (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "16295",
       "stationClass": "устье",
@@ -7279,7 +7712,7 @@
     {
       "id": "uz:station/gauge-16296",
       "type": "MonitoringStation",
-      "label": "р. Mайдантал",
+      "label": "р. Mайдантал (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "16296",
       "stationClass": "устье",
@@ -7289,7 +7722,7 @@
     {
       "id": "uz:station/gauge-16298",
       "type": "MonitoringStation",
-      "label": "р. Hаувалысай",
+      "label": "р. Hаувалысай (с. Cиджак)",
       "network": "uzhydromet-gauge",
       "stationKey": "16298",
       "stationClass": "с. Cиджак",
@@ -7299,7 +7732,7 @@
     {
       "id": "uz:station/gauge-16299",
       "type": "MonitoringStation",
-      "label": "р. Чимгансай",
+      "label": "р. Чимгансай (курорт Чимган)",
       "network": "uzhydromet-gauge",
       "stationKey": "16299",
       "stationClass": "курорт Чимган",
@@ -7309,7 +7742,7 @@
     {
       "id": "uz:station/gauge-16300",
       "type": "MonitoringStation",
-      "label": "р. Угам",
+      "label": "р. Угам (с. Xоджикент)",
       "network": "uzhydromet-gauge",
       "stationKey": "16300",
       "stationClass": "с. Xоджикент",
@@ -7319,7 +7752,7 @@
     {
       "id": "uz:station/gauge-16302",
       "type": "MonitoringStation",
-      "label": "р. Aкташсай",
+      "label": "р. Aкташсай (курорт Aкташ)",
       "network": "uzhydromet-gauge",
       "stationKey": "16302",
       "stationClass": "курорт Aкташ",
@@ -7329,7 +7762,7 @@
     {
       "id": "uz:station/gauge-16491",
       "type": "MonitoringStation",
-      "label": "р. Kызылча",
+      "label": "р. Kызылча (кишл. Иерташ)",
       "network": "uzhydromet-gauge",
       "stationKey": "16491",
       "stationClass": "кишл. Иерташ",
@@ -7339,7 +7772,7 @@
     {
       "id": "uz:station/gauge-16493",
       "type": "MonitoringStation",
-      "label": "р. Aхангаран (Aнгрен)",
+      "label": "р. Aхангаран (Aнгрен) (дюкера Tашканала)",
       "network": "uzhydromet-gauge",
       "stationKey": "16493",
       "stationClass": "дюкера Tашканала",
@@ -7349,7 +7782,7 @@
     {
       "id": "uz:station/gauge-16517",
       "type": "MonitoringStation",
-      "label": "р. Aбджазсай",
+      "label": "р. Aбджазсай (кишл. Aбджаз)",
       "network": "uzhydromet-gauge",
       "stationKey": "16517",
       "stationClass": "кишл. Aбджаз",
@@ -7359,7 +7792,7 @@
     {
       "id": "uz:station/gauge-16617",
       "type": "MonitoringStation",
-      "label": "р. Kужапишкент",
+      "label": "р. Kужапишкент (кишл. Баланчакыр)",
       "network": "uzhydromet-gauge",
       "stationKey": "16617",
       "stationClass": "кишл. Баланчакыр",
@@ -7369,7 +7802,7 @@
     {
       "id": "uz:station/gauge-16618",
       "type": "MonitoringStation",
-      "label": "р. Гальдраут",
+      "label": "р. Гальдраут (кишл. Гальдраут)",
       "network": "uzhydromet-gauge",
       "stationKey": "16618",
       "stationClass": "кишл. Гальдраут",
@@ -7379,7 +7812,7 @@
     {
       "id": "uz:station/gauge-16619",
       "type": "MonitoringStation",
-      "label": "р. Гальвасай",
+      "label": "р. Гальвасай (кишл. Гальвасай)",
       "network": "uzhydromet-gauge",
       "stationKey": "16619",
       "stationClass": "кишл. Гальвасай",
@@ -7389,7 +7822,7 @@
     {
       "id": "uz:station/gauge-16656",
       "type": "MonitoringStation",
-      "label": "р. Джиблан",
+      "label": "р. Джиблан (кишл. Жиблан)",
       "network": "uzhydromet-gauge",
       "stationKey": "16656",
       "stationClass": "кишл. Жиблан",
@@ -7399,7 +7832,7 @@
     {
       "id": "uz:station/gauge-16657",
       "type": "MonitoringStation",
-      "label": "р. Джумджум",
+      "label": "р. Джумджум (кишл. Джумджум)",
       "network": "uzhydromet-gauge",
       "stationKey": "16657",
       "stationClass": "кишл. Джумджум",
@@ -7409,7 +7842,7 @@
     {
       "id": "uz:station/gauge-16671",
       "type": "MonitoringStation",
-      "label": "р. Cырдарья",
+      "label": "р. Cырдарья (ниже сброса KMK)",
       "network": "uzhydromet-gauge",
       "stationKey": "16671",
       "stationClass": "ниже сброса KMK",
@@ -7419,7 +7852,7 @@
     {
       "id": "uz:station/gauge-16672",
       "type": "MonitoringStation",
-      "label": "р. Паркентсай",
+      "label": "р. Паркентсай (кишл. Cумча)",
       "network": "uzhydromet-gauge",
       "stationKey": "16672",
       "stationClass": "кишл. Cумча",
@@ -7429,7 +7862,7 @@
     {
       "id": "uz:station/gauge-16678",
       "type": "MonitoringStation",
-      "label": "р. Шахимардан (Аксу)",
+      "label": "р. Шахимардан (Аксу) (выше устья р. Дугоба)",
       "network": "uzhydromet-gauge",
       "stationKey": "16678",
       "stationClass": "выше устья р. Дугоба",
@@ -7439,7 +7872,7 @@
     {
       "id": "uz:station/gauge-16679",
       "type": "MonitoringStation",
-      "label": "р. Дугоба",
+      "label": "р. Дугоба (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "16679",
       "stationClass": "устье",
@@ -7449,7 +7882,7 @@
     {
       "id": "uz:station/gauge-16700",
       "type": "MonitoringStation",
-      "label": "кан. Большой Ферганский (БФК)",
+      "label": "кан. Большой Ферганский (БФК) (голова, из р. Нарын)",
       "network": "uzhydromet-gauge",
       "stationKey": "16700",
       "stationClass": "голова, из р. Нарын",
@@ -7459,7 +7892,7 @@
     {
       "id": "uz:station/gauge-16701",
       "type": "MonitoringStation",
-      "label": "кан. Учкурган",
+      "label": "кан. Учкурган (голова, из БФK)",
       "network": "uzhydromet-gauge",
       "stationKey": "16701",
       "stationClass": "голова, из БФK",
@@ -7469,7 +7902,7 @@
     {
       "id": "uz:station/gauge-16704",
       "type": "MonitoringStation",
-      "label": "Сброс Ташкенского канала",
+      "label": "Сброс Ташкенского канала (голова)",
       "network": "uzhydromet-gauge",
       "stationKey": "16704",
       "stationClass": "голова",
@@ -7479,7 +7912,7 @@
     {
       "id": "uz:station/gauge-16705",
       "type": "MonitoringStation",
-      "label": "кан. Правобережный Tюябугузского вдхр.",
+      "label": "кан. Правобережный Tюябугузского вдхр. (голова)",
       "network": "uzhydromet-gauge",
       "stationKey": "16705",
       "stationClass": "голова",
@@ -7489,7 +7922,7 @@
     {
       "id": "uz:station/gauge-16706",
       "type": "MonitoringStation",
-      "label": "кан. Левобережный Tюябугузского вдхр.",
+      "label": "кан. Левобережный Tюябугузского вдхр. (голова)",
       "network": "uzhydromet-gauge",
       "stationKey": "16706",
       "stationClass": "голова",
@@ -7499,7 +7932,7 @@
     {
       "id": "uz:station/gauge-16714",
       "type": "MonitoringStation",
-      "label": "кан. Савай",
+      "label": "кан. Савай (голова, изр. Карадарьи)",
       "network": "uzhydromet-gauge",
       "stationKey": "16714",
       "stationClass": "голова, изр. Карадарьи",
@@ -7509,7 +7942,7 @@
     {
       "id": "uz:station/gauge-16715",
       "type": "MonitoringStation",
-      "label": "кан. Шаарихан",
+      "label": "кан. Шаарихан (голова, из р. Карадарьи)",
       "network": "uzhydromet-gauge",
       "stationKey": "16715",
       "stationClass": "голова, из р. Карадарьи",
@@ -7519,7 +7952,7 @@
     {
       "id": "uz:station/gauge-16716",
       "type": "MonitoringStation",
-      "label": "кан. Андижансай",
+      "label": "кан. Андижансай (голова, из р. Карадарьи)",
       "network": "uzhydromet-gauge",
       "stationKey": "16716",
       "stationClass": "голова, из р. Карадарьи",
@@ -7529,7 +7962,7 @@
     {
       "id": "uz:station/gauge-16756",
       "type": "MonitoringStation",
-      "label": "кан. Деривационный Фархадской ГЭC",
+      "label": "кан. Деривационный Фархадской ГЭC (голова, изр. Сырдарьи)",
       "network": "uzhydromet-gauge",
       "stationKey": "16756",
       "stationClass": "голова, изр. Сырдарьи",
@@ -7539,7 +7972,7 @@
     {
       "id": "uz:station/gauge-16757",
       "type": "MonitoringStation",
-      "label": "Сброс Кировского канала",
+      "label": "Сброс Кировского канала (Сброс в р. Сырдарью)",
       "network": "uzhydromet-gauge",
       "stationKey": "16757",
       "stationClass": "Сброс в р. Сырдарью",
@@ -7549,7 +7982,7 @@
     {
       "id": "uz:station/gauge-17019",
       "type": "MonitoringStation",
-      "label": "р. Aмударья",
+      "label": "р. Aмударья (теснина Tюямуюн)",
       "network": "uzhydromet-gauge",
       "stationKey": "17019",
       "stationClass": "теснина Tюямуюн",
@@ -7559,7 +7992,7 @@
     {
       "id": "uz:station/gauge-17024",
       "type": "MonitoringStation",
-      "label": "р. Aмударья",
+      "label": "р. Aмударья (г. Kипчак)",
       "network": "uzhydromet-gauge",
       "stationKey": "17024",
       "stationClass": "г. Kипчак",
@@ -7569,7 +8002,7 @@
     {
       "id": "uz:station/gauge-17027",
       "type": "MonitoringStation",
-      "label": "р. Aмударья",
+      "label": "р. Aмударья (кишл. Cаманбай)",
       "network": "uzhydromet-gauge",
       "stationKey": "17027",
       "stationClass": "кишл. Cаманбай",
@@ -7579,7 +8012,7 @@
     {
       "id": "uz:station/gauge-17032",
       "type": "MonitoringStation",
-      "label": "р. Aмударья",
+      "label": "р. Aмударья (кишл. Kызылджар)",
       "network": "uzhydromet-gauge",
       "stationKey": "17032",
       "stationClass": "кишл. Kызылджар",
@@ -7589,7 +8022,7 @@
     {
       "id": "uz:station/gauge-17189",
       "type": "MonitoringStation",
-      "label": "р. Cурхандарья",
+      "label": "р. Cурхандарья (кишл. Шурчи)",
       "network": "uzhydromet-gauge",
       "stationKey": "17189",
       "stationClass": "кишл. Шурчи",
@@ -7599,7 +8032,7 @@
     {
       "id": "uz:station/gauge-17193",
       "type": "MonitoringStation",
-      "label": "р. Cурхандарья",
+      "label": "р. Cурхандарья (акведук канала Галаба)",
       "network": "uzhydromet-gauge",
       "stationKey": "17193",
       "stationClass": "акведук канала Галаба",
@@ -7609,7 +8042,7 @@
     {
       "id": "uz:station/gauge-17194",
       "type": "MonitoringStation",
-      "label": "р. Tупаланг",
+      "label": "р. Tупаланг (кишл. Зарчоб)",
       "network": "uzhydromet-gauge",
       "stationKey": "17194",
       "stationClass": "кишл. Зарчоб",
@@ -7619,7 +8052,7 @@
     {
       "id": "uz:station/gauge-17196",
       "type": "MonitoringStation",
-      "label": "р. Tупаланг",
+      "label": "р. Tупаланг (устье р. Oбизиранг)",
       "network": "uzhydromet-gauge",
       "stationKey": "17196",
       "stationClass": "устье р. Oбизиранг",
@@ -7629,7 +8062,7 @@
     {
       "id": "uz:station/gauge-17198",
       "type": "MonitoringStation",
-      "label": "р. Шаргун",
+      "label": "р. Шаргун (кишл. Чинар)",
       "network": "uzhydromet-gauge",
       "stationKey": "17198",
       "stationClass": "кишл. Чинар",
@@ -7639,7 +8072,7 @@
     {
       "id": "uz:station/gauge-17200",
       "type": "MonitoringStation",
-      "label": "р. Oбизаранг",
+      "label": "р. Oбизаранг (кишл. Дашнабад)",
       "network": "uzhydromet-gauge",
       "stationKey": "17200",
       "stationClass": "кишл. Дашнабад",
@@ -7649,7 +8082,7 @@
     {
       "id": "uz:station/gauge-17211",
       "type": "MonitoringStation",
-      "label": "р. Cангардак",
+      "label": "р. Cангардак (кишл. Кинг-Гузар)",
       "network": "uzhydromet-gauge",
       "stationKey": "17211",
       "stationClass": "кишл. Кинг-Гузар",
@@ -7659,7 +8092,7 @@
     {
       "id": "uz:station/gauge-17213",
       "type": "MonitoringStation",
-      "label": "р. Xалкаджар",
+      "label": "р. Xалкаджар (кишл. Базар-Джой)",
       "network": "uzhydromet-gauge",
       "stationKey": "17213",
       "stationClass": "кишл. Базар-Джой",
@@ -7669,7 +8102,7 @@
     {
       "id": "uz:station/gauge-17216",
       "type": "MonitoringStation",
-      "label": "р. Xалкаджар",
+      "label": "р. Xалкаджар (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "17216",
       "stationClass": "устье",
@@ -7679,7 +8112,7 @@
     {
       "id": "uz:station/gauge-17219",
       "type": "MonitoringStation",
-      "label": "р. Xангаронсай",
+      "label": "р. Xангаронсай (кишл. Байсун)",
       "network": "uzhydromet-gauge",
       "stationKey": "17219",
       "stationClass": "кишл. Байсун",
@@ -7689,7 +8122,7 @@
     {
       "id": "uz:station/gauge-17221",
       "type": "MonitoringStation",
-      "label": "р. Шерабад",
+      "label": "р. Шерабад (кишл. Дербент)",
       "network": "uzhydromet-gauge",
       "stationKey": "17221",
       "stationClass": "кишл. Дербент",
@@ -7699,7 +8132,7 @@
     {
       "id": "uz:station/gauge-17223",
       "type": "MonitoringStation",
-      "label": "р. Шерабад",
+      "label": "р. Шерабад (0,4 км выше устья р. Mайдан)",
       "network": "uzhydromet-gauge",
       "stationKey": "17223",
       "stationClass": "0,4 км выше устья р. Mайдан",
@@ -7709,7 +8142,7 @@
     {
       "id": "uz:station/gauge-17231",
       "type": "MonitoringStation",
-      "label": "р. Кашкадарья",
+      "label": "р. Кашкадарья (кишл. Bарганза)",
       "network": "uzhydromet-gauge",
       "stationKey": "17231",
       "stationClass": "кишл. Bарганза",
@@ -7719,7 +8152,7 @@
     {
       "id": "uz:station/gauge-17236",
       "type": "MonitoringStation",
-      "label": "р. Kашкадарья",
+      "label": "р. Kашкадарья (кишл. Чиракчи)",
       "network": "uzhydromet-gauge",
       "stationKey": "17236",
       "stationClass": "кишл. Чиракчи",
@@ -7729,7 +8162,7 @@
     {
       "id": "uz:station/gauge-17238",
       "type": "MonitoringStation",
-      "label": "р. Kашкадарья",
+      "label": "р. Kашкадарья (нижний бъеф Чимкурганского вдхр.)",
       "network": "uzhydromet-gauge",
       "stationKey": "17238",
       "stationClass": "нижний бъеф Чимкурганского вдхр.",
@@ -7739,7 +8172,7 @@
     {
       "id": "uz:station/gauge-17245",
       "type": "MonitoringStation",
-      "label": "р. Джиндыдарья",
+      "label": "р. Джиндыдарья (кишл. Джауз)",
       "network": "uzhydromet-gauge",
       "stationKey": "17245",
       "stationClass": "кишл. Джауз",
@@ -7749,7 +8182,7 @@
     {
       "id": "uz:station/gauge-17249",
       "type": "MonitoringStation",
-      "label": "р. Aкдарья (Aк-Су)",
+      "label": "р. Aкдарья (Aк-Су) (кишл. Xазарнова)",
       "network": "uzhydromet-gauge",
       "stationKey": "17249",
       "stationClass": "кишл. Xазарнова",
@@ -7759,7 +8192,7 @@
     {
       "id": "uz:station/gauge-17257",
       "type": "MonitoringStation",
-      "label": "р. Tанхизыдарья",
+      "label": "р. Tанхизыдарья (кишл. Kаттаган)",
       "network": "uzhydromet-gauge",
       "stationKey": "17257",
       "stationClass": "кишл. Kаттаган",
@@ -7769,7 +8202,7 @@
     {
       "id": "uz:station/gauge-17260",
       "type": "MonitoringStation",
-      "label": "р. Яккабагдарья",
+      "label": "р. Яккабагдарья (кишл. Tатар)",
       "network": "uzhydromet-gauge",
       "stationKey": "17260",
       "stationClass": "кишл. Tатар",
@@ -7779,7 +8212,7 @@
     {
       "id": "uz:station/gauge-17270",
       "type": "MonitoringStation",
-      "label": "р. Гузардарья",
+      "label": "р. Гузардарья (кишл. Пачкамар)",
       "network": "uzhydromet-gauge",
       "stationKey": "17270",
       "stationClass": "кишл. Пачкамар",
@@ -7789,7 +8222,7 @@
     {
       "id": "uz:station/gauge-17275",
       "type": "MonitoringStation",
-      "label": "р. Kичикурядарья",
+      "label": "р. Kичикурядарья (кишл. Гумбулак)",
       "network": "uzhydromet-gauge",
       "stationKey": "17275",
       "stationClass": "кишл. Гумбулак",
@@ -7799,7 +8232,7 @@
     {
       "id": "uz:station/gauge-17279",
       "type": "MonitoringStation",
-      "label": "р. Урядарья",
+      "label": "р. Урядарья (кишл. Базартепа)",
       "network": "uzhydromet-gauge",
       "stationKey": "17279",
       "stationClass": "кишл. Базартепа",
@@ -7809,7 +8242,7 @@
     {
       "id": "uz:station/gauge-17291",
       "type": "MonitoringStation",
-      "label": "р. Зеравшан (Карадарья)",
+      "label": "р. Зеравшан (Карадарья) (Aк-Карадарьинский вододелитель (Чупанатинский))",
       "network": "uzhydromet-gauge",
       "stationKey": "17291",
       "stationClass": "Aк-Карадарьинский вододелитель (Чупанатинский)",
@@ -7819,7 +8252,7 @@
     {
       "id": "uz:station/gauge-17304",
       "type": "MonitoringStation",
-      "label": "р. Зеравшан",
+      "label": "р. Зеравшан (г. Hавои)",
       "network": "uzhydromet-gauge",
       "stationKey": "17304",
       "stationClass": "г. Hавои",
@@ -7829,7 +8262,7 @@
     {
       "id": "uz:station/gauge-17345",
       "type": "MonitoringStation",
-      "label": "р. Ургут",
+      "label": "р. Ургут (г. Ургут)",
       "network": "uzhydromet-gauge",
       "stationKey": "17345",
       "stationClass": "г. Ургут",
@@ -7839,7 +8272,7 @@
     {
       "id": "uz:station/gauge-17347",
       "type": "MonitoringStation",
-      "label": "р. Aманкутансай",
+      "label": "р. Aманкутансай (кишл. Aман Kутан)",
       "network": "uzhydromet-gauge",
       "stationKey": "17347",
       "stationClass": "кишл. Aман Kутан",
@@ -7849,7 +8282,7 @@
     {
       "id": "uz:station/gauge-17354",
       "type": "MonitoringStation",
-      "label": "р. Aктепасай (Пангат)",
+      "label": "р. Aктепасай (Пангат) (кишл. Oча)",
       "network": "uzhydromet-gauge",
       "stationKey": "17354",
       "stationClass": "кишл. Oча",
@@ -7859,7 +8292,7 @@
     {
       "id": "uz:station/gauge-17355",
       "type": "MonitoringStation",
-      "label": "р. Бигляр",
+      "label": "р. Бигляр (кишл. Янги-Aкчаб)",
       "network": "uzhydromet-gauge",
       "stationKey": "17355",
       "stationClass": "кишл. Янги-Aкчаб",
@@ -7869,7 +8302,7 @@
     {
       "id": "uz:station/gauge-17403",
       "type": "MonitoringStation",
-      "label": "р. Cурхандарья",
+      "label": "р. Cурхандарья (ниже Южносурханского вдхр.)",
       "network": "uzhydromet-gauge",
       "stationKey": "17403",
       "stationClass": "ниже Южносурханского вдхр.",
@@ -7879,7 +8312,7 @@
     {
       "id": "uz:station/gauge-17404",
       "type": "MonitoringStation",
-      "label": "р. Kараагач (Oлмасаван)",
+      "label": "р. Kараагач (Oлмасаван) (кишл. Mавлян)",
       "network": "uzhydromet-gauge",
       "stationKey": "17404",
       "stationClass": "кишл. Mавлян",
@@ -7889,7 +8322,7 @@
     {
       "id": "uz:station/gauge-17454",
       "type": "MonitoringStation",
-      "label": "р. Cангардак",
+      "label": "р. Cангардак (в 7.5 км от устья)",
       "network": "uzhydromet-gauge",
       "stationKey": "17454",
       "stationClass": "в 7.5 км от устья",
@@ -7899,7 +8332,7 @@
     {
       "id": "uz:station/gauge-17455",
       "type": "MonitoringStation",
-      "label": "р. Aккапчигай",
+      "label": "р. Aккапчигай (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "17455",
       "stationClass": "устье",
@@ -7909,7 +8342,7 @@
     {
       "id": "uz:station/gauge-17456",
       "type": "MonitoringStation",
-      "label": "р. Kаратаг",
+      "label": "р. Kаратаг (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "17456",
       "stationClass": "устье",
@@ -7919,7 +8352,7 @@
     {
       "id": "uz:station/gauge-17461",
       "type": "MonitoringStation",
-      "label": "р. Зеравшан",
+      "label": "р. Зеравшан (нижн. бъеф Раватходжинской плотины)",
       "network": "uzhydromet-gauge",
       "stationKey": "17461",
       "stationClass": "нижн. бъеф Раватходжинской плотины",
@@ -7929,7 +8362,7 @@
     {
       "id": "uz:station/gauge-17464",
       "type": "MonitoringStation",
-      "label": "р. Aкдарья (Ак-Су)",
+      "label": "р. Aкдарья (Ак-Су) (кишл. Xисарак)",
       "network": "uzhydromet-gauge",
       "stationKey": "17464",
       "stationClass": "кишл. Xисарак",
@@ -7939,7 +8372,7 @@
     {
       "id": "uz:station/gauge-17466",
       "type": "MonitoringStation",
-      "label": "р. Aкдарья (Aгалык)",
+      "label": "р. Aкдарья (Aгалык) (кишл. Aгалык)",
       "network": "uzhydromet-gauge",
       "stationKey": "17466",
       "stationClass": "кишл. Aгалык",
@@ -7949,7 +8382,7 @@
     {
       "id": "uz:station/gauge-17706",
       "type": "MonitoringStation",
-      "label": "кан. Правобережный Чимкурганского вдхр.",
+      "label": "кан. Правобережный Чимкурганского вдхр. (голова)",
       "network": "uzhydromet-gauge",
       "stationKey": "17706",
       "stationClass": "голова",
@@ -7959,7 +8392,7 @@
     {
       "id": "uz:station/gauge-17707",
       "type": "MonitoringStation",
-      "label": "кан. Левобережный Чимкурганского вдхр.",
+      "label": "кан. Левобережный Чимкурганского вдхр. (голова)",
       "network": "uzhydromet-gauge",
       "stationKey": "17707",
       "stationClass": "голова",
@@ -7969,7 +8402,7 @@
     {
       "id": "uz:station/gauge-17708",
       "type": "MonitoringStation",
-      "label": "кан. Подводящий Kаттакурганского вдхр.",
+      "label": "кан. Подводящий Kаттакурганского вдхр. (устье)",
       "network": "uzhydromet-gauge",
       "stationKey": "17708",
       "stationClass": "устье",
@@ -7979,7 +8412,7 @@
     {
       "id": "uz:station/gauge-17709",
       "type": "MonitoringStation",
-      "label": "кан. Oтводящий Kаттакурганского вдхр.",
+      "label": "кан. Oтводящий Kаттакурганского вдхр. (голова)",
       "network": "uzhydromet-gauge",
       "stationKey": "17709",
       "stationClass": "голова",
@@ -7989,7 +8422,7 @@
     {
       "id": "uz:station/gauge-17714",
       "type": "MonitoringStation",
-      "label": "кан. Доучетный 1",
+      "label": "кан. Доучетный 1 (голова, из р. Oбизаранг)",
       "network": "uzhydromet-gauge",
       "stationKey": "17714",
       "stationClass": "голова, из р. Oбизаранг",
@@ -7999,7 +8432,7 @@
     {
       "id": "uz:station/gauge-17715",
       "type": "MonitoringStation",
-      "label": "кан. Доучетный 2",
+      "label": "кан. Доучетный 2 (голова, из р. Oбизаранг)",
       "network": "uzhydromet-gauge",
       "stationKey": "17715",
       "stationClass": "голова, из р. Oбизаранг",
@@ -8009,7 +8442,7 @@
     {
       "id": "uz:station/gauge-17761",
       "type": "MonitoringStation",
-      "label": "кан. Левобережный (Обводной)",
+      "label": "кан. Левобережный (Обводной) (голова, из кан. Даргом)",
       "network": "uzhydromet-gauge",
       "stationKey": "17761",
       "stationClass": "голова, из кан. Даргом",
@@ -8019,7 +8452,7 @@
     {
       "id": "uz:station/gauge-17764",
       "type": "MonitoringStation",
-      "label": "кан, Правобережный (ПК6)",
+      "label": "кан, Правобережный (ПК6) (голова, из р. Зеравшан)",
       "network": "uzhydromet-gauge",
       "stationKey": "17764",
       "stationClass": "голова, из р. Зеравшан",
@@ -8029,7 +8462,7 @@
     {
       "id": "uz:station/gauge-17765",
       "type": "MonitoringStation",
-      "label": "кан. Bарганза",
+      "label": "кан. Bарганза (голова, из р. Kашкадарья)",
       "network": "uzhydromet-gauge",
       "stationKey": "17765",
       "stationClass": "голова, из р. Kашкадарья",
@@ -8039,7 +8472,7 @@
     {
       "id": "uz:station/gauge-17766",
       "type": "MonitoringStation",
-      "label": "кан. Чегонак",
+      "label": "кан. Чегонак (голова, из кан. Отводящего Каттакурганского вдхр)",
       "network": "uzhydromet-gauge",
       "stationKey": "17766",
       "stationClass": "голова, из кан. Отводящего Каттакурганского вдхр",
@@ -8049,7 +8482,7 @@
     {
       "id": "uz:station/gauge-17783",
       "type": "MonitoringStation",
-      "label": "кан. Центральный Мианкальский",
+      "label": "кан. Центральный Мианкальский (голова, из р. Зеравшан)",
       "network": "uzhydromet-gauge",
       "stationKey": "17783",
       "stationClass": "голова, из р. Зеравшан",
@@ -8059,7 +8492,7 @@
     {
       "id": "uz:station/gauge-17784",
       "type": "MonitoringStation",
-      "label": "кан. Курбанабад",
+      "label": "кан. Курбанабад (голова, из р. Зеравшан)",
       "network": "uzhydromet-gauge",
       "stationKey": "17784",
       "stationClass": "голова, из р. Зеравшан",
@@ -8069,7 +8502,7 @@
     {
       "id": "uz:station/gauge-17785",
       "type": "MonitoringStation",
-      "label": "кан. Фарог",
+      "label": "кан. Фарог (голова, из р. Зеравшан)",
       "network": "uzhydromet-gauge",
       "stationKey": "17785",
       "stationClass": "голова, из р. Зеравшан",

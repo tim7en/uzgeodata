@@ -214,6 +214,17 @@ class GraphBuilder:
         aid = assertion_id(subject, predicate, payload)
         if status is None:
             status = "asserted" if confidence >= PROMOTE_THRESHOLD else "proposed"
+
+        # The same triple can be reached by more than one route - the atlas
+        # metadata, a curator's mapping of an external delivery, and the lexical
+        # rules all have opinions about what a dataset observes. The strongest
+        # claim wins, so a later, weaker pass never quietly downgrades an earlier
+        # one. Build order settles genuine ties.
+        existing = self.assertions.get(aid)
+        if existing is not None:
+            rank = {"superseded": 0, "proposed": 1, "asserted": 2, "rejected": 3}
+            if (rank[existing["status"]], existing["confidence"]) >= (rank[status], confidence):
+                return aid
         record = {
             "id": aid,
             "subject": subject,
@@ -981,6 +992,8 @@ class GraphBuilder:
                     "useCases": sorted({f["object"] for f in facts if f["predicate"] == "uz:supportsUseCase"}),
                     "places": sorted({f["object"] for f in facts if f["predicate"] == "uz:coversPlace"}),
                     "temporal": next((f["value"] for f in facts if f["predicate"] == "uz:temporalCoverage"), None),
+                    "license": next((f["value"] for f in facts if f["predicate"] == "uz:license"), None),
+                    "attribution": next((f["value"] for f in facts if f["predicate"] == "uz:attributedTo"), None),
                     "extent": next((f["value"] for f in facts if f["predicate"] == "uz:spatialExtent"), None),
                     "flags": sorted({f["value"] for f in facts if f["predicate"] == "uz:qualityFlag"}),
                     "distributions": sum(1 for f in facts if f["predicate"] == "uz:hasDistribution"),
@@ -1005,8 +1018,16 @@ class GraphBuilder:
             "agents": [{"id": a["id"], "label": a["label"], "kind": a["agentKind"],
                         "trustTier": a["trustTier"]} for a in self.agents],
             "datasets": sorted(nodes, key=lambda n: (n["atlasNumber"] is None, n["atlasNumber"] or 0)),
+            "stations": [
+                {"id": e["id"], "label": e["label"], "network": e["network"],
+                 "stationClass": e.get("stationClass"),
+                 "lon": e["longitude"], "lat": e["latitude"]}
+                for e in sorted(self.entities.values(), key=lambda e: e["id"])
+                if e["type"] == "MonitoringStation"
+            ],
             "counts": {
                 "datasets": len(nodes),
+                "stations": sum(1 for e in self.entities.values() if e["type"] == "MonitoringStation"),
                 "publishedAssertions": len(published),
                 "proposedAssertions": sum(1 for a in self.assertions.values() if a["status"] == "proposed"),
             },

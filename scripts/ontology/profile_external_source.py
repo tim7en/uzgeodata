@@ -264,8 +264,8 @@ def main(argv=None) -> int:
             handle.write("\n")
         print(f"\nwrote {args.out}")
     if too_deep:
-        print(f"
-{len(too_deep)} files below the depth limit were NOT profiled, e.g. {too_deep[0]}")
+        print(f"{len(too_deep)} files below the depth limit were NOT profiled, "
+              f"e.g. {too_deep[0]}")
     counts = inventory["counts"]
     print(f"{counts['files']} files, {counts['new']} not held by the project, "
           f"{counts['bytes'] / 1e9:.2f} GB")

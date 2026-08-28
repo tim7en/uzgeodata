@@ -1,52 +1,306 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-28T14:15:53+00:00",
+  "generatedAt": "2026-08-28T14:44:40+00:00",
   "assertions": [
     {
-      "id": "uz:a/23465d5064801b80",
-      "subject": "uz:ds/a127-soil-organic-carbon",
+      "id": "uz:a/2d7a04dce7dd4540",
+      "subject": "uz:ds/a100-livestock",
       "predicate": "uz:observes",
-      "object": "uz:prop/soil-salinity",
+      "object": "uz:prop/land-tenure",
       "status": "proposed",
       "confidence": 0.5,
       "assertedBy": "uz:agent/model-tfidf-knn-v1",
       "method": "tfidf-knn",
       "evidence": {
         "source": "title+fields",
-        "score": 0.273,
+        "score": 0.19,
         "neighbours": [
           {
-            "dataset": "uz:ds/a129-net-carbon-balance",
-            "similarity": 0.232
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.167
           },
           {
-            "dataset": "uz:ds/a147-forest-carbon-sequestration",
-            "similarity": 0.2
+            "dataset": "uz:ds/osm-landuse",
+            "similarity": 0.092
           },
           {
-            "dataset": "uz:ds/a128-carbon-emission-volume",
-            "similarity": 0.17
+            "dataset": "uz:ds/osm-railways",
+            "similarity": 0.07
           },
           {
-            "dataset": "uz:ds/a95-soil-chemistry",
-            "similarity": 0.138
+            "dataset": "uz:ds/a52-water-management-zones",
+            "similarity": 0.069
           },
           {
-            "dataset": "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
-            "similarity": 0.128
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.067
           }
         ],
-        "note": "calibrated on 97 labelled datasets"
+        "note": "calibrated on 130 labelled datasets"
       },
-      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "generatedAt": "2026-08-28T14:44:40+00:00",
       "reviewedBy": null,
       "reviewedAt": null
     },
     {
-      "id": "uz:a/777629e486a7b947",
-      "subject": "uz:ds/a137-forest-types",
+      "id": "uz:a/f45aeaff8e3835a1",
+      "subject": "uz:ds/a101-forage-lands",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-tenure",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.236,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-forest-agency-lands",
+            "similarity": 0.131
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.118
+          },
+          {
+            "dataset": "uz:ds/a57-dams-reservoirs-and-glacial-lakes",
+            "similarity": 0.11
+          },
+          {
+            "dataset": "uz:ds/a152-forest-landscape-integrity-index",
+            "similarity": 0.105
+          },
+          {
+            "dataset": "uz:ds/a22-average-end-of-the-growing-season-20002024",
+            "similarity": 0.1
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/5bbba4c920ca3b68",
+      "subject": "uz:ds/a124-pasture-vegetation-types",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/a162-vegetation",
+      "status": "proposed",
+      "confidence": 0.575,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.35,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/2af9510506b870c6",
+      "subject": "uz:ds/a152-forest-landscape-integrity-index",
+      "predicate": "uz:observes",
+      "object": "uz:prop/forest-cover",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.232,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a160-landscape-structure",
+            "similarity": 0.274
+          },
+          {
+            "dataset": "uz:ds/a159-landscapes",
+            "similarity": 0.234
+          },
+          {
+            "dataset": "uz:ds/a121-leaf-area-index",
+            "similarity": 0.168
+          },
+          {
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.159
+          },
+          {
+            "dataset": "uz:ds/a148-forest-plantation-potential",
+            "similarity": 0.151
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/6c3dca8138386830",
+      "subject": "uz:ds/a162-vegetation",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/a124-pasture-vegetation-types",
+      "status": "proposed",
+      "confidence": 0.575,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.35,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/7c77da6e945f5728",
+      "subject": "uz:ds/a167-useful-plants",
       "predicate": "uz:observes",
       "object": "uz:prop/land-use-type",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.183,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a174-plants",
+            "similarity": 0.406
+          },
+          {
+            "dataset": "uz:ds/a161-plant-formations",
+            "similarity": 0.133
+          },
+          {
+            "dataset": "uz:ds/a171-fish",
+            "similarity": 0.128
+          },
+          {
+            "dataset": "uz:ds/a176-birds",
+            "similarity": 0.125
+          },
+          {
+            "dataset": "uz:ds/osm-landuse",
+            "similarity": 0.108
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/60cd3ecaa4e7bf47",
+      "subject": "uz:ds/a202-palmer-drought-severity-index-2020",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/a203-palmer-drought-severity-index-2021",
+      "status": "proposed",
+      "confidence": 0.778,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.755,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/db86dba9fcacd285",
+      "subject": "uz:ds/a52-water-management-zones",
+      "predicate": "uz:observes",
+      "object": "uz:prop/surface-water-extent",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.187,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a18-local-climate-zones",
+            "similarity": 0.179
+          },
+          {
+            "dataset": "uz:ds/a206-mudflow-zones",
+            "similarity": 0.13
+          },
+          {
+            "dataset": "uz:ds/a73-water-stress",
+            "similarity": 0.129
+          },
+          {
+            "dataset": "uz:ds/a98-agricultural-land-types",
+            "similarity": 0.119
+          },
+          {
+            "dataset": "uz:ds/osm-waterways",
+            "similarity": 0.094
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/f6d5bbb5b168b741",
+      "subject": "uz:ds/a53-irrigated-areas-by-catchment",
+      "predicate": "uz:observes",
+      "object": "uz:prop/sown-area",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.262,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a116-irrigated-soil-salinity",
+            "similarity": 0.216
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.179
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.167
+          },
+          {
+            "dataset": "uz:ds/cadastre-protected-areas",
+            "similarity": 0.13
+          },
+          {
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.12
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/17d84332af25bb2c",
+      "subject": "uz:ds/a53-irrigated-areas-by-catchment",
+      "predicate": "uz:observes",
+      "object": "uz:prop/crop-yield",
       "status": "proposed",
       "confidence": 0.5,
       "assertedBy": "uz:agent/model-tfidf-knn-v1",
@@ -56,77 +310,117 @@
         "score": 0.223,
         "neighbours": [
           {
-            "dataset": "uz:ds/a97-land-use-types",
-            "similarity": 0.306
+            "dataset": "uz:ds/a116-irrigated-soil-salinity",
+            "similarity": 0.216
           },
           {
-            "dataset": "uz:ds/a16-climate-types",
-            "similarity": 0.277
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.179
           },
           {
-            "dataset": "uz:ds/x-forest-cover",
-            "similarity": 0.276
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.167
           },
           {
-            "dataset": "uz:ds/a135-forest-cover-2005",
-            "similarity": 0.22
+            "dataset": "uz:ds/cadastre-protected-areas",
+            "similarity": 0.13
           },
           {
-            "dataset": "uz:ds/a98-agricultural-land-types",
-            "similarity": 0.198
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.12
           }
         ],
-        "note": "calibrated on 97 labelled datasets"
+        "note": "calibrated on 130 labelled datasets"
       },
-      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "generatedAt": "2026-08-28T14:44:40+00:00",
       "reviewedBy": null,
       "reviewedAt": null
     },
     {
-      "id": "uz:a/f665cf56108753c2",
-      "subject": "uz:ds/a148-forest-plantation-potential",
+      "id": "uz:a/35a1fd8755b4563f",
+      "subject": "uz:ds/a53-irrigated-areas-by-catchment",
       "predicate": "uz:observes",
-      "object": "uz:prop/forest-type",
+      "object": "uz:prop/gross-harvest",
       "status": "proposed",
       "confidence": 0.5,
       "assertedBy": "uz:agent/model-tfidf-knn-v1",
       "method": "tfidf-knn",
       "evidence": {
         "source": "title+fields",
-        "score": 0.204,
+        "score": 0.217,
         "neighbours": [
           {
-            "dataset": "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
-            "similarity": 0.309
+            "dataset": "uz:ds/a116-irrigated-soil-salinity",
+            "similarity": 0.216
           },
           {
-            "dataset": "uz:ds/x-forest-cover",
-            "similarity": 0.152
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.179
           },
           {
-            "dataset": "uz:ds/a152-forest-landscape-integrity-index",
-            "similarity": 0.151
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.167
           },
           {
-            "dataset": "uz:ds/a137-forest-types",
-            "similarity": 0.151
+            "dataset": "uz:ds/cadastre-protected-areas",
+            "similarity": 0.13
           },
           {
-            "dataset": "uz:ds/a147-forest-carbon-sequestration",
-            "similarity": 0.144
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.12
           }
         ],
-        "note": "calibrated on 97 labelled datasets"
+        "note": "calibrated on 130 labelled datasets"
       },
-      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "generatedAt": "2026-08-28T14:44:40+00:00",
       "reviewedBy": null,
       "reviewedAt": null
     },
     {
-      "id": "uz:a/66a454326e4f0d0d",
-      "subject": "uz:ds/a198-geomorphology",
+      "id": "uz:a/d4d1c9c99f28b199",
+      "subject": "uz:ds/a55-historical-irrigation-districts",
       "predicate": "uz:observes",
-      "object": "uz:prop/land-use-type",
+      "object": "uz:prop/sown-area",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.256,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.208
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.117
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.109
+          },
+          {
+            "dataset": "uz:ds/a116-irrigated-soil-salinity",
+            "similarity": 0.106
+          },
+          {
+            "dataset": "uz:ds/a53-irrigated-areas-by-catchment",
+            "similarity": 0.094
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/f1ff80eaea5bc2da",
+      "subject": "uz:ds/a55-historical-irrigation-districts",
+      "predicate": "uz:observes",
+      "object": "uz:prop/gross-harvest",
       "status": "proposed",
       "confidence": 0.5,
       "assertedBy": "uz:agent/model-tfidf-knn-v1",
@@ -136,35 +430,235 @@
         "score": 0.216,
         "neighbours": [
           {
-            "dataset": "uz:ds/a137-forest-types",
-            "similarity": 0.051
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.208
           },
           {
-            "dataset": "uz:ds/a159-landscapes",
-            "similarity": 0.045
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.117
           },
           {
-            "dataset": "uz:ds/a97-land-use-types",
-            "similarity": 0.042
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.109
           },
           {
-            "dataset": "uz:ds/a98-agricultural-land-types",
-            "similarity": 0.038
+            "dataset": "uz:ds/a116-irrigated-soil-salinity",
+            "similarity": 0.106
           },
           {
-            "dataset": "uz:ds/a16-climate-types",
-            "similarity": 0.032
+            "dataset": "uz:ds/a53-irrigated-areas-by-catchment",
+            "similarity": 0.094
           }
         ],
-        "note": "calibrated on 97 labelled datasets"
+        "note": "calibrated on 130 labelled datasets"
       },
-      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "generatedAt": "2026-08-28T14:44:40+00:00",
       "reviewedBy": null,
       "reviewedAt": null
     },
     {
-      "id": "uz:a/abc4f62220acaabc",
-      "subject": "uz:ds/a64-agricultural-land-served-by-canals",
+      "id": "uz:a/120e2475731159cd",
+      "subject": "uz:ds/a55-historical-irrigation-districts",
+      "predicate": "uz:observes",
+      "object": "uz:prop/crop-yield",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.209,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.208
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.117
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.109
+          },
+          {
+            "dataset": "uz:ds/a116-irrigated-soil-salinity",
+            "similarity": 0.106
+          },
+          {
+            "dataset": "uz:ds/a53-irrigated-areas-by-catchment",
+            "similarity": 0.094
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/d8054d24cdacd91d",
+      "subject": "uz:ds/a73-water-stress",
+      "predicate": "uz:observes",
+      "object": "uz:prop/surface-water-extent",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.222,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.159
+          },
+          {
+            "dataset": "uz:ds/a74-water-balance",
+            "similarity": 0.143
+          },
+          {
+            "dataset": "uz:ds/a52-water-management-zones",
+            "similarity": 0.129
+          },
+          {
+            "dataset": "uz:ds/a33-climatic-water-deficit-2023",
+            "similarity": 0.128
+          },
+          {
+            "dataset": "uz:ds/a32-climatic-water-deficit-1990",
+            "similarity": 0.125
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/0f20e3c201ed56be",
+      "subject": "uz:ds/a77-water-ecosystem-area",
+      "predicate": "uz:observes",
+      "object": "uz:prop/surface-water-extent",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.215,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a79-change-in-seasonally-flooded-ecosystems-20012004",
+            "similarity": 0.531
+          },
+          {
+            "dataset": "uz:ds/a78-change-in-permanently-flooded-ecosystems-2001200",
+            "similarity": 0.52
+          },
+          {
+            "dataset": "uz:ds/a190-ecosystem-bioclimatic-resilience",
+            "similarity": 0.239
+          },
+          {
+            "dataset": "uz:ds/a43-settlement-area-change-19702020",
+            "similarity": 0.191
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.182
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/b1339d24760b762e",
+      "subject": "uz:ds/a80-drainage-network",
+      "predicate": "uz:observes",
+      "object": "uz:prop/road-network",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.31,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a54-areas-using-drainage",
+            "similarity": 0.38
+          },
+          {
+            "dataset": "uz:ds/a81-flow-in-drainage-canals",
+            "similarity": 0.267
+          },
+          {
+            "dataset": "uz:ds/a45-road-network-density",
+            "similarity": 0.239
+          },
+          {
+            "dataset": "uz:ds/meteorological-station-network",
+            "similarity": 0.204
+          },
+          {
+            "dataset": "uz:ds/a101-forage-lands",
+            "similarity": 0.051
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/bc7047ff153087bd",
+      "subject": "uz:ds/a80-drainage-network",
+      "predicate": "uz:observes",
+      "object": "uz:prop/monitoring-station",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.262,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a54-areas-using-drainage",
+            "similarity": 0.38
+          },
+          {
+            "dataset": "uz:ds/a81-flow-in-drainage-canals",
+            "similarity": 0.267
+          },
+          {
+            "dataset": "uz:ds/a45-road-network-density",
+            "similarity": 0.239
+          },
+          {
+            "dataset": "uz:ds/meteorological-station-network",
+            "similarity": 0.204
+          },
+          {
+            "dataset": "uz:ds/a101-forage-lands",
+            "similarity": 0.051
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/9b5f5d2841a7610a",
+      "subject": "uz:ds/a96-farming-systems",
       "predicate": "uz:observes",
       "object": "uz:prop/land-use-type",
       "status": "proposed",
@@ -173,72 +667,2664 @@
       "method": "tfidf-knn",
       "evidence": {
         "source": "title+fields",
-        "score": 0.337,
+        "score": 0.226,
         "neighbours": [
           {
-            "dataset": "uz:ds/a98-agricultural-land-types",
-            "similarity": 0.455
+            "dataset": "uz:ds/a79-change-in-seasonally-flooded-ecosystems-20012004",
+            "similarity": 0.09
           },
           {
-            "dataset": "uz:ds/a81-flow-in-drainage-canals",
-            "similarity": 0.364
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.088
           },
           {
-            "dataset": "uz:ds/a63-irrigation-canal-density",
-            "similarity": 0.102
+            "dataset": "uz:ds/a78-change-in-permanently-flooded-ecosystems-2001200",
+            "similarity": 0.087
           },
           {
-            "dataset": "uz:ds/a139-natural-and-planted-forests",
-            "similarity": 0.096
+            "dataset": "uz:ds/a77-water-ecosystem-area",
+            "similarity": 0.085
           },
           {
-            "dataset": "uz:ds/a92-land-cover",
-            "similarity": 0.073
+            "dataset": "uz:ds/osm-landuse",
+            "similarity": 0.084
           }
         ],
-        "note": "calibrated on 97 labelled datasets"
+        "note": "calibrated on 130 labelled datasets"
       },
-      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "generatedAt": "2026-08-28T14:44:40+00:00",
       "reviewedBy": null,
       "reviewedAt": null
     },
     {
-      "id": "uz:a/f53dbaa485bb115f",
+      "id": "uz:a/d2dc4831bb0fe4a5",
       "subject": "uz:ds/a98-agricultural-land-types",
       "predicate": "uz:observes",
-      "object": "uz:prop/forest-type",
+      "object": "uz:prop/cropland-extent",
       "status": "proposed",
       "confidence": 0.5,
       "assertedBy": "uz:agent/model-tfidf-knn-v1",
       "method": "tfidf-knn",
       "evidence": {
         "source": "title+fields",
-        "score": 0.238,
+        "score": 0.216,
         "neighbours": [
           {
             "dataset": "uz:ds/a64-agricultural-land-served-by-canals",
-            "similarity": 0.455
+            "similarity": 0.444
+          },
+          {
+            "dataset": "uz:ds/cadastre-agriculture-fields",
+            "similarity": 0.42
           },
           {
             "dataset": "uz:ds/a137-forest-types",
-            "similarity": 0.198
+            "similarity": 0.199
           },
           {
             "dataset": "uz:ds/a16-climate-types",
-            "similarity": 0.194
+            "similarity": 0.197
           },
           {
             "dataset": "uz:ds/a97-land-use-types",
-            "similarity": 0.19
-          },
-          {
-            "dataset": "uz:ds/a139-natural-and-planted-forests",
-            "similarity": 0.133
+            "similarity": 0.192
           }
         ],
-        "note": "calibrated on 97 labelled datasets"
+        "note": "calibrated on 130 labelled datasets"
       },
-      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/556051c1bf6b307a",
+      "subject": "uz:ds/a98-agricultural-land-types",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.209,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a64-agricultural-land-served-by-canals",
+            "similarity": 0.444
+          },
+          {
+            "dataset": "uz:ds/cadastre-agriculture-fields",
+            "similarity": 0.42
+          },
+          {
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.199
+          },
+          {
+            "dataset": "uz:ds/a16-climate-types",
+            "similarity": 0.197
+          },
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.192
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/008af34a0e55ec82",
+      "subject": "uz:ds/a98-agricultural-land-types",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-agriculture-fields",
+      "status": "proposed",
+      "confidence": 0.61,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.42,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/5267bbe475cc17ca",
+      "subject": "uz:ds/a99-cotton-yield",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.222,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-agriculture-fields",
+            "similarity": 0.072
+          },
+          {
+            "dataset": "uz:ds/a162-vegetation",
+            "similarity": 0.07
+          },
+          {
+            "dataset": "uz:ds/landcover-training-samples",
+            "similarity": 0.041
+          },
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.037
+          },
+          {
+            "dataset": "uz:ds/a159-landscapes",
+            "similarity": 0.037
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/3c9602d70c729791",
+      "subject": "uz:ds/cadastre-agriculture-fields",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-tenure",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.269,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.485
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.462
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.433
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.425
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.42
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/fb77474467c2461d",
+      "subject": "uz:ds/cadastre-agriculture-fields",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.643,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.485,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/130936556ebf8301",
+      "subject": "uz:ds/cadastre-agriculture-fields",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.631,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.462,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/9b927a4eb0d67509",
+      "subject": "uz:ds/cadastre-agriculture-fields",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-water",
+      "status": "proposed",
+      "confidence": 0.617,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.433,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/147d0fd22c582244",
+      "subject": "uz:ds/cadastre-apartment-housing",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-non-residential",
+      "status": "proposed",
+      "confidence": 0.645,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.491,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/166e1cfe76cfb2fd",
+      "subject": "uz:ds/cadastre-apartment-housing",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.623,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.445,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/7f8693d4b1239855",
+      "subject": "uz:ds/cadastre-apartment-housing",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.606,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.412,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/37c7b70a430a3f82",
+      "subject": "uz:ds/cadastre-buildings",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-tenure",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.336,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.59
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.547
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.527
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.517
+          },
+          {
+            "dataset": "uz:ds/cadastre-private-plots",
+            "similarity": 0.474
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/0a35aec784a55494",
+      "subject": "uz:ds/cadastre-buildings",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.316,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.59
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.547
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.527
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.517
+          },
+          {
+            "dataset": "uz:ds/cadastre-private-plots",
+            "similarity": 0.474
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/b3f13097a42e5b95",
+      "subject": "uz:ds/cadastre-buildings",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.695,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.59,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/c3d9423302b2e393",
+      "subject": "uz:ds/cadastre-buildings",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.673,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.547,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/27075d9e95c52d92",
+      "subject": "uz:ds/cadastre-buildings",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-water",
+      "status": "proposed",
+      "confidence": 0.663,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.527,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/0b0cd81dba6dfed6",
+      "subject": "uz:ds/cadastre-forest-agency-lands",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.309,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.554
+          },
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.496
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.414
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.407
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.403
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/e8090b4b55bde653",
+      "subject": "uz:ds/cadastre-forest-agency-lands",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.677,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.554,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/cfbdf3f58fc950eb",
+      "subject": "uz:ds/cadastre-forest-agency-lands",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.648,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.496,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/6f0e9e770398a1e4",
+      "subject": "uz:ds/cadastre-forest-agency-lands",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-water",
+      "status": "proposed",
+      "confidence": 0.607,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.414,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/36884cc8cdb1ddb2",
+      "subject": "uz:ds/cadastre-highways",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-tenure",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.336,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.596
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.552
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.533
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.517
+          },
+          {
+            "dataset": "uz:ds/cadastre-private-plots",
+            "similarity": 0.479
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/40a30c8d84a69950",
+      "subject": "uz:ds/cadastre-highways",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.317,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.596
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.552
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.533
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.517
+          },
+          {
+            "dataset": "uz:ds/cadastre-private-plots",
+            "similarity": 0.479
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/ab43aede1f113689",
+      "subject": "uz:ds/cadastre-highways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.698,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.596,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/46bfd67294860495",
+      "subject": "uz:ds/cadastre-highways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.676,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.552,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/5c0bb84a3136d72e",
+      "subject": "uz:ds/cadastre-highways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-water",
+      "status": "proposed",
+      "confidence": 0.667,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.533,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/0a0952a1e6c458c7",
+      "subject": "uz:ds/cadastre-land-stock",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.748,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.697,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/069131c131537433",
+      "subject": "uz:ds/cadastre-land-stock",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-water",
+      "status": "proposed",
+      "confidence": 0.718,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.636,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/596d02a623e81bab",
+      "subject": "uz:ds/cadastre-land-stock",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-highways",
+      "status": "proposed",
+      "confidence": 0.698,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.596,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/578c636efcadc991",
+      "subject": "uz:ds/cadastre-non-residential",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-apartment-housing",
+      "status": "proposed",
+      "confidence": 0.645,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.491,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/39542e3ade74d258",
+      "subject": "uz:ds/cadastre-non-residential",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.622,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.444,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/7054a99626ecf685",
+      "subject": "uz:ds/cadastre-non-residential",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.606,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.411,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/0a48304b8405d64c",
+      "subject": "uz:ds/cadastre-private-plots",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.673,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.547,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/e6753e57d209602a",
+      "subject": "uz:ds/cadastre-private-plots",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.653,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.506,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/82517eac235c4a1a",
+      "subject": "uz:ds/cadastre-private-plots",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-water",
+      "status": "proposed",
+      "confidence": 0.652,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.504,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/4ab5a3506e0b31c1",
+      "subject": "uz:ds/cadastre-protected-areas",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-tenure",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.341,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.543
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.512
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.496
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.45
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.446
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/85ac6010a60d868f",
+      "subject": "uz:ds/cadastre-protected-areas",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.248,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.543
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.512
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.496
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.45
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.446
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/efc4f2f1e9b660c0",
+      "subject": "uz:ds/cadastre-protected-areas",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.671,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.543,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/17727844c8df968e",
+      "subject": "uz:ds/cadastre-protected-areas",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.656,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.512,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/f0700784c9834862",
+      "subject": "uz:ds/cadastre-protected-areas",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-water",
+      "status": "proposed",
+      "confidence": 0.648,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.496,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/b1cd5cb45b4a85ff",
+      "subject": "uz:ds/cadastre-railways",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-tenure",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.252,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.423
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.391
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.386
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.377
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.367
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/8b34c0418b5f026e",
+      "subject": "uz:ds/cadastre-railways",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.225,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.423
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.391
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.386
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.377
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.367
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/1d2652ae1f4a1dbc",
+      "subject": "uz:ds/cadastre-railways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.612,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.423,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/6a2330bd01e3ecfe",
+      "subject": "uz:ds/cadastre-railways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.596,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.391,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/058ce5f22db65497",
+      "subject": "uz:ds/cadastre-railways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-highways",
+      "status": "proposed",
+      "confidence": 0.593,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.386,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/39970a0f56612395",
+      "subject": "uz:ds/cadastre-shared-lands",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.338,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.697
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.592
+          },
+          {
+            "dataset": "uz:ds/cadastre-forest-agency-lands",
+            "similarity": 0.554
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.552
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.547
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/d4ec0932d9c16369",
+      "subject": "uz:ds/cadastre-shared-lands",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.748,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.697,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/71d35abbd1e3247f",
+      "subject": "uz:ds/cadastre-shared-lands",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-water",
+      "status": "proposed",
+      "confidence": 0.696,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.592,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/7468a9103bb0098d",
+      "subject": "uz:ds/cadastre-shared-lands",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-forest-agency-lands",
+      "status": "proposed",
+      "confidence": 0.677,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.554,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/7c16491ce969e0ec",
+      "subject": "uz:ds/cadastre-water",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-tenure",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.343,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.636
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.592
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.533
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.527
+          },
+          {
+            "dataset": "uz:ds/cadastre-private-plots",
+            "similarity": 0.504
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/27ac19b3ebe181eb",
+      "subject": "uz:ds/cadastre-water",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.322,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.636
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.592
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.533
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.527
+          },
+          {
+            "dataset": "uz:ds/cadastre-private-plots",
+            "similarity": 0.504
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/92cdf80e6e6e69e8",
+      "subject": "uz:ds/cadastre-water",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.718,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.636,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/bbf7678ba87b6438",
+      "subject": "uz:ds/cadastre-water",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.696,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.592,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/96b62006c035726e",
+      "subject": "uz:ds/cadastre-water",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-highways",
+      "status": "proposed",
+      "confidence": 0.667,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.533,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/d5fbebd83aaad40c",
+      "subject": "uz:ds/crop-production-2005-2021",
+      "predicate": "uz:observes",
+      "object": "uz:prop/irrigated-area",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.193,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/crop-statistics-2005-2011",
+            "similarity": 0.284
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.266
+          },
+          {
+            "dataset": "uz:ds/land-use-statistics-2005-2020",
+            "similarity": 0.226
+          },
+          {
+            "dataset": "uz:ds/a122-land-productivity-dynamics",
+            "similarity": 0.146
+          },
+          {
+            "dataset": "uz:ds/a126-pasture-productivity",
+            "similarity": 0.132
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/e6569157fcdb9e37",
+      "subject": "uz:ds/crop-statistics-2005-2011",
+      "predicate": "uz:observes",
+      "object": "uz:prop/irrigated-area",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.364,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.847
+          },
+          {
+            "dataset": "uz:ds/land-use-statistics-2005-2020",
+            "similarity": 0.602
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.586
+          },
+          {
+            "dataset": "uz:ds/crop-production-2005-2021",
+            "similarity": 0.284
+          },
+          {
+            "dataset": "uz:ds/a135-forest-cover-2005",
+            "similarity": 0.096
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/c2d9f994fb419726",
+      "subject": "uz:ds/crop-statistics-2005-2011",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-irrigated-2005-2011",
+      "status": "proposed",
+      "confidence": 0.824,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.847,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/fa9c1d1a0fda57ad",
+      "subject": "uz:ds/crop-statistics-2005-2011",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/land-use-statistics-2005-2020",
+      "status": "proposed",
+      "confidence": 0.701,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.602,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/db92af4e17dd5fe2",
+      "subject": "uz:ds/crop-statistics-2005-2011",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-2012-2020",
+      "status": "proposed",
+      "confidence": 0.693,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.586,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/9eb5c6219952a00e",
+      "subject": "uz:ds/crop-statistics-2012-2020",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-irrigated-2005-2011",
+      "status": "proposed",
+      "confidence": 0.731,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.662,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/44140e48fe59bb50",
+      "subject": "uz:ds/crop-statistics-2012-2020",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-2005-2011",
+      "status": "proposed",
+      "confidence": 0.693,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.586,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/24f15fd851bde900",
+      "subject": "uz:ds/crop-statistics-2012-2020",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/land-use-statistics-2005-2020",
+      "status": "proposed",
+      "confidence": 0.623,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.446,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/201a5e94e7b4e819",
+      "subject": "uz:ds/crop-statistics-irrigated-2005-2011",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-2005-2011",
+      "status": "proposed",
+      "confidence": 0.824,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.847,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/edf1495649c2ecd2",
+      "subject": "uz:ds/crop-statistics-irrigated-2005-2011",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-2012-2020",
+      "status": "proposed",
+      "confidence": 0.731,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.662,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/51bc4f25b55ee7d1",
+      "subject": "uz:ds/crop-statistics-irrigated-2005-2011",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/land-use-statistics-2005-2020",
+      "status": "proposed",
+      "confidence": 0.682,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.565,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/2cee30c09a0f671f",
+      "subject": "uz:ds/fertiliser-application-2007-2020",
+      "predicate": "uz:observes",
+      "object": "uz:prop/sown-area",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.2,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/land-use-statistics-2005-2020",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/regional-evapotranspiration-2020",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.089
+          },
+          {
+            "dataset": "uz:ds/a43-settlement-area-change-19702020",
+            "similarity": 0.061
+          },
+          {
+            "dataset": "uz:ds/a202-palmer-drought-severity-index-2020",
+            "similarity": 0.06
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/7af87d6e105b264a",
+      "subject": "uz:ds/fertiliser-application-2007-2020",
+      "predicate": "uz:observes",
+      "object": "uz:prop/gross-harvest",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.191,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/land-use-statistics-2005-2020",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/regional-evapotranspiration-2020",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.089
+          },
+          {
+            "dataset": "uz:ds/a43-settlement-area-change-19702020",
+            "similarity": 0.061
+          },
+          {
+            "dataset": "uz:ds/a202-palmer-drought-severity-index-2020",
+            "similarity": 0.06
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/020dc7d05508aa27",
+      "subject": "uz:ds/fertiliser-application-2007-2020",
+      "predicate": "uz:observes",
+      "object": "uz:prop/crop-yield",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.19,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/land-use-statistics-2005-2020",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/regional-evapotranspiration-2020",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.089
+          },
+          {
+            "dataset": "uz:ds/a43-settlement-area-change-19702020",
+            "similarity": 0.061
+          },
+          {
+            "dataset": "uz:ds/a202-palmer-drought-severity-index-2020",
+            "similarity": 0.06
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/a016b2b0b4e274f8",
+      "subject": "uz:ds/kamchik-pass-climate-series",
+      "predicate": "uz:observes",
+      "object": "uz:prop/monitoring-station",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.246,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a29-precipitation-trend-19902023",
+            "similarity": 0.298
+          },
+          {
+            "dataset": "uz:ds/a28-precipitation-trend-19602023",
+            "similarity": 0.297
+          },
+          {
+            "dataset": "uz:ds/station-soil-temperature-series",
+            "similarity": 0.291
+          },
+          {
+            "dataset": "uz:ds/station-air-temperature-series",
+            "similarity": 0.29
+          },
+          {
+            "dataset": "uz:ds/a37-projected-precipitation-change-by-2040",
+            "similarity": 0.25
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/3fe96c72ee755c0a",
+      "subject": "uz:ds/kamchik-pass-climate-series",
+      "predicate": "uz:observes",
+      "object": "uz:prop/soil-temperature",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.231,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a29-precipitation-trend-19902023",
+            "similarity": 0.298
+          },
+          {
+            "dataset": "uz:ds/a28-precipitation-trend-19602023",
+            "similarity": 0.297
+          },
+          {
+            "dataset": "uz:ds/station-soil-temperature-series",
+            "similarity": 0.291
+          },
+          {
+            "dataset": "uz:ds/station-air-temperature-series",
+            "similarity": 0.29
+          },
+          {
+            "dataset": "uz:ds/a37-projected-precipitation-change-by-2040",
+            "similarity": 0.25
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/66e23dfb64e0c71e",
+      "subject": "uz:ds/land-use-statistics-2005-2020",
+      "predicate": "uz:observes",
+      "object": "uz:prop/sown-area",
+      "status": "proposed",
+      "confidence": 0.771,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.487,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/crop-statistics-2005-2011",
+            "similarity": 0.602
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.565
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.446
+          },
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.297
+          },
+          {
+            "dataset": "uz:ds/crop-production-2005-2021",
+            "similarity": 0.226
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/0eabf843670c93ac",
+      "subject": "uz:ds/land-use-statistics-2005-2020",
+      "predicate": "uz:observes",
+      "object": "uz:prop/gross-harvest",
+      "status": "proposed",
+      "confidence": 0.771,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.483,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/crop-statistics-2005-2011",
+            "similarity": 0.602
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.565
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.446
+          },
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.297
+          },
+          {
+            "dataset": "uz:ds/crop-production-2005-2021",
+            "similarity": 0.226
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/f84a9de352250295",
+      "subject": "uz:ds/land-use-statistics-2005-2020",
+      "predicate": "uz:observes",
+      "object": "uz:prop/crop-yield",
+      "status": "proposed",
+      "confidence": 0.771,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.483,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/crop-statistics-2005-2011",
+            "similarity": 0.602
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.565
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.446
+          },
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.297
+          },
+          {
+            "dataset": "uz:ds/crop-production-2005-2021",
+            "similarity": 0.226
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/5bff6e59fb11a76a",
+      "subject": "uz:ds/land-use-statistics-2005-2020",
+      "predicate": "uz:observes",
+      "object": "uz:prop/irrigated-area",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.277,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/crop-statistics-2005-2011",
+            "similarity": 0.602
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-irrigated-2005-2011",
+            "similarity": 0.565
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.446
+          },
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.297
+          },
+          {
+            "dataset": "uz:ds/crop-production-2005-2021",
+            "similarity": 0.226
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/237e383beb9f3d27",
+      "subject": "uz:ds/land-use-statistics-2005-2020",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-2005-2011",
+      "status": "proposed",
+      "confidence": 0.701,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.602,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/47050e9fde9a18f4",
+      "subject": "uz:ds/land-use-statistics-2005-2020",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-irrigated-2005-2011",
+      "status": "proposed",
+      "confidence": 0.682,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.565,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/ff6bdf795e32a814",
+      "subject": "uz:ds/land-use-statistics-2005-2020",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/crop-statistics-2012-2020",
+      "status": "proposed",
+      "confidence": 0.623,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.446,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/eee20b653e2c9ff5",
+      "subject": "uz:ds/landcover-training-samples",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-tenure",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.353,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.381
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.356
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.32
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.284
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.282
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/f527111f67bd36e8",
+      "subject": "uz:ds/landcover-training-samples",
+      "predicate": "uz:observes",
+      "object": "uz:prop/cadastral-parcel",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.256,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/cadastre-land-stock",
+            "similarity": 0.381
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.356
+          },
+          {
+            "dataset": "uz:ds/cadastre-water",
+            "similarity": 0.32
+          },
+          {
+            "dataset": "uz:ds/cadastre-buildings",
+            "similarity": 0.284
+          },
+          {
+            "dataset": "uz:ds/cadastre-highways",
+            "similarity": 0.282
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/4b3b200f3bbdc5c9",
+      "subject": "uz:ds/landcover-training-samples",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-land-stock",
+      "status": "proposed",
+      "confidence": 0.591,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.381,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/c94adbfaf9c493e8",
+      "subject": "uz:ds/landcover-training-samples",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/cadastre-shared-lands",
+      "status": "proposed",
+      "confidence": 0.578,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.356,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/097637ed0ed36eeb",
+      "subject": "uz:ds/meteorological-station-network",
+      "predicate": "uz:observes",
+      "object": "uz:prop/drainage-network",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.193,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a80-drainage-network",
+            "similarity": 0.204
+          },
+          {
+            "dataset": "uz:ds/osm-points",
+            "similarity": 0.168
+          },
+          {
+            "dataset": "uz:ds/a45-road-network-density",
+            "similarity": 0.147
+          },
+          {
+            "dataset": "uz:ds/station-soil-temperature-series",
+            "similarity": 0.082
+          },
+          {
+            "dataset": "uz:ds/station-air-temperature-series",
+            "similarity": 0.082
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/33172d4a8e30ac67",
+      "subject": "uz:ds/osm-buildings",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-landuse",
+      "status": "proposed",
+      "confidence": 0.578,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.356,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/632246f5bf6b832f",
+      "subject": "uz:ds/osm-landuse",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-railways",
+      "status": "proposed",
+      "confidence": 0.637,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.474,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/d9523e2fc6af83fb",
+      "subject": "uz:ds/osm-landuse",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-waterways",
+      "status": "proposed",
+      "confidence": 0.619,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.437,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/5b1eca8bbe2a546d",
+      "subject": "uz:ds/osm-landuse",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-natural",
+      "status": "proposed",
+      "confidence": 0.615,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.429,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/81d40a754b19e240",
+      "subject": "uz:ds/osm-natural",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-landuse",
+      "status": "proposed",
+      "confidence": 0.615,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.429,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/d001bd4c8db52de6",
+      "subject": "uz:ds/osm-places",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-landuse",
+      "status": "proposed",
+      "confidence": 0.588,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.376,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/570a58c2039bf2fb",
+      "subject": "uz:ds/osm-points",
+      "predicate": "uz:observes",
+      "object": "uz:prop/settlement-extent",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.183,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/osm-landuse",
+            "similarity": 0.374
+          },
+          {
+            "dataset": "uz:ds/osm-buildings",
+            "similarity": 0.314
+          },
+          {
+            "dataset": "uz:ds/osm-railways",
+            "similarity": 0.284
+          },
+          {
+            "dataset": "uz:ds/osm-waterways",
+            "similarity": 0.269
+          },
+          {
+            "dataset": "uz:ds/osm-natural",
+            "similarity": 0.265
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/f464c0afa86ce4bb",
+      "subject": "uz:ds/osm-points",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-landuse",
+      "status": "proposed",
+      "confidence": 0.587,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.374,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/5e1f74894cfd76fb",
+      "subject": "uz:ds/osm-railways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-waterways",
+      "status": "proposed",
+      "confidence": 0.643,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.487,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/d2da7160d7bc5f6e",
+      "subject": "uz:ds/osm-railways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-landuse",
+      "status": "proposed",
+      "confidence": 0.637,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.474,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/54d59f307ab6409c",
+      "subject": "uz:ds/osm-waterways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-railways",
+      "status": "proposed",
+      "confidence": 0.643,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.487,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/3913a25d7f868320",
+      "subject": "uz:ds/osm-waterways",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/osm-landuse",
+      "status": "proposed",
+      "confidence": 0.619,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.437,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/b29b2821ab3c1260",
+      "subject": "uz:ds/regional-evapotranspiration-2020",
+      "predicate": "uz:observes",
+      "object": "uz:prop/ecoregion",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.202,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/fertiliser-application-2007-2020",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/a163-zoogeographic-regions",
+            "similarity": 0.1
+          },
+          {
+            "dataset": "uz:ds/a158-physical-geographic-regions",
+            "similarity": 0.083
+          },
+          {
+            "dataset": "uz:ds/land-use-statistics-2005-2020",
+            "similarity": 0.07
+          },
+          {
+            "dataset": "uz:ds/crop-statistics-2012-2020",
+            "similarity": 0.058
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/b901e70a0255068e",
+      "subject": "uz:ds/river-gauge-inventory",
+      "predicate": "uz:observes",
+      "object": "uz:prop/species-occurrence",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.253,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a175-invertebrates",
+            "similarity": 0.103
+          },
+          {
+            "dataset": "uz:ds/a165-habitat-diversity-index",
+            "similarity": 0.03
+          },
+          {
+            "dataset": "uz:ds/x-forest-cover",
+            "similarity": 0.026
+          },
+          {
+            "dataset": "uz:ds/a92-land-cover",
+            "similarity": 0.026
+          },
+          {
+            "dataset": "uz:ds/a187-protected-areas-and-key-biodiversity-areas",
+            "similarity": 0.023
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/b37a1f7243123a6b",
+      "subject": "uz:ds/station-air-temperature-series",
+      "predicate": "uz:observes",
+      "object": "uz:prop/soil-temperature",
+      "status": "proposed",
+      "confidence": 0.771,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.429,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/station-soil-temperature-series",
+            "similarity": 0.695
+          },
+          {
+            "dataset": "uz:ds/kamchik-pass-climate-series",
+            "similarity": 0.29
+          },
+          {
+            "dataset": "uz:ds/a24-annual-temperature-trend-19902023",
+            "similarity": 0.204
+          },
+          {
+            "dataset": "uz:ds/a23-annual-temperature-trend-19602023",
+            "similarity": 0.204
+          },
+          {
+            "dataset": "uz:ds/a27-maximum-temperature-trend-19602023",
+            "similarity": 0.198
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/55d30a7dbe024951",
+      "subject": "uz:ds/station-air-temperature-series",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/station-soil-temperature-series",
+      "status": "proposed",
+      "confidence": 0.748,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.695,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/02435009b4046a9b",
+      "subject": "uz:ds/station-soil-temperature-series",
+      "predicate": "uz:relatedTo",
+      "object": "uz:ds/station-air-temperature-series",
+      "status": "proposed",
+      "confidence": 0.748,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-similarity",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.695,
+        "note": "nearest neighbour in the shared text space"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/4a2749aa138fd109",
+      "subject": "uz:ds/tashkent-city-boundary",
+      "predicate": "uz:observes",
+      "object": "uz:prop/ecoregion",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.206,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a163-zoogeographic-regions",
+            "similarity": 0.069
+          },
+          {
+            "dataset": "uz:ds/a158-physical-geographic-regions",
+            "similarity": 0.056
+          },
+          {
+            "dataset": "uz:ds/a42-share-of-settlement-area",
+            "similarity": 0.054
+          },
+          {
+            "dataset": "uz:ds/regional-evapotranspiration-2020",
+            "similarity": 0.05
+          },
+          {
+            "dataset": "uz:ds/cadastre-shared-lands",
+            "similarity": 0.05
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/94c0edb3602d469f",
+      "subject": "uz:ds/uzhydromet-survey-responses",
+      "predicate": "uz:observes",
+      "object": "uz:prop/conservation-value",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.187,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/regional-evapotranspiration-2020",
+            "similarity": 0.055
+          },
+          {
+            "dataset": "uz:ds/a188-nature-conservation",
+            "similarity": 0.039
+          },
+          {
+            "dataset": "uz:ds/a197-hypsometric-map",
+            "similarity": 0.028
+          },
+          {
+            "dataset": "uz:ds/a189-conservation-value-index",
+            "similarity": 0.026
+          },
+          {
+            "dataset": "uz:ds/landcover-training-samples",
+            "similarity": 0.024
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/4f73e19b3ea4b8db",
+      "subject": "uz:ds/x-uzbekistan-national-atlas-environmental-atlas",
+      "predicate": "uz:observes",
+      "object": "uz:prop/monitoring-station",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.277,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a188-nature-conservation",
+            "similarity": 0.041
+          },
+          {
+            "dataset": "uz:ds/osm-natural",
+            "similarity": 0.034
+          },
+          {
+            "dataset": "uz:ds/a148-forest-plantation-potential",
+            "similarity": 0.029
+          },
+          {
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.026
+          },
+          {
+            "dataset": "uz:ds/a162-vegetation",
+            "similarity": 0.026
+          }
+        ],
+        "note": "calibrated on 130 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:44:40+00:00",
       "reviewedBy": null,
       "reviewedAt": null
     }

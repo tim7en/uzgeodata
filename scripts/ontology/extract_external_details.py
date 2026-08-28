@@ -179,6 +179,12 @@ def extract(root: Path, only_source: str | None = None) -> dict:
                         unkeyed += 1
                         key = f"x{unkeyed:02d}"
                     label = str(row.get(config["nameField"], "")).strip() or key
+                    if config.get("labelIncludesClass") and config.get("classField"):
+                        # A gauge list names the river, not the site; without the
+                        # location every gauge on one river shares a label.
+                        place = str(row.get(config["classField"], "")).strip()
+                        if place and place.lower() != "nan":
+                            label = f"{label} ({place})"
                     station = {
                         "id": f"uz:station/{prefix}-{key}",
                         "type": "MonitoringStation",

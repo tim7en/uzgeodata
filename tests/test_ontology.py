@@ -288,6 +288,105 @@ def test_rejection_requires_a_reviewer(tmp_path, assertions):
     assert any("rejected without a reviewer" in error for error in report.errors)
 
 
+# --------------------------------------------------------------------- external deliveries
+
+
+@pytest.fixture(scope="module")
+def details():
+    return load(ROOT / "ontology" / "instances" / "external" / "details.json")
+
+
+def test_external_datasets_carry_licence_and_attribution(assertions, entities):
+    """ODbL and restricted sources both oblige us to state terms and credit."""
+    licensed = {a["subject"] for a in assertions if a["predicate"] == "uz:license"}
+    attributed = {a["subject"] for a in assertions if a["predicate"] == "uz:attributedTo"}
+    osm = {e["id"] for e in entities.values()
+           if e["type"] == "Dataset" and e["id"].startswith("uz:ds/osm-")}
+    assert osm, "expected the OpenStreetMap datasets to be catalogued"
+    assert osm <= licensed and osm <= attributed
+    odbl = {a["subject"] for a in assertions
+            if a["predicate"] == "uz:license" and a.get("value") == "ODbL-1.0"}
+    assert osm <= odbl
+
+
+def test_curator_mapping_outranks_the_lexical_rules(assertions):
+    """Regression: the rule pass used to overwrite curator-asserted facts."""
+    labels = [a for a in assertions
+              if a["subject"] == "uz:ds/landcover-training-samples"
+              and a["predicate"] == "uz:observes"
+              and a["object"] == "uz:prop/annotation-labels"]
+    assert len(labels) == 1
+    assert labels[0]["assertedBy"] == "uz:agent/curator"
+    assert labels[0]["status"] == "asserted"
+
+
+def test_external_distributions_are_referenced_not_copied(assertions, entities):
+    external = [e for e in entities.values()
+                if e["type"] == "Distribution" and str(e.get("role", "")).startswith("external-")]
+    assert external
+    located = {a["subject"] for a in assertions if a["predicate"] == "uz:externalLocation"}
+    for distribution in external:
+        assert distribution["id"] in located
+        assert distribution.get("storedName") is None
+        assert distribution.get("url") is None
+
+
+def test_stations_resolve_and_sit_inside_the_region(entities, assertions):
+    stations = [e for e in entities.values() if e["type"] == "MonitoringStation"]
+    assert len(stations) >= 190
+    for station in stations:
+        assert 55.0 <= station["longitude"] <= 74.0, station["id"]
+        assert 36.0 <= station["latitude"] <= 46.0, station["id"]
+        assert station["network"] in {"uzhydromet-meteo", "uzhydromet-gauge"}
+    operated = {a["object"] for a in assertions if a["predicate"] == "uz:operatesStation"}
+    assert operated == {s["id"] for s in stations}
+
+
+def test_station_shapefile_crs_is_flagged(assertions):
+    """The station shapefile is Pulkovo 1942, not WGS 84; that has to be visible."""
+    flags = [a for a in assertions
+             if a["subject"] == "uz:ds/meteorological-station-network"
+             and a["predicate"] == "uz:qualityFlag"]
+    values = {a["value"] for a in flags}
+    assert "crs-not-wgs84" in values
+    assert "attribute-encoding-cp1251" in values
+
+
+def test_training_class_labels_match_the_measurement(assertions, details):
+    measured = details["classLabels"]["landcover-training-samples"]
+    asserted = {a["value"]: a["evidence"]["featureCount"] for a in assertions
+                if a["subject"] == "uz:ds/landcover-training-samples"
+                and a["predicate"] == "uz:hasClassLabel"}
+    assert asserted == measured["classes"]
+    assert sum(asserted.values()) == measured["total"]
+    flags = {a["value"] for a in assertions
+             if a["subject"] == "uz:ds/landcover-training-samples"
+             and a["predicate"] == "uz:qualityFlag"}
+    assert "severe-class-imbalance" in flags
+
+
+def test_the_missing_atlas_package_is_now_accounted_for(assertions, entities):
+    """atlas 92 had no distribution until the 1 GB package turned up in the drop."""
+    distributions = [a["object"] for a in assertions
+                     if a["subject"] == "uz:ds/a92-land-cover"
+                     and a["predicate"] == "uz:hasDistribution"]
+    assert distributions
+    assert any(entities[d]["role"] == "source-package" for d in distributions)
+
+
+def test_inventory_is_complete(entities):
+    """A delivery that nests deeper than the profiler's limit must not vanish."""
+    inventory = load(ROOT / "ontology" / "instances" / "external" / "maps-drop.json")
+    assert inventory.get("skippedTooDeep") == []
+    profiled = {f["path"] for f in inventory["files"]}
+    referenced = {
+        Path(e["externalPath"]).as_posix().split("/MAPS/")[-1]
+        for e in entities.values()
+        if e["type"] == "Distribution" and e.get("externalPath")
+    }
+    assert referenced <= profiled
+
+
 # --------------------------------------------------------------------- helpers
 
 
