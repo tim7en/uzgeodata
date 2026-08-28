@@ -4,7 +4,7 @@ import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import {
   ArrowDown, ArrowRight, Building2, Check, Database, Droplets, FileArchive,
   File, FlaskConical, Grid3X3, HardDrive, Layers3, Leaf, LoaderCircle,
-  LockKeyhole, LogOut, Menu, Minus, Mountain, Network, Orbit, Plus,
+  LockKeyhole, LogOut, Menu, Minus, Mountain, Network, Orbit, Pause, Play, Plus,
   RotateCcw, Search, ShieldAlert, Trash2, Trees, UploadCloud, Wheat, X
 } from 'lucide-react';
 
@@ -164,10 +164,19 @@ function inferConcept(title='') {
 function OntologyExplorer({ onRequest }) {
   const [catalog,setCatalog] = useState([]);
   const [selectedId,setSelectedId] = useState(null);
+  const [hoveredId,setHoveredId] = useState(null);
   const [query,setQuery] = useState('');
   const [activeDomain,setActiveDomain] = useState('All domains');
   const [zoom,setZoom] = useState(1);
+  const [touring,setTouring] = useState(true);
+  const [reducedMotion,setReducedMotion] = useState(false);
   useEffect(()=>{fetch('/data/archive-catalog.json').then(r=>r.json()).then(items=>{setCatalog(items);setSelectedId(items[0]?.id)})},[]);
+  useEffect(()=>{
+    const media=window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update=()=>{setReducedMotion(media.matches);if(media.matches)setTouring(false)};
+    update(); media.addEventListener('change',update);
+    return()=>media.removeEventListener('change',update);
+  },[]);
   const graph = useMemo(()=>{
     const datasetNodes=[];
     ontologyDomains.forEach(domain=>{
@@ -180,24 +189,37 @@ function OntologyExplorer({ onRequest }) {
     });
     return datasetNodes;
   },[catalog]);
-  const selected=graph.find(node=>node.id===selectedId);
   const queryLower=query.trim().toLowerCase();
-  const isVisible=node=>(activeDomain==='All domains'||node.category===activeDomain)&&(!queryLower||`${node.title} ${node.sourceTitle} ${node.category} ${node.concept}`.toLowerCase().includes(queryLower));
-  const matchCount=graph.filter(isVisible).length;
-  const selectedConcept=selected&&ontologyConcepts[selected.concept];
+  const visibleNodes=useMemo(()=>graph.filter(node=>(activeDomain==='All domains'||node.category===activeDomain)&&(!queryLower||`${node.title} ${node.sourceTitle} ${node.category} ${node.concept}`.toLowerCase().includes(queryLower))),[graph,activeDomain,queryLower]);
+  const visibleIds=useMemo(()=>new Set(visibleNodes.map(node=>node.id)),[visibleNodes]);
+  const isVisible=node=>visibleIds.has(node.id);
+  const selected=graph.find(node=>node.id===selectedId);
+  const focused=graph.find(node=>node.id===hoveredId)||selected;
+  const focusedConcept=focused&&ontologyConcepts[focused.concept];
+  const matchCount=visibleNodes.length;
+  useEffect(()=>{
+    if(!touring||reducedMotion||hoveredId||visibleNodes.length<2)return;
+    const timer=window.setInterval(()=>setSelectedId(current=>{
+      const index=visibleNodes.findIndex(node=>node.id===current);
+      return visibleNodes[(index+1+visibleNodes.length)%visibleNodes.length].id;
+    }),3600);
+    return()=>window.clearInterval(timer);
+  },[touring,reducedMotion,hoveredId,visibleNodes]);
+  const selectNode=id=>{setSelectedId(id);setTouring(false)};
+  const selectDomain=name=>{setActiveDomain(activeDomain===name?'All domains':name);setTouring(false)};
   return <section className="ontology" id="ontology"><div className="ontology-intro"><div><div className="kicker">03 / Catalog knowledge model</div><h2>From files to<br/><span>knowledge.</span></h2></div><p>The atlas catalogue is organized as connected records. Explore how every package belongs to an environmental domain and is associated with an analytical role.</p></div>
-    <div className="ontology-toolbar"><div className="ontology-search"><Search size={17}/><input aria-label="Search ontology" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Find a dataset, domain or concept..."/><span>{matchCount} objects</span></div><div className="ontology-filters"><button aria-pressed={activeDomain==='All domains'} className={activeDomain==='All domains'?'active':''} onClick={()=>setActiveDomain('All domains')}>All domains</button>{ontologyDomains.map(domain=><button aria-pressed={activeDomain===domain.name} key={domain.name} className={activeDomain===domain.name?'active':''} onClick={()=>setActiveDomain(domain.name)}><i style={{background:domain.color}}/>{domain.name}</button>)}</div></div>
-    <div className="ontology-workspace"><div className="ontology-canvas"><div className="ontology-controls"><button onClick={()=>setZoom(value=>Math.min(1.35,value+.1))} aria-label="Zoom in"><Plus/></button><button onClick={()=>setZoom(value=>Math.max(.72,value-.1))} aria-label="Zoom out"><Minus/></button><button onClick={()=>setZoom(1)} aria-label="Reset zoom"><RotateCcw/></button></div>
+    <div className="ontology-toolbar"><div className="ontology-search"><Search size={17}/><input aria-label="Search ontology" value={query} onChange={e=>{setQuery(e.target.value);setTouring(false)}} placeholder="Find a dataset, domain or concept..."/><span>{matchCount} objects</span></div><div className="ontology-filters"><button aria-pressed={activeDomain==='All domains'} className={activeDomain==='All domains'?'active':''} onClick={()=>{setActiveDomain('All domains');setTouring(false)}}>All domains</button>{ontologyDomains.map(domain=><button aria-pressed={activeDomain===domain.name} key={domain.name} className={activeDomain===domain.name?'active':''} onClick={()=>selectDomain(domain.name)}><i style={{background:domain.color}}/>{domain.name}</button>)}</div></div>
+    <div className="ontology-workspace"><div className={`ontology-canvas ${touring?'is-touring':''}`}><div className="ontology-controls"><button className={touring?'tour-active':''} onClick={()=>setTouring(value=>!value)} aria-label={touring?'Pause guided tour':'Play guided tour'} aria-pressed={touring}>{touring?<Pause/>:<Play/>}</button><button onClick={()=>setZoom(value=>Math.min(1.35,value+.1))} aria-label="Zoom in"><Plus/></button><button onClick={()=>setZoom(value=>Math.max(.72,value-.1))} aria-label="Zoom out"><Minus/></button><button onClick={()=>setZoom(1)} aria-label="Reset zoom"><RotateCcw/></button></div><div className="ontology-live"><i/><span>{touring?'GUIDED TOUR':'INTERACTIVE'}</span><b>{focused?.title||'CATALOG READY'}</b></div>
       <svg viewBox="0 0 1200 740" role="img" aria-label="Knowledge graph of Uzbekistan environmental datasets"><g style={{transform:`translate(600px, 370px) scale(${zoom}) translate(-600px, -370px)`,transformOrigin:'0 0'}}>
         <g className="ontology-core-links">{ontologyDomains.map(domain=><line key={domain.name} x1="600" y1="360" x2={domain.x} y2={domain.y}/>)}</g>
-        <g className="ontology-data-links">{graph.map(node=><line key={node.id} x1={node.domain.x} y1={node.domain.y} x2={node.x} y2={node.y} className={isVisible(node)?'visible':'dim'}/>)}</g>
-        {selected&&selectedConcept&&<line className="concept-link" x1={selected.x} y1={selected.y} x2={selectedConcept.x} y2={selectedConcept.y}/>} 
-        <g className="concept-nodes">{Object.entries(ontologyConcepts).map(([name,position])=><g key={name} transform={`translate(${position.x} ${position.y})`} className={selected?.concept===name?'related':''}><rect x="-53" y="-13" width="106" height="26"/><text>{name.toUpperCase()}</text></g>)}</g>
-        <g className="root-node" transform="translate(600 360)"><circle r="49"/><circle r="38"/><Network size={25} x="-12.5" y="-23"/><text y="16">UZGEODATA</text><text className="root-subtitle" y="29">CATALOG MODEL</text></g>
-        <g className="domain-nodes">{ontologyDomains.map(domain=>{const count=graph.filter(node=>node.category===domain.name).length;return <g key={domain.name} transform={`translate(${domain.x} ${domain.y})`} className={activeDomain===domain.name?'selected-domain':''} onClick={()=>setActiveDomain(activeDomain===domain.name?'All domains':domain.name)}><circle r="31" style={{stroke:domain.color}}/><circle r="23"/><text y="-2">{domain.name.toUpperCase()}</text><text className="domain-count" y="12">{count} DATASETS</text></g>})}</g>
-        <g className="dataset-nodes">{graph.map(node=><g key={node.id} transform={`translate(${node.x} ${node.y})`} className={`${isVisible(node)?'visible':'dim'} ${selectedId===node.id?'selected':''}`} onClick={()=>setSelectedId(node.id)}><circle r={selectedId===node.id?7:4} style={{fill:node.domain.color}}/><title>{node.title}</title></g>)}</g>
+        <g className="ontology-data-links">{graph.map(node=><line key={node.id} x1={node.domain.x} y1={node.domain.y} x2={node.x} y2={node.y} style={{'--link-delay':`${(Number(node.id.split('-')[1])%16)*90}ms`}} className={`${isVisible(node)?'visible':'dim'} ${focused?.id===node.id?'focused-link':''} ${focused&&focused.category!==node.category?'context-dim':''}`}/>)}</g>
+        {focused&&focusedConcept&&<line className="concept-link" x1={focused.x} y1={focused.y} x2={focusedConcept.x} y2={focusedConcept.y}/>}
+        <g className="concept-nodes">{Object.entries(ontologyConcepts).map(([name,position])=><g key={name} transform={`translate(${position.x} ${position.y})`} className={focused?.concept===name?'related':''}><rect x="-53" y="-13" width="106" height="26"/><text>{name.toUpperCase()}</text></g>)}</g>
+        <g className="root-node" transform="translate(600 360)"><circle className="root-halo" r="63"/><circle className="root-shell" r="49"/><circle className="root-core" r="38"/><Network size={25} x="-12.5" y="-23"/><text y="16">UZGEODATA</text><text className="root-subtitle" y="29">CATALOG MODEL</text></g>
+        <g className="domain-nodes">{ontologyDomains.map((domain,index)=>{const count=graph.filter(node=>node.category===domain.name).length;const related=focused?.category===domain.name;return <g key={domain.name} transform={`translate(${domain.x} ${domain.y})`} className={`${activeDomain===domain.name?'selected-domain':''} ${related?'related-domain':''}`} onClick={()=>selectDomain(domain.name)}><circle className="domain-halo" r="42" style={{stroke:domain.color,'--domain-delay':`${index*.35}s`}}/><circle className="domain-shell" r="31" style={{stroke:domain.color}}/><circle className="domain-core" r="23"/><text y="-2">{domain.name.toUpperCase()}</text><text className="domain-count" y="12">{count} DATASETS</text></g>})}</g>
+        <g className="dataset-nodes">{graph.map((node,index)=>{const focusedNode=focused?.id===node.id;return <g key={node.id} transform={`translate(${node.x} ${node.y})`} style={{'--node-delay':`${Math.min(index*12,900)}ms`}} className={`${isVisible(node)?'visible':'dim'} ${selectedId===node.id?'selected':''} ${focusedNode?'focused-node':''} ${focused&&focused.category===node.category?'related-node':''}`} onMouseEnter={()=>setHoveredId(node.id)} onMouseLeave={()=>setHoveredId(null)} onClick={()=>selectNode(node.id)}>{focusedNode&&<circle className="node-focus-ring" r="13"/>}<circle className="dataset-dot" r={selectedId===node.id?7:4} style={{fill:node.domain.color}}/><title>{node.title}</title></g>})}</g>
       </g></svg><div className="ontology-legend"><span><i className="legend-root"/>Atlas</span><span><i className="legend-domain"/>Domain</span><span><i className="legend-data"/>Dataset</span><span><i className="legend-concept"/>Analytical concept</span></div></div>
-      <aside className="ontology-detail">{selected?<><div className="entity-type"><span>DATASET ENTITY</span><small>{selected.id.toUpperCase()}</small></div><div className="entity-icon"><Network size={28}/></div><h3>{selected.title}</h3><p className="source-name">{selected.sourceTitle}</p><div className="relation-chain"><span>UZBEKISTAN ATLAS</span><b>→</b><span>{selected.category}</span><b>→</b><strong>{selected.concept}</strong></div><div className="entity-properties"><div><span>DOMAIN</span><strong>{selected.category}</strong></div><div><span>DESCRIBES</span><strong>{selected.concept}</strong></div><div><span>FORMAT</span><strong>{selected.extension}</strong></div><div><span>SOURCE SIZE</span><strong>{(selected.size/1024/1024).toFixed(selected.size>10*1024*1024?0:1)} MB</strong></div></div><div className="semantic-tags"><span>is a · Dataset</span><span>belongs to · {selected.category}</span><span>describes · {selected.concept}</span></div><button className="button" onClick={()=>onRequest(selected.title)}>Request this dataset <ArrowRight size={16}/></button></>:<div className="entity-empty"><Network/><p>Select a node to inspect its relationships.</p></div>}</aside>
+      <aside className="ontology-detail">{selected?<div className="entity-content" key={selected.id}><div className="entity-type"><span>DATASET ENTITY</span><small>{selected.id.toUpperCase()}</small></div><div className="entity-icon"><Network size={28}/></div><h3>{selected.title}</h3><p className="source-name">{selected.sourceTitle}</p><div className="relation-chain"><span>UZBEKISTAN ATLAS</span><b>→</b><span>{selected.category}</span><b>→</b><strong>{selected.concept}</strong></div><div className="entity-properties"><div><span>DOMAIN</span><strong>{selected.category}</strong></div><div><span>DESCRIBES</span><strong>{selected.concept}</strong></div><div><span>FORMAT</span><strong>{selected.extension}</strong></div><div><span>SOURCE SIZE</span><strong>{(selected.size/1024/1024).toFixed(selected.size>10*1024*1024?0:1)} MB</strong></div></div><div className="semantic-tags"><span>is a · Dataset</span><span>belongs to · {selected.category}</span><span>describes · {selected.concept}</span></div><button className="button" onClick={()=>onRequest(selected.title)}>Request this dataset <ArrowRight size={16}/></button></div>:<div className="entity-empty"><Network/><p>Select a node to inspect its relationships.</p></div>}</aside>
     </div>
   </section>
 }
