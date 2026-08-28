@@ -28,6 +28,8 @@
     {"id": "uz:prop/surface-water-extent", "prefLabel": "Surface water extent", "altLabels": ["flooded ecosystems", "водная поверхность"], "definition": "Area covered by permanent or seasonal surface water.", "unit": "km2", "broader": "uz:theme/water"},
     {"id": "uz:prop/water-ecosystem-extent", "prefLabel": "Water ecosystem extent", "altLabels": ["wetland", "водные экосистемы"], "definition": "Area of aquatic and wetland ecosystems.", "unit": "km2", "broader": "uz:theme/water"},
     {"id": "uz:prop/water-management-zone", "prefLabel": "Water management zone", "altLabels": ["water management", "управление водными ресурсами"], "definition": "Administrative or operational unit for allocating and managing water.", "broader": "uz:theme/water"},
+    {"id": "uz:prop/river-network", "prefLabel": "River network", "altLabels": ["river reach", "stream network", "речная сеть"], "definition": "Connected river and stream reaches with stable identifiers, direction and downstream routing.", "broader": "uz:theme/water"},
+    {"id": "uz:prop/drainage-basin", "prefLabel": "Drainage basin", "altLabels": ["catchment", "watershed", "речной бассейн"], "definition": "Hydrologically connected catchment polygons organized by Pfafstetter hierarchy.", "broader": "uz:theme/water"},
 
     {"id": "uz:prop/land-cover", "prefLabel": "Land cover", "altLabels": ["наземный покров", "земельный покров"], "definition": "Physical material at the surface, as a classified map.", "broader": "uz:theme/land-agriculture"},
     {"id": "uz:prop/land-use-type", "prefLabel": "Land use type", "altLabels": ["land use", "виды землепользования"], "definition": "Human function assigned to land, distinct from its physical cover.", "broader": "uz:theme/land-agriculture"},

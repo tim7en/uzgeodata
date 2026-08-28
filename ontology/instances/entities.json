@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-28T14:47:37+00:00",
+  "generatedAt": "2026-08-28T20:45:09+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -27,6 +27,15 @@
       "agentVersion": "1.0",
       "trustTier": "authoritative",
       "description": "Measured facts produced by the conversion scripts: geometry type, feature counts, bounding boxes, field names, derivation lineage."
+    },
+    {
+      "id": "uz:agent/hydrosheds",
+      "type": "Agent",
+      "label": "HydroSHEDS",
+      "agentKind": "organisation",
+      "agentVersion": "HydroRIVERS v1.0 / HydroLAKES v1.0 / HydroBASINS v1.c",
+      "trustTier": "authoritative",
+      "description": "Global hydrographic reference data developed by WWF and partners. Stable river, lake and basin identifiers are preserved in the Uzbekistan relationship database together with native downstream routing and Pfafstetter hierarchy."
     },
     {
       "id": "uz:agent/model-tfidf-knn-v1",
@@ -84,8 +93,8 @@
       "sourceKey": "100_животноводство",
       "atlasNumber": 100,
       "catalogId": "atlas-001",
-      "repositoryId": "50ade40a-5603-480b-9e1c-797787c25f40",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 100_животноводство"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a101-forage-lands",
@@ -98,8 +107,8 @@
       "sourceKey": "101_Кормовые_угодья",
       "atlasNumber": 101,
       "catalogId": "atlas-002",
-      "repositoryId": "4d5bf2b9-424c-4e24-9224-25763d9470dc",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 101_Кормовые_угодья"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a113-arable-land-dynamics",
@@ -112,8 +121,8 @@
       "sourceKey": "113_Динамика_пахотных_земель",
       "atlasNumber": 113,
       "catalogId": "atlas-003",
-      "repositoryId": "30c11606-2962-4171-81f8-d821bc7cd5f4",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 113_Динамика_пахотных_земель"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a114-terrestrial-land-cover",
@@ -126,8 +135,8 @@
       "sourceKey": "114_Наземный покров",
       "atlasNumber": 114,
       "catalogId": "atlas-004",
-      "repositoryId": "7265ca51-dc59-45da-b868-ea4f8bd3aa45",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 114_Наземный покров"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a115-soil-salinity",
@@ -140,8 +149,8 @@
       "sourceKey": "115_Степень засоления почв",
       "atlasNumber": 115,
       "catalogId": "atlas-005",
-      "repositoryId": "4f48bee8-d2f0-4818-a54a-27432020a2a6",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 115_Степень засоления почв"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a116-irrigated-soil-salinity",
@@ -154,8 +163,8 @@
       "sourceKey": "116_Засоление_орошаемых_почв",
       "atlasNumber": 116,
       "catalogId": "atlas-006",
-      "repositoryId": "0bf77393-4f96-4a4f-ac84-c9e73d253e18",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 116_Засоление_орошаемых_почв"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a117-soil-salinity-dynamics",
@@ -168,8 +177,8 @@
       "sourceKey": "117_Динамика_засоления_почв",
       "atlasNumber": 117,
       "catalogId": "atlas-007",
-      "repositoryId": "d8e89293-1ed4-4503-a7e1-26c05ad3f8cf",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 117_Динамика_засоления_почв"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a118-average-maximum-ndvi-20042024",
@@ -182,8 +191,8 @@
       "sourceKey": "118_Средние максимальные значения NDVI (2004–2024 гг",
       "atlasNumber": 118,
       "catalogId": "atlas-008",
-      "repositoryId": "eeedd791-2b75-4ec4-afdb-427798fe4045",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 118_Средние максимальные значения NDVI (2004–2024 гг"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a119-ndvi-dynamics",
@@ -196,8 +205,8 @@
       "sourceKey": "119_Динамика нормализованного вегетационного индекса",
       "atlasNumber": 119,
       "catalogId": "atlas-009",
-      "repositoryId": "19a7918a-4e3b-49a4-9302-52ba11bce1bc",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 119_Динамика нормализованного вегетационного индекса"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a120-enhanced-vegetation-index-dynamics",
@@ -210,8 +219,8 @@
       "sourceKey": "120_Динамика улучшенного индекса растительности",
       "atlasNumber": 120,
       "catalogId": "atlas-010",
-      "repositoryId": "8dce8177-6b1b-4490-a282-e55db58d2cec",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 120_Динамика улучшенного индекса растительности"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a121-leaf-area-index",
@@ -224,8 +233,8 @@
       "sourceKey": "121_Индекс листовой поверхности",
       "atlasNumber": 121,
       "catalogId": "atlas-011",
-      "repositoryId": "88881178-66bc-4f0c-bb99-5b26930e0444",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 121_Индекс листовой поверхности"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a122-land-productivity-dynamics",
@@ -238,8 +247,8 @@
       "sourceKey": "122_Динамика продуктивности земель",
       "atlasNumber": 122,
       "catalogId": "atlas-012",
-      "repositoryId": "db489b4d-76f5-42ff-8a93-5dd65e243b4d",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 122_Динамика продуктивности земель"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a123-arable-land-use-intensity",
@@ -252,8 +261,8 @@
       "sourceKey": "123_Интенсивность использования пахотных земель",
       "atlasNumber": 123,
       "catalogId": "atlas-013",
-      "repositoryId": "08ac240a-7965-47b2-a001-24ca72fd2418",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 123_Интенсивность использования пахотных земель"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a124-pasture-vegetation-types",
@@ -266,8 +275,8 @@
       "sourceKey": "124_Типы растительности пастбищ",
       "atlasNumber": 124,
       "catalogId": "atlas-014",
-      "repositoryId": "776c2989-8142-43e0-8ee0-f3ade98d55bb",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 124_Типы растительности пастбищ"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a125-recommended-pasture-stocking-rate",
@@ -280,8 +289,8 @@
       "sourceKey": "125_Нормативная пастбищная нагрузка (голов на га)",
       "atlasNumber": 125,
       "catalogId": "atlas-015",
-      "repositoryId": "487bc0ca-40f3-49d5-8bb0-d60d1738a6aa",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 125_Нормативная пастбищная нагрузка (голов на га)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a126-pasture-productivity",
@@ -294,8 +303,8 @@
       "sourceKey": "126_Продуктивность пастбищ (тонн_га)",
       "atlasNumber": 126,
       "catalogId": "atlas-016",
-      "repositoryId": "c32f0430-ac1b-4574-8398-549af9c13766",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 126_Продуктивность пастбищ (тонн_га)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a127-soil-organic-carbon",
@@ -308,8 +317,8 @@
       "sourceKey": "127_Органический углерод в почвах",
       "atlasNumber": 127,
       "catalogId": "atlas-017",
-      "repositoryId": "199a7eb1-4467-4459-9cce-fb7ca6cc4057",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 127_Органический углерод в почвах"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a128-carbon-emission-volume",
@@ -322,8 +331,8 @@
       "sourceKey": "128_объём выбросов углерода",
       "atlasNumber": 128,
       "catalogId": "atlas-018",
-      "repositoryId": "41c2f2fd-8e33-4fe8-a6b7-37636e573eb1",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 128_объём выбросов углерода"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a129-net-carbon-balance",
@@ -336,8 +345,8 @@
       "sourceKey": "129_чистый баланс углерода",
       "atlasNumber": 129,
       "catalogId": "atlas-019",
-      "repositoryId": "9d1f98d5-f1cf-484d-ae9b-534b930c1ff7",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 129_чистый баланс углерода"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a135-forest-cover-2005",
@@ -350,8 +359,8 @@
       "sourceKey": "135_Лесной покров в 2005.tif",
       "atlasNumber": 135,
       "catalogId": "atlas-020",
-      "repositoryId": "58aa9ecb-b9a9-4d96-bc5f-1cddf618c77a",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 135_Лесной покров в 2005.tif"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a137-forest-types",
@@ -364,8 +373,8 @@
       "sourceKey": "137_Типы_лесов",
       "atlasNumber": 137,
       "catalogId": "atlas-021",
-      "repositoryId": "57ce8228-4f9e-4c0a-9536-093a8f8cd2ab",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 137_Типы_лесов"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a138-saxaul-distribution",
@@ -378,8 +387,8 @@
       "sourceKey": "138_Ареалы произростания саксаула",
       "atlasNumber": 138,
       "catalogId": "atlas-022",
-      "repositoryId": "4fbd7d7f-3c0b-45fc-b542-7f6b117fccbf",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 138_Ареалы произростания саксаула"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a139-natural-and-planted-forests",
@@ -392,8 +401,8 @@
       "sourceKey": "139_Естественные и искусственные леса",
       "atlasNumber": 139,
       "catalogId": "atlas-023",
-      "repositoryId": "05c06640-1038-4f8e-93bb-051078b8b807",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 139_Естественные и искусственные леса"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a147-forest-carbon-sequestration",
@@ -406,8 +415,8 @@
       "sourceKey": "147_поглощение углерода лесами",
       "atlasNumber": 147,
       "catalogId": "atlas-024",
-      "repositoryId": "49fa9d01-2768-4167-bd9d-24a760e684cd",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 147_поглощение углерода лесами"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a148-forest-plantation-potential",
@@ -420,8 +429,8 @@
       "sourceKey": "148_Потенциал устройства лесных плантаций (_)",
       "atlasNumber": 148,
       "catalogId": "atlas-025",
-      "repositoryId": "c30d4bfa-5ff2-41ee-a41d-87083b4d3475",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 148_Потенциал устройства лесных плантаций (_)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
@@ -434,8 +443,8 @@
       "sourceKey": "149_Потенциал_связывания_углерода_при_лесовосстановлении.tif",
       "atlasNumber": 149,
       "catalogId": "atlas-026",
-      "repositoryId": "09e9f784-bf2c-4202-987e-809340829bd8",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 149_Потенциал_связывания_углерода_при_лесовосстановлении.tif"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a150-forest-canopy-closure",
@@ -448,8 +457,8 @@
       "sourceKey": "150_Сомкнутость леса",
       "atlasNumber": 150,
       "catalogId": "atlas-027",
-      "repositoryId": "a17331e4-a270-4dab-a476-08cc97f8266c",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 150_Сомкнутость леса"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a151-forest-age",
@@ -462,8 +471,8 @@
       "sourceKey": "151_Возраст леса",
       "atlasNumber": 151,
       "catalogId": "atlas-028",
-      "repositoryId": "91095f4e-e475-41b0-a227-9fb5178bd85f",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 151_Возраст леса"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a152-forest-landscape-integrity-index",
@@ -476,8 +485,8 @@
       "sourceKey": "152_Индекс целостности лесных ландшафтов",
       "atlasNumber": 152,
       "catalogId": "atlas-029",
-      "repositoryId": "638c54df-41b4-489e-ab13-cadb07ec44ab",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 152_Индекс целостности лесных ландшафтов"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a153-forest-cover-change-19822016",
@@ -490,8 +499,8 @@
       "sourceKey": "153_Ареал изменения лесного покрова, 1982–2016 гг.",
       "atlasNumber": 153,
       "catalogId": "atlas-030",
-      "repositoryId": "76b9739d-07bb-42f4-a81b-f48bc8023bb5",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 153_Ареал изменения лесного покрова, 1982–2016 гг."
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a158-physical-geographic-regions",
@@ -504,8 +513,8 @@
       "sourceKey": "158_Физико_географическое_районирование",
       "atlasNumber": 158,
       "catalogId": "atlas-031",
-      "repositoryId": "29735e66-a71c-4cb3-a5cc-e2dd4e77dbf4",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 158_Физико_географическое_районирование"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a159-landscapes",
@@ -518,8 +527,8 @@
       "sourceKey": "159_Ландшафты",
       "atlasNumber": 159,
       "catalogId": "atlas-032",
-      "repositoryId": "b6ac0853-93b4-43cd-ad23-4760c9756488",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 159_Ландшафты"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a16-climate-types",
@@ -532,8 +541,8 @@
       "sourceKey": "16_Типы климата",
       "atlasNumber": 16,
       "catalogId": "atlas-043",
-      "repositoryId": "8e59993b-3cec-4e9e-bc2e-705217420d6d",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 16_Типы климата"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a160-landscape-structure",
@@ -546,8 +555,8 @@
       "sourceKey": "160_Ландшафтная_структура",
       "atlasNumber": 160,
       "catalogId": "atlas-033",
-      "repositoryId": "c8493fa1-78c8-43ec-a665-ce4156ff6a2c",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 160_Ландшафтная_структура"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a161-plant-formations",
@@ -560,8 +569,8 @@
       "sourceKey": "161_растительные_формации",
       "atlasNumber": 161,
       "catalogId": "atlas-034",
-      "repositoryId": "67aaffd5-8f48-4044-bea5-1ad19461721d",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 161_растительные_формации"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a162-vegetation",
@@ -574,8 +583,8 @@
       "sourceKey": "162_Растительность",
       "atlasNumber": 162,
       "catalogId": "atlas-035",
-      "repositoryId": "0f6d25bd-6d52-4026-94c3-d51406bfa6b6",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 162_Растительность"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a163-zoogeographic-regions",
@@ -588,8 +597,8 @@
       "sourceKey": "163_Зоогеографические_районы",
       "atlasNumber": 163,
       "catalogId": "atlas-036",
-      "repositoryId": "fd5f52ea-86f3-40b0-8474-1f623461b58d",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 163_Зоогеографические_районы"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a164-bird-species-richness",
@@ -602,8 +611,8 @@
       "sourceKey": "164_количество_видов_птиц",
       "atlasNumber": 164,
       "catalogId": "atlas-037",
-      "repositoryId": "782d62ce-c9c1-49cd-bbfc-5adc75221bea",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 164_количество_видов_птиц"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a165-habitat-diversity-index",
@@ -616,8 +625,8 @@
       "sourceKey": "165_индекс_разнообразия_местообитаний",
       "atlasNumber": 165,
       "catalogId": "atlas-038",
-      "repositoryId": "bd9444dd-2a9c-4e23-b046-2a4f83feaa9c",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 165_индекс_разнообразия_местообитаний"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a166-mammal-species-richness",
@@ -630,8 +639,8 @@
       "sourceKey": "166_количество_видов_млекопитающих",
       "atlasNumber": 166,
       "catalogId": "atlas-039",
-      "repositoryId": "e790be47-1c4c-4bdd-ae81-939c67ccae54",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 166_количество_видов_млекопитающих"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a167-useful-plants",
@@ -644,8 +653,8 @@
       "sourceKey": "167_полезные_растения",
       "atlasNumber": 167,
       "catalogId": "atlas-040",
-      "repositoryId": "a40bd4ed-c269-499c-96da-a6d826d50125",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 167_полезные_растения"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a168-game-birds",
@@ -658,8 +667,8 @@
       "sourceKey": "168_Охотничье-промысловые птицы",
       "atlasNumber": 168,
       "catalogId": "atlas-041",
-      "repositoryId": "d50b76a1-f810-442d-817f-6be97b371677",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 168_Охотничье-промысловые птицы"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a169-game-mammals",
@@ -672,8 +681,8 @@
       "sourceKey": "169_Охотничье-промысловые млекопитающие",
       "atlasNumber": 169,
       "catalogId": "atlas-042",
-      "repositoryId": "7af6f2c0-a541-49a5-8ff8-beb7b6c96f3f",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 169_Охотничье-промысловые млекопитающие"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a17-projected-climate-types-for-2100",
@@ -686,8 +695,8 @@
       "sourceKey": "17_Прогнозируемые_типы_климата_2100",
       "atlasNumber": 17,
       "catalogId": "atlas-051",
-      "repositoryId": "c22ec8cc-acac-467f-97f0-a7f90ba1dd97",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 17_Прогнозируемые_типы_климата_2100"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a170-biodiversity-intactness-index",
@@ -700,8 +709,8 @@
       "sourceKey": "170_Индекс_интактности_биоразнообразия",
       "atlasNumber": 170,
       "catalogId": "atlas-044",
-      "repositoryId": "85da645f-132c-4e3f-98b7-dd58fd364408",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 170_Индекс_интактности_биоразнообразия"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a171-fish",
@@ -714,8 +723,8 @@
       "sourceKey": "171_Рыбы",
       "atlasNumber": 171,
       "catalogId": "atlas-045",
-      "repositoryId": "e4585875-c61d-41f8-8aa8-f23e71d21789",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 171_Рыбы"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a172-reptiles",
@@ -728,8 +737,8 @@
       "sourceKey": "172_Рептилии",
       "atlasNumber": 172,
       "catalogId": "atlas-046",
-      "repositoryId": "d1f6f3a1-000a-4e27-8467-0a5ad7ab9c34",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 172_Рептилии"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a173-mammals",
@@ -742,8 +751,8 @@
       "sourceKey": "173_Млекопитающие",
       "atlasNumber": 173,
       "catalogId": "atlas-047",
-      "repositoryId": "1ded4b15-37f5-4d98-8a86-3349142be9c1",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 173_Млекопитающие"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a174-plants",
@@ -756,8 +765,8 @@
       "sourceKey": "174_Растения",
       "atlasNumber": 174,
       "catalogId": "atlas-048",
-      "repositoryId": "0c26961e-9e82-49dc-a631-0bb5a760b04c",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 174_Растения"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a175-invertebrates",
@@ -770,8 +779,8 @@
       "sourceKey": "175_Беспозвоночные",
       "atlasNumber": 175,
       "catalogId": "atlas-049",
-      "repositoryId": "41d483c3-d8cb-4d06-a3f4-e563d58bb4e6",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 175_Беспозвоночные"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a176-birds",
@@ -784,8 +793,8 @@
       "sourceKey": "176_Птицы",
       "atlasNumber": 176,
       "catalogId": "atlas-050",
-      "repositoryId": "2e929e7a-fbfd-4984-94d7-656321e96bfc",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 176_Птицы"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a18-local-climate-zones",
@@ -798,8 +807,8 @@
       "sourceKey": "18_Локальные климатические зоны",
       "atlasNumber": 18,
       "catalogId": "atlas-057",
-      "repositoryId": "dbeee78e-5a64-4a50-a7c2-4762f8c418a6",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 18_Локальные климатические зоны"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a185-protected-area-types",
@@ -812,8 +821,8 @@
       "sourceKey": "185_Типы ООПТ",
       "atlasNumber": 185,
       "catalogId": "atlas-052",
-      "repositoryId": "f93faa8e-d3b5-4985-8739-5e0ed4fad44c",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 185_Типы ООПТ"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a186-ecoregions",
@@ -826,8 +835,8 @@
       "sourceKey": "186_Экорегионы",
       "atlasNumber": 186,
       "catalogId": "atlas-053",
-      "repositoryId": "5849ad1e-237e-4b73-9737-4679205e2f6e",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 186_Экорегионы"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a187-protected-areas-and-key-biodiversity-areas",
@@ -840,8 +849,8 @@
       "sourceKey": "187_ООПТ_и_ключевые_территории_биоразнообразия",
       "atlasNumber": 187,
       "catalogId": "atlas-054",
-      "repositoryId": "5a0e612b-ac00-422e-af95-ec9eebb2db96",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 187_ООПТ_и_ключевые_территории_биоразнообразия"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a188-nature-conservation",
@@ -854,8 +863,8 @@
       "sourceKey": "188_Охрана природы",
       "atlasNumber": 188,
       "catalogId": "atlas-055",
-      "repositoryId": "175082a4-5530-4c87-a47c-14b4a0ccbfc9",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 188_Охрана природы"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a189-conservation-value-index",
@@ -868,8 +877,8 @@
       "sourceKey": "189_Индекс_природоохранной_ценности",
       "atlasNumber": 189,
       "catalogId": "atlas-056",
-      "repositoryId": "a5d661bb-55a4-4068-b2d3-24e28a106045",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 189_Индекс_природоохранной_ценности"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a19-average-start-of-the-growing-season-20002024",
@@ -882,8 +891,8 @@
       "sourceKey": "19_Средние многолетние даты начала вегетационного сезона (2000–2024 гг",
       "atlasNumber": 19,
       "catalogId": "atlas-062",
-      "repositoryId": "cfc9c763-2b04-421b-aaf6-5700994ee68e",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 19_Средние многолетние даты начала вегетационного сезона (2000–2024 гг"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a190-ecosystem-bioclimatic-resilience",
@@ -896,8 +905,8 @@
       "sourceKey": "190_биоклим_устойчивость_экосистем",
       "atlasNumber": 190,
       "catalogId": "atlas-058",
-      "repositoryId": "d38b5a88-f738-4d4b-b877-726fd5e4e7d1",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 190_биоклим_устойчивость_экосистем"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a191-habitat-dynamics-index",
@@ -910,8 +919,8 @@
       "sourceKey": "191_индекс_динамики_местообитаний",
       "atlasNumber": 191,
       "catalogId": "atlas-059",
-      "repositoryId": "20956d7a-e3e8-42dd-86ba-200b19883165",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 191_индекс_динамики_местообитаний"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a197-hypsometric-map",
@@ -924,8 +933,8 @@
       "sourceKey": "197_Гипсометрическая_карта",
       "atlasNumber": 197,
       "catalogId": "atlas-060",
-      "repositoryId": "994e7a35-d899-4e2f-839e-3a7bce8c4473",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 197_Гипсометрическая_карта"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a198-geomorphology",
@@ -938,8 +947,8 @@
       "sourceKey": "198_Геоморфология",
       "atlasNumber": 198,
       "catalogId": "atlas-061",
-      "repositoryId": "9cb8b0c1-27f8-46a5-8fdc-d1726d047b66",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 198_Геоморфология"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a20-average-peak-of-the-growing-season-20002024",
@@ -952,8 +961,8 @@
       "sourceKey": "20_Средние многолетние даты наступления пика вегетационного сезона (2000–2024 гг.)",
       "atlasNumber": 20,
       "catalogId": "atlas-079",
-      "repositoryId": "8e692b67-4749-4b7f-b573-67c651978dfa",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 20_Средние многолетние даты наступления пика вегетационного сезона (2000–2024 гг.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a201-palmer-drought-severity-index-2000",
@@ -966,8 +975,8 @@
       "sourceKey": "201_Индекс засухи Палмера (2000 г.)",
       "atlasNumber": 201,
       "catalogId": "atlas-063",
-      "repositoryId": "16b352d0-6e21-4187-983b-33078c5f5146",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 201_Индекс засухи Палмера (2000 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a201-palmer-drought-severity-index-2001",
@@ -980,8 +989,8 @@
       "sourceKey": "201_Индекс засухи Палмера (2001 г.)",
       "atlasNumber": 201,
       "catalogId": "atlas-064",
-      "repositoryId": "5a099843-dc76-4edf-9328-e0afd43e2afa",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 201_Индекс засухи Палмера (2001 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a202-palmer-drought-severity-index-2008",
@@ -994,8 +1003,8 @@
       "sourceKey": "202_Индекс засухи Палмера (2008 г.)",
       "atlasNumber": 202,
       "catalogId": "atlas-065",
-      "repositoryId": "d8712c69-d206-4d78-8c69-1611ef58bd37",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 202_Индекс засухи Палмера (2008 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a202-palmer-drought-severity-index-2011",
@@ -1008,8 +1017,8 @@
       "sourceKey": "202_Индекс засухи Палмера (2011 г.)",
       "atlasNumber": 202,
       "catalogId": "atlas-066",
-      "repositoryId": "52f41181-86a2-4a3c-9e2e-1fa3391ac897",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 202_Индекс засухи Палмера (2011 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a202-palmer-drought-severity-index-2018",
@@ -1022,8 +1031,8 @@
       "sourceKey": "202_Индекс засухи Палмера (2018 г.)",
       "atlasNumber": 202,
       "catalogId": "atlas-067",
-      "repositoryId": "8b2ad2e5-231b-420a-bb2e-7f81dcb33497",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 202_Индекс засухи Палмера (2018 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a202-palmer-drought-severity-index-2020",
@@ -1036,8 +1045,8 @@
       "sourceKey": "202_Индекс засухи Палмера (2020 г.)",
       "atlasNumber": 202,
       "catalogId": "atlas-068",
-      "repositoryId": "4c4424e6-2814-4872-b4f1-a940a0324973",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 202_Индекс засухи Палмера (2020 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a203-palmer-drought-severity-index-2021",
@@ -1050,8 +1059,8 @@
       "sourceKey": "203_Индекс засухи Палмера (2021 г.)",
       "atlasNumber": 203,
       "catalogId": "atlas-069",
-      "repositoryId": "f2ef7d31-d10f-49ad-a016-b89abc093b42",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 203_Индекс засухи Палмера (2021 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a203-palmer-drought-severity-index-2022",
@@ -1064,8 +1073,8 @@
       "sourceKey": "203_Индекс засухи Палмера (2022 г.)",
       "atlasNumber": 203,
       "catalogId": "atlas-070",
-      "repositoryId": "0de9518b-e7e9-4ac7-9069-4b2149e7a5ec",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 203_Индекс засухи Палмера (2022 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a203-palmer-drought-severity-index-2023",
@@ -1078,8 +1087,8 @@
       "sourceKey": "203_Индекс засухи Палмера (2023 г.)",
       "atlasNumber": 203,
       "catalogId": "atlas-071",
-      "repositoryId": "dd94bb60-baf9-4969-b2d1-14a18e5b46b6",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 203_Индекс засухи Палмера (2023 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a203-palmer-drought-severity-index-2024",
@@ -1092,8 +1101,8 @@
       "sourceKey": "203_Индекс засухи Палмера (2024 г.)",
       "atlasNumber": 203,
       "catalogId": "atlas-072",
-      "repositoryId": "7eb4158b-f3e2-4125-b44f-d649c493f6a0",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 203_Индекс засухи Палмера (2024 г.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a204-exposure-to-adverse-geodynamic-processes",
@@ -1106,8 +1115,8 @@
       "sourceKey": "204_Потенциальная подверженность территории Узбекистана негативным геодинамическим процессам",
       "atlasNumber": 204,
       "catalogId": "atlas-073",
-      "repositoryId": "447e25ca-505e-4f6b-88e8-86f0248d1ad5",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 204_Потенциальная подверженность территории Узбекистана негативным геодинамическим процессам"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a205-earthquakes-19902024",
@@ -1120,8 +1129,8 @@
       "sourceKey": "205_Землетрясения",
       "atlasNumber": 205,
       "catalogId": "atlas-074",
-      "repositoryId": "718817c7-c794-4af1-8ecc-92f912f35d78",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 205_Землетрясения"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a206-mudflow-zones",
@@ -1134,8 +1143,8 @@
       "sourceKey": "206_Зона распространения селей",
       "atlasNumber": 206,
       "catalogId": "atlas-075",
-      "repositoryId": "9e581146-6709-4eec-97e2-ef5bb4af6c9d",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 206_Зона распространения селей"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a207-flood-risk",
@@ -1148,8 +1157,8 @@
       "sourceKey": "207_Риск_наводнений",
       "atlasNumber": 207,
       "catalogId": "atlas-076",
-      "repositoryId": "5e3a5abf-5858-4d6b-bb39-1fde47707ff1",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 207_Риск_наводнений"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a208-flood-extent",
@@ -1162,8 +1171,8 @@
       "sourceKey": "208_распространение_наводнений",
       "atlasNumber": 208,
       "catalogId": "atlas-077",
-      "repositoryId": "a08aa858-b08e-4f0a-b2c9-422c5b277739",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 208_распространение_наводнений"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a209-glacier-ice-volume",
@@ -1176,8 +1185,8 @@
       "sourceKey": "209_объем_льда_в_ледниках",
       "atlasNumber": 209,
       "catalogId": "atlas-078",
-      "repositoryId": "3e9019f7-74a0-4d5b-a72e-44794f8e7ce1",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 209_объем_льда_в_ледниках"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a21-average-growing-season-duration-20002024",
@@ -1190,8 +1199,8 @@
       "sourceKey": "21-Средняя многолетняя продолжительность вегетационного сезона (2000–2024 гг.)",
       "atlasNumber": 21,
       "catalogId": "atlas-080",
-      "repositoryId": "c2e75ebd-1340-4d31-838b-97c057c2fa2a",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 21-Средняя многолетняя продолжительность вегетационного сезона (2000–2024 гг.)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a213-economic-losses-from-floods-and-earthquakes",
@@ -1204,8 +1213,8 @@
       "sourceKey": "213_Экономические потери от наводнений и землетрясений (_ ВРП)",
       "atlasNumber": 213,
       "catalogId": "atlas-081",
-      "repositoryId": "9bd55290-52f8-418e-a8d6-9cb0adb0fba0",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 213_Экономические потери от наводнений и землетрясений (_ ВРП)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a214-flood-and-earthquake-fatalities",
@@ -1218,8 +1227,8 @@
       "sourceKey": "214_Количество погибших от наводнений и землетрясений",
       "atlasNumber": 214,
       "catalogId": "atlas-082",
-      "repositoryId": "8eae6460-4f19-41dc-90bb-1581d8574bb0",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 214_Количество погибших от наводнений и землетрясений"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a22-average-end-of-the-growing-season-20002024",
@@ -1232,8 +1241,8 @@
       "sourceKey": "22_Средние многолетние даты конца вегетационного сезона (2000–2024 гг",
       "atlasNumber": 22,
       "catalogId": "atlas-083",
-      "repositoryId": "39a80101-6ca3-414b-acc4-807ba6c54777",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 22_Средние многолетние даты конца вегетационного сезона (2000–2024 гг"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a23-annual-temperature-trend-19602023",
@@ -1246,8 +1255,8 @@
       "sourceKey": "23_Тренд изменения среднегодовых температур, 1960-2023 (°C_год)",
       "atlasNumber": 23,
       "catalogId": "atlas-084",
-      "repositoryId": "4ab91a7c-df56-4dcf-8751-e01ae823e293",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 23_Тренд изменения среднегодовых температур, 1960-2023 (°C_год)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a24-annual-temperature-trend-19902023",
@@ -1260,8 +1269,8 @@
       "sourceKey": "24_Тренд изменения среднегодовых температур, 1990-2023 (°C_год)",
       "atlasNumber": 24,
       "catalogId": "atlas-085",
-      "repositoryId": "c8a9c6a2-bc3f-47e4-95bf-d395a30e2a45",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 24_Тренд изменения среднегодовых температур, 1990-2023 (°C_год)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a25-warm-season-temperature-trend-19602023",
@@ -1274,8 +1283,8 @@
       "sourceKey": "25_Тренд изменения температуры теплого периода, 1960-2023 (°C_год)",
       "atlasNumber": 25,
       "catalogId": "atlas-086",
-      "repositoryId": "283e3410-8643-41b6-88f9-6949fa8f6ba8",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 25_Тренд изменения температуры теплого периода, 1960-2023 (°C_год)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a26-warm-season-temperature-trend-19902023",
@@ -1288,8 +1297,8 @@
       "sourceKey": "26_Тренд изменения температуры теплого периода, 1990-2023 (°C_год)",
       "atlasNumber": 26,
       "catalogId": "atlas-087",
-      "repositoryId": "c12d2a69-856f-4547-993f-2aac6f1a741b",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 26_Тренд изменения температуры теплого периода, 1990-2023 (°C_год)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a27-maximum-temperature-trend-19602023",
@@ -1302,8 +1311,8 @@
       "sourceKey": "27_Тренд изменения максимальных температур, 1960-2023 (°C_год)",
       "atlasNumber": 27,
       "catalogId": "atlas-088",
-      "repositoryId": "8e855b1f-3db7-4b08-a003-8e9082665dbb",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 27_Тренд изменения максимальных температур, 1960-2023 (°C_год)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a28-precipitation-trend-19602023",
@@ -1316,8 +1325,8 @@
       "sourceKey": "28_Тренд изменения осадков, 1960-2023 (мм_год)",
       "atlasNumber": 28,
       "catalogId": "atlas-089",
-      "repositoryId": "6bfed434-86a6-4974-92cc-8f461202f2f9",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 28_Тренд изменения осадков, 1960-2023 (мм_год)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a29-precipitation-trend-19902023",
@@ -1330,8 +1339,8 @@
       "sourceKey": "29_Тренд изменения осадков, 1990-2023 (мм_год)",
       "atlasNumber": 29,
       "catalogId": "atlas-090",
-      "repositoryId": "4e0195c7-ca59-42c8-b990-5339714719bf",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 29_Тренд изменения осадков, 1990-2023 (мм_год)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a30-snow-cover-depth-trend-19602024",
@@ -1344,8 +1353,8 @@
       "sourceKey": "30_Тренд мощности снежного покрова (мм_год), 1960-2024",
       "atlasNumber": 30,
       "catalogId": "atlas-091",
-      "repositoryId": "2611f9e6-4183-4369-8aad-8da42c0ee281",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 30_Тренд мощности снежного покрова (мм_год), 1960-2024"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a31-snow-cover-depth-trend-19902024",
@@ -1358,8 +1367,8 @@
       "sourceKey": "31_Тренд мощности снежного покрова (мм_год), 1990-2024",
       "atlasNumber": 31,
       "catalogId": "atlas-092",
-      "repositoryId": "0baa3fa6-7a0f-4c99-a252-084ba27234e8",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 31_Тренд мощности снежного покрова (мм_год), 1990-2024"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a32-climatic-water-deficit-1990",
@@ -1372,8 +1381,8 @@
       "sourceKey": "32_Климатический водный дефицит, 1990 (мм)",
       "atlasNumber": 32,
       "catalogId": "atlas-093",
-      "repositoryId": "eb9a5bb0-0b51-4724-9939-95ed472ac7cd",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 32_Климатический водный дефицит, 1990 (мм)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a33-climatic-water-deficit-2023",
@@ -1386,8 +1395,8 @@
       "sourceKey": "33_Климатический водный дефицит, 2023 (мм)",
       "atlasNumber": 33,
       "catalogId": "atlas-094",
-      "repositoryId": "36ba0707-5733-4a7d-a34c-cac38a0be10f",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 33_Климатический водный дефицит, 2023 (мм)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a34-climatic-water-deficit-trend-19602023",
@@ -1400,8 +1409,8 @@
       "sourceKey": "34_Тренд изменения климатического водного дефицита, 1960-2023 (мм)",
       "atlasNumber": 34,
       "catalogId": "atlas-095",
-      "repositoryId": "7a647b7a-fe55-4361-8204-50603716875c",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 34_Тренд изменения климатического водного дефицита, 1960-2023 (мм)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a35-climatic-water-deficit-trend-19902023",
@@ -1414,8 +1423,8 @@
       "sourceKey": "35_Тренд изменения климатического водного дефицита, 1990-2023 (мм)",
       "atlasNumber": 35,
       "catalogId": "atlas-096",
-      "repositoryId": "b387c962-ee3d-4a45-af80-21b9cf2def33",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 35_Тренд изменения климатического водного дефицита, 1990-2023 (мм)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a36-projected-temperature-change-by-2040",
@@ -1428,8 +1437,8 @@
       "sourceKey": "36_Ожидаемое изменение температуры к 2040 году относительно базового периода (1970-2000) (°C)",
       "atlasNumber": 36,
       "catalogId": "atlas-097",
-      "repositoryId": "ab669431-27c2-41e6-a791-81b9d2e9d971",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 36_Ожидаемое изменение температуры к 2040 году относительно базового периода (1970-2000) (°C)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a37-projected-precipitation-change-by-2040",
@@ -1442,8 +1451,8 @@
       "sourceKey": "37_Ожидаемое изменение осадков к 2040 в _ от базового периода (1970-2000)",
       "atlasNumber": 37,
       "catalogId": "atlas-098",
-      "repositoryId": "2f3522ff-4188-45dd-99f1-a1049af39ad1",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 37_Ожидаемое изменение осадков к 2040 в _ от базового периода (1970-2000)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a42-share-of-settlement-area",
@@ -1456,8 +1465,8 @@
       "sourceKey": "42_Доля площади населенных пунктов (_)",
       "atlasNumber": 42,
       "catalogId": "atlas-099",
-      "repositoryId": "fc0bb1fb-5e3b-4203-9686-f61f0614a6dd",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 42_Доля площади населенных пунктов (_)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a43-settlement-area-change-19702020",
@@ -1470,8 +1479,8 @@
       "sourceKey": "43_Изменение площади населенных пунктов за период 1970-2020 (_)",
       "atlasNumber": 43,
       "catalogId": "atlas-100",
-      "repositoryId": "fadf7143-f78e-4f7f-9c39-93f177d75960",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 43_Изменение площади населенных пунктов за период 1970-2020 (_)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a44-disappeared-settlements-by-basin",
@@ -1484,8 +1493,8 @@
       "sourceKey": "44_Доля_исчезнувших_н_п_от_общей_площади_бассейна",
       "atlasNumber": 44,
       "catalogId": "atlas-101",
-      "repositoryId": "7da31e4b-68ff-491b-90df-c14a22435aa8",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 44_Доля_исчезнувших_н_п_от_общей_площади_бассейна"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a45-road-network-density",
@@ -1498,8 +1507,8 @@
       "sourceKey": "45_Плотность автомобильных дорог (км_км2)",
       "atlasNumber": 45,
       "catalogId": "atlas-102",
-      "repositoryId": "1b0a279d-6b4f-4f5f-ad4f-2217e6156756",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 45_Плотность автомобильных дорог (км_км2)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a52-water-management-zones",
@@ -1512,8 +1521,8 @@
       "sourceKey": "52_Водное_хозяйство",
       "atlasNumber": 52,
       "catalogId": "atlas-103",
-      "repositoryId": "36dd27de-07d7-44f2-b972-84f61bdf33b1",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 52_Водное_хозяйство"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a53-irrigated-areas-by-catchment",
@@ -1526,8 +1535,8 @@
       "sourceKey": "53_Орошаемые площади водосборных бассейнов",
       "atlasNumber": 53,
       "catalogId": "atlas-104",
-      "repositoryId": "c1061ab7-7340-47fa-b8e7-87ce6631b9e9",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 53_Орошаемые площади водосборных бассейнов"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a54-areas-using-drainage",
@@ -1540,8 +1549,8 @@
       "sourceKey": "54_Районы с использованием дренажа",
       "atlasNumber": 54,
       "catalogId": "atlas-105",
-      "repositoryId": "4834f18e-9b75-4851-9139-94485a581bfc",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 54_Районы с использованием дренажа"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a55-historical-irrigation-districts",
@@ -1554,8 +1563,8 @@
       "sourceKey": "55_Исторические_ирригационные_районы_готово",
       "atlasNumber": 55,
       "catalogId": "atlas-106",
-      "repositoryId": "d2107f1d-e4ed-4be8-9f0b-4eb37a83f1ae",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 55_Исторические_ирригационные_районы_готово"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a56-annual-runoff-volume",
@@ -1568,8 +1577,8 @@
       "sourceKey": "56_Объем годового стока (км3)",
       "atlasNumber": 56,
       "catalogId": "atlas-107",
-      "repositoryId": "c14cd1a5-e679-49a0-9441-2df158be1ddd",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 56_Объем годового стока (км3)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a57-dams-reservoirs-and-glacial-lakes",
@@ -1582,8 +1591,8 @@
       "sourceKey": "57_Дамбы_и_водохранилища",
       "atlasNumber": 57,
       "catalogId": "atlas-108",
-      "repositoryId": "94241919-fef8-4153-8438-1af16c330aac",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 57_Дамбы_и_водохранилища"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a58-lake-and-reservoir-volume",
@@ -1596,8 +1605,8 @@
       "sourceKey": "58_Объем озер и водохранилищ (млн м3)",
       "atlasNumber": 58,
       "catalogId": "atlas-109",
-      "repositoryId": "3213b708-476d-4c19-8569-eed38e1dc8d4",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 58_Объем озер и водохранилищ (млн м3)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a59-groundwater-depth",
@@ -1610,8 +1619,8 @@
       "sourceKey": "59_Глубина_залегания_грунтовых_вод",
       "atlasNumber": 59,
       "catalogId": "atlas-110",
-      "repositoryId": "21d68ef6-8392-4b70-a766-8079c5182217",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 59_Глубина_залегания_грунтовых_вод"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a60-groundwater-pollution",
@@ -1624,8 +1633,8 @@
       "sourceKey": "60_Загрязнение_грунтовых_вод",
       "atlasNumber": 60,
       "catalogId": "atlas-111",
-      "repositoryId": "99df6995-1a30-4c3c-a673-064c0c0ff127",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 60_Загрязнение_грунтовых_вод"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a61-groundwater-resources",
@@ -1638,8 +1647,8 @@
       "sourceKey": "61_Подземные воды",
       "atlasNumber": 61,
       "catalogId": "atlas-112",
-      "repositoryId": "7e0fa917-0557-4ec3-93ba-71f6fc70d818",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 61_Подземные воды"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a62-artesian-basins",
@@ -1652,8 +1661,8 @@
       "sourceKey": "62_Артезианские бассейны",
       "atlasNumber": 62,
       "catalogId": "atlas-113",
-      "repositoryId": "3bdb63da-5daa-4319-811b-987a69b345b9",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 62_Артезианские бассейны"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a63-irrigation-canal-density",
@@ -1666,8 +1675,8 @@
       "sourceKey": "63_Плотность_ирригационных_каналов",
       "atlasNumber": 63,
       "catalogId": "atlas-114",
-      "repositoryId": "61ef1c6b-998f-47b3-b49f-9f9b3a99effc",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 63_Плотность_ирригационных_каналов"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a64-agricultural-land-served-by-canals",
@@ -1680,8 +1689,8 @@
       "sourceKey": "64_Площадь_сельскохозяйственных_земель_обслуживаемых_каналом",
       "atlasNumber": 64,
       "catalogId": "atlas-115",
-      "repositoryId": "04389da7-0fd3-45b3-a286-dd741f91b08e",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 64_Площадь_сельскохозяйственных_земель_обслуживаемых_каналом"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a73-water-stress",
@@ -1694,8 +1703,8 @@
       "sourceKey": "73_Водный_стресс",
       "atlasNumber": 73,
       "catalogId": "atlas-116",
-      "repositoryId": "84bf7431-3bc8-4ed2-ba7a-38e716ef8e92",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 73_Водный_стресс"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a74-water-balance",
@@ -1708,8 +1717,8 @@
       "sourceKey": "74_водный_баланс",
       "atlasNumber": 74,
       "catalogId": "atlas-117",
-      "repositoryId": "a62db40c-d9ee-447b-9ae2-2fb769733400",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 74_водный_баланс"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a75-access-to-sustainable-drinking-water",
@@ -1722,8 +1731,8 @@
       "sourceKey": "75_Доля населения, имеющего доступ к устойчивым источникам питьевой воды (_)",
       "atlasNumber": 75,
       "catalogId": "atlas-118",
-      "repositoryId": "ce35212b-fe4f-4bdb-90bd-3c8dfb3a387e",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 75_Доля населения, имеющего доступ к устойчивым источникам питьевой воды (_)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a76-access-to-sustainable-sanitation",
@@ -1736,8 +1745,8 @@
       "sourceKey": "76_Доля населения, имеющего доступ к устойчивым системам санитарии (_)",
       "atlasNumber": 76,
       "catalogId": "atlas-119",
-      "repositoryId": "d7ad22e0-26ee-4972-aad7-e26c3451e00d",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 76_Доля населения, имеющего доступ к устойчивым системам санитарии (_)"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a77-water-ecosystem-area",
@@ -1750,8 +1759,8 @@
       "sourceKey": "77_Площади_водных_экосистем",
       "atlasNumber": 77,
       "catalogId": "atlas-120",
-      "repositoryId": "c8448991-7b98-4637-a7c4-2051a9bcae4c",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 77_Площади_водных_экосистем"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a78-change-in-permanently-flooded-ecosystems-2001200",
@@ -1764,8 +1773,8 @@
       "sourceKey": "78_Изменение площади постоянно затапливаемых экосистем, 2001-2004",
       "atlasNumber": 78,
       "catalogId": "atlas-121",
-      "repositoryId": "1b4c23b3-3941-44a3-8f73-ea6297215d17",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 78_Изменение площади постоянно затапливаемых экосистем, 2001-2004"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a79-change-in-seasonally-flooded-ecosystems-20012004",
@@ -1778,8 +1787,8 @@
       "sourceKey": "79_Изменение площади сезонно затапливаемых экосистем, 2001-2004",
       "atlasNumber": 79,
       "catalogId": "atlas-122",
-      "repositoryId": "54fd8cef-bd32-4763-84c5-9fbc82f64d8b",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 79_Изменение площади сезонно затапливаемых экосистем, 2001-2004"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a80-drainage-network",
@@ -1792,8 +1801,8 @@
       "sourceKey": "80_Дренаж",
       "atlasNumber": 80,
       "catalogId": "atlas-123",
-      "repositoryId": "be26e7fe-bf9c-49bc-b909-2820777c38ea",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 80_Дренаж"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a81-flow-in-drainage-canals",
@@ -1806,8 +1815,8 @@
       "sourceKey": "81_расход_воды_в_дренажных_каналах",
       "atlasNumber": 81,
       "catalogId": "atlas-124",
-      "repositoryId": "e6f55c0b-2aaa-4f6b-b1c1-73ee1b76ef8c",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 81_расход_воды_в_дренажных_каналах"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a90-land-cover-2000",
@@ -1820,8 +1829,8 @@
       "sourceKey": "90_Земельный_покров_2000.tif",
       "atlasNumber": 90,
       "catalogId": "atlas-125",
-      "repositoryId": "2862ccc2-b0ae-4107-a751-953bd97fd045",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 90_Земельный_покров_2000.tif"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a91-land-cover-2010",
@@ -1834,8 +1843,8 @@
       "sourceKey": "91_Земельный_покров_2010.tif",
       "atlasNumber": 91,
       "catalogId": "atlas-126",
-      "repositoryId": "fb42a39b-eafc-4945-b52b-87e60f645025",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 91_Земельный_покров_2010.tif"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a92-land-cover",
@@ -1862,8 +1871,8 @@
       "sourceKey": "94_Незадернованная_поверхность",
       "atlasNumber": 94,
       "catalogId": "atlas-128",
-      "repositoryId": "5ee0b291-ad44-4e9c-a3f8-6d119e12f0fc",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 94_Незадернованная_поверхность"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a95-soil-chemistry",
@@ -1876,8 +1885,8 @@
       "sourceKey": "95_Химизм почв",
       "atlasNumber": 95,
       "catalogId": "atlas-129",
-      "repositoryId": "72a4fec2-e619-41c6-8e91-8d6f600136bc",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 95_Химизм почв"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a96-farming-systems",
@@ -1890,8 +1899,8 @@
       "sourceKey": "96_Земледелие",
       "atlasNumber": 96,
       "catalogId": "atlas-130",
-      "repositoryId": "7063d2e5-e254-4af4-98e2-5e9920ab2d9d",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 96_Земледелие"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a97-land-use-types",
@@ -1904,8 +1913,8 @@
       "sourceKey": "97_Типы_землепользования",
       "atlasNumber": 97,
       "catalogId": "atlas-131",
-      "repositoryId": "dbe111f2-837d-47c6-99cc-d20ca59f2a67",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 97_Типы_землепользования"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a98-agricultural-land-types",
@@ -1918,8 +1927,8 @@
       "sourceKey": "98_Типы сельскохозяйственных земель",
       "atlasNumber": 98,
       "catalogId": "atlas-132",
-      "repositoryId": "28b14844-7b49-4164-8dcb-a6a8e5fd0422",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 98_Типы сельскохозяйственных земель"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/a99-cotton-yield",
@@ -1932,8 +1941,8 @@
       "sourceKey": "99_Урожайность_хлопка",
       "atlasNumber": 99,
       "catalogId": "atlas-133",
-      "repositoryId": "7dca1fd5-cda1-4ab6-a044-0ccc39e8f587",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: 99_Урожайность_хлопка"
+      "repositoryId": null,
+      "description": ""
     },
     {
       "id": "uz:ds/cadastre-agriculture-fields",
@@ -2155,6 +2164,45 @@
       "catalogId": null,
       "repositoryId": null,
       "description": "Delivered twice, once standalone and once inside the Uzhydromet transfer; both copies are recorded as distributions of one dataset."
+    },
+    {
+      "id": "uz:ds/hydrobasins-level12-uzbekistan",
+      "type": "Dataset",
+      "label": "HydroBASINS level-12 catchments — Uzbekistan",
+      "labels": {
+        "en": "HydroBASINS level-12 catchments — Uzbekistan"
+      },
+      "sourceKey": "hydrosheds/hydrobasins-v1c-level12-uzbekistan",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Level-12 Pfafstetter catchments referenced by the Uzbekistan river and lake relationship database."
+    },
+    {
+      "id": "uz:ds/hydrolakes-uzbekistan",
+      "type": "Dataset",
+      "label": "HydroLAKES water bodies — Uzbekistan",
+      "labels": {
+        "en": "HydroLAKES water bodies — Uzbekistan"
+      },
+      "sourceKey": "hydrosheds/hydrolakes-v10-uzbekistan",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Lakes and reservoirs intersecting Uzbekistan, with native HydroLAKES identifiers and measured links to HydroBASINS level-12 catchments."
+    },
+    {
+      "id": "uz:ds/hydrorivers-uzbekistan",
+      "type": "Dataset",
+      "label": "HydroRIVERS river network — Uzbekistan",
+      "labels": {
+        "en": "HydroRIVERS river network — Uzbekistan"
+      },
+      "sourceKey": "hydrosheds/hydrorivers-v10-uzbekistan",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Hydrologically routed river reaches intersecting Uzbekistan, clipped to the national boundary while preserving native HydroRIVERS identifiers and downstream links."
     },
     {
       "id": "uz:ds/kamchik-pass-climate-series",
@@ -2388,2892 +2436,8 @@
       "sourceKey": "Покрытие_лесами",
       "atlasNumber": null,
       "catalogId": "atlas-134",
-      "repositoryId": "875fc3ff-8e0b-4d76-8bb4-08f80fba8d1b",
-      "description": "Original ArcGIS layer package from the Uzbekistan environmental atlas. Source title: Покрытие_лесами"
-    },
-    {
-      "id": "uz:ds/x-uzbekistan-national-atlas-environmental-atlas",
-      "type": "Dataset",
-      "label": "Uzbekistan - National Atlas, Environmental Atlas",
-      "labels": {
-        "en": "Uzbekistan - National Atlas, Environmental Atlas"
-      },
-      "sourceKey": "3e744452-1907-43e0-be3b-356372c33d9b",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": "3e744452-1907-43e0-be3b-356372c33d9b",
+      "repositoryId": null,
       "description": ""
-    },
-    {
-      "id": "uz:dist/a100-livestock-layer-112",
-      "type": "Distribution",
-      "label": "Livestock (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 417302,
-      "storedName": "layer-112.geojson",
-      "url": "/data/layers/layer-112.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a100-livestock-lpkx",
-      "type": "Distribution",
-      "label": "Livestock (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 274598,
-      "storedName": "be163cf1-f1f7-4d87-bec0-9353c98aece8.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a101-forage-lands-layer-039",
-      "type": "Distribution",
-      "label": "Forage lands (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1347624,
-      "storedName": "layer-039.geojson",
-      "url": "/data/layers/layer-039.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a101-forage-lands-lpkx",
-      "type": "Distribution",
-      "label": "Forage lands (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 349605,
-      "storedName": "49c96da4-00fb-4629-bede-d5dd535d25bd.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a113-arable-land-dynamics-layer-051",
-      "type": "Distribution",
-      "label": "Arable-land dynamics (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 58345,
-      "storedName": "layer-051.png",
-      "url": "/data/layers/layer-051.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a113-arable-land-dynamics-lpkx",
-      "type": "Distribution",
-      "label": "Arable-land dynamics (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 725279,
-      "storedName": "54b2bb31-fb6c-46fd-92ea-bc8790e4f0e3.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a114-terrestrial-land-cover-layer-110-preview",
-      "type": "Distribution",
-      "label": "Terrestrial land cover (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 773,
-      "storedName": "layer-110-preview.png",
-      "url": "/data/layers/layer-110-preview.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a114-terrestrial-land-cover-lpkx",
-      "type": "Distribution",
-      "label": "Terrestrial land cover (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 37051408,
-      "storedName": "bbe399d3-a7d3-4729-bd52-e26323316086.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a115-soil-salinity-layer-104",
-      "type": "Distribution",
-      "label": "Soil salinity (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 247636,
-      "storedName": "layer-104.geojson",
-      "url": "/data/layers/layer-104.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a115-soil-salinity-lpkx",
-      "type": "Distribution",
-      "label": "Soil salinity (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 127616,
-      "storedName": "addf0273-311c-4ffc-9205-274d305ddce5.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a116-irrigated-soil-salinity-layer-044",
-      "type": "Distribution",
-      "label": "Irrigated-soil salinity (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 302739,
-      "storedName": "layer-044.geojson",
-      "url": "/data/layers/layer-044.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a116-irrigated-soil-salinity-lpkx",
-      "type": "Distribution",
-      "label": "Irrigated-soil salinity (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 89484,
-      "storedName": "4db908ef-4366-41ac-898d-d6e7f49e3843.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a117-soil-salinity-dynamics-layer-070",
-      "type": "Distribution",
-      "label": "Soil-salinity dynamics (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 26930,
-      "storedName": "layer-070.png",
-      "url": "/data/layers/layer-070.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a117-soil-salinity-dynamics-lpkx",
-      "type": "Distribution",
-      "label": "Soil-salinity dynamics (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 547677,
-      "storedName": "6ee24633-6769-4ab1-a03c-be041c783bb1.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a118-average-maximum-ndvi-20042024-layer-115",
-      "type": "Distribution",
-      "label": "Average maximum NDVI, 2004–2024 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 3160749,
-      "storedName": "layer-115.png",
-      "url": "/data/layers/layer-115.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a118-average-maximum-ndvi-20042024-lpkx",
-      "type": "Distribution",
-      "label": "Average maximum NDVI, 2004–2024 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 138313490,
-      "storedName": "c66aa7a0-0677-4a16-9e9d-fc348f696086.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a118-average-maximum-ndvi-20042024-poly-map-ndvimax-me",
-      "type": "Distribution",
-      "label": "Average maximum NDVI, 2004–2024 (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 4041204,
-      "storedName": "c66aa7a0-0677-4a16-9e9d-fc348f696086-map-ndvimax-mean-2004-2024-1a3c4cc7a7.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a119-ndvi-dynamics-layer-021",
-      "type": "Distribution",
-      "label": "NDVI dynamics (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 166121,
-      "storedName": "layer-021.png",
-      "url": "/data/layers/layer-021.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a119-ndvi-dynamics-lpkx",
-      "type": "Distribution",
-      "label": "NDVI dynamics (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 533705,
-      "storedName": "225a1f69-ea01-4dcf-8788-c7227c328a9a.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a120-enhanced-vegetation-index-dynamics-layer-096",
-      "type": "Distribution",
-      "label": "Enhanced Vegetation Index dynamics (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 166663,
-      "storedName": "layer-096.png",
-      "url": "/data/layers/layer-096.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a120-enhanced-vegetation-index-dynamics-lpkx",
-      "type": "Distribution",
-      "label": "Enhanced Vegetation Index dynamics (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 538585,
-      "storedName": "a333978b-38c1-4a71-b522-0edac958b52d.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a121-leaf-area-index-layer-087",
-      "type": "Distribution",
-      "label": "Leaf Area Index (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 173607,
-      "storedName": "layer-087.png",
-      "url": "/data/layers/layer-087.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a121-leaf-area-index-lpkx",
-      "type": "Distribution",
-      "label": "Leaf Area Index (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 578121,
-      "storedName": "9a8f94c5-07bc-494e-b365-f7639c34c791.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a122-land-productivity-dynamics-layer-001",
-      "type": "Distribution",
-      "label": "Land-productivity dynamics (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 229123,
-      "storedName": "layer-001.png",
-      "url": "/data/layers/layer-001.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a122-land-productivity-dynamics-lpkx",
-      "type": "Distribution",
-      "label": "Land-productivity dynamics (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 674665,
-      "storedName": "040f14ee-62ab-4a2f-8809-aa0431d92921.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a123-arable-land-use-intensity-layer-013",
-      "type": "Distribution",
-      "label": "Arable-land use intensity (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 243293,
-      "storedName": "layer-013.png",
-      "url": "/data/layers/layer-013.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a123-arable-land-use-intensity-lpkx",
-      "type": "Distribution",
-      "label": "Arable-land use intensity (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 877485,
-      "storedName": "1042edf1-d998-42ca-8d36-b4d5504b53ad.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a124-pasture-vegetation-types-layer-098",
-      "type": "Distribution",
-      "label": "Pasture vegetation types (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 27633802,
-      "storedName": "layer-098.geojson",
-      "url": "/data/layers/layer-098.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a124-pasture-vegetation-types-lpkx",
-      "type": "Distribution",
-      "label": "Pasture vegetation types (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 41228892,
-      "storedName": "a5fe6140-79fb-4032-a7ea-ef62734b2d80.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a125-recommended-pasture-stocking-rate-layer-017",
-      "type": "Distribution",
-      "label": "Recommended pasture stocking rate (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 27633802,
-      "storedName": "layer-017.geojson",
-      "url": "/data/layers/layer-017.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a125-recommended-pasture-stocking-rate-lpkx",
-      "type": "Distribution",
-      "label": "Recommended pasture stocking rate (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 41225077,
-      "storedName": "1ab57190-7d95-4b27-81a1-77eb1ac40887.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a126-pasture-productivity-layer-053",
-      "type": "Distribution",
-      "label": "Pasture productivity (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 27633802,
-      "storedName": "layer-053.geojson",
-      "url": "/data/layers/layer-053.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a126-pasture-productivity-lpkx",
-      "type": "Distribution",
-      "label": "Pasture productivity (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 41225221,
-      "storedName": "5880f5e5-745a-4155-abd3-484622caba28.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a127-soil-organic-carbon-layer-072",
-      "type": "Distribution",
-      "label": "Soil organic carbon (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 895047,
-      "storedName": "layer-072.png",
-      "url": "/data/layers/layer-072.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a127-soil-organic-carbon-lpkx",
-      "type": "Distribution",
-      "label": "Soil organic carbon (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 2606105,
-      "storedName": "757aa449-be5e-4435-ac7c-31de24797eef.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a128-carbon-emission-volume-layer-042",
-      "type": "Distribution",
-      "label": "Carbon-emission volume (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 8856,
-      "storedName": "layer-042.png",
-      "url": "/data/layers/layer-042.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a128-carbon-emission-volume-lpkx",
-      "type": "Distribution",
-      "label": "Carbon-emission volume (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 48515,
-      "storedName": "4d42149b-a920-4733-85fa-5d945b207bd0.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a129-net-carbon-balance-layer-055",
-      "type": "Distribution",
-      "label": "Net carbon balance (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 79844,
-      "storedName": "layer-055.png",
-      "url": "/data/layers/layer-055.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a129-net-carbon-balance-lpkx",
-      "type": "Distribution",
-      "label": "Net carbon balance (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 272845,
-      "storedName": "5aed75e9-ab46-40e5-b34c-7800afbee730.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a135-forest-cover-2005-layer-121",
-      "type": "Distribution",
-      "label": "Forest cover, 2005 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 191369,
-      "storedName": "layer-121.png",
-      "url": "/data/layers/layer-121.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a135-forest-cover-2005-lpkx",
-      "type": "Distribution",
-      "label": "Forest cover, 2005 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 1138358,
-      "storedName": "ddd52ac6-3300-4b94-a1a9-d9f39fc86917.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a137-forest-types-layer-030",
-      "type": "Distribution",
-      "label": "Forest types (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 280607,
-      "storedName": "layer-030.geojson",
-      "url": "/data/layers/layer-030.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a137-forest-types-lpkx",
-      "type": "Distribution",
-      "label": "Forest types (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 73234,
-      "storedName": "38cba15a-337b-41a6-99b8-29b0306f643e.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a138-saxaul-distribution-layer-107",
-      "type": "Distribution",
-      "label": "Saxaul distribution (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 16326292,
-      "storedName": "layer-107.geojson",
-      "url": "/data/layers/layer-107.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a138-saxaul-distribution-lpkx",
-      "type": "Distribution",
-      "label": "Saxaul distribution (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 17046513,
-      "storedName": "b92974e9-9f40-43e9-874b-ebafdd02d3c5.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a139-natural-and-planted-forests-layer-049",
-      "type": "Distribution",
-      "label": "Natural and planted forests (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 16326292,
-      "storedName": "layer-049.geojson",
-      "url": "/data/layers/layer-049.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a139-natural-and-planted-forests-lpkx",
-      "type": "Distribution",
-      "label": "Natural and planted forests (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 17046463,
-      "storedName": "52957643-c255-4417-85b4-2617f3956b44.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a147-forest-carbon-sequestration-layer-090",
-      "type": "Distribution",
-      "label": "Forest carbon sequestration (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 76630,
-      "storedName": "layer-090.png",
-      "url": "/data/layers/layer-090.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a147-forest-carbon-sequestration-lpkx",
-      "type": "Distribution",
-      "label": "Forest carbon sequestration (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 270539,
-      "storedName": "9e1e2a87-bda7-4477-a168-e56196ccec78.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a148-forest-plantation-potential-layer-120",
-      "type": "Distribution",
-      "label": "Forest plantation potential (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 144182,
-      "storedName": "layer-120.png",
-      "url": "/data/layers/layer-120.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a148-forest-plantation-potential-lpkx",
-      "type": "Distribution",
-      "label": "Forest plantation potential (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 170782,
-      "storedName": "dc0fb74c-ae7d-419f-81de-8de6898978ce.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a149-carbon-sequestration-potential-from-reforestatio-layer-056",
-      "type": "Distribution",
-      "label": "Carbon sequestration potential from reforestation (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 144182,
-      "storedName": "layer-056.png",
-      "url": "/data/layers/layer-056.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a149-carbon-sequestration-potential-from-reforestatio-lpkx",
-      "type": "Distribution",
-      "label": "Carbon sequestration potential from reforestation (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 168351,
-      "storedName": "5bb2b4dd-f1da-4d1f-b98c-1b75270a6262.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a150-forest-canopy-closure-layer-066",
-      "type": "Distribution",
-      "label": "Forest canopy closure (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 16326292,
-      "storedName": "layer-066.geojson",
-      "url": "/data/layers/layer-066.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a150-forest-canopy-closure-lpkx",
-      "type": "Distribution",
-      "label": "Forest canopy closure (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 17046745,
-      "storedName": "65862418-7f2b-426a-8aba-54ea977e2540.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a151-forest-age-layer-026",
-      "type": "Distribution",
-      "label": "Forest age (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 16326292,
-      "storedName": "layer-026.geojson",
-      "url": "/data/layers/layer-026.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a151-forest-age-lpkx",
-      "type": "Distribution",
-      "label": "Forest age (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 17044394,
-      "storedName": "2bcabfb7-d138-41e1-b791-ce269f809fda.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a152-forest-landscape-integrity-index-layer-038",
-      "type": "Distribution",
-      "label": "Forest Landscape Integrity Index (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 56692,
-      "storedName": "layer-038.png",
-      "url": "/data/layers/layer-038.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a152-forest-landscape-integrity-index-lpkx",
-      "type": "Distribution",
-      "label": "Forest Landscape Integrity Index (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 193915,
-      "storedName": "49c49559-eb66-40bf-a2ab-cd00e9d60782.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a153-forest-cover-change-19822016-layer-027",
-      "type": "Distribution",
-      "label": "Forest-cover change, 1982–2016 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 5932,
-      "storedName": "layer-027.png",
-      "url": "/data/layers/layer-027.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a153-forest-cover-change-19822016-lpkx",
-      "type": "Distribution",
-      "label": "Forest-cover change, 1982–2016 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 31729,
-      "storedName": "325b3bfb-6c0f-44f5-972b-d6a3de51a75f.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a158-physical-geographic-regions-layer-031",
-      "type": "Distribution",
-      "label": "Physical-geographic regions (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 249360,
-      "storedName": "layer-031.geojson",
-      "url": "/data/layers/layer-031.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a158-physical-geographic-regions-lpkx",
-      "type": "Distribution",
-      "label": "Physical-geographic regions (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 127439,
-      "storedName": "3b1140dd-4666-4cd8-8a68-73e2660001a4.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a159-landscapes-layer-093",
-      "type": "Distribution",
-      "label": "Landscapes (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 764257,
-      "storedName": "layer-093.geojson",
-      "url": "/data/layers/layer-093.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a159-landscapes-lpkx",
-      "type": "Distribution",
-      "label": "Landscapes (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 696536,
-      "storedName": "a0cdf4b2-2ca3-49ea-85b0-abdfd9a48297.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a16-climate-types-layer-071",
-      "type": "Distribution",
-      "label": "Climate types (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 35559,
-      "storedName": "layer-071.png",
-      "url": "/data/layers/layer-071.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a16-climate-types-lpkx",
-      "type": "Distribution",
-      "label": "Climate types (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 67651,
-      "storedName": "72e200f8-1ede-42a6-b115-c8829cf520fe.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a160-landscape-structure-layer-095",
-      "type": "Distribution",
-      "label": "Landscape structure (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 2174331,
-      "storedName": "layer-095.geojson",
-      "url": "/data/layers/layer-095.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a160-landscape-structure-lpkx",
-      "type": "Distribution",
-      "label": "Landscape structure (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 832367,
-      "storedName": "a2d7be4a-4ea1-4fa6-9104-915de77ee2e9.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a161-plant-formations-layer-075",
-      "type": "Distribution",
-      "label": "Plant formations (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1636034,
-      "storedName": "layer-075.geojson",
-      "url": "/data/layers/layer-075.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a161-plant-formations-lpkx",
-      "type": "Distribution",
-      "label": "Plant formations (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 346969,
-      "storedName": "7bf68e29-e3a7-44d8-9ab8-25d9e6a249ee.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a162-vegetation-layer-078",
-      "type": "Distribution",
-      "label": "Vegetation (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 625888,
-      "storedName": "layer-078.geojson",
-      "url": "/data/layers/layer-078.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a162-vegetation-lpkx",
-      "type": "Distribution",
-      "label": "Vegetation (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 288430,
-      "storedName": "82679a76-5a35-4841-bf6b-8f8c40f8239c.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a163-zoogeographic-regions-layer-040",
-      "type": "Distribution",
-      "label": "Zoogeographic regions (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 338835,
-      "storedName": "layer-040.geojson",
-      "url": "/data/layers/layer-040.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a163-zoogeographic-regions-lpkx",
-      "type": "Distribution",
-      "label": "Zoogeographic regions (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 248683,
-      "storedName": "4bb8fff8-b5da-44e7-9ec2-2cee15dc5792.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a164-bird-species-richness-layer-102",
-      "type": "Distribution",
-      "label": "Bird species richness (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 7855,
-      "storedName": "layer-102.png",
-      "url": "/data/layers/layer-102.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a164-bird-species-richness-lpkx",
-      "type": "Distribution",
-      "label": "Bird species richness (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 52151,
-      "storedName": "ac6a0ab7-9f27-4d79-a58c-12cdfda540e2.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a164-bird-species-richness-poly-birds-number-o",
-      "type": "Distribution",
-      "label": "Bird species richness (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 65214,
-      "storedName": "ac6a0ab7-9f27-4d79-a58c-12cdfda540e2-birds-number-of-species-aba4963d26.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a165-habitat-diversity-index-layer-065",
-      "type": "Distribution",
-      "label": "Habitat Diversity Index (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 543218,
-      "storedName": "layer-065.png",
-      "url": "/data/layers/layer-065.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a165-habitat-diversity-index-lpkx",
-      "type": "Distribution",
-      "label": "Habitat Diversity Index (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 1646560,
-      "storedName": "6569e661-c3d4-494c-b661-f964b2e3c9ec.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a166-mammal-species-richness-layer-082",
-      "type": "Distribution",
-      "label": "Mammal species richness (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 5750,
-      "storedName": "layer-082.png",
-      "url": "/data/layers/layer-082.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a166-mammal-species-richness-lpkx",
-      "type": "Distribution",
-      "label": "Mammal species richness (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 51921,
-      "storedName": "8f709c9f-64c2-4619-a745-cfc1d1c3458d.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a166-mammal-species-richness-poly-mammals-nuber",
-      "type": "Distribution",
-      "label": "Mammal species richness (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 259688,
-      "storedName": "8f709c9f-64c2-4619-a745-cfc1d1c3458d-mammals-nuber-of-species-9f6d8712cc.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a167-useful-plants-layer-035",
-      "type": "Distribution",
-      "label": "Useful plants (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 103410,
-      "storedName": "layer-035.geojson",
-      "url": "/data/layers/layer-035.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a167-useful-plants-lpkx",
-      "type": "Distribution",
-      "label": "Useful plants (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 32221,
-      "storedName": "46ad2c40-d873-40ed-94df-773a3862eb96.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a168-game-birds-layer-058-preview",
-      "type": "Distribution",
-      "label": "Game birds (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 35553,
-      "storedName": "layer-058-preview.png",
-      "url": "/data/layers/layer-058-preview.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a168-game-birds-lpkx",
-      "type": "Distribution",
-      "label": "Game birds (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 4348366,
-      "storedName": "5cdf4b02-2df5-4450-8a35-a0a41b68125e.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a169-game-mammals-layer-006",
-      "type": "Distribution",
-      "label": "Game mammals (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 90705,
-      "storedName": "layer-006.png",
-      "url": "/data/layers/layer-006.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a169-game-mammals-lpkx",
-      "type": "Distribution",
-      "label": "Game mammals (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 4876983,
-      "storedName": "078a07a7-e3a7-4192-ae47-3adf651abd71.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a169-game-mammals-poly-raster-218744c",
-      "type": "Distribution",
-      "label": "Game mammals (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 179136,
-      "storedName": "078a07a7-e3a7-4192-ae47-3adf651abd71-raster-55bc53fbec.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a169-game-mammals-poly-raster-f977bda",
-      "type": "Distribution",
-      "label": "Game mammals (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 66640,
-      "storedName": "078a07a7-e3a7-4192-ae47-3adf651abd71-raster-88628b8719.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a17-projected-climate-types-for-2100-layer-083",
-      "type": "Distribution",
-      "label": "Projected climate types for 2100 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 33386,
-      "storedName": "layer-083.png",
-      "url": "/data/layers/layer-083.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a17-projected-climate-types-for-2100-lpkx",
-      "type": "Distribution",
-      "label": "Projected climate types for 2100 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 64964,
-      "storedName": "90db035c-0c1b-4b9c-9b83-8a53a6f4698f.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a170-biodiversity-intactness-index-layer-111",
-      "type": "Distribution",
-      "label": "Biodiversity Intactness Index (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 242886,
-      "storedName": "layer-111.geojson",
-      "url": "/data/layers/layer-111.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a170-biodiversity-intactness-index-lpkx",
-      "type": "Distribution",
-      "label": "Biodiversity Intactness Index (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 158893556,
-      "storedName": "bd3f5401-b3ce-4c23-8701-3133abc77a54.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a170-biodiversity-intactness-index-poly-biodiversity-i",
-      "type": "Distribution",
-      "label": "Biodiversity Intactness Index (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 808018,
-      "storedName": "bd3f5401-b3ce-4c23-8701-3133abc77a54-biodiversity-intactness-index-c7d38ae2e1.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a171-fish-layer-012",
-      "type": "Distribution",
-      "label": "Fish (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 128368,
-      "storedName": "layer-012.geojson",
-      "url": "/data/layers/layer-012.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a171-fish-lpkx",
-      "type": "Distribution",
-      "label": "Fish (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 45602,
-      "storedName": "0e2da180-8716-4c8a-aa4d-a5f0717049b5.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a172-reptiles-layer-003",
-      "type": "Distribution",
-      "label": "Reptiles (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 150021,
-      "storedName": "layer-003.geojson",
-      "url": "/data/layers/layer-003.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a172-reptiles-lpkx",
-      "type": "Distribution",
-      "label": "Reptiles (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 38696,
-      "storedName": "05c1f245-b8d7-4e69-8c64-c8cdf75cb7f0.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a173-mammals-layer-105",
-      "type": "Distribution",
-      "label": "Mammals (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 230474,
-      "storedName": "layer-105.geojson",
-      "url": "/data/layers/layer-105.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a173-mammals-lpkx",
-      "type": "Distribution",
-      "label": "Mammals (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 44125,
-      "storedName": "b3f8a3a0-c48e-4c1b-8b38-a806c59125c5.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a174-plants-layer-118",
-      "type": "Distribution",
-      "label": "Plants (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 37348,
-      "storedName": "layer-118.geojson",
-      "url": "/data/layers/layer-118.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a174-plants-lpkx",
-      "type": "Distribution",
-      "label": "Plants (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 48775,
-      "storedName": "d3b25dcc-18d6-48e7-ab75-6c2bae3f8f5b.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a175-invertebrates-layer-079",
-      "type": "Distribution",
-      "label": "Invertebrates (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 74537,
-      "storedName": "layer-079.geojson",
-      "url": "/data/layers/layer-079.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a175-invertebrates-lpkx",
-      "type": "Distribution",
-      "label": "Invertebrates (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 52551,
-      "storedName": "888087cc-a249-45a8-ad81-3447c44182b6.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a176-birds-layer-117",
-      "type": "Distribution",
-      "label": "Birds (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 319827,
-      "storedName": "layer-117.geojson",
-      "url": "/data/layers/layer-117.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a176-birds-lpkx",
-      "type": "Distribution",
-      "label": "Birds (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 53546,
-      "storedName": "d33d2bbd-b711-4096-90e1-4c4bf389bedf.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a18-local-climate-zones-layer-015",
-      "type": "Distribution",
-      "label": "Local climate zones (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 147305,
-      "storedName": "layer-015.png",
-      "url": "/data/layers/layer-015.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a18-local-climate-zones-lpkx",
-      "type": "Distribution",
-      "label": "Local climate zones (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 1781458,
-      "storedName": "14735c3e-d921-4d64-abd7-cfaa8ac47014.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a185-protected-area-types-layer-114",
-      "type": "Distribution",
-      "label": "Protected-area types (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 262050,
-      "storedName": "layer-114.geojson",
-      "url": "/data/layers/layer-114.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a185-protected-area-types-lpkx",
-      "type": "Distribution",
-      "label": "Protected-area types (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 389516,
-      "storedName": "c26bb6bb-8a52-4181-84b0-4f1bf65b4dbe.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a186-ecoregions-layer-010",
-      "type": "Distribution",
-      "label": "Ecoregions (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 135786,
-      "storedName": "layer-010.geojson",
-      "url": "/data/layers/layer-010.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a186-ecoregions-lpkx",
-      "type": "Distribution",
-      "label": "Ecoregions (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 80081,
-      "storedName": "0ca0b8dd-69c1-40da-848f-b122afd4c43d.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a187-protected-areas-and-key-biodiversity-areas-layer-106",
-      "type": "Distribution",
-      "label": "Protected areas and key biodiversity areas (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 128088,
-      "storedName": "layer-106.geojson",
-      "url": "/data/layers/layer-106.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a187-protected-areas-and-key-biodiversity-areas-lpkx",
-      "type": "Distribution",
-      "label": "Protected areas and key biodiversity areas (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 817040,
-      "storedName": "b8382b2a-6775-498d-93c7-7dc57c224cba.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a188-nature-conservation-layer-041",
-      "type": "Distribution",
-      "label": "Nature conservation (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 750624,
-      "storedName": "layer-041.geojson",
-      "url": "/data/layers/layer-041.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a188-nature-conservation-lpkx",
-      "type": "Distribution",
-      "label": "Nature conservation (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 746882,
-      "storedName": "4cfc3e7b-5ce6-47b6-90cd-5d19cec0da42.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a189-conservation-value-index-layer-024",
-      "type": "Distribution",
-      "label": "Conservation Value Index (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 14086,
-      "storedName": "layer-024.png",
-      "url": "/data/layers/layer-024.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a189-conservation-value-index-lpkx",
-      "type": "Distribution",
-      "label": "Conservation Value Index (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 73425,
-      "storedName": "2632008c-8568-45ac-aed3-f112eb2b3ff1.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a189-conservation-value-index-poly-areas-of-globa",
-      "type": "Distribution",
-      "label": "Conservation Value Index (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 160772,
-      "storedName": "2632008c-8568-45ac-aed3-f112eb2b3ff1-areas-of-global-conservation-value-9d3528eefc.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a19-average-start-of-the-growing-season-20002024-layer-086",
-      "type": "Distribution",
-      "label": "Average start of the growing season (2000–2024) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 1421595,
-      "storedName": "layer-086.png",
-      "url": "/data/layers/layer-086.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a19-average-start-of-the-growing-season-20002024-lpkx",
-      "type": "Distribution",
-      "label": "Average start of the growing season (2000–2024) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 8771119,
-      "storedName": "98280eaa-4266-4a94-bd8f-6f48e37bd457.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a19-average-start-of-the-growing-season-20002024-poly-map-sos-a3677e",
-      "type": "Distribution",
-      "label": "Average start of the growing season (2000–2024) (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 1565133,
-      "storedName": "98280eaa-4266-4a94-bd8f-6f48e37bd457-map-sos-493db91f03.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a190-ecosystem-bioclimatic-resilience-layer-064",
-      "type": "Distribution",
-      "label": "Ecosystem bioclimatic resilience (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 640656,
-      "storedName": "layer-064.png",
-      "url": "/data/layers/layer-064.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a190-ecosystem-bioclimatic-resilience-lpkx",
-      "type": "Distribution",
-      "label": "Ecosystem bioclimatic resilience (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 1600038,
-      "storedName": "641daa52-d0fa-49b5-805d-28aaf773941d.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a191-habitat-dynamics-index-layer-092",
-      "type": "Distribution",
-      "label": "Habitat dynamics index (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 509163,
-      "storedName": "layer-092.png",
-      "url": "/data/layers/layer-092.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a191-habitat-dynamics-index-lpkx",
-      "type": "Distribution",
-      "label": "Habitat dynamics index (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 1099304,
-      "storedName": "9fb19779-c290-4524-b7bb-0f2f17414523.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a197-hypsometric-map-layer-119",
-      "type": "Distribution",
-      "label": "Hypsometric map (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 38504,
-      "storedName": "layer-119.png",
-      "url": "/data/layers/layer-119.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a197-hypsometric-map-lpkx",
-      "type": "Distribution",
-      "label": "Hypsometric map (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 615904,
-      "storedName": "d3cc4565-a44e-4c04-a566-75785ee5e079.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a198-geomorphology-layer-007",
-      "type": "Distribution",
-      "label": "Geomorphology (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 339398,
-      "storedName": "layer-007.geojson",
-      "url": "/data/layers/layer-007.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a198-geomorphology-lpkx",
-      "type": "Distribution",
-      "label": "Geomorphology (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 151607,
-      "storedName": "08f1d850-976f-456d-9ecc-d31b74223c82.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a20-average-peak-of-the-growing-season-20002024-layer-029",
-      "type": "Distribution",
-      "label": "Average peak of the growing season (2000–2024) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 1456160,
-      "storedName": "layer-029.png",
-      "url": "/data/layers/layer-029.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a20-average-peak-of-the-growing-season-20002024-lpkx",
-      "type": "Distribution",
-      "label": "Average peak of the growing season (2000–2024) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 8599968,
-      "storedName": "36a1baec-2955-432a-87b9-65d87c3b6f0c.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a201-palmer-drought-severity-index-2000-layer-052",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2000) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 45389,
-      "storedName": "layer-052.png",
-      "url": "/data/layers/layer-052.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a201-palmer-drought-severity-index-2000-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2000) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 116418,
-      "storedName": "55ff359f-e9cb-4fe0-b7da-66f52ebce4bf.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a201-palmer-drought-severity-index-2001-layer-022",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2001) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 44951,
-      "storedName": "layer-022.png",
-      "url": "/data/layers/layer-022.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a201-palmer-drought-severity-index-2001-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2001) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 114428,
-      "storedName": "23e92e32-592c-46bc-804d-74316f0eba0c.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a202-palmer-drought-severity-index-2008-layer-130",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2008) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 41329,
-      "storedName": "layer-130.png",
-      "url": "/data/layers/layer-130.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a202-palmer-drought-severity-index-2008-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2008) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 113670,
-      "storedName": "fb1ec64f-9340-4eb6-896a-032269ae6073.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a202-palmer-drought-severity-index-2011-layer-057",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2011) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 46283,
-      "storedName": "layer-057.png",
-      "url": "/data/layers/layer-057.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a202-palmer-drought-severity-index-2011-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2011) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 114441,
-      "storedName": "5cc6e9cd-3967-4e3d-9228-f893876f630d.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a202-palmer-drought-severity-index-2018-layer-091",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2018) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 51856,
-      "storedName": "layer-091.png",
-      "url": "/data/layers/layer-091.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a202-palmer-drought-severity-index-2018-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2018) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 89842,
-      "storedName": "9ed2b07c-15dc-4d85-894c-0b0f290f0920.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a202-palmer-drought-severity-index-2020-layer-081",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2020) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 44561,
-      "storedName": "layer-081.png",
-      "url": "/data/layers/layer-081.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a202-palmer-drought-severity-index-2020-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2020) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 117419,
-      "storedName": "8c73b9a4-ae5a-4e85-a0c1-7c58552acfda.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a203-palmer-drought-severity-index-2021-layer-108",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2021) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 48798,
-      "storedName": "layer-108.png",
-      "url": "/data/layers/layer-108.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a203-palmer-drought-severity-index-2021-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2021) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 114222,
-      "storedName": "bad243ce-b04f-4d27-8cf8-5426513a1fbc.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a203-palmer-drought-severity-index-2022-layer-094",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2022) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 47654,
-      "storedName": "layer-094.png",
-      "url": "/data/layers/layer-094.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a203-palmer-drought-severity-index-2022-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2022) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 115898,
-      "storedName": "a17cbb38-3c18-43ba-8c82-de0f2644343d.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a203-palmer-drought-severity-index-2023-layer-067",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2023) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 49836,
-      "storedName": "layer-067.png",
-      "url": "/data/layers/layer-067.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a203-palmer-drought-severity-index-2023-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2023) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 113698,
-      "storedName": "684ef5c6-1853-4e1c-9ef7-17430a5c8c9e.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a203-palmer-drought-severity-index-2024-layer-011",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2024) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 50562,
-      "storedName": "layer-011.png",
-      "url": "/data/layers/layer-011.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a203-palmer-drought-severity-index-2024-lpkx",
-      "type": "Distribution",
-      "label": "Palmer Drought Severity Index (2024) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 116700,
-      "storedName": "0cb49561-86d0-4d15-b985-1d10bcbc5dd6.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a204-exposure-to-adverse-geodynamic-processes-layer-088",
-      "type": "Distribution",
-      "label": "Exposure to adverse geodynamic processes (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 54639,
-      "storedName": "layer-088.geojson",
-      "url": "/data/layers/layer-088.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a204-exposure-to-adverse-geodynamic-processes-lpkx",
-      "type": "Distribution",
-      "label": "Exposure to adverse geodynamic processes (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 51057189,
-      "storedName": "9baa9a0f-8b43-4e8e-906e-b1f498362989.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a205-earthquakes-19902024-layer-048",
-      "type": "Distribution",
-      "label": "Earthquakes, 1990–2024 (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 4267575,
-      "storedName": "layer-048.geojson",
-      "url": "/data/layers/layer-048.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a205-earthquakes-19902024-lpkx",
-      "type": "Distribution",
-      "label": "Earthquakes, 1990–2024 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 792140,
-      "storedName": "5067f6ed-ff0b-4492-9543-727d897b3a94.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a206-mudflow-zones-layer-126",
-      "type": "Distribution",
-      "label": "Mudflow zones (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1173321,
-      "storedName": "layer-126.geojson",
-      "url": "/data/layers/layer-126.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a206-mudflow-zones-lpkx",
-      "type": "Distribution",
-      "label": "Mudflow zones (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 516589,
-      "storedName": "e74d4e2a-d3d4-4969-bcec-f854ab46c316.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a207-flood-risk-layer-127",
-      "type": "Distribution",
-      "label": "Flood risk (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1346694,
-      "storedName": "layer-127.geojson",
-      "url": "/data/layers/layer-127.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a207-flood-risk-lpkx",
-      "type": "Distribution",
-      "label": "Flood risk (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 394496,
-      "storedName": "f05d423b-2f33-453b-91d1-4773a9a2d74b.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a208-flood-extent-layer-089",
-      "type": "Distribution",
-      "label": "Flood extent (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 177436,
-      "storedName": "layer-089.png",
-      "url": "/data/layers/layer-089.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a208-flood-extent-lpkx",
-      "type": "Distribution",
-      "label": "Flood extent (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 5489445,
-      "storedName": "9ca1f447-ff4b-456b-b197-2e0151cfdbf9.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a209-glacier-ice-volume-layer-045",
-      "type": "Distribution",
-      "label": "Glacier ice volume (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1911768,
-      "storedName": "layer-045.geojson",
-      "url": "/data/layers/layer-045.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a209-glacier-ice-volume-lpkx",
-      "type": "Distribution",
-      "label": "Glacier ice volume (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 342744,
-      "storedName": "4e97db31-3ab8-4723-bc08-56682788cdf0.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a21-average-growing-season-duration-20002024-layer-132",
-      "type": "Distribution",
-      "label": "Average growing-season duration (2000–2024) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 1401258,
-      "storedName": "layer-132.png",
-      "url": "/data/layers/layer-132.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a21-average-growing-season-duration-20002024-lpkx",
-      "type": "Distribution",
-      "label": "Average growing-season duration (2000–2024) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 9953370,
-      "storedName": "fcf34007-14c9-4777-9f17-52e00ebd7644.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a213-economic-losses-from-floods-and-earthquakes-layer-020",
-      "type": "Distribution",
-      "label": "Economic losses from floods and earthquakes (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 147204,
-      "storedName": "layer-020.geojson",
-      "url": "/data/layers/layer-020.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a213-economic-losses-from-floods-and-earthquakes-lpkx",
-      "type": "Distribution",
-      "label": "Economic losses from floods and earthquakes (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 96449,
-      "storedName": "22417183-aedf-46a7-97b0-f079b72fd0ab.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a214-flood-and-earthquake-fatalities-layer-002",
-      "type": "Distribution",
-      "label": "Flood and earthquake fatalities (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 148282,
-      "storedName": "layer-002.geojson",
-      "url": "/data/layers/layer-002.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a214-flood-and-earthquake-fatalities-lpkx",
-      "type": "Distribution",
-      "label": "Flood and earthquake fatalities (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 109109,
-      "storedName": "04dbd8fb-ed95-4ea1-ad9b-d6ee1714dc04.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a22-average-end-of-the-growing-season-20002024-layer-033",
-      "type": "Distribution",
-      "label": "Average end of the growing season (2000–2024) (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 1576791,
-      "storedName": "layer-033.png",
-      "url": "/data/layers/layer-033.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a22-average-end-of-the-growing-season-20002024-lpkx",
-      "type": "Distribution",
-      "label": "Average end of the growing season (2000–2024) (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 10444276,
-      "storedName": "418d59d6-7c01-4167-96df-e7bbb1d791c3.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a22-average-end-of-the-growing-season-20002024-poly-map-eos-dea6a7",
-      "type": "Distribution",
-      "label": "Average end of the growing season (2000–2024) (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 2062544,
-      "storedName": "418d59d6-7c01-4167-96df-e7bbb1d791c3-map-eos-7a76ae84da.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/a23-annual-temperature-trend-19602023-layer-080",
-      "type": "Distribution",
-      "label": "Annual temperature trend, 1960–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 10676,
-      "storedName": "layer-080.png",
-      "url": "/data/layers/layer-080.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a23-annual-temperature-trend-19602023-lpkx",
-      "type": "Distribution",
-      "label": "Annual temperature trend, 1960–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 61609,
-      "storedName": "8891f340-5204-46ed-a051-55380e88dd6b.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a24-annual-temperature-trend-19902023-layer-016",
-      "type": "Distribution",
-      "label": "Annual temperature trend, 1990–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 11995,
-      "storedName": "layer-016.png",
-      "url": "/data/layers/layer-016.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a24-annual-temperature-trend-19902023-lpkx",
-      "type": "Distribution",
-      "label": "Annual temperature trend, 1990–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 62027,
-      "storedName": "19c44d81-4659-4b64-9d51-0647f616b0c7.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a25-warm-season-temperature-trend-19602023-layer-069",
-      "type": "Distribution",
-      "label": "Warm-season temperature trend, 1960–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 10328,
-      "storedName": "layer-069.png",
-      "url": "/data/layers/layer-069.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a25-warm-season-temperature-trend-19602023-lpkx",
-      "type": "Distribution",
-      "label": "Warm-season temperature trend, 1960–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 62251,
-      "storedName": "6b947dea-8c53-46c7-9930-76ad2dd18803.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a26-warm-season-temperature-trend-19902023-layer-116",
-      "type": "Distribution",
-      "label": "Warm-season temperature trend, 1990–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 11548,
-      "storedName": "layer-116.png",
-      "url": "/data/layers/layer-116.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a26-warm-season-temperature-trend-19902023-lpkx",
-      "type": "Distribution",
-      "label": "Warm-season temperature trend, 1990–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 61825,
-      "storedName": "cf1d5fe2-2669-4c00-b517-eb4164aa213f.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a27-maximum-temperature-trend-19602023-layer-128",
-      "type": "Distribution",
-      "label": "Maximum temperature trend, 1960–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 46465,
-      "storedName": "layer-128.png",
-      "url": "/data/layers/layer-128.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a27-maximum-temperature-trend-19602023-lpkx",
-      "type": "Distribution",
-      "label": "Maximum temperature trend, 1960–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 180940,
-      "storedName": "f2336901-8c38-4f0e-9588-6aa51bcf81dc.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a28-precipitation-trend-19602023-layer-028",
-      "type": "Distribution",
-      "label": "Precipitation trend, 1960–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 50788,
-      "storedName": "layer-028.png",
-      "url": "/data/layers/layer-028.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a28-precipitation-trend-19602023-lpkx",
-      "type": "Distribution",
-      "label": "Precipitation trend, 1960–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 121925,
-      "storedName": "3406aaed-349b-425b-b26a-5b837d208806.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a29-precipitation-trend-19902023-layer-100",
-      "type": "Distribution",
-      "label": "Precipitation trend, 1990–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 54914,
-      "storedName": "layer-100.png",
-      "url": "/data/layers/layer-100.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a29-precipitation-trend-19902023-lpkx",
-      "type": "Distribution",
-      "label": "Precipitation trend, 1990–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 78850,
-      "storedName": "a8b4d83d-5bb2-4049-bbc4-50f8ca338d79.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a30-snow-cover-depth-trend-19602024-layer-014",
-      "type": "Distribution",
-      "label": "Snow-cover depth trend, 1960–2024 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 7320,
-      "storedName": "layer-014.png",
-      "url": "/data/layers/layer-014.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a30-snow-cover-depth-trend-19602024-lpkx",
-      "type": "Distribution",
-      "label": "Snow-cover depth trend, 1960–2024 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 63823,
-      "storedName": "13eaed5d-a09f-4e8f-8eb4-d7c65eebec6c.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a31-snow-cover-depth-trend-19902024-layer-019",
-      "type": "Distribution",
-      "label": "Snow-cover depth trend, 1990–2024 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 5729,
-      "storedName": "layer-019.png",
-      "url": "/data/layers/layer-019.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a31-snow-cover-depth-trend-19902024-lpkx",
-      "type": "Distribution",
-      "label": "Snow-cover depth trend, 1990–2024 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 61519,
-      "storedName": "2164c116-f4f4-4e09-9a51-2e284003043a.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a32-climatic-water-deficit-1990-layer-060",
-      "type": "Distribution",
-      "label": "Climatic water deficit, 1990 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 39865,
-      "storedName": "layer-060.png",
-      "url": "/data/layers/layer-060.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a32-climatic-water-deficit-1990-lpkx",
-      "type": "Distribution",
-      "label": "Climatic water deficit, 1990 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 106514,
-      "storedName": "5dfc01e1-233c-4529-9177-918c88a621cc.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a33-climatic-water-deficit-2023-layer-008",
-      "type": "Distribution",
-      "label": "Climatic water deficit, 2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 39382,
-      "storedName": "layer-008.png",
-      "url": "/data/layers/layer-008.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a33-climatic-water-deficit-2023-lpkx",
-      "type": "Distribution",
-      "label": "Climatic water deficit, 2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 107199,
-      "storedName": "0a34b112-9ede-4a2a-97e9-c926f8044049.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a34-climatic-water-deficit-trend-19602023-layer-085",
-      "type": "Distribution",
-      "label": "Climatic water-deficit trend, 1960–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 45585,
-      "storedName": "layer-085.png",
-      "url": "/data/layers/layer-085.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a34-climatic-water-deficit-trend-19602023-lpkx",
-      "type": "Distribution",
-      "label": "Climatic water-deficit trend, 1960–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 221883,
-      "storedName": "9815100e-8a16-453d-86dd-3718c584b20e.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a35-climatic-water-deficit-trend-19902023-layer-097",
-      "type": "Distribution",
-      "label": "Climatic water-deficit trend, 1990–2023 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 60572,
-      "storedName": "layer-097.png",
-      "url": "/data/layers/layer-097.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a35-climatic-water-deficit-trend-19902023-lpkx",
-      "type": "Distribution",
-      "label": "Climatic water-deficit trend, 1990–2023 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 130781,
-      "storedName": "a5b313bb-7803-4c63-aa54-b4b1631f0eed.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a36-projected-temperature-change-by-2040-layer-004",
-      "type": "Distribution",
-      "label": "Projected temperature change by 2040 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 5317,
-      "storedName": "layer-004.png",
-      "url": "/data/layers/layer-004.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a36-projected-temperature-change-by-2040-lpkx",
-      "type": "Distribution",
-      "label": "Projected temperature change by 2040 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 34891,
-      "storedName": "06570733-4903-42d2-b8e4-cae75561e0f0.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a37-projected-precipitation-change-by-2040-layer-023",
-      "type": "Distribution",
-      "label": "Projected precipitation change by 2040 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 47445,
-      "storedName": "layer-023.png",
-      "url": "/data/layers/layer-023.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a37-projected-precipitation-change-by-2040-lpkx",
-      "type": "Distribution",
-      "label": "Projected precipitation change by 2040 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 82810,
-      "storedName": "2493ec7d-35b6-4905-99f5-b0f0ade1cf4c.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a42-share-of-settlement-area-layer-129",
-      "type": "Distribution",
-      "label": "Share of settlement area (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1136307,
-      "storedName": "layer-129.geojson",
-      "url": "/data/layers/layer-129.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a42-share-of-settlement-area-lpkx",
-      "type": "Distribution",
-      "label": "Share of settlement area (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 181331,
-      "storedName": "f7b572b6-8da6-4cae-9683-cb00ef80fe43.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a43-settlement-area-change-19702020-layer-084",
-      "type": "Distribution",
-      "label": "Settlement area change, 1970–2020 (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1137805,
-      "storedName": "layer-084.geojson",
-      "url": "/data/layers/layer-084.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a43-settlement-area-change-19702020-lpkx",
-      "type": "Distribution",
-      "label": "Settlement area change, 1970–2020 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 187151,
-      "storedName": "94064521-4989-40b2-a7fd-692e440db604.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a44-disappeared-settlements-by-basin-layer-074",
-      "type": "Distribution",
-      "label": "Disappeared settlements by basin (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 261620,
-      "storedName": "layer-074.geojson",
-      "url": "/data/layers/layer-074.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a44-disappeared-settlements-by-basin-lpkx",
-      "type": "Distribution",
-      "label": "Disappeared settlements by basin (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 347442,
-      "storedName": "7a21804e-6ea3-4c53-b845-e1eb50cc6eae.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a45-road-network-density-layer-109",
-      "type": "Distribution",
-      "label": "Road network density (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 272875,
-      "storedName": "layer-109.png",
-      "url": "/data/layers/layer-109.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a45-road-network-density-lpkx",
-      "type": "Distribution",
-      "label": "Road network density (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 12021669,
-      "storedName": "bbac933f-f8d0-48d0-8e40-9c6c314f3bfa.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a52-water-management-zones-layer-123",
-      "type": "Distribution",
-      "label": "Water management zones (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 471451,
-      "storedName": "layer-123.geojson",
-      "url": "/data/layers/layer-123.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a52-water-management-zones-lpkx",
-      "type": "Distribution",
-      "label": "Water management zones (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 193773,
-      "storedName": "deffb1b7-49ea-4e80-b8dc-f77a2c2dc623.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a53-irrigated-areas-by-catchment-layer-124",
-      "type": "Distribution",
-      "label": "Irrigated areas by catchment (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1111457,
-      "storedName": "layer-124.geojson",
-      "url": "/data/layers/layer-124.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a53-irrigated-areas-by-catchment-lpkx",
-      "type": "Distribution",
-      "label": "Irrigated areas by catchment (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 202294,
-      "storedName": "df08e81f-59de-41f4-a79b-ea5a02f18baf.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a54-areas-using-drainage-layer-059",
-      "type": "Distribution",
-      "label": "Areas using drainage (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 230567,
-      "storedName": "layer-059.geojson",
-      "url": "/data/layers/layer-059.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a54-areas-using-drainage-lpkx",
-      "type": "Distribution",
-      "label": "Areas using drainage (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 110670,
-      "storedName": "5d466b52-a388-49c2-bf67-835612df1993.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a55-historical-irrigation-districts-layer-036",
-      "type": "Distribution",
-      "label": "Historical irrigation districts (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 626165,
-      "storedName": "layer-036.geojson",
-      "url": "/data/layers/layer-036.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a55-historical-irrigation-districts-lpkx",
-      "type": "Distribution",
-      "label": "Historical irrigation districts (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 147396,
-      "storedName": "4783d7c1-dd1a-4a4a-8659-129419a77a73.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a56-annual-runoff-volume-layer-125",
-      "type": "Distribution",
-      "label": "Annual runoff volume (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1127585,
-      "storedName": "layer-125.geojson",
-      "url": "/data/layers/layer-125.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a56-annual-runoff-volume-lpkx",
-      "type": "Distribution",
-      "label": "Annual runoff volume (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 178510,
-      "storedName": "e1c59d8a-deb4-4b1d-8d27-9c997c795301.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a57-dams-reservoirs-and-glacial-lakes-layer-113",
-      "type": "Distribution",
-      "label": "Dams, reservoirs and glacial lakes (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 20873,
-      "storedName": "layer-113.geojson",
-      "url": "/data/layers/layer-113.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a57-dams-reservoirs-and-glacial-lakes-lpkx",
-      "type": "Distribution",
-      "label": "Dams, reservoirs and glacial lakes (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 28729,
-      "storedName": "c23ed37f-872b-4111-bc14-3cfef6274af0.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a58-lake-and-reservoir-volume-layer-099",
-      "type": "Distribution",
-      "label": "Lake and reservoir volume (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1127021,
-      "storedName": "layer-099.geojson",
-      "url": "/data/layers/layer-099.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a58-lake-and-reservoir-volume-lpkx",
-      "type": "Distribution",
-      "label": "Lake and reservoir volume (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 178561,
-      "storedName": "a67e2264-bc34-4bc5-a82e-f50c0f3157a5.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a59-groundwater-depth-layer-133",
-      "type": "Distribution",
-      "label": "Groundwater depth (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 311715,
-      "storedName": "layer-133.geojson",
-      "url": "/data/layers/layer-133.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a59-groundwater-depth-lpkx",
-      "type": "Distribution",
-      "label": "Groundwater depth (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 113951,
-      "storedName": "fff027be-3068-43db-9ab3-006f9ad0cbc3.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a60-groundwater-pollution-layer-063",
-      "type": "Distribution",
-      "label": "Groundwater pollution (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 224856,
-      "storedName": "layer-063.geojson",
-      "url": "/data/layers/layer-063.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a60-groundwater-pollution-lpkx",
-      "type": "Distribution",
-      "label": "Groundwater pollution (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 86825,
-      "storedName": "63998556-2bef-4c50-8a50-afb175f65f16.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a61-groundwater-resources-layer-050",
-      "type": "Distribution",
-      "label": "Groundwater resources (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 461024,
-      "storedName": "layer-050.geojson",
-      "url": "/data/layers/layer-050.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a61-groundwater-resources-lpkx",
-      "type": "Distribution",
-      "label": "Groundwater resources (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 299682,
-      "storedName": "5340d8c1-2d5b-43fa-898d-f96ba917e465.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a62-artesian-basins-layer-122",
-      "type": "Distribution",
-      "label": "Artesian basins (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 40233,
-      "storedName": "layer-122.geojson",
-      "url": "/data/layers/layer-122.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a62-artesian-basins-lpkx",
-      "type": "Distribution",
-      "label": "Artesian basins (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 264930,
-      "storedName": "de84c2e5-71b2-4776-ac46-5d40c53ae9e2.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a63-irrigation-canal-density-layer-103",
-      "type": "Distribution",
-      "label": "Irrigation canal density (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1137805,
-      "storedName": "layer-103.geojson",
-      "url": "/data/layers/layer-103.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a63-irrigation-canal-density-lpkx",
-      "type": "Distribution",
-      "label": "Irrigation canal density (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 185676,
-      "storedName": "ace1a70f-e991-4b3c-8b86-aade0abcafb0.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a64-agricultural-land-served-by-canals-layer-009",
-      "type": "Distribution",
-      "label": "Agricultural land served by canals (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1458664,
-      "storedName": "layer-009.geojson",
-      "url": "/data/layers/layer-009.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a64-agricultural-land-served-by-canals-lpkx",
-      "type": "Distribution",
-      "label": "Agricultural land served by canals (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 3530278,
-      "storedName": "0a657117-c834-40ea-b602-50af37191b6c.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a73-water-stress-layer-076",
-      "type": "Distribution",
-      "label": "Water stress (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 706541,
-      "storedName": "layer-076.geojson",
-      "url": "/data/layers/layer-076.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a73-water-stress-lpkx",
-      "type": "Distribution",
-      "label": "Water stress (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 157205,
-      "storedName": "7d551820-06d2-4e21-9a81-d77b8a3698d3.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a74-water-balance-layer-061",
-      "type": "Distribution",
-      "label": "Water balance (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 3263,
-      "storedName": "layer-061.geojson",
-      "url": "/data/layers/layer-061.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a74-water-balance-lpkx",
-      "type": "Distribution",
-      "label": "Water balance (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 237178,
-      "storedName": "5ecc4173-fc62-4175-adcc-78a4ed059f99.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a75-access-to-sustainable-drinking-water-layer-043",
-      "type": "Distribution",
-      "label": "Access to sustainable drinking water (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 148282,
-      "storedName": "layer-043.geojson",
-      "url": "/data/layers/layer-043.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a75-access-to-sustainable-drinking-water-lpkx",
-      "type": "Distribution",
-      "label": "Access to sustainable drinking water (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 79304,
-      "storedName": "4d9049ad-ed13-49fd-be0b-72abbf8b2541.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a76-access-to-sustainable-sanitation-layer-034",
-      "type": "Distribution",
-      "label": "Access to sustainable sanitation (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 148282,
-      "storedName": "layer-034.geojson",
-      "url": "/data/layers/layer-034.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a76-access-to-sustainable-sanitation-lpkx",
-      "type": "Distribution",
-      "label": "Access to sustainable sanitation (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 79285,
-      "storedName": "43ddfeac-85d8-4120-b2ce-2bfd0a3997c0.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a77-water-ecosystem-area-layer-068",
-      "type": "Distribution",
-      "label": "Water ecosystem area (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1120601,
-      "storedName": "layer-068.geojson",
-      "url": "/data/layers/layer-068.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a77-water-ecosystem-area-lpkx",
-      "type": "Distribution",
-      "label": "Water ecosystem area (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 300235,
-      "storedName": "6b7ba107-4ea7-48c6-8667-3f4c7ac13470.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a78-change-in-permanently-flooded-ecosystems-2001200-layer-032",
-      "type": "Distribution",
-      "label": "Change in permanently flooded ecosystems, 2001–2004 (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1124965,
-      "storedName": "layer-032.geojson",
-      "url": "/data/layers/layer-032.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a78-change-in-permanently-flooded-ecosystems-2001200-lpkx",
-      "type": "Distribution",
-      "label": "Change in permanently flooded ecosystems, 2001–2004 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 231631,
-      "storedName": "3db4d737-c595-4164-a08c-04f0a4515f55.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a79-change-in-seasonally-flooded-ecosystems-20012004-layer-025",
-      "type": "Distribution",
-      "label": "Change in seasonally flooded ecosystems, 2001–2004 (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 1124965,
-      "storedName": "layer-025.geojson",
-      "url": "/data/layers/layer-025.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a79-change-in-seasonally-flooded-ecosystems-20012004-lpkx",
-      "type": "Distribution",
-      "label": "Change in seasonally flooded ecosystems, 2001–2004 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 227729,
-      "storedName": "290fc48f-e325-456f-bef2-3b91f7af5454.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a80-drainage-network-layer-005",
-      "type": "Distribution",
-      "label": "Drainage network (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 102885,
-      "storedName": "layer-005.geojson",
-      "url": "/data/layers/layer-005.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a80-drainage-network-lpkx",
-      "type": "Distribution",
-      "label": "Drainage network (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 260847,
-      "storedName": "0780a307-2109-4c13-bd52-e525b8333b5f.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a81-flow-in-drainage-canals-layer-077",
-      "type": "Distribution",
-      "label": "Flow in drainage canals (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 2553098,
-      "storedName": "layer-077.geojson",
-      "url": "/data/layers/layer-077.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a81-flow-in-drainage-canals-lpkx",
-      "type": "Distribution",
-      "label": "Flow in drainage canals (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 4397355,
-      "storedName": "7fee6de2-29fb-46fb-89bc-db6001212479.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a90-land-cover-2000-layer-047",
-      "type": "Distribution",
-      "label": "Land cover, 2000 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 429684,
-      "storedName": "layer-047.png",
-      "url": "/data/layers/layer-047.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a90-land-cover-2000-lpkx",
-      "type": "Distribution",
-      "label": "Land cover, 2000 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 956411,
-      "storedName": "50613892-5cbf-4086-aace-8e60e4de2d0c.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a91-land-cover-2010-layer-054",
-      "type": "Distribution",
-      "label": "Land cover, 2010 (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 175529,
-      "storedName": "layer-054.png",
-      "url": "/data/layers/layer-054.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a91-land-cover-2010-lpkx",
-      "type": "Distribution",
-      "label": "Land cover, 2010 (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 998719,
-      "storedName": "59aae156-a8ee-4890-b6fd-d168a1f497b2.lpkx",
-      "url": null,
-      "accessPolicy": "request"
     },
     {
       "id": "uz:dist/a92-land-cover-92-tif-62c5bc",
@@ -5288,138 +2452,6 @@
       "externalPath": "C:/Users/User/Desktop/MAPS/Uzbekistan-20260828T081638Z-1-001/Uzbekistan/92_Земельный_покров.tif.lpkx",
       "featureCount": null,
       "crs": null
-    },
-    {
-      "id": "uz:dist/a94-bare-surface-layer-018",
-      "type": "Distribution",
-      "label": "Bare surface (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 1069728,
-      "storedName": "layer-018.png",
-      "url": "/data/layers/layer-018.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a94-bare-surface-lpkx",
-      "type": "Distribution",
-      "label": "Bare surface (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 1181688,
-      "storedName": "1d51c0b7-2687-4de9-b2fd-0376e3f5fcd1.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a95-soil-chemistry-layer-073",
-      "type": "Distribution",
-      "label": "Soil chemistry (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 333712,
-      "storedName": "layer-073.geojson",
-      "url": "/data/layers/layer-073.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a95-soil-chemistry-lpkx",
-      "type": "Distribution",
-      "label": "Soil chemistry (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 570021,
-      "storedName": "78b53b03-cb18-4c39-8eb7-f26ec0ac60a1.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a96-farming-systems-layer-062",
-      "type": "Distribution",
-      "label": "Farming systems (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 665802,
-      "storedName": "layer-062.geojson",
-      "url": "/data/layers/layer-062.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a96-farming-systems-lpkx",
-      "type": "Distribution",
-      "label": "Farming systems (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 218039,
-      "storedName": "5eee6e86-8a3c-4a5b-a44f-3a84b57b6194.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a97-land-use-types-layer-037",
-      "type": "Distribution",
-      "label": "Land-use types (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 396523,
-      "storedName": "layer-037.geojson",
-      "url": "/data/layers/layer-037.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a97-land-use-types-lpkx",
-      "type": "Distribution",
-      "label": "Land-use types (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 92868,
-      "storedName": "482f3158-0d46-41f4-9b9f-879fbd5da59a.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a98-agricultural-land-types-layer-131",
-      "type": "Distribution",
-      "label": "Agricultural land types (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 390957,
-      "storedName": "layer-131.geojson",
-      "url": "/data/layers/layer-131.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a98-agricultural-land-types-lpkx",
-      "type": "Distribution",
-      "label": "Agricultural land types (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 174585,
-      "storedName": "fb7b25ef-7cd0-42c1-a80e-d8b244de4fe4.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a99-cotton-yield-layer-101",
-      "type": "Distribution",
-      "label": "Cotton yield (web-vector)",
-      "role": "web-vector",
-      "format": "GeoJSON",
-      "byteSize": 233329,
-      "storedName": "layer-101.geojson",
-      "url": "/data/layers/layer-101.geojson",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/a99-cotton-yield-lpkx",
-      "type": "Distribution",
-      "label": "Cotton yield (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 182323,
-      "storedName": "a8eb30be-11c5-49f3-8f24-33f2d449b3e7.lpkx",
-      "url": null,
-      "accessPolicy": "request"
     },
     {
       "id": "uz:dist/cadastre-agriculture-fields-agriculturefields-production-rea",
@@ -6771,6 +3803,120 @@
       "accessPolicy": "free"
     },
     {
+      "id": "uz:dist/hydrobasins-level12-uzbekistan-relationship-database",
+      "type": "Distribution",
+      "label": "HydroBASINS level-12 catchments — Uzbekistan (relationship database)",
+      "role": "web-vector",
+      "format": "GeoPackage",
+      "byteSize": 12447744,
+      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "url": null,
+      "accessPolicy": "free",
+      "featureCount": 2736,
+      "crs": "EPSG:4326"
+    },
+    {
+      "id": "uz:dist/hydrobasins-level12-uzbekistan-source",
+      "type": "Distribution",
+      "label": "Uzbekistan HydroBASINS lake extraction v1.c",
+      "role": "external-vector",
+      "format": "GPKG",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free",
+      "externalPath": "C:\\earth_engine\\uzbekistan_hydrobasins_lake_v1c\\uzbekistan_hydrobasins_lake_v1c.gpkg"
+    },
+    {
+      "id": "uz:dist/hydrobasins-level12-uzbekistan-web",
+      "type": "Distribution",
+      "label": "HydroBASINS level-12 catchments — Uzbekistan (web GeoJSON)",
+      "role": "web-vector",
+      "format": "GeoJSON",
+      "byteSize": 3016969,
+      "storedName": "public/data/hydrography/basins.geojson",
+      "url": "/data/hydrography/basins.geojson",
+      "accessPolicy": "free",
+      "featureCount": 2736,
+      "crs": "EPSG:4326"
+    },
+    {
+      "id": "uz:dist/hydrolakes-uzbekistan-relationship-database",
+      "type": "Distribution",
+      "label": "HydroLAKES water bodies — Uzbekistan (relationship database)",
+      "role": "web-vector",
+      "format": "GeoPackage",
+      "byteSize": 12447744,
+      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "url": null,
+      "accessPolicy": "free",
+      "featureCount": 647,
+      "crs": "EPSG:4326"
+    },
+    {
+      "id": "uz:dist/hydrolakes-uzbekistan-source",
+      "type": "Distribution",
+      "label": "HydroLAKES v1.0 global FileGDB",
+      "role": "external-vector",
+      "format": "FileGDB",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free",
+      "externalPath": "D:\\earth_engine\\HydroLAKES_polys_v10.gdb\\HydroLAKES_polys_v10.gdb"
+    },
+    {
+      "id": "uz:dist/hydrolakes-uzbekistan-web",
+      "type": "Distribution",
+      "label": "HydroLAKES water bodies — Uzbekistan (web GeoJSON)",
+      "role": "web-vector",
+      "format": "GeoJSON",
+      "byteSize": 914540,
+      "storedName": "public/data/hydrography/lakes.geojson",
+      "url": "/data/hydrography/lakes.geojson",
+      "accessPolicy": "free",
+      "featureCount": 647,
+      "crs": "EPSG:4326"
+    },
+    {
+      "id": "uz:dist/hydrorivers-uzbekistan-relationship-database",
+      "type": "Distribution",
+      "label": "HydroRIVERS river network — Uzbekistan (relationship database)",
+      "role": "web-vector",
+      "format": "GeoPackage",
+      "byteSize": 12447744,
+      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "url": null,
+      "accessPolicy": "free",
+      "featureCount": 17447,
+      "crs": "EPSG:4326"
+    },
+    {
+      "id": "uz:dist/hydrorivers-uzbekistan-source",
+      "type": "Distribution",
+      "label": "HydroRIVERS v1.0 Asia FileGDB",
+      "role": "external-vector",
+      "format": "FileGDB",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free",
+      "externalPath": "D:\\earth_engine\\HydroRIVERS_v10_as.gdb\\HydroRIVERS_v10_as.gdb"
+    },
+    {
+      "id": "uz:dist/hydrorivers-uzbekistan-web",
+      "type": "Distribution",
+      "label": "HydroRIVERS river network — Uzbekistan (web GeoJSON)",
+      "role": "web-vector",
+      "format": "GeoJSON",
+      "byteSize": 10456674,
+      "storedName": "public/data/hydrography/rivers.geojson",
+      "url": "/data/hydrography/rivers.geojson",
+      "accessPolicy": "free",
+      "featureCount": 17447,
+      "crs": "EPSG:4326"
+    },
+    {
       "id": "uz:dist/kamchik-pass-climate-series-21690c",
       "type": "Distribution",
       "label": "Камчик_температура_воздуха_и_осадки.xlsx",
@@ -7269,72 +4415,6 @@
       "accessPolicy": "free"
     },
     {
-      "id": "uz:dist/x-forest-cover-layer-046",
-      "type": "Distribution",
-      "label": "Forest cover (web-raster-preview)",
-      "role": "web-raster-preview",
-      "format": "PNG",
-      "byteSize": 193116,
-      "storedName": "layer-046.png",
-      "url": "/data/layers/layer-046.png",
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/x-forest-cover-lpkx",
-      "type": "Distribution",
-      "label": "Forest cover (LPKX)",
-      "role": "source-package",
-      "format": "ArcGIS Layer Package",
-      "byteSize": 1206885,
-      "storedName": "501e934c-b961-4826-ba54-125f56bdf0c7.lpkx",
-      "url": null,
-      "accessPolicy": "request"
-    },
-    {
-      "id": "uz:dist/x-forest-cover-poly-treecover2005",
-      "type": "Distribution",
-      "label": "Forest cover (polygonised raster)",
-      "role": "raster-polygonized",
-      "format": "GeoJSON",
-      "byteSize": 336406,
-      "storedName": "501e934c-b961-4826-ba54-125f56bdf0c7-treecover2005-uzbekistan-4ff381369a.geojson",
-      "url": null,
-      "accessPolicy": "internal"
-    },
-    {
-      "id": "uz:dist/x-uzbekistan-national-atlas-environmental-atlas-pdf-930a4b3c",
-      "type": "Distribution",
-      "label": "Uzbekistan - National Atlas, Environmental Atlas (PDF)",
-      "role": "source-document",
-      "format": "PDF",
-      "byteSize": 151916922,
-      "storedName": "930a4b3c-3b31-4c55-9eb1-cb88169e8e54.pdf",
-      "url": null,
-      "accessPolicy": "free"
-    },
-    {
-      "id": "uz:dist/x-uzbekistan-national-atlas-environmental-atlas-pdf-9b32d850",
-      "type": "Distribution",
-      "label": "Uzbekistan - National Atlas, Environmental Atlas (PDF)",
-      "role": "source-document",
-      "format": "PDF",
-      "byteSize": 54903945,
-      "storedName": "9b32d850-4e86-4915-a67a-f3369f09269a.pdf",
-      "url": null,
-      "accessPolicy": "free"
-    },
-    {
-      "id": "uz:dist/x-uzbekistan-national-atlas-environmental-atlas-pdf-ebdf9892",
-      "type": "Distribution",
-      "label": "Uzbekistan - National Atlas, Environmental Atlas (PDF)",
-      "role": "source-document",
-      "format": "PDF",
-      "byteSize": 155472377,
-      "storedName": "ebdf9892-4157-46a8-ba7d-d1125174d03e.pdf",
-      "url": null,
-      "accessPolicy": "free"
-    },
-    {
       "id": "uz:layer/earthquakes",
       "type": "MapLayer",
       "label": "Earthquakes 1990–2024",
@@ -7360,6 +4440,42 @@
       "featureCount": 93,
       "url": "/data/glacial-lakes.geojson",
       "legend": null
+    },
+    {
+      "id": "uz:layer/hydrobasins-level12-uzbekistan",
+      "type": "MapLayer",
+      "label": "HydroBASINS level-12 catchments — Uzbekistan",
+      "geometryType": "polygon",
+      "featureCount": 2736,
+      "url": "/data/hydrography/basins.geojson",
+      "legend": {
+        "group": "Hydrography",
+        "source": "HydroSHEDS"
+      }
+    },
+    {
+      "id": "uz:layer/hydrolakes-uzbekistan",
+      "type": "MapLayer",
+      "label": "HydroLAKES water bodies — Uzbekistan",
+      "geometryType": "polygon",
+      "featureCount": 647,
+      "url": "/data/hydrography/lakes.geojson",
+      "legend": {
+        "group": "Hydrography",
+        "source": "HydroSHEDS"
+      }
+    },
+    {
+      "id": "uz:layer/hydrorivers-uzbekistan",
+      "type": "MapLayer",
+      "label": "HydroRIVERS river network — Uzbekistan",
+      "geometryType": "line",
+      "featureCount": 17447,
+      "url": "/data/hydrography/rivers.geojson",
+      "legend": {
+        "group": "Hydrography",
+        "source": "HydroSHEDS"
+      }
     },
     {
       "id": "uz:layer/protected-areas",

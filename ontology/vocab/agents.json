@@ -66,6 +66,15 @@
       "description": "The national hydrometeorological service. Source of the station climate series, the river-gauge inventory and the agricultural statistics transferred in the same delivery."
     },
     {
+      "id": "uz:agent/hydrosheds",
+      "type": "Agent",
+      "label": "HydroSHEDS",
+      "agentKind": "organisation",
+      "agentVersion": "HydroRIVERS v1.0 / HydroLAKES v1.0 / HydroBASINS v1.c",
+      "trustTier": "authoritative",
+      "description": "Global hydrographic reference data developed by WWF and partners. Stable river, lake and basin identifiers are preserved in the Uzbekistan relationship database together with native downstream routing and Pfafstetter hierarchy."
+    },
+    {
       "id": "uz:agent/curator",
       "type": "Agent",
       "label": "Portal curator",

@@ -44,6 +44,7 @@ AGENT_SOURCE = "uz:agent/atlas-source"
 AGENT_PIPELINE = "uz:agent/extraction-pipeline"
 AGENT_RULES = "uz:agent/rule-lexical-v1"
 AGENT_CURATOR = "uz:agent/curator"
+AGENT_HYDROSHEDS = "uz:agent/hydrosheds"
 
 # The five layers published to the public map, keyed by the atlas number their
 # extraction script pulls them from (scripts/build_web_layers.py).
@@ -275,6 +276,9 @@ class GraphBuilder:
                                           {"sources": []})
         self.external_details = read_json(external_dir / "details.json",
                                           {"stations": [], "classLabels": {}})
+        self.hydrography = read_json(
+            root / "ontology" / "instances" / "hydrography.json", {}
+        )
 
     # ------------------------------------------------------------------ build
 
@@ -286,6 +290,7 @@ class GraphBuilder:
         self.build_derived_distributions()
         self.build_public_layers()
         self.build_external_sources()
+        self.build_hydrography_sources()
         self.seed_semantics()
         self.merge_preserved_assertions()
 
@@ -704,6 +709,214 @@ class GraphBuilder:
                                            "score": round(largest / max(smallest, 1), 1),
                                            "note": "rarest class is more than 100x smaller than the "
                                                    "commonest; stratify before training"})
+
+    def build_hydrography_sources(self) -> None:
+        """Add the measured Uzbekistan HydroSHEDS relationship database.
+
+        Feature-level routing stays in the GeoPackage/JSON projection where it
+        can be queried without inflating the catalogue graph with tens of
+        thousands of geometry nodes.  The canonical ontology records the three
+        intellectual datasets, their source and derived distributions, map
+        layers, lineage, coverage and curated meaning.
+        """
+        manifest = self.hydrography
+        if not manifest:
+            self.warn("HydroSHEDS reference has not been built; run npm run hydrography:build")
+            return
+
+        counts = manifest.get("counts", {})
+        sources = manifest.get("sources", {})
+        web = manifest.get("web", {})
+        fields = manifest.get("fields", {})
+        extent = manifest.get("extent")
+        database_path = (manifest.get("database") or {}).get("path")
+        licence = manifest.get("license")
+        attribution = manifest.get("attribution")
+        evidence = {
+            "source": "ontology/instances/hydrography.json",
+            "note": manifest.get("selection", "Uzbekistan hydrography selection"),
+        }
+
+        configs = [
+            {
+                "slug": "hydrorivers-uzbekistan",
+                "label": "HydroRIVERS river network — Uzbekistan",
+                "description": "Hydrologically routed river reaches intersecting Uzbekistan, clipped to the national boundary while preserving native HydroRIVERS identifiers and downstream links.",
+                "sourceKey": "hydrosheds/hydrorivers-v10-uzbekistan",
+                "source": sources.get("rivers"),
+                "sourceLabel": "HydroRIVERS v1.0 Asia FileGDB",
+                "sourceFormat": "FileGDB",
+                "web": web.get("rivers"),
+                "webFile": "public/data/hydrography/rivers.geojson",
+                "geometry": "line",
+                "count": counts.get("rivers"),
+                "fields": fields.get("rivers", []),
+                "observes": ["uz:prop/river-network", "uz:prop/river-discharge"],
+            },
+            {
+                "slug": "hydrolakes-uzbekistan",
+                "label": "HydroLAKES water bodies — Uzbekistan",
+                "description": "Lakes and reservoirs intersecting Uzbekistan, with native HydroLAKES identifiers and measured links to HydroBASINS level-12 catchments.",
+                "sourceKey": "hydrosheds/hydrolakes-v10-uzbekistan",
+                "source": sources.get("lakes"),
+                "sourceLabel": "HydroLAKES v1.0 global FileGDB",
+                "sourceFormat": "FileGDB",
+                "web": web.get("lakes"),
+                "webFile": "public/data/hydrography/lakes.geojson",
+                "geometry": "polygon",
+                "count": counts.get("lakes"),
+                "fields": fields.get("lakes", []),
+                "observes": ["uz:prop/surface-water-extent", "uz:prop/reservoir-volume"],
+            },
+            {
+                "slug": "hydrobasins-level12-uzbekistan",
+                "label": "HydroBASINS level-12 catchments — Uzbekistan",
+                "description": "Level-12 Pfafstetter catchments referenced by the Uzbekistan river and lake relationship database.",
+                "sourceKey": "hydrosheds/hydrobasins-v1c-level12-uzbekistan",
+                "source": sources.get("basins"),
+                "sourceLabel": "Uzbekistan HydroBASINS lake extraction v1.c",
+                "sourceFormat": "GPKG",
+                "web": web.get("basins"),
+                "webFile": "public/data/hydrography/basins.geojson",
+                "geometry": "polygon",
+                "count": counts.get("basins"),
+                "fields": fields.get("basins", []),
+                "observes": ["uz:prop/drainage-basin"],
+            },
+        ]
+
+        dataset_ids = {}
+        for config in configs:
+            ds_id = self.dataset_id(
+                config["sourceKey"], None, config["label"], preferred=config["slug"]
+            )
+            dataset_ids[config["slug"]] = ds_id
+            self.add_entity({
+                "id": ds_id,
+                "type": "Dataset",
+                "label": config["label"],
+                "labels": {"en": config["label"]},
+                "sourceKey": config["sourceKey"],
+                "atlasNumber": None,
+                "catalogId": None,
+                "repositoryId": None,
+                "description": config["description"],
+            })
+
+            source_dist = f"uz:dist/{config['slug']}-source"
+            self.add_entity({
+                "id": source_dist,
+                "type": "Distribution",
+                "label": config["sourceLabel"],
+                "role": "external-vector",
+                "format": config["sourceFormat"],
+                "byteSize": None,
+                "storedName": None,
+                "url": None,
+                "accessPolicy": "free",
+                "externalPath": config["source"],
+            })
+            database_dist = f"uz:dist/{config['slug']}-relationship-database"
+            database_file = Path(database_path) if database_path else None
+            self.add_entity({
+                "id": database_dist,
+                "type": "Distribution",
+                "label": f"{config['label']} (relationship database)",
+                "role": "web-vector",
+                "format": "GeoPackage",
+                "byteSize": database_file.stat().st_size if database_file and database_file.exists() else None,
+                "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+                "url": None,
+                "accessPolicy": "free",
+                "featureCount": config["count"],
+                "crs": manifest.get("crs"),
+            })
+            web_dist = f"uz:dist/{config['slug']}-web"
+            web_file = self.root / config["webFile"]
+            self.add_entity({
+                "id": web_dist,
+                "type": "Distribution",
+                "label": f"{config['label']} (web GeoJSON)",
+                "role": "web-vector",
+                "format": "GeoJSON",
+                "byteSize": web_file.stat().st_size if web_file.exists() else None,
+                "storedName": config["webFile"],
+                "url": config["web"],
+                "accessPolicy": "free",
+                "featureCount": config["count"],
+                "crs": manifest.get("crs"),
+            })
+            layer_id = f"uz:layer/{config['slug']}"
+            self.add_entity({
+                "id": layer_id,
+                "type": "MapLayer",
+                "label": config["label"],
+                "geometryType": config["geometry"],
+                "featureCount": config["count"],
+                "url": config["web"],
+                "legend": {"group": "Hydrography", "source": "HydroSHEDS"},
+            })
+
+            for distribution in (source_dist, database_dist, web_dist):
+                self.add(ds_id, "uz:hasDistribution", distribution, agent=AGENT_PIPELINE,
+                         confidence=1.0, status="asserted", method="hydrography-build",
+                         evidence=evidence)
+            if config["source"]:
+                self.add(source_dist, "uz:externalLocation", value=config["source"],
+                         agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
+                         method="measurement", evidence=evidence)
+            self.add(database_dist, "uz:derivedFrom", source_dist, agent=AGENT_PIPELINE,
+                     confidence=1.0, status="asserted", method="spatial-intersection",
+                     evidence=evidence)
+            self.add(web_dist, "uz:derivedFrom", database_dist, agent=AGENT_PIPELINE,
+                     confidence=1.0, status="asserted", method="simplification",
+                     evidence=evidence)
+            self.add(layer_id, "uz:rendersDistribution", web_dist, agent=AGENT_PIPELINE,
+                     confidence=1.0, status="asserted", method="portal-configuration")
+            self.add(ds_id, "uz:belongsToTheme", "uz:theme/water", agent=AGENT_CURATOR,
+                     confidence=1.0, status="asserted", method="curator-mapping", evidence=evidence)
+            self.add(ds_id, "uz:hasAnalysisConcept", "uz:analysis/environmental-feature",
+                     agent=AGENT_CURATOR, confidence=1.0, status="asserted",
+                     method="curator-mapping", evidence=evidence)
+            for concept in config["observes"]:
+                self.add(ds_id, "uz:observes", concept, agent=AGENT_CURATOR,
+                         confidence=1.0, status="asserted", method="curator-mapping",
+                         evidence=evidence)
+            self.add(ds_id, "uz:supportsUseCase", "uz:usecase/water-resource-allocation",
+                     agent=AGENT_CURATOR, confidence=1.0, status="asserted",
+                     method="curator-mapping", evidence=evidence)
+            for subject in (ds_id, layer_id):
+                self.add(subject, "uz:coversPlace", "uz:place/uzbekistan",
+                         agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
+                         method="boundary-clip", evidence=evidence)
+                if extent:
+                    self.add(subject, "uz:spatialExtent", value=extent,
+                             agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
+                             method="measurement", evidence=evidence)
+            if licence:
+                self.add(ds_id, "uz:license", value=licence, agent=AGENT_CURATOR,
+                         confidence=1.0, status="asserted", method="curator-mapping",
+                         evidence=evidence)
+            if attribution:
+                self.add(ds_id, "uz:attributedTo", value=attribution, agent=AGENT_CURATOR,
+                         confidence=1.0, status="asserted", method="curator-mapping",
+                         evidence=evidence)
+            for field in config["fields"]:
+                self.add(source_dist, "uz:hasField", value=field, agent=AGENT_PIPELINE,
+                         confidence=1.0, status="asserted", method="measurement",
+                         evidence=evidence)
+
+        river_id = dataset_ids["hydrorivers-uzbekistan"]
+        lake_id = dataset_ids["hydrolakes-uzbekistan"]
+        basin_id = dataset_ids["hydrobasins-level12-uzbekistan"]
+        for subject, related in [
+            (river_id, lake_id), (lake_id, river_id),
+            (river_id, basin_id), (basin_id, river_id),
+            (lake_id, basin_id), (basin_id, lake_id),
+        ]:
+            self.add(subject, "uz:relatedTo", related, agent=AGENT_CURATOR,
+                     confidence=1.0, status="asserted", method="curator-mapping",
+                     evidence=evidence)
 
     def assert_external_semantics(self, ds_id: str, source: dict, dataset: dict) -> None:
         evidence = {"source": "external-sources.json",
