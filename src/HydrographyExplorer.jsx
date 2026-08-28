@@ -20,7 +20,7 @@ const TYPES = {
   rivers: {
     label: 'Rivers', singular: 'reach', plural: 'reaches', icon: Waves, color: '#4cc9f0',
     idField: 'HYRIV_ID', rank: r => r.upstreamKm2 ?? 0,
-    filter: { key: 'strahlerOrder', label: 'Min Strahler order', min: 1, max: 9, step: 1, initial: 4, format: v => `≥ ${v}` },
+    filter: { key: 'strahlerOrder', label: 'Min Strahler order', min: 1, max: 8, step: 1, initial: 4, format: v => `≥ ${v}` },
     name: r => `Reach ${r.id}`,
     detail: r => `Order ${r.strahlerOrder} · ${num(r.lengthKm, 2)} km`,
   },
