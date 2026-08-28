@@ -63,7 +63,7 @@ ENGLISH_BY_ID = {
 
 def category_for(number: int | None, title: str) -> str:
     if number is None:
-        return "Forests"
+        return "Forests & carbon"
     if number <= 37:
         return "Climate"
     if number <= 45:
