@@ -1,0 +1,109 @@
+{
+  "version": "1.0",
+  "description": "Weak-supervision rules, kept as data rather than code so a curator can edit them without touching the pipeline. They seed the graph and give the first model something to learn from; they are not the ontology itself. Property matching is driven mainly by the labels in properties.json — this file only adds terms the labels do not cover, and the ordered analysis rules.",
+  "matching": {
+    "labelMatchBase": 0.55,
+    "prefLabelBonus": 0.2,
+    "multiTermBonus": 0.05,
+    "maxConfidence": 0.9
+  },
+  "propertyTerms": [
+    {"terms": ["fish", "рыбы"], "concept": "uz:prop/species-occurrence", "weight": 0.75},
+    {"terms": ["reptiles", "рептилии", "пресмыкающиеся"], "concept": "uz:prop/species-occurrence", "weight": 0.75},
+    {"terms": ["mammals", "млекопитающие"], "concept": "uz:prop/species-occurrence", "weight": 0.75},
+    {"terms": ["birds", "птицы"], "concept": "uz:prop/species-occurrence", "weight": 0.75},
+    {"terms": ["invertebrates", "беспозвоночные"], "concept": "uz:prop/species-occurrence", "weight": 0.75},
+    {"terms": ["plants", "растения"], "concept": "uz:prop/species-occurrence", "weight": 0.7},
+    {"terms": ["useful plants", "полезные растения"], "concept": "uz:prop/species-occurrence", "weight": 0.8},
+    {"terms": ["game birds", "game mammals", "охотничьи"], "concept": "uz:prop/species-occurrence", "weight": 0.8},
+    {"terms": ["nature conservation", "охрана природы"], "concept": "uz:prop/protected-area", "weight": 0.75},
+    {"terms": ["hypsometric", "гипсометрическая"], "concept": "uz:prop/elevation", "weight": 0.85},
+    {"terms": ["mudflow", "сель", "селевые"], "concept": "uz:prop/mudflow-hazard", "weight": 0.85},
+    {"terms": ["earthquake", "землетрясен"], "concept": "uz:prop/seismicity", "weight": 0.85},
+    {"terms": ["flood", "наводнен", "затоплен"], "concept": "uz:prop/flood-hazard", "weight": 0.7},
+    {"terms": ["dams", "reservoirs", "водохранилищ", "плотин"], "concept": "uz:prop/reservoir-volume", "weight": 0.7},
+    {"terms": ["artesian", "артезианск"], "concept": "uz:prop/groundwater-resources", "weight": 0.8},
+    {"terms": ["catchment", "бассейн"], "concept": "uz:prop/irrigated-area", "weight": 0.6},
+    {"terms": ["soil", "почв"], "concept": "uz:prop/soil-chemistry", "weight": 0.5},
+    {"terms": ["cotton", "хлопок", "хлопчатник"], "concept": "uz:prop/crop-yield", "weight": 0.8},
+    {"terms": ["saxaul", "саксаул"], "concept": "uz:prop/forest-type", "weight": 0.85},
+    {"terms": ["road", "дорог"], "concept": "uz:prop/road-density", "weight": 0.8},
+    {"terms": ["settlement", "поселен", "населённ", "населенн"], "concept": "uz:prop/settlement-extent", "weight": 0.75},
+    {"terms": ["ecosystem", "экосистем"], "concept": "uz:prop/water-ecosystem-extent", "weight": 0.5}
+  ],
+  "analysisRules": [
+    {
+      "id": "hazard-first",
+      "priority": 40,
+      "concept": "uz:analysis/risk-exposure",
+      "weight": 0.85,
+      "terms": ["risk", "hazard", "earthquake", "flood", "mudflow", "drought", "adverse", "fatalit", "losses", "exposure", "риск", "опасн", "землетрясен", "наводнен", "сель", "засух", "ущерб", "погибш"],
+      "note": "Evaluated before the year rule so a decades-long hazard catalogue is not misfiled as a change series."
+    },
+    {
+      "id": "change-series",
+      "priority": 30,
+      "concept": "uz:analysis/change-over-time",
+      "weight": 0.8,
+      "terms": ["dynamics", "trend", "change", "динамик", "тренд", "изменен"],
+      "requiresIntervalOrTerm": true,
+      "note": "Also triggered when temporalCoverage spans more than one year."
+    },
+    {
+      "id": "resource-system",
+      "priority": 20,
+      "concept": "uz:analysis/resource-system",
+      "weight": 0.75,
+      "terms": ["management", "irrigat", "drainage", "canal", "access", "supply", "sanitation", "stocking", "yield", "livestock", "farming system", "use intensity", "served by", "управлен", "орошен", "дренаж", "канал", "водоснабжен", "санитар"]
+    },
+    {
+      "id": "observation-index",
+      "priority": 10,
+      "concept": "uz:analysis/state-observation",
+      "weight": 0.7,
+      "terms": ["index", "ndvi", "evi", "productivity", "richness", "intactness", "integrity", "score", "volume", "depth", "density", "balance", "sequestration", "индекс", "продуктивн", "запас", "объём", "объем", "глубин", "плотност"]
+    },
+    {
+      "id": "feature-default",
+      "priority": 0,
+      "concept": "uz:analysis/environmental-feature",
+      "weight": 0.5,
+      "default": true
+    }
+  ],
+  "useCaseFromProperty": [
+    {"property": "uz:prop/drought-severity", "usecase": "uz:usecase/drought-early-warning", "weight": 0.8},
+    {"property": "uz:prop/climatic-water-deficit", "usecase": "uz:usecase/drought-early-warning", "weight": 0.7},
+    {"property": "uz:prop/ndvi", "usecase": "uz:usecase/drought-early-warning", "weight": 0.6},
+    {"property": "uz:prop/irrigated-area", "usecase": "uz:usecase/irrigation-planning", "weight": 0.8},
+    {"property": "uz:prop/irrigation-canal-network", "usecase": "uz:usecase/irrigation-planning", "weight": 0.8},
+    {"property": "uz:prop/drainage-network", "usecase": "uz:usecase/irrigation-planning", "weight": 0.7},
+    {"property": "uz:prop/water-stress", "usecase": "uz:usecase/water-resource-allocation", "weight": 0.8},
+    {"property": "uz:prop/water-balance", "usecase": "uz:usecase/water-resource-allocation", "weight": 0.8},
+    {"property": "uz:prop/surface-runoff", "usecase": "uz:usecase/water-resource-allocation", "weight": 0.7},
+    {"property": "uz:prop/groundwater-depth", "usecase": "uz:usecase/water-resource-allocation", "weight": 0.6},
+    {"property": "uz:prop/seismicity", "usecase": "uz:usecase/disaster-risk-reduction", "weight": 0.85},
+    {"property": "uz:prop/flood-hazard", "usecase": "uz:usecase/disaster-risk-reduction", "weight": 0.85},
+    {"property": "uz:prop/mudflow-hazard", "usecase": "uz:usecase/disaster-risk-reduction", "weight": 0.85},
+    {"property": "uz:prop/glacial-lake", "usecase": "uz:usecase/disaster-risk-reduction", "weight": 0.7},
+    {"property": "uz:prop/disaster-mortality", "usecase": "uz:usecase/disaster-risk-reduction", "weight": 0.8},
+    {"property": "uz:prop/disaster-economic-loss", "usecase": "uz:usecase/disaster-risk-reduction", "weight": 0.8},
+    {"property": "uz:prop/protected-area", "usecase": "uz:usecase/conservation-planning", "weight": 0.85},
+    {"property": "uz:prop/conservation-value", "usecase": "uz:usecase/conservation-planning", "weight": 0.85},
+    {"property": "uz:prop/species-richness", "usecase": "uz:usecase/conservation-planning", "weight": 0.7},
+    {"property": "uz:prop/ecoregion", "usecase": "uz:usecase/conservation-planning", "weight": 0.6},
+    {"property": "uz:prop/biodiversity-intactness", "usecase": "uz:usecase/conservation-planning", "weight": 0.7},
+    {"property": "uz:prop/carbon-sequestration", "usecase": "uz:usecase/carbon-accounting", "weight": 0.85},
+    {"property": "uz:prop/carbon-balance", "usecase": "uz:usecase/carbon-accounting", "weight": 0.85},
+    {"property": "uz:prop/carbon-emission", "usecase": "uz:usecase/carbon-accounting", "weight": 0.85},
+    {"property": "uz:prop/soil-organic-carbon", "usecase": "uz:usecase/carbon-accounting", "weight": 0.75},
+    {"property": "uz:prop/reforestation-potential", "usecase": "uz:usecase/carbon-accounting", "weight": 0.7},
+    {"property": "uz:prop/soil-salinity", "usecase": "uz:usecase/land-degradation-monitoring", "weight": 0.85},
+    {"property": "uz:prop/land-productivity", "usecase": "uz:usecase/land-degradation-monitoring", "weight": 0.8},
+    {"property": "uz:prop/bare-surface", "usecase": "uz:usecase/land-degradation-monitoring", "weight": 0.7},
+    {"property": "uz:prop/pasture-stocking-rate", "usecase": "uz:usecase/land-degradation-monitoring", "weight": 0.7},
+    {"property": "uz:prop/settlement-extent", "usecase": "uz:usecase/urban-and-settlement-planning", "weight": 0.8},
+    {"property": "uz:prop/settlement-change", "usecase": "uz:usecase/urban-and-settlement-planning", "weight": 0.85},
+    {"property": "uz:prop/road-density", "usecase": "uz:usecase/urban-and-settlement-planning", "weight": 0.7}
+  ]
+}

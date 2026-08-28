@@ -1,0 +1,57 @@
+{
+  "scheme": "theme",
+  "title": "Atlas thematic domains",
+  "description": "The single controlled list of top-level domains. The public catalogue, the private repository, the admin upload form and the ontology explorer must all resolve to these IDs; display labels are presentation only. Labels used by earlier imports are kept as altLabels so historic records can be mapped rather than dropped.",
+  "version": "1.0",
+  "concepts": [
+    {
+      "id": "uz:theme/climate",
+      "prefLabel": "Climate",
+      "altLabels": ["Climate", "Климат"],
+      "definition": "Atmospheric conditions and their trends: temperature, precipitation, snow, growing season, water deficit and climate projections.",
+      "color": "#b8c6cc"
+    },
+    {
+      "id": "uz:theme/water",
+      "prefLabel": "Water",
+      "altLabels": ["Water", "Вода", "Водные ресурсы"],
+      "definition": "Surface and ground water resources, irrigation and drainage infrastructure, water balance, stress and access to water services.",
+      "color": "#45bad5"
+    },
+    {
+      "id": "uz:theme/land-agriculture",
+      "prefLabel": "Land & agriculture",
+      "altLabels": ["Land & agriculture", "Agriculture", "Land", "Земля и сельское хозяйство"],
+      "definition": "Land cover and land use, soils, vegetation condition, cropland and pasture productivity, livestock and agricultural carbon.",
+      "color": "#e4a94d"
+    },
+    {
+      "id": "uz:theme/forests-carbon",
+      "prefLabel": "Forests & carbon",
+      "altLabels": ["Forests & carbon", "Forests", "Forest", "Леса"],
+      "definition": "Forest extent, structure, condition and change, together with carbon sequestration and reforestation potential.",
+      "color": "#8bb78c"
+    },
+    {
+      "id": "uz:theme/biodiversity",
+      "prefLabel": "Biodiversity",
+      "altLabels": ["Biodiversity", "Биоразнообразие"],
+      "definition": "Species, habitats, landscapes, ecoregions, protected areas and conservation value.",
+      "color": "#d3d0b2"
+    },
+    {
+      "id": "uz:theme/hazards-terrain",
+      "prefLabel": "Hazards & terrain",
+      "altLabels": ["Hazards & terrain", "Hazards", "Terrain", "Опасные процессы"],
+      "definition": "Terrain and geomorphology, and the natural hazards shaped by them: seismicity, floods, mudflows, drought and their recorded impacts.",
+      "color": "#ff6a2d"
+    },
+    {
+      "id": "uz:theme/infrastructure",
+      "prefLabel": "Infrastructure",
+      "altLabels": ["Infrastructure", "Инфраструктура"],
+      "definition": "Built environment: settlements, their change over time, and transport networks.",
+      "color": "#8f9698"
+    }
+  ]
+}

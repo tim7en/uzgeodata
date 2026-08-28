@@ -1,0 +1,122 @@
+{
+  "version": "1.0",
+  "predicates": [
+    {
+      "id": "uz:belongsToTheme",
+      "label": "belongs to theme",
+      "definition": "Places a dataset in exactly one top-level thematic domain of the atlas.",
+      "domain": ["Dataset"],
+      "range": {"kind": "concept", "schemes": ["theme"]},
+      "cardinality": "one",
+      "mlProposable": true
+    },
+    {
+      "id": "uz:observes",
+      "label": "observes",
+      "definition": "The environmental property or phenomenon the dataset measures. A dataset may observe several properties; this is the main semantic link and the primary target for model-assisted enrichment.",
+      "domain": ["Dataset"],
+      "range": {"kind": "concept", "schemes": ["property"]},
+      "cardinality": "many",
+      "mlProposable": true
+    },
+    {
+      "id": "uz:hasAnalysisConcept",
+      "label": "has analysis concept",
+      "definition": "How the dataset is analytically shaped: a state observation, a change series, a risk view, a managed resource system or a mapped feature. Replaces the title regex previously used by the portal.",
+      "domain": ["Dataset"],
+      "range": {"kind": "concept", "schemes": ["analysis"]},
+      "cardinality": "one",
+      "mlProposable": true
+    },
+    {
+      "id": "uz:supportsUseCase",
+      "label": "supports use case",
+      "definition": "A decision or workflow the dataset can feed. Drives the portal's 'what can I do with this' surfaces.",
+      "domain": ["Dataset"],
+      "range": {"kind": "concept", "schemes": ["usecase"]},
+      "cardinality": "many",
+      "mlProposable": true
+    },
+    {
+      "id": "uz:coversPlace",
+      "label": "covers place",
+      "definition": "Geographic area the data actually covers, which is not always the area implied by the title.",
+      "domain": ["Dataset", "MapLayer"],
+      "range": {"kind": "concept", "schemes": ["place"]},
+      "cardinality": "many",
+      "mlProposable": true
+    },
+    {
+      "id": "uz:relatedTo",
+      "label": "related to",
+      "definition": "Symmetric association between datasets that are useful together. Populated by similarity search and confirmed by curators.",
+      "domain": ["Dataset"],
+      "range": {"kind": "entity", "entityTypes": ["Dataset"]},
+      "cardinality": "many",
+      "mlProposable": true
+    },
+    {
+      "id": "uz:temporalCoverage",
+      "label": "temporal coverage",
+      "definition": "Closed interval of observation as {start, end} years, or a single year for a snapshot.",
+      "domain": ["Dataset"],
+      "range": {"kind": "literal", "literalType": "interval"},
+      "cardinality": "one",
+      "mlProposable": true
+    },
+    {
+      "id": "uz:spatialExtent",
+      "label": "spatial extent",
+      "definition": "Bounding box in EPSG:4326 as [west, south, east, north], measured from the extracted geometry rather than declared.",
+      "domain": ["Dataset", "MapLayer"],
+      "range": {"kind": "literal", "literalType": "bbox"},
+      "cardinality": "one",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:hasDistribution",
+      "label": "has distribution",
+      "definition": "Links a dataset to one concrete encoding of it: the source package, a document, a web layer or a polygonised raster.",
+      "domain": ["Dataset"],
+      "range": {"kind": "entity", "entityTypes": ["Distribution"]},
+      "cardinality": "many",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:derivedFrom",
+      "label": "derived from",
+      "definition": "Provenance between distributions: which source file a web derivative was produced from. Records the choice the extraction pipeline made.",
+      "domain": ["Distribution"],
+      "range": {"kind": "entity", "entityTypes": ["Distribution"]},
+      "cardinality": "many",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:rendersDistribution",
+      "label": "renders distribution",
+      "definition": "Links a browser map layer to the distribution it draws.",
+      "domain": ["MapLayer"],
+      "range": {"kind": "entity", "entityTypes": ["Distribution"]},
+      "cardinality": "one",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:hasField",
+      "label": "has field",
+      "definition": "An attribute name present in a vector distribution. Weak but real evidence about what the data contains, and a feature for the enrichment model.",
+      "domain": ["Distribution"],
+      "range": {"kind": "literal", "literalType": "string"},
+      "cardinality": "many",
+      "mlProposable": false
+    },
+    {
+      "id": "uz:qualityFlag",
+      "label": "quality flag",
+      "definition": "A known defect or caveat, e.g. coverage extending beyond Uzbekistan, or unparseable area values. Kept in the graph so the portal can display caveats instead of hiding them.",
+      "domain": ["Dataset", "Distribution", "MapLayer"],
+      "range": {"kind": "literal", "literalType": "string"},
+      "cardinality": "many",
+      "mlProposable": true
+    }
+  ]
+}

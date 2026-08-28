@@ -1,0 +1,4874 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-08-28T14:15:58+00:00",
+  "promoteThreshold": 0.75,
+  "vocabularies": {
+    "themes": [
+      {
+        "id": "uz:theme/climate",
+        "prefLabel": "Climate",
+        "definition": "Atmospheric conditions and their trends: temperature, precipitation, snow, growing season, water deficit and climate projections.",
+        "color": "#b8c6cc"
+      },
+      {
+        "id": "uz:theme/water",
+        "prefLabel": "Water",
+        "definition": "Surface and ground water resources, irrigation and drainage infrastructure, water balance, stress and access to water services.",
+        "color": "#45bad5"
+      },
+      {
+        "id": "uz:theme/land-agriculture",
+        "prefLabel": "Land & agriculture",
+        "definition": "Land cover and land use, soils, vegetation condition, cropland and pasture productivity, livestock and agricultural carbon.",
+        "color": "#e4a94d"
+      },
+      {
+        "id": "uz:theme/forests-carbon",
+        "prefLabel": "Forests & carbon",
+        "definition": "Forest extent, structure, condition and change, together with carbon sequestration and reforestation potential.",
+        "color": "#8bb78c"
+      },
+      {
+        "id": "uz:theme/biodiversity",
+        "prefLabel": "Biodiversity",
+        "definition": "Species, habitats, landscapes, ecoregions, protected areas and conservation value.",
+        "color": "#d3d0b2"
+      },
+      {
+        "id": "uz:theme/hazards-terrain",
+        "prefLabel": "Hazards & terrain",
+        "definition": "Terrain and geomorphology, and the natural hazards shaped by them: seismicity, floods, mudflows, drought and their recorded impacts.",
+        "color": "#ff6a2d"
+      },
+      {
+        "id": "uz:theme/infrastructure",
+        "prefLabel": "Infrastructure",
+        "definition": "Built environment: settlements, their change over time, and transport networks.",
+        "color": "#8f9698"
+      }
+    ],
+    "analysis": [
+      {
+        "id": "uz:analysis/state-observation",
+        "prefLabel": "Observation & index",
+        "definition": "A measured or modelled value describing conditions at a point in time, including composite indices. Answers 'what is it like'."
+      },
+      {
+        "id": "uz:analysis/change-over-time",
+        "prefLabel": "Change over time",
+        "definition": "A trend, dynamic or difference between periods. Answers 'what changed'. Takes precedence over a state observation when both readings are possible."
+      },
+      {
+        "id": "uz:analysis/risk-exposure",
+        "prefLabel": "Risk & exposure",
+        "definition": "A hazard, the exposure of people or assets to it, or its recorded losses. Answers 'what could go wrong and who is affected'."
+      },
+      {
+        "id": "uz:analysis/resource-system",
+        "prefLabel": "Resource system",
+        "definition": "A managed system with infrastructure, allocation or service delivery: irrigation, drainage, canals, water and sanitation access, farming systems, protected-area management."
+      },
+      {
+        "id": "uz:analysis/environmental-feature",
+        "prefLabel": "Environmental feature",
+        "definition": "A mapped entity or classification with a fixed footprint: landscapes, ecoregions, climate types, geomorphology, plant formations. Answers 'what is where'."
+      }
+    ],
+    "properties": [
+      {
+        "id": "uz:prop/air-temperature",
+        "prefLabel": "Air temperature",
+        "definition": "Near-surface air temperature, as a level or a trend.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/precipitation",
+        "prefLabel": "Precipitation",
+        "definition": "Depth of precipitation over a period, as a level or a trend.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/snow-cover-depth",
+        "prefLabel": "Snow cover depth",
+        "definition": "Depth of accumulated snow, a control on spring runoff.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/climatic-water-deficit",
+        "prefLabel": "Climatic water deficit",
+        "definition": "Gap between potential and actual evapotranspiration; a physical measure of moisture shortage.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/growing-season-timing",
+        "prefLabel": "Growing season timing",
+        "definition": "Start, peak, end or duration of the vegetation growing season.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/climate-classification",
+        "prefLabel": "Climate classification",
+        "definition": "Categorical climate or local climate zone classification.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/climate-projection",
+        "prefLabel": "Climate projection",
+        "definition": "Modelled future climate condition under a scenario, for a stated horizon.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/surface-runoff",
+        "prefLabel": "Surface runoff",
+        "definition": "Volume of water flowing from a catchment over a year.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/reservoir-volume",
+        "prefLabel": "Lake and reservoir volume",
+        "definition": "Stored water volume in lakes and reservoirs.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/groundwater-depth",
+        "prefLabel": "Groundwater depth",
+        "definition": "Depth from the surface to the water table.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/groundwater-quality",
+        "prefLabel": "Groundwater quality",
+        "definition": "Chemical condition or contamination of groundwater.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/groundwater-resources",
+        "prefLabel": "Groundwater resources",
+        "definition": "Available groundwater stock, including artesian basins.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/water-stress",
+        "prefLabel": "Water stress",
+        "definition": "Ratio of demand to available supply; the standard water-scarcity indicator.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/water-balance",
+        "prefLabel": "Water balance",
+        "definition": "Accounting of inflows, outflows and storage change for a unit of territory.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/irrigated-area",
+        "prefLabel": "Irrigated area",
+        "definition": "Extent of land under irrigation, by catchment or district.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/irrigation-canal-network",
+        "prefLabel": "Irrigation canal network",
+        "definition": "Canal infrastructure delivering irrigation water, and its density.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/drainage-network",
+        "prefLabel": "Drainage network",
+        "definition": "Drainage infrastructure removing excess and saline water from irrigated land.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/drainage-flow",
+        "prefLabel": "Drainage flow",
+        "definition": "Volume of water carried by drainage canals, a proxy for leaching and salinity load.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/drinking-water-access",
+        "prefLabel": "Drinking water access",
+        "definition": "Share of population with access to a sustainable drinking-water source.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/sanitation-access",
+        "prefLabel": "Sanitation access",
+        "definition": "Share of population with access to sustainable sanitation.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/surface-water-extent",
+        "prefLabel": "Surface water extent",
+        "definition": "Area covered by permanent or seasonal surface water.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/water-ecosystem-extent",
+        "prefLabel": "Water ecosystem extent",
+        "definition": "Area of aquatic and wetland ecosystems.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/water-management-zone",
+        "prefLabel": "Water management zone",
+        "definition": "Administrative or operational unit for allocating and managing water.",
+        "broader": "uz:theme/water"
+      },
+      {
+        "id": "uz:prop/land-cover",
+        "prefLabel": "Land cover",
+        "definition": "Physical material at the surface, as a classified map.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/land-use-type",
+        "prefLabel": "Land use type",
+        "definition": "Human function assigned to land, distinct from its physical cover.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/land-use-intensity",
+        "prefLabel": "Land use intensity",
+        "definition": "How intensively land, particularly arable land, is worked.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/cropland-extent",
+        "prefLabel": "Cropland extent",
+        "definition": "Area of arable and cropped land.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/farming-system",
+        "prefLabel": "Farming system",
+        "definition": "Characteristic combination of crops, livestock and practices in an area.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/crop-yield",
+        "prefLabel": "Crop yield",
+        "definition": "Harvested output per unit area.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/livestock-density",
+        "prefLabel": "Livestock density",
+        "definition": "Number of animals held per unit area.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/forage-resources",
+        "prefLabel": "Forage resources",
+        "definition": "Land providing fodder for livestock.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/pasture-vegetation",
+        "prefLabel": "Pasture vegetation",
+        "definition": "Vegetation composition of rangeland and pasture.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/pasture-productivity",
+        "prefLabel": "Pasture productivity",
+        "definition": "Biomass a pasture produces per unit area and season.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/pasture-stocking-rate",
+        "prefLabel": "Pasture stocking rate",
+        "definition": "Recommended or actual grazing load a pasture can sustain.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/soil-salinity",
+        "prefLabel": "Soil salinity",
+        "definition": "Degree of salt accumulation in soil, the dominant degradation process in irrigated Uzbekistan.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/soil-chemistry",
+        "prefLabel": "Soil chemistry",
+        "definition": "Chemical composition and reaction of soils.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/soil-organic-carbon",
+        "prefLabel": "Soil organic carbon",
+        "definition": "Carbon stored in the soil organic fraction.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/vegetation-index",
+        "prefLabel": "Vegetation index",
+        "definition": "Remotely sensed index of vegetation greenness or structure.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/ndvi",
+        "prefLabel": "NDVI",
+        "definition": "Normalised Difference Vegetation Index, the standard greenness measure.",
+        "broader": "uz:prop/vegetation-index"
+      },
+      {
+        "id": "uz:prop/evi",
+        "prefLabel": "EVI",
+        "definition": "Enhanced Vegetation Index, less saturated over dense canopy than NDVI.",
+        "broader": "uz:prop/vegetation-index"
+      },
+      {
+        "id": "uz:prop/leaf-area-index",
+        "prefLabel": "Leaf area index",
+        "definition": "Leaf area per unit ground area, a structural vegetation measure.",
+        "broader": "uz:prop/vegetation-index"
+      },
+      {
+        "id": "uz:prop/land-productivity",
+        "prefLabel": "Land productivity",
+        "definition": "Biological productivity of land and its trajectory, an SDG 15.3.1 sub-indicator.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/bare-surface",
+        "prefLabel": "Bare surface",
+        "definition": "Extent of unvegetated ground, a degradation and desertification signal.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/carbon-emission",
+        "prefLabel": "Carbon emission",
+        "definition": "Carbon released from land, soils or land-use change.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/carbon-balance",
+        "prefLabel": "Net carbon balance",
+        "definition": "Net of carbon emitted and sequestered for a unit of territory.",
+        "broader": "uz:theme/land-agriculture"
+      },
+      {
+        "id": "uz:prop/forest-cover",
+        "prefLabel": "Forest cover",
+        "definition": "Extent of forested land, as a state or a change series.",
+        "broader": "uz:theme/forests-carbon"
+      },
+      {
+        "id": "uz:prop/forest-type",
+        "prefLabel": "Forest type",
+        "definition": "Compositional class of forest, including saxaul and planted stands.",
+        "broader": "uz:theme/forests-carbon"
+      },
+      {
+        "id": "uz:prop/forest-age",
+        "prefLabel": "Forest age",
+        "definition": "Age class of forest stands, a control on carbon uptake.",
+        "broader": "uz:theme/forests-carbon"
+      },
+      {
+        "id": "uz:prop/canopy-closure",
+        "prefLabel": "Canopy closure",
+        "definition": "Fraction of ground shaded by tree crowns.",
+        "broader": "uz:theme/forests-carbon"
+      },
+      {
+        "id": "uz:prop/forest-integrity",
+        "prefLabel": "Forest landscape integrity",
+        "definition": "Degree to which a forest landscape remains ecologically intact.",
+        "broader": "uz:theme/forests-carbon"
+      },
+      {
+        "id": "uz:prop/carbon-sequestration",
+        "prefLabel": "Carbon sequestration",
+        "definition": "Rate or stock of carbon captured by vegetation.",
+        "broader": "uz:theme/forests-carbon"
+      },
+      {
+        "id": "uz:prop/reforestation-potential",
+        "prefLabel": "Reforestation potential",
+        "definition": "Suitability of land for establishing or restoring forest, and the benefit expected from doing so.",
+        "broader": "uz:theme/forests-carbon"
+      },
+      {
+        "id": "uz:prop/species-richness",
+        "prefLabel": "Species richness",
+        "definition": "Count of species present in an area, by taxonomic group.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/species-occurrence",
+        "prefLabel": "Species occurrence",
+        "definition": "Presence or distribution of a taxonomic group, including game and useful species.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/habitat-diversity",
+        "prefLabel": "Habitat diversity",
+        "definition": "Variety of habitat types within an area.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/habitat-dynamics",
+        "prefLabel": "Habitat dynamics",
+        "definition": "Change in habitat extent or condition over time.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/biodiversity-intactness",
+        "prefLabel": "Biodiversity intactness",
+        "definition": "Share of original biodiversity remaining under current land use.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/ecosystem-resilience",
+        "prefLabel": "Ecosystem resilience",
+        "definition": "Capacity of an ecosystem to persist under bioclimatic change.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/conservation-value",
+        "prefLabel": "Conservation value",
+        "definition": "Composite priority score for protecting an area.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/protected-area",
+        "prefLabel": "Protected area",
+        "definition": "Legally designated conservation area, its type and management.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/ecoregion",
+        "prefLabel": "Ecoregion",
+        "definition": "Biogeographic unit sharing ecological character.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/landscape-type",
+        "prefLabel": "Landscape type",
+        "definition": "Classification and structure of physical landscapes.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/vegetation-formation",
+        "prefLabel": "Vegetation formation",
+        "definition": "Phytocoenotic classification of natural vegetation.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/biogeographic-region",
+        "prefLabel": "Biogeographic region",
+        "definition": "Physical-geographic or zoogeographic regionalisation of the territory.",
+        "broader": "uz:theme/biodiversity"
+      },
+      {
+        "id": "uz:prop/elevation",
+        "prefLabel": "Elevation",
+        "definition": "Height of the land surface above sea level.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/geomorphology",
+        "prefLabel": "Geomorphology",
+        "definition": "Landform classification and the processes that shaped it.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/seismicity",
+        "prefLabel": "Seismicity",
+        "definition": "Occurrence, magnitude and depth of earthquakes.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/flood-hazard",
+        "prefLabel": "Flood hazard",
+        "definition": "Likelihood and severity of flooding at a location.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/flood-extent",
+        "prefLabel": "Flood extent",
+        "definition": "Area actually inundated by a flood event or scenario.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/mudflow-hazard",
+        "prefLabel": "Mudflow hazard",
+        "definition": "Exposure to mudflow and debris-flow processes.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/drought-severity",
+        "prefLabel": "Drought severity",
+        "definition": "Severity of meteorological drought, typically as PDSI for a given year.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/geodynamic-hazard",
+        "prefLabel": "Geodynamic hazard",
+        "definition": "Exposure to landslides, subsidence, karst and related ground processes.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/glacier-volume",
+        "prefLabel": "Glacier ice volume",
+        "definition": "Ice volume stored in glaciers, the region's buffer for summer runoff.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/glacial-lake",
+        "prefLabel": "Glacial lake",
+        "definition": "Lakes impounded by glacial processes, and their outburst potential.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/disaster-mortality",
+        "prefLabel": "Disaster mortality",
+        "definition": "Deaths recorded from natural hazard events.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/disaster-economic-loss",
+        "prefLabel": "Disaster economic loss",
+        "definition": "Monetary loss recorded from natural hazard events.",
+        "broader": "uz:theme/hazards-terrain"
+      },
+      {
+        "id": "uz:prop/settlement-extent",
+        "prefLabel": "Settlement extent",
+        "definition": "Share and footprint of built-up settlement area.",
+        "broader": "uz:theme/infrastructure"
+      },
+      {
+        "id": "uz:prop/settlement-change",
+        "prefLabel": "Settlement change",
+        "definition": "Growth, decline or disappearance of settlements over time.",
+        "broader": "uz:theme/infrastructure"
+      },
+      {
+        "id": "uz:prop/road-density",
+        "prefLabel": "Road density",
+        "definition": "Length of road network per unit area.",
+        "broader": "uz:theme/infrastructure"
+      }
+    ],
+    "usecases": [
+      {
+        "id": "uz:usecase/drought-early-warning",
+        "prefLabel": "Drought early warning",
+        "definition": "Detecting and anticipating agricultural and hydrological drought from vegetation, precipitation and water-deficit signals."
+      },
+      {
+        "id": "uz:usecase/irrigation-planning",
+        "prefLabel": "Irrigation planning",
+        "definition": "Allocating water and maintaining canal and drainage systems across irrigated districts."
+      },
+      {
+        "id": "uz:usecase/disaster-risk-reduction",
+        "prefLabel": "Disaster risk reduction",
+        "definition": "Reducing exposure and loss from earthquakes, floods, mudflows and glacial-lake outbursts."
+      },
+      {
+        "id": "uz:usecase/conservation-planning",
+        "prefLabel": "Conservation planning",
+        "definition": "Choosing where to protect, connect or restore habitat, and finding gaps in the protected-area network."
+      },
+      {
+        "id": "uz:usecase/carbon-accounting",
+        "prefLabel": "Carbon accounting",
+        "definition": "Estimating stocks, emissions and sequestration potential in soils and forests."
+      },
+      {
+        "id": "uz:usecase/land-degradation-monitoring",
+        "prefLabel": "Land degradation monitoring",
+        "definition": "Tracking salinity, productivity decline, bare-surface expansion and pasture overuse."
+      },
+      {
+        "id": "uz:usecase/urban-and-settlement-planning",
+        "prefLabel": "Urban & settlement planning",
+        "definition": "Understanding settlement growth, abandonment and pressure on irrigated land."
+      },
+      {
+        "id": "uz:usecase/water-resource-allocation",
+        "prefLabel": "Water resource allocation",
+        "definition": "Balancing supply, demand and stress across basins and catchments."
+      }
+    ],
+    "places": [
+      {
+        "id": "uz:place/uzbekistan",
+        "prefLabel": "Uzbekistan",
+        "definition": "The Republic of Uzbekistan, the portal's primary area of interest."
+      },
+      {
+        "id": "uz:place/central-asia",
+        "prefLabel": "Central Asia",
+        "definition": "The wider region covered by some source layers, including areas outside Uzbekistan."
+      },
+      {
+        "id": "uz:place/kazakhstan",
+        "prefLabel": "Kazakhstan",
+        "definition": "Neighbouring state appearing in the extent of regionally compiled layers.",
+        "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/kyrgyzstan",
+        "prefLabel": "Kyrgyzstan",
+        "definition": "Neighbouring state appearing in the extent of regionally compiled layers.",
+        "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/tajikistan",
+        "prefLabel": "Tajikistan",
+        "definition": "Neighbouring state appearing in the extent of regionally compiled layers.",
+        "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/turkmenistan",
+        "prefLabel": "Turkmenistan",
+        "definition": "Neighbouring state appearing in the extent of regionally compiled layers.",
+        "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/afghanistan",
+        "prefLabel": "Afghanistan",
+        "definition": "Neighbouring state appearing in the extent of regionally compiled layers, notably the seismic catalogue.",
+        "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/amu-darya-basin",
+        "prefLabel": "Amu Darya basin",
+        "definition": "Catchment of the Amu Darya, one of the two river systems governing Uzbek irrigation.",
+        "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/syr-darya-basin",
+        "prefLabel": "Syr Darya basin",
+        "definition": "Catchment of the Syr Darya.",
+        "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/aral-sea-basin",
+        "prefLabel": "Aral Sea basin",
+        "definition": "The endorheic basin the two main rivers drain into, and the focus of the region's best-known environmental change.",
+        "broader": "uz:place/central-asia"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "id": "uz:agent/atlas-source",
+      "label": "Uzbekistan environmental atlas (source metadata)",
+      "kind": "organisation",
+      "trustTier": "authoritative"
+    },
+    {
+      "id": "uz:agent/extraction-pipeline",
+      "label": "Geospatial extraction pipeline",
+      "kind": "rule",
+      "trustTier": "authoritative"
+    },
+    {
+      "id": "uz:agent/rule-lexical-v1",
+      "label": "Lexical seeding rules v1",
+      "kind": "rule",
+      "trustTier": "heuristic"
+    },
+    {
+      "id": "uz:agent/model-tfidf-knn-v1",
+      "label": "Character n-gram similarity model v1",
+      "kind": "model",
+      "trustTier": "predicted"
+    },
+    {
+      "id": "uz:agent/curator",
+      "label": "Portal curator",
+      "kind": "person",
+      "trustTier": "curated"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "uz:ds/a16-climate-types",
+      "label": "Climate types",
+      "sourceTitle": "16_Типы климата",
+      "atlasNumber": 16,
+      "catalogId": "atlas-043",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99167,
+        37.175,
+        73.13333,
+        45.575
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a17-projected-climate-types-for-2100",
+      "label": "Projected climate types for 2100",
+      "sourceTitle": "17_Прогнозируемые_типы_климата_2100",
+      "atlasNumber": 17,
+      "catalogId": "atlas-051",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2100,
+        "end": 2100
+      },
+      "extent": [
+        55.99167,
+        37.175,
+        73.13333,
+        45.575
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a18-local-climate-zones",
+      "label": "Local climate zones",
+      "sourceTitle": "18_Локальные климатические зоны",
+      "atlasNumber": 18,
+      "catalogId": "atlas-057",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        -0.5,
+        -4685.5,
+        9546.5,
+        0.5
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a19-average-start-of-the-growing-season-20002024",
+      "label": "Average start of the growing season (2000–2024)",
+      "sourceTitle": "19_Средние многолетние даты начала вегетационного сезона (2000–2024 гг",
+      "atlasNumber": 19,
+      "catalogId": "atlas-062",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2024
+      },
+      "extent": [
+        55.99873,
+        37.17229,
+        73.14757,
+        45.5895
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a20-average-peak-of-the-growing-season-20002024",
+      "label": "Average peak of the growing season (2000–2024)",
+      "sourceTitle": "20_Средние многолетние даты наступления пика вегетационного сезона (2000–2024 гг.)",
+      "atlasNumber": 20,
+      "catalogId": "atlas-079",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2024
+      },
+      "extent": [
+        55.99873,
+        37.17229,
+        73.14757,
+        45.5895
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a21-average-growing-season-duration-20002024",
+      "label": "Average growing-season duration (2000–2024)",
+      "sourceTitle": "21-Средняя многолетняя продолжительность вегетационного сезона (2000–2024 гг.)",
+      "atlasNumber": 21,
+      "catalogId": "atlas-080",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2024
+      },
+      "extent": [
+        55.99873,
+        37.17229,
+        73.14757,
+        45.5895
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a22-average-end-of-the-growing-season-20002024",
+      "label": "Average end of the growing season (2000–2024)",
+      "sourceTitle": "22_Средние многолетние даты конца вегетационного сезона (2000–2024 гг",
+      "atlasNumber": 22,
+      "catalogId": "atlas-083",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2024
+      },
+      "extent": [
+        55.99873,
+        37.17229,
+        73.14757,
+        45.5895
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a23-annual-temperature-trend-19602023",
+      "label": "Annual temperature trend, 1960–2023",
+      "sourceTitle": "23_Тренд изменения среднегодовых температур, 1960-2023 (°C_год)",
+      "atlasNumber": 23,
+      "catalogId": "atlas-084",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1960,
+        "end": 2023
+      },
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a24-annual-temperature-trend-19902023",
+      "label": "Annual temperature trend, 1990–2023",
+      "sourceTitle": "24_Тренд изменения среднегодовых температур, 1990-2023 (°C_год)",
+      "atlasNumber": 24,
+      "catalogId": "atlas-085",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1990,
+        "end": 2023
+      },
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a25-warm-season-temperature-trend-19602023",
+      "label": "Warm-season temperature trend, 1960–2023",
+      "sourceTitle": "25_Тренд изменения температуры теплого периода, 1960-2023 (°C_год)",
+      "atlasNumber": 25,
+      "catalogId": "atlas-086",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1960,
+        "end": 2023
+      },
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a26-warm-season-temperature-trend-19902023",
+      "label": "Warm-season temperature trend, 1990–2023",
+      "sourceTitle": "26_Тренд изменения температуры теплого периода, 1990-2023 (°C_год)",
+      "atlasNumber": 26,
+      "catalogId": "atlas-087",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1990,
+        "end": 2023
+      },
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a27-maximum-temperature-trend-19602023",
+      "label": "Maximum temperature trend, 1960–2023",
+      "sourceTitle": "27_Тренд изменения максимальных температур, 1960-2023 (°C_год)",
+      "atlasNumber": 27,
+      "catalogId": "atlas-088",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1960,
+        "end": 2023
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a28-precipitation-trend-19602023",
+      "label": "Precipitation trend, 1960–2023",
+      "sourceTitle": "28_Тренд изменения осадков, 1960-2023 (мм_год)",
+      "atlasNumber": 28,
+      "catalogId": "atlas-089",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/precipitation",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1960,
+        "end": 2023
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a29-precipitation-trend-19902023",
+      "label": "Precipitation trend, 1990–2023",
+      "sourceTitle": "29_Тренд изменения осадков, 1990-2023 (мм_год)",
+      "atlasNumber": 29,
+      "catalogId": "atlas-090",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/precipitation",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1990,
+        "end": 2023
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a30-snow-cover-depth-trend-19602024",
+      "label": "Snow-cover depth trend, 1960–2024",
+      "sourceTitle": "30_Тренд мощности снежного покрова (мм_год), 1960-2024",
+      "atlasNumber": 30,
+      "catalogId": "atlas-091",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/snow-cover-depth",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1960,
+        "end": 2024
+      },
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a31-snow-cover-depth-trend-19902024",
+      "label": "Snow-cover depth trend, 1990–2024",
+      "sourceTitle": "31_Тренд мощности снежного покрова (мм_год), 1990-2024",
+      "atlasNumber": 31,
+      "catalogId": "atlas-092",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/snow-cover-depth",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1990,
+        "end": 2024
+      },
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a32-climatic-water-deficit-1990",
+      "label": "Climatic water deficit, 1990",
+      "sourceTitle": "32_Климатический водный дефицит, 1990 (мм)",
+      "atlasNumber": 32,
+      "catalogId": "atlas-093",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/climatic-water-deficit",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1990,
+        "end": 1990
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a33-climatic-water-deficit-2023",
+      "label": "Climatic water deficit, 2023",
+      "sourceTitle": "33_Климатический водный дефицит, 2023 (мм)",
+      "atlasNumber": 33,
+      "catalogId": "atlas-094",
+      "theme": "uz:theme/climate",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/climatic-water-deficit",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2023,
+        "end": 2023
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a34-climatic-water-deficit-trend-19602023",
+      "label": "Climatic water-deficit trend, 1960–2023",
+      "sourceTitle": "34_Тренд изменения климатического водного дефицита, 1960-2023 (мм)",
+      "atlasNumber": 34,
+      "catalogId": "atlas-095",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/climatic-water-deficit",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1960,
+        "end": 2023
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a35-climatic-water-deficit-trend-19902023",
+      "label": "Climatic water-deficit trend, 1990–2023",
+      "sourceTitle": "35_Тренд изменения климатического водного дефицита, 1990-2023 (мм)",
+      "atlasNumber": 35,
+      "catalogId": "atlas-096",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/climatic-water-deficit",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1990,
+        "end": 2023
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a36-projected-temperature-change-by-2040",
+      "label": "Projected temperature change by 2040",
+      "sourceTitle": "36_Ожидаемое изменение температуры к 2040 году относительно базового периода (1970-2000) (°C)",
+      "atlasNumber": 36,
+      "catalogId": "atlas-097",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1970,
+        "end": 2040
+      },
+      "extent": [
+        55.95833,
+        37.25,
+        73.125,
+        45.58333
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a37-projected-precipitation-change-by-2040",
+      "label": "Projected precipitation change by 2040",
+      "sourceTitle": "37_Ожидаемое изменение осадков к 2040 в _ от базового периода (1970-2000)",
+      "atlasNumber": 37,
+      "catalogId": "atlas-098",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/precipitation",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1970,
+        "end": 2040
+      },
+      "extent": [
+        55.95833,
+        37.16667,
+        73.16667,
+        45.58333
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a42-share-of-settlement-area",
+      "label": "Share of settlement area",
+      "sourceTitle": "42_Доля площади населенных пунктов (_)",
+      "atlasNumber": 42,
+      "catalogId": "atlas-099",
+      "theme": "uz:theme/infrastructure",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/settlement-extent",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a43-settlement-area-change-19702020",
+      "label": "Settlement area change, 1970–2020",
+      "sourceTitle": "43_Изменение площади населенных пунктов за период 1970-2020 (_)",
+      "atlasNumber": 43,
+      "catalogId": "atlas-100",
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/settlement-extent",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1970,
+        "end": 2020
+      },
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a44-disappeared-settlements-by-basin",
+      "label": "Disappeared settlements by basin",
+      "sourceTitle": "44_Доля_исчезнувших_н_п_от_общей_площади_бассейна",
+      "atlasNumber": 44,
+      "catalogId": "atlas-101",
+      "theme": "uz:theme/infrastructure",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/settlement-extent",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning",
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.37806,
+        37.40861,
+        72.11872,
+        45.10625
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a45-road-network-density",
+      "label": "Road network density",
+      "sourceTitle": "45_Плотность автомобильных дорог (км_км2)",
+      "atlasNumber": 45,
+      "catalogId": "atlas-102",
+      "theme": "uz:theme/infrastructure",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/road-density",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        54.22777,
+        36.47345,
+        73.76074,
+        46.31812
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a52-water-management-zones",
+      "label": "Water management zones",
+      "sourceTitle": "52_Водное_хозяйство",
+      "atlasNumber": 52,
+      "catalogId": "atlas-103",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/water-management-zone",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a53-irrigated-areas-by-catchment",
+      "label": "Irrigated areas by catchment",
+      "sourceTitle": "53_Орошаемые площади водосборных бассейнов",
+      "atlasNumber": 53,
+      "catalogId": "atlas-104",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/irrigated-area",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17834,
+        73.1346,
+        45.57085
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a54-areas-using-drainage",
+      "label": "Areas using drainage",
+      "sourceTitle": "54_Районы с использованием дренажа",
+      "atlasNumber": 54,
+      "catalogId": "atlas-105",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.53044,
+        37.1842,
+        73.1456,
+        43.36714
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a55-historical-irrigation-districts",
+      "label": "Historical irrigation districts",
+      "sourceTitle": "55_Исторические_ирригационные_районы_готово",
+      "atlasNumber": 55,
+      "catalogId": "atlas-106",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/irrigation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9982,
+        37.1723,
+        73.1456,
+        45.5901
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a56-annual-runoff-volume",
+      "label": "Annual runoff volume",
+      "sourceTitle": "56_Объем годового стока (км3)",
+      "atlasNumber": 56,
+      "catalogId": "atlas-107",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a57-dams-reservoirs-and-glacial-lakes",
+      "label": "Dams, reservoirs and glacial lakes",
+      "sourceTitle": "57_Дамбы_и_водохранилища",
+      "atlasNumber": 57,
+      "catalogId": "atlas-108",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/reservoir-volume",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/glacial-lake",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        67.46946,
+        38.71394,
+        71.26466,
+        42.28534
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a58-lake-and-reservoir-volume",
+      "label": "Lake and reservoir volume",
+      "sourceTitle": "58_Объем озер и водохранилищ (млн м3)",
+      "atlasNumber": 58,
+      "catalogId": "atlas-109",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/reservoir-volume",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a59-groundwater-depth",
+      "label": "Groundwater depth",
+      "sourceTitle": "59_Глубина_залегания_грунтовых_вод",
+      "atlasNumber": 59,
+      "catalogId": "atlas-110",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/groundwater-depth",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.52891,
+        37.18199,
+        72.9162,
+        43.28795
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a60-groundwater-pollution",
+      "label": "Groundwater pollution",
+      "sourceTitle": "60_Загрязнение_грунтовых_вод",
+      "atlasNumber": 60,
+      "catalogId": "atlas-111",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.54459,
+        37.18194,
+        72.25581,
+        43.28795
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a61-groundwater-resources",
+      "label": "Groundwater resources",
+      "sourceTitle": "61_Подземные воды",
+      "atlasNumber": 61,
+      "catalogId": "atlas-112",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/groundwater-resources",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a62-artesian-basins",
+      "label": "Artesian basins",
+      "sourceTitle": "62_Артезианские бассейны",
+      "atlasNumber": 62,
+      "catalogId": "atlas-113",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/groundwater-resources",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.24469,
+        37.28772,
+        72.58386,
+        43.8672
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a63-irrigation-canal-density",
+      "label": "Irrigation canal density",
+      "sourceTitle": "63_Плотность_ирригационных_каналов",
+      "atlasNumber": 63,
+      "catalogId": "atlas-114",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/irrigation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a64-agricultural-land-served-by-canals",
+      "label": "Agricultural land served by canals",
+      "sourceTitle": "64_Площадь_сельскохозяйственных_земель_обслуживаемых_каналом",
+      "atlasNumber": 64,
+      "catalogId": "atlas-115",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/irrigation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.6188,
+        37.24257,
+        73.073,
+        43.7504
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a73-water-stress",
+      "label": "Water stress",
+      "sourceTitle": "73_Водный_стресс",
+      "atlasNumber": 73,
+      "catalogId": "atlas-116",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/water-stress",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17732,
+        73.1346,
+        45.57085
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a74-water-balance",
+      "label": "Water balance",
+      "sourceTitle": "74_водный_баланс",
+      "atlasNumber": 74,
+      "catalogId": "atlas-117",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/water-balance",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        62.88017,
+        38.84884,
+        72.17017,
+        42.26655
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a75-access-to-sustainable-drinking-water",
+      "label": "Access to sustainable drinking water",
+      "sourceTitle": "75_Доля населения, имеющего доступ к устойчивым источникам питьевой воды (_)",
+      "atlasNumber": 75,
+      "catalogId": "atlas-118",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a76-access-to-sustainable-sanitation",
+      "label": "Access to sustainable sanitation",
+      "sourceTitle": "76_Доля населения, имеющего доступ к устойчивым системам санитарии (_)",
+      "atlasNumber": 76,
+      "catalogId": "atlas-119",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a77-water-ecosystem-area",
+      "label": "Water ecosystem area",
+      "sourceTitle": "77_Площади_водных_экосистем",
+      "atlasNumber": 77,
+      "catalogId": "atlas-120",
+      "theme": "uz:theme/water",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a78-change-in-permanently-flooded-ecosystems-2001200",
+      "label": "Change in permanently flooded ecosystems, 2001–2004",
+      "sourceTitle": "78_Изменение площади постоянно затапливаемых экосистем, 2001-2004",
+      "atlasNumber": 78,
+      "catalogId": "atlas-121",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2001,
+        "end": 2004
+      },
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a79-change-in-seasonally-flooded-ecosystems-20012004",
+      "label": "Change in seasonally flooded ecosystems, 2001–2004",
+      "sourceTitle": "79_Изменение площади сезонно затапливаемых экосистем, 2001-2004",
+      "atlasNumber": 79,
+      "catalogId": "atlas-122",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2001,
+        "end": 2004
+      },
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a80-drainage-network",
+      "label": "Drainage network",
+      "sourceTitle": "80_Дренаж",
+      "atlasNumber": 80,
+      "catalogId": "atlas-123",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/drainage-network",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.47036,
+        37.37816,
+        72.25333,
+        43.62378
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a81-flow-in-drainage-canals",
+      "label": "Flow in drainage canals",
+      "sourceTitle": "81_расход_воды_в_дренажных_каналах",
+      "atlasNumber": 81,
+      "catalogId": "atlas-124",
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.45307,
+        37.21958,
+        73.03544,
+        43.73904
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a90-land-cover-2000",
+      "label": "Land cover, 2000",
+      "sourceTitle": "90_Земельный_покров_2000.tif",
+      "atlasNumber": 90,
+      "catalogId": "atlas-125",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/land-cover",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2000
+      },
+      "extent": [
+        55.99822,
+        36.67467,
+        80.22856,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a91-land-cover-2010",
+      "label": "Land cover, 2010",
+      "sourceTitle": "91_Земельный_покров_2010.tif",
+      "atlasNumber": 91,
+      "catalogId": "atlas-126",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/land-cover",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2010,
+        "end": 2010
+      },
+      "extent": [
+        55.99822,
+        37.17149,
+        73.14788,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a92-land-cover",
+      "label": "Land cover",
+      "sourceTitle": "92_Земельный_покров.tif",
+      "atlasNumber": 92,
+      "catalogId": "atlas-127",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/land-cover",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 0,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a94-bare-surface",
+      "label": "Bare surface",
+      "sourceTitle": "94_Незадернованная_поверхность",
+      "atlasNumber": 94,
+      "catalogId": "atlas-128",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/bare-surface",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99199,
+        37.1633,
+        73.14981,
+        45.59848
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a95-soil-chemistry",
+      "label": "Soil chemistry",
+      "sourceTitle": "95_Химизм почв",
+      "atlasNumber": 95,
+      "catalogId": "atlas-129",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/soil-salinity",
+          "confidence": 1.0,
+          "by": "uz:agent/model-tfidf-knn-v1",
+          "reviewed": true
+        },
+        {
+          "concept": "uz:prop/soil-chemistry",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a96-farming-systems",
+      "label": "Farming systems",
+      "sourceTitle": "96_Земледелие",
+      "atlasNumber": 96,
+      "catalogId": "atlas-130",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/farming-system",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a97-land-use-types",
+      "label": "Land-use types",
+      "sourceTitle": "97_Типы_землепользования",
+      "atlasNumber": 97,
+      "catalogId": "atlas-131",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/land-use-type",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9982,
+        37.1723,
+        73.1456,
+        45.5901
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a98-agricultural-land-types",
+      "label": "Agricultural land types",
+      "sourceTitle": "98_Типы сельскохозяйственных земель",
+      "atlasNumber": 98,
+      "catalogId": "atlas-132",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/land-use-type",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": true
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9982,
+        37.1723,
+        73.1456,
+        45.5901
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a99-cotton-yield",
+      "label": "Cotton yield",
+      "sourceTitle": "99_Урожайность_хлопка",
+      "atlasNumber": 99,
+      "catalogId": "atlas-133",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/crop-yield",
+          "confidence": 0.85,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.58887,
+        37.1842,
+        73.04389,
+        43.3564
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a100-livestock",
+      "label": "Livestock",
+      "sourceTitle": "100_животноводство",
+      "atlasNumber": 100,
+      "catalogId": "atlas-001",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a101-forage-lands",
+      "label": "Forage lands",
+      "sourceTitle": "101_Кормовые_угодья",
+      "atlasNumber": 101,
+      "catalogId": "atlas-002",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        36.67228,
+        80.22815,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a113-arable-land-dynamics",
+      "label": "Arable-land dynamics",
+      "sourceTitle": "113_Динамика_пахотных_земель",
+      "atlasNumber": 113,
+      "catalogId": "atlas-003",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        -519477.93395,
+        4031905.63775,
+        1265522.06605,
+        5186905.63775
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a114-terrestrial-land-cover",
+      "label": "Terrestrial land cover",
+      "sourceTitle": "114_Наземный покров",
+      "atlasNumber": 114,
+      "catalogId": "atlas-004",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/land-cover",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a115-soil-salinity",
+      "label": "Soil salinity",
+      "sourceTitle": "115_Степень засоления почв",
+      "atlasNumber": 115,
+      "catalogId": "atlas-005",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/soil-salinity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99232,
+        37.20067,
+        73.19908,
+        45.54184
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a116-irrigated-soil-salinity",
+      "label": "Irrigated-soil salinity",
+      "sourceTitle": "116_Засоление_орошаемых_почв",
+      "atlasNumber": 116,
+      "catalogId": "atlas-006",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/soil-salinity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.5218,
+        37.18194,
+        72.65411,
+        43.28584
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a117-soil-salinity-dynamics",
+      "label": "Soil-salinity dynamics",
+      "sourceTitle": "117_Динамика_засоления_почв",
+      "atlasNumber": 117,
+      "catalogId": "atlas-007",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/soil-salinity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        -519477.93395,
+        4031905.63775,
+        1265522.06605,
+        5186905.63775
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a118-average-maximum-ndvi-20042024",
+      "label": "Average maximum NDVI, 2004–2024",
+      "sourceTitle": "118_Средние максимальные значения NDVI (2004–2024 гг",
+      "atlasNumber": 118,
+      "catalogId": "atlas-008",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/state-observation",
+      "observes": [
+        {
+          "concept": "uz:prop/ndvi",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2004,
+        "end": 2024
+      },
+      "extent": [
+        55.99648,
+        37.17004,
+        73.14981,
+        45.59175
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a119-ndvi-dynamics",
+      "label": "NDVI dynamics",
+      "sourceTitle": "119_Динамика нормализованного вегетационного индекса",
+      "atlasNumber": 119,
+      "catalogId": "atlas-009",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/ndvi",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15261,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a120-enhanced-vegetation-index-dynamics",
+      "label": "Enhanced Vegetation Index dynamics",
+      "sourceTitle": "120_Динамика улучшенного индекса растительности",
+      "atlasNumber": 120,
+      "catalogId": "atlas-010",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/vegetation-index",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15261,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a121-leaf-area-index",
+      "label": "Leaf Area Index",
+      "sourceTitle": "121_Индекс листовой поверхности",
+      "atlasNumber": 121,
+      "catalogId": "atlas-011",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/leaf-area-index",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15261,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a122-land-productivity-dynamics",
+      "label": "Land-productivity dynamics",
+      "sourceTitle": "122_Динамика продуктивности земель",
+      "atlasNumber": 122,
+      "catalogId": "atlas-012",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/land-productivity",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15261,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a123-arable-land-use-intensity",
+      "label": "Arable-land use intensity",
+      "sourceTitle": "123_Интенсивность использования пахотных земель",
+      "atlasNumber": 123,
+      "catalogId": "atlas-013",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/land-use-intensity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        -0.5,
+        -2364.5,
+        4599.5,
+        0.5
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a124-pasture-vegetation-types",
+      "label": "Pasture vegetation types",
+      "sourceTitle": "124_Типы растительности пастбищ",
+      "atlasNumber": 124,
+      "catalogId": "atlas-014",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/pasture-vegetation",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        59.73102,
+        37.74719,
+        68.12725,
+        43.4916
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a125-recommended-pasture-stocking-rate",
+      "label": "Recommended pasture stocking rate",
+      "sourceTitle": "125_Нормативная пастбищная нагрузка (голов на га)",
+      "atlasNumber": 125,
+      "catalogId": "atlas-015",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/pasture-productivity",
+          "confidence": 1.0,
+          "by": "uz:agent/model-tfidf-knn-v1",
+          "reviewed": true
+        },
+        {
+          "concept": "uz:prop/pasture-stocking-rate",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        59.73102,
+        37.74719,
+        68.12725,
+        43.4916
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a126-pasture-productivity",
+      "label": "Pasture productivity",
+      "sourceTitle": "126_Продуктивность пастбищ (тонн_га)",
+      "atlasNumber": 126,
+      "catalogId": "atlas-016",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/pasture-productivity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        59.73102,
+        37.74719,
+        68.12725,
+        43.4916
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a127-soil-organic-carbon",
+      "label": "Soil organic carbon",
+      "sourceTitle": "127_Органический углерод в почвах",
+      "atlasNumber": 127,
+      "catalogId": "atlas-017",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/soil-organic-carbon",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/carbon-accounting"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15025,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a128-carbon-emission-volume",
+      "label": "Carbon-emission volume",
+      "sourceTitle": "128_объём выбросов углерода",
+      "atlasNumber": 128,
+      "catalogId": "atlas-018",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/carbon-emission",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/carbon-accounting"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99199,
+        37.1633,
+        73.14981,
+        45.59848
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a129-net-carbon-balance",
+      "label": "Net carbon balance",
+      "sourceTitle": "129_чистый баланс углерода",
+      "atlasNumber": 129,
+      "catalogId": "atlas-019",
+      "theme": "uz:theme/land-agriculture",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/carbon-balance",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/carbon-accounting"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99199,
+        37.1633,
+        73.14981,
+        45.59848
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a135-forest-cover-2005",
+      "label": "Forest cover, 2005",
+      "sourceTitle": "135_Лесной покров в 2005.tif",
+      "atlasNumber": 135,
+      "catalogId": "atlas-020",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/forest-cover",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2005,
+        "end": 2005
+      },
+      "extent": [
+        55.99822,
+        37.17149,
+        73.14788,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a137-forest-types",
+      "label": "Forest types",
+      "sourceTitle": "137_Типы_лесов",
+      "atlasNumber": 137,
+      "catalogId": "atlas-021",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/forest-type",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9982,
+        37.18623,
+        73.1453,
+        45.55872
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a138-saxaul-distribution",
+      "label": "Saxaul distribution",
+      "sourceTitle": "138_Ареалы произростания саксаула",
+      "atlasNumber": 138,
+      "catalogId": "atlas-022",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/forest-type",
+          "confidence": 0.9,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99707,
+        37.7298,
+        73.1415,
+        44.57779
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a139-natural-and-planted-forests",
+      "label": "Natural and planted forests",
+      "sourceTitle": "139_Естественные и искусственные леса",
+      "atlasNumber": 139,
+      "catalogId": "atlas-023",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/forest-type",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": true
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99707,
+        37.7298,
+        73.1415,
+        44.57779
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a147-forest-carbon-sequestration",
+      "label": "Forest carbon sequestration",
+      "sourceTitle": "147_поглощение углерода лесами",
+      "atlasNumber": 147,
+      "catalogId": "atlas-024",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/carbon-sequestration",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/carbon-accounting"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99199,
+        37.1633,
+        73.14981,
+        45.59848
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a148-forest-plantation-potential",
+      "label": "Forest plantation potential",
+      "sourceTitle": "148_Потенциал устройства лесных плантаций (_)",
+      "atlasNumber": 148,
+      "catalogId": "atlas-025",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.98995,
+        37.16997,
+        73.13994,
+        45.57996
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
+      "label": "Carbon sequestration potential from reforestation",
+      "sourceTitle": "149_Потенциал_связывания_углерода_при_лесовосстановлении.tif",
+      "atlasNumber": 149,
+      "catalogId": "atlas-026",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/carbon-sequestration",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/carbon-accounting"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.98995,
+        37.16997,
+        73.13994,
+        45.57996
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a150-forest-canopy-closure",
+      "label": "Forest canopy closure",
+      "sourceTitle": "150_Сомкнутость леса",
+      "atlasNumber": 150,
+      "catalogId": "atlas-027",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/canopy-closure",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99707,
+        37.7298,
+        73.1415,
+        44.57779
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a151-forest-age",
+      "label": "Forest age",
+      "sourceTitle": "151_Возраст леса",
+      "atlasNumber": 151,
+      "catalogId": "atlas-028",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/forest-age",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99707,
+        37.7298,
+        73.1415,
+        44.57779
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a152-forest-landscape-integrity-index",
+      "label": "Forest Landscape Integrity Index",
+      "sourceTitle": "152_Индекс целостности лесных ландшафтов",
+      "atlasNumber": 152,
+      "catalogId": "atlas-029",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/forest-integrity",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        -0.5,
+        -793.5,
+        1317.5,
+        0.5
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a153-forest-cover-change-19822016",
+      "label": "Forest-cover change, 1982–2016",
+      "sourceTitle": "153_Ареал изменения лесного покрова, 1982–2016 гг.",
+      "atlasNumber": 153,
+      "catalogId": "atlas-030",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/forest-cover",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1982,
+        "end": 2016
+      },
+      "extent": [
+        55.99778,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a158-physical-geographic-regions",
+      "label": "Physical-geographic regions",
+      "sourceTitle": "158_Физико_географическое_районирование",
+      "atlasNumber": 158,
+      "catalogId": "atlas-031",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a159-landscapes",
+      "label": "Landscapes",
+      "sourceTitle": "159_Ландшафты",
+      "atlasNumber": 159,
+      "catalogId": "atlas-032",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99842,
+        37.17226,
+        73.14854,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a160-landscape-structure",
+      "label": "Landscape structure",
+      "sourceTitle": "160_Ландшафтная_структура",
+      "atlasNumber": 160,
+      "catalogId": "atlas-033",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        36.67228,
+        80.22815,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a161-plant-formations",
+      "label": "Plant formations",
+      "sourceTitle": "161_растительные_формации",
+      "atlasNumber": 161,
+      "catalogId": "atlas-034",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        36.67204,
+        80.22815,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a162-vegetation",
+      "label": "Vegetation",
+      "sourceTitle": "162_Растительность",
+      "atlasNumber": 162,
+      "catalogId": "atlas-035",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a163-zoogeographic-regions",
+      "label": "Zoogeographic regions",
+      "sourceTitle": "163_Зоогеографические_районы",
+      "atlasNumber": 163,
+      "catalogId": "atlas-036",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/ecoregion",
+          "confidence": 1.0,
+          "by": "uz:agent/model-tfidf-knn-v1",
+          "reviewed": true
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a164-bird-species-richness",
+      "label": "Bird species richness",
+      "sourceTitle": "164_количество_видов_птиц",
+      "atlasNumber": 164,
+      "catalogId": "atlas-037",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-richness",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        53.40081,
+        37.18665,
+        76.69177,
+        45.62097
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a165-habitat-diversity-index",
+      "label": "Habitat Diversity Index",
+      "sourceTitle": "165_индекс_разнообразия_местообитаний",
+      "atlasNumber": 165,
+      "catalogId": "atlas-038",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/habitat-diversity",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15025,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a166-mammal-species-richness",
+      "label": "Mammal species richness",
+      "sourceTitle": "166_количество_видов_млекопитающих",
+      "atlasNumber": 166,
+      "catalogId": "atlas-039",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 1.0,
+          "by": "uz:agent/model-tfidf-knn-v1",
+          "reviewed": true
+        },
+        {
+          "concept": "uz:prop/species-richness",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        53.40081,
+        37.18665,
+        76.69177,
+        45.62097
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a167-useful-plants",
+      "label": "Useful plants",
+      "sourceTitle": "167_полезные_растения",
+      "atlasNumber": 167,
+      "catalogId": "atlas-040",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 0.85,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.18528,
+        37.39064,
+        72.84442,
+        44.32769
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a168-game-birds",
+      "label": "Game birds",
+      "sourceTitle": "168_Охотничье-промысловые птицы",
+      "atlasNumber": 168,
+      "catalogId": "atlas-041",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 0.85,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a169-game-mammals",
+      "label": "Game mammals",
+      "sourceTitle": "169_Охотничье-промысловые млекопитающие",
+      "atlasNumber": 169,
+      "catalogId": "atlas-042",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 0.85,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        -519477.93395,
+        4031905.63775,
+        1265522.06605,
+        5186905.63775
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 4,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a170-biodiversity-intactness-index",
+      "label": "Biodiversity Intactness Index",
+      "sourceTitle": "170_Индекс_интактности_биоразнообразия",
+      "atlasNumber": 170,
+      "catalogId": "atlas-044",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/biodiversity-intactness",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.02281,
+        37.58191,
+        71.97956,
+        45.58353
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a171-fish",
+      "label": "Fish",
+      "sourceTitle": "171_Рыбы",
+      "atlasNumber": 171,
+      "catalogId": "atlas-045",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.46016,
+        37.20388,
+        72.34535,
+        45.46061
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a172-reptiles",
+      "label": "Reptiles",
+      "sourceTitle": "172_Рептилии",
+      "atlasNumber": 172,
+      "catalogId": "atlas-046",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.20478,
+        37.27632,
+        72.56856,
+        45.34459
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a173-mammals",
+      "label": "Mammals",
+      "sourceTitle": "173_Млекопитающие",
+      "atlasNumber": 173,
+      "catalogId": "atlas-047",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.08922,
+        37.28225,
+        72.37366,
+        45.25617
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a174-plants",
+      "label": "Plants",
+      "sourceTitle": "174_Растения",
+      "atlasNumber": 174,
+      "catalogId": "atlas-048",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.39718,
+        37.29709,
+        72.5948,
+        44.30531
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a175-invertebrates",
+      "label": "Invertebrates",
+      "sourceTitle": "175_Беспозвоночные",
+      "atlasNumber": 175,
+      "catalogId": "atlas-049",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        58.24071,
+        37.36712,
+        71.98013,
+        45.43599
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a176-birds",
+      "label": "Birds",
+      "sourceTitle": "176_Птицы",
+      "atlasNumber": 176,
+      "catalogId": "atlas-050",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/species-occurrence",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.35265,
+        37.29463,
+        72.32368,
+        44.88469
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a185-protected-area-types",
+      "label": "Protected-area types",
+      "sourceTitle": "185_Типы ООПТ",
+      "atlasNumber": 185,
+      "catalogId": "atlas-052",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/protected-area",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/conservation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.02281,
+        37.58191,
+        71.97956,
+        45.58353
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a186-ecoregions",
+      "label": "Ecoregions",
+      "sourceTitle": "186_Экорегионы",
+      "atlasNumber": 186,
+      "catalogId": "atlas-053",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/ecoregion",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a187-protected-areas-and-key-biodiversity-areas",
+      "label": "Protected areas and key biodiversity areas",
+      "sourceTitle": "187_ООПТ_и_ключевые_территории_биоразнообразия",
+      "atlasNumber": 187,
+      "catalogId": "atlas-054",
+      "theme": "uz:theme/biodiversity",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/protected-area",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/conservation-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        56.23237,
+        37.32105,
+        71.26826,
+        45.13802
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a188-nature-conservation",
+      "label": "Nature conservation",
+      "sourceTitle": "188_Охрана природы",
+      "atlasNumber": 188,
+      "catalogId": "atlas-055",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/conservation-value",
+          "confidence": 1.0,
+          "by": "uz:agent/model-tfidf-knn-v1",
+          "reviewed": true
+        },
+        {
+          "concept": "uz:prop/protected-area",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/conservation-planning"
+      ],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        36.67228,
+        80.2281,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a189-conservation-value-index",
+      "label": "Conservation Value Index",
+      "sourceTitle": "189_Индекс_природоохранной_ценности",
+      "atlasNumber": 189,
+      "catalogId": "atlas-056",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/conservation-value",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/conservation-planning"
+      ],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        51.93416,
+        37.17495,
+        76.95349,
+        45.65589
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a190-ecosystem-bioclimatic-resilience",
+      "label": "Ecosystem bioclimatic resilience",
+      "sourceTitle": "190_биоклим_устойчивость_экосистем",
+      "atlasNumber": 190,
+      "catalogId": "atlas-058",
+      "theme": "uz:theme/biodiversity",
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15025,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a191-habitat-dynamics-index",
+      "label": "Habitat dynamics index",
+      "sourceTitle": "191_индекс_динамики_местообитаний",
+      "atlasNumber": 191,
+      "catalogId": "atlas-059",
+      "theme": "uz:theme/biodiversity",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/habitat-dynamics",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15025,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a197-hypsometric-map",
+      "label": "Hypsometric map",
+      "sourceTitle": "197_Гипсометрическая_карта",
+      "atlasNumber": 197,
+      "catalogId": "atlas-060",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/elevation",
+          "confidence": 0.85,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        -519477.93395,
+        4031905.63775,
+        1265522.06605,
+        5186905.63775
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a198-geomorphology",
+      "label": "Geomorphology",
+      "sourceTitle": "198_Геоморфология",
+      "atlasNumber": 198,
+      "catalogId": "atlas-061",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/geomorphology",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a201-palmer-drought-severity-index-2000",
+      "label": "Palmer Drought Severity Index (2000)",
+      "sourceTitle": "201_Индекс засухи Палмера (2000 г.)",
+      "atlasNumber": 201,
+      "catalogId": "atlas-063",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2000
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a201-palmer-drought-severity-index-2001",
+      "label": "Palmer Drought Severity Index (2001)",
+      "sourceTitle": "201_Индекс засухи Палмера (2001 г.)",
+      "atlasNumber": 201,
+      "catalogId": "atlas-064",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2001,
+        "end": 2001
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a202-palmer-drought-severity-index-2008",
+      "label": "Palmer Drought Severity Index (2008)",
+      "sourceTitle": "202_Индекс засухи Палмера (2008 г.)",
+      "atlasNumber": 202,
+      "catalogId": "atlas-065",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2008,
+        "end": 2008
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a202-palmer-drought-severity-index-2011",
+      "label": "Palmer Drought Severity Index (2011)",
+      "sourceTitle": "202_Индекс засухи Палмера (2011 г.)",
+      "atlasNumber": 202,
+      "catalogId": "atlas-066",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2011,
+        "end": 2011
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a202-palmer-drought-severity-index-2018",
+      "label": "Palmer Drought Severity Index (2018)",
+      "sourceTitle": "202_Индекс засухи Палмера (2018 г.)",
+      "atlasNumber": 202,
+      "catalogId": "atlas-067",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2018,
+        "end": 2018
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a202-palmer-drought-severity-index-2020",
+      "label": "Palmer Drought Severity Index (2020)",
+      "sourceTitle": "202_Индекс засухи Палмера (2020 г.)",
+      "atlasNumber": 202,
+      "catalogId": "atlas-068",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2020,
+        "end": 2020
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a203-palmer-drought-severity-index-2021",
+      "label": "Palmer Drought Severity Index (2021)",
+      "sourceTitle": "203_Индекс засухи Палмера (2021 г.)",
+      "atlasNumber": 203,
+      "catalogId": "atlas-069",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2021,
+        "end": 2021
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a203-palmer-drought-severity-index-2022",
+      "label": "Palmer Drought Severity Index (2022)",
+      "sourceTitle": "203_Индекс засухи Палмера (2022 г.)",
+      "atlasNumber": 203,
+      "catalogId": "atlas-070",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2022,
+        "end": 2022
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a203-palmer-drought-severity-index-2023",
+      "label": "Palmer Drought Severity Index (2023)",
+      "sourceTitle": "203_Индекс засухи Палмера (2023 г.)",
+      "atlasNumber": 203,
+      "catalogId": "atlas-071",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2023,
+        "end": 2023
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a203-palmer-drought-severity-index-2024",
+      "label": "Palmer Drought Severity Index (2024)",
+      "sourceTitle": "203_Индекс засухи Палмера (2024 г.)",
+      "atlasNumber": 203,
+      "catalogId": "atlas-072",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/drought-severity",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2024,
+        "end": 2024
+      },
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a204-exposure-to-adverse-geodynamic-processes",
+      "label": "Exposure to adverse geodynamic processes",
+      "sourceTitle": "204_Потенциальная подверженность территории Узбекистана негативным геодинамическим процессам",
+      "atlasNumber": 204,
+      "catalogId": "atlas-073",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        60.0602,
+        37.71531,
+        73.1346,
+        41.81156
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a205-earthquakes-19902024",
+      "label": "Earthquakes, 1990–2024",
+      "sourceTitle": "205_Землетрясения",
+      "atlasNumber": 205,
+      "catalogId": "atlas-074",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/seismicity",
+          "confidence": 0.9,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1990,
+        "end": 2024
+      },
+      "extent": [
+        52.383,
+        30.676,
+        81.4719,
+        49.0185
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a206-mudflow-zones",
+      "label": "Mudflow zones",
+      "sourceTitle": "206_Зона распространения селей",
+      "atlasNumber": 206,
+      "catalogId": "atlas-075",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/mudflow-hazard",
+          "confidence": 0.85,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        65.05306,
+        37.30188,
+        73.21477,
+        42.29508
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a207-flood-risk",
+      "label": "Flood risk",
+      "sourceTitle": "207_Риск_наводнений",
+      "atlasNumber": 207,
+      "catalogId": "atlas-076",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/flood-hazard",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99778,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a208-flood-extent",
+      "label": "Flood extent",
+      "sourceTitle": "208_распространение_наводнений",
+      "atlasNumber": 208,
+      "catalogId": "atlas-077",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/flood-extent",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        54.22777,
+        36.47345,
+        73.76074,
+        46.31812
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a209-glacier-ice-volume",
+      "label": "Glacier ice volume",
+      "sourceTitle": "209_объем_льда_в_ледниках",
+      "atlasNumber": 209,
+      "catalogId": "atlas-078",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/glacier-volume",
+          "confidence": 0.8,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a213-economic-losses-from-floods-and-earthquakes",
+      "label": "Economic losses from floods and earthquakes",
+      "sourceTitle": "213_Экономические потери от наводнений и землетрясений (_ ВРП)",
+      "atlasNumber": 213,
+      "catalogId": "atlas-081",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/seismicity",
+          "confidence": 0.9,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/a214-flood-and-earthquake-fatalities",
+      "label": "Flood and earthquake fatalities",
+      "sourceTitle": "214_Количество погибших от наводнений и землетрясений",
+      "atlasNumber": 214,
+      "catalogId": "atlas-082",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/risk-exposure",
+      "observes": [
+        {
+          "concept": "uz:prop/seismicity",
+          "confidence": 0.9,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
+      "flags": [],
+      "distributions": 2,
+      "related": []
+    },
+    {
+      "id": "uz:ds/x-forest-cover",
+      "label": "Forest cover",
+      "sourceTitle": "Покрытие_лесами",
+      "atlasNumber": null,
+      "catalogId": "atlas-134",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/forest-cover",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "extent": [
+        55.99822,
+        37.17149,
+        73.14788,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/x-uzbekistan-national-atlas-environmental-atlas",
+      "label": "Uzbekistan - National Atlas, Environmental Atlas",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": null,
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [],
+      "temporal": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    }
+  ],
+  "counts": {
+    "datasets": 135,
+    "publishedAssertions": 1471,
+    "proposedAssertions": 452
+  }
+}

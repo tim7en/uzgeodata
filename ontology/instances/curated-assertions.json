@@ -1,0 +1,1121 @@
+{
+  "version": "1.0",
+  "assertions": [
+    {
+      "id": "uz:a/30952293637c60ac",
+      "subject": "uz:ds/a118-average-maximum-ndvi-20042024",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "rejected",
+      "confidence": 0.7,
+      "assertedBy": "uz:agent/rule-lexical-v1",
+      "method": "lexical-rule",
+      "generatedAt": "2026-08-28T14:08:11+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:44+00:00",
+      "object": "uz:analysis/change-over-time",
+      "evidence": {
+        "source": "title",
+        "matchedTerms": [
+          "multi-year interval"
+        ],
+        "note": "an average over 2004-2024 is a state observation, not a trend"
+      }
+    },
+    {
+      "id": "uz:a/eb64285d210e3ae2",
+      "subject": "uz:ds/a118-average-maximum-ndvi-20042024",
+      "predicate": "uz:hasAnalysisConcept",
+      "object": "uz:analysis/state-observation",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/curator",
+      "method": "curator",
+      "evidence": {
+        "source": "curator",
+        "note": "period average, corrected from the lexical rule"
+      },
+      "generatedAt": "2026-08-28T14:11:44+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:44+00:00"
+    },
+    {
+      "id": "uz:a/e3e834fb63ca6b72",
+      "subject": "uz:ds/a121-leaf-area-index",
+      "predicate": "uz:observes",
+      "object": "uz:prop/drought-severity",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.341,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a152-forest-landscape-integrity-index",
+            "similarity": 0.16
+          },
+          {
+            "dataset": "uz:ds/a201-palmer-drought-severity-index-2000",
+            "similarity": 0.155
+          },
+          {
+            "dataset": "uz:ds/a201-palmer-drought-severity-index-2001",
+            "similarity": 0.151
+          },
+          {
+            "dataset": "uz:ds/a191-habitat-dynamics-index",
+            "similarity": 0.15
+          },
+          {
+            "dataset": "uz:ds/a189-conservation-value-index",
+            "similarity": 0.149
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/14eec9626dc9cc2b",
+      "subject": "uz:ds/a125-recommended-pasture-stocking-rate",
+      "predicate": "uz:observes",
+      "object": "uz:prop/pasture-productivity",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.34,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a124-pasture-vegetation-types",
+            "similarity": 0.548
+          },
+          {
+            "dataset": "uz:ds/a126-pasture-productivity",
+            "similarity": 0.52
+          },
+          {
+            "dataset": "uz:ds/a81-flow-in-drainage-canals",
+            "similarity": 0.06
+          },
+          {
+            "dataset": "uz:ds/a64-agricultural-land-served-by-canals",
+            "similarity": 0.054
+          },
+          {
+            "dataset": "uz:ds/a100-livestock",
+            "similarity": 0.051
+          }
+        ],
+        "note": "confirmed against the source layer",
+        "modelScore": 0.34
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:36+00:00"
+    },
+    {
+      "id": "uz:a/92b3b686c98087d5",
+      "subject": "uz:ds/a125-recommended-pasture-stocking-rate",
+      "predicate": "uz:observes",
+      "object": "uz:prop/pasture-vegetation",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.369,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a124-pasture-vegetation-types",
+            "similarity": 0.548
+          },
+          {
+            "dataset": "uz:ds/a126-pasture-productivity",
+            "similarity": 0.52
+          },
+          {
+            "dataset": "uz:ds/a81-flow-in-drainage-canals",
+            "similarity": 0.06
+          },
+          {
+            "dataset": "uz:ds/a64-agricultural-land-served-by-canals",
+            "similarity": 0.054
+          },
+          {
+            "dataset": "uz:ds/a100-livestock",
+            "similarity": 0.051
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/0a64c5f1e02ecb77",
+      "subject": "uz:ds/a135-forest-cover-2005",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-cover",
+      "status": "rejected",
+      "confidence": 0.714,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.415,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/x-forest-cover",
+            "similarity": 0.358
+          },
+          {
+            "dataset": "uz:ds/a90-land-cover-2000",
+            "similarity": 0.334
+          },
+          {
+            "dataset": "uz:ds/a91-land-cover-2010",
+            "similarity": 0.286
+          },
+          {
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.22
+          },
+          {
+            "dataset": "uz:ds/a92-land-cover",
+            "similarity": 0.21
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/6c293cac4156a840",
+      "subject": "uz:ds/a139-natural-and-planted-forests",
+      "predicate": "uz:observes",
+      "object": "uz:prop/forest-type",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/curator",
+      "method": "curator",
+      "evidence": {
+        "source": "curator",
+        "note": "natural vs planted is a forest type distinction"
+      },
+      "generatedAt": "2026-08-28T14:11:44+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:44+00:00"
+    },
+    {
+      "id": "uz:a/91d25bb4adbfb455",
+      "subject": "uz:ds/a152-forest-landscape-integrity-index",
+      "predicate": "uz:observes",
+      "object": "uz:prop/drought-severity",
+      "status": "rejected",
+      "confidence": 0.714,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.418,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a160-landscape-structure",
+            "similarity": 0.274
+          },
+          {
+            "dataset": "uz:ds/a159-landscapes",
+            "similarity": 0.234
+          },
+          {
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.161
+          },
+          {
+            "dataset": "uz:ds/a121-leaf-area-index",
+            "similarity": 0.16
+          },
+          {
+            "dataset": "uz:ds/x-forest-cover",
+            "similarity": 0.153
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/45a07114a5292c2a",
+      "subject": "uz:ds/a16-climate-types",
+      "predicate": "uz:observes",
+      "object": "uz:prop/climatic-water-deficit",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.361,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a17-projected-climate-types-for-2100",
+            "similarity": 0.43
+          },
+          {
+            "dataset": "uz:ds/a18-local-climate-zones",
+            "similarity": 0.36
+          },
+          {
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.277
+          },
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.217
+          },
+          {
+            "dataset": "uz:ds/a33-climatic-water-deficit-2023",
+            "similarity": 0.21
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/fcede6aaaa69b37b",
+      "subject": "uz:ds/a160-landscape-structure",
+      "predicate": "uz:observes",
+      "object": "uz:prop/forest-integrity",
+      "status": "rejected",
+      "confidence": 0.714,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.405,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a152-forest-landscape-integrity-index",
+            "similarity": 0.274
+          },
+          {
+            "dataset": "uz:ds/a159-landscapes",
+            "similarity": 0.223
+          },
+          {
+            "dataset": "uz:ds/a101-forage-lands",
+            "similarity": 0.071
+          },
+          {
+            "dataset": "uz:ds/a73-water-stress",
+            "similarity": 0.053
+          },
+          {
+            "dataset": "uz:ds/a121-leaf-area-index",
+            "similarity": 0.049
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/6b804c97b47938d9",
+      "subject": "uz:ds/a163-zoogeographic-regions",
+      "predicate": "uz:observes",
+      "object": "uz:prop/ecoregion",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.373,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a158-physical-geographic-regions",
+            "similarity": 0.49
+          },
+          {
+            "dataset": "uz:ds/a186-ecoregions",
+            "similarity": 0.126
+          },
+          {
+            "dataset": "uz:ds/a55-historical-irrigation-districts",
+            "similarity": 0.082
+          },
+          {
+            "dataset": "uz:ds/a187-protected-areas-and-key-biodiversity-areas",
+            "similarity": 0.058
+          },
+          {
+            "dataset": "uz:ds/a54-areas-using-drainage",
+            "similarity": 0.058
+          }
+        ],
+        "note": "confirmed against the source layer",
+        "modelScore": 0.373
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:36+00:00"
+    },
+    {
+      "id": "uz:a/c67ccfcdc77fdb16",
+      "subject": "uz:ds/a165-habitat-diversity-index",
+      "predicate": "uz:observes",
+      "object": "uz:prop/habitat-dynamics",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.385,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a191-habitat-dynamics-index",
+            "similarity": 0.49
+          },
+          {
+            "dataset": "uz:ds/a170-biodiversity-intactness-index",
+            "similarity": 0.286
+          },
+          {
+            "dataset": "uz:ds/a187-protected-areas-and-key-biodiversity-areas",
+            "similarity": 0.207
+          },
+          {
+            "dataset": "uz:ds/a121-leaf-area-index",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/a203-palmer-drought-severity-index-2024",
+            "similarity": 0.11
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/a8f3cad775b6c5e5",
+      "subject": "uz:ds/a166-mammal-species-richness",
+      "predicate": "uz:observes",
+      "object": "uz:prop/species-occurrence",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.35,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a164-bird-species-richness",
+            "similarity": 0.64
+          },
+          {
+            "dataset": "uz:ds/a173-mammals",
+            "similarity": 0.319
+          },
+          {
+            "dataset": "uz:ds/a169-game-mammals",
+            "similarity": 0.284
+          },
+          {
+            "dataset": "uz:ds/a214-flood-and-earthquake-fatalities",
+            "similarity": 0.088
+          },
+          {
+            "dataset": "uz:ds/a52-water-management-zones",
+            "similarity": 0.032
+          }
+        ],
+        "note": "confirmed against the source layer",
+        "modelScore": 0.35
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:36+00:00"
+    },
+    {
+      "id": "uz:a/1963b21ff5db658a",
+      "subject": "uz:ds/a170-biodiversity-intactness-index",
+      "predicate": "uz:observes",
+      "object": "uz:prop/protected-area",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.376,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a185-protected-area-types",
+            "similarity": 0.452
+          },
+          {
+            "dataset": "uz:ds/a165-habitat-diversity-index",
+            "similarity": 0.286
+          },
+          {
+            "dataset": "uz:ds/a187-protected-areas-and-key-biodiversity-areas",
+            "similarity": 0.253
+          },
+          {
+            "dataset": "uz:ds/a152-forest-landscape-integrity-index",
+            "similarity": 0.099
+          },
+          {
+            "dataset": "uz:ds/a121-leaf-area-index",
+            "similarity": 0.096
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/2553197683f7e1fd",
+      "subject": "uz:ds/a18-local-climate-zones",
+      "predicate": "uz:observes",
+      "object": "uz:prop/climatic-water-deficit",
+      "status": "rejected",
+      "confidence": 0.714,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.458,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a16-climate-types",
+            "similarity": 0.36
+          },
+          {
+            "dataset": "uz:ds/a33-climatic-water-deficit-2023",
+            "similarity": 0.217
+          },
+          {
+            "dataset": "uz:ds/a32-climatic-water-deficit-1990",
+            "similarity": 0.212
+          },
+          {
+            "dataset": "uz:ds/a17-projected-climate-types-for-2100",
+            "similarity": 0.19
+          },
+          {
+            "dataset": "uz:ds/a52-water-management-zones",
+            "similarity": 0.179
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/427b40ff582cb482",
+      "subject": "uz:ds/a188-nature-conservation",
+      "predicate": "uz:observes",
+      "object": "uz:prop/conservation-value",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.537,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a189-conservation-value-index",
+            "similarity": 0.419
+          },
+          {
+            "dataset": "uz:ds/a139-natural-and-planted-forests",
+            "similarity": 0.07
+          },
+          {
+            "dataset": "uz:ds/a58-lake-and-reservoir-volume",
+            "similarity": 0.059
+          },
+          {
+            "dataset": "uz:ds/a24-annual-temperature-trend-19902023",
+            "similarity": 0.055
+          },
+          {
+            "dataset": "uz:ds/a23-annual-temperature-trend-19602023",
+            "similarity": 0.055
+          }
+        ],
+        "note": "confirmed against the source layer",
+        "modelScore": 0.537
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:36+00:00"
+    },
+    {
+      "id": "uz:a/8d380167aa288688",
+      "subject": "uz:ds/a190-ecosystem-bioclimatic-resilience",
+      "predicate": "uz:observes",
+      "object": "uz:prop/climatic-water-deficit",
+      "status": "rejected",
+      "confidence": 0.87,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.507,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a77-water-ecosystem-area",
+            "similarity": 0.234
+          },
+          {
+            "dataset": "uz:ds/a32-climatic-water-deficit-1990",
+            "similarity": 0.136
+          },
+          {
+            "dataset": "uz:ds/a79-change-in-seasonally-flooded-ecosystems-20012004",
+            "similarity": 0.136
+          },
+          {
+            "dataset": "uz:ds/a33-climatic-water-deficit-2023",
+            "similarity": 0.135
+          },
+          {
+            "dataset": "uz:ds/a78-change-in-permanently-flooded-ecosystems-2001200",
+            "similarity": 0.133
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/f0cb7c0ff6cfa53c",
+      "subject": "uz:ds/a197-hypsometric-map",
+      "predicate": "uz:observes",
+      "object": "uz:prop/climatic-water-deficit",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.345,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a55-historical-irrigation-districts",
+            "similarity": 0.055
+          },
+          {
+            "dataset": "uz:ds/a32-climatic-water-deficit-1990",
+            "similarity": 0.025
+          },
+          {
+            "dataset": "uz:ds/a127-soil-organic-carbon",
+            "similarity": 0.023
+          },
+          {
+            "dataset": "uz:ds/a166-mammal-species-richness",
+            "similarity": 0.022
+          },
+          {
+            "dataset": "uz:ds/a33-climatic-water-deficit-2023",
+            "similarity": 0.021
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/10f27ec529ce17d6",
+      "subject": "uz:ds/a206-mudflow-zones",
+      "predicate": "uz:observes",
+      "object": "uz:prop/species-occurrence",
+      "status": "rejected",
+      "confidence": 0.714,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.471,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a208-flood-extent",
+            "similarity": 0.162
+          },
+          {
+            "dataset": "uz:ds/a171-fish",
+            "similarity": 0.159
+          },
+          {
+            "dataset": "uz:ds/a176-birds",
+            "similarity": 0.156
+          },
+          {
+            "dataset": "uz:ds/a172-reptiles",
+            "similarity": 0.133
+          },
+          {
+            "dataset": "uz:ds/a18-local-climate-zones",
+            "similarity": 0.133
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/ba964445b3a7b4ab",
+      "subject": "uz:ds/a209-glacier-ice-volume",
+      "predicate": "uz:observes",
+      "object": "uz:prop/reservoir-volume",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.391,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a56-annual-runoff-volume",
+            "similarity": 0.207
+          },
+          {
+            "dataset": "uz:ds/a58-lake-and-reservoir-volume",
+            "similarity": 0.204
+          },
+          {
+            "dataset": "uz:ds/a128-carbon-emission-volume",
+            "similarity": 0.179
+          },
+          {
+            "dataset": "uz:ds/a57-dams-reservoirs-and-glacial-lakes",
+            "similarity": 0.075
+          },
+          {
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.061
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/f738702f6f1f2792",
+      "subject": "uz:ds/a36-projected-temperature-change-by-2040",
+      "predicate": "uz:observes",
+      "object": "uz:prop/precipitation",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.398,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a37-projected-precipitation-change-by-2040",
+            "similarity": 0.654
+          },
+          {
+            "dataset": "uz:ds/a26-warm-season-temperature-trend-19902023",
+            "similarity": 0.306
+          },
+          {
+            "dataset": "uz:ds/a25-warm-season-temperature-trend-19602023",
+            "similarity": 0.306
+          },
+          {
+            "dataset": "uz:ds/a24-annual-temperature-trend-19902023",
+            "similarity": 0.266
+          },
+          {
+            "dataset": "uz:ds/a23-annual-temperature-trend-19602023",
+            "similarity": 0.265
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/cdda19d4eb0d4d99",
+      "subject": "uz:ds/a45-road-network-density",
+      "predicate": "uz:observes",
+      "object": "uz:prop/drainage-network",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.355,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a80-drainage-network",
+            "similarity": 0.272
+          },
+          {
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.181
+          },
+          {
+            "dataset": "uz:ds/a123-arable-land-use-intensity",
+            "similarity": 0.115
+          },
+          {
+            "dataset": "uz:ds/a165-habitat-diversity-index",
+            "similarity": 0.038
+          },
+          {
+            "dataset": "uz:ds/a129-net-carbon-balance",
+            "similarity": 0.035
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/d9aff8e98ceac24a",
+      "subject": "uz:ds/a60-groundwater-pollution",
+      "predicate": "uz:observes",
+      "object": "uz:prop/groundwater-depth",
+      "status": "rejected",
+      "confidence": 0.714,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.402,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a59-groundwater-depth",
+            "similarity": 0.425
+          },
+          {
+            "dataset": "uz:ds/a61-groundwater-resources",
+            "similarity": 0.266
+          },
+          {
+            "dataset": "uz:ds/a73-water-stress",
+            "similarity": 0.079
+          },
+          {
+            "dataset": "uz:ds/a52-water-management-zones",
+            "similarity": 0.062
+          },
+          {
+            "dataset": "uz:ds/a77-water-ecosystem-area",
+            "similarity": 0.051
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/5c1b0603083a92c7",
+      "subject": "uz:ds/a73-water-stress",
+      "predicate": "uz:observes",
+      "object": "uz:prop/climatic-water-deficit",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.351,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a74-water-balance",
+            "similarity": 0.141
+          },
+          {
+            "dataset": "uz:ds/a52-water-management-zones",
+            "similarity": 0.127
+          },
+          {
+            "dataset": "uz:ds/a33-climatic-water-deficit-2023",
+            "similarity": 0.127
+          },
+          {
+            "dataset": "uz:ds/a32-climatic-water-deficit-1990",
+            "similarity": 0.124
+          },
+          {
+            "dataset": "uz:ds/a75-access-to-sustainable-drinking-water",
+            "similarity": 0.109
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/62484be7e2e35c65",
+      "subject": "uz:ds/a75-access-to-sustainable-drinking-water",
+      "predicate": "uz:observes",
+      "object": "uz:prop/seismicity",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.382,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a76-access-to-sustainable-sanitation",
+            "similarity": 0.774
+          },
+          {
+            "dataset": "uz:ds/a214-flood-and-earthquake-fatalities",
+            "similarity": 0.318
+          },
+          {
+            "dataset": "uz:ds/a213-economic-losses-from-floods-and-earthquakes",
+            "similarity": 0.298
+          },
+          {
+            "dataset": "uz:ds/a73-water-stress",
+            "similarity": 0.109
+          },
+          {
+            "dataset": "uz:ds/a61-groundwater-resources",
+            "similarity": 0.078
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/e76a8e35ac5f3e68",
+      "subject": "uz:ds/a76-access-to-sustainable-sanitation",
+      "predicate": "uz:observes",
+      "object": "uz:prop/seismicity",
+      "status": "rejected",
+      "confidence": 0.714,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.423,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a75-access-to-sustainable-drinking-water",
+            "similarity": 0.774
+          },
+          {
+            "dataset": "uz:ds/a214-flood-and-earthquake-fatalities",
+            "similarity": 0.359
+          },
+          {
+            "dataset": "uz:ds/a213-economic-losses-from-floods-and-earthquakes",
+            "similarity": 0.336
+          },
+          {
+            "dataset": "uz:ds/a207-flood-risk",
+            "similarity": 0.071
+          },
+          {
+            "dataset": "uz:ds/a42-share-of-settlement-area",
+            "similarity": 0.07
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/9234ccd2a05864ac",
+      "subject": "uz:ds/a77-water-ecosystem-area",
+      "predicate": "uz:observes",
+      "object": "uz:prop/settlement-extent",
+      "status": "rejected",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.346,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a79-change-in-seasonally-flooded-ecosystems-20012004",
+            "similarity": 0.531
+          },
+          {
+            "dataset": "uz:ds/a78-change-in-permanently-flooded-ecosystems-2001200",
+            "similarity": 0.52
+          },
+          {
+            "dataset": "uz:ds/a190-ecosystem-bioclimatic-resilience",
+            "similarity": 0.234
+          },
+          {
+            "dataset": "uz:ds/a43-settlement-area-change-19702020",
+            "similarity": 0.194
+          },
+          {
+            "dataset": "uz:ds/a42-share-of-settlement-area",
+            "similarity": 0.186
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/b13da813eea79ba3",
+      "subject": "uz:ds/a80-drainage-network",
+      "predicate": "uz:observes",
+      "object": "uz:prop/road-density",
+      "status": "rejected",
+      "confidence": 0.87,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.502,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a54-areas-using-drainage",
+            "similarity": 0.362
+          },
+          {
+            "dataset": "uz:ds/a45-road-network-density",
+            "similarity": 0.272
+          },
+          {
+            "dataset": "uz:ds/a81-flow-in-drainage-canals",
+            "similarity": 0.258
+          },
+          {
+            "dataset": "uz:ds/a101-forage-lands",
+            "similarity": 0.051
+          },
+          {
+            "dataset": "uz:ds/a129-net-carbon-balance",
+            "similarity": 0.049
+          }
+        ],
+        "note": "text similarity artefact, not an observed property"
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:37+00:00"
+    },
+    {
+      "id": "uz:a/3f1911c9a14c0245",
+      "subject": "uz:ds/a95-soil-chemistry",
+      "predicate": "uz:observes",
+      "object": "uz:prop/soil-salinity",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.379,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a127-soil-organic-carbon",
+            "similarity": 0.138
+          },
+          {
+            "dataset": "uz:ds/a115-soil-salinity",
+            "similarity": 0.135
+          },
+          {
+            "dataset": "uz:ds/a117-soil-salinity-dynamics",
+            "similarity": 0.091
+          },
+          {
+            "dataset": "uz:ds/a189-conservation-value-index",
+            "similarity": 0.085
+          },
+          {
+            "dataset": "uz:ds/a116-irrigated-soil-salinity",
+            "similarity": 0.084
+          }
+        ],
+        "note": "confirmed against the source layer",
+        "modelScore": 0.379
+      },
+      "generatedAt": "2026-08-28T14:10:31+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:36+00:00"
+    },
+    {
+      "id": "uz:a/7af676ba7432140b",
+      "subject": "uz:ds/a98-agricultural-land-types",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-use-type",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/curator",
+      "method": "curator",
+      "evidence": {
+        "source": "curator",
+        "note": "agricultural land types are a land-use classification"
+      },
+      "generatedAt": "2026-08-28T14:11:44+00:00",
+      "reviewedBy": "uz:agent/curator",
+      "reviewedAt": "2026-08-28T14:11:44+00:00"
+    }
+  ]
+}

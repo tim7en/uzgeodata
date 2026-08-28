@@ -1,0 +1,48 @@
+{
+  "scheme": "usecase",
+  "title": "Decision use cases",
+  "description": "The decisions the portal's data can support. Deliberately small and concrete; each one is the seed of an analytical product rather than a marketing category.",
+  "version": "1.0",
+  "concepts": [
+    {
+      "id": "uz:usecase/drought-early-warning",
+      "prefLabel": "Drought early warning",
+      "definition": "Detecting and anticipating agricultural and hydrological drought from vegetation, precipitation and water-deficit signals."
+    },
+    {
+      "id": "uz:usecase/irrigation-planning",
+      "prefLabel": "Irrigation planning",
+      "definition": "Allocating water and maintaining canal and drainage systems across irrigated districts."
+    },
+    {
+      "id": "uz:usecase/disaster-risk-reduction",
+      "prefLabel": "Disaster risk reduction",
+      "definition": "Reducing exposure and loss from earthquakes, floods, mudflows and glacial-lake outbursts."
+    },
+    {
+      "id": "uz:usecase/conservation-planning",
+      "prefLabel": "Conservation planning",
+      "definition": "Choosing where to protect, connect or restore habitat, and finding gaps in the protected-area network."
+    },
+    {
+      "id": "uz:usecase/carbon-accounting",
+      "prefLabel": "Carbon accounting",
+      "definition": "Estimating stocks, emissions and sequestration potential in soils and forests."
+    },
+    {
+      "id": "uz:usecase/land-degradation-monitoring",
+      "prefLabel": "Land degradation monitoring",
+      "definition": "Tracking salinity, productivity decline, bare-surface expansion and pasture overuse."
+    },
+    {
+      "id": "uz:usecase/urban-and-settlement-planning",
+      "prefLabel": "Urban & settlement planning",
+      "definition": "Understanding settlement growth, abandonment and pressure on irrigated land."
+    },
+    {
+      "id": "uz:usecase/water-resource-allocation",
+      "prefLabel": "Water resource allocation",
+      "definition": "Balancing supply, demand and stress across basins and catchments."
+    }
+  ]
+}

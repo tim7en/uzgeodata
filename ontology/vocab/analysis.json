@@ -1,0 +1,38 @@
+{
+  "scheme": "analysis",
+  "title": "Analytical concepts",
+  "description": "How a dataset is analytically shaped, independent of its theme. The same five nodes the ontology explorer already draws, but with stable IDs, written definitions and explicit assignment rules instead of a title regex.",
+  "version": "1.0",
+  "concepts": [
+    {
+      "id": "uz:analysis/state-observation",
+      "prefLabel": "Observation & index",
+      "definition": "A measured or modelled value describing conditions at a point in time, including composite indices. Answers 'what is it like'.",
+      "note": "Assign when the dataset carries a quantity or index for a single period."
+    },
+    {
+      "id": "uz:analysis/change-over-time",
+      "prefLabel": "Change over time",
+      "definition": "A trend, dynamic or difference between periods. Answers 'what changed'. Takes precedence over a state observation when both readings are possible.",
+      "note": "Requires a temporalCoverage interval spanning more than one year, or an explicit dynamics/trend/change term in the source title."
+    },
+    {
+      "id": "uz:analysis/risk-exposure",
+      "prefLabel": "Risk & exposure",
+      "definition": "A hazard, the exposure of people or assets to it, or its recorded losses. Answers 'what could go wrong and who is affected'.",
+      "note": "Hazard evidence outranks the presence of a year range, so an event catalogue spanning decades stays a hazard dataset."
+    },
+    {
+      "id": "uz:analysis/resource-system",
+      "prefLabel": "Resource system",
+      "definition": "A managed system with infrastructure, allocation or service delivery: irrigation, drainage, canals, water and sanitation access, farming systems, protected-area management.",
+      "note": "Assign when the subject is human management of a resource rather than the resource's physical state."
+    },
+    {
+      "id": "uz:analysis/environmental-feature",
+      "prefLabel": "Environmental feature",
+      "definition": "A mapped entity or classification with a fixed footprint: landscapes, ecoregions, climate types, geomorphology, plant formations. Answers 'what is where'.",
+      "note": "Default when no other concept has supporting evidence."
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "description": "Everything that can make an assertion, with a trust tier. Provenance is mandatory: no fact enters the graph without naming the agent that produced it, so a curator can always tell an atlas fact from a rule guess from a model prediction.",
+  "agents": [
+    {
+      "id": "uz:agent/atlas-source",
+      "type": "Agent",
+      "label": "Uzbekistan environmental atlas (source metadata)",
+      "agentKind": "organisation",
+      "agentVersion": "2024",
+      "trustTier": "authoritative",
+      "description": "Facts taken verbatim from the source packages: titles, file sizes, formats, package membership."
+    },
+    {
+      "id": "uz:agent/extraction-pipeline",
+      "type": "Agent",
+      "label": "Geospatial extraction pipeline",
+      "agentKind": "rule",
+      "agentVersion": "1.0",
+      "trustTier": "authoritative",
+      "description": "Measured facts produced by the conversion scripts: geometry type, feature counts, bounding boxes, field names, derivation lineage."
+    },
+    {
+      "id": "uz:agent/rule-lexical-v1",
+      "type": "Agent",
+      "label": "Lexical seeding rules v1",
+      "agentKind": "rule",
+      "agentVersion": "1.0",
+      "trustTier": "heuristic",
+      "description": "Deterministic term matching over English and Russian titles. Produces the weak-supervision seed for semantic predicates; never publishes as asserted on its own above the review threshold."
+    },
+    {
+      "id": "uz:agent/model-tfidf-knn-v1",
+      "type": "Agent",
+      "label": "Character n-gram similarity model v1",
+      "agentKind": "model",
+      "agentVersion": "1.0",
+      "trustTier": "predicted",
+      "description": "TF-IDF character n-gram model over bilingual titles and field names. Proposes observed properties, analysis concepts and related datasets with calibrated confidence. Replaceable by a satellite-embedding or language-model backend without changing the graph contract."
+    },
+    {
+      "id": "uz:agent/curator",
+      "type": "Agent",
+      "label": "Portal curator",
+      "agentKind": "person",
+      "trustTier": "curated",
+      "description": "A human reviewer who promotes, corrects or rejects proposals. Curator decisions are the training labels for the next model."
+    }
+  ]
+}

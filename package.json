@@ -7,7 +7,12 @@
     "dev": "node server.mjs",
     "build": "vite build",
     "start": "cross-env NODE_ENV=production node server.mjs",
-    "preview": "npm run start"
+    "preview": "npm run start",
+    "ontology:build": "python scripts/ontology/build_ontology.py",
+    "ontology:validate": "python scripts/ontology/validate_ontology.py",
+    "ontology:propose": "python scripts/ontology/propose_assertions.py",
+    "ontology:review": "python scripts/ontology/review_assertions.py",
+    "test:ontology": "python -m pytest tests/test_ontology.py -q"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

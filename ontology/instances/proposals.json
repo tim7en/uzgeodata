@@ -1,0 +1,246 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-08-28T14:15:53+00:00",
+  "assertions": [
+    {
+      "id": "uz:a/23465d5064801b80",
+      "subject": "uz:ds/a127-soil-organic-carbon",
+      "predicate": "uz:observes",
+      "object": "uz:prop/soil-salinity",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.273,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a129-net-carbon-balance",
+            "similarity": 0.232
+          },
+          {
+            "dataset": "uz:ds/a147-forest-carbon-sequestration",
+            "similarity": 0.2
+          },
+          {
+            "dataset": "uz:ds/a128-carbon-emission-volume",
+            "similarity": 0.17
+          },
+          {
+            "dataset": "uz:ds/a95-soil-chemistry",
+            "similarity": 0.138
+          },
+          {
+            "dataset": "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
+            "similarity": 0.128
+          }
+        ],
+        "note": "calibrated on 97 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/777629e486a7b947",
+      "subject": "uz:ds/a137-forest-types",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-use-type",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.223,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.306
+          },
+          {
+            "dataset": "uz:ds/a16-climate-types",
+            "similarity": 0.277
+          },
+          {
+            "dataset": "uz:ds/x-forest-cover",
+            "similarity": 0.276
+          },
+          {
+            "dataset": "uz:ds/a135-forest-cover-2005",
+            "similarity": 0.22
+          },
+          {
+            "dataset": "uz:ds/a98-agricultural-land-types",
+            "similarity": 0.198
+          }
+        ],
+        "note": "calibrated on 97 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/f665cf56108753c2",
+      "subject": "uz:ds/a148-forest-plantation-potential",
+      "predicate": "uz:observes",
+      "object": "uz:prop/forest-type",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.204,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
+            "similarity": 0.309
+          },
+          {
+            "dataset": "uz:ds/x-forest-cover",
+            "similarity": 0.152
+          },
+          {
+            "dataset": "uz:ds/a152-forest-landscape-integrity-index",
+            "similarity": 0.151
+          },
+          {
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.151
+          },
+          {
+            "dataset": "uz:ds/a147-forest-carbon-sequestration",
+            "similarity": 0.144
+          }
+        ],
+        "note": "calibrated on 97 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/66a454326e4f0d0d",
+      "subject": "uz:ds/a198-geomorphology",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-use-type",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.216,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.051
+          },
+          {
+            "dataset": "uz:ds/a159-landscapes",
+            "similarity": 0.045
+          },
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.042
+          },
+          {
+            "dataset": "uz:ds/a98-agricultural-land-types",
+            "similarity": 0.038
+          },
+          {
+            "dataset": "uz:ds/a16-climate-types",
+            "similarity": 0.032
+          }
+        ],
+        "note": "calibrated on 97 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/abc4f62220acaabc",
+      "subject": "uz:ds/a64-agricultural-land-served-by-canals",
+      "predicate": "uz:observes",
+      "object": "uz:prop/land-use-type",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.337,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a98-agricultural-land-types",
+            "similarity": 0.455
+          },
+          {
+            "dataset": "uz:ds/a81-flow-in-drainage-canals",
+            "similarity": 0.364
+          },
+          {
+            "dataset": "uz:ds/a63-irrigation-canal-density",
+            "similarity": 0.102
+          },
+          {
+            "dataset": "uz:ds/a139-natural-and-planted-forests",
+            "similarity": 0.096
+          },
+          {
+            "dataset": "uz:ds/a92-land-cover",
+            "similarity": 0.073
+          }
+        ],
+        "note": "calibrated on 97 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    },
+    {
+      "id": "uz:a/f53dbaa485bb115f",
+      "subject": "uz:ds/a98-agricultural-land-types",
+      "predicate": "uz:observes",
+      "object": "uz:prop/forest-type",
+      "status": "proposed",
+      "confidence": 0.5,
+      "assertedBy": "uz:agent/model-tfidf-knn-v1",
+      "method": "tfidf-knn",
+      "evidence": {
+        "source": "title+fields",
+        "score": 0.238,
+        "neighbours": [
+          {
+            "dataset": "uz:ds/a64-agricultural-land-served-by-canals",
+            "similarity": 0.455
+          },
+          {
+            "dataset": "uz:ds/a137-forest-types",
+            "similarity": 0.198
+          },
+          {
+            "dataset": "uz:ds/a16-climate-types",
+            "similarity": 0.194
+          },
+          {
+            "dataset": "uz:ds/a97-land-use-types",
+            "similarity": 0.19
+          },
+          {
+            "dataset": "uz:ds/a139-natural-and-planted-forests",
+            "similarity": 0.133
+          }
+        ],
+        "note": "calibrated on 97 labelled datasets"
+      },
+      "generatedAt": "2026-08-28T14:15:53+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null
+    }
+  ]
+}

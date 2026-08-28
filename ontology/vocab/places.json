@@ -1,0 +1,71 @@
+{
+  "scheme": "place",
+  "title": "Places",
+  "description": "Coverage targets. Kept honest on purpose: several atlas layers are regional rather than national, so the graph can state that a dataset covers Uzbekistan and its neighbours instead of implying national coverage. Coverage is asserted from measured geometry bounds, not from the title.",
+  "version": "1.0",
+  "concepts": [
+    {
+      "id": "uz:place/uzbekistan",
+      "prefLabel": "Uzbekistan",
+      "altLabels": ["Узбекистан", "Ozbekiston"],
+      "definition": "The Republic of Uzbekistan, the portal's primary area of interest."
+    },
+    {
+      "id": "uz:place/central-asia",
+      "prefLabel": "Central Asia",
+      "definition": "The wider region covered by some source layers, including areas outside Uzbekistan.",
+      "related": ["uz:place/uzbekistan"]
+    },
+    {
+      "id": "uz:place/kazakhstan",
+      "prefLabel": "Kazakhstan",
+      "definition": "Neighbouring state appearing in the extent of regionally compiled layers.",
+      "broader": "uz:place/central-asia"
+    },
+    {
+      "id": "uz:place/kyrgyzstan",
+      "prefLabel": "Kyrgyzstan",
+      "definition": "Neighbouring state appearing in the extent of regionally compiled layers.",
+      "broader": "uz:place/central-asia"
+    },
+    {
+      "id": "uz:place/tajikistan",
+      "prefLabel": "Tajikistan",
+      "definition": "Neighbouring state appearing in the extent of regionally compiled layers.",
+      "broader": "uz:place/central-asia"
+    },
+    {
+      "id": "uz:place/turkmenistan",
+      "prefLabel": "Turkmenistan",
+      "definition": "Neighbouring state appearing in the extent of regionally compiled layers.",
+      "broader": "uz:place/central-asia"
+    },
+    {
+      "id": "uz:place/afghanistan",
+      "prefLabel": "Afghanistan",
+      "definition": "Neighbouring state appearing in the extent of regionally compiled layers, notably the seismic catalogue.",
+      "broader": "uz:place/central-asia"
+    },
+    {
+      "id": "uz:place/amu-darya-basin",
+      "prefLabel": "Amu Darya basin",
+      "altLabels": ["Амударья"],
+      "definition": "Catchment of the Amu Darya, one of the two river systems governing Uzbek irrigation.",
+      "broader": "uz:place/central-asia"
+    },
+    {
+      "id": "uz:place/syr-darya-basin",
+      "prefLabel": "Syr Darya basin",
+      "altLabels": ["Сырдарья"],
+      "definition": "Catchment of the Syr Darya.",
+      "broader": "uz:place/central-asia"
+    },
+    {
+      "id": "uz:place/aral-sea-basin",
+      "prefLabel": "Aral Sea basin",
+      "altLabels": ["Аральское море"],
+      "definition": "The endorheic basin the two main rivers drain into, and the focus of the region's best-known environmental change.",
+      "broader": "uz:place/central-asia"
+    }
+  ]
+}

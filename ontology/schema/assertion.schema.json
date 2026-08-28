@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uzgeodata.uz/schema/assertion.json",
+  "title": "Assertion set",
+  "description": "Every relational fact in the ontology is a first-class, provenanced, confidence-scored assertion. This is the hook for machine learning: a model may add candidates with status 'proposed', a curator promotes or rejects them, and reviewed assertions become the training set for the next model.",
+  "type": "object",
+  "required": ["version", "generatedAt", "assertions"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"type": "string"},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "subject", "predicate", "status", "confidence", "assertedBy", "generatedAt"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^uz:a/[a-z0-9-]+$"},
+          "subject": {"type": "string", "pattern": "^uz:[a-z-]+/[a-z0-9-]+$"},
+          "predicate": {"type": "string", "pattern": "^uz:[a-zA-Z]+$"},
+          "object": {
+            "type": "string",
+            "pattern": "^uz:[a-z-]+/[a-z0-9-]+$",
+            "description": "Entity or concept ID. Mutually exclusive with 'value'."
+          },
+          "value": {
+            "description": "Literal object, for predicates whose range is a literal.",
+            "type": ["string", "number", "integer", "boolean", "array", "object"]
+          },
+          "status": {
+            "enum": ["asserted", "proposed", "rejected", "superseded"],
+            "description": "Only 'asserted' is published to the portal. 'proposed' is a model or rule candidate awaiting review. 'rejected' is a negative label and is kept, because negatives are as valuable to training as positives."
+          },
+          "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "assertedBy": {"type": "string", "pattern": "^uz:agent/[a-z0-9-]+$"},
+          "method": {
+            "type": "string",
+            "description": "Free-text method tag, e.g. source-metadata, lexical-rule, tfidf-knn, logistic-regression, curator."
+          },
+          "evidence": {
+            "type": "object",
+            "description": "Why this assertion exists. Rules record matched terms; models record features, neighbours and scores. Required for anything not taken verbatim from the source metadata.",
+            "properties": {
+              "source": {"type": "string"},
+              "matchedTerms": {"type": "array", "items": {"type": "string"}},
+              "neighbours": {"type": "array", "items": {"type": "object"}},
+              "features": {"type": "object", "description": "Model feature values."},
+              "featureCount": {"type": "integer", "minimum": 0},
+              "score": {"type": "number"},
+              "note": {"type": "string"}
+            }
+          },
+          "generatedAt": {"type": "string", "format": "date-time"},
+          "reviewedBy": {"type": ["string", "null"], "pattern": "^uz:agent/[a-z0-9-]+$"},
+          "reviewedAt": {"type": ["string", "null"], "format": "date-time"},
+          "supersedes": {"type": "string"}
+        },
+        "oneOf": [{"required": ["object"]}, {"required": ["value"]}]
+      }
+    }
+  }
+}

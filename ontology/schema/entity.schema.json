@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uzgeodata.uz/schema/entity.json",
+  "title": "Entity graph",
+  "description": "Canonical records for the things the portal talks about. Intrinsic attributes live here; everything relational lives in assertions.json.",
+  "type": "object",
+  "required": ["version", "generatedAt", "entities"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"type": "string"},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "label"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^uz:(ds|dist|layer|agent)/[a-z0-9-]+$"},
+          "type": {"enum": ["Dataset", "Distribution", "MapLayer", "Agent"]},
+          "label": {"type": "string", "minLength": 1},
+          "labels": {
+            "type": "object",
+            "description": "Language-tagged labels. ru holds the original atlas title.",
+            "additionalProperties": {"type": "string"}
+          },
+          "description": {"type": "string"}
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"type": {"const": "Dataset"}}},
+            "then": {
+              "required": ["sourceKey"],
+              "properties": {
+                "sourceKey": {"type": "string", "minLength": 1, "description": "Immutable natural key from the source archive; identity is minted from this once and then frozen."},
+                "atlasNumber": {"type": ["integer", "null"]},
+                "catalogId": {"type": ["string", "null"], "description": "Legacy sequential public-catalog id, kept only as a cross-reference."},
+                "repositoryId": {"type": ["string", "null"], "description": "UUID of the record in the private repository."}
+              }
+            }
+          },
+          {
+            "if": {"properties": {"type": {"const": "Distribution"}}},
+            "then": {
+              "required": ["role", "format"],
+              "properties": {
+                "role": {"enum": ["source-package", "source-document", "web-vector", "web-raster-preview", "raster-polygonized"]},
+                "format": {"type": "string"},
+                "byteSize": {"type": ["integer", "null"], "minimum": 0},
+                "storedName": {"type": ["string", "null"]},
+                "url": {"type": ["string", "null"]},
+                "accessPolicy": {"enum": ["free", "request", "licensed", "internal"]}
+              }
+            }
+          },
+          {
+            "if": {"properties": {"type": {"const": "MapLayer"}}},
+            "then": {
+              "required": ["geometryType"],
+              "properties": {
+                "geometryType": {"enum": ["point", "line", "polygon", "shape", "raster", "unknown"]},
+                "featureCount": {"type": ["integer", "null"], "minimum": 0},
+                "url": {"type": ["string", "null"]},
+                "legend": {"type": ["object", "null"]}
+              }
+            }
+          },
+          {
+            "if": {"properties": {"type": {"const": "Agent"}}},
+            "then": {
+              "required": ["agentKind"],
+              "properties": {
+                "agentKind": {"enum": ["organisation", "person", "rule", "model"]},
+                "agentVersion": {"type": "string"},
+                "trustTier": {"enum": ["authoritative", "curated", "heuristic", "predicted"]}
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
