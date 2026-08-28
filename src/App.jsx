@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  ArrowDown, ArrowRight, Check, Database, Droplets, FileArchive, Grid3X3,
-  Layers3, Leaf, Menu, Mountain, Orbit, Search, X
+  ArrowDown, ArrowRight, Check, Database, Droplets, FileArchive, File,
+  Grid3X3, HardDrive, Layers3, Leaf, LoaderCircle, LockKeyhole, LogOut,
+  Menu, Mountain, Orbit, Search, Trash2, UploadCloud, X
 } from 'lucide-react';
 
 const datasets = [
@@ -32,7 +33,7 @@ function Header({ onAccess }) {
     <Logo />
     <button className="menu-button" onClick={() => setOpen(!open)} aria-label="Toggle menu">{open ? <X/> : <Menu/>}</button>
     <nav className={open ? 'open' : ''} onClick={() => setOpen(false)}>
-      <a href="#catalog">Data catalog</a><a href="#solutions">Use cases</a><a href="#community">Community</a><a href="#about">About</a>
+      <a href="#catalog">Data catalog</a><a href="#solutions">Use cases</a><a href="#community">Community</a><a href="#about">About</a><a href="/admin">Admin</a>
     </nav>
     <button className="button button-small desktop-cta" onClick={onAccess}>Request access <ArrowRight size={16}/></button>
   </header>
@@ -130,7 +131,7 @@ function CTA({ onAccess }) {
 }
 
 function Footer() {
-  return <footer><div className="footer-top"><div><Logo/><p>Authoritative geospatial data<br/>for a changing Uzbekistan.</p></div><div className="footer-links"><div><strong>EXPLORE</strong><a href="#catalog">Data catalog</a><a href="#solutions">Use cases</a><a href="#about">Methodology</a></div><div><strong>CONNECT</strong><a href="#community">Community</a><a href="mailto:hello@uzgeodata.uz">Contact</a><a href="#join">Partners</a></div><div><strong>LEGAL</strong><a href="#about">Licensing</a><a href="#about">Terms</a><a href="#about">Privacy</a></div></div></div><div className="footer-bottom"><span>© 2026 UZGEODATA.UZ</span><span>BUILT IN UZBEKISTAN <span className="accent">●</span></span><span>41.3775° N / 64.5853° E</span></div></footer>
+  return <footer><div className="footer-top"><div><Logo/><p>Authoritative geospatial data<br/>for a changing Uzbekistan.</p></div><div className="footer-links"><div><strong>EXPLORE</strong><a href="#catalog">Data catalog</a><a href="#solutions">Use cases</a><a href="#about">Methodology</a></div><div><strong>CONNECT</strong><a href="#community">Community</a><a href="mailto:hello@uzgeodata.uz">Contact</a><a href="#join">Partners</a></div><div><strong>LEGAL</strong><a href="#about">Licensing</a><a href="#about">Terms</a><a href="/admin">Admin access</a></div></div></div><div className="footer-bottom"><span>© 2026 UZGEODATA.UZ</span><span>BUILT IN UZBEKISTAN <span className="accent">●</span></span><span>41.3775° N / 64.5853° E</span></div></footer>
 }
 
 function AccessModal({ initial, onClose }) {
@@ -144,7 +145,88 @@ function AccessModal({ initial, onClose }) {
   </div></div>
 }
 
+const fileSize = bytes => {
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+  if (bytes < 1024 * 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+  return `${(bytes / 1024 / 1024 / 1024).toFixed(2)} GB`;
+};
+
+function AdminLogin({ onLogin }) {
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  async function submit(event) {
+    event.preventDefault(); setLoading(true); setError('');
+    const form = new FormData(event.currentTarget);
+    try {
+      const response = await fetch('/api/admin/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(Object.fromEntries(form)) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+      onLogin();
+    } catch (loginError) { setError(loginError.message); }
+    finally { setLoading(false); }
+  }
+  return <div className="admin-shell login-shell"><a href="/" className="admin-logo"><Logo/></a><div className="login-card">
+    <div className="login-mark"><LockKeyhole size={28}/></div><div className="kicker">Restricted system</div><h1>Admin<br/><span>access.</span></h1><p>Authorized UzGeoData personnel only. Sign in to manage the data repository.</p>
+    <form onSubmit={submit}><label>USERNAME<input name="username" autoComplete="username" required autoFocus/></label><label>PASSWORD<input name="password" type="password" autoComplete="current-password" required/></label>{error && <div className="form-error">{error}</div>}<button className="button" disabled={loading}>{loading ? <LoaderCircle className="spin" size={18}/> : <>Enter repository <ArrowRight size={17}/></>}</button></form>
+    <a href="/" className="back-link">← Back to public portal</a>
+  </div><div className="login-image"/></div>
+}
+
+function AdminPanel() {
+  const [authenticated, setAuthenticated] = useState(null);
+  const [items, setItems] = useState([]);
+  const [notice, setNotice] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [selected, setSelected] = useState([]);
+
+  const load = async () => {
+    const response = await fetch('/api/admin/datasets');
+    if (response.status === 401) return setAuthenticated(false);
+    setItems(await response.json()); setAuthenticated(true);
+  };
+  useEffect(() => { fetch('/api/admin/session').then(r => r.json()).then(result => result.authenticated ? load() : setAuthenticated(false)).catch(() => setAuthenticated(false)); }, []);
+
+  async function uploadDataset(event) {
+    event.preventDefault(); setUploading(true); setNotice('');
+    const form = event.currentTarget;
+    try {
+      const response = await fetch('/api/admin/datasets', { method: 'POST', body: new FormData(form) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+      form.reset(); setSelected([]); setNotice(`“${result.title}” was uploaded successfully.`); await load();
+    } catch (error) { setNotice(`Error: ${error.message}`); }
+    finally { setUploading(false); }
+  }
+
+  async function remove(item) {
+    if (!window.confirm(`Permanently remove “${item.title}” and its ${item.files.length} stored file(s)?`)) return;
+    const response = await fetch(`/api/admin/datasets/${item.id}`, { method: 'DELETE' });
+    if (response.ok) { setNotice(`“${item.title}” was removed.`); await load(); }
+  }
+
+  async function logout() { await fetch('/api/admin/logout', {method:'POST'}); setAuthenticated(false); }
+  if (authenticated === null) return <div className="admin-loading"><LoaderCircle className="spin"/><span>Opening secure repository</span></div>;
+  if (!authenticated) return <AdminLogin onLogin={load}/>;
+  const totalBytes = items.flatMap(x => x.files).reduce((sum, file) => sum + file.size, 0);
+  return <div className="admin-app">
+    <header className="admin-header"><Logo/><div><span className="admin-status"><i/> Secure session</span><a href="/">View portal <ArrowRight size={15}/></a><button onClick={logout}><LogOut size={16}/> Sign out</button></div></header>
+    <main className="admin-main"><div className="admin-title"><div><div className="kicker">Data operations</div><h1>Repository<br/><span>control.</span></h1></div><p>Upload, document and manage the files that power the UzGeoData catalog.</p></div>
+      <div className="admin-stats"><div><Database/><span><strong>{items.length}</strong>Data entries</span></div><div><FileArchive/><span><strong>{items.reduce((sum,x)=>sum+x.files.length,0)}</strong>Stored files</span></div><div><HardDrive/><span><strong>{fileSize(totalBytes)}</strong>Total storage</span></div></div>
+      <div className="admin-grid"><section className="upload-panel"><div className="panel-heading"><span>01</span><div><h2>Upload data</h2><p>Add a complete dataset or supporting documentation.</p></div></div>
+        <form onSubmit={uploadDataset}><label>DATASET TITLE<input name="title" required placeholder="e.g. Uzbekistan Atlas v2"/></label><div className="form-row"><label>CATEGORY<select name="category" required defaultValue=""><option value="" disabled>Select category</option><option>Atlas</option><option>Water</option><option>Agriculture</option><option>Raster</option><option>Terrain</option><option>Administrative</option><option>Research</option><option>Other</option></select></label><label>ACCESS LEVEL<select name="access" defaultValue="Request"><option>Free</option><option>Request</option><option>Licensed</option><option>Internal</option></select></label></div><label>DESCRIPTION<textarea name="description" rows="4" placeholder="Coverage, source, resolution and intended use..."/></label>
+          <label className="drop-zone"><UploadCloud size={32}/><strong>Choose geodata files</strong><span>ZIP, SHP, GeoPackage, GeoTIFF, COG, GeoJSON, CSV, KML or PDF · up to 5 GB each</span><input type="file" name="files" multiple required onChange={e => setSelected([...e.target.files])}/></label>
+          {selected.length > 0 && <div className="selected-files">{selected.map(file => <div key={`${file.name}-${file.size}`}><File size={15}/><span>{file.name}</span><small>{fileSize(file.size)}</small></div>)}</div>}
+          {notice && <div className={notice.startsWith('Error') ? 'admin-notice error' : 'admin-notice'}>{notice}</div>}<button className="button" disabled={uploading}>{uploading ? <><LoaderCircle className="spin" size={18}/> Uploading…</> : <>Upload to repository <UploadCloud size={17}/></>}</button>
+        </form></section>
+        <section className="repository-panel"><div className="panel-heading"><span>02</span><div><h2>Stored data</h2><p>Private repository inventory.</p></div></div>
+          <div className="repository-list">{items.length === 0 ? <div className="repository-empty"><Database size={35}/><h3>No uploads yet</h3><p>Your uploaded geodata will appear here.</p></div> : items.map(item => <article className="repository-item" key={item.id}><div className="repo-top"><span>{item.category}</span><button onClick={() => remove(item)} title="Remove dataset"><Trash2 size={16}/></button></div><h3>{item.title}</h3><p>{item.description || 'No description provided.'}</p><div className="repo-meta"><span>{item.access}</span><span>{item.files.length} file{item.files.length === 1 ? '' : 's'}</span><span>{fileSize(item.files.reduce((sum,f)=>sum+f.size,0))}</span></div><div className="repo-files">{item.files.map(file => <a key={file.storedName} href={`/api/admin/datasets/${item.id}/files/${file.storedName}`}><File size={13}/>{file.originalName}</a>)}</div><time>{new Date(item.createdAt).toLocaleString()}</time></article>)}</div>
+        </section></div>
+    </main>
+  </div>;
+}
+
 export default function App() {
+  if (window.location.pathname.startsWith('/admin')) return <AdminPanel/>;
   const [request, setRequest] = useState(null);
   const openRequest = (dataset = '') => setRequest(dataset || 'General data request');
   return <><Header onAccess={() => openRequest()}/><main><Hero onExplore={() => document.getElementById('catalog').scrollIntoView({behavior:'smooth'})} onAccess={() => openRequest()}/><Catalog onRequest={openRequest}/><Solutions/><TrustStrip/><Community/><Standards/><CTA onAccess={() => openRequest()}/></main><Footer/>{request !== null && <AccessModal initial={request} onClose={() => setRequest(null)}/>}</>;

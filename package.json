@@ -4,12 +4,17 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node server.mjs",
     "build": "vite build",
-    "preview": "vite preview"
+    "start": "cross-env NODE_ENV=production node server.mjs",
+    "preview": "npm run start"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
+    "cross-env": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "multer": "latest",
     "vite": "latest",
     "typescript": "latest",
     "react": "latest",
