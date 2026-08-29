@@ -201,8 +201,12 @@ if (process.env.NODE_ENV === 'production') {
     : next());
 } else {
   const { createServer } = await import('vite');
+  // Point at the config file explicitly: Vite resolves vite.config.mjs relative
+  // to `root`, and the root it declares is INTERFACE/, so passing the root here
+  // instead would make it look inside INTERFACE and silently find nothing —
+  // taking publicDir with it. The config is the single source of truth.
   const vite = await createServer({
-    root: path.join(root, 'INTERFACE'),
+    configFile: path.join(root, 'vite.config.mjs'),
     server: { middlewareMode: true },
     appType: 'spa',
   });
