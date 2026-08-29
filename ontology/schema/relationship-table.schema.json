@@ -78,7 +78,7 @@
             "additionalProperties": false,
             "properties": {
               "manifest": {
-                "enum": ["hydrography", "atlasBasinLinks"],
+                "enum": ["hydrography", "atlasBasinLinks", "basinZonalStats"],
                 "description": "Which build's manifest already measured this table."
               },
               "key": {"type": "string", "minLength": 1}

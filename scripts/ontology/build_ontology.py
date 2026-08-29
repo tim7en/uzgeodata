@@ -313,6 +313,9 @@ class GraphBuilder:
             "atlasBasinLinks": (read_json(
                 root / "ontology" / "instances" / "atlas-basin-links.json", {}
             ) or {}).get("counts", {}),
+            "basinZonalStats": (read_json(
+                root / "ontology" / "instances" / "basin-zonal-stats.json", {}
+            ) or {}).get("counts", {}),
         }
 
     # ------------------------------------------------------------------ build

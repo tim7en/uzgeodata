@@ -1,0 +1,601 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-08-29T17:21:09+00:00",
+  "predicate": "uz:hasBasinStatistic",
+  "subjectType": "Dataset",
+  "objectType": "Basin",
+  "basinLevel": 12,
+  "basinReference": "uzbekistan_basinatlas_v10 :: basinatlas_uz_lev12",
+  "basins": 3981,
+  "maxPixels": 40000000,
+  "statistics": [
+    "pixels",
+    "mean",
+    "min",
+    "max",
+    "stddev",
+    "majority"
+  ],
+  "note": "mean and stddev describe a continuous surface; for a categorical raster read majority instead, and treat the mean of class codes as meaningless. value_kind carries which one applies. Where a raster was larger than maxPixels it was read decimated, which leaves the mean stable and can soften the extremes. In an 8-bit band that declares no nodata, 255 is treated as fill: these legends top out at 34 classes, so it is never a real value here.",
+  "counts": {
+    "basinStatistics": 167309,
+    "datasetsLinked": 50,
+    "packagesRead": 57,
+    "packagesSkipped": 7
+  },
+  "output": "storage/derived/basin-zonal-stats.csv",
+  "perPackage": [
+    {
+      "dataset": "uz:ds/a16-climate-types",
+      "label": "Climate types",
+      "valueKind": "categorical",
+      "status": "ok",
+      "basins": 3962,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 2073456
+    },
+    {
+      "dataset": "uz:ds/a17-projected-climate-types-for-2100",
+      "label": "Projected climate types for 2100",
+      "valueKind": "categorical",
+      "status": "ok",
+      "basins": 3962,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 2073456
+    },
+    {
+      "dataset": "uz:ds/a18-local-climate-zones",
+      "label": "Local climate zones",
+      "valueKind": "categorical",
+      "status": "no georeference; the package carries no CRS"
+    },
+    {
+      "dataset": "uz:ds/a20-average-peak-of-the-growing-season-20002024",
+      "label": "Average peak of the growing season (2000–2024)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3980,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 28619728
+    },
+    {
+      "dataset": "uz:ds/a21-average-growing-season-duration-20002024",
+      "label": "Average growing-season duration (2000–2024)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3980,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 28619728
+    },
+    {
+      "dataset": "uz:ds/a23-annual-temperature-trend-19602023",
+      "label": "Annual temperature trend, 1960–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 2958,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 14620
+    },
+    {
+      "dataset": "uz:ds/a24-annual-temperature-trend-19902023",
+      "label": "Annual temperature trend, 1990–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 2958,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 14620
+    },
+    {
+      "dataset": "uz:ds/a25-warm-season-temperature-trend-19602023",
+      "label": "Warm-season temperature trend, 1960–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 2958,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 14620
+    },
+    {
+      "dataset": "uz:ds/a26-warm-season-temperature-trend-19902023",
+      "label": "Warm-season temperature trend, 1990–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 2958,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 14620
+    },
+    {
+      "dataset": "uz:ds/a27-maximum-temperature-trend-19602023",
+      "label": "Maximum temperature trend, 1960–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a28-precipitation-trend-19602023",
+      "label": "Precipitation trend, 1960–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a29-precipitation-trend-19902023",
+      "label": "Precipitation trend, 1990–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a30-snow-cover-depth-trend-19602024",
+      "label": "Snow-cover depth trend, 1960–2024",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 2958,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 14620
+    },
+    {
+      "dataset": "uz:ds/a31-snow-cover-depth-trend-19902024",
+      "label": "Snow-cover depth trend, 1990–2024",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 2958,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 14620
+    },
+    {
+      "dataset": "uz:ds/a32-climatic-water-deficit-1990",
+      "label": "Climatic water deficit, 1990",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a33-climatic-water-deficit-2023",
+      "label": "Climatic water deficit, 2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a34-climatic-water-deficit-trend-19602023",
+      "label": "Climatic water-deficit trend, 1960–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a35-climatic-water-deficit-trend-19902023",
+      "label": "Climatic water-deficit trend, 1990–2023",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a36-projected-temperature-change-by-2040",
+      "label": "Projected temperature change by 2040",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 1628,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 5150
+    },
+    {
+      "dataset": "uz:ds/a37-projected-precipitation-change-by-2040",
+      "label": "Projected precipitation change by 2040",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3628,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83426
+    },
+    {
+      "dataset": "uz:ds/a45-road-network-density",
+      "label": "Road network density",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3952,
+      "crs": "EPSG:32642",
+      "readScale": 1.0,
+      "pixels": 17185640
+    },
+    {
+      "dataset": "uz:ds/a90-land-cover-2000",
+      "label": "Land cover, 2000",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3935,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 7159053
+    },
+    {
+      "dataset": "uz:ds/a91-land-cover-2010",
+      "label": "Land cover, 2010",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3923,
+      "crs": "EPSG:3395",
+      "readScale": 1.0,
+      "pixels": 25469276
+    },
+    {
+      "dataset": "uz:ds/a94-bare-surface",
+      "label": "Bare surface",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3968,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 1793490
+    },
+    {
+      "dataset": "uz:ds/a113-arable-land-dynamics",
+      "label": "Arable-land dynamics",
+      "valueKind": "rgb",
+      "status": "4 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a114-terrestrial-land-cover",
+      "label": "Terrestrial land cover",
+      "valueKind": "categorical",
+      "status": "ok",
+      "basins": 3981,
+      "crs": "EPSG:2597",
+      "readScale": 0.0696,
+      "pixels": 8261595162
+    },
+    {
+      "dataset": "uz:ds/a117-soil-salinity-dynamics",
+      "label": "Soil-salinity dynamics",
+      "valueKind": "rgb",
+      "status": "4 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a119-ndvi-dynamics",
+      "label": "NDVI dynamics",
+      "valueKind": "categorical",
+      "status": "ok",
+      "basins": 3578,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 7164375
+    },
+    {
+      "dataset": "uz:ds/a120-enhanced-vegetation-index-dynamics",
+      "label": "Enhanced Vegetation Index dynamics",
+      "valueKind": "categorical",
+      "status": "ok",
+      "basins": 3577,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 7164375
+    },
+    {
+      "dataset": "uz:ds/a121-leaf-area-index",
+      "label": "Leaf Area Index",
+      "valueKind": "categorical",
+      "status": "ok",
+      "basins": 3527,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 7164375
+    },
+    {
+      "dataset": "uz:ds/a122-land-productivity-dynamics",
+      "label": "Land-productivity dynamics",
+      "valueKind": "categorical",
+      "status": "ok",
+      "basins": 3524,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 7164375
+    },
+    {
+      "dataset": "uz:ds/a123-arable-land-use-intensity",
+      "label": "Arable-land use intensity",
+      "valueKind": "continuous",
+      "status": "no georeference; the package carries no CRS"
+    },
+    {
+      "dataset": "uz:ds/a127-soil-organic-carbon",
+      "label": "Soil organic carbon",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3815,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 2082660
+    },
+    {
+      "dataset": "uz:ds/a128-carbon-emission-volume",
+      "label": "Carbon-emission volume",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 459,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 1793490
+    },
+    {
+      "dataset": "uz:ds/a129-net-carbon-balance",
+      "label": "Net carbon balance",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 1409,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 1793490
+    },
+    {
+      "dataset": "uz:ds/a135-forest-cover-2005",
+      "label": "Forest cover, 2005",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3981,
+      "crs": "EPSG:3395",
+      "readScale": 1.0,
+      "pixels": 25469276
+    },
+    {
+      "dataset": "uz:ds/a147-forest-carbon-sequestration",
+      "label": "Forest carbon sequestration",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 1408,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 1793490
+    },
+    {
+      "dataset": "uz:ds/a148-forest-plantation-potential",
+      "label": "Forest plantation potential",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 1532,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 1442315
+    },
+    {
+      "dataset": "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
+      "label": "Carbon sequestration potential from reforestation",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 1532,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 1442315
+    },
+    {
+      "dataset": "uz:ds/a152-forest-landscape-integrity-index",
+      "label": "Forest Landscape Integrity Index",
+      "valueKind": "rgb",
+      "status": "3 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a153-forest-cover-change-19822016",
+      "label": "Forest-cover change, 1982–2016",
+      "valueKind": "categorical",
+      "status": "ok",
+      "basins": 3735,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 57624
+    },
+    {
+      "dataset": "uz:ds/a165-habitat-diversity-index",
+      "label": "Habitat Diversity Index",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3692,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 2082660
+    },
+    {
+      "dataset": "uz:ds/a168-game-birds",
+      "label": "Game birds",
+      "valueKind": "unknown",
+      "status": "0 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a190-ecosystem-bioclimatic-resilience",
+      "label": "Ecosystem bioclimatic resilience",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3692,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 2082660
+    },
+    {
+      "dataset": "uz:ds/a191-habitat-dynamics-index",
+      "label": "Habitat dynamics index",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3692,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 2082660
+    },
+    {
+      "dataset": "uz:ds/a197-hypsometric-map",
+      "label": "Hypsometric map",
+      "valueKind": "rgb",
+      "status": "4 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a201-palmer-drought-severity-index-2000",
+      "label": "Palmer Drought Severity Index (2000)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a201-palmer-drought-severity-index-2001",
+      "label": "Palmer Drought Severity Index (2001)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a202-palmer-drought-severity-index-2008",
+      "label": "Palmer Drought Severity Index (2008)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a202-palmer-drought-severity-index-2011",
+      "label": "Palmer Drought Severity Index (2011)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a202-palmer-drought-severity-index-2018",
+      "label": "Palmer Drought Severity Index (2018)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a202-palmer-drought-severity-index-2020",
+      "label": "Palmer Drought Severity Index (2020)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a203-palmer-drought-severity-index-2021",
+      "label": "Palmer Drought Severity Index (2021)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a203-palmer-drought-severity-index-2022",
+      "label": "Palmer Drought Severity Index (2022)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a203-palmer-drought-severity-index-2023",
+      "label": "Palmer Drought Severity Index (2023)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a203-palmer-drought-severity-index-2024",
+      "label": "Palmer Drought Severity Index (2024)",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3621,
+      "crs": "EPSG:4326",
+      "readScale": 1.0,
+      "pixels": 83224
+    },
+    {
+      "dataset": "uz:ds/a208-flood-extent",
+      "label": "Flood extent",
+      "valueKind": "continuous",
+      "status": "ok",
+      "basins": 3952,
+      "crs": "EPSG:32642",
+      "readScale": 1.0,
+      "pixels": 17185640
+    }
+  ],
+  "skipped": [
+    {
+      "dataset": "uz:ds/a18-local-climate-zones",
+      "reason": "no georeference; the package carries no CRS"
+    },
+    {
+      "dataset": "uz:ds/a113-arable-land-dynamics",
+      "reason": "4 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a117-soil-salinity-dynamics",
+      "reason": "4 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a123-arable-land-use-intensity",
+      "reason": "no georeference; the package carries no CRS"
+    },
+    {
+      "dataset": "uz:ds/a152-forest-landscape-integrity-index",
+      "reason": "3 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a168-game-birds",
+      "reason": "0 bands, a rendered image not a surface"
+    },
+    {
+      "dataset": "uz:ds/a197-hypsometric-map",
+      "reason": "4 bands, a rendered image not a surface"
+    }
+  ]
+}

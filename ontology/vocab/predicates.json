@@ -213,6 +213,16 @@
       "viaRelationshipTable": true
     },
     {
+      "id": "uz:hasBasinStatistic",
+      "label": "has basin statistic",
+      "definition": "What a raster surface reads inside a basin: pixel count, mean, minimum, maximum, standard deviation, and the majority class where the surface is categorical. This is the counterpart to uz:coversBasin, which measures how much of a layer is present. For NDVI or drought severity the useful question is not how much of it is here but what it says here, and binning a continuous surface to answer the first question destroys the answer to the second.",
+      "domain": ["Dataset"],
+      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
       "id": "uz:subBasinOf",
       "label": "sub-basin of",
       "definition": "Containment in the Pfafstetter hierarchy: the basin one level up that this basin nests inside. Established by Pfafstetter code prefix confirmed by spatial overlap, so every child resolves to exactly one parent at the adjacent level.",

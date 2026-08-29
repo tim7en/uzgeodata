@@ -73,9 +73,10 @@ the predicate must be registered, must be marked `viaRelationshipTable`, must no
 be `mlProposable`, and its domain and range must admit the declared feature types.
 Which tables exist is data, not code — `vocab/relationship-tables.json`.
 
-Five predicates are declared this way, all pipeline-only: `uz:flowsInto`,
-`uz:drainsToBasin`, `uz:withinBasin`, `uz:subBasinOf` and `uz:coversBasin`. A model
-may propose what a dataset *observes*; it may not propose where water goes.
+Six predicates are declared this way, all pipeline-only: `uz:flowsInto`,
+`uz:drainsToBasin`, `uz:withinBasin`, `uz:subBasinOf`, `uz:coversBasin` and
+`uz:hasBasinStatistic`. A model may propose what a dataset *observes*; it may not
+propose where water goes.
 
 ### Reaching the atlas from a basin
 
@@ -91,10 +92,31 @@ published vector geometry onto the level-12 basins and records the magnitude:
 | line | length inside the basin, km |
 | point | features inside the basin, count |
 
-That is 195,649 links over 76 of the 134 packages. The other 58 are raster
-packages whose only derivative is a PNG preview; `scripts/raster_to_geojson.py`
-gives them geometry, and the manifest names every one so the gap is countable
-rather than invisible.
+That is 195,649 links over 76 of the 134 packages.
+
+The other 58 are rasters, and for them "how much of it is here" is the wrong
+question. Binning NDVI or drought severity into classes and measuring the area of
+each class destroys the values. What a basin wants from a surface is what it
+*reads* there, so `scripts/build_basin_zonal_stats.py` computes zonal statistics
+instead — pixels, mean, min, max, standard deviation, and the majority class where
+the surface is classified — under `uz:hasBasinStatistic`. That is a further
+167,309 rows over 50 packages.
+
+Those rasters are not TIFFs and never were. Each `.lpkx` is a 7-zip archive
+holding an ESRI File Geodatabase with the raster inside it, which is why
+`raster_to_geojson.py`, which searches for `.tif`, found nothing in any of them.
+GDAL's OpenFileGDB driver reads them once the archive is unpacked.
+
+**126 of the 134 packages are therefore reachable from a basin ID**, 76 by
+overlay and 50 by statistic. The remaining eight are named in the manifests with
+the reason for each: five are rendered RGB images with no data band, two carry no
+georeference at all, and one is not on disk.
+
+Two caveats travel with the statistics. A raster larger than 40 million pixels is
+read decimated, which leaves the mean stable but can soften the extremes. And an
+8-bit band that declares no nodata is read with 255 treated as fill — these
+legends top out at 34 classes, so 255 is never a real value here, and leaving it
+in dragged basin means toward a number that meant nothing.
 
 Two caveats travel with the numbers. Basin polygons are whole, not clipped, so a
 layer that reaches past the border totals more than the country's area — forest

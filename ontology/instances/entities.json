@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T16:02:39+00:00",
+  "generatedAt": "2026-08-29T17:23:05+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -5555,6 +5555,28 @@
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
       "rowCount": 195649
+    },
+    {
+      "id": "uz:dist/atlas-basin-statistics",
+      "type": "Distribution",
+      "label": "Atlas raster surfaces read per level-12 basin",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 26460814,
+      "storedName": "storage/derived/basin-zonal-stats.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "subjectColumn": "dataset_id",
+      "objectColumn": "basin_id",
+      "scopeColumn": null,
+      "measureColumn": "mean",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 167309
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-basinatlas-uz-lev01-003e44",

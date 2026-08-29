@@ -121,6 +121,25 @@
       "rowCountFrom": {"manifest": "atlasBasinLinks", "key": "atlasBasinLinks"}
     },
     {
+      "id": "atlas-basin-statistics",
+      "dataset": "basinatlas-uz-v10",
+      "label": "Atlas raster surfaces read per level-12 basin",
+      "note": "Zonal statistics for every atlas package whose raster is georeferenced and carries a single data band: pixels, mean, min, max, stddev, and majority where the surface is categorical. Read value_kind first — mean describes a continuous surface, majority a classified one, and the mean of class codes means nothing. The rasters live inside an ESRI File Geodatabase within each 7-zip layer package, which is why the TIFF-only converter never found them. Seven packages are excluded and the manifest gives the reason for each: six are rendered RGB images or carry no georeference, and one is not on disk.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "storage/derived/basin-zonal-stats.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "dataset_id",
+      "objectColumn": "basin_id",
+      "scopeColumn": null,
+      "measureColumn": "mean",
+      "measureUnitColumn": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCountFrom": {"manifest": "basinZonalStats", "key": "basinStatistics"}
+    },
+    {
       "id": "hydrobasins-lake-uz-downstream",
       "dataset": "hydrobasins-uz-lake-v1c",
       "label": "Basin downstream routing, lake format, levels 01-12",
