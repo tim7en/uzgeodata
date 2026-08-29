@@ -1,0 +1,2732 @@
+{
+  "version": "1.0",
+  "name": "earth-engine-hydro",
+  "source": "D:\\dev\\uzgeodata\\earth_engine\\earth_engine",
+  "profiledAt": "2026-08-29T06:17:43+00:00",
+  "fingerprint": "f4b7063509",
+  "counts": {
+    "files": 69,
+    "new": 69,
+    "bytes": 7419643808
+  },
+  "skippedTooDeep": [],
+  "byKind": {
+    "document": 7,
+    "geodatabase": 5,
+    "other": 9,
+    "table": 21,
+    "vector": 27
+  },
+  "files": [
+    {
+      "path": "BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+      "name": "BasinATLAS_v10.gdb",
+      "kind": "geodatabase",
+      "suffix": ".gdb",
+      "bytes": 5951137198,
+      "modified": "2026-08-28T21:37:18.485362+00:00",
+      "profile": {
+        "layers": [
+          {
+            "name": "BasinATLAS_v10_lev01",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev02",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev03",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev04",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev05",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev06",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev07",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev08",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev09",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev10",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev11",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "BasinATLAS_v10_lev12",
+            "geometry": "MultiPolygon"
+          }
+        ],
+        "layerCount": 12
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb",
+      "name": "HydroLAKES_polys_v10.gdb",
+      "kind": "geodatabase",
+      "suffix": ".gdb",
+      "bytes": 944453264,
+      "modified": "2026-08-28T21:16:59.796024+00:00",
+      "profile": {
+        "layers": [
+          {
+            "name": "HydroLAKES_polys_v10",
+            "geometry": "MultiPolygon"
+          }
+        ],
+        "layerCount": 1
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb",
+      "name": "HydroRIVERS_v10_as.gdb",
+      "kind": "geodatabase",
+      "suffix": ".gdb",
+      "bytes": 256073631,
+      "modified": "2026-08-28T21:16:57.228914+00:00",
+      "profile": {
+        "layers": [
+          {
+            "name": "HydroRIVERS_v10_as",
+            "geometry": "MultiLineString"
+          }
+        ],
+        "layerCount": 1
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "BasinATLAS_Data_v10.gdb/BasinATLAS_Catalog_v10.pdf",
+      "name": "BasinATLAS_Catalog_v10.pdf",
+      "kind": "document",
+      "suffix": ".pdf",
+      "bytes": 60341549,
+      "modified": "2019-12-04T19:45:49.211167+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "BasinATLAS_Data_v10.gdb/HydroATLAS_TechDoc_v10.pdf",
+      "name": "HydroATLAS_TechDoc_v10.pdf",
+      "kind": "document",
+      "suffix": ".pdf",
+      "bytes": 1024082,
+      "modified": "2019-12-04T21:54:31.389937+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "BasinATLAS_Data_v10.gdb/HydroATLAS_v10_Legends.xlsx",
+      "name": "HydroATLAS_v10_Legends.xlsx",
+      "kind": "table",
+      "suffix": ".xlsx",
+      "bytes": 83700,
+      "modified": "2019-12-04T22:12:29.663235+00:00",
+      "profile": {
+        "error": "ValueError: Excel file format cannot be determined, you must specify an engine manually."
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "HydroLAKES_polys_v10.gdb/HydroLAKES_TechDoc_v10.pdf",
+      "name": "HydroLAKES_TechDoc_v10.pdf",
+      "kind": "document",
+      "suffix": ".pdf",
+      "bytes": 989557,
+      "modified": "2016-12-13T12:00:12.904488+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "HydroRIVERS_v10_as.gdb/HydroRIVERS_TechDoc_v10.pdf",
+      "name": "HydroRIVERS_TechDoc_v10.pdf",
+      "kind": "document",
+      "suffix": ".pdf",
+      "bytes": 534461,
+      "modified": "2019-10-27T05:41:01.822798+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev01.csv",
+      "name": "basinatlas_uz_lev01.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 5256,
+      "modified": "2026-08-29T06:15:27.273715+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev01",
+            "rows": 2,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev02.csv",
+      "name": "basinatlas_uz_lev02.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 5290,
+      "modified": "2026-08-29T06:15:29.542621+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev02",
+            "rows": 2,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev03.csv",
+      "name": "basinatlas_uz_lev03.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 7278,
+      "modified": "2026-08-29T06:15:30.309784+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev03",
+            "rows": 4,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev04.csv",
+      "name": "basinatlas_uz_lev04.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 15266,
+      "modified": "2026-08-29T06:15:30.623944+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev04",
+            "rows": 12,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev05.csv",
+      "name": "basinatlas_uz_lev05.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 33818,
+      "modified": "2026-08-29T06:15:30.890566+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev05",
+            "rows": 31,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev06.csv",
+      "name": "basinatlas_uz_lev06.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 94290,
+      "modified": "2026-08-29T06:15:31.208025+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev06",
+            "rows": 92,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev07.csv",
+      "name": "basinatlas_uz_lev07.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 260592,
+      "modified": "2026-08-29T06:15:31.712048+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev07",
+            "rows": 263,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev08.csv",
+      "name": "basinatlas_uz_lev08.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 786167,
+      "modified": "2026-08-29T06:15:32.820248+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev08",
+            "rows": 805,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev09.csv",
+      "name": "basinatlas_uz_lev09.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 1931189,
+      "modified": "2026-08-29T06:15:35.244897+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev09",
+            "rows": 1989,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev10.csv",
+      "name": "basinatlas_uz_lev10.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 3497181,
+      "modified": "2026-08-29T06:15:39.544173+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev10",
+            "rows": 3608,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev11.csv",
+      "name": "basinatlas_uz_lev11.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 3841806,
+      "modified": "2026-08-29T06:15:44.160402+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev11",
+            "rows": 3960,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev12.csv",
+      "name": "basinatlas_uz_lev12.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 3865923,
+      "modified": "2026-08-29T06:15:48.843333+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "basinatlas_uz_lev12",
+            "rows": 3981,
+            "columns": 299,
+            "header": [
+              "HYBAS_ID",
+              "NEXT_DOWN",
+              "NEXT_SINK",
+              "MAIN_BAS",
+              "DIST_SINK",
+              "DIST_MAIN",
+              "SUB_AREA",
+              "UP_AREA",
+              "PFAF_ID",
+              "ENDO",
+              "COAST",
+              "ORDER_",
+              "SORT",
+              "dis_m3_pyr",
+              "dis_m3_pmn",
+              "dis_m3_pmx",
+              "run_mm_syr",
+              "inu_pc_smn",
+              "inu_pc_umn",
+              "inu_pc_smx",
+              "inu_pc_umx",
+              "inu_pc_slt",
+              "inu_pc_ult",
+              "lka_pc_sse",
+              "lka_pc_use",
+              "lkv_mc_usu",
+              "rev_mc_usu",
+              "dor_pc_pva",
+              "ria_ha_ssu",
+              "ria_ha_usu",
+              "riv_tc_ssu",
+              "riv_tc_usu",
+              "gwt_cm_sav",
+              "ele_mt_sav",
+              "ele_mt_uav",
+              "ele_mt_smn",
+              "ele_mt_smx",
+              "slp_dg_sav",
+              "slp_dg_uav",
+              "sgr_dk_sav",
+              "clz_cl_smj",
+              "cls_cl_smj",
+              "tmp_dc_syr",
+              "tmp_dc_uyr",
+              "tmp_dc_smn",
+              "tmp_dc_smx",
+              "tmp_dc_s01",
+              "tmp_dc_s02",
+              "tmp_dc_s03",
+              "tmp_dc_s04",
+              "tmp_dc_s05",
+              "tmp_dc_s06",
+              "tmp_dc_s07",
+              "tmp_dc_s08",
+              "tmp_dc_s09",
+              "tmp_dc_s10",
+              "tmp_dc_s11",
+              "tmp_dc_s12",
+              "pre_mm_syr",
+              "pre_mm_uyr"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/boundary/uzb_admbnda_adm0_2018b_recovered.geojson",
+      "name": "uzb_admbnda_adm0_2018b_recovered.geojson",
+      "kind": "vector",
+      "suffix": ".geojson",
+      "bytes": 139323,
+      "modified": "2026-08-29T06:16:18.024341+00:00",
+      "profile": {
+        "driver": "GeoJSON",
+        "crs": "EPSG:4326",
+        "geometryType": "MultiPolygon",
+        "features": 1,
+        "fieldCount": 5,
+        "fields": [
+          "ADM0_EN",
+          "ADM0_RU",
+          "ADM0_UZ",
+          "ADM0ALT1EN",
+          "ADM0_PCODE"
+        ],
+        "bounds": [
+          55.996635,
+          37.184329,
+          73.13227,
+          45.60519
+        ],
+        "profileSeconds": 0.01
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/level_summary.csv",
+      "name": "level_summary.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 785,
+      "modified": "2026-08-29T06:15:49.028746+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "level_summary",
+            "rows": 12,
+            "columns": 9,
+            "header": [
+              "level",
+              "feature_count",
+              "uzb_overlap_sum_km2",
+              "country_area_km2",
+              "coverage_pct",
+              "invalid_source_geometries",
+              "geometries_coerced_to_polygonal",
+              "pfaf_digit_length_errors",
+              "attribute_count"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/manifest.json",
+      "name": "manifest.json",
+      "kind": "other",
+      "suffix": ".json",
+      "bytes": 13881,
+      "modified": "2026-08-29T06:16:18.375089+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/processing_parameters.json",
+      "name": "processing_parameters.json",
+      "kind": "other",
+      "suffix": ".json",
+      "bytes": 1599,
+      "modified": "2026-08-29T06:16:18.024341+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/README.md",
+      "name": "README.md",
+      "kind": "document",
+      "suffix": ".md",
+      "bytes": 3715,
+      "modified": "2026-08-29T06:16:18.024341+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/relationships/downstream_links.csv",
+      "name": "downstream_links.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 2020581,
+      "modified": "2026-08-29T06:16:17.841837+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "downstream_links",
+            "rows": 14749,
+            "columns": 13,
+            "header": [
+              "level",
+              "hybas_id",
+              "pfaf_id",
+              "src_layer",
+              "next_down",
+              "next_down_scope",
+              "next_sink",
+              "next_sink_scope",
+              "main_bas",
+              "main_bas_scope",
+              "endo",
+              "coast",
+              "order"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/relationships/feature_hierarchy_links.csv",
+      "name": "feature_hierarchy_links.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 1488407,
+      "modified": "2026-08-29T06:16:17.207779+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "feature_hierarchy_links",
+            "rows": 14747,
+            "columns": 10,
+            "header": [
+              "child_level",
+              "child_hybas_id",
+              "child_pfaf_id",
+              "parent_level",
+              "parent_hybas_id",
+              "parent_pfaf_id",
+              "overlap_km2",
+              "child_overlap_pct",
+              "primary_match",
+              "match_rule"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/relationships/pfaf_hierarchy.csv",
+      "name": "pfaf_hierarchy.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 446267,
+      "modified": "2026-08-29T06:15:49.090222+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "pfaf_hierarchy",
+            "rows": 14747,
+            "columns": 5,
+            "header": [
+              "child_level",
+              "child_pfaf_id",
+              "parent_level",
+              "parent_pfaf_id",
+              "parent_selected"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev01.shp",
+      "name": "basinatlas_uz_lev01.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 7653888,
+      "modified": "2026-08-29T06:15:27.353841+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 2,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          -24.542322,
+          1.166667,
+          150.921489,
+          81.858976
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev02.shp",
+      "name": "basinatlas_uz_lev02.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 927696,
+      "modified": "2026-08-29T06:15:29.558246+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 2,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          31.970833,
+          33.675,
+          85.00063,
+          61.962038
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev03.shp",
+      "name": "basinatlas_uz_lev03.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 745220,
+      "modified": "2026-08-29T06:15:30.312151+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 4,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          45.38697,
+          33.675,
+          79.216667,
+          54.7125
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev04.shp",
+      "name": "basinatlas_uz_lev04.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 845432,
+      "modified": "2026-08-29T06:15:30.638955+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 12,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          53.333333,
+          33.675,
+          79.216667,
+          47.783863
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev05.shp",
+      "name": "basinatlas_uz_lev05.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 858400,
+      "modified": "2026-08-29T06:15:30.910996+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 31,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          53.620848,
+          36.241667,
+          78.354167,
+          46.658951
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev06.shp",
+      "name": "basinatlas_uz_lev06.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 1153772,
+      "modified": "2026-08-29T06:15:31.225768+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 92,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          54.233333,
+          36.725,
+          74.896401,
+          46.658951
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev07.shp",
+      "name": "basinatlas_uz_lev07.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 1678408,
+      "modified": "2026-08-29T06:15:31.731969+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 263,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          54.529167,
+          36.725,
+          73.820819,
+          46.150617
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev08.shp",
+      "name": "basinatlas_uz_lev08.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 2585660,
+      "modified": "2026-08-29T06:15:32.861587+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 805,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          54.983333,
+          36.945833,
+          73.820819,
+          45.996401
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev09.shp",
+      "name": "basinatlas_uz_lev09.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 3798748,
+      "modified": "2026-08-29T06:15:35.362758+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 1989,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          55.616667,
+          36.995216,
+          73.575,
+          45.904167
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev10.shp",
+      "name": "basinatlas_uz_lev10.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 5008868,
+      "modified": "2026-08-29T06:15:39.711540+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 3608,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          55.708333,
+          37.104167,
+          73.575,
+          45.904167
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev11.shp",
+      "name": "basinatlas_uz_lev11.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 5237672,
+      "modified": "2026-08-29T06:15:44.344021+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 3960,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          55.708333,
+          37.104167,
+          73.2875,
+          45.720833
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev12.shp",
+      "name": "basinatlas_uz_lev12.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 5254800,
+      "modified": "2026-08-29T06:15:49.026876+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 3981,
+        "fieldCount": 16,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "ENDO",
+          "COAST",
+          "ORDER_",
+          "SORT",
+          "SRC_LAYER",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          55.708333,
+          37.104167,
+          73.2875,
+          45.720833
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg",
+      "name": "uzbekistan_basinatlas_v10.gpkg",
+      "kind": "geodatabase",
+      "suffix": ".gpkg",
+      "bytes": 63422464,
+      "modified": "2026-08-29T06:16:17.975589+00:00",
+      "profile": {
+        "layers": [
+          {
+            "name": "uzbekistan_adm0",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev01",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev02",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev03",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev04",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev05",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev06",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev07",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev08",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev09",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev10",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev11",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "basinatlas_uz_lev12",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "pfaf_hierarchy",
+            "geometry": "None"
+          },
+          {
+            "name": "feature_hierarchy_links",
+            "geometry": "None"
+          },
+          {
+            "name": "downstream_links",
+            "geometry": "None"
+          },
+          {
+            "name": "level_summary",
+            "geometry": "None"
+          }
+        ],
+        "layerCount": 17
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/boundary/uzb_admbnda_adm0_2018b_recovered.geojson",
+      "name": "uzb_admbnda_adm0_2018b_recovered.geojson",
+      "kind": "vector",
+      "suffix": ".geojson",
+      "bytes": 114522,
+      "modified": "2026-08-28T20:04:32.474843+00:00",
+      "profile": {
+        "driver": "GeoJSON",
+        "crs": "EPSG:4326",
+        "geometryType": "MultiPolygon",
+        "features": 1,
+        "fieldCount": 5,
+        "fields": [
+          "ADM0_EN",
+          "ADM0_RU",
+          "ADM0_UZ",
+          "ADM0ALT1EN",
+          "ADM0_PCODE"
+        ],
+        "bounds": [
+          55.996635,
+          37.184329,
+          73.13227,
+          45.60519
+        ],
+        "profileSeconds": 0.01
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/documentation/HydroBASINS_TechDoc_v1c.pdf",
+      "name": "HydroBASINS_TechDoc_v1c.pdf",
+      "kind": "document",
+      "suffix": ".pdf",
+      "bytes": 269329,
+      "modified": "2014-07-24T19:00:00+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/level_summary.csv",
+      "name": "level_summary.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 800,
+      "modified": "2026-08-28T20:08:48.951983+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "level_summary",
+            "rows": 12,
+            "columns": 9,
+            "header": [
+              "level",
+              "feature_count",
+              "eu_count",
+              "as_count",
+              "uzb_overlap_sum_km2",
+              "country_area_km2",
+              "coverage_pct",
+              "invalid_source_geometries",
+              "pfaf_digit_length_errors"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/manifest.json",
+      "name": "manifest.json",
+      "kind": "other",
+      "suffix": ".json",
+      "bytes": 13972,
+      "modified": "2026-08-28T20:12:40.323310+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/preflight_io_test.json",
+      "name": "preflight_io_test.json",
+      "kind": "other",
+      "suffix": ".json",
+      "bytes": 489,
+      "modified": "2026-08-28T20:12:40.168235+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/processing_parameters.json",
+      "name": "processing_parameters.json",
+      "kind": "other",
+      "suffix": ".json",
+      "bytes": 594,
+      "modified": "2026-08-28T20:08:55.512384+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/README.md",
+      "name": "README.md",
+      "kind": "document",
+      "suffix": ".md",
+      "bytes": 2220,
+      "modified": "2026-08-28T20:12:40.168235+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/relationships/downstream_links.csv",
+      "name": "downstream_links.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 1803355,
+      "modified": "2026-08-28T20:08:48.951983+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "downstream_links",
+            "rows": 15194,
+            "columns": 13,
+            "header": [
+              "level",
+              "hybas_id",
+              "pfaf_id",
+              "src_tile",
+              "next_down",
+              "next_down_scope",
+              "next_sink",
+              "next_sink_scope",
+              "main_bas",
+              "main_bas_scope",
+              "lake",
+              "endo",
+              "side"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/relationships/feature_hierarchy_links.csv",
+      "name": "feature_hierarchy_links.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 1533262,
+      "modified": "2026-08-28T20:08:48.873858+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "feature_hierarchy_links",
+            "rows": 15202,
+            "columns": 10,
+            "header": [
+              "child_level",
+              "child_hybas_id",
+              "child_pfaf_id",
+              "parent_level",
+              "parent_hybas_id",
+              "parent_pfaf_id",
+              "overlap_km2",
+              "child_overlap_pct",
+              "primary_match",
+              "match_rule"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/relationships/pfaf_hierarchy.csv",
+      "name": "pfaf_hierarchy.csv",
+      "kind": "table",
+      "suffix": ".csv",
+      "bytes": 420956,
+      "modified": "2026-08-28T20:08:48.795731+00:00",
+      "profile": {
+        "sheets": [
+          {
+            "name": "pfaf_hierarchy",
+            "rows": 13918,
+            "columns": 5,
+            "header": [
+              "child_level",
+              "child_pfaf_id",
+              "parent_level",
+              "parent_pfaf_id",
+              "parent_selected"
+            ]
+          }
+        ]
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev01_v1c.shp",
+      "name": "hybas_lake_uz_lev01_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 7365292,
+      "modified": "2026-08-28T20:05:07.971735+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 2,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          -24.542322,
+          1.166667,
+          150.921489,
+          81.858976
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev02_v1c.shp",
+      "name": "hybas_lake_uz_lev02_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 700792,
+      "modified": "2026-08-28T20:05:08.097464+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 2,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          31.970833,
+          33.675,
+          85.00063,
+          61.962038
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev03_v1c.shp",
+      "name": "hybas_lake_uz_lev03_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 744148,
+      "modified": "2026-08-28T20:05:08.784841+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 4,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          45.38697,
+          33.675,
+          79.216667,
+          54.7125
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev04_v1c.shp",
+      "name": "hybas_lake_uz_lev04_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 893720,
+      "modified": "2026-08-28T20:05:09.144392+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 13,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          53.333333,
+          33.675,
+          79.216667,
+          47.783863
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev05_v1c.shp",
+      "name": "hybas_lake_uz_lev05_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 919868,
+      "modified": "2026-08-28T20:05:09.449282+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 34,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          53.620848,
+          36.241667,
+          78.354167,
+          46.873322
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev06_v1c.shp",
+      "name": "hybas_lake_uz_lev06_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 1145320,
+      "modified": "2026-08-28T20:05:09.903702+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 87,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          54.233333,
+          36.725,
+          74.896401,
+          46.873322
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev07_v1c.shp",
+      "name": "hybas_lake_uz_lev07_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 1665292,
+      "modified": "2026-08-28T20:05:10.784549+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 255,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          54.529167,
+          36.725,
+          73.820819,
+          46.873322
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev08_v1c.shp",
+      "name": "hybas_lake_uz_lev08_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 2624524,
+      "modified": "2026-08-28T20:07:07.096801+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 843,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          54.983333,
+          36.945833,
+          73.820819,
+          46.873322
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev09_v1c.shp",
+      "name": "hybas_lake_uz_lev09_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 3809136,
+      "modified": "2026-08-28T20:07:12.542640+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 2039,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          55.616667,
+          36.995216,
+          73.575,
+          46.873322
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev10_v1c.shp",
+      "name": "hybas_lake_uz_lev10_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 4948360,
+      "modified": "2026-08-28T20:07:21.849166+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 3643,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          55.708333,
+          37.104167,
+          73.575,
+          46.873322
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev11_v1c.shp",
+      "name": "hybas_lake_uz_lev11_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 5258656,
+      "modified": "2026-08-28T20:07:32.331701+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 4125,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          55.708333,
+          37.104167,
+          73.2875,
+          46.873322
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev12_v1c.shp",
+      "name": "hybas_lake_uz_lev12_v1c.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 5275824,
+      "modified": "2026-08-28T20:07:43.050375+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 4147,
+        "fieldCount": 18,
+        "fields": [
+          "HYBAS_ID",
+          "NEXT_DOWN",
+          "NEXT_SINK",
+          "MAIN_BAS",
+          "DIST_SINK",
+          "DIST_MAIN",
+          "SUB_AREA",
+          "UP_AREA",
+          "PFAF_ID",
+          "SIDE",
+          "LAKE",
+          "ENDO",
+          "COAST",
+          "ORDER",
+          "SORT",
+          "SRC_TILE",
+          "UZB_KM2",
+          "UZB_PCT"
+        ],
+        "bounds": [
+          55.708333,
+          37.104167,
+          73.2875,
+          46.873322
+        ],
+        "profileSeconds": 0.02
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/shapefiles/uzb_adm0_selection_boundary.shp",
+      "name": "uzb_adm0_selection_boundary.shp",
+      "kind": "vector",
+      "suffix": ".shp",
+      "bytes": 51228,
+      "modified": "2026-08-28T20:04:32.626367+00:00",
+      "profile": {
+        "driver": "ESRI Shapefile",
+        "crs": "EPSG:4326",
+        "geometryType": "Polygon",
+        "features": 1,
+        "fieldCount": 5,
+        "fields": [
+          "ADM0_EN",
+          "ADM0_RU",
+          "ADM0_UZ",
+          "ADM0ALT1EN",
+          "ADM0_PCODE"
+        ],
+        "bounds": [
+          55.996635,
+          37.184329,
+          73.13227,
+          45.60519
+        ],
+        "profileSeconds": 0.0
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/uzbekistan_hydrobasins_lake_v1c.gpkg",
+      "name": "uzbekistan_hydrobasins_lake_v1c.gpkg",
+      "kind": "geodatabase",
+      "suffix": ".gpkg",
+      "bytes": 47812608,
+      "modified": "2026-08-28T20:10:19.796054+00:00",
+      "profile": {
+        "layers": [
+          {
+            "name": "uzb_adm0_selection_boundary",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev01",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev02",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev03",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev04",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev05",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev06",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev07",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev08",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev09",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev10",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev11",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "hybas_uz_lev12",
+            "geometry": "MultiPolygon"
+          },
+          {
+            "name": "pfaf_hierarchy",
+            "geometry": "None"
+          },
+          {
+            "name": "feature_hierarchy_links",
+            "geometry": "None"
+          },
+          {
+            "name": "downstream_links",
+            "geometry": "None"
+          },
+          {
+            "name": "level_summary",
+            "geometry": "None"
+          }
+        ],
+        "layerCount": 17
+      },
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c/validation_report.json",
+      "name": "validation_report.json",
+      "kind": "other",
+      "suffix": ".json",
+      "bytes": 1038,
+      "modified": "2026-08-28T20:10:37.205833+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzgeodata-build/index.html",
+      "name": "index.html",
+      "kind": "other",
+      "suffix": ".html",
+      "bytes": 849,
+      "modified": "2026-08-28T18:26:52.826120+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzgeodata-build/package-lock.json",
+      "name": "package-lock.json",
+      "kind": "other",
+      "suffix": ".json",
+      "bytes": 117,
+      "modified": "2026-08-28T20:59:41.127580+00:00",
+      "alreadyHeld": null
+    },
+    {
+      "path": "uzgeodata-deps/package.json",
+      "name": "package.json",
+      "kind": "other",
+      "suffix": ".json",
+      "bytes": 453,
+      "modified": "2026-08-28T21:01:36.239316+00:00",
+      "alreadyHeld": null
+    }
+  ]
+}

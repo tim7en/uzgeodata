@@ -265,6 +265,18 @@ def validate(root: Path, strict: bool = False) -> Report:
     if awaiting:
         report.note(f"{awaiting} dataset/predicate gaps have an unreviewed candidate waiting")
 
+    # Referenced-in-place assets: a path that no longer resolves is a dead
+    # reference, whether the delivery moved or the drive was detached.
+    unreachable = []
+    for entity in entities.values():
+        location = entity.get("externalPath")
+        if location and not Path(location).exists():
+            unreachable.append((entity["id"], location))
+    for entity_id, location in unreachable[:20]:
+        report.warn(f"{entity_id}: external location does not resolve: {location}")
+    if len(unreachable) > 20:
+        report.note(f"{len(unreachable) - 20} further unreachable external locations")
+
     # Catalogue parity: the ontology must account for every public record.
     catalog = read_json(root / "public" / "data" / "archive-catalog.json", [])
     catalog_ids = {record["id"] for record in catalog}

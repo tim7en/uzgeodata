@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-28T20:45:09+00:00",
+  "generatedAt": "2026-08-29T06:24:24+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -906,13 +906,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99167,
+        37.175,
+        73.13333,
+        45.575
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -925,16 +932,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2100,
         "end": 2100
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99167,
+        37.175,
+        73.13333,
+        45.575
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -947,13 +961,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        -0.5,
+        -4685.5,
+        9546.5,
+        0.5
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -966,16 +990,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2000,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99873,
+        37.17229,
+        73.14757,
+        45.5895
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 3,
       "related": []
     },
     {
@@ -988,16 +1019,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2000,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99873,
+        37.17229,
+        73.14757,
+        45.5895
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1010,16 +1048,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2000,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99873,
+        37.17229,
+        73.14757,
+        45.5895
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1032,16 +1077,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2000,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99873,
+        37.17229,
+        73.14757,
+        45.5895
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 3,
       "related": []
     },
     {
@@ -1054,16 +1106,23 @@
       "analysis": "uz:analysis/change-over-time",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1960,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1076,16 +1135,23 @@
       "analysis": "uz:analysis/change-over-time",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1990,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1098,16 +1164,23 @@
       "analysis": "uz:analysis/change-over-time",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1960,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1120,16 +1193,23 @@
       "analysis": "uz:analysis/change-over-time",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1990,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1142,16 +1222,23 @@
       "analysis": "uz:analysis/change-over-time",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1960,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1171,16 +1258,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1960,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1200,16 +1294,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1990,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1229,16 +1330,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1960,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1258,16 +1366,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1990,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.95,
+        37.15,
+        73.15,
+        45.65
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1287,16 +1402,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1990,
         "end": 1990
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1316,16 +1438,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2023,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1345,16 +1474,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1960,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1374,16 +1510,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1990,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1396,16 +1539,23 @@
       "analysis": "uz:analysis/change-over-time",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1970,
         "end": 2040
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.95833,
+        37.25,
+        73.125,
+        45.58333
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1425,16 +1575,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1970,
         "end": 2040
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.95833,
+        37.16667,
+        73.16667,
+        45.58333
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1456,13 +1613,20 @@
       "useCases": [
         "uz:usecase/urban-and-settlement-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1484,16 +1648,23 @@
       "useCases": [
         "uz:usecase/urban-and-settlement-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1970,
         "end": 2020
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1516,13 +1687,20 @@
         "uz:usecase/irrigation-planning",
         "uz:usecase/urban-and-settlement-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.37806,
+        37.40861,
+        72.11872,
+        45.10625
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1548,13 +1726,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        54.22777,
+        36.47345,
+        73.76074,
+        46.31812
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -1574,13 +1762,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 1,
+      "distributions": 3,
       "related": []
     },
     {
@@ -1602,13 +1797,20 @@
       "useCases": [
         "uz:usecase/irrigation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17834,
+        73.1346,
+        45.57085
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1621,13 +1823,20 @@
       "analysis": "uz:analysis/resource-system",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.53044,
+        37.1842,
+        73.1456,
+        43.36714
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1642,13 +1851,20 @@
       "useCases": [
         "uz:usecase/irrigation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9982,
+        37.1723,
+        73.1456,
+        45.5901
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1661,13 +1877,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1693,13 +1916,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        67.46946,
+        38.71394,
+        71.26466,
+        42.28534
+      ],
       "flags": [],
-      "distributions": 1,
+      "distributions": 3,
       "related": []
     },
     {
@@ -1719,13 +1949,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1745,13 +1982,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.52891,
+        37.18199,
+        72.9162,
+        43.28795
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1764,13 +2008,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.54459,
+        37.18194,
+        72.25581,
+        43.28795
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1790,13 +2041,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1818,13 +2076,20 @@
       "useCases": [
         "uz:usecase/irrigation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.24469,
+        37.28772,
+        72.58386,
+        43.8672
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1839,13 +2104,20 @@
       "useCases": [
         "uz:usecase/irrigation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17717,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1860,13 +2132,20 @@
       "useCases": [
         "uz:usecase/irrigation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.6188,
+        37.24257,
+        73.073,
+        43.7504
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1888,13 +2167,20 @@
       "useCases": [
         "uz:usecase/water-resource-allocation"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17732,
+        73.1346,
+        45.57085
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1916,13 +2202,20 @@
       "useCases": [
         "uz:usecase/water-resource-allocation"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        62.88017,
+        38.84884,
+        72.17017,
+        42.26655
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1932,16 +2225,25 @@
       "atlasNumber": 75,
       "catalogId": "atlas-118",
       "theme": "uz:theme/water",
-      "analysis": "uz:analysis/resource-system",
+      "analysis": "uz:analysis/risk-exposure",
       "observes": [],
-      "useCases": [],
-      "places": [],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1951,16 +2253,25 @@
       "atlasNumber": 76,
       "catalogId": "atlas-119",
       "theme": "uz:theme/water",
-      "analysis": "uz:analysis/resource-system",
+      "analysis": "uz:analysis/risk-exposure",
       "observes": [],
-      "useCases": [],
-      "places": [],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1973,13 +2284,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -1994,16 +2312,23 @@
       "useCases": [
         "uz:usecase/disaster-risk-reduction"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2001,
         "end": 2004
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2018,16 +2343,23 @@
       "useCases": [
         "uz:usecase/disaster-risk-reduction"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2001,
         "end": 2004
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2047,13 +2379,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.47036,
+        37.37816,
+        72.25333,
+        43.62378
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2068,13 +2407,20 @@
       "useCases": [
         "uz:usecase/irrigation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.45307,
+        37.21958,
+        73.03544,
+        43.73904
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2094,16 +2440,26 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2000,
         "end": 2000
       },
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        55.99822,
+        36.67467,
+        80.22856,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -2123,16 +2479,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2010,
         "end": 2010
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17149,
+        73.14788,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2178,13 +2541,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99199,
+        37.1633,
+        73.14981,
+        45.59848
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2210,13 +2580,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2236,13 +2613,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2262,13 +2646,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9982,
+        37.1723,
+        73.1456,
+        45.5901
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2288,13 +2679,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9982,
+        37.1723,
+        73.1456,
+        45.5901
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2314,13 +2712,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.58887,
+        37.1842,
+        73.04389,
+        43.3564
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2333,13 +2738,20 @@
       "analysis": "uz:analysis/resource-system",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2352,13 +2764,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        55.99822,
+        36.67228,
+        80.22815,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -2371,13 +2793,23 @@
       "analysis": "uz:analysis/change-over-time",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        -519477.93395,
+        4031905.63775,
+        1265522.06605,
+        5186905.63775
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -2403,7 +2835,7 @@
       "attribution": null,
       "extent": null,
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2425,13 +2857,20 @@
       "useCases": [
         "uz:usecase/land-degradation-monitoring"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99232,
+        37.20067,
+        73.19908,
+        45.54184
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2453,13 +2892,20 @@
       "useCases": [
         "uz:usecase/land-degradation-monitoring"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.5218,
+        37.18194,
+        72.65411,
+        43.28584
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2481,13 +2927,23 @@
       "useCases": [
         "uz:usecase/land-degradation-monitoring"
       ],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        -519477.93395,
+        4031905.63775,
+        1265522.06605,
+        5186905.63775
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -2507,16 +2963,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2004,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99648,
+        37.17004,
+        73.14981,
+        45.59175
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 3,
       "related": []
     },
     {
@@ -2536,13 +2999,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15261,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2562,13 +3032,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15261,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2588,13 +3065,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15261,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2616,13 +3100,20 @@
       "useCases": [
         "uz:usecase/land-degradation-monitoring"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15261,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2642,13 +3133,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        -0.5,
+        -2364.5,
+        4599.5,
+        0.5
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -2668,13 +3169,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        59.73102,
+        37.74719,
+        68.12725,
+        43.4916
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2700,13 +3208,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        59.73102,
+        37.74719,
+        68.12725,
+        43.4916
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2726,13 +3241,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        59.73102,
+        37.74719,
+        68.12725,
+        43.4916
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2754,13 +3276,20 @@
       "useCases": [
         "uz:usecase/carbon-accounting"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15025,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2782,13 +3311,20 @@
       "useCases": [
         "uz:usecase/carbon-accounting"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99199,
+        37.1633,
+        73.14981,
+        45.59848
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2810,13 +3346,20 @@
       "useCases": [
         "uz:usecase/carbon-accounting"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99199,
+        37.1633,
+        73.14981,
+        45.59848
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2836,16 +3379,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2005,
         "end": 2005
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17149,
+        73.14788,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2865,13 +3415,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9982,
+        37.18623,
+        73.1453,
+        45.55872
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2891,13 +3448,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99707,
+        37.7298,
+        73.1415,
+        44.57779
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2917,13 +3481,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99707,
+        37.7298,
+        73.1415,
+        44.57779
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2945,13 +3516,20 @@
       "useCases": [
         "uz:usecase/carbon-accounting"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99199,
+        37.1633,
+        73.14981,
+        45.59848
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2964,13 +3542,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.98995,
+        37.16997,
+        73.13994,
+        45.57996
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -2992,13 +3577,20 @@
       "useCases": [
         "uz:usecase/carbon-accounting"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.98995,
+        37.16997,
+        73.13994,
+        45.57996
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3018,13 +3610,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99707,
+        37.7298,
+        73.1415,
+        44.57779
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3044,13 +3643,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99707,
+        37.7298,
+        73.1415,
+        44.57779
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3070,13 +3676,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        -0.5,
+        -793.5,
+        1317.5,
+        0.5
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -3096,16 +3712,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1982,
         "end": 2016
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99778,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3118,13 +3741,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3137,13 +3767,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99842,
+        37.17226,
+        73.14854,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3156,13 +3793,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        55.99822,
+        36.67228,
+        80.22815,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -3175,13 +3822,23 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        55.99822,
+        36.67204,
+        80.22815,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -3194,13 +3851,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3220,13 +3884,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3246,13 +3917,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        53.40081,
+        37.18665,
+        76.69177,
+        45.62097
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 3,
       "related": []
     },
     {
@@ -3272,13 +3953,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15025,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3304,13 +3992,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        53.40081,
+        37.18665,
+        76.69177,
+        45.62097
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 3,
       "related": []
     },
     {
@@ -3330,13 +4028,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.18528,
+        37.39064,
+        72.84442,
+        44.32769
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3362,7 +4067,7 @@
       "attribution": null,
       "extent": null,
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3382,13 +4087,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        -519477.93395,
+        4031905.63775,
+        1265522.06605,
+        5186905.63775
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 4,
       "related": []
     },
     {
@@ -3408,13 +4123,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.02281,
+        37.58191,
+        71.97956,
+        45.58353
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 3,
       "related": []
     },
     {
@@ -3434,13 +4156,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.46016,
+        37.20388,
+        72.34535,
+        45.46061
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3460,13 +4189,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.20478,
+        37.27632,
+        72.56856,
+        45.34459
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3486,13 +4222,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.08922,
+        37.28225,
+        72.37366,
+        45.25617
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3505,13 +4248,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.39718,
+        37.29709,
+        72.5948,
+        44.30531
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3531,13 +4281,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        58.24071,
+        37.36712,
+        71.98013,
+        45.43599
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3557,13 +4314,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.35265,
+        37.29463,
+        72.32368,
+        44.88469
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3585,13 +4349,20 @@
       "useCases": [
         "uz:usecase/conservation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.02281,
+        37.58191,
+        71.97956,
+        45.58353
+      ],
       "flags": [],
-      "distributions": 1,
+      "distributions": 3,
       "related": []
     },
     {
@@ -3611,13 +4382,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3627,7 +4405,7 @@
       "atlasNumber": 187,
       "catalogId": "atlas-054",
       "theme": "uz:theme/biodiversity",
-      "analysis": null,
+      "analysis": "uz:analysis/change-over-time",
       "observes": [
         {
           "concept": "uz:prop/protected-area",
@@ -3639,13 +4417,20 @@
       "useCases": [
         "uz:usecase/conservation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        56.23237,
+        37.32105,
+        71.26826,
+        45.13802
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3673,13 +4458,23 @@
       "useCases": [
         "uz:usecase/conservation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        55.99822,
+        36.67228,
+        80.2281,
+        45.59007
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -3701,13 +4496,23 @@
       "useCases": [
         "uz:usecase/conservation-planning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        51.93416,
+        37.17495,
+        76.95349,
+        45.65589
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 3,
       "related": []
     },
     {
@@ -3720,13 +4525,20 @@
       "analysis": null,
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15025,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3746,13 +4558,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.15025,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3772,13 +4591,23 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        -519477.93395,
+        4031905.63775,
+        1265522.06605,
+        5186905.63775
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -3798,13 +4627,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14895,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3826,16 +4662,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2000,
         "end": 2000
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3857,16 +4700,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2001,
         "end": 2001
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3888,16 +4738,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2008,
         "end": 2008
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3919,16 +4776,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2011,
         "end": 2011
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3950,16 +4814,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2018,
         "end": 2018
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -3981,16 +4852,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2020,
         "end": 2020
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4012,16 +4890,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2021,
         "end": 2021
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4043,16 +4928,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2022,
         "end": 2022
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4074,16 +4966,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2023,
         "end": 2023
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4105,16 +5004,23 @@
       "useCases": [
         "uz:usecase/drought-early-warning"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 2024,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9625,
+        37.17083,
+        73.12917,
+        45.5875
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4127,13 +5033,20 @@
       "analysis": "uz:analysis/risk-exposure",
       "observes": [],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        60.0602,
+        37.71531,
+        73.1346,
+        41.81156
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4155,16 +5068,26 @@
       "useCases": [
         "uz:usecase/disaster-risk-reduction"
       ],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": {
         "start": 1990,
         "end": 2024
       },
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 1,
+      "extent": [
+        52.383,
+        30.676,
+        81.4719,
+        49.0185
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 3,
       "related": []
     },
     {
@@ -4186,13 +5109,20 @@
       "useCases": [
         "uz:usecase/disaster-risk-reduction"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        65.05306,
+        37.30188,
+        73.21477,
+        42.29508
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4214,13 +5144,20 @@
       "useCases": [
         "uz:usecase/disaster-risk-reduction"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99778,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 1,
+      "distributions": 3,
       "related": []
     },
     {
@@ -4242,13 +5179,23 @@
       "useCases": [
         "uz:usecase/disaster-risk-reduction"
       ],
-      "places": [],
+      "places": [
+        "uz:place/central-asia",
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
-      "flags": [],
-      "distributions": 0,
+      "extent": [
+        54.22777,
+        36.47345,
+        73.76074,
+        46.31812
+      ],
+      "flags": [
+        "extent-exceeds-uzbekistan"
+      ],
+      "distributions": 2,
       "related": []
     },
     {
@@ -4268,13 +5215,20 @@
         }
       ],
       "useCases": [],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.99822,
+        37.17226,
+        73.14879,
+        45.59007
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4296,13 +5250,20 @@
       "useCases": [
         "uz:usecase/disaster-risk-reduction"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4324,13 +5285,20 @@
       "useCases": [
         "uz:usecase/disaster-risk-reduction"
       ],
-      "places": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
       "license": null,
       "attribution": null,
-      "extent": null,
+      "extent": [
+        55.9981,
+        37.17719,
+        73.1346,
+        45.57111
+      ],
       "flags": [],
-      "distributions": 0,
+      "distributions": 2,
       "related": []
     },
     {
@@ -4350,13 +5318,39 @@
         }
       ],
       "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "license": null,
+      "attribution": null,
+      "extent": [
+        55.99822,
+        37.17149,
+        73.14788,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": []
+    },
+    {
+      "id": "uz:ds/x-uzbekistan-national-atlas-environmental-atlas",
+      "label": "Uzbekistan - National Atlas, Environmental Atlas",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": null,
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
       "places": [],
       "temporal": null,
       "license": null,
       "attribution": null,
       "extent": null,
       "flags": [],
-      "distributions": 0,
+      "distributions": 3,
       "related": []
     },
     {
@@ -5724,6 +6718,197 @@
         "out-of-scope-for-the-portal"
       ],
       "distributions": 9,
+      "related": []
+    },
+    {
+      "id": "uz:ds/hydrosheds-basinatlas-global",
+      "label": "BasinATLAS v1.0 (global source)",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/drainage-basin",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": null,
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/hydrosheds-hydrolakes-global",
+      "label": "HydroLAKES v1.0 (global source)",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/surface-water-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/reservoir-volume",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": null,
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/hydrosheds-hydrorivers-asia",
+      "label": "HydroRIVERS v1.0 (Asia source)",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/river-network",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/surface-runoff",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": null,
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 1,
+      "related": []
+    },
+    {
+      "id": "uz:ds/hydrobasins-uz-lake-v1c",
+      "label": "Uzbekistan HydroBASINS extraction (lake format)",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/drainage-basin",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/surface-water-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning",
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": [
+        55.99663,
+        37.18433,
+        73.13227,
+        45.60519
+      ],
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 25,
+      "related": []
+    },
+    {
+      "id": "uz:ds/basinatlas-uz-v10",
+      "label": "Uzbekistan BasinATLAS extraction",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/drainage-basin",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/surface-runoff",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/drought-early-warning",
+        "uz:usecase/irrigation-planning",
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": [
+        55.99663,
+        37.18433,
+        73.13227,
+        45.60519
+      ],
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 33,
       "related": []
     },
     {
@@ -7383,9 +8568,9 @@
     }
   ],
   "counts": {
-    "datasets": 171,
+    "datasets": 177,
     "stations": 190,
-    "publishedAssertions": 1389,
-    "proposedAssertions": 572
+    "publishedAssertions": 3054,
+    "proposedAssertions": 577
   }
 }

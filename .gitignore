@@ -6,3 +6,24 @@ dist/
 *.log
 storage/
 tmp/
+
+# Source geodatabases: multi-gigabyte binary directories that are reference data,
+# not project source. Catalogue them through the ontology (they are referenced in
+# place via uz:externalLocation) rather than committing them.
+# BasinATLAS_Data_v10.gdb is 4.3 GB unpacked, 2.6 GB zipped, and ships a second
+# copy nested under earth_engine/.
+BasinATLAS_Data_v10.gdb/
+BasinATLAS_Data_v10.gdb.zip
+*.gdb/
+*.gdb.zip
+
+# Delivery archives. GitHub rejects any file over 100 MB, and an archive of data
+# the repo already holds unpacked is duplication either way.
+*.rar
+*.7z
+earth_engine.zip
+
+# Python bytecode
+__pycache__/
+*.pyc
+.pytest_cache/

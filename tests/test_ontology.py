@@ -136,11 +136,29 @@ def test_regional_extent_is_flagged(assertions):
 
 
 def test_derived_layers_record_their_provenance(assertions, entities):
+    """Lineage links distributions, and every chain ends at something original.
+
+    Derivation is not always one hop: a HydroSHEDS layer goes source -> relationship
+    database -> web layer. What must hold is that following the chain terminates at
+    a source or referenced-in-place original, and never loops.
+    """
     derived = [a for a in assertions if a["predicate"] == "uz:derivedFrom"]
     assert derived
+    parents = {}
     for assertion in derived:
         assert entities[assertion["subject"]]["type"] == "Distribution"
-        assert entities[assertion["object"]]["role"] in {"source-package", "source-document"}
+        assert entities[assertion["object"]]["type"] == "Distribution"
+        parents.setdefault(assertion["subject"], []).append(assertion["object"])
+
+    roots = {"source-package", "source-document", "external-vector", "external-table",
+             "external-document", "external-archive"}
+    for start in parents:
+        seen, current = {start}, start
+        while current in parents:
+            current = parents[current][0]
+            assert current not in seen, f"derivation cycle at {current}"
+            seen.add(current)
+        assert entities[current]["role"] in roots, entities[current]["role"]
 
 
 def test_curator_decisions_survive_a_rebuild(assertions):
@@ -374,17 +392,33 @@ def test_the_missing_atlas_package_is_now_accounted_for(assertions, entities):
     assert any(entities[d]["role"] == "source-package" for d in distributions)
 
 
-def test_inventory_is_complete(entities):
-    """A delivery that nests deeper than the profiler's limit must not vanish."""
-    inventory = load(ROOT / "ontology" / "instances" / "external" / "maps-drop.json")
-    assert inventory.get("skippedTooDeep") == []
-    profiled = {f["path"] for f in inventory["files"]}
-    referenced = {
-        Path(e["externalPath"]).as_posix().split("/MAPS/")[-1]
-        for e in entities.values()
-        if e["type"] == "Distribution" and e.get("externalPath")
-    }
-    assert referenced <= profiled
+def test_inventories_are_complete(entities):
+    """Every referenced external file was actually profiled, in some delivery.
+
+    Guards two ways of losing data silently: the profiler's depth limit dropping
+    files, and a curator mapping pointing at a path nothing ever measured.
+    """
+    external = ROOT / "ontology" / "instances" / "external"
+    inventories = [load(path) for path in sorted(external.glob("*.json"))
+                   if "files" in load(path)]
+    assert inventories, "expected at least one profiled delivery"
+
+    profiled = set()
+    for inventory in inventories:
+        assert inventory.get("skippedTooDeep", []) == [], inventory["name"]
+        root = Path(inventory["source"]).as_posix().rstrip("/")
+        profiled |= {f"{root}/{record['path']}" for record in inventory["files"]}
+
+    roots = [Path(inventory["source"]).as_posix().rstrip("/") for inventory in inventories]
+    referenced = {Path(entity["externalPath"]).as_posix()
+                  for entity in entities.values()
+                  if entity["type"] == "Distribution" and entity.get("externalPath")}
+    # Only paths inside a profiled delivery are in scope here. References that
+    # predate profiling are reported by the validator instead, as a warning.
+    in_scope = {path for path in referenced if any(path.startswith(root) for root in roots)}
+    assert in_scope, "expected external distributions from a profiled delivery"
+    missing = in_scope - profiled
+    assert not missing, sorted(missing)[:5]
 
 
 # --------------------------------------------------------------------- helpers

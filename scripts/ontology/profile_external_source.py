@@ -27,7 +27,8 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-VECTOR_SUFFIXES = {".geojson", ".json", ".shp", ".gpkg", ".kml", ".gml"}
+VECTOR_SUFFIXES = {".geojson", ".shp", ".kml", ".gml"}
+MULTILAYER_SUFFIXES = {".gpkg", ".gdb"}
 RASTER_SUFFIXES = {".tif", ".tiff", ".img", ".asc"}
 TABLE_SUFFIXES = {".xlsx", ".xls", ".csv"}
 DOC_SUFFIXES = {".pdf", ".docx", ".doc", ".txt", ".md"}
@@ -42,10 +43,23 @@ def sha_short(text: str, length: int = 10) -> str:
     return hashlib.sha1(text.encode("utf-8")).hexdigest()[:length]
 
 
+def looks_like_geojson(path: Path) -> bool:
+    """A .json file is only a vector if it says so in its first kilobyte."""
+    try:
+        head = path.open("rb").read(1024).decode("utf-8", "ignore")
+    except OSError:
+        return False
+    return '"FeatureCollection"' in head or '"geometry"' in head
+
+
 def classify(path: Path) -> str:
     suffix = path.suffix.lower()
+    if suffix in MULTILAYER_SUFFIXES:
+        return "geodatabase"
     if suffix in VECTOR_SUFFIXES:
         return "vector"
+    if suffix == ".json":
+        return "vector" if looks_like_geojson(path) else "other"
     if suffix in RASTER_SUFFIXES:
         return "raster"
     if suffix in TABLE_SUFFIXES:
@@ -96,6 +110,17 @@ def profile_raster(path: Path) -> dict:
         }
 
 
+def profile_geodatabase(path: Path) -> dict:
+    """A file geodatabase is one container, not the 80 binary files inside it."""
+    from pyogrio import list_layers
+
+    layers = list_layers(path)
+    return {
+        "layers": [{"name": str(name), "geometry": str(geometry)} for name, geometry in layers],
+        "layerCount": len(layers),
+    }
+
+
 def profile_table(path: Path) -> dict:
     import pandas as pd
 
@@ -144,7 +169,9 @@ def profile_file(path: Path, root: Path, skip_slow_over_mb: float | None) -> dic
     }
     too_big = skip_slow_over_mb is not None and size > skip_slow_over_mb * 1024 * 1024
     try:
-        if kind == "vector" and not too_big:
+        if kind == "geodatabase":
+            record["profile"] = profile_geodatabase(path)
+        elif kind == "vector" and not too_big:
             record["profile"] = profile_vector(path)
         elif kind == "vector":
             record["profile"] = {"skipped": f"larger than {skip_slow_over_mb} MB"}
@@ -213,8 +240,33 @@ def main(argv=None) -> int:
 
     files = []
     too_deep = []
+    # Container directories are catalogued as a single asset and not walked into.
+    containers = sorted(p for p in root.rglob("*")
+                        if p.is_dir() and p.suffix.lower() == ".gdb" and any(p.glob("*.gdbtable")))
+    for container in containers:
+        size = sum(p.stat().st_size for p in container.rglob("*") if p.is_file())
+        record = {
+            "path": str(container.relative_to(root)).replace("\\", "/"),
+            "name": container.name,
+            "kind": "geodatabase",
+            "suffix": ".gdb",
+            "bytes": size,
+            "modified": datetime.fromtimestamp(container.stat().st_mtime, timezone.utc).isoformat(),
+        }
+        try:
+            record["profile"] = profile_geodatabase(container)
+        except Exception as error:
+            record["profile"] = {"error": f"{type(error).__name__}: {error}"}
+        record["alreadyHeld"] = None
+        files.append(record)
+        layers = (record.get("profile") or {}).get("layerCount")
+        print(f"  NEW  {size / 1e6:8.1f} MB  {record['path'][:64]:66s} "
+              f"{layers if layers is not None else ''} layer(s)")
+
     for path in sorted(root.rglob("*")):
         if not path.is_file():
+            continue
+        if any(parent in containers for parent in path.parents):
             continue
         if len(path.relative_to(root).parts) > args.max_depth:
             # Recorded, not silently dropped: a delivery that nests deeper than
