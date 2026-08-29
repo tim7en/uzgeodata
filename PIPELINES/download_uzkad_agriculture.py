@@ -10,6 +10,7 @@ largest saved source ``id``.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import shutil
 import sqlite3
@@ -17,6 +18,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -193,6 +195,160 @@ def add_source_id_index(output: Path, layer_name: str) -> None:
         )
 
 
+def normalize_output_schema(output: Path, layer_name: str) -> None:
+    """Apply authoritative ArcGIS types that GeoJSON cannot fully express."""
+    table = quote_identifier(layer_name)
+    with sqlite3.connect(output) as connection:
+        geometry_row = connection.execute(
+            "SELECT column_name FROM gpkg_geometry_columns WHERE table_name = ?",
+            (layer_name,),
+        ).fetchone()
+        if not geometry_row:
+            raise RuntimeError(f"GeoPackage geometry metadata is missing for {layer_name}")
+
+        # ogr2ogr promotes every polygon to a MultiPolygon, but mixed source
+        # Polygon/MultiPolygon pages cause the GeoJSON driver to declare the
+        # layer as generic GEOMETRY. Record the actual, narrower type.
+        connection.execute(
+            "UPDATE gpkg_geometry_columns SET geometry_type_name = 'MULTIPOLYGON' "
+            "WHERE table_name = ?",
+            (layer_name,),
+        )
+
+        declared_types = {
+            row[1]: str(row[2]).upper()
+            for row in connection.execute(f"PRAGMA table_info({table})")
+        }
+        # GeoPackage RTree maintenance triggers reference GDAL spatial SQL
+        # functions that Python's built-in sqlite3 does not provide. Temporarily
+        # remove the table's triggers while changing non-spatial columns, then
+        # restore their exact definitions within the same transaction.
+        triggers = connection.execute(
+            "SELECT name, sql FROM sqlite_master "
+            "WHERE type = 'trigger' AND tbl_name = ? AND sql IS NOT NULL",
+            (layer_name,),
+        ).fetchall()
+        for trigger_name, _ in triggers:
+            connection.execute(f"DROP TRIGGER {quote_identifier(trigger_name)}")
+
+        conversions = {
+            "store_count": ("INTEGER", int),
+            "height": ("REAL", float),
+        }
+        for field_name, (sql_type, parser) in conversions.items():
+            if declared_types.get(field_name) == sql_type:
+                continue
+            field = quote_identifier(field_name)
+            values = connection.execute(
+                f"SELECT {field} FROM {table} WHERE {field} IS NOT NULL"
+            ).fetchall()
+            try:
+                for (value,) in values:
+                    parser(value)
+            except (TypeError, ValueError) as exc:
+                raise RuntimeError(
+                    f"Cannot safely convert {field_name} to {sql_type}: {value!r}"
+                ) from exc
+
+            old_field_name = f"__text_{field_name}"
+            old_field = quote_identifier(old_field_name)
+            connection.execute(f"ALTER TABLE {table} RENAME COLUMN {field} TO {old_field}")
+            connection.execute(f"ALTER TABLE {table} ADD COLUMN {field} {sql_type}")
+            connection.execute(
+                f"UPDATE {table} SET {field} = CAST({old_field} AS {sql_type}) "
+                f"WHERE {old_field} IS NOT NULL"
+            )
+            connection.execute(f"ALTER TABLE {table} DROP COLUMN {old_field}")
+
+        for _, trigger_sql in triggers:
+            connection.execute(trigger_sql)
+
+        integrity = connection.execute("PRAGMA integrity_check").fetchone()[0]
+        if integrity != "ok":
+            raise RuntimeError(f"GeoPackage integrity check failed: {integrity}")
+
+
+def sha256sum(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for block in iter(lambda: source.read(8 * 1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def write_metadata(
+    output: Path,
+    layer_name: str,
+    where: str,
+    feature_count: int,
+) -> Path:
+    metadata_path = output.with_suffix(".metadata.json")
+    metadata = {
+        "source_layer_url": LAYER_URL,
+        "query_url": f"{LAYER_URL}/query",
+        "where": where,
+        "output_layer": layer_name,
+        "feature_count": feature_count,
+        "source_object_id_field": "id",
+        "geometry_type": "MultiPolygon",
+        "crs": NATIVE_CRS,
+        "downloaded_at_utc": datetime.now(timezone.utc).isoformat(),
+        "sha256": sha256sum(output),
+    }
+    metadata_path.write_text(
+        json.dumps(metadata, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return metadata_path
+
+
+def validate_source_ids(
+    session: requests.Session,
+    output: Path,
+    layer_name: str,
+    where: str,
+) -> int:
+    payload = query_json(
+        session,
+        {"where": where, "returnIdsOnly": "true", "f": "json"},
+    )
+    source_ids = {int(value) for value in payload.get("objectIds") or []}
+    table = quote_identifier(layer_name)
+    with sqlite3.connect(output) as connection:
+        local_ids = {
+            int(row[0])
+            for row in connection.execute(f"SELECT id FROM {table}")
+        }
+        null_geometry_count = int(
+            connection.execute(
+                f"SELECT COUNT(*) FROM {table} WHERE geom IS NULL"
+            ).fetchone()[0]
+        )
+        geometry_metadata = connection.execute(
+            "SELECT geometry_type_name, srs_id FROM gpkg_geometry_columns "
+            "WHERE table_name = ?",
+            (layer_name,),
+        ).fetchone()
+
+    if local_ids != source_ids:
+        missing = len(source_ids - local_ids)
+        extra = len(local_ids - source_ids)
+        raise RuntimeError(
+            f"Source ID mismatch: {missing:,} missing and {extra:,} extra features"
+        )
+    if null_geometry_count:
+        raise RuntimeError(f"Output contains {null_geometry_count:,} null geometries")
+    if geometry_metadata != ("MULTIPOLYGON", 32642):
+        raise RuntimeError(
+            f"Unexpected geometry metadata: {geometry_metadata!r}"
+        )
+    print(
+        f"Verified all {len(source_ids):,} source IDs; no missing or extra features",
+        flush=True,
+    )
+    return len(source_ids)
+
+
 def resolve_ogr2ogr(candidate: Path) -> Path:
     if candidate.is_file():
         return candidate.resolve()
@@ -271,8 +427,20 @@ def main() -> int:
         raise RuntimeError(
             f"Final count mismatch: saved {final_count:,}, expected {expected_count:,}"
         )
+    normalize_output_schema(output, args.layer_name)
     add_source_id_index(output, args.layer_name)
+    verified_count = validate_source_ids(
+        session, output, args.layer_name, args.where
+    )
+    if verified_count != final_count:
+        raise RuntimeError(
+            f"Verified ID count mismatch: {verified_count:,} != {final_count:,}"
+        )
+    metadata_path = write_metadata(
+        output, args.layer_name, args.where, final_count
+    )
     print(f"Complete: {output} ({final_count:,} features, {NATIVE_CRS})", flush=True)
+    print(f"Metadata: {metadata_path}", flush=True)
     return 0
 
 
