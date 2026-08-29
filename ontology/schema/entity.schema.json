@@ -15,8 +15,11 @@
         "type": "object",
         "required": ["id", "type", "label"],
         "properties": {
-          "id": {"type": "string", "pattern": "^uz:(ds|dist|layer|station|agent)/[a-z0-9-]+$"},
-          "type": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Agent"]},
+          "id": {"type": "string", "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water)/[a-z0-9-]+$"},
+          "type": {
+            "enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Agent", "Basin", "RiverReach", "WaterBody"],
+            "description": "Basin, RiverReach and WaterBody are the hydrographic feature types. They are declared so predicates and relationship tables can be typed against them; individual features are deliberately not minted as entities, because the topology runs to more than 126,000 links and belongs in the GeoPackage that measures it. A relationship-table Distribution says which features a table relates, under which predicate, and where to read it."
+          },
           "label": {"type": "string", "minLength": 1},
           "labels": {
             "type": "object",
@@ -43,7 +46,7 @@
             "then": {
               "required": ["role", "format"],
               "properties": {
-                "role": {"enum": ["source-package", "source-document", "web-vector", "web-raster-preview", "raster-polygonized", "external-vector", "external-table", "external-document", "external-archive"]},
+                "role": {"enum": ["source-package", "source-document", "web-vector", "web-raster-preview", "raster-polygonized", "external-vector", "external-table", "external-document", "external-archive", "relationship-table"]},
                 "format": {"type": "string"},
                 "byteSize": {"type": ["integer", "null"], "minimum": 0},
                 "storedName": {"type": ["string", "null"]},
@@ -80,6 +83,27 @@
           {
             "if": {"properties": {"type": {"const": "Distribution"}}},
             "then": {"properties": {"externalPath": {"type": ["string", "null"]}}}
+          },
+          {
+            "if": {
+              "required": ["type", "role"],
+              "properties": {"type": {"const": "Distribution"}, "role": {"const": "relationship-table"}}
+            },
+            "then": {
+              "required": ["predicate", "subjectType", "objectType", "subjectColumn", "objectColumn", "rowCount"],
+              "description": "A measured edge list kept outside the graph. The ontology records what the table means and where it is; the rows stay in the file that produced them.",
+              "properties": {
+                "predicate": {"type": "string", "pattern": "^uz:[a-zA-Z]+$", "description": "The registered predicate every row of this table asserts."},
+                "subjectType": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Basin", "RiverReach", "WaterBody"]},
+                "objectType": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Basin", "RiverReach", "WaterBody"]},
+                "subjectColumn": {"type": "string", "minLength": 1, "description": "Column holding the subject identifier."},
+                "objectColumn": {"type": "string", "minLength": 1, "description": "Column holding the object identifier."},
+                "scopeColumn": {"type": ["string", "null"], "description": "Column recording whether the object resolves inside the selection, where the producing pipeline writes one."},
+                "containerTable": {"type": ["string", "null"], "description": "Table name inside the container, for a GeoPackage or database. Null for a standalone file."},
+                "identifierScheme": {"type": "string", "description": "Which identifier the columns carry, e.g. HYBAS_ID, HYRIV_ID, Hylak_id, PFAF_ID."},
+                "rowCount": {"type": "integer", "minimum": 0, "description": "Measured row count, not an estimate."}
+              }
+            }
           },
           {
             "if": {"properties": {"type": {"const": "Agent"}}},

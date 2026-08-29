@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uzgeodata.uz/schema/relationship-table.json",
+  "title": "Relationship table registry",
+  "description": "Declares the measured edge lists that stay outside the assertion graph. Feature topology runs to more than 126,000 links across the HydroSHEDS packages; expanding it into assertions.json would bury 3,684 curated facts under measurements no curator will ever review. Instead each table is registered as a typed relationship-table Distribution: the graph records which predicate every row asserts, which feature types it relates, and where to read it, and the validator checks that declaration against the predicate registry. The file that produced the rows stays the system of record.",
+  "type": "object",
+  "required": ["version", "tables"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"type": "string", "pattern": "^[0-9]+[.][0-9]+$"},
+    "description": {"type": "string"},
+    "tables": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "dataset", "label", "predicate", "subjectType", "objectType",
+          "container", "format", "subjectColumn", "objectColumn", "identifierScheme"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Slug for the distribution ID; stable, because the ID is minted from it."
+          },
+          "dataset": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Slug of the dataset that owns the table. Ownership follows the subject: a reach-to-basin table belongs to the river dataset."
+          },
+          "label": {"type": "string", "minLength": 4},
+          "note": {"type": "string"},
+          "predicate": {
+            "type": "string",
+            "pattern": "^uz:[a-zA-Z]+$",
+            "description": "The registered predicate every row asserts. Must be declared viaRelationshipTable and must not be mlProposable."
+          },
+          "subjectType": {"enum": ["Basin", "RiverReach", "WaterBody"]},
+          "objectType": {"enum": ["Basin", "RiverReach", "WaterBody"]},
+          "container": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Path to the file holding the rows, relative to the repository root."
+          },
+          "containerTable": {
+            "type": ["string", "null"],
+            "description": "Table name inside the container for a GeoPackage; null for a standalone CSV."
+          },
+          "format": {"enum": ["GeoPackage table", "CSV"]},
+          "subjectColumn": {"type": "string", "minLength": 1},
+          "objectColumn": {"type": "string", "minLength": 1},
+          "scopeColumn": {
+            "type": ["string", "null"],
+            "description": "Column recording whether the object resolves inside the published selection. Present wherever the producing pipeline reports unresolved joins instead of dropping them."
+          },
+          "identifierScheme": {
+            "type": "string",
+            "minLength": 2,
+            "description": "Which identifier the two columns carry, e.g. HYBAS_ID, HYRIV_ID, Hylak_id, PFAF_ID. Two tables are only joinable when this matches."
+          },
+          "rowCountFrom": {
+            "type": "object",
+            "description": "Where the build reads the row count. Omitted for a CSV, whose rows the build counts directly.",
+            "required": ["manifest", "key"],
+            "additionalProperties": false,
+            "properties": {
+              "manifest": {"enum": ["hydrography"]},
+              "key": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
+  }
+}

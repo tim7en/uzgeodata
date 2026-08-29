@@ -279,6 +279,9 @@ class GraphBuilder:
         self.hydrography = read_json(
             root / "ontology" / "instances" / "hydrography.json", {}
         )
+        self.relationship_tables = read_json(
+            root / "ontology" / "vocab" / "relationship-tables.json", {"tables": []}
+        )
 
     # ------------------------------------------------------------------ build
 
@@ -291,6 +294,7 @@ class GraphBuilder:
         self.build_public_layers()
         self.build_external_sources()
         self.build_hydrography_sources()
+        self.build_relationship_tables()
         self.assert_hydroatlas_attributes()
         self.seed_semantics()
         self.merge_preserved_assertions()
@@ -921,6 +925,133 @@ class GraphBuilder:
             self.add(subject, "uz:relatedTo", related, agent=AGENT_CURATOR,
                      confidence=1.0, status="asserted", method="curator-mapping",
                      evidence=evidence)
+
+    def build_relationship_tables(self) -> None:
+        """Register the measured feature topology without expanding it.
+
+        The HydroSHEDS packages carry more than 126,000 links between basins,
+        reaches and water bodies. Expanding them into assertions.json would bury
+        the curated facts under measurements no human will ever review, and would
+        mint tens of thousands of feature entities to point at.
+
+        So each edge list is registered as one typed relationship-table
+        Distribution instead. It names the predicate every row asserts, the
+        feature types on each end, the columns holding the identifiers and the
+        measured row count. The graph knows the links exist, what they mean and
+        where to read them; the file that produced them stays the system of
+        record, and the validator checks the declaration against the predicate
+        registry.
+        """
+        tables = self.relationship_tables.get("tables", [])
+        if not tables:
+            self.warn("no relationship tables declared; feature topology is unregistered")
+            return
+
+        # A CSV the delivery ships already has a distribution, minted from the
+        # file profile as a generic external table. Upgrade that record rather
+        # than minting a second one for the same bytes.
+        by_location = {}
+        for entity in self.entities.values():
+            if entity.get("type") != "Distribution":
+                continue
+            location = entity.get("externalPath") or entity.get("storedName") or ""
+            if location:
+                by_location[location.replace("\\", "/").lower()] = entity["id"]
+
+        counts = (self.hydrography or {}).get("counts", {})
+        registered = 0
+        for table in tables:
+            dataset = f"uz:ds/{table['dataset']}"
+            if dataset not in self.entities:
+                self.warn(
+                    f"relationship table {table['id']} names dataset {table['dataset']}, "
+                    "which is not in the graph"
+                )
+                continue
+
+            container = table["container"]
+            row_count = self.count_relationship_rows(table, counts)
+            if row_count is None:
+                self.warn(
+                    f"relationship table {table['id']}: no row count available; "
+                    f"{container} has not been built"
+                )
+                continue
+
+            # Only a standalone file can be identified by its path. Several
+            # tables share one GeoPackage, so matching those on the container
+            # would collapse them onto each other and onto the database
+            # distribution that holds them.
+            existing = None
+            if not table.get("containerTable"):
+                suffix = container.lower()
+                existing = by_location.get(suffix) or next(
+                    (dist for location, dist in by_location.items()
+                     if location.endswith(suffix)),
+                    None,
+                )
+            dist_id = existing or f"uz:dist/{table['id']}"
+
+            local = self.root / container
+            evidence = {
+                "source": "ontology/vocab/relationship-tables.json",
+                "note": table.get("note", table["label"]),
+            }
+            self.add_entity({
+                "id": dist_id,
+                "type": "Distribution",
+                "label": table["label"],
+                "role": "relationship-table",
+                "format": table["format"],
+                "byteSize": local.stat().st_size if local.exists() else None,
+                # A delivery CSV is already located by its externalPath and must
+                # stay referenced rather than copied; only a table this build
+                # writes itself gets an in-repo storedName. Its access policy is
+                # the curator's, set when the delivery was mapped, and upgrading
+                # the record to a typed table must not relax it.
+                "storedName": None if existing else container,
+                "url": None,
+                "accessPolicy": None if existing else "free",
+                "predicate": table["predicate"],
+                "subjectType": table["subjectType"],
+                "objectType": table["objectType"],
+                "subjectColumn": table["subjectColumn"],
+                "objectColumn": table["objectColumn"],
+                "scopeColumn": table.get("scopeColumn"),
+                "containerTable": table.get("containerTable"),
+                "identifierScheme": table["identifierScheme"],
+                "rowCount": row_count,
+            })
+            self.add(dataset, "uz:hasDistribution", dist_id, agent=AGENT_PIPELINE,
+                     confidence=1.0, status="asserted", method="relationship-table",
+                     evidence=evidence)
+            if table.get("containerTable"):
+                # A table inside the hydrography GeoPackage is a product of the
+                # same build that wrote the geometry it links.
+                database = f"uz:dist/{table['dataset']}-relationship-database"
+                if database in self.entities:
+                    self.add(dist_id, "uz:derivedFrom", database, agent=AGENT_PIPELINE,
+                             confidence=1.0, status="asserted", method="hydrography-build",
+                             evidence=evidence)
+            registered += 1
+
+        total = sum(
+            e.get("rowCount", 0) for e in self.entities.values()
+            if e.get("role") == "relationship-table"
+        )
+        self.log(f"  relationship tables: {registered} registered, {total:,} links declared")
+
+    def count_relationship_rows(self, table: dict, counts: dict):
+        """Measure the table, or read the count the producing build already measured."""
+        source = table.get("rowCountFrom")
+        if source:
+            value = counts.get(source["key"])
+            return int(value) if value is not None else None
+        path = self.root / table["container"]
+        if not path.exists():
+            return None
+        with path.open(encoding="utf-8-sig", newline="") as handle:
+            return max(sum(1 for _ in handle) - 1, 0)  # discount the header
 
     def assert_hydroatlas_attributes(self) -> None:
         """Say what BasinATLAS measures, one property at a time.

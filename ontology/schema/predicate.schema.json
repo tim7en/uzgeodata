@@ -20,7 +20,7 @@
           "definition": {"type": "string", "minLength": 10},
           "domain": {
             "type": "array", "minItems": 1,
-            "items": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Concept", "Agent"]}
+            "items": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Concept", "Agent", "Basin", "RiverReach", "WaterBody"]}
           },
           "range": {
             "type": "object",
@@ -28,7 +28,7 @@
             "additionalProperties": false,
             "properties": {
               "kind": {"enum": ["entity", "concept", "literal"]},
-              "entityTypes": {"type": "array", "items": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Agent"]}},
+              "entityTypes": {"type": "array", "items": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Agent", "Basin", "RiverReach", "WaterBody"]}},
               "schemes": {"type": "array", "items": {"type": "string"}},
               "literalType": {"enum": ["string", "number", "integer", "boolean", "interval", "bbox"]}
             }
@@ -37,6 +37,10 @@
           "mlProposable": {
             "type": "boolean", "default": false,
             "description": "Whether a model is allowed to generate candidate assertions for this predicate. Structural facts are rule-derived only."
+          },
+          "viaRelationshipTable": {
+            "type": "boolean", "default": false,
+            "description": "This predicate is asserted in bulk by a relationship-table Distribution rather than one assertion per fact. Measured feature topology is declared this way: the table is the system of record and the graph records its meaning, its size and where to read it. Such a predicate must never be mlProposable, because a model cannot measure topology."
           },
           "inverseOf": {"type": "string"}
         }

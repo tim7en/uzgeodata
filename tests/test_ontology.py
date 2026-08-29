@@ -60,6 +60,7 @@ def concepts():
         ("usecases.json", "concept.schema.json"),
         ("places.json", "concept.schema.json"),
         ("predicates.json", "predicate.schema.json"),
+        ("relationship-tables.json", "relationship-table.schema.json"),
     ],
 )
 def test_vocabulary_matches_schema(filename, schema_name):
@@ -194,8 +195,7 @@ def test_portal_projection_publishes_only_asserted_facts():
 # --------------------------------------------------------------------- guard rails
 
 
-def _validate_with(tmp_path: Path, mutate) -> validate_ontology.Report:
-    """Copy the ontology into a temp root, mutate the assertions, validate."""
+def _copy_ontology(tmp_path: Path) -> None:
     for relative in ("ontology/schema", "ontology/vocab", "ontology/instances"):
         source = ROOT / relative
         target = tmp_path / relative
@@ -207,10 +207,30 @@ def _validate_with(tmp_path: Path, mutate) -> validate_ontology.Report:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text((ROOT / relative).read_text(encoding="utf-8"), encoding="utf-8")
 
-    path = tmp_path / "ontology" / "instances" / "assertions.json"
+
+def _mutate_json(tmp_path: Path, relative: str, key: str, mutate) -> None:
+    path = tmp_path / relative
     document = json.loads(path.read_text(encoding="utf-8"))
-    mutate(document["assertions"])
+    mutate(document[key])
     path.write_text(json.dumps(document, ensure_ascii=False), encoding="utf-8")
+
+
+def _validate_with(tmp_path: Path, mutate) -> validate_ontology.Report:
+    """Copy the ontology into a temp root, mutate the assertions, validate."""
+    _copy_ontology(tmp_path)
+    _mutate_json(tmp_path, "ontology/instances/assertions.json", "assertions", mutate)
+    return validate_ontology.validate(tmp_path)
+
+
+def _validate_with_entities(tmp_path: Path, mutate) -> validate_ontology.Report:
+    _copy_ontology(tmp_path)
+    _mutate_json(tmp_path, "ontology/instances/entities.json", "entities", mutate)
+    return validate_ontology.validate(tmp_path)
+
+
+def _validate_with_predicates(tmp_path: Path, mutate) -> validate_ontology.Report:
+    _copy_ontology(tmp_path)
+    _mutate_json(tmp_path, "ontology/vocab/predicates.json", "predicates", mutate)
     return validate_ontology.validate(tmp_path)
 
 
@@ -447,3 +467,193 @@ def test_builder_promotes_only_above_the_threshold(tmp_path):
                       evidence={"source": "test"})
     assert builder.assertions[high]["status"] == "asserted"
     assert builder.assertions[low]["status"] == "proposed"
+
+
+# --------------------------------------------------------------- feature topology
+
+TOPOLOGY_PREDICATES = {
+    "uz:flowsInto", "uz:drainsToBasin", "uz:withinBasin", "uz:subBasinOf",
+}
+
+
+@pytest.fixture(scope="module")
+def relationship_tables():
+    return load(ROOT / "ontology" / "vocab" / "relationship-tables.json")["tables"]
+
+
+@pytest.fixture(scope="module")
+def predicates():
+    return {p["id"]: p for p in load(ROOT / "ontology" / "vocab" / "predicates.json")["predicates"]}
+
+
+def test_topology_predicates_are_measured_not_proposed(predicates):
+    """A model can guess what a dataset observes. It cannot measure where water goes."""
+    for name in TOPOLOGY_PREDICATES:
+        predicate = predicates[name]
+        assert predicate["viaRelationshipTable"] is True, name
+        assert predicate["mlProposable"] is False, name
+        assert predicate["range"]["kind"] == "entity", name
+        assert set(predicate["domain"]) <= {"Basin", "RiverReach", "WaterBody"}, name
+        assert set(predicate["range"]["entityTypes"]) <= {"Basin", "RiverReach", "WaterBody"}, name
+
+
+def test_topology_stays_out_of_the_assertion_graph(assertions):
+    """The whole point: 126,000 links declared, not expanded.
+
+    One assertion per link would bury the curated facts under measurements no
+    curator will ever review, and would need a feature entity for every endpoint.
+    """
+    expanded = [a for a in assertions if a["predicate"] in TOPOLOGY_PREDICATES]
+    assert not expanded, f"{len(expanded)} topology links leaked into assertions.json"
+    features = [e for e in load(ROOT / "ontology" / "instances" / "entities.json")["entities"]
+                if e["type"] in {"Basin", "RiverReach", "WaterBody"}]
+    assert not features, f"{len(features)} feature entities were minted"
+
+
+def test_every_declared_relationship_table_reaches_the_graph(relationship_tables, entities,
+                                                             assertions):
+    registered = {e["id"]: e for e in entities.values() if e.get("role") == "relationship-table"}
+    assert len(registered) == len(relationship_tables)
+
+    owner = {a["object"]: a["subject"] for a in assertions
+             if a["predicate"] == "uz:hasDistribution"}
+    # Several tables share one GeoPackage, so the container alone does not
+    # identify a table; keep a list and match on the table name as well.
+    located = [
+        ((e.get("storedName") or e.get("externalPath") or "").replace("\\", "/").lower(), e)
+        for e in registered.values()
+    ]
+
+    for table in relationship_tables:
+        match = next(
+            (e for location, e in located
+             if location.endswith(table["container"].lower())
+             and e.get("containerTable") == table.get("containerTable")),
+            None,
+        )
+        assert match is not None, table["id"]
+        assert match["predicate"] == table["predicate"]
+        assert match["subjectType"] == table["subjectType"]
+        assert match["objectType"] == table["objectType"]
+        assert match["subjectColumn"] == table["subjectColumn"]
+        assert match["objectColumn"] == table["objectColumn"]
+        assert match["identifierScheme"] == table["identifierScheme"]
+        assert match["rowCount"] > 0
+        assert owner.get(match["id"]) == f"uz:ds/{table['dataset']}", table["id"]
+
+
+def test_relationship_tables_say_where_to_read_them_exactly_once(entities):
+    """Referenced in place or held in the repo, never recorded as both."""
+    for entity in entities.values():
+        if entity.get("role") != "relationship-table":
+            continue
+        stored = entity.get("storedName")
+        referenced = entity.get("externalPath")
+        assert stored or referenced, entity["id"]
+        assert not (stored and referenced), entity["id"]
+        assert entity.get("url") is None, entity["id"]
+
+
+def test_relationship_table_row_counts_are_measured(relationship_tables, entities):
+    """Counts come from the file or the build that wrote it, never from the vocabulary."""
+    import csv
+
+    by_path = {(e.get("storedName") or e.get("externalPath") or "").replace("\\", "/").lower(): e
+               for e in entities.values()
+               if e.get("role") == "relationship-table" and not e.get("containerTable")}
+    checked = 0
+    for table in relationship_tables:
+        if table["format"] != "CSV":
+            continue
+        container = ROOT / table["container"]
+        if not container.exists():
+            continue
+        entity = next(e for path, e in by_path.items()
+                      if path.endswith(table["container"].lower()))
+        with container.open(encoding="utf-8-sig", newline="") as handle:
+            header = next(csv.reader(handle))
+            rows = sum(1 for _ in handle)
+        assert entity["rowCount"] == rows, table["id"]
+        assert table["subjectColumn"] in header, table["id"]
+        assert table["objectColumn"] in header, table["id"]
+        if table.get("scopeColumn"):
+            assert table["scopeColumn"] in header, table["id"]
+        checked += 1
+    assert checked >= 6, "expected the delivery relationship CSVs to be present"
+
+    # A table inside a GeoPackage shares its path with its siblings, so it is only
+    # identifiable if it names itself.
+    inside = [e for e in entities.values()
+              if e.get("role") == "relationship-table" and e.get("containerTable")]
+    assert len({e["containerTable"] for e in inside}) == len(inside)
+
+
+def test_relationship_table_schema_requires_the_typed_declaration():
+    """The role is what binds the extra requirements; dropping a field must fail."""
+    schema = load(ROOT / "ontology" / "schema" / "entity.schema.json")
+    entities = load(ROOT / "ontology" / "instances" / "entities.json")
+    document = copy.deepcopy(entities)
+    table = next(e for e in document["entities"] if e.get("role") == "relationship-table")
+    del table["subjectColumn"]
+    errors = list(Draft202012Validator(schema).iter_errors(document))
+    assert any("subjectColumn" in error.message for error in errors)
+
+    # The same record without the role carries no such requirement.
+    document = copy.deepcopy(entities)
+    table = next(e for e in document["entities"] if e.get("role") == "relationship-table")
+    del table["subjectColumn"]
+    table["role"] = "external-table"
+    assert not list(Draft202012Validator(schema).iter_errors(document))
+
+
+def test_validator_rejects_a_table_whose_subject_the_predicate_forbids(tmp_path):
+    def mutate(records):
+        table = next(e for e in records if e.get("role") == "relationship-table"
+                     and e["predicate"] == "uz:withinBasin")
+        table["subjectType"] = "Basin"  # uz:withinBasin applies to a WaterBody
+
+    report = _validate_with_entities(tmp_path, mutate)
+    assert any("does not apply to a Basin" in error for error in report.errors)
+
+
+def test_validator_rejects_a_table_whose_object_the_predicate_forbids(tmp_path):
+    def mutate(records):
+        table = next(e for e in records if e.get("role") == "relationship-table"
+                     and e["predicate"] == "uz:drainsToBasin")
+        table["objectType"] = "RiverReach"  # uz:drainsToBasin ranges over Basin
+
+    report = _validate_with_entities(tmp_path, mutate)
+    assert any("table declares RiverReach" in error for error in report.errors)
+
+
+def test_validator_rejects_an_empty_relationship_table(tmp_path):
+    def mutate(records):
+        table = next(e for e in records if e.get("role") == "relationship-table")
+        table["rowCount"] = 0
+
+    report = _validate_with_entities(tmp_path, mutate)
+    assert any("declares no rows" in error for error in report.errors)
+
+
+def test_a_model_may_not_be_let_at_measured_topology(tmp_path):
+    """Opening uz:flowsInto to the model has to fail, not quietly widen the surface."""
+
+    def mutate(records):
+        predicate = next(p for p in records if p["id"] == "uz:flowsInto")
+        predicate["mlProposable"] = True
+
+    report = _validate_with_predicates(tmp_path, mutate)
+    assert any("mutually exclusive" in error for error in report.errors)
+
+
+def test_topology_may_not_be_asserted_one_fact_at_a_time(tmp_path, assertions):
+    """A table predicate belongs in a table; a stray assertion using it is an error."""
+
+    def mutate(records):
+        bad = copy.deepcopy(next(a for a in records if a["predicate"] == "uz:relatedTo"))
+        bad["id"] = "uz:a/deadbeefdeadbee9"
+        bad["predicate"] = "uz:flowsInto"
+        records.append(bad)
+
+    report = _validate_with(tmp_path, mutate)
+    assert any("declared to live in a relationship table" in error for error in report.errors)

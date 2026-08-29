@@ -55,6 +55,7 @@ def validate(root: Path, strict: bool = False) -> Report:
     predicate_schema = read_json(schema_dir / "predicate.schema.json")
     entity_schema = read_json(schema_dir / "entity.schema.json")
     assertion_schema = read_json(schema_dir / "assertion.schema.json")
+    relationship_table_schema = read_json(schema_dir / "relationship-table.schema.json")
 
     # ---------------------------------------------------------------- schemas
     vocab_files = {
@@ -65,6 +66,7 @@ def validate(root: Path, strict: bool = False) -> Report:
         "places.json": concept_schema,
         "hydroatlas-attributes.json": concept_schema,
         "predicates.json": predicate_schema,
+        "relationship-tables.json": relationship_table_schema,
     }
     concepts: dict[str, dict] = {}
     schemes: dict[str, set[str]] = {}
@@ -227,6 +229,98 @@ def validate(root: Path, strict: bool = False) -> Report:
             report.error(
                 f"{assertion['id']}: unreviewed model assertion published below the promote threshold"
             )
+
+    # ---------------------------------------------------------------- relationship tables
+    # Feature topology is declared, not expanded: one typed distribution stands
+    # for tens of thousands of measured links. That trade is only safe if the
+    # declaration is checked as strictly as an assertion would have been.
+    declared = {t["id"]: t for t in
+                (read_json(vocab_dir / "relationship-tables.json") or {}).get("tables", [])}
+    feature_types = {"Basin", "RiverReach", "WaterBody"}
+    tables = [e for e in entities.values()
+              if e.get("type") == "Distribution" and e.get("role") == "relationship-table"]
+
+    for table in tables:
+        tid = table["id"]
+        predicate = predicates.get(table.get("predicate"))
+        if predicate is None:
+            report.error(f"{tid}: relationship table declares unregistered predicate "
+                         f"{table.get('predicate')}")
+            continue
+        if not predicate.get("viaRelationshipTable"):
+            report.error(
+                f"{tid}: {predicate['id']} is not declared viaRelationshipTable, so it "
+                "must be asserted one fact at a time rather than by a table"
+            )
+        if predicate.get("mlProposable"):
+            report.error(
+                f"{tid}: {predicate['id']} is mlProposable; measured topology must not be "
+                "a predicate a model may write"
+            )
+        subject_type = table.get("subjectType")
+        if subject_type not in predicate["domain"]:
+            report.error(
+                f"{tid}: {predicate['id']} does not apply to a {subject_type} "
+                f"(allowed: {', '.join(predicate['domain'])})"
+            )
+        rng = predicate["range"]
+        if rng["kind"] != "entity":
+            report.error(f"{tid}: {predicate['id']} does not range over entities")
+        elif rng.get("entityTypes") and table.get("objectType") not in rng["entityTypes"]:
+            report.error(
+                f"{tid}: {predicate['id']} expects {'/'.join(rng['entityTypes'])}, "
+                f"table declares {table.get('objectType')}"
+            )
+        if table.get("rowCount", 0) <= 0:
+            report.error(f"{tid}: relationship table declares no rows")
+        if not (table.get("storedName") or table.get("externalPath")):
+            report.error(f"{tid}: relationship table does not say where to read it")
+        if table.get("externalPath") and table.get("storedName"):
+            report.error(f"{tid}: relationship table is both referenced and copied")
+
+    # Every declaration in the vocabulary has to reach the graph, or the topology
+    # it names is silently missing.
+    registered = {t.get("storedName") for t in tables} | {
+        (t.get("externalPath") or "").replace("\\", "/") for t in tables
+    }
+    for tid, table in declared.items():
+        container = table["container"]
+        if not any(location and location.lower().endswith(container.lower())
+                   for location in registered if location):
+            report.warn(
+                f"relationship table {tid} is declared but not registered; "
+                f"{container} has not been built"
+            )
+
+    # A feature type exists to be pointed at. If one is used by no table and no
+    # entity, it is dead vocabulary.
+    used_types = {t.get("subjectType") for t in tables} | {t.get("objectType") for t in tables}
+    used_types |= {e["type"] for e in entities.values()}
+    for feature_type in sorted(feature_types - used_types):
+        report.warn(f"feature type {feature_type} is declared but nothing uses it")
+
+    for predicate in predicates.values():
+        if not predicate.get("viaRelationshipTable"):
+            continue
+        if predicate.get("mlProposable"):
+            report.error(
+                f"{predicate['id']}: viaRelationshipTable and mlProposable are mutually "
+                "exclusive; a model cannot measure topology"
+            )
+        if not any(t.get("predicate") == predicate["id"] for t in tables):
+            report.warn(f"{predicate['id']}: no relationship table asserts it")
+        spurious = [a["id"] for a in assertions if a["predicate"] == predicate["id"]]
+        if spurious:
+            report.error(
+                f"{predicate['id']}: {len(spurious)} individual assertions use a predicate "
+                "that is declared to live in a relationship table"
+            )
+
+    if tables:
+        report.note(
+            f"{len(tables)} relationship tables declare "
+            f"{sum(t.get('rowCount', 0) for t in tables):,} measured links, held outside the graph"
+        )
 
     # ---------------------------------------------------------------- coverage
     datasets = [e for e in entities.values() if e["type"] == "Dataset"]

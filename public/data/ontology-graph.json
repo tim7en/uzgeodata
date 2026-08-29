@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T07:06:56+00:00",
+  "generatedAt": "2026-08-29T15:16:54+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -6977,7 +6977,7 @@
         45.60519
       ],
       "flags": [],
-      "distributions": 3,
+      "distributions": 5,
       "related": [
         "uz:ds/hydrolakes-uzbekistan",
         "uz:ds/hydrobasins-level12-uzbekistan"
@@ -7027,7 +7027,7 @@
         45.60519
       ],
       "flags": [],
-      "distributions": 3,
+      "distributions": 4,
       "related": [
         "uz:ds/hydrorivers-uzbekistan",
         "uz:ds/hydrobasins-level12-uzbekistan"
@@ -8598,7 +8598,7 @@
   "counts": {
     "datasets": 177,
     "stations": 190,
-    "publishedAssertions": 3085,
+    "publishedAssertions": 3091,
     "proposedAssertions": 577
   }
 }

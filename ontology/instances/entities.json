@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T07:06:56+00:00",
+  "generatedAt": "2026-08-29T15:16:54+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -2189,7 +2189,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Level-12 Pfafstetter catchments referenced by the Uzbekistan river and lake relationship database."
+      "description": "Level-12 Pfafstetter catchments from the BasinATLAS Uzbekistan extraction. This is the reference frame the river and lake layers are joined onto, and its HYBAS_ID is the key the 281 BasinATLAS attributes join on."
     },
     {
       "id": "uz:ds/hydrobasins-uz-lake-v1c",
@@ -5873,8 +5873,8 @@
     {
       "id": "uz:dist/basinatlas-uz-v10-downstream-links-7be1b7",
       "type": "Distribution",
-      "label": "downstream_links.csv",
-      "role": "external-table",
+      "label": "Basin downstream routing, levels 01-12",
+      "role": "relationship-table",
       "format": "CSV",
       "byteSize": 2020581,
       "storedName": null,
@@ -5882,13 +5882,21 @@
       "accessPolicy": "internal",
       "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/relationships/downstream_links.csv",
       "featureCount": null,
-      "crs": null
+      "crs": null,
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "subjectColumn": "hybas_id",
+      "objectColumn": "next_down",
+      "scopeColumn": "next_down_scope",
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 14749
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-feature-hierarchy-links-f33226",
       "type": "Distribution",
-      "label": "feature_hierarchy_links.csv",
-      "role": "external-table",
+      "label": "Basin nesting across levels",
+      "role": "relationship-table",
       "format": "CSV",
       "byteSize": 1488407,
       "storedName": null,
@@ -5896,7 +5904,14 @@
       "accessPolicy": "internal",
       "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/relationships/feature_hierarchy_links.csv",
       "featureCount": null,
-      "crs": null
+      "crs": null,
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "subjectColumn": "child_hybas_id",
+      "objectColumn": "parent_hybas_id",
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 14747
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-level-summary-3c73a5",
@@ -5929,8 +5944,8 @@
     {
       "id": "uz:dist/basinatlas-uz-v10-pfaf-hierarchy-1ad63f",
       "type": "Distribution",
-      "label": "pfaf_hierarchy.csv",
-      "role": "external-table",
+      "label": "Pfafstetter code nesting",
+      "role": "relationship-table",
       "format": "CSV",
       "byteSize": 446267,
       "storedName": null,
@@ -5938,7 +5953,15 @@
       "accessPolicy": "internal",
       "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/relationships/pfaf_hierarchy.csv",
       "featureCount": null,
-      "crs": null
+      "crs": null,
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "subjectColumn": "child_pfaf_id",
+      "objectColumn": "parent_pfaf_id",
+      "scopeColumn": "parent_selected",
+      "identifierScheme": "PFAF_ID",
+      "rowCount": 14747
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-processing-parameters-111d36",
@@ -7361,7 +7384,7 @@
     {
       "id": "uz:dist/hydrobasins-level12-uzbekistan-source",
       "type": "Distribution",
-      "label": "Uzbekistan HydroBASINS lake extraction v1.c",
+      "label": "Uzbekistan BasinATLAS extraction, level 12 (standard HydroBASINS format)",
       "role": "external-vector",
       "format": "GPKG",
       "byteSize": null,
@@ -7386,8 +7409,8 @@
     {
       "id": "uz:dist/hydrobasins-uz-lake-v1c-downstream-links-66076e",
       "type": "Distribution",
-      "label": "downstream_links.csv",
-      "role": "external-table",
+      "label": "Basin downstream routing, lake format, levels 01-12",
+      "role": "relationship-table",
       "format": "CSV",
       "byteSize": 1803355,
       "storedName": null,
@@ -7395,13 +7418,21 @@
       "accessPolicy": "internal",
       "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/relationships/downstream_links.csv",
       "featureCount": null,
-      "crs": null
+      "crs": null,
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "subjectColumn": "hybas_id",
+      "objectColumn": "next_down",
+      "scopeColumn": "next_down_scope",
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 15194
     },
     {
       "id": "uz:dist/hydrobasins-uz-lake-v1c-feature-hierarchy-links-100988",
       "type": "Distribution",
-      "label": "feature_hierarchy_links.csv",
-      "role": "external-table",
+      "label": "Basin nesting across levels, lake format",
+      "role": "relationship-table",
       "format": "CSV",
       "byteSize": 1533262,
       "storedName": null,
@@ -7409,7 +7440,14 @@
       "accessPolicy": "internal",
       "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/relationships/feature_hierarchy_links.csv",
       "featureCount": null,
-      "crs": null
+      "crs": null,
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "subjectColumn": "child_hybas_id",
+      "objectColumn": "parent_hybas_id",
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 15202
     },
     {
       "id": "uz:dist/hydrobasins-uz-lake-v1c-hybas-lake-uz-lev01-v1c-17ebd4",
@@ -7624,8 +7662,8 @@
     {
       "id": "uz:dist/hydrobasins-uz-lake-v1c-pfaf-hierarchy-790bfc",
       "type": "Distribution",
-      "label": "pfaf_hierarchy.csv",
-      "role": "external-table",
+      "label": "Pfafstetter code nesting, lake format",
+      "role": "relationship-table",
       "format": "CSV",
       "byteSize": 420956,
       "storedName": null,
@@ -7633,7 +7671,15 @@
       "accessPolicy": "internal",
       "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/relationships/pfaf_hierarchy.csv",
       "featureCount": null,
-      "crs": null
+      "crs": null,
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "subjectColumn": "child_pfaf_id",
+      "objectColumn": "parent_pfaf_id",
+      "scopeColumn": "parent_selected",
+      "identifierScheme": "PFAF_ID",
+      "rowCount": 13918
     },
     {
       "id": "uz:dist/hydrobasins-uz-lake-v1c-preflight-io-test-e83efc",
@@ -7732,6 +7778,66 @@
       "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/validation_report.json",
       "featureCount": null,
       "crs": null
+    },
+    {
+      "id": "uz:dist/hydrography-lake-basin",
+      "type": "Distribution",
+      "label": "Water body to level-12 basin",
+      "role": "relationship-table",
+      "format": "GeoPackage table",
+      "byteSize": null,
+      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:withinBasin",
+      "subjectType": "WaterBody",
+      "objectType": "Basin",
+      "subjectColumn": "lake_id",
+      "objectColumn": "basin_id",
+      "scopeColumn": "basin_scope",
+      "containerTable": "lake_basin_links",
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 647
+    },
+    {
+      "id": "uz:dist/hydrography-river-basin",
+      "type": "Distribution",
+      "label": "River reach to level-12 basin",
+      "role": "relationship-table",
+      "format": "GeoPackage table",
+      "byteSize": null,
+      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:drainsToBasin",
+      "subjectType": "RiverReach",
+      "objectType": "Basin",
+      "subjectColumn": "river_id",
+      "objectColumn": "basin_id",
+      "scopeColumn": "basin_scope",
+      "containerTable": "river_basin_links",
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 17447
+    },
+    {
+      "id": "uz:dist/hydrography-river-downstream",
+      "type": "Distribution",
+      "label": "River reach downstream routing",
+      "role": "relationship-table",
+      "format": "GeoPackage table",
+      "byteSize": null,
+      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:flowsInto",
+      "subjectType": "RiverReach",
+      "objectType": "RiverReach",
+      "subjectColumn": "source_id",
+      "objectColumn": "target_id",
+      "scopeColumn": "target_scope",
+      "containerTable": "river_downstream_links",
+      "identifierScheme": "HYRIV_ID",
+      "rowCount": 17447
     },
     {
       "id": "uz:dist/hydrolakes-uzbekistan-relationship-database",

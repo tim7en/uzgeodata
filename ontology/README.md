@@ -23,7 +23,7 @@ scripts/ontology/
 
 ## The model
 
-Five entity types, and everything relational between them is an assertion.
+Six catalogue entity types, and everything relational between them is an assertion.
 
 | Entity | What it is | Example |
 | --- | --- | --- |
@@ -38,6 +38,44 @@ Separating these four data-side types is the point. A `.lpkx` package is not a
 dataset, and the GeoJSON extracted from its first readable layer is not the same
 thing as the dataset either — it is one derivative, and the graph records which
 choice the pipeline made to produce it.
+
+Three further types name the hydrographic features themselves — `Basin`,
+`RiverReach` and `WaterBody` — and no instance of any of them is ever minted. See
+[Measured topology](#measured-topology).
+
+### Measured topology
+
+The HydroSHEDS packages carry more than 126,000 links: which reach flows into
+which, which basin a reach drains, which basin a lake sits in, and how basins nest
+through the twelve Pfafstetter levels. Expanding those into assertions would bury
+3,684 curated facts under measurements no curator will ever review, and would need
+a feature entity for every endpoint.
+
+So the edge lists stay in the GeoPackage and the CSVs that measured them, and each
+one is registered as a single typed `relationship-table` distribution:
+
+```json
+{
+  "id": "uz:dist/hydrography-river-basin", "type": "Distribution",
+  "role": "relationship-table", "format": "GeoPackage table",
+  "predicate": "uz:drainsToBasin",
+  "subjectType": "RiverReach", "objectType": "Basin",
+  "subjectColumn": "river_id", "objectColumn": "basin_id",
+  "scopeColumn": "basin_scope", "identifierScheme": "HYBAS_ID",
+  "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+  "containerTable": "river_basin_links", "rowCount": 17447
+}
+```
+
+The graph therefore knows the links exist, what they mean and where to read them,
+and the validator can check the declaration as strictly as it checks an assertion:
+the predicate must be registered, must be marked `viaRelationshipTable`, must not
+be `mlProposable`, and its domain and range must admit the declared feature types.
+Which tables exist is data, not code — `vocab/relationship-tables.json`.
+
+Four predicates are declared this way, all pipeline-only: `uz:flowsInto`,
+`uz:drainsToBasin`, `uz:withinBasin` and `uz:subBasinOf`. A model may propose what
+a dataset *observes*; it may not propose where water goes.
 
 ### Identity
 
@@ -115,7 +153,12 @@ it. Every rule below is covered by a test in `tests/test_ontology.py`:
 - an unreviewed model assertion cannot be published below the promote threshold
   (`PROMOTE_THRESHOLD`, currently 0.75);
 - a rejection must name its reviewer;
-- every subject, object and agent must resolve.
+- every subject, object and agent must resolve;
+- a relationship table must declare a registered `viaRelationshipTable` predicate
+  whose domain and range admit its subject and object types, must count its rows,
+  and must say where to read them — referenced or stored, never both;
+- a `viaRelationshipTable` predicate may not also be `mlProposable`, and may not
+  appear as an individual assertion.
 
 Validation warnings are the curation backlog rather than failures. They currently
 surface three real data problems: one public catalogue record with no counterpart

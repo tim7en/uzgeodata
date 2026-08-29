@@ -171,6 +171,46 @@
       "range": {"kind": "literal", "literalType": "string"},
       "cardinality": "many",
       "mlProposable": true
+    },
+    {
+      "id": "uz:flowsInto",
+      "label": "flows into",
+      "definition": "Measured downstream routing: the next reach or basin the water leaves this one for. Read from the native NEXT_DOWN of HydroRIVERS and HydroBASINS, never inferred. A terminal feature carries no such fact rather than a null one.",
+      "domain": ["RiverReach", "Basin"],
+      "range": {"kind": "entity", "entityTypes": ["RiverReach", "Basin"]},
+      "cardinality": "one",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:drainsToBasin",
+      "label": "drains to basin",
+      "definition": "The level-12 catchment a river reach drains, from the reach's own HYBAS_L12. This is the join that makes basins the reference frame for the river network, so it is resolved against the published basin set and a reach whose basin falls outside it is recorded with that scope rather than dropped.",
+      "domain": ["RiverReach"],
+      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "cardinality": "one",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:withinBasin",
+      "label": "within basin",
+      "definition": "The level-12 catchment a water body sits in, resolved from its pour point and, failing that, its centroid. Spatial containment measured against the published basin polygons.",
+      "domain": ["WaterBody"],
+      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "cardinality": "one",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:subBasinOf",
+      "label": "sub-basin of",
+      "definition": "Containment in the Pfafstetter hierarchy: the basin one level up that this basin nests inside. Established by Pfafstetter code prefix confirmed by spatial overlap, so every child resolves to exactly one parent at the adjacent level.",
+      "domain": ["Basin"],
+      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "cardinality": "one",
+      "mlProposable": false,
+      "viaRelationshipTable": true
     }
   ]
 }
