@@ -46,7 +46,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("WORKSPACE/downloads/uzkad_agriculture_qashqadaryo.gpkg"),
+        default=Path(
+            "WORKSPACE/downloads/uzkad_agriculture_regions/"
+            "1710_qashqadaryo.gpkg"
+        ),
         help="Destination GeoPackage path.",
     )
     parser.add_argument(
