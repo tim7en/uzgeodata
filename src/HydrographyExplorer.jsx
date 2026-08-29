@@ -229,6 +229,7 @@ export default function HydrographyExplorer() {
       </div>
       <nav>
         <a href="/">Portal</a>
+        <a href="/relationships.html">Tables</a>
         <a href="#workspace" className="active">Explorer</a>
         <a href="#database">Database</a>
       </nav>

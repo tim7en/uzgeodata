@@ -279,7 +279,7 @@ function Community() {
 
 function Standards() {
   return <section className="section standards" id="about">
-    <div className="standards-copy"><div className="kicker">06 / Data discipline</div><h2>Know your<br/>source.</h2><p>Professional geodata is more than a file. The portal separates original source packages from optimized web derivatives and keeps access status visible.</p><a href="#ontology" className="button dark-button">Explore data relationships <ArrowRight size={17}/></a></div>
+    <div className="standards-copy"><div className="kicker">06 / Data discipline</div><h2>Know your<br/>source.</h2><p>Professional geodata is more than a file. The portal separates original source packages from optimized web derivatives and keeps access status visible.</p><a href="/relationships.html" className="button dark-button">Explore data relationships <ArrowRight size={17}/></a></div>
     <div className="standard-list">
       {[['01','Source-preserving workflow','Original ArcGIS packages remain separate from lightweight browser derivatives.'],['02','Machine-readable index','English titles, domains, source filenames and sizes are available as structured metadata.'],['03','Semantic organization','Catalog records are grouped by environmental domain and analytical role.'],['04','Explicit access status','Free, request-based, licensed and internal data are distinguished before delivery.']].map(x => <div className="standard-item" key={x[0]}><span>{x[0]}</span><div><h3>{x[1]}</h3><p>{x[2]}</p></div><Check size={20}/></div>)}
     </div>

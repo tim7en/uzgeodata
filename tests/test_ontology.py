@@ -183,6 +183,44 @@ def test_published_facts_carry_provenance(assertions, entities):
             assert assertion.get("evidence"), assertion["id"]
 
 
+def test_triple_table_carries_every_fact_with_its_provenance(assertions):
+    """The review table is the one projection that must NOT filter by status.
+
+    The portal shows facts; this file is for the backlog, so a proposal or a
+    rejection going missing here is the failure mode that matters.
+    """
+    table = load(ROOT / "public" / "data" / "ontology-triples.json")
+    assert table["counts"]["total"] == len(assertions)
+    by_status = {}
+    for assertion in assertions:
+        by_status[assertion["status"]] = by_status.get(assertion["status"], 0) + 1
+    for status, count in by_status.items():
+        assert table["counts"][status] == count, status
+    assert table["counts"]["proposed"] > 0 and table["counts"]["rejected"] > 0
+
+    rows = {row["id"]: row for row in table["triples"]}
+    assert len(rows) == len(assertions)
+    for assertion in assertions:
+        row = rows[assertion["id"]]
+        assert row["s"] == assertion["subject"]
+        assert row["p"] == assertion["predicate"]
+        assert row["st"] == assertion["status"]
+        assert row["a"] == assertion["assertedBy"]
+        assert row["r"] == assertion.get("reviewedBy")
+        assert (row["o"] is not None) or (row["v"] is not None)
+
+    # Every id the table renders must have a label, or the browser shows a URI.
+    for row in table["triples"]:
+        assert row["s"] in table["labels"], row["s"]
+        if row["o"]:
+            assert row["o"] in table["labels"], row["o"]
+
+    registered = {p["id"] for p in table["predicates"]}
+    assert {row["p"] for row in table["triples"]} <= registered
+    agents = {a["id"] for a in table["agents"]}
+    assert {row["a"] for row in table["triples"]} <= agents
+
+
 def test_portal_projection_publishes_only_asserted_facts():
     graph = load(ROOT / "public" / "data" / "ontology-graph.json")
     assert graph["counts"]["datasets"] == len(graph["datasets"])
