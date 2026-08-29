@@ -17,7 +17,8 @@
     "hydrography:build": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run_hydrography_build.ps1",
     "test:ontology": "python -m pytest tests/test_ontology.py -q",
     "hydrography:basinatlas": "python scripts/extract_uz_basinatlas.py",
-    "ontology:hydroatlas": "python scripts/ontology/build_hydroatlas_vocabulary.py"
+    "ontology:hydroatlas": "python scripts/ontology/build_hydroatlas_vocabulary.py",
+    "hydrography:atlaslinks": "python scripts/build_atlas_basin_links.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T15:52:21+00:00",
+  "generatedAt": "2026-08-29T16:02:39+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -5533,6 +5533,28 @@
       "storedName": "a8eb30be-11c5-49f3-8f24-33f2d449b3e7.lpkx",
       "url": null,
       "accessPolicy": "request"
+    },
+    {
+      "id": "uz:dist/atlas-basin-coverage",
+      "type": "Distribution",
+      "label": "Environmental atlas layers by level-12 basin",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 23588189,
+      "storedName": "storage/derived/atlas-basin-links.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:coversBasin",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "subjectColumn": "dataset_id",
+      "objectColumn": "basin_id",
+      "scopeColumn": null,
+      "measureColumn": "measure",
+      "measureUnitColumn": "measure_unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 195649
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-basinatlas-uz-lev01-003e44",

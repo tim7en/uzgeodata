@@ -237,8 +237,11 @@ def main(argv=None) -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     columns = ["dataset_id", "atlas_number", "basin_id", "geometry_kind",
                "feature_parts", "measure", "measure_unit", "distribution"]
-    pd.DataFrame(rows, columns=columns).to_csv(output, index=False, encoding="utf-8",
-                                               lineterminator="\n")
+    table = pd.DataFrame(rows, columns=columns)
+    # Nullable integer: one dataset has no atlas number, and the default float
+    # coercion would write every other one as "100.0".
+    table["atlas_number"] = table["atlas_number"].astype("Int64")
+    table.to_csv(output, index=False, encoding="utf-8", lineterminator="\n")
 
     # Rasters with no polygonised counterpart are the honest gap in the coverage.
     entities = {e["id"]: e for e in

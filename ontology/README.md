@@ -73,9 +73,35 @@ the predicate must be registered, must be marked `viaRelationshipTable`, must no
 be `mlProposable`, and its domain and range must admit the declared feature types.
 Which tables exist is data, not code — `vocab/relationship-tables.json`.
 
-Four predicates are declared this way, all pipeline-only: `uz:flowsInto`,
-`uz:drainsToBasin`, `uz:withinBasin` and `uz:subBasinOf`. A model may propose what
-a dataset *observes*; it may not propose where water goes.
+Five predicates are declared this way, all pipeline-only: `uz:flowsInto`,
+`uz:drainsToBasin`, `uz:withinBasin`, `uz:subBasinOf` and `uz:coversBasin`. A model
+may propose what a dataset *observes*; it may not propose where water goes.
+
+### Reaching the atlas from a basin
+
+`uz:coversBasin` is the one that puts a catalogue record on one end and a feature
+on the other. The 134 atlas packages were pinned to `uz:place/uzbekistan` and
+nothing finer, so a basin ID could reach every reach and every lake but not one
+atlas layer. `scripts/build_atlas_basin_links.py` overlays each package that has
+published vector geometry onto the level-12 basins and records the magnitude:
+
+| Geometry | Measure |
+| --- | --- |
+| polygon | overlap area, km² on EPSG:6933, comparable with `UZB_KM2` |
+| line | length inside the basin, km |
+| point | features inside the basin, count |
+
+That is 195,649 links over 76 of the 134 packages. The other 58 are raster
+packages whose only derivative is a PNG preview; `scripts/raster_to_geojson.py`
+gives them geometry, and the manifest names every one so the gap is countable
+rather than invisible.
+
+Two caveats travel with the numbers. Basin polygons are whole, not clipped, so a
+layer that reaches past the border totals more than the country's area — forest
+cover sums to 504,174 km² against Uzbekistan's 450,964 km², while a layer clipped
+to the border lands within a percent of it. And a measure is of the *published*
+derivative, not the source package, which is why each row names the distribution
+it was measured from.
 
 ### Identity
 

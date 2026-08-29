@@ -1,0 +1,797 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-08-29T16:01:59+00:00",
+  "predicate": "uz:coversBasin",
+  "subjectType": "Dataset",
+  "objectType": "Basin",
+  "basinLevel": 12,
+  "basinReference": "uzbekistan_basinatlas_v10 :: basinatlas_uz_lev12",
+  "basins": 3981,
+  "vectorCrs": "EPSG:4326",
+  "areaCrs": "EPSG:6933",
+  "measures": {
+    "polygon": "overlap area, km2",
+    "line": "length inside the basin, km",
+    "point": "features inside the basin, count"
+  },
+  "counts": {
+    "atlasBasinLinks": 195649,
+    "datasetsLinked": 76,
+    "layersRead": 78,
+    "layersMissingOnDisk": 5,
+    "datasetsWithoutGeometry": 58
+  },
+  "output": "storage/derived/atlas-basin-links.csv",
+  "perLayer": [
+    {
+      "dataset": "uz:ds/a100-livestock",
+      "distribution": "uz:dist/a100-livestock-layer-112",
+      "rows": 3945,
+      "features": 97,
+      "kind": "polygon",
+      "basins": 3945,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a101-forage-lands",
+      "distribution": "uz:dist/a101-forage-lands-layer-039",
+      "rows": 3950,
+      "features": 389,
+      "kind": "polygon",
+      "basins": 3950,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a115-soil-salinity",
+      "distribution": "uz:dist/a115-soil-salinity-layer-104",
+      "rows": 3691,
+      "features": 91,
+      "kind": "polygon",
+      "basins": 3691,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a116-irrigated-soil-salinity",
+      "distribution": "uz:dist/a116-irrigated-soil-salinity-layer-044",
+      "rows": 902,
+      "features": 92,
+      "kind": "polygon",
+      "basins": 902,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a118-average-maximum-ndvi-20042024",
+      "distribution": "uz:dist/a118-average-maximum-ndvi-20042024-poly-map-ndvimax-me",
+      "rows": 3981,
+      "features": 9554,
+      "kind": "polygon",
+      "basins": 3981,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a124-pasture-vegetation-types",
+      "distribution": "uz:dist/a124-pasture-vegetation-types-layer-098",
+      "rows": 659,
+      "features": 360,
+      "kind": "polygon",
+      "basins": 659,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a125-recommended-pasture-stocking-rate",
+      "distribution": "uz:dist/a125-recommended-pasture-stocking-rate-layer-017",
+      "rows": 659,
+      "features": 360,
+      "kind": "polygon",
+      "basins": 659,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a126-pasture-productivity",
+      "distribution": "uz:dist/a126-pasture-productivity-layer-053",
+      "rows": 659,
+      "features": 360,
+      "kind": "polygon",
+      "basins": 659,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a137-forest-types",
+      "distribution": "uz:dist/a137-forest-types-layer-030",
+      "rows": 3844,
+      "features": 10,
+      "kind": "polygon",
+      "basins": 3844,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a138-saxaul-distribution",
+      "distribution": "uz:dist/a138-saxaul-distribution-layer-107",
+      "rows": 1109,
+      "features": 38262,
+      "kind": "polygon",
+      "basins": 1109,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a139-natural-and-planted-forests",
+      "distribution": "uz:dist/a139-natural-and-planted-forests-layer-049",
+      "rows": 1109,
+      "features": 38262,
+      "kind": "polygon",
+      "basins": 1109,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a150-forest-canopy-closure",
+      "distribution": "uz:dist/a150-forest-canopy-closure-layer-066",
+      "rows": 1109,
+      "features": 38262,
+      "kind": "polygon",
+      "basins": 1109,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a151-forest-age",
+      "distribution": "uz:dist/a151-forest-age-layer-026",
+      "rows": 1109,
+      "features": 38262,
+      "kind": "polygon",
+      "basins": 1109,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a158-physical-geographic-regions",
+      "distribution": "uz:dist/a158-physical-geographic-regions-layer-031",
+      "rows": 3411,
+      "features": 37,
+      "kind": "polygon",
+      "basins": 3411,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a159-landscapes",
+      "distribution": "uz:dist/a159-landscapes-layer-093",
+      "rows": 3926,
+      "features": 167,
+      "kind": "polygon",
+      "basins": 3926,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a160-landscape-structure",
+      "distribution": "uz:dist/a160-landscape-structure-layer-095",
+      "rows": 3950,
+      "features": 813,
+      "kind": "polygon",
+      "basins": 3950,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a161-plant-formations",
+      "distribution": "uz:dist/a161-plant-formations-layer-075",
+      "rows": 3950,
+      "features": 13,
+      "kind": "polygon",
+      "basins": 3950,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a162-vegetation",
+      "distribution": "uz:dist/a162-vegetation-layer-078",
+      "rows": 3945,
+      "features": 197,
+      "kind": "polygon",
+      "basins": 3945,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a163-zoogeographic-regions",
+      "distribution": "uz:dist/a163-zoogeographic-regions-layer-040",
+      "rows": 3422,
+      "features": 49,
+      "kind": "polygon",
+      "basins": 3422,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a164-bird-species-richness",
+      "distribution": "uz:dist/a164-bird-species-richness-poly-birds-number-o",
+      "rows": 3917,
+      "features": 69,
+      "kind": "polygon",
+      "basins": 3917,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a166-mammal-species-richness",
+      "distribution": "uz:dist/a166-mammal-species-richness-poly-mammals-nuber",
+      "rows": 3917,
+      "features": 781,
+      "kind": "polygon",
+      "basins": 3917,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a167-useful-plants",
+      "distribution": "uz:dist/a167-useful-plants-layer-035",
+      "rows": 361,
+      "features": 394,
+      "kind": "point",
+      "basins": 361,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a169-game-mammals",
+      "distribution": "uz:dist/a169-game-mammals-poly-raster-218744c",
+      "rows": 2015,
+      "features": 669,
+      "kind": "polygon",
+      "basins": 2015,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a169-game-mammals",
+      "distribution": "uz:dist/a169-game-mammals-poly-raster-f977bda",
+      "rows": 3504,
+      "features": 112,
+      "kind": "polygon",
+      "basins": 3504,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a170-biodiversity-intactness-index",
+      "distribution": "uz:dist/a170-biodiversity-intactness-index-layer-111",
+      "rows": 1036,
+      "features": 62,
+      "kind": "polygon",
+      "basins": 1036,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a170-biodiversity-intactness-index",
+      "distribution": "uz:dist/a170-biodiversity-intactness-index-poly-biodiversity-i",
+      "rows": 3958,
+      "features": 1147,
+      "kind": "polygon",
+      "basins": 3958,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a171-fish",
+      "distribution": "uz:dist/a171-fish-layer-012",
+      "rows": 154,
+      "features": 218,
+      "kind": "point",
+      "basins": 154,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a172-reptiles",
+      "distribution": "uz:dist/a172-reptiles-layer-003",
+      "rows": 223,
+      "features": 235,
+      "kind": "point",
+      "basins": 223,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a173-mammals",
+      "distribution": "uz:dist/a173-mammals-layer-105",
+      "rows": 361,
+      "features": 381,
+      "kind": "point",
+      "basins": 361,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a174-plants",
+      "distribution": "uz:dist/a174-plants-layer-118",
+      "rows": 10,
+      "features": 47,
+      "kind": "point",
+      "basins": 10,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a175-invertebrates",
+      "distribution": "uz:dist/a175-invertebrates-layer-079",
+      "rows": 198,
+      "features": 218,
+      "kind": "point",
+      "basins": 198,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a176-birds",
+      "distribution": "uz:dist/a176-birds-layer-117",
+      "rows": 492,
+      "features": 602,
+      "kind": "point",
+      "basins": 492,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a185-protected-area-types",
+      "distribution": "uz:dist/a185-protected-area-types-layer-114",
+      "rows": 1036,
+      "features": 62,
+      "kind": "polygon",
+      "basins": 1036,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a186-ecoregions",
+      "distribution": "uz:dist/a186-ecoregions-layer-010",
+      "rows": 3834,
+      "features": 8,
+      "kind": "polygon",
+      "basins": 3834,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a187-protected-areas-and-key-biodiversity-areas",
+      "distribution": "uz:dist/a187-protected-areas-and-key-biodiversity-areas-layer-106",
+      "rows": 582,
+      "features": 48,
+      "kind": "polygon",
+      "basins": 582,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a188-nature-conservation",
+      "distribution": "uz:dist/a188-nature-conservation-layer-041",
+      "rows": 3950,
+      "features": 6,
+      "kind": "polygon",
+      "basins": 3950,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a189-conservation-value-index",
+      "distribution": "uz:dist/a189-conservation-value-index-poly-areas-of-globa",
+      "rows": 3981,
+      "features": 309,
+      "kind": "polygon",
+      "basins": 3981,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a19-average-start-of-the-growing-season-20002024",
+      "distribution": "uz:dist/a19-average-start-of-the-growing-season-20002024-poly-map-sos-a3677e",
+      "rows": 3976,
+      "features": 4127,
+      "kind": "polygon",
+      "basins": 3976,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a198-geomorphology",
+      "distribution": "uz:dist/a198-geomorphology-layer-007",
+      "rows": 3395,
+      "features": 17,
+      "kind": "polygon",
+      "basins": 3395,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a204-exposure-to-adverse-geodynamic-processes",
+      "distribution": "uz:dist/a204-exposure-to-adverse-geodynamic-processes-layer-088",
+      "rows": 445,
+      "features": 1,
+      "kind": "polygon",
+      "basins": 445,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a205-earthquakes-19902024",
+      "distribution": "uz:dist/a205-earthquakes-19902024-layer-048",
+      "rows": 217,
+      "features": 14541,
+      "kind": "point",
+      "basins": 217,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a206-mudflow-zones",
+      "distribution": "uz:dist/a206-mudflow-zones-layer-126",
+      "rows": 939,
+      "features": 1,
+      "kind": "polygon",
+      "basins": 939,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a207-flood-risk",
+      "distribution": "uz:dist/a207-flood-risk-layer-127",
+      "rows": 3957,
+      "features": 345,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a209-glacier-ice-volume",
+      "distribution": "uz:dist/a209-glacier-ice-volume-layer-045",
+      "rows": 3946,
+      "features": 256,
+      "kind": "polygon",
+      "basins": 3946,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a213-economic-losses-from-floods-and-earthquakes",
+      "distribution": "uz:dist/a213-economic-losses-from-floods-and-earthquakes-layer-020",
+      "rows": 3957,
+      "features": 14,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a214-flood-and-earthquake-fatalities",
+      "distribution": "uz:dist/a214-flood-and-earthquake-fatalities-layer-002",
+      "rows": 3957,
+      "features": 14,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a22-average-end-of-the-growing-season-20002024",
+      "distribution": "uz:dist/a22-average-end-of-the-growing-season-20002024-poly-map-eos-dea6a7",
+      "rows": 3976,
+      "features": 5921,
+      "kind": "polygon",
+      "basins": 3976,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a42-share-of-settlement-area",
+      "distribution": "uz:dist/a42-share-of-settlement-area-layer-129",
+      "rows": 3957,
+      "features": 93,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a43-settlement-area-change-19702020",
+      "distribution": "uz:dist/a43-settlement-area-change-19702020-layer-084",
+      "rows": 3957,
+      "features": 93,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a44-disappeared-settlements-by-basin",
+      "distribution": "uz:dist/a44-disappeared-settlements-by-basin-layer-074",
+      "rows": 235,
+      "features": 315,
+      "kind": "polygon",
+      "basins": 235,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a52-water-management-zones",
+      "distribution": "uz:dist/a52-water-management-zones-layer-123",
+      "rows": 3945,
+      "features": 196,
+      "kind": "polygon",
+      "basins": 3945,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a53-irrigated-areas-by-catchment",
+      "distribution": "uz:dist/a53-irrigated-areas-by-catchment-layer-124",
+      "rows": 3954,
+      "features": 79,
+      "kind": "polygon",
+      "basins": 3954,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a54-areas-using-drainage",
+      "distribution": "uz:dist/a54-areas-using-drainage-layer-059",
+      "rows": 947,
+      "features": 134,
+      "kind": "polygon",
+      "basins": 947,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a55-historical-irrigation-districts",
+      "distribution": "uz:dist/a55-historical-irrigation-districts-layer-036",
+      "rows": 3942,
+      "features": 657,
+      "kind": "polygon",
+      "basins": 3942,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a56-annual-runoff-volume",
+      "distribution": "uz:dist/a56-annual-runoff-volume-layer-125",
+      "rows": 3957,
+      "features": 93,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a57-dams-reservoirs-and-glacial-lakes",
+      "distribution": "uz:dist/a57-dams-reservoirs-and-glacial-lakes-layer-113",
+      "rows": 20,
+      "features": 93,
+      "kind": "point",
+      "basins": 20,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a58-lake-and-reservoir-volume",
+      "distribution": "uz:dist/a58-lake-and-reservoir-volume-layer-099",
+      "rows": 3957,
+      "features": 93,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a59-groundwater-depth",
+      "distribution": "uz:dist/a59-groundwater-depth-layer-133",
+      "rows": 937,
+      "features": 92,
+      "kind": "polygon",
+      "basins": 937,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a60-groundwater-pollution",
+      "distribution": "uz:dist/a60-groundwater-pollution-layer-063",
+      "rows": 642,
+      "features": 116,
+      "kind": "polygon",
+      "basins": 642,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a61-groundwater-resources",
+      "distribution": "uz:dist/a61-groundwater-resources-layer-050",
+      "rows": 3396,
+      "features": 78,
+      "kind": "polygon",
+      "basins": 3396,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a62-artesian-basins",
+      "distribution": "uz:dist/a62-artesian-basins-layer-122",
+      "rows": 73,
+      "features": 76,
+      "kind": "point",
+      "basins": 73,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a63-irrigation-canal-density",
+      "distribution": "uz:dist/a63-irrigation-canal-density-layer-103",
+      "rows": 3957,
+      "features": 93,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a64-agricultural-land-served-by-canals",
+      "distribution": "uz:dist/a64-agricultural-land-served-by-canals-layer-009",
+      "rows": 1014,
+      "features": 3253,
+      "kind": "line",
+      "basins": 1014,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a73-water-stress",
+      "distribution": "uz:dist/a73-water-stress-layer-076",
+      "rows": 3954,
+      "features": 54,
+      "kind": "polygon",
+      "basins": 3954,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a74-water-balance",
+      "distribution": "uz:dist/a74-water-balance-layer-061",
+      "rows": 62,
+      "features": 6,
+      "kind": "polygon",
+      "basins": 62,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a75-access-to-sustainable-drinking-water",
+      "distribution": "uz:dist/a75-access-to-sustainable-drinking-water-layer-043",
+      "rows": 3957,
+      "features": 14,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a76-access-to-sustainable-sanitation",
+      "distribution": "uz:dist/a76-access-to-sustainable-sanitation-layer-034",
+      "rows": 3957,
+      "features": 14,
+      "kind": "polygon",
+      "basins": 3957,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a77-water-ecosystem-area",
+      "distribution": "uz:dist/a77-water-ecosystem-area-layer-068",
+      "rows": 3954,
+      "features": 79,
+      "kind": "polygon",
+      "basins": 3954,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a78-change-in-permanently-flooded-ecosystems-2001200",
+      "distribution": "uz:dist/a78-change-in-permanently-flooded-ecosystems-2001200-layer-032",
+      "rows": 3954,
+      "features": 79,
+      "kind": "polygon",
+      "basins": 3954,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a79-change-in-seasonally-flooded-ecosystems-20012004",
+      "distribution": "uz:dist/a79-change-in-seasonally-flooded-ecosystems-20012004-layer-025",
+      "rows": 3954,
+      "features": 79,
+      "kind": "polygon",
+      "basins": 3954,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a80-drainage-network",
+      "distribution": "uz:dist/a80-drainage-network-layer-005",
+      "rows": 511,
+      "features": 266,
+      "kind": "line",
+      "basins": 511,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a81-flow-in-drainage-canals",
+      "distribution": "uz:dist/a81-flow-in-drainage-canals-layer-077",
+      "rows": 975,
+      "features": 6564,
+      "kind": "line",
+      "basins": 975,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a95-soil-chemistry",
+      "distribution": "uz:dist/a95-soil-chemistry-layer-073",
+      "rows": 3116,
+      "features": 69,
+      "kind": "polygon",
+      "basins": 3116,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a96-farming-systems",
+      "distribution": "uz:dist/a96-farming-systems-layer-062",
+      "rows": 3945,
+      "features": 197,
+      "kind": "polygon",
+      "basins": 3945,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a97-land-use-types",
+      "distribution": "uz:dist/a97-land-use-types-layer-037",
+      "rows": 3943,
+      "features": 263,
+      "kind": "polygon",
+      "basins": 3943,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a98-agricultural-land-types",
+      "distribution": "uz:dist/a98-agricultural-land-types-layer-131",
+      "rows": 3941,
+      "features": 5,
+      "kind": "polygon",
+      "basins": 3941,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/a99-cotton-yield",
+      "distribution": "uz:dist/a99-cotton-yield-layer-101",
+      "rows": 931,
+      "features": 103,
+      "kind": "polygon",
+      "basins": 931,
+      "crsAssumed": false
+    },
+    {
+      "dataset": "uz:ds/x-forest-cover",
+      "distribution": "uz:dist/x-forest-cover-poly-treecover2005",
+      "rows": 3981,
+      "features": 444,
+      "kind": "polygon",
+      "basins": 3981,
+      "crsAssumed": false
+    }
+  ],
+  "missingOnDisk": [
+    "uz:dist/protected-areas-public-geojson",
+    "uz:dist/earthquakes-public-geojson",
+    "uz:dist/flood-risk-public-geojson",
+    "uz:dist/water-management-public-geojson",
+    "uz:dist/glacial-lakes-public-geojson"
+  ],
+  "datasetsWithoutGeometry": [
+    "uz:ds/a113-arable-land-dynamics",
+    "uz:ds/a114-terrestrial-land-cover",
+    "uz:ds/a117-soil-salinity-dynamics",
+    "uz:ds/a119-ndvi-dynamics",
+    "uz:ds/a120-enhanced-vegetation-index-dynamics",
+    "uz:ds/a121-leaf-area-index",
+    "uz:ds/a122-land-productivity-dynamics",
+    "uz:ds/a123-arable-land-use-intensity",
+    "uz:ds/a127-soil-organic-carbon",
+    "uz:ds/a128-carbon-emission-volume",
+    "uz:ds/a129-net-carbon-balance",
+    "uz:ds/a135-forest-cover-2005",
+    "uz:ds/a147-forest-carbon-sequestration",
+    "uz:ds/a148-forest-plantation-potential",
+    "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
+    "uz:ds/a152-forest-landscape-integrity-index",
+    "uz:ds/a153-forest-cover-change-19822016",
+    "uz:ds/a16-climate-types",
+    "uz:ds/a165-habitat-diversity-index",
+    "uz:ds/a168-game-birds",
+    "uz:ds/a17-projected-climate-types-for-2100",
+    "uz:ds/a18-local-climate-zones",
+    "uz:ds/a190-ecosystem-bioclimatic-resilience",
+    "uz:ds/a191-habitat-dynamics-index",
+    "uz:ds/a197-hypsometric-map",
+    "uz:ds/a20-average-peak-of-the-growing-season-20002024",
+    "uz:ds/a201-palmer-drought-severity-index-2000",
+    "uz:ds/a201-palmer-drought-severity-index-2001",
+    "uz:ds/a202-palmer-drought-severity-index-2008",
+    "uz:ds/a202-palmer-drought-severity-index-2011",
+    "uz:ds/a202-palmer-drought-severity-index-2018",
+    "uz:ds/a202-palmer-drought-severity-index-2020",
+    "uz:ds/a203-palmer-drought-severity-index-2021",
+    "uz:ds/a203-palmer-drought-severity-index-2022",
+    "uz:ds/a203-palmer-drought-severity-index-2023",
+    "uz:ds/a203-palmer-drought-severity-index-2024",
+    "uz:ds/a208-flood-extent",
+    "uz:ds/a21-average-growing-season-duration-20002024",
+    "uz:ds/a23-annual-temperature-trend-19602023",
+    "uz:ds/a24-annual-temperature-trend-19902023",
+    "uz:ds/a25-warm-season-temperature-trend-19602023",
+    "uz:ds/a26-warm-season-temperature-trend-19902023",
+    "uz:ds/a27-maximum-temperature-trend-19602023",
+    "uz:ds/a28-precipitation-trend-19602023",
+    "uz:ds/a29-precipitation-trend-19902023",
+    "uz:ds/a30-snow-cover-depth-trend-19602024",
+    "uz:ds/a31-snow-cover-depth-trend-19902024",
+    "uz:ds/a32-climatic-water-deficit-1990",
+    "uz:ds/a33-climatic-water-deficit-2023",
+    "uz:ds/a34-climatic-water-deficit-trend-19602023",
+    "uz:ds/a35-climatic-water-deficit-trend-19902023",
+    "uz:ds/a36-projected-temperature-change-by-2040",
+    "uz:ds/a37-projected-precipitation-change-by-2040",
+    "uz:ds/a45-road-network-density",
+    "uz:ds/a90-land-cover-2000",
+    "uz:ds/a91-land-cover-2010",
+    "uz:ds/a92-land-cover",
+    "uz:ds/a94-bare-surface"
+  ],
+  "note": "Datasets without geometry are raster packages whose only derivative is a PNG preview. Run scripts/raster_to_geojson.py over them to bring them into this table."
+}
