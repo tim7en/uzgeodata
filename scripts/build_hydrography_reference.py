@@ -1,4 +1,19 @@
-"""Build an Uzbekistan HydroRIVERS/HydroLAKES relationship database.
+"""Build an Uzbekistan hydrography relationship database around a basin reference.
+
+The level-12 basins of the BasinATLAS Uzbekistan extraction are the reference
+frame: every basin in that selection is published, and rivers and lakes are then
+joined onto it.  The basin set is never derived from the feature layers, because
+doing so drops any basin the features happen not to mention and leaves reaches
+pointing at catchments that were never written.
+
+BasinATLAS is in standard HydroBASINS format, which is the format HydroRIVERS'
+``HYBAS_L12`` keys to.  The lake-format package this build previously read splits
+basins at lakes and therefore mints different identifiers, so 569 of the 3,147
+basins the reaches referenced had no polygon and 3,073 reaches were orphaned.
+
+Anything that still fails to resolve is reported: a warning on stderr, a
+``warnings`` list in both JSON outputs, and a ``basin_scope`` column on the link
+tables.  Nothing is dropped silently.
 
 The canonical local output is a GeoPackage containing clipped river, lake and
 level-12 basin geometry plus explicit relationship tables.  Lightweight
@@ -10,6 +25,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -63,24 +79,56 @@ LAKE_FIELDS = {
     "Pour_lat": ogr.OFTReal,
 }
 
+# The HydroBASINS core as BasinATLAS carries it, plus the three fields the
+# extraction adds.  BasinATLAS has no LAKE or SIDE field, and SRC_TILE becomes
+# SRC_LAYER because the source is one global layer set rather than regional tiles.
 BASIN_FIELDS = {
     "HYBAS_ID": ogr.OFTInteger64,
     "NEXT_DOWN": ogr.OFTInteger64,
+    "NEXT_SINK": ogr.OFTInteger64,
     "MAIN_BAS": ogr.OFTInteger64,
-    "PFAF_ID": ogr.OFTInteger64,
+    "DIST_SINK": ogr.OFTReal,
+    "DIST_MAIN": ogr.OFTReal,
     "SUB_AREA": ogr.OFTReal,
     "UP_AREA": ogr.OFTReal,
-    "LAKE": ogr.OFTInteger,
+    "PFAF_ID": ogr.OFTInteger64,
     "ENDO": ogr.OFTInteger,
-    "ORDER": ogr.OFTInteger,
-    "SRC_TILE": ogr.OFTString,
+    "COAST": ogr.OFTInteger,
+    "ORDER_": ogr.OFTInteger,
+    "SORT": ogr.OFTInteger64,
+    "SRC_LAYER": ogr.OFTString,
     "UZB_KM2": ogr.OFTReal,
     "UZB_PCT": ogr.OFTReal,
 }
 
+BASIN_INTEGER_FIELDS = (
+    "HYBAS_ID", "NEXT_DOWN", "NEXT_SINK", "MAIN_BAS",
+    "PFAF_ID", "ENDO", "COAST", "ORDER_", "SORT",
+)
+
 WEB_RIVER_FIELDS = list(RIVER_FIELDS)
 WEB_LAKE_FIELDS = list(LAKE_FIELDS) + ["HYBAS_L12"]
-WEB_BASIN_FIELDS = list(BASIN_FIELDS)
+# The browser needs identity, routing, size and the national share; the sink
+# distances and the sort key stay in the GeoPackage.
+WEB_BASIN_FIELDS = [
+    "HYBAS_ID", "NEXT_DOWN", "MAIN_BAS", "PFAF_ID", "SUB_AREA", "UP_AREA",
+    "ENDO", "ORDER_", "SRC_LAYER", "UZB_KM2", "UZB_PCT",
+]
+
+# The 281 BasinATLAS attributes are deliberately not copied here.  They join on
+# HYBAS_ID against the extraction's own GeoPackage layer and attribute CSVs, and
+# every column is decoded in ontology/instances/hydroatlas-columns.json.
+ATTRIBUTE_JOIN_KEY = "HYBAS_ID"
+
+WARNINGS: list[dict] = []
+
+
+def warn(code: str, message: str, **detail) -> None:
+    """Record a defect instead of dropping a feature silently."""
+    entry = {"code": code, "message": message}
+    entry.update(detail)
+    WARNINGS.append(entry)
+    print(f"WARNING [{code}] {message}", file=sys.stderr)
 
 
 def utc_now() -> str:
@@ -248,18 +296,34 @@ def copy_selected_layer(source_layer, target_layer, boundary, field_types: dict,
     return records
 
 
-def load_basins(path: Path):
-    dataset, layer = open_layer(path, "hybas_uz_lev12")
+def load_basins(path: Path, layer_name: str):
+    """Read the basin reference: every level-12 basin of the extraction.
+
+    Geometry is kept unclipped so a lake pour point just outside the border still
+    resolves to its basin.  Clipping happens only on the way out.
+    """
+    dataset, layer = open_layer(path, layer_name)
     records = {}
     for feature in layer:
         values = {name: field_value(feature, name) for name in BASIN_FIELDS}
-        basin_id = integer(values["HYBAS_ID"])
-        values["HYBAS_ID"] = basin_id
-        values["NEXT_DOWN"] = integer(values["NEXT_DOWN"])
-        values["MAIN_BAS"] = integer(values["MAIN_BAS"])
-        values["PFAF_ID"] = integer(values["PFAF_ID"])
-        records[basin_id] = {"values": values, "geometry": feature.GetGeometryRef().Clone()}
+        for name in BASIN_INTEGER_FIELDS:
+            values[name] = integer(values[name])
+        basin_id = values["HYBAS_ID"]
+        if basin_id is None:
+            warn("basin-missing-id", f"A feature in {layer_name} has no HYBAS_ID and was skipped")
+            continue
+        geometry = feature.GetGeometryRef()
+        if geometry is None or geometry.IsEmpty():
+            warn("basin-missing-geometry", f"Basin {basin_id} has no geometry and was skipped",
+                 basinId=basin_id)
+            continue
+        if basin_id in records:
+            warn("basin-duplicate-id", f"Basin {basin_id} appears more than once in {layer_name}",
+                 basinId=basin_id)
+        records[basin_id] = {"values": values, "geometry": geometry.Clone()}
     dataset = None
+    if not records:
+        raise RuntimeError(f"Basin reference {layer_name} in {path} is empty")
     return records
 
 
@@ -308,24 +372,110 @@ def copy_lakes(source_layer, target_layer, boundary, basins: dict):
     return records
 
 
-def copy_basins(target_layer, boundary, basins: dict, selected_ids: set[int]):
+def copy_basins(target_layer, boundary, basins: dict):
+    """Publish the whole basin reference, clipped to the border.
+
+    Every basin in the selection is written.  The set is not narrowed to what the
+    rivers and lakes happen to mention, because that is what left reaches pointing
+    at catchments with no polygon.
+    """
     records = []
+    dropped = []
     definition = target_layer.GetLayerDefn()
-    for basin_id in sorted(selected_ids):
-        basin = basins.get(basin_id)
-        if not basin:
-            continue
+    for basin_id in sorted(basins):
+        basin = basins[basin_id]
         geometry = clipped_geometry(basin["geometry"], boundary, "polygon")
         if geometry is None:
+            dropped.append(basin_id)
             continue
         target = ogr.Feature(definition)
         set_fields(target, basin["values"])
         target.SetGeometry(geometry)
         if target_layer.CreateFeature(target) != ogr.OGRERR_NONE:
-            raise RuntimeError("Failed writing basin feature")
+            raise RuntimeError(f"Failed writing basin {basin_id}")
         records.append(basin["values"])
         target = None
+    if dropped:
+        warn(
+            "basin-clip-empty",
+            f"{len(dropped)} reference basins intersect the boundary but clip to an empty "
+            "geometry and were not published",
+            count=len(dropped),
+            sample=dropped[:10],
+        )
     return records
+
+
+def resolve_basin_links(records, id_field: str, basin_field: str, link_id_name: str,
+                       reference_ids: set, kind: str):
+    """Join features onto the basin reference, reporting every failure.
+
+    Returns the link rows, each carrying the scope of its basin the way
+    ``river_downstream_links`` already carries the scope of its target, so an
+    unresolved join survives into the data rather than living only in a log line.
+    """
+    rows = []
+    unresolved = {}
+    without_key = []
+    for record in records:
+        feature_id = integer(record.get(id_field))
+        basin_id = integer(record.get(basin_field))
+        if basin_id is None:
+            without_key.append(feature_id)
+            scope = "no_basin_key"
+        elif basin_id in reference_ids:
+            scope = "resolved"
+        else:
+            unresolved[basin_id] = unresolved.get(basin_id, 0) + 1
+            scope = "outside_reference"
+        rows.append({link_id_name: feature_id, "basin_id": basin_id or 0, "basin_scope": scope})
+    if without_key:
+        warn(
+            f"{kind}-basin-no-key",
+            f"{len(without_key)} {kind}s carry no basin identifier and could not be joined",
+            count=len(without_key),
+            sample=without_key[:10],
+        )
+    if unresolved:
+        affected = sum(unresolved.values())
+        warn(
+            f"{kind}-basin-outside-reference",
+            f"{affected} {kind}s reference {len(unresolved)} basin ids that are not in the "
+            "basin reference; they are linked with scope outside_reference, not dropped",
+            features=affected,
+            basins=len(unresolved),
+            sample=sorted(unresolved)[:10],
+        )
+    return rows, {
+        "resolved": sum(1 for row in rows if row["basin_scope"] == "resolved"),
+        "outsideReference": sum(unresolved.values()),
+        "noBasinKey": len(without_key),
+        "unresolvedBasinIds": len(unresolved),
+    }
+
+
+def scope_next_down(basin_records, reference_ids: set):
+    """Tally how many basins drain to a basin that is outside the reference."""
+    tally = {"inside_reference": 0, "terminal": 0, "outside_reference": 0}
+    outside = []
+    for record in basin_records:
+        target = integer(record.get("NEXT_DOWN")) or 0
+        if target == 0:
+            tally["terminal"] += 1
+        elif target in reference_ids:
+            tally["inside_reference"] += 1
+        else:
+            tally["outside_reference"] += 1
+            outside.append(integer(record.get("HYBAS_ID")))
+    if outside:
+        warn(
+            "basin-next-down-outside-reference",
+            f"{len(outside)} basins drain to a basin outside the reference; the explorer "
+            "will show them as terminal nodes",
+            count=len(outside),
+            sample=outside[:10],
+        )
+    return tally
 
 
 def create_attribute_table(dataset, name: str, fields: dict, rows: list[dict]):
@@ -379,24 +529,25 @@ def bounds_for_geojson(path: Path):
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--rivers", type=Path, default=Path(r"C:\earth_engine\HydroRIVERS_v10_as.gdb"))
-    parser.add_argument("--lakes", type=Path, default=Path(r"C:\earth_engine\HydroLAKES_polys_v10.gdb"))
-    parser.add_argument(
-        "--basins",
-        type=Path,
-        default=Path(r"C:\earth_engine\uzbekistan_hydrobasins_lake_v1c\uzbekistan_hydrobasins_lake_v1c.gpkg"),
-    )
-    parser.add_argument(
-        "--boundary",
-        type=Path,
-        default=Path(r"C:\earth_engine\uzbekistan_hydrobasins_lake_v1c\boundary\uzb_admbnda_adm0_2018b_recovered.geojson"),
-    )
+    # Every input ships inside the delivery folder, so the defaults resolve under
+    # --root rather than naming a drive letter that only one workstation has.
+    parser.add_argument("--rivers", type=Path, default=None)
+    parser.add_argument("--lakes", type=Path, default=None)
+    parser.add_argument("--basins", type=Path, default=None,
+                        help="GeoPackage holding the level-12 basin reference")
+    parser.add_argument("--basin-layer", default="basinatlas_uz_lev12",
+                        help="Layer inside --basins to use as the basin reference")
+    parser.add_argument("--boundary", type=Path, default=None)
     args = parser.parse_args(argv)
     root = args.root.resolve()
-    river_gdb = resolve_file_gdb(args.rivers.resolve())
-    lake_gdb = resolve_file_gdb(args.lakes.resolve())
-    basin_gpkg = args.basins.resolve()
-    boundary_path = args.boundary.resolve()
+    delivery = root / "earth_engine" / "earth_engine"
+    basinatlas = delivery / "uzbekistan_basinatlas_v10"
+    river_gdb = resolve_file_gdb((args.rivers or delivery / "HydroRIVERS_v10_as.gdb").resolve())
+    lake_gdb = resolve_file_gdb((args.lakes or delivery / "HydroLAKES_polys_v10.gdb").resolve())
+    basin_gpkg = (args.basins or basinatlas / "uzbekistan_basinatlas_v10.gpkg").resolve()
+    boundary_path = (
+        args.boundary or basinatlas / "boundary" / "uzb_admbnda_adm0_2018b_recovered.geojson"
+    ).resolve()
     boundary = read_boundary(boundary_path)
 
     output_dir = root / "storage" / "derived" / "hydrography"
@@ -414,7 +565,14 @@ def main(argv=None) -> int:
 
     river_source, river_layer = open_layer(river_gdb, "HydroRIVERS_v10_as")
     lake_source, lake_layer = open_layer(lake_gdb, "HydroLAKES_polys_v10")
-    basins = load_basins(basin_gpkg)
+
+    # The reference comes first. Everything after this is joined onto it.
+    basins = load_basins(basin_gpkg, args.basin_layer)
+    basin_output = create_layer(database, "basins_level12", ogr.wkbMultiPolygon, BASIN_FIELDS)
+    basin_output.StartTransaction()
+    basin_records = copy_basins(basin_output, boundary, basins)
+    basin_output.CommitTransaction()
+    reference_ids = {integer(record["HYBAS_ID"]) for record in basin_records}
 
     river_output = create_layer(database, "rivers_uzbekistan", ogr.wkbMultiLineString, RIVER_FIELDS)
     river_output.StartTransaction()
@@ -431,31 +589,19 @@ def main(argv=None) -> int:
     lake_records = copy_lakes(lake_layer, lake_output, boundary, basins)
     lake_output.CommitTransaction()
 
-    selected_basin_ids = {
-        integer(record.get("HYBAS_L12"))
-        for record in river_records + lake_records
-        if integer(record.get("HYBAS_L12"))
-    }
-    basin_output = create_layer(database, "basins_level12", ogr.wkbMultiPolygon, BASIN_FIELDS)
-    basin_output.StartTransaction()
-    basin_records = copy_basins(basin_output, boundary, basins, selected_basin_ids)
-    basin_output.CommitTransaction()
+    river_basin_rows, river_join = resolve_basin_links(
+        river_records, "HYRIV_ID", "HYBAS_L12", "river_id", reference_ids, "river")
+    lake_basin_rows, lake_join = resolve_basin_links(
+        lake_records, "Hylak_id", "HYBAS_L12", "lake_id", reference_ids, "lake")
+    basin_routing = scope_next_down(basin_records, reference_ids)
 
     selected_river_ids = {integer(record["HYRIV_ID"]) for record in river_records}
     downstream_rows = []
-    river_basin_rows = []
     for record in river_records:
         source_id = integer(record["HYRIV_ID"])
         target_id = integer(record.get("NEXT_DOWN")) or 0
         scope = "selected" if target_id in selected_river_ids else "outlet" if target_id == 0 else "outside_selection"
         downstream_rows.append({"source_id": source_id, "target_id": target_id, "target_scope": scope})
-        if record.get("HYBAS_L12"):
-            river_basin_rows.append({"river_id": source_id, "basin_id": integer(record["HYBAS_L12"])})
-    lake_basin_rows = [
-        {"lake_id": integer(record["Hylak_id"]), "basin_id": integer(record["HYBAS_L12"])}
-        for record in lake_records
-        if record.get("HYBAS_L12")
-    ]
     create_attribute_table(
         database,
         "river_downstream_links",
@@ -465,13 +611,13 @@ def main(argv=None) -> int:
     create_attribute_table(
         database,
         "river_basin_links",
-        {"river_id": ogr.OFTInteger64, "basin_id": ogr.OFTInteger64},
+        {"river_id": ogr.OFTInteger64, "basin_id": ogr.OFTInteger64, "basin_scope": ogr.OFTString},
         river_basin_rows,
     )
     create_attribute_table(
         database,
         "lake_basin_links",
-        {"lake_id": ogr.OFTInteger64, "basin_id": ogr.OFTInteger64},
+        {"lake_id": ogr.OFTInteger64, "basin_id": ogr.OFTInteger64, "basin_scope": ogr.OFTString},
         lake_basin_rows,
     )
     database = None
@@ -541,10 +687,23 @@ def main(argv=None) -> int:
             "uzbekistanKm2": rounded(r.get("UZB_KM2")),
             "uzbekistanPercent": rounded(r.get("UZB_PCT")),
             "endorheic": bool(integer(r.get("ENDO")) or 0),
-            "sourceTile": r.get("SRC_TILE"),
+            "order": integer(r.get("ORDER_")),
+            "sourceLayer": r.get("SRC_LAYER"),
         }
         for r in basin_records
     ]
+    # Measured integrity of this run. The descriptive counterpart lives under
+    # "basinReference" in the manifest; keep the names distinct so the two are
+    # never confused for each other.
+    integrity = {
+        "basinReferencePackage": basinatlas.name,
+        "basinReferenceLayer": args.basin_layer,
+        "basinsInSelection": len(basins),
+        "basinsPublished": len(basin_records),
+        "basinNextDown": basin_routing,
+        "riverBasinJoin": river_join,
+        "lakeBasinJoin": lake_join,
+    }
     graph = {
         "version": "1.0",
         "generatedAt": utc_now(),
@@ -552,10 +711,14 @@ def main(argv=None) -> int:
         "sources": {
             "rivers": str(river_gdb),
             "lakes": str(lake_gdb),
-            "basins": str(basin_gpkg),
+            "basins": f"{basin_gpkg} :: {args.basin_layer}",
             "boundary": str(boundary_path),
         },
-        "selection": "geometry clipped to the Uzbekistan ADM0 boundary",
+        "selection": (
+            "the BasinATLAS Uzbekistan level-12 selection is the basin reference; "
+            "rivers and lakes are joined onto it, and all geometry is clipped to the "
+            "Uzbekistan ADM0 boundary"
+        ),
         "counts": {
             "rivers": len(river_nodes),
             "lakes": len(lake_nodes),
@@ -564,6 +727,8 @@ def main(argv=None) -> int:
             "riverBasinLinks": len(river_basin_rows),
             "lakeBasinLinks": len(lake_basin_rows),
         },
+        "integrity": integrity,
+        "warnings": WARNINGS,
         "layers": {
             "rivers": "/data/hydrography/rivers.geojson",
             "lakes": "/data/hydrography/lakes.geojson",
@@ -579,14 +744,37 @@ def main(argv=None) -> int:
     manifest = {
         "version": "1.0",
         "generatedAt": graph["generatedAt"],
-        "source": "HydroSHEDS / HydroRIVERS v1.0 / HydroLAKES v1.0",
+        "source": "HydroSHEDS / BasinATLAS v1.0 / HydroRIVERS v1.0 / HydroLAKES v1.0",
         "license": "HydroSHEDS free data licence",
-        "attribution": "HydroSHEDS (Lehner, Grill et al.) and HydroLAKES (Messager et al.)",
+        "attribution": (
+            "HydroSHEDS (Lehner, Grill et al.), BasinATLAS (Linke, Lehner et al.) "
+            "and HydroLAKES (Messager et al.)"
+        ),
         "selection": graph["selection"],
         "crs": "EPSG:4326",
         "extent": bounds_for_geojson(boundary_geojson),
         "counts": graph["counts"],
+        "integrity": integrity,
+        "warnings": WARNINGS,
         "sources": graph["sources"],
+        "basinReference": {
+            "package": basinatlas.name,
+            "layer": args.basin_layer,
+            "format": "standard HydroBASINS, the format HydroRIVERS HYBAS_L12 keys to",
+            "geometry": "whole source polygons, clipped to the border only on publication",
+            "attributes": {
+                "note": (
+                    "The 281 BasinATLAS attributes are not copied into this database. "
+                    f"They join on {ATTRIBUTE_JOIN_KEY} against the extraction, which is "
+                    "why the reference had to be standard format."
+                ),
+                "key": ATTRIBUTE_JOIN_KEY,
+                "table": f"{basin_gpkg} :: {args.basin_layer}",
+                "csv": str(basinatlas / "attributes" / f"{args.basin_layer}.csv"),
+                "vocabulary": "ontology/instances/hydroatlas-columns.json",
+                "nationalProfile": "ontology/instances/hydroatlas-uz-profile.json",
+            },
+        },
         "database": {
             "path": str(gpkg),
             "format": "GeoPackage",
@@ -606,7 +794,16 @@ def main(argv=None) -> int:
         "fields": {"rivers": WEB_RIVER_FIELDS, "lakes": WEB_LAKE_FIELDS, "basins": WEB_BASIN_FIELDS},
     }
     atomic_json(root / "ontology" / "instances" / "hydrography.json", manifest)
-    print(json.dumps({"database": str(gpkg), **graph["counts"]}, indent=2))
+    print(json.dumps(
+        {"database": str(gpkg), **graph["counts"], "integrity": integrity,
+         "warnings": len(WARNINGS)},
+        indent=2,
+    ))
+    if WARNINGS:
+        print(
+            f"{len(WARNINGS)} warning(s) recorded in relationships.json and hydrography.json",
+            file=sys.stderr,
+        )
     return 0
 
 

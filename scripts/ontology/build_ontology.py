@@ -772,10 +772,13 @@ class GraphBuilder:
             {
                 "slug": "hydrobasins-level12-uzbekistan",
                 "label": "HydroBASINS level-12 catchments — Uzbekistan",
-                "description": "Level-12 Pfafstetter catchments referenced by the Uzbekistan river and lake relationship database.",
+                "description": "Level-12 Pfafstetter catchments from the BasinATLAS Uzbekistan extraction. This is the reference frame the river and lake layers are joined onto, and its HYBAS_ID is the key the 281 BasinATLAS attributes join on.",
+                # The source key is frozen in identity-map.json and names the
+                # dataset, not the package behind it; the package changed from the
+                # lake-format extraction to BasinATLAS, the dataset did not.
                 "sourceKey": "hydrosheds/hydrobasins-v1c-level12-uzbekistan",
                 "source": sources.get("basins"),
-                "sourceLabel": "Uzbekistan HydroBASINS lake extraction v1.c",
+                "sourceLabel": "Uzbekistan BasinATLAS extraction, level 12 (standard HydroBASINS format)",
                 "sourceFormat": "GPKG",
                 "web": web.get("basins"),
                 "webFile": "public/data/hydrography/basins.geojson",
