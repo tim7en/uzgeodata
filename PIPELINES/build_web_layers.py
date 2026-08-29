@@ -162,7 +162,7 @@ def build_layer(spec: dict, source: Path, working: Path, output: Path) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("source", type=Path)
-    parser.add_argument("--output", type=Path, default=Path("public/data"))
+    parser.add_argument("--output", type=Path, default=Path("PUBLISHED/data"))
     parser.add_argument("--working", type=Path, default=Path("tmp/map-extract"))
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)

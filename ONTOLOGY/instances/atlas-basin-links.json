@@ -21,7 +21,7 @@
     "layersMissingOnDisk": 5,
     "datasetsWithoutGeometry": 58
   },
-  "output": "storage/derived/atlas-basin-links.csv",
+  "output": "WORKSPACE/derived/atlas-basin-links.csv",
   "perLayer": [
     {
       "dataset": "uz:ds/a100-livestock",
@@ -793,5 +793,5 @@
     "uz:ds/a92-land-cover",
     "uz:ds/a94-bare-surface"
   ],
-  "note": "Datasets without geometry are raster packages whose only derivative is a PNG preview. Run scripts/raster_to_geojson.py over them to bring them into this table."
+  "note": "Datasets without geometry are raster packages whose only derivative is a PNG preview. Run PIPELINES/raster_to_geojson.py over them to bring them into this table."
 }

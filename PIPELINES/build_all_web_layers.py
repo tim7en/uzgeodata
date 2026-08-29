@@ -246,9 +246,9 @@ def archive_preview(package: Path, target: Path, max_bytes: int = 25 * 1024 * 10
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("source", type=Path)
-    parser.add_argument("--catalog", type=Path, default=Path("public/data/archive-catalog.json"))
-    parser.add_argument("--datasets", type=Path, default=Path("storage/datasets.json"))
-    parser.add_argument("--output", type=Path, default=Path("public/data/layers"))
+    parser.add_argument("--catalog", type=Path, default=Path("PUBLISHED/data/archive-catalog.json"))
+    parser.add_argument("--datasets", type=Path, default=Path("WORKSPACE/datasets.json"))
+    parser.add_argument("--output", type=Path, default=Path("PUBLISHED/data/layers"))
     parser.add_argument("--manifest", type=Path)
     parser.add_argument("--working", type=Path, default=Path("tmp/all-layer-build"))
     parser.add_argument("--max-output-gb", type=float, default=5.0)

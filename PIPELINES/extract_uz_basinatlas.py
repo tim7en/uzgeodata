@@ -22,8 +22,8 @@ Two honest differences from the lake package, both forced by the source:
     the attribute CSVs hold the full set.
 
 Usage:
-    python scripts/extract_uz_basinatlas.py
-    python scripts/extract_uz_basinatlas.py --levels 1 2 3 --out /tmp/test
+    python PIPELINES/extract_uz_basinatlas.py
+    python PIPELINES/extract_uz_basinatlas.py --levels 1 2 3 --out /tmp/test
 """
 
 from __future__ import annotations
@@ -385,7 +385,7 @@ with the lake package.
 The boundary is the ADM0 polygon recovered for the lake package from the
 `uzb_admbnda_adm0_2018b` ArcGIS Feature Service, reused unchanged.
 
-Regenerate with `python scripts/extract_uz_basinatlas.py`.
+Regenerate with `python PIPELINES/extract_uz_basinatlas.py`.
 """
     (out / "README.md").write_text(text, encoding="utf-8", newline="\n")
 
@@ -393,11 +393,11 @@ Regenerate with `python scripts/extract_uz_basinatlas.py`.
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--root", default=".")
-    parser.add_argument("--gdb", default="BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb")
+    parser.add_argument("--gdb", default="GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb")
     parser.add_argument("--boundary",
-                        default="earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/"
+                        default="GEODATA/uzbekistan_hydrobasins_lake_v1c/"
                                 "boundary/uzb_admbnda_adm0_2018b_recovered.geojson")
-    parser.add_argument("--out", default=f"earth_engine/earth_engine/{PACKAGE}")
+    parser.add_argument("--out", default=f"GEODATA/{PACKAGE}")
     parser.add_argument("--levels", type=int, nargs="+", default=list(range(1, 13)))
     parser.add_argument("--no-shapefiles", action="store_true")
     args = parser.parse_args(argv)

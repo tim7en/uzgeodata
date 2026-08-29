@@ -90,10 +90,11 @@
               "properties": {"type": {"const": "Distribution"}, "role": {"const": "relationship-table"}}
             },
             "then": {
-              "required": ["predicate", "subjectType", "objectType", "subjectColumn", "objectColumn", "rowCount"],
+              "required": ["predicate", "subjectType", "objectType", "subjectColumn", "objectColumn", "rowCount", "container"],
               "description": "A measured edge list kept outside the graph. The ontology records what the table means and where it is; the rows stay in the file that produced them.",
               "properties": {
                 "predicate": {"type": "string", "pattern": "^uz:[a-zA-Z]+$", "description": "The registered predicate every row of this table asserts."},
+                "container": {"type": "string", "minLength": 1, "description": "Repo-relative path of the file holding the rows. storedName and externalPath record where the bytes sit, which depends on the machine that profiled them; this identifies the declared table itself."},
                 "subjectType": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Basin", "RiverReach", "WaterBody"]},
                 "objectType": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Basin", "RiverReach", "WaterBody"]},
                 "subjectColumn": {"type": "string", "minLength": 1, "description": "Column holding the subject identifier."},

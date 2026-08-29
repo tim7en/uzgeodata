@@ -9,7 +9,7 @@ from pathlib import Path
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--title", required=True)
-    parser.add_argument("--storage", type=Path, default=Path("storage"))
+    parser.add_argument("--storage", type=Path, default=Path("WORKSPACE"))
     args = parser.parse_args()
     metadata_file = (args.storage / "datasets.json").resolve()
     upload_root = (args.storage / "uploads").resolve()

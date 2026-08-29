@@ -10,11 +10,11 @@ learned from. This package replaces that with a stored graph of typed, provenanc
 confidence-scored facts.
 
 ```
-ontology/
+ONTOLOGY/
   schema/      JSON Schema for concepts, predicates, entities, assertions
   vocab/       the controlled vocabularies and the seeding rules
   instances/   the built graph, the curator's decisions, the model's proposals
-scripts/ontology/
+PIPELINES/ontology/
   build_ontology.py      project the real registries into the graph
   propose_assertions.py  the model: propose new facts, calibrated
   review_assertions.py   the curator: accept, reject, or state a fact
@@ -62,7 +62,7 @@ one is registered as a single typed `relationship-table` distribution:
   "subjectType": "RiverReach", "objectType": "Basin",
   "subjectColumn": "river_id", "objectColumn": "basin_id",
   "scopeColumn": "basin_scope", "identifierScheme": "HYBAS_ID",
-  "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+  "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
   "containerTable": "river_basin_links", "rowCount": 17447
 }
 ```
@@ -83,7 +83,7 @@ propose where water goes.
 `uz:coversBasin` is the one that puts a catalogue record on one end and a feature
 on the other. The 134 atlas packages were pinned to `uz:place/uzbekistan` and
 nothing finer, so a basin ID could reach every reach and every lake but not one
-atlas layer. `scripts/build_atlas_basin_links.py` overlays each package that has
+atlas layer. `PIPELINES/build_atlas_basin_links.py` overlays each package that has
 published vector geometry onto the level-12 basins and records the magnitude:
 
 | Geometry | Measure |
@@ -97,7 +97,7 @@ That is 195,649 links over 76 of the 134 packages.
 The other 58 are rasters, and for them "how much of it is here" is the wrong
 question. Binning NDVI or drought severity into classes and measuring the area of
 each class destroys the values. What a basin wants from a surface is what it
-*reads* there, so `scripts/build_basin_zonal_stats.py` computes zonal statistics
+*reads* there, so `PIPELINES/build_basin_zonal_stats.py` computes zonal statistics
 instead — pixels, mean, min, max, standard deviation, and the majority class where
 the surface is classified — under `uz:hasBasinStatistic`. That is a further
 167,309 rows over 50 packages.
@@ -192,7 +192,7 @@ artefacts from the candidate pool permanently.
 ### Guard rails
 
 A model is allowed to write into this graph only because the validator can refuse
-it. Every rule below is covered by a test in `tests/test_ontology.py`:
+it. Every rule below is covered by a test in `TESTS/test_ontology.py`:
 
 - predicates are typed: domain, range, scheme and cardinality are all enforced;
 - a predicate must be marked `mlProposable` before a model may assert it —
@@ -221,8 +221,8 @@ cataloguing:
 
 ```bash
 npm run ontology:profile -- "C:/Users/User/Desktop/MAPS" \
-    --name maps-drop-2026-08 --out ontology/instances/external/maps-drop.json
-# add a block to ontology/vocab/external-sources.json saying what the files are
+    --name maps-drop-2026-08 --out ONTOLOGY/instances/external/maps-drop.json
+# add a block to ONTOLOGY/vocab/external-sources.json saying what the files are
 npm run ontology:details       # station coordinates, training-set class balance
 npm run ontology:build
 ```
@@ -270,16 +270,16 @@ statistics rather than titles.
 ## Commands
 
 ```bash
-npm run ontology:profile -- <folder> --name <id> --out ontology/instances/external/<id>.json
+npm run ontology:profile -- <folder> --name <id> --out ONTOLOGY/instances/external/<id>.json
 npm run ontology:details     # station coordinates and class balances from a delivery
 npm run ontology:build       # rebuild the graph from the registries
 npm run ontology:validate    # schema + integrity + guard rails
 npm run ontology:propose     # run the model, write calibrated proposals
 npm run ontology:review -- --list --limit 20
 npm run ontology:review -- --accept uz:a/…  --note "checked against the source"
-python -m pytest tests/test_ontology.py
+python -m pytest TESTS/test_ontology.py
 ```
 
-The build also writes `public/data/ontology-graph.json`: the published projection,
+The build also writes `PUBLISHED/data/ontology-graph.json`: the published projection,
 carrying only `asserted` facts, each with the agent and confidence behind it, ready
 for the ontology explorer to render provenance instead of a regex.

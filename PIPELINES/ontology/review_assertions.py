@@ -4,16 +4,16 @@ Accepting a proposal publishes it and marks it reviewed. Rejecting one keeps it
 in the graph with status 'rejected' - a negative label the next model run reads,
 so a wrong guess is never made twice.
 
-Decisions are written to ontology/instances/curated-assertions.json, which the
+Decisions are written to ONTOLOGY/instances/curated-assertions.json, which the
 build merges back on top of anything it regenerates. Rules and models can be
 re-run freely without ever overwriting a human.
 
 Usage:
-    python scripts/ontology/review_assertions.py --list --limit 20
-    python scripts/ontology/review_assertions.py --list --predicate uz:observes --min-confidence 0.7
-    python scripts/ontology/review_assertions.py --accept uz:a/1a2b... uz:a/3c4d...
-    python scripts/ontology/review_assertions.py --reject uz:a/5e6f... --note "regional, not national"
-    python scripts/ontology/review_assertions.py --accept-above 0.8 --predicate uz:observes
+    python PIPELINES/ontology/review_assertions.py --list --limit 20
+    python PIPELINES/ontology/review_assertions.py --list --predicate uz:observes --min-confidence 0.7
+    python PIPELINES/ontology/review_assertions.py --accept uz:a/1a2b... uz:a/3c4d...
+    python PIPELINES/ontology/review_assertions.py --reject uz:a/5e6f... --note "regional, not national"
+    python PIPELINES/ontology/review_assertions.py --accept-above 0.8 --predicate uz:observes
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ def write_json(path: Path, payload) -> None:
 
 
 def load_pool(root: Path):
-    instances = root / "ontology" / "instances"
+    instances = root / "ONTOLOGY" / "instances"
     pool: dict[str, dict] = {}
     for name in ("assertions.json", "proposals.json", "curated-assertions.json"):
         for record in (read_json(instances / name, {"assertions": []}) or {}).get("assertions", []):
@@ -62,14 +62,14 @@ def load_pool(root: Path):
     for entity in entities:
         labels[entity["id"]] = entity.get("label", entity["id"])
     for name in ("properties.json", "themes.json", "analysis.json", "usecases.json", "places.json"):
-        payload = read_json(root / "ontology" / "vocab" / name)
+        payload = read_json(root / "ONTOLOGY" / "vocab" / name)
         for concept in (payload or {}).get("concepts", []):
             labels[concept["id"]] = concept["prefLabel"]
     return pool, labels
 
 
 def record_decision(root: Path, records: list[dict], status: str, reviewer: str, note: str | None):
-    instances = root / "ontology" / "instances"
+    instances = root / "ONTOLOGY" / "instances"
     path = instances / "curated-assertions.json"
     document = read_json(path, {"version": "1.0", "assertions": []})
     existing = {record["id"]: record for record in document["assertions"]}
@@ -155,7 +155,7 @@ def main(argv=None) -> int:
         }
         record_decision(root, [record], "asserted", args.reviewer, args.note)
         print(f"asserted {labels[subject]} {predicate.split(':')[-1]} {labels[obj]}")
-        print("rebuild to apply: python scripts/ontology/build_ontology.py")
+        print("rebuild to apply: python PIPELINES/ontology/build_ontology.py")
         return 0
 
     if args.accept or args.reject:
@@ -172,7 +172,7 @@ def main(argv=None) -> int:
         if rejected:
             record_decision(root, rejected, "rejected", args.reviewer, args.note)
             print(f"rejected {len(rejected)}")
-        print("rebuild to apply: python scripts/ontology/build_ontology.py")
+        print("rebuild to apply: python PIPELINES/ontology/build_ontology.py")
         return 0
 
     if args.accept_above is not None:
@@ -183,7 +183,7 @@ def main(argv=None) -> int:
             return 0
         record_decision(root, batch, "asserted", args.reviewer, args.note)
         print(f"accepted {len(batch)} proposals at or above {args.accept_above}")
-        print("rebuild to apply: python scripts/ontology/build_ontology.py")
+        print("rebuild to apply: python PIPELINES/ontology/build_ontology.py")
         return 0
 
     shown = [r for r in pending

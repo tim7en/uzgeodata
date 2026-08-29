@@ -11,7 +11,7 @@ events outside Uzbekistan is reported up front: this catalogue is regional, so
 any national rate computed from it is an overstatement.
 
 Usage:
-    python scripts/analysis/seismicity.py
+    python PIPELINES/analysis/seismicity.py
 """
 
 from __future__ import annotations
@@ -160,7 +160,7 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     root = Path(args.root).resolve()
 
-    events = load_events(root / "public" / "data" / "earthquakes.geojson")
+    events = load_events(root / "PUBLISHED" / "data" / "earthquakes.geojson")
     magnitudes = np.array([event["mag"] for event in events])
     depths = np.array([event["depth"] for event in events])
     years = [event["year"] for event in events if event["year"]]
@@ -227,7 +227,7 @@ def main(argv=None) -> int:
         ],
     }
 
-    target = root / "public" / "data" / "analysis" / "seismicity.json"
+    target = root / "PUBLISHED" / "data" / "analysis" / "seismicity.json"
     write_json(target, result)
 
     features = [
@@ -236,7 +236,7 @@ def main(argv=None) -> int:
          "properties": {k: v for k, v in c.items() if k not in {"lon", "lat"}}}
         for c in clusters[:12]
     ]
-    write_json(root / "public" / "data" / "analysis" / "seismicity-clusters.geojson",
+    write_json(root / "PUBLISHED" / "data" / "analysis" / "seismicity-clusters.geojson",
                {"type": "FeatureCollection", "features": features})
 
     rate = gutenberg and 10 ** (gutenberg["a"] - gutenberg["b"] * 5.0) / (span[1] - span[0] + 1)

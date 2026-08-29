@@ -9,7 +9,7 @@ Exit code is 1 if any ERROR is found. Warnings never fail the run; they are the
 curation backlog.
 
 Usage:
-    python scripts/ontology/validate_ontology.py [--root .] [--strict]
+    python PIPELINES/ontology/validate_ontology.py [--root .] [--strict]
 """
 
 from __future__ import annotations
@@ -47,9 +47,9 @@ class Report:
 
 def validate(root: Path, strict: bool = False) -> Report:
     report = Report()
-    schema_dir = root / "ontology" / "schema"
-    vocab_dir = root / "ontology" / "vocab"
-    instances = root / "ontology" / "instances"
+    schema_dir = root / "ONTOLOGY" / "schema"
+    vocab_dir = root / "ONTOLOGY" / "vocab"
+    instances = root / "ONTOLOGY" / "instances"
 
     concept_schema = read_json(schema_dir / "concept.schema.json")
     predicate_schema = read_json(schema_dir / "predicate.schema.json")
@@ -91,7 +91,7 @@ def validate(root: Path, strict: bool = False) -> Report:
     entities_doc = read_json(instances / "entities.json")
     assertions_doc = read_json(instances / "assertions.json")
     if entities_doc is None or assertions_doc is None:
-        report.error("no built instance found; run scripts/ontology/build_ontology.py first")
+        report.error("no built instance found; run PIPELINES/ontology/build_ontology.py first")
         return report
 
     for problem in Draft202012Validator(entity_schema).iter_errors(entities_doc):
@@ -280,13 +280,10 @@ def validate(root: Path, strict: bool = False) -> Report:
 
     # Every declaration in the vocabulary has to reach the graph, or the topology
     # it names is silently missing.
-    registered = {t.get("storedName") for t in tables} | {
-        (t.get("externalPath") or "").replace("\\", "/") for t in tables
-    }
+    registered = {t.get("container") for t in tables if t.get("container")}
     for tid, table in declared.items():
         container = table["container"]
-        if not any(location and location.lower().endswith(container.lower())
-                   for location in registered if location):
+        if container not in registered:
             report.warn(
                 f"relationship table {tid} is declared but not registered; "
                 f"{container} has not been built"
@@ -373,7 +370,7 @@ def validate(root: Path, strict: bool = False) -> Report:
         report.note(f"{len(unreachable) - 20} further unreachable external locations")
 
     # Catalogue parity: the ontology must account for every public record.
-    catalog = read_json(root / "public" / "data" / "archive-catalog.json", [])
+    catalog = read_json(root / "PUBLISHED" / "data" / "archive-catalog.json", [])
     catalog_ids = {record["id"] for record in catalog}
     covered = {d.get("catalogId") for d in datasets if d.get("catalogId")}
     for missing in sorted(catalog_ids - covered):
@@ -388,7 +385,7 @@ def validate(root: Path, strict: bool = False) -> Report:
     for record in catalog:
         if (record.get("category") or "").strip().lower() not in theme_labels:
             report.error(f"catalogue category '{record.get('category')}' has no theme concept")
-    for record in read_json(root / "storage" / "datasets.json", []):
+    for record in read_json(root / "WORKSPACE" / "datasets.json", []):
         category = (record.get("category") or "").strip().lower()
         if category and category not in theme_labels:
             report.warn(f"repository category '{record.get('category')}' has no theme concept")

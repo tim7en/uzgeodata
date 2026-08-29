@@ -1,16 +1,27 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 
+const here = path => fileURLToPath(new URL(path, import.meta.url));
+
+// The interface lives in INTERFACE/ and the browser-served files in PUBLISHED/,
+// so Vite's root moves to INTERFACE. That keeps page URLs flat — /hydrography.html
+// rather than /INTERFACE/hydrography.html — because Vite emits each HTML entry at
+// its path relative to the root, and every page sits directly in it.
+//
 // Multi-page build: the portal SPA, the standalone hydrography explorer and the
 // relationship tables that browse the stored graph.
 // JSX is left to Vite's default esbuild transform, matching how the portal built before.
 export default defineConfig({
+  root: here('./INTERFACE'),
+  publicDir: here('./PUBLISHED'),
   build: {
+    outDir: here('./dist'),
+    emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: fileURLToPath(new URL('./index.html', import.meta.url)),
-        hydrography: fileURLToPath(new URL('./hydrography.html', import.meta.url)),
-        relationships: fileURLToPath(new URL('./relationships.html', import.meta.url)),
+        main: here('./INTERFACE/index.html'),
+        hydrography: here('./INTERFACE/hydrography.html'),
+        relationships: here('./INTERFACE/relationships.html'),
       },
     },
   },

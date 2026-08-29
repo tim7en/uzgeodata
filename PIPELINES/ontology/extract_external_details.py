@@ -2,19 +2,19 @@
 
 Some facts live inside files the project references but does not hold: where the
 monitoring stations are, and how a labelled training set is distributed across
-its classes. Both are read once into ontology/instances/external/details.json,
+its classes. Both are read once into ONTOLOGY/instances/external/details.json,
 which the build then consumes. Builds stay deterministic whether or not the
 source folder is attached; re-run this whenever the delivery is available and the
 mapping has changed.
 
-Driven by ontology/vocab/external-sources.json:
+Driven by ONTOLOGY/vocab/external-sources.json:
   `stations`        a shapefile (read with the encoding the source really uses)
                     or a spreadsheet with coordinate columns
   `classLabelField` the attribute holding the class of each training polygon
 
 Usage:
-    python scripts/ontology/extract_external_details.py
-    python scripts/ontology/extract_external_details.py --source uzkad-cadastre-2025-08
+    python PIPELINES/ontology/extract_external_details.py
+    python PIPELINES/ontology/extract_external_details.py --source uzkad-cadastre-2025-08
 """
 
 from __future__ import annotations
@@ -118,8 +118,8 @@ def count_classes(delivery_root: Path, dataset: dict, field: str, warnings: list
 
 
 def extract(root: Path, only_source: str | None = None) -> dict:
-    mapping = read_json(root / "ontology" / "vocab" / "external-sources.json")
-    external_dir = root / "ontology" / "instances" / "external"
+    mapping = read_json(root / "ONTOLOGY" / "vocab" / "external-sources.json")
+    external_dir = root / "ONTOLOGY" / "instances" / "external"
     inventories = {}
     for path in sorted(external_dir.glob("*.json")):
         payload = read_json(path)
@@ -258,7 +258,7 @@ def main(argv=None) -> int:
 
     root = Path(args.root).resolve()
     result = extract(root, args.source)
-    target = root / "ontology" / "instances" / "external" / "details.json"
+    target = root / "ONTOLOGY" / "instances" / "external" / "details.json"
     if not result["stations"] and not result["classLabels"]:
         print("nothing extracted; leaving the existing file untouched")
         for warning in result["warnings"]:

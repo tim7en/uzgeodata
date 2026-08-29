@@ -25,9 +25,9 @@ calibration is deliberately pessimistic, which keeps machine guesses below the
 publication threshold until there is evidence they deserve to be above it.
 
 Usage:
-    python scripts/ontology/propose_assertions.py                 # write proposals
-    python scripts/ontology/propose_assertions.py --dry-run       # report only
-    python scripts/ontology/propose_assertions.py --auto-publish  # publish >= threshold
+    python PIPELINES/ontology/propose_assertions.py                 # write proposals
+    python PIPELINES/ontology/propose_assertions.py --dry-run       # report only
+    python PIPELINES/ontology/propose_assertions.py --auto-publish  # publish >= threshold
 """
 
 from __future__ import annotations
@@ -88,8 +88,8 @@ class Proposer:
     def __init__(self, root: Path):
         self.root = root
         self.generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-        instances = root / "ontology" / "instances"
-        vocab = root / "ontology" / "vocab"
+        instances = root / "ONTOLOGY" / "instances"
+        vocab = root / "ONTOLOGY" / "vocab"
 
         self.entities = {e["id"]: e for e in read_json(instances / "entities.json")["entities"]}
         self.assertions = read_json(instances / "assertions.json")["assertions"]
@@ -342,7 +342,7 @@ class Proposer:
         }
 
         if not dry_run:
-            instances = self.root / "ontology" / "instances"
+            instances = self.root / "ONTOLOGY" / "instances"
             write_json(instances / "proposals.json",
                        {"version": "1.0", "generatedAt": self.generated_at, "assertions": proposals})
             write_json(instances / "model-report.json", report)
@@ -397,8 +397,8 @@ def main(argv=None) -> int:
     if args.dry_run:
         print("(dry run - nothing written)")
     else:
-        print("wrote ontology/instances/proposals.json and model-report.json")
-        print("next: review them, then rebuild - python scripts/ontology/build_ontology.py")
+        print("wrote ONTOLOGY/instances/proposals.json and model-report.json")
+        print("next: review them, then rebuild - python PIPELINES/ontology/build_ontology.py")
     return 0
 
 

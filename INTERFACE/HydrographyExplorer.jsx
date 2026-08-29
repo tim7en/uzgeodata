@@ -408,7 +408,7 @@ export default function HydrographyExplorer() {
             Rivers come from HydroRIVERS v1.0, lakes from HydroLAKES v1.0 and sub-basins from HydroBASINS
             level 12, each intersected with the Uzbekistan ADM0 boundary. Rebuild with
             {' '}<code>npm run hydrography:build</code>, which writes both the GeoPackage under
-            {' '}<code>storage/derived/hydrography</code> and the web layers this page reads.
+            {' '}<code>WORKSPACE/derived/hydrography</code> and the web layers this page reads.
           </p>
           <p>Generated {new Date(index.generatedAt).toLocaleString('en-GB')} &middot; {index.selection}.</p>
         </div>

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T17:24:35+00:00",
+  "generatedAt": "2026-08-29T17:52:48+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -1955,7 +1955,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "14,749 basins across levels 01-12, each carrying the full 296 BasinATLAS attributes. Extracted from the global source with scripts/extract_uz_basinatlas.py under the same rules as the lake package, and validated: identifiers unique per level, every child basin resolving to a selected parent, no routing target missing from the source, and overlap sums matching the national area at every level."
+      "description": "14,749 basins across levels 01-12, each carrying the full 296 BasinATLAS attributes. Extracted from the global source with PIPELINES/extract_uz_basinatlas.py under the same rules as the lake package, and validated: identifiers unique per level, every child basin resolving to a selected parent, no routing target missing from the source, and overlap sums matching the national area at every level."
     },
     {
       "id": "uz:ds/cadastre-agriculture-fields",
@@ -2332,7 +2332,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Already converted to GeoJSON in storage/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
+      "description": "Already converted to GeoJSON in WORKSPACE/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
     },
     {
       "id": "uz:ds/osm-landuse",
@@ -2345,7 +2345,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Already converted to GeoJSON in storage/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
+      "description": "Already converted to GeoJSON in WORKSPACE/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
     },
     {
       "id": "uz:ds/osm-natural",
@@ -2358,7 +2358,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Already converted to GeoJSON in storage/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
+      "description": "Already converted to GeoJSON in WORKSPACE/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
     },
     {
       "id": "uz:ds/osm-places",
@@ -2371,7 +2371,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Already converted to GeoJSON in storage/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
+      "description": "Already converted to GeoJSON in WORKSPACE/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
     },
     {
       "id": "uz:ds/osm-points",
@@ -2384,7 +2384,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Already converted to GeoJSON in storage/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
+      "description": "Already converted to GeoJSON in WORKSPACE/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
     },
     {
       "id": "uz:ds/osm-railways",
@@ -2397,7 +2397,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Already converted to GeoJSON in storage/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
+      "description": "Already converted to GeoJSON in WORKSPACE/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
     },
     {
       "id": "uz:ds/osm-waterways",
@@ -2410,7 +2410,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Already converted to GeoJSON in storage/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
+      "description": "Already converted to GeoJSON in WORKSPACE/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives."
     },
     {
       "id": "uz:ds/regional-evapotranspiration-2020",
@@ -5541,7 +5541,7 @@
       "role": "relationship-table",
       "format": "CSV",
       "byteSize": 23588189,
-      "storedName": "storage/derived/atlas-basin-links.csv",
+      "storedName": "WORKSPACE/derived/atlas-basin-links.csv",
       "url": null,
       "accessPolicy": "free",
       "predicate": "uz:coversBasin",
@@ -5549,6 +5549,7 @@
       "objectType": "Basin",
       "subjectColumn": "dataset_id",
       "objectColumn": "basin_id",
+      "container": "WORKSPACE/derived/atlas-basin-links.csv",
       "scopeColumn": null,
       "measureColumn": "measure",
       "measureUnitColumn": "measure_unit",
@@ -5563,7 +5564,7 @@
       "role": "relationship-table",
       "format": "CSV",
       "byteSize": 26460814,
-      "storedName": "storage/derived/basin-zonal-stats.csv",
+      "storedName": "WORKSPACE/derived/basin-zonal-stats.csv",
       "url": null,
       "accessPolicy": "free",
       "predicate": "uz:hasBasinStatistic",
@@ -5571,6 +5572,7 @@
       "objectType": "Basin",
       "subjectColumn": "dataset_id",
       "objectColumn": "basin_id",
+      "container": "WORKSPACE/derived/basin-zonal-stats.csv",
       "scopeColumn": null,
       "measureColumn": "mean",
       "measureUnitColumn": null,
@@ -5932,6 +5934,7 @@
       "objectType": "Basin",
       "subjectColumn": "hybas_id",
       "objectColumn": "next_down",
+      "container": "GEODATA/uzbekistan_basinatlas_v10/relationships/downstream_links.csv",
       "scopeColumn": "next_down_scope",
       "identifierScheme": "HYBAS_ID",
       "rowCount": 14749
@@ -5954,6 +5957,7 @@
       "objectType": "Basin",
       "subjectColumn": "child_hybas_id",
       "objectColumn": "parent_hybas_id",
+      "container": "GEODATA/uzbekistan_basinatlas_v10/relationships/feature_hierarchy_links.csv",
       "identifierScheme": "HYBAS_ID",
       "rowCount": 14747
     },
@@ -6003,6 +6007,7 @@
       "objectType": "Basin",
       "subjectColumn": "child_pfaf_id",
       "objectColumn": "parent_pfaf_id",
+      "container": "GEODATA/uzbekistan_basinatlas_v10/relationships/pfaf_hierarchy.csv",
       "scopeColumn": "parent_selected",
       "identifierScheme": "PFAF_ID",
       "rowCount": 14747
@@ -7419,7 +7424,7 @@
       "role": "web-vector",
       "format": "GeoPackage",
       "byteSize": null,
-      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "url": null,
       "accessPolicy": "free",
       "featureCount": 2736,
@@ -7444,7 +7449,7 @@
       "role": "web-vector",
       "format": "GeoJSON",
       "byteSize": 3019711,
-      "storedName": "public/data/hydrography/basins.geojson",
+      "storedName": "PUBLISHED/data/hydrography/basins.geojson",
       "url": "/data/hydrography/basins.geojson",
       "accessPolicy": "free",
       "featureCount": 2736,
@@ -7468,6 +7473,7 @@
       "objectType": "Basin",
       "subjectColumn": "hybas_id",
       "objectColumn": "next_down",
+      "container": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/downstream_links.csv",
       "scopeColumn": "next_down_scope",
       "identifierScheme": "HYBAS_ID",
       "rowCount": 15194
@@ -7490,6 +7496,7 @@
       "objectType": "Basin",
       "subjectColumn": "child_hybas_id",
       "objectColumn": "parent_hybas_id",
+      "container": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/feature_hierarchy_links.csv",
       "identifierScheme": "HYBAS_ID",
       "rowCount": 15202
     },
@@ -7721,6 +7728,7 @@
       "objectType": "Basin",
       "subjectColumn": "child_pfaf_id",
       "objectColumn": "parent_pfaf_id",
+      "container": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/pfaf_hierarchy.csv",
       "scopeColumn": "parent_selected",
       "identifierScheme": "PFAF_ID",
       "rowCount": 13918
@@ -7830,7 +7838,7 @@
       "role": "relationship-table",
       "format": "GeoPackage table",
       "byteSize": null,
-      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "url": null,
       "accessPolicy": "free",
       "predicate": "uz:withinBasin",
@@ -7838,6 +7846,7 @@
       "objectType": "Basin",
       "subjectColumn": "lake_id",
       "objectColumn": "basin_id",
+      "container": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "scopeColumn": "basin_scope",
       "measureColumn": null,
       "measureUnitColumn": null,
@@ -7852,7 +7861,7 @@
       "role": "relationship-table",
       "format": "GeoPackage table",
       "byteSize": null,
-      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "url": null,
       "accessPolicy": "free",
       "predicate": "uz:drainsToBasin",
@@ -7860,6 +7869,7 @@
       "objectType": "Basin",
       "subjectColumn": "river_id",
       "objectColumn": "basin_id",
+      "container": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "scopeColumn": "basin_scope",
       "measureColumn": null,
       "measureUnitColumn": null,
@@ -7874,7 +7884,7 @@
       "role": "relationship-table",
       "format": "GeoPackage table",
       "byteSize": null,
-      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "url": null,
       "accessPolicy": "free",
       "predicate": "uz:flowsInto",
@@ -7882,6 +7892,7 @@
       "objectType": "RiverReach",
       "subjectColumn": "source_id",
       "objectColumn": "target_id",
+      "container": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "scopeColumn": "target_scope",
       "measureColumn": null,
       "measureUnitColumn": null,
@@ -7896,7 +7907,7 @@
       "role": "web-vector",
       "format": "GeoPackage",
       "byteSize": null,
-      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "url": null,
       "accessPolicy": "free",
       "featureCount": 647,
@@ -7921,7 +7932,7 @@
       "role": "web-vector",
       "format": "GeoJSON",
       "byteSize": 915193,
-      "storedName": "public/data/hydrography/lakes.geojson",
+      "storedName": "PUBLISHED/data/hydrography/lakes.geojson",
       "url": "/data/hydrography/lakes.geojson",
       "accessPolicy": "free",
       "featureCount": 647,
@@ -7934,7 +7945,7 @@
       "role": "web-vector",
       "format": "GeoPackage",
       "byteSize": null,
-      "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+      "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "url": null,
       "accessPolicy": "free",
       "featureCount": 17447,
@@ -7959,7 +7970,7 @@
       "role": "web-vector",
       "format": "GeoJSON",
       "byteSize": 10474127,
-      "storedName": "public/data/hydrography/rivers.geojson",
+      "storedName": "PUBLISHED/data/hydrography/rivers.geojson",
       "url": "/data/hydrography/rivers.geojson",
       "accessPolicy": "free",
       "featureCount": 17447,

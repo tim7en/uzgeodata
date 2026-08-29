@@ -11,7 +11,7 @@ import numpy as np
 import rasterio
 from rasterio.transform import from_origin
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "PIPELINES"))
 
 from raster_to_geojson import (  # noqa: E402
     QuotaExceeded,

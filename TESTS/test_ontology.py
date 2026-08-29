@@ -17,7 +17,7 @@ import pytest
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts" / "ontology"))
+sys.path.insert(0, str(ROOT / "PIPELINES" / "ontology"))
 
 import validate_ontology  # noqa: E402
 from build_ontology import PROMOTE_THRESHOLD, GraphBuilder, slugify, term_matches  # noqa: E402
@@ -30,19 +30,19 @@ def load(path: Path):
 
 @pytest.fixture(scope="module")
 def entities():
-    return {e["id"]: e for e in load(ROOT / "ontology" / "instances" / "entities.json")["entities"]}
+    return {e["id"]: e for e in load(ROOT / "ONTOLOGY" / "instances" / "entities.json")["entities"]}
 
 
 @pytest.fixture(scope="module")
 def assertions():
-    return load(ROOT / "ontology" / "instances" / "assertions.json")["assertions"]
+    return load(ROOT / "ONTOLOGY" / "instances" / "assertions.json")["assertions"]
 
 
 @pytest.fixture(scope="module")
 def concepts():
     result = {}
     for name in ("themes", "properties", "analysis", "usecases", "places"):
-        payload = load(ROOT / "ontology" / "vocab" / f"{name}.json")
+        payload = load(ROOT / "ONTOLOGY" / "vocab" / f"{name}.json")
         for concept in payload["concepts"]:
             result[concept["id"]] = dict(concept, scheme=payload["scheme"])
     return result
@@ -64,8 +64,8 @@ def concepts():
     ],
 )
 def test_vocabulary_matches_schema(filename, schema_name):
-    payload = load(ROOT / "ontology" / "vocab" / filename)
-    schema = load(ROOT / "ontology" / "schema" / schema_name)
+    payload = load(ROOT / "ONTOLOGY" / "vocab" / filename)
+    schema = load(ROOT / "ONTOLOGY" / "schema" / schema_name)
     errors = list(Draft202012Validator(schema).iter_errors(payload))
     assert not errors, [e.message for e in errors]
 
@@ -73,12 +73,12 @@ def test_vocabulary_matches_schema(filename, schema_name):
 def test_theme_vocabulary_covers_every_catalogue_category():
     """The drift that put a stray 'Forests' category outside the seven domains."""
     labels = set()
-    for concept in load(ROOT / "ontology" / "vocab" / "themes.json")["concepts"]:
+    for concept in load(ROOT / "ONTOLOGY" / "vocab" / "themes.json")["concepts"]:
         labels.add(concept["prefLabel"].lower())
         labels.update(alt.lower() for alt in concept.get("altLabels", []))
     categories = {
         (record.get("category") or "").lower()
-        for record in load(ROOT / "public" / "data" / "archive-catalog.json")
+        for record in load(ROOT / "PUBLISHED" / "data" / "archive-catalog.json")
     }
     assert categories <= labels
 
@@ -96,19 +96,19 @@ def test_built_graph_validates_cleanly():
 
 
 def test_every_public_catalogue_record_is_in_the_graph(entities):
-    catalogue = {record["id"] for record in load(ROOT / "public" / "data" / "archive-catalog.json")}
+    catalogue = {record["id"] for record in load(ROOT / "PUBLISHED" / "data" / "archive-catalog.json")}
     covered = {e.get("catalogId") for e in entities.values() if e["type"] == "Dataset"}
     assert catalogue <= covered
 
 
 def test_identity_survives_a_rebuild():
     """IDs are minted from the immutable source filename, not from sort order."""
-    before = load(ROOT / "ontology" / "instances" / "identity-map.json")["ids"]
+    before = load(ROOT / "ONTOLOGY" / "instances" / "identity-map.json")["ids"]
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "ontology" / "build_ontology.py"), "--quiet"],
+        [sys.executable, str(ROOT / "PIPELINES" / "ontology" / "build_ontology.py"), "--quiet"],
         cwd=ROOT, check=True,
     )
-    after = load(ROOT / "ontology" / "instances" / "identity-map.json")["ids"]
+    after = load(ROOT / "ONTOLOGY" / "instances" / "identity-map.json")["ids"]
     assert before == {k: v for k, v in after.items() if k in before}
 
 
@@ -189,7 +189,7 @@ def test_triple_table_carries_every_fact_with_its_provenance(assertions):
     The portal shows facts; this file is for the backlog, so a proposal or a
     rejection going missing here is the failure mode that matters.
     """
-    table = load(ROOT / "public" / "data" / "ontology-triples.json")
+    table = load(ROOT / "PUBLISHED" / "data" / "ontology-triples.json")
     assert table["counts"]["total"] == len(assertions)
     by_status = {}
     for assertion in assertions:
@@ -222,7 +222,7 @@ def test_triple_table_carries_every_fact_with_its_provenance(assertions):
 
 
 def test_portal_projection_publishes_only_asserted_facts():
-    graph = load(ROOT / "public" / "data" / "ontology-graph.json")
+    graph = load(ROOT / "PUBLISHED" / "data" / "ontology-graph.json")
     assert graph["counts"]["datasets"] == len(graph["datasets"])
     assert graph["promoteThreshold"] == PROMOTE_THRESHOLD
     for dataset in graph["datasets"]:
@@ -234,13 +234,13 @@ def test_portal_projection_publishes_only_asserted_facts():
 
 
 def _copy_ontology(tmp_path: Path) -> None:
-    for relative in ("ontology/schema", "ontology/vocab", "ontology/instances"):
+    for relative in ("ONTOLOGY/schema", "ONTOLOGY/vocab", "ONTOLOGY/instances"):
         source = ROOT / relative
         target = tmp_path / relative
         target.mkdir(parents=True, exist_ok=True)
         for item in source.glob("*.json"):
             target.joinpath(item.name).write_text(item.read_text(encoding="utf-8"), encoding="utf-8")
-    for relative in ("public/data/archive-catalog.json", "storage/datasets.json"):
+    for relative in ("PUBLISHED/data/archive-catalog.json", "WORKSPACE/datasets.json"):
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text((ROOT / relative).read_text(encoding="utf-8"), encoding="utf-8")
@@ -256,19 +256,19 @@ def _mutate_json(tmp_path: Path, relative: str, key: str, mutate) -> None:
 def _validate_with(tmp_path: Path, mutate) -> validate_ontology.Report:
     """Copy the ontology into a temp root, mutate the assertions, validate."""
     _copy_ontology(tmp_path)
-    _mutate_json(tmp_path, "ontology/instances/assertions.json", "assertions", mutate)
+    _mutate_json(tmp_path, "ONTOLOGY/instances/assertions.json", "assertions", mutate)
     return validate_ontology.validate(tmp_path)
 
 
 def _validate_with_entities(tmp_path: Path, mutate) -> validate_ontology.Report:
     _copy_ontology(tmp_path)
-    _mutate_json(tmp_path, "ontology/instances/entities.json", "entities", mutate)
+    _mutate_json(tmp_path, "ONTOLOGY/instances/entities.json", "entities", mutate)
     return validate_ontology.validate(tmp_path)
 
 
 def _validate_with_predicates(tmp_path: Path, mutate) -> validate_ontology.Report:
     _copy_ontology(tmp_path)
-    _mutate_json(tmp_path, "ontology/vocab/predicates.json", "predicates", mutate)
+    _mutate_json(tmp_path, "ONTOLOGY/vocab/predicates.json", "predicates", mutate)
     return validate_ontology.validate(tmp_path)
 
 
@@ -369,7 +369,7 @@ def test_rejection_requires_a_reviewer(tmp_path, assertions):
 
 @pytest.fixture(scope="module")
 def details():
-    return load(ROOT / "ontology" / "instances" / "external" / "details.json")
+    return load(ROOT / "ONTOLOGY" / "instances" / "external" / "details.json")
 
 
 def test_external_datasets_carry_licence_and_attribution(assertions, entities):
@@ -456,7 +456,7 @@ def test_inventories_are_complete(entities):
     Guards two ways of losing data silently: the profiler's depth limit dropping
     files, and a curator mapping pointing at a path nothing ever measured.
     """
-    external = ROOT / "ontology" / "instances" / "external"
+    external = ROOT / "ONTOLOGY" / "instances" / "external"
     inventories = [load(path) for path in sorted(external.glob("*.json"))
                    if "files" in load(path)]
     assert inventories, "expected at least one profiled delivery"
@@ -516,12 +516,12 @@ TOPOLOGY_PREDICATES = {
 
 @pytest.fixture(scope="module")
 def relationship_tables():
-    return load(ROOT / "ontology" / "vocab" / "relationship-tables.json")["tables"]
+    return load(ROOT / "ONTOLOGY" / "vocab" / "relationship-tables.json")["tables"]
 
 
 @pytest.fixture(scope="module")
 def predicates():
-    return {p["id"]: p for p in load(ROOT / "ontology" / "vocab" / "predicates.json")["predicates"]}
+    return {p["id"]: p for p in load(ROOT / "ONTOLOGY" / "vocab" / "predicates.json")["predicates"]}
 
 
 def test_topology_predicates_are_measured_not_proposed(predicates):
@@ -543,7 +543,7 @@ def test_topology_stays_out_of_the_assertion_graph(assertions):
     """
     expanded = [a for a in assertions if a["predicate"] in TOPOLOGY_PREDICATES]
     assert not expanded, f"{len(expanded)} topology links leaked into assertions.json"
-    features = [e for e in load(ROOT / "ontology" / "instances" / "entities.json")["entities"]
+    features = [e for e in load(ROOT / "ONTOLOGY" / "instances" / "entities.json")["entities"]
                 if e["type"] in {"Basin", "RiverReach", "WaterBody"}]
     assert not features, f"{len(features)} feature entities were minted"
 
@@ -556,16 +556,11 @@ def test_every_declared_relationship_table_reaches_the_graph(relationship_tables
     owner = {a["object"]: a["subject"] for a in assertions
              if a["predicate"] == "uz:hasDistribution"}
     # Several tables share one GeoPackage, so the container alone does not
-    # identify a table; keep a list and match on the table name as well.
-    located = [
-        ((e.get("storedName") or e.get("externalPath") or "").replace("\\", "/").lower(), e)
-        for e in registered.values()
-    ]
-
+    # identify a table; the declared table name separates them.
     for table in relationship_tables:
         match = next(
-            (e for location, e in located
-             if location.endswith(table["container"].lower())
+            (e for e in registered.values()
+             if e.get("container") == table["container"]
              and e.get("containerTable") == table.get("containerTable")),
             None,
         )
@@ -596,9 +591,8 @@ def test_relationship_table_row_counts_are_measured(relationship_tables, entitie
     """Counts come from the file or the build that wrote it, never from the vocabulary."""
     import csv
 
-    by_path = {(e.get("storedName") or e.get("externalPath") or "").replace("\\", "/").lower(): e
-               for e in entities.values()
-               if e.get("role") == "relationship-table" and not e.get("containerTable")}
+    by_container = {e.get("container"): e for e in entities.values()
+                    if e.get("role") == "relationship-table" and not e.get("containerTable")}
     checked = 0
     for table in relationship_tables:
         if table["format"] != "CSV":
@@ -606,8 +600,7 @@ def test_relationship_table_row_counts_are_measured(relationship_tables, entitie
         container = ROOT / table["container"]
         if not container.exists():
             continue
-        entity = next(e for path, e in by_path.items()
-                      if path.endswith(table["container"].lower()))
+        entity = by_container[table["container"]]
         with container.open(encoding="utf-8-sig", newline="") as handle:
             header = next(csv.reader(handle))
             rows = sum(1 for _ in handle)
@@ -628,8 +621,8 @@ def test_relationship_table_row_counts_are_measured(relationship_tables, entitie
 
 def test_relationship_table_schema_requires_the_typed_declaration():
     """The role is what binds the extra requirements; dropping a field must fail."""
-    schema = load(ROOT / "ontology" / "schema" / "entity.schema.json")
-    entities = load(ROOT / "ontology" / "instances" / "entities.json")
+    schema = load(ROOT / "ONTOLOGY" / "schema" / "entity.schema.json")
+    entities = load(ROOT / "ONTOLOGY" / "instances" / "entities.json")
     document = copy.deepcopy(entities)
     table = next(e for e in document["entities"] if e.get("role") == "relationship-table")
     del table["subjectColumn"]

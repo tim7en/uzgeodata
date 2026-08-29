@@ -18,8 +18,8 @@ Geospatial models are routinely reported with the first number. The second is th
 one that predicts how the model behaves on a new district.
 
 Usage:
-    python scripts/analysis/landuse_shape_model.py
-    python scripts/analysis/landuse_shape_model.py --sample 50000   # quick pass
+    python PIPELINES/analysis/landuse_shape_model.py
+    python PIPELINES/analysis/landuse_shape_model.py --sample 50000   # quick pass
 """
 
 from __future__ import annotations
@@ -57,8 +57,8 @@ def write_json(path: Path, payload) -> None:
 
 def source_path(root: Path) -> Path | None:
     """Find the training shapefile through the ontology, not a hard-coded path."""
-    entities = json.loads((root / "ontology" / "instances" / "entities.json").read_text(encoding="utf-8"))
-    assertions = json.loads((root / "ontology" / "instances" / "assertions.json").read_text(encoding="utf-8"))
+    entities = json.loads((root / "ONTOLOGY" / "instances" / "entities.json").read_text(encoding="utf-8"))
+    assertions = json.loads((root / "ONTOLOGY" / "instances" / "assertions.json").read_text(encoding="utf-8"))
     by_id = {e["id"]: e for e in entities["entities"]}
     for assertion in assertions["assertions"]:
         if (assertion["subject"] == "uz:ds/landcover-training-samples"
@@ -277,7 +277,7 @@ def main(argv=None) -> int:
         "runtimeSeconds": round(time.time() - started, 1),
     }
 
-    target = root / "public" / "data" / "analysis" / "landuse-shape-model.json"
+    target = root / "PUBLISHED" / "data" / "analysis" / "landuse-shape-model.json"
     write_json(target, result)
     print(f"\noptimism gap {result['validation']['optimismGap']:.3f} "
           f"({random_scores['accuracy']:.3f} random vs {spatial_scores['accuracy']:.3f} spatial)")

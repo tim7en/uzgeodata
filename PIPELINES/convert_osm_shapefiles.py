@@ -129,9 +129,9 @@ def layer_metadata(name: str, source: str, data: gpd.GeoDataFrame, repaired: int
 def main() -> int:
     parser = argparse.ArgumentParser(description="Convert OSM shapefiles to quota-controlled GeoJSON.")
     parser.add_argument("source", type=Path, help="Folder containing buildings/, waterways/, etc.")
-    parser.add_argument("--output", type=Path, default=Path("storage/derived/osm-geojson"))
-    parser.add_argument("--manifest", type=Path, default=Path("storage/derived/osm-layers.json"))
-    parser.add_argument("--quota-root", type=Path, default=Path("storage/derived"))
+    parser.add_argument("--output", type=Path, default=Path("WORKSPACE/derived/osm-geojson"))
+    parser.add_argument("--manifest", type=Path, default=Path("WORKSPACE/derived/osm-layers.json"))
+    parser.add_argument("--quota-root", type=Path, default=Path("WORKSPACE/derived"))
     parser.add_argument("--max-store-gb", type=float, default=5.0)
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T17:24:35+00:00",
+  "generatedAt": "2026-08-29T17:52:48+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -8597,9 +8597,20 @@
   ],
   "counts": {
     "datasets": 177,
+    "atlasPackages": 134,
     "stations": 190,
     "publishedAssertions": 3093,
-    "proposedAssertions": 577
+    "proposedAssertions": 577,
+    "relationshipTables": 11,
+    "relationshipLinks": 487056
+  },
+  "hydrography": {
+    "rivers": 17447,
+    "lakes": 647,
+    "basins": 2736,
+    "downstreamLinks": 17447,
+    "riverBasinLinks": 17447,
+    "lakeBasinLinks": 647
   },
   "triples": "/data/ontology-triples.json"
 }

@@ -3,10 +3,10 @@
 Reads the public catalogue, the private repository, the extracted layer registry
 and the polygonised-raster registry, and projects them into one graph:
 
-    ontology/instances/identity-map.json   sourceKey -> dataset ID, minted once
-    ontology/instances/entities.json       Dataset / Distribution / MapLayer / Agent
-    ontology/instances/assertions.json     every relational fact, with provenance
-    public/data/ontology-graph.json        the projection the portal renders
+    ONTOLOGY/instances/identity-map.json   sourceKey -> dataset ID, minted once
+    ONTOLOGY/instances/entities.json       Dataset / Distribution / MapLayer / Agent
+    ONTOLOGY/instances/assertions.json     every relational fact, with provenance
+    PUBLISHED/data/ontology-graph.json        the projection the portal renders
 
 Nothing here guesses silently. Structural facts come from the source metadata or
 from measurements made by the extraction pipeline; semantic facts come from the
@@ -14,7 +14,7 @@ lexical rules and are labelled as such, so a curator (or a later model) can tell
 them apart and correct them.
 
 Usage:
-    python scripts/ontology/build_ontology.py [--root .] [--quiet]
+    python PIPELINES/ontology/build_ontology.py [--root .] [--quiet]
 """
 
 from __future__ import annotations
@@ -47,7 +47,7 @@ AGENT_CURATOR = "uz:agent/curator"
 AGENT_HYDROSHEDS = "uz:agent/hydrosheds"
 
 # The five layers published to the public map, keyed by the atlas number their
-# extraction script pulls them from (scripts/build_web_layers.py).
+# extraction script pulls them from (PIPELINES/build_web_layers.py).
 PUBLIC_LAYER_ATLAS_NUMBERS = {
     "protected-areas": 185,
     "earthquakes": 205,
@@ -150,6 +150,32 @@ def term_matches(haystack: str, term: str) -> bool:
     return re.search(r" " + re.escape(term) + r"[a-zЀ-ӿ]{0,3}(?= )", haystack) is not None
 
 
+def match_by_path_tail(container: str, by_location: dict[str, str]) -> str | None:
+    """Find the distribution that already stands for this file.
+
+    A relationship table names its container relative to the repository, while a
+    delivery file's recorded location is absolute and rooted wherever it was
+    profiled, so the two share only a tail. Comparing whole paths breaks the
+    moment either root is renamed, and then the build mints a second record for
+    bytes it already catalogued.
+
+    Try the longest tail first and stop at the first that is unambiguous. Never
+    fall back to the bare filename: relationships/downstream_links.csv exists in
+    more than one delivery, and guessing between them would be worse than
+    minting a fresh record.
+    """
+    parts = container.lower().split("/")
+    for start in range(len(parts) - 1):
+        tail = "/".join(parts[start:])
+        matches = {dist for location, dist in by_location.items()
+                   if location == tail or location.endswith("/" + tail)}
+        if len(matches) == 1:
+            return matches.pop()
+        if len(matches) > 1:
+            return None
+    return None
+
+
 def assertion_id(subject: str, predicate: str, obj) -> str:
     key = f"{subject}|{predicate}|{json.dumps(obj, ensure_ascii=False, sort_keys=True)}"
     return "uz:a/" + hashlib.sha1(key.encode("utf-8")).hexdigest()[:16]
@@ -164,7 +190,7 @@ class GraphBuilder:
         self.assertions: dict[str, dict] = {}
         self.warnings: list[str] = []
 
-        vocab = root / "ontology" / "vocab"
+        vocab = root / "ONTOLOGY" / "vocab"
         self.themes = read_json(vocab / "themes.json")["concepts"]
         self.properties = read_json(vocab / "properties.json")["concepts"]
         self.analysis = read_json(vocab / "analysis.json")["concepts"]
@@ -179,7 +205,7 @@ class GraphBuilder:
                 self.theme_by_label[label.strip().lower()] = concept["id"]
 
         self.identity_map = read_json(
-            root / "ontology" / "instances" / "identity-map.json", {"version": "1.0", "ids": {}}
+            root / "ONTOLOGY" / "instances" / "identity-map.json", {"version": "1.0", "ids": {}}
         )
 
     def log(self, message: str) -> None:
@@ -275,11 +301,11 @@ class GraphBuilder:
 
     def load_sources(self) -> None:
         root = self.root
-        self.catalog = read_json(root / "public" / "data" / "archive-catalog.json", [])
-        self.repository = read_json(root / "storage" / "datasets.json", [])
-        self.layers = read_json(root / "storage" / "derived" / "all-map-layers.json", [])
-        self.rasters = read_json(root / "storage" / "derived" / "raster-geojson.json", [])
-        self.public_layers = read_json(root / "public" / "data" / "map-layers.json", [])
+        self.catalog = read_json(root / "PUBLISHED" / "data" / "archive-catalog.json", [])
+        self.repository = read_json(root / "WORKSPACE" / "datasets.json", [])
+        self.layers = read_json(root / "WORKSPACE" / "derived" / "all-map-layers.json", [])
+        self.rasters = read_json(root / "WORKSPACE" / "derived" / "raster-geojson.json", [])
+        self.public_layers = read_json(root / "PUBLISHED" / "data" / "map-layers.json", [])
 
         self.repo_by_source_title = {}
         for record in self.repository:
@@ -290,31 +316,31 @@ class GraphBuilder:
 
         # External deliveries: profiled inventories plus the curator's mapping of
         # which files make up which dataset.
-        external_dir = root / "ontology" / "instances" / "external"
+        external_dir = root / "ONTOLOGY" / "instances" / "external"
         self.inventories = {}
         for path in sorted(external_dir.glob("*.json")):
             payload = read_json(path)
             if payload and payload.get("name") and "files" in payload:
                 self.inventories[payload["name"]] = payload
-        self.external_mapping = read_json(root / "ontology" / "vocab" / "external-sources.json",
+        self.external_mapping = read_json(root / "ONTOLOGY" / "vocab" / "external-sources.json",
                                           {"sources": []})
         self.external_details = read_json(external_dir / "details.json",
                                           {"stations": [], "classLabels": {}})
         self.hydrography = read_json(
-            root / "ontology" / "instances" / "hydrography.json", {}
+            root / "ONTOLOGY" / "instances" / "hydrography.json", {}
         )
         self.relationship_tables = read_json(
-            root / "ontology" / "vocab" / "relationship-tables.json", {"tables": []}
+            root / "ONTOLOGY" / "vocab" / "relationship-tables.json", {"tables": []}
         )
         # Row counts a producing build already measured, keyed by the name a
         # table declares in rowCountFrom.manifest.
         self.relationship_counts = {
             "hydrography": (self.hydrography or {}).get("counts", {}),
             "atlasBasinLinks": (read_json(
-                root / "ontology" / "instances" / "atlas-basin-links.json", {}
+                root / "ONTOLOGY" / "instances" / "atlas-basin-links.json", {}
             ) or {}).get("counts", {}),
             "basinZonalStats": (read_json(
-                root / "ontology" / "instances" / "basin-zonal-stats.json", {}
+                root / "ONTOLOGY" / "instances" / "basin-zonal-stats.json", {}
             ) or {}).get("counts", {}),
         }
 
@@ -563,7 +589,7 @@ class GraphBuilder:
                 continue
 
             dist_id = f"uz:dist/{slug}-public-geojson"
-            path = self.root / "public" / (entry.get("url") or "").lstrip("/")
+            path = self.root / "PUBLISHED" / (entry.get("url") or "").lstrip("/")
             size = path.stat().st_size if path.exists() else None
             self.add_entity(
                 {
@@ -773,7 +799,7 @@ class GraphBuilder:
         licence = manifest.get("license")
         attribution = manifest.get("attribution")
         evidence = {
-            "source": "ontology/instances/hydrography.json",
+            "source": "ONTOLOGY/instances/hydrography.json",
             "note": manifest.get("selection", "Uzbekistan hydrography selection"),
         }
 
@@ -787,7 +813,7 @@ class GraphBuilder:
                 "sourceLabel": "HydroRIVERS v1.0 Asia FileGDB",
                 "sourceFormat": "FileGDB",
                 "web": web.get("rivers"),
-                "webFile": "public/data/hydrography/rivers.geojson",
+                "webFile": "PUBLISHED/data/hydrography/rivers.geojson",
                 "geometry": "line",
                 "count": counts.get("rivers"),
                 "fields": fields.get("rivers", []),
@@ -802,7 +828,7 @@ class GraphBuilder:
                 "sourceLabel": "HydroLAKES v1.0 global FileGDB",
                 "sourceFormat": "FileGDB",
                 "web": web.get("lakes"),
-                "webFile": "public/data/hydrography/lakes.geojson",
+                "webFile": "PUBLISHED/data/hydrography/lakes.geojson",
                 "geometry": "polygon",
                 "count": counts.get("lakes"),
                 "fields": fields.get("lakes", []),
@@ -820,7 +846,7 @@ class GraphBuilder:
                 "sourceLabel": "Uzbekistan BasinATLAS extraction, level 12 (standard HydroBASINS format)",
                 "sourceFormat": "GPKG",
                 "web": web.get("basins"),
-                "webFile": "public/data/hydrography/basins.geojson",
+                "webFile": "PUBLISHED/data/hydrography/basins.geojson",
                 "geometry": "polygon",
                 "count": counts.get("basins"),
                 "fields": fields.get("basins", []),
@@ -868,7 +894,7 @@ class GraphBuilder:
                 "role": "web-vector",
                 "format": "GeoPackage",
                 "byteSize": database_file.stat().st_size if database_file and database_file.exists() else None,
-                "storedName": "storage/derived/hydrography/uzbekistan-hydrography.gpkg",
+                "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
                 "url": None,
                 "accessPolicy": "free",
                 "featureCount": config["count"],
@@ -1019,17 +1045,12 @@ class GraphBuilder:
             # distribution that holds them.
             existing = None
             if not table.get("containerTable"):
-                suffix = container.lower()
-                existing = by_location.get(suffix) or next(
-                    (dist for location, dist in by_location.items()
-                     if location.endswith(suffix)),
-                    None,
-                )
+                existing = match_by_path_tail(container, by_location)
             dist_id = existing or f"uz:dist/{table['id']}"
 
             local = self.root / container
             evidence = {
-                "source": "ontology/vocab/relationship-tables.json",
+                "source": "ONTOLOGY/vocab/relationship-tables.json",
                 "note": table.get("note", table["label"]),
             }
             self.add_entity({
@@ -1052,6 +1073,11 @@ class GraphBuilder:
                 "objectType": table["objectType"],
                 "subjectColumn": table["subjectColumn"],
                 "objectColumn": table["objectColumn"],
+                # The file this table stands for, repo-relative. storedName and
+                # externalPath say where the bytes are, which depends on the
+                # machine that profiled them; this says which declared table it
+                # is, so nothing downstream has to match paths by guesswork.
+                "container": container,
                 "scopeColumn": table.get("scopeColumn"),
                 "measureColumn": table.get("measureColumn"),
                 "measureUnitColumn": table.get("measureUnitColumn"),
@@ -1099,7 +1125,7 @@ class GraphBuilder:
         properties the portal already has concepts for. The decoding comes from
         the official catalogue, so each link cites the columns behind it.
         """
-        columns = read_json(self.root / "ontology" / "instances" / "hydroatlas-columns.json", {})
+        columns = read_json(self.root / "ONTOLOGY" / "instances" / "hydroatlas-columns.json", {})
         decoded = columns.get("columns") or {}
         if not decoded:
             return
@@ -1355,7 +1381,7 @@ class GraphBuilder:
         hand-written curator facts), is carried over. A reviewed assertion always
         wins over the freshly generated one with the same subject/predicate/object.
         """
-        instances = self.root / "ontology" / "instances"
+        instances = self.root / "ONTOLOGY" / "instances"
         previous = read_json(instances / "assertions.json", {"assertions": []})["assertions"]
         curated = read_json(instances / "curated-assertions.json", {"assertions": []})["assertions"]
         proposals = read_json(instances / "proposals.json", {"assertions": []})["assertions"]
@@ -1459,10 +1485,21 @@ class GraphBuilder:
             ],
             "counts": {
                 "datasets": len(nodes),
+                "atlasPackages": sum(1 for n in nodes if n["catalogId"]),
                 "stations": sum(1 for e in self.entities.values() if e["type"] == "MonitoringStation"),
                 "publishedAssertions": len(published),
                 "proposedAssertions": sum(1 for a in self.assertions.values() if a["status"] == "proposed"),
+                # The measured topology is held outside the graph, so the portal
+                # cannot count it by walking assertions; carry the totals across.
+                "relationshipTables": sum(
+                    1 for e in self.entities.values() if e.get("role") == "relationship-table"),
+                "relationshipLinks": sum(
+                    e.get("rowCount", 0) for e in self.entities.values()
+                    if e.get("role") == "relationship-table"),
             },
+            # What the hydrography build measured, so the portal can describe the
+            # explorer without fetching its 7 MB relationship graph to count rows.
+            "hydrography": (self.hydrography or {}).get("counts", {}),
             # Proposals and rejections are deliberately not inlined here: this is
             # what the portal renders, and the portal renders facts. The review
             # table fetches the companion file instead, so the front page never
@@ -1487,7 +1524,7 @@ class GraphBuilder:
                 types[concept["id"]] = "Concept"
 
         predicates = read_json(
-            self.root / "ontology" / "vocab" / "predicates.json", {"predicates": []}
+            self.root / "ONTOLOGY" / "vocab" / "predicates.json", {"predicates": []}
         )["predicates"]
 
         rows = [
@@ -1531,7 +1568,7 @@ class GraphBuilder:
         }
 
     def save(self) -> dict:
-        instances = self.root / "ontology" / "instances"
+        instances = self.root / "ONTOLOGY" / "instances"
         write_json(instances / "identity-map.json", self.identity_map)
         write_json(
             instances / "entities.json",
@@ -1544,8 +1581,8 @@ class GraphBuilder:
              "assertions": sorted(self.assertions.values(), key=lambda a: (a["subject"], a["predicate"], a["id"]))},
         )
         graph = self.portal_graph()
-        write_json(self.root / "public" / "data" / "ontology-graph.json", graph)
-        write_json_rows(self.root / "public" / "data" / "ontology-triples.json",
+        write_json(self.root / "PUBLISHED" / "data" / "ontology-graph.json", graph)
+        write_json_rows(self.root / "PUBLISHED" / "data" / "ontology-triples.json",
                         self.triple_table(), "triples")
         return graph
 

@@ -34,7 +34,7 @@ try:
 except ImportError as error:  # pragma: no cover - depends on workstation GIS install
     raise SystemExit(
         "GDAL Python bindings are required. Run with QGIS Python, for example "
-        "scripts/run_hydrography_build.ps1"
+        "PIPELINES/run_hydrography_build.ps1"
     ) from error
 
 
@@ -117,7 +117,7 @@ WEB_BASIN_FIELDS = [
 
 # The 281 BasinATLAS attributes are deliberately not copied here.  They join on
 # HYBAS_ID against the extraction's own GeoPackage layer and attribute CSVs, and
-# every column is decoded in ontology/instances/hydroatlas-columns.json.
+# every column is decoded in ONTOLOGY/instances/hydroatlas-columns.json.
 ATTRIBUTE_JOIN_KEY = "HYBAS_ID"
 
 WARNINGS: list[dict] = []
@@ -540,7 +540,7 @@ def main(argv=None) -> int:
     parser.add_argument("--boundary", type=Path, default=None)
     args = parser.parse_args(argv)
     root = args.root.resolve()
-    delivery = root / "earth_engine" / "earth_engine"
+    delivery = root / "GEODATA"
     basinatlas = delivery / "uzbekistan_basinatlas_v10"
     river_gdb = resolve_file_gdb((args.rivers or delivery / "HydroRIVERS_v10_as.gdb").resolve())
     lake_gdb = resolve_file_gdb((args.lakes or delivery / "HydroLAKES_polys_v10.gdb").resolve())
@@ -550,8 +550,8 @@ def main(argv=None) -> int:
     ).resolve()
     boundary = read_boundary(boundary_path)
 
-    output_dir = root / "storage" / "derived" / "hydrography"
-    public_dir = root / "public" / "data" / "hydrography"
+    output_dir = root / "WORKSPACE" / "derived" / "hydrography"
+    public_dir = root / "PUBLISHED" / "data" / "hydrography"
     output_dir.mkdir(parents=True, exist_ok=True)
     public_dir.mkdir(parents=True, exist_ok=True)
     gpkg = output_dir / "uzbekistan-hydrography.gpkg"
@@ -771,8 +771,8 @@ def main(argv=None) -> int:
                 "key": ATTRIBUTE_JOIN_KEY,
                 "table": f"{basin_gpkg} :: {args.basin_layer}",
                 "csv": str(basinatlas / "attributes" / f"{args.basin_layer}.csv"),
-                "vocabulary": "ontology/instances/hydroatlas-columns.json",
-                "nationalProfile": "ontology/instances/hydroatlas-uz-profile.json",
+                "vocabulary": "ONTOLOGY/instances/hydroatlas-columns.json",
+                "nationalProfile": "ONTOLOGY/instances/hydroatlas-uz-profile.json",
             },
         },
         "database": {
@@ -793,7 +793,7 @@ def main(argv=None) -> int:
         },
         "fields": {"rivers": WEB_RIVER_FIELDS, "lakes": WEB_LAKE_FIELDS, "basins": WEB_BASIN_FIELDS},
     }
-    atomic_json(root / "ontology" / "instances" / "hydrography.json", manifest)
+    atomic_json(root / "ONTOLOGY" / "instances" / "hydrography.json", manifest)
     print(json.dumps(
         {"database": str(gpkg), **graph["counts"], "integrity": integrity,
          "warnings": len(WARNINGS)},

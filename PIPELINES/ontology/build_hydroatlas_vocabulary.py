@@ -21,8 +21,8 @@ The column name is then decoded against the catalogue's own suffix syntax:
                mj = majority class, mn/mx = min/max, av = average, su = sum
 
 Usage:
-    python scripts/ontology/build_hydroatlas_vocabulary.py
-    python scripts/ontology/build_hydroatlas_vocabulary.py --no-profile
+    python PIPELINES/ontology/build_hydroatlas_vocabulary.py
+    python PIPELINES/ontology/build_hydroatlas_vocabulary.py --no-profile
 """
 
 from __future__ import annotations
@@ -35,8 +35,8 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-CATALOG = "BasinATLAS_Data_v10.gdb/BasinATLAS_Catalog_v10.pdf"
-PACKAGE_GPKG = "earth_engine/earth_engine/uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg"
+CATALOG = "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Catalog_v10.pdf"
+PACKAGE_GPKG = "GEODATA/uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg"
 
 CORE_FIELDS = {
     "HYBAS_ID", "NEXT_DOWN", "NEXT_SINK", "MAIN_BAS", "DIST_SINK", "DIST_MAIN", "SUB_AREA",
@@ -334,11 +334,11 @@ def main(argv=None) -> int:
             if entry["label"]
         ],
     }
-    write_json(root / "ontology" / "vocab" / "hydroatlas-attributes.json", scheme)
+    write_json(root / "ONTOLOGY" / "vocab" / "hydroatlas-attributes.json", scheme)
 
     # The column decoding is measured detail about one release, not vocabulary,
     # so it lives with the instances and keeps the concept scheme schema-clean.
-    write_json(root / "ontology" / "instances" / "hydroatlas-columns.json", {
+    write_json(root / "ONTOLOGY" / "instances" / "hydroatlas-columns.json", {
         "version": "1.0",
         "generatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "catalogSource": CATALOG,
@@ -348,7 +348,7 @@ def main(argv=None) -> int:
         "columns": decoded,
         "undecodedColumns": undecoded,
     })
-    print(f"  wrote ontology/vocab/hydroatlas-attributes.json "
+    print(f"  wrote ONTOLOGY/vocab/hydroatlas-attributes.json "
           f"({len(scheme['concepts'])} concepts, {len(decoded)} decoded columns)")
 
     linked = {meaning["property"] for meaning in decoded.values() if meaning["property"]}
@@ -357,7 +357,7 @@ def main(argv=None) -> int:
     if not args.no_profile:
         print("computing the national profile ...")
         profile = country_profile(root, decoded)
-        write_json(root / "ontology" / "instances" / "hydroatlas-uz-profile.json", profile)
+        write_json(root / "ONTOLOGY" / "instances" / "hydroatlas-uz-profile.json", profile)
         print(f"  {len(profile['attributes'])} attributes summarised over "
               f"{profile['basins']:,} basins")
     return 0

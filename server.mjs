@@ -9,7 +9,7 @@ import multer from 'multer';
 dotenv.config();
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const storageRoot = path.join(root, 'storage');
+const storageRoot = path.join(root, 'WORKSPACE');
 const uploadRoot = path.join(storageRoot, 'uploads');
 const metadataFile = path.join(storageRoot, 'datasets.json');
 const requestsFile = path.join(storageRoot, 'requests.json');
@@ -201,7 +201,11 @@ if (process.env.NODE_ENV === 'production') {
     : next());
 } else {
   const { createServer } = await import('vite');
-  const vite = await createServer({ root, server: { middlewareMode: true }, appType: 'spa' });
+  const vite = await createServer({
+    root: path.join(root, 'INTERFACE'),
+    server: { middlewareMode: true },
+    appType: 'spa',
+  });
   app.use(vite.middlewares);
 }
 

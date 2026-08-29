@@ -17,7 +17,7 @@ converter in `raster_to_geojson.py` never found them. GDAL's OpenFileGDB driver
 reads them directly once the archive is unpacked.
 
 Usage:
-    python scripts/build_basin_zonal_stats.py [--root .] [--level 12]
+    python PIPELINES/build_basin_zonal_stats.py [--root .] [--level 12]
 """
 
 from __future__ import annotations
@@ -99,12 +99,12 @@ def write_json(path: Path, payload) -> None:
 def raster_packages(root: Path) -> list[dict]:
     """Atlas datasets whose only geometry is a raster inside a layer package."""
     entities = {e["id"]: e for e in
-                read_json(root / "ontology" / "instances" / "entities.json",
+                read_json(root / "ONTOLOGY" / "instances" / "entities.json",
                           {"entities": []})["entities"]}
-    assertions = read_json(root / "ontology" / "instances" / "assertions.json",
+    assertions = read_json(root / "ONTOLOGY" / "instances" / "assertions.json",
                            {"assertions": []})["assertions"]
     registry = {r.get("atlasNumber"): r for r in
-                read_json(root / "storage" / "derived" / "all-map-layers.json", [])}
+                read_json(root / "WORKSPACE" / "derived" / "all-map-layers.json", [])}
 
     distributions = defaultdict(list)
     for assertion in assertions:
@@ -123,7 +123,7 @@ def raster_packages(root: Path) -> list[dict]:
                        if d.get("role") == "source-package" and d.get("storedName")), None)
         if source is None:
             continue
-        path = root / "storage" / "uploads" / source["storedName"]
+        path = root / "WORKSPACE" / "uploads" / source["storedName"]
         legend = (registry.get(dataset.get("atlasNumber"), {}).get("legend") or {})
         packages.append({
             "dataset": dataset["id"],
@@ -220,7 +220,7 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     root = args.root.resolve()
 
-    package_dir = root / "earth_engine" / "earth_engine" / "uzbekistan_basinatlas_v10"
+    package_dir = root / "GEODATA" / "uzbekistan_basinatlas_v10"
     gpkg = package_dir / "uzbekistan_basinatlas_v10.gpkg"
     if not gpkg.exists():
         raise SystemExit(f"Basin reference not found: {gpkg}")
@@ -303,7 +303,7 @@ def main(argv=None) -> int:
     finally:
         shutil.rmtree(work_root, ignore_errors=True)
 
-    output = root / "storage" / "derived" / "basin-zonal-stats.csv"
+    output = root / "WORKSPACE" / "derived" / "basin-zonal-stats.csv"
     output.parent.mkdir(parents=True, exist_ok=True)
     columns = ["dataset_id", "atlas_number", "basin_id", "value_kind", "pixels",
                "mean", "min", "max", "stddev", "majority", "raster_crs", "distribution"]
@@ -342,7 +342,7 @@ def main(argv=None) -> int:
         "perPackage": report,
         "skipped": [{"dataset": e["dataset"], "reason": e.get("status")} for e in skipped],
     }
-    write_json(root / "ontology" / "instances" / "basin-zonal-stats.json", manifest)
+    write_json(root / "ONTOLOGY" / "instances" / "basin-zonal-stats.json", manifest)
 
     print(f"\n{len(rows):,} basin statistics across {len(linked)} datasets -> {output}")
     print(f"{len(skipped)} packages skipped; the manifest says why for each")

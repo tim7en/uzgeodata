@@ -15,14 +15,14 @@ features on the BasinATLAS Uzbekistan level-12 basins and records one row per
 
 The result is an edge list, not an assertion set: at up to 3,981 basins per
 dataset it belongs in a relationship table, registered in the graph by
-`ontology/vocab/relationship-tables.json` and read from disk when someone asks.
+`ONTOLOGY/vocab/relationship-tables.json` and read from disk when someone asks.
 
 Rasters that were never polygonised have no geometry to overlay, so they are
 skipped and named in the manifest rather than silently dropped. Run
-`scripts/raster_to_geojson.py` over them first to bring them in.
+`PIPELINES/raster_to_geojson.py` over them first to bring them in.
 
 Usage:
-    python scripts/build_atlas_basin_links.py [--root .] [--level 12]
+    python PIPELINES/build_atlas_basin_links.py [--root .] [--level 12]
 """
 
 from __future__ import annotations
@@ -39,7 +39,7 @@ try:
 except ImportError as error:  # pragma: no cover - depends on the workstation
     raise SystemExit(
         "geopandas and pandas are required. This is the same environment "
-        "scripts/extract_uz_basinatlas.py runs in."
+        "PIPELINES/extract_uz_basinatlas.py runs in."
     ) from error
 
 VECTOR_CRS = "EPSG:4326"
@@ -49,8 +49,8 @@ AREA_CRS = "EPSG:6933"
 
 # Where a distribution's storedName resolves, by role.
 ROLE_DIRECTORIES = {
-    "web-vector": Path("storage") / "derived" / "web-layers",
-    "raster-polygonized": Path("storage") / "derived" / "raster-geojson",
+    "web-vector": Path("WORKSPACE") / "derived" / "web-layers",
+    "raster-polygonized": Path("WORKSPACE") / "derived" / "raster-geojson",
 }
 
 POLYGONAL = {"Polygon", "MultiPolygon"}
@@ -83,9 +83,9 @@ def atlas_layers(root: Path) -> list[dict]:
     column carries a real dataset ID the validator can resolve.
     """
     entities = {e["id"]: e for e in
-                read_json(root / "ontology" / "instances" / "entities.json",
+                read_json(root / "ONTOLOGY" / "instances" / "entities.json",
                           {"entities": []})["entities"]}
-    assertions = read_json(root / "ontology" / "instances" / "assertions.json",
+    assertions = read_json(root / "ONTOLOGY" / "instances" / "assertions.json",
                            {"assertions": []})["assertions"]
 
     distributions: dict[str, list[str]] = {}
@@ -116,7 +116,7 @@ def atlas_layers(root: Path) -> list[dict]:
 
 
 def load_basins(root: Path, level: int) -> gpd.GeoDataFrame:
-    package = root / "earth_engine" / "earth_engine" / "uzbekistan_basinatlas_v10"
+    package = root / "GEODATA" / "uzbekistan_basinatlas_v10"
     gpkg = package / "uzbekistan_basinatlas_v10.gpkg"
     if not gpkg.exists():
         raise SystemExit(f"Basin reference not found: {gpkg}")
@@ -233,7 +233,7 @@ def main(argv=None) -> int:
         print(f"  [{index:>3}/{len(present)}] {layer['dataset']:<52} "
               f"{len(produced):>5} basins  {note.get('kind') or note.get('note') or note.get('error', '')}")
 
-    output = root / "storage" / "derived" / "atlas-basin-links.csv"
+    output = root / "WORKSPACE" / "derived" / "atlas-basin-links.csv"
     output.parent.mkdir(parents=True, exist_ok=True)
     columns = ["dataset_id", "atlas_number", "basin_id", "geometry_kind",
                "feature_parts", "measure", "measure_unit", "distribution"]
@@ -245,7 +245,7 @@ def main(argv=None) -> int:
 
     # Rasters with no polygonised counterpart are the honest gap in the coverage.
     entities = {e["id"]: e for e in
-                read_json(root / "ontology" / "instances" / "entities.json",
+                read_json(root / "ONTOLOGY" / "instances" / "entities.json",
                           {"entities": []})["entities"]}
     linked = {layer["dataset"] for layer in layers}
     uncovered = sorted(e["id"] for e in entities.values()
@@ -278,11 +278,11 @@ def main(argv=None) -> int:
         "datasetsWithoutGeometry": uncovered,
         "note": (
             "Datasets without geometry are raster packages whose only derivative is a "
-            "PNG preview. Run scripts/raster_to_geojson.py over them to bring them into "
+            "PNG preview. Run PIPELINES/raster_to_geojson.py over them to bring them into "
             "this table."
         ),
     }
-    write_json(root / "ontology" / "instances" / "atlas-basin-links.json", manifest)
+    write_json(root / "ONTOLOGY" / "instances" / "atlas-basin-links.json", manifest)
 
     print(f"\n{len(rows):,} links across {manifest['counts']['datasetsLinked']} datasets "
           f"-> {output}")

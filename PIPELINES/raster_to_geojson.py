@@ -297,15 +297,15 @@ def parser() -> argparse.ArgumentParser:
         description="Polygonize TIFF rasters into quota-limited GeoJSON files.",
         epilog=(
             "Examples:\n"
-            "  python scripts/raster_to_geojson.py map.tif\n"
-            "  python scripts/raster_to_geojson.py atlas.lpkx --max-store-gb 5 --max-pixels 1000000\n"
-            "  python scripts/raster_to_geojson.py rasters/ --categorical yes --overwrite"
+            "  python PIPELINES/raster_to_geojson.py map.tif\n"
+            "  python PIPELINES/raster_to_geojson.py atlas.lpkx --max-store-gb 5 --max-pixels 1000000\n"
+            "  python PIPELINES/raster_to_geojson.py rasters/ --categorical yes --overwrite"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     result.add_argument("sources", nargs="+", type=Path, help="TIFF, LPKX, or directory containing either")
-    result.add_argument("--output", type=Path, default=Path("storage/derived/raster-geojson"))
-    result.add_argument("--registry", type=Path, default=Path("storage/derived/raster-geojson.json"))
+    result.add_argument("--output", type=Path, default=Path("WORKSPACE/derived/raster-geojson"))
+    result.add_argument("--registry", type=Path, default=Path("WORKSPACE/derived/raster-geojson.json"))
     result.add_argument("--max-store-gb", type=float, default=5.0, help="Aggregate output quota in GiB")
     result.add_argument("--max-temp-gb", type=float, default=5.0, help="LPKX TIFF extraction limit in GiB")
     result.add_argument("--max-pixels", type=int, default=DEFAULT_MAX_PIXELS)

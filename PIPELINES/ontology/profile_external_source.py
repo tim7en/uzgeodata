@@ -13,8 +13,8 @@ The result is a JSON inventory that `ingest_external_source.py` turns into
 ontology entities. Nothing is copied and nothing is converted here.
 
 Usage:
-    python scripts/ontology/profile_external_source.py "C:/Users/User/Desktop/MAPS" \
-        --name maps-drop-2026-08 --out ontology/instances/external/maps-drop.json
+    python PIPELINES/ontology/profile_external_source.py "C:/Users/User/Desktop/MAPS" \
+        --name maps-drop-2026-08 --out ONTOLOGY/instances/external/maps-drop.json
 """
 
 from __future__ import annotations
@@ -192,8 +192,8 @@ def known_assets(repo_root: Path) -> dict[str, str]:
     """
     known: dict[str, str] = {}
     for registry, label in (
-        ("storage/derived/osm-layers.json", "converted to storage/derived/osm-geojson"),
-        ("storage/derived/raster-geojson.json", "polygonised into storage/derived/raster-geojson"),
+        ("WORKSPACE/derived/osm-layers.json", "converted to WORKSPACE/derived/osm-geojson"),
+        ("WORKSPACE/derived/raster-geojson.json", "polygonised into WORKSPACE/derived/raster-geojson"),
     ):
         path = repo_root / registry
         if not path.exists():
@@ -203,7 +203,7 @@ def known_assets(repo_root: Path) -> dict[str, str]:
             if source:
                 known[Path(str(source)).name.lower()] = label
 
-    datasets = repo_root / "storage" / "datasets.json"
+    datasets = repo_root / "WORKSPACE" / "datasets.json"
     if datasets.exists():
         for record in json.loads(datasets.read_text(encoding="utf-8")):
             for file_record in record.get("files", []):

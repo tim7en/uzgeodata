@@ -12,8 +12,8 @@ from pathlib import Path
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("source", type=Path)
-    parser.add_argument("--catalog", type=Path, default=Path("public/data/archive-catalog.json"))
-    parser.add_argument("--storage", type=Path, default=Path("storage"))
+    parser.add_argument("--catalog", type=Path, default=Path("PUBLISHED/data/archive-catalog.json"))
+    parser.add_argument("--storage", type=Path, default=Path("WORKSPACE"))
     args = parser.parse_args()
 
     uploads = args.storage / "uploads"

@@ -23,8 +23,36 @@ const useCases = [
   { n:'03', sector:'Agriculture', title:'Monitor productive land', icon:Wheat, question:'How are crop vigor, salinity and land productivity changing?', outcome:'Direct field surveys and support resilient farm management.', data:['NDVI & EVI','Soil salinity','Land productivity'], users:'Agriculture agencies · Agronomists' },
   { n:'04', sector:'Disaster risk', title:'Assess exposure', icon:ShieldAlert, question:'Where do communities and assets overlap known environmental hazards?', outcome:'Support screening, preparedness and risk-sensitive planning.', data:['Flood risk','Earthquakes','Mudflow zones'], users:'Emergency services · Engineers' },
   { n:'05', sector:'Nature & carbon', title:'Protect ecosystems', icon:Trees, question:'Which habitats carry the greatest biodiversity and restoration value?', outcome:'Prioritize protection, restoration and carbon investment.', data:['Protected areas','Forest integrity','Carbon potential'], users:'Conservation bodies · NGOs' },
-  { n:'06', sector:'Research', title:'Build reproducible evidence', icon:FlaskConical, question:'Can source layers be compared across themes, regions and time?', outcome:'Create cited analysis without rebuilding the data inventory.', data:['134 indexed layers','Source metadata','Catalog relationships'], users:'Universities · Research teams' },
+  { n:'06', sector:'Research', title:'Build reproducible evidence', icon:FlaskConical, question:'Can source layers be compared across themes, regions and time?', outcome:'Create cited analysis without rebuilding the data inventory.', data:['Full atlas index','Source metadata','Basin-level linkage'], users:'Universities · Research teams' },
 ];
+
+// One fetch of the published graph, shared by every section that quotes a number.
+// Nothing on this page hardcodes a count any more: the build writes them, so the
+// page cannot drift from what the ontology actually holds.
+let graphRequest = null;
+const loadGraph = () => {
+  if (!graphRequest) graphRequest = fetch('/data/ontology-graph.json').then(r => r.json());
+  return graphRequest;
+};
+
+function useGraph() {
+  const [graph, setGraph] = useState(null);
+  useEffect(() => {
+    let live = true;
+    loadGraph().then(data => { if (live) setGraph(data); }).catch(() => {});
+    return () => { live = false; };
+  }, []);
+  return graph;
+}
+
+const count = (value, fallback = '—') =>
+  value === undefined || value === null ? fallback : Number(value).toLocaleString('en-US');
+
+const compact = value => {
+  if (value === undefined || value === null) return ['—', ''];
+  if (value >= 1000) return [Math.round(value / 1000).toLocaleString('en-US'), 'K'];
+  return [Number(value).toLocaleString('en-US'), ''];
+};
 
 function Logo({ href = '#top' }) {
   return <a href={href} className="logo" aria-label="UzGeoData home">
@@ -39,29 +67,32 @@ function Header({ onAccess }) {
     <Logo />
     <button className="menu-button" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open} aria-controls="primary-navigation">{open ? <X/> : <Menu/>}</button>
     <nav id="primary-navigation" className={open ? 'open' : ''} onClick={() => setOpen(false)}>
-      <a href="#catalog">Data catalog</a><a href="#map">Map explorer</a><a href="#ontology">Ontology</a><a href="#solutions">Use cases</a><a href="#about">Standards</a>
+      <a href="#catalog">Data catalog</a><a href="#map">Map explorer</a><a href="#explorers">Explorers</a><a href="#ontology">Ontology</a><a href="#solutions">Use cases</a><a href="#about">Standards</a>
     </nav>
     <button className="button button-small desktop-cta" onClick={onAccess}>Request access <ArrowRight size={16}/></button>
   </header>
 }
 
 function Hero({ onExplore, onAccess }) {
+  const graph = useGraph();
+  const counts = graph?.counts || {};
+  const [links, linksUnit] = compact(counts.relationshipLinks);
   return <section className="hero" id="top">
     <div className="hero-image" />
     <div className="hero-grid" />
     <div className="hero-content">
       <div className="eyebrow"><span className="pulse"/> Uzbekistan environmental data portal</div>
       <h1>Map what<br/><span>matters.</span></h1>
-      <p className="hero-copy">Curated environmental geodata for the people shaping Uzbekistan. Atlas vectors, analysis-ready rasters and specialist datasets—organized, documented and ready to work.</p>
+      <p className="hero-copy">Curated environmental geodata for the people shaping Uzbekistan. Atlas vectors, analysis-ready rasters and national hydrography—organized into a provenanced knowledge graph, and measured against the basins the country actually drains into.</p>
       <div className="hero-actions">
         <button className="button" onClick={onExplore}>Explore data <ArrowDown size={17}/></button>
         <button className="text-button" onClick={onAccess}>Request a dataset <ArrowRight size={17}/></button>
       </div>
     </div>
     <div className="hero-stats">
-      <div><strong>134</strong><small>Atlas packages catalogued</small></div>
-      <div><strong>5</strong><small>Interactive map layers</small></div>
-      <div><strong>1.6<span>GB</span></strong><small>Indexed source volume</small></div>
+      <div><strong>{count(counts.datasets)}</strong><small>Datasets catalogued</small></div>
+      <div><strong>{count(counts.publishedAssertions)}</strong><small>Provenanced facts</small></div>
+      <div><strong>{links}<span>{linksUnit}</span></strong><small>Measured relationships</small></div>
     </div>
     <div className="coordinates">41.3775° N&nbsp;&nbsp;&nbsp; 64.5853° E</div>
     <div className="scroll-note"><span>Scroll to discover</span><ArrowDown size={14}/></div>
@@ -69,6 +100,7 @@ function Hero({ onExplore, onAccess }) {
 }
 
 function Catalog({ onRequest }) {
+  const atlasPackages = useGraph()?.counts?.atlasPackages;
   const [query, setQuery] = useState('');
   const [active, setActive] = useState('All data');
   const categories = ['All data', ...new Set(datasets.map(dataset => dataset.category))];
@@ -92,7 +124,7 @@ function Catalog({ onRequest }) {
       </article>)}
       {shown.length === 0 && <div className="empty-state"><Search size={30}/><h3>No exact match</h3><p>Try a broader theme or clear your filters.</p><button onClick={() => {setQuery(''); setActive('All data')}}>Clear search</button></div>}
     </div>
-    <a href="#map" className="catalog-link">Browse all 134 atlas datasets <ArrowRight size={18}/></a>
+    <a href="#map" className="catalog-link">Browse all {count(atlasPackages, "134")} atlas packages <ArrowRight size={18}/></a>
   </section>
 }
 
@@ -133,7 +165,7 @@ function EnvironmentalMap() {
       <ZoomControl position="bottomright"/>
       {geoData && <GeoJSON key={active} data={geoData} style={layerStyle} pointToLayer={pointToLayer} onEachFeature={(feature,layer)=>layer.bindPopup(popupNode(feature,current?.title || 'Feature'),{maxWidth:300})}/>} 
     </MapContainer>{!geoData && <div className="map-loading"><LoaderCircle className="spin"/> Loading layer</div>}<div className="map-readout"><span>UZBEKISTAN / WGS 84</span><strong>{current?.features?.toLocaleString() || '—'} FEATURES</strong></div></div>
-      <aside className="map-panel"><div className="layer-heading"><span>LIVE LAYERS</span><small>{layers.length} / 134 web-ready</small></div><div className="layer-buttons">{layers.map(layer=><button key={layer.id} aria-pressed={active===layer.id} className={active===layer.id?'active':''} onClick={()=>setActive(layer.id)}><i style={{background:mapColors[layer.id]}}/><span><strong>{layer.title}</strong><small>{layer.features.toLocaleString()} features · {layer.geometry}</small></span><ArrowRight size={14}/></button>)}</div>
+      <aside className="map-panel"><div className="layer-heading"><span>LIVE LAYERS</span><small>{layers.length} / {count(catalog.length, "134")} web-ready</small></div><div className="layer-buttons">{layers.map(layer=><button key={layer.id} aria-pressed={active===layer.id} className={active===layer.id?'active':''} onClick={()=>setActive(layer.id)}><i style={{background:mapColors[layer.id]}}/><span><strong>{layer.title}</strong><small>{layer.features.toLocaleString()} features · {layer.geometry}</small></span><ArrowRight size={14}/></button>)}</div>
         <div className="archive-index"><div className="layer-heading"><span>FULL ARCHIVE INDEX</span><small>{filtered.length} packages</small></div><div className="archive-search"><Search size={15}/><input aria-label="Search full archive" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search all layers..."/></div><select aria-label="Filter archive by theme" value={category} onChange={e=>setCategory(e.target.value)}>{categories.map(item=><option key={item}>{item}</option>)}</select><div className="archive-results">{filtered.slice(0,60).map(item=><div key={item.id}><span>{item.atlasNumber || '—'}</span><p><strong>{item.title}</strong><small>{normalizeDomain(item.category)} · {(item.size/1024/1024).toFixed(item.size>10*1024*1024?0:1)} MB</small></p></div>)}</div>{filtered.length>60&&<div className="archive-more">+ {filtered.length-60} more matching packages</div>}</div>
       </aside></div>
   </section>
@@ -181,7 +213,7 @@ function OntologyExplorer({ onRequest }) {
   const [zoom,setZoom] = useState(1);
   const [touring,setTouring] = useState(true);
   const [reducedMotion,setReducedMotion] = useState(false);
-  useEffect(()=>{fetch('/data/ontology-graph.json').then(r=>r.json()).then(data=>{setModel(data);setSelectedId(data.datasets[0]?.id)})},[]);
+  useEffect(()=>{loadGraph().then(data=>{setModel(data);setSelectedId(data.datasets[0]?.id)}).catch(()=>{})},[]);
   useEffect(()=>{
     const media=window.matchMedia('(prefers-reduced-motion: reduce)');
     const update=()=>{setReducedMotion(media.matches);if(media.matches)setTouring(false)};
@@ -229,7 +261,7 @@ function OntologyExplorer({ onRequest }) {
   },[touring,reducedMotion,hoveredId,visibleNodes]);
   const selectNode=id=>{setSelectedId(id);setTouring(false)};
   const selectDomain=name=>{setActiveDomain(activeDomain===name?'All domains':name);setTouring(false)};
-  return <section className="ontology" id="ontology"><div className="ontology-intro"><div><div className="kicker">03 / Catalog knowledge model</div><h2>From files to<br/><span>knowledge.</span></h2></div><p>The atlas catalogue is organized as connected records. Explore how every package belongs to an environmental domain and is associated with an analytical role.</p></div>
+  return <section className="ontology" id="ontology"><div className="ontology-intro"><div><div className="kicker">04 / Catalog knowledge model</div><h2>From files to<br/><span>knowledge.</span></h2></div><p>Not a folder listing. Every record is a stored, typed fact carrying the agent that asserted it and how confident it is — measured by the pipeline, matched by a rule, or decided by a curator. Explore the domains below, then read the facts themselves in the <a href="/relationships.html">relationship tables</a>.</p></div>
     <div className="ontology-toolbar"><div className="ontology-search"><Search size={17}/><input aria-label="Search ontology" value={query} onChange={e=>{setQuery(e.target.value);setTouring(false)}} placeholder="Find a dataset, domain or concept..."/><span>{matchCount} objects</span></div><div className="ontology-filters"><button aria-pressed={activeDomain==='All domains'} className={activeDomain==='All domains'?'active':''} onClick={()=>{setActiveDomain('All domains');setTouring(false)}}>All domains</button>{ontologyDomains.map(domain=><button aria-pressed={activeDomain===domain.name} key={domain.name} className={activeDomain===domain.name?'active':''} onClick={()=>selectDomain(domain.name)}><i style={{background:domain.color}}/>{domain.name}</button>)}</div></div>
     <div className="ontology-workspace"><div className={`ontology-canvas ${touring?'is-touring':''}`}><div className="ontology-controls"><button className={touring?'tour-active':''} onClick={()=>setTouring(value=>!value)} aria-label={touring?'Pause guided tour':'Play guided tour'} aria-pressed={touring}>{touring?<Pause/>:<Play/>}</button><button onClick={()=>setZoom(value=>Math.min(1.35,value+.1))} aria-label="Zoom in"><Plus/></button><button onClick={()=>setZoom(value=>Math.max(.72,value-.1))} aria-label="Zoom out"><Minus/></button><button onClick={()=>setZoom(1)} aria-label="Reset zoom"><RotateCcw/></button></div><div className="ontology-live"><i/><span>{touring?'GUIDED TOUR':'INTERACTIVE'}</span><b>{focused?.title||'CATALOG READY'}</b></div>
       <svg viewBox="0 0 1200 740" role="img" aria-label="Knowledge graph of Uzbekistan environmental datasets"><g style={{transform:`translate(600px, 370px) scale(${zoom}) translate(-600px, -370px)`,transformOrigin:'0 0'}}>
@@ -246,9 +278,52 @@ function OntologyExplorer({ onRequest }) {
   </section>
 }
 
+function Explorers() {
+  const graph = useGraph();
+  const counts = graph?.counts || {};
+  const water = graph?.hydrography || {};
+  const tools = [
+    {
+      href: '/hydrography.html',
+      icon: Droplets,
+      kicker: 'Hydrography',
+      title: 'Trace the water.',
+      copy: 'Every river reach, water body and level-12 catchment HydroSHEDS records inside the national boundary — on a map that follows the links between them. Select a reach to see what it flows into, the basin it drains and the reaches feeding it.',
+      stats: [[count(water.rivers), 'River reaches'], [count(water.lakes), 'Water bodies'],
+              [count(water.basins), 'Level-12 basins']],
+    },
+    {
+      href: '/relationships.html',
+      icon: Network,
+      kicker: 'Relationships',
+      title: 'Read the graph.',
+      copy: 'Every stored fact in a filterable table — subject, predicate, object, the agent that asserted it and how confident it is — including the proposals awaiting review and the rejections, which the portal itself never publishes. Sortable, and exportable as CSV.',
+      stats: [[count(counts.publishedAssertions), 'Asserted facts'],
+              [count(counts.proposedAssertions), 'Awaiting review'],
+              [count(counts.relationshipTables), 'Relationship tables']],
+    },
+  ];
+  return <section className="section explorers" id="explorers">
+    <div className="section-head">
+      <div><div className="kicker">03 / Workbenches</div><h2>Two ways in,<br/>past the map.</h2></div>
+      <p>The catalogue answers what exists. These answer how it connects — one for the water network, one for the graph that records every claim the portal makes.</p>
+    </div>
+    <div className="explorer-grid">
+      {tools.map(tool => <a className="explorer-card" href={tool.href} key={tool.href}>
+        <div className="explorer-top"><span className="data-icon"><tool.icon size={22}/></span><small>{tool.kicker}</small></div>
+        <h3>{tool.title}</h3>
+        <p>{tool.copy}</p>
+        <div className="explorer-stats">{tool.stats.map(([value, label]) =>
+          <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>
+        <span className="explorer-go">Open the explorer <ArrowRight size={17}/></span>
+      </a>)}
+    </div>
+  </section>
+}
+
 function Solutions({ onRequest }) {
   return <section className="section solutions" id="solutions">
-    <div className="section-head inverted"><div><div className="kicker">04 / Decision applications</div><h2>One country.<br/><em>Many missions.</em></h2></div><p>UzGeoData is designed around decisions, not file formats. Each use case combines multiple atlas themes into a practical evidence base.</p></div>
+    <div className="section-head inverted"><div><div className="kicker">05 / Decision applications</div><h2>One country.<br/><em>Many missions.</em></h2></div><p>UzGeoData is designed around decisions, not file formats. Each use case combines multiple atlas themes into a practical evidence base.</p></div>
     <div className="audience-strip"><span>BUILT FOR</span><strong>Government agencies</strong><strong>Regional planners</strong><strong>Research institutions</strong><strong>Engineering teams</strong><strong>Conservation organizations</strong></div>
     <div className="use-case-grid">{useCases.map(item => <article className="use-case-card" key={item.n}>
       <div className="case-top"><span>{item.n}</span><item.icon size={25}/><small>{item.sector}</small></div><h3>{item.title}</h3>
@@ -265,13 +340,14 @@ function TrustStrip() {
 }
 
 function Community() {
+  const counts = useGraph()?.counts || {};
   return <section className="community" id="community">
     <div className="community-image"><img src="/assets/field-team.png" alt="Uzbek geospatial field team in the mountains"/><span className="vertical-caption">Field intelligence / Tashkent Region</span></div>
     <div className="community-copy">
-      <div className="kicker">05 / Community</div><h2>Data moves<br/>with people.</h2>
+      <div className="kicker">06 / Community</div><h2>Data moves<br/>with people.</h2>
       <blockquote>“A useful spatial platform does more than publish files. It connects field knowledge, institutional memory and reproducible analysis.”</blockquote>
       <div className="quote-person"><div className="avatar">UZ</div><div><strong>UzGeoData principle</strong><span>Source titles remain visible with every catalog record</span></div></div>
-      <div className="community-proof"><div><strong>134</strong><span>Environmental packages indexed</span></div><div><strong>7</strong><span>Environmental domains</span></div></div>
+      <div className="community-proof"><div><strong>{count(counts.datasets)}</strong><span>Datasets indexed</span></div><div><strong>{count(counts.stations)}</strong><span>Monitoring stations</span></div></div>
       <a href="#ontology">Explore the knowledge model <ArrowRight size={18}/></a>
     </div>
   </section>
@@ -279,7 +355,7 @@ function Community() {
 
 function Standards() {
   return <section className="section standards" id="about">
-    <div className="standards-copy"><div className="kicker">06 / Data discipline</div><h2>Know your<br/>source.</h2><p>Professional geodata is more than a file. The portal separates original source packages from optimized web derivatives and keeps access status visible.</p><a href="/relationships.html" className="button dark-button">Explore data relationships <ArrowRight size={17}/></a></div>
+    <div className="standards-copy"><div className="kicker">07 / Data discipline</div><h2>Know your<br/>source.</h2><p>Professional geodata is more than a file. The portal separates original source packages from optimized web derivatives and keeps access status visible.</p><a href="/relationships.html" className="button dark-button">Explore data relationships <ArrowRight size={17}/></a></div>
     <div className="standard-list">
       {[['01','Source-preserving workflow','Original ArcGIS packages remain separate from lightweight browser derivatives.'],['02','Machine-readable index','English titles, domains, source filenames and sizes are available as structured metadata.'],['03','Semantic organization','Catalog records are grouped by environmental domain and analytical role.'],['04','Explicit access status','Free, request-based, licensed and internal data are distinguished before delivery.']].map(x => <div className="standard-item" key={x[0]}><span>{x[0]}</span><div><h3>{x[1]}</h3><p>{x[2]}</p></div><Check size={20}/></div>)}
     </div>
@@ -407,7 +483,7 @@ function AdminPanel() {
 function PublicPortal() {
   const [request, setRequest] = useState(null);
   const openRequest = (dataset = '') => setRequest(dataset || 'General data request');
-  return <><Header onAccess={() => openRequest()}/><main><Hero onExplore={() => document.getElementById('catalog').scrollIntoView({behavior:'smooth'})} onAccess={() => openRequest()}/><Catalog onRequest={openRequest}/><EnvironmentalMap/><OntologyExplorer onRequest={openRequest}/><Solutions onRequest={openRequest}/><TrustStrip/><Community/><Standards/><CTA onAccess={() => openRequest()}/></main><Footer/>{request !== null && <AccessModal initial={request} onClose={() => setRequest(null)}/>}</>;
+  return <><Header onAccess={() => openRequest()}/><main><Hero onExplore={() => document.getElementById('catalog').scrollIntoView({behavior:'smooth'})} onAccess={() => openRequest()}/><Catalog onRequest={openRequest}/><EnvironmentalMap/><Explorers/><OntologyExplorer onRequest={openRequest}/><Solutions onRequest={openRequest}/><TrustStrip/><Community/><Standards/><CTA onAccess={() => openRequest()}/></main><Footer/>{request !== null && <AccessModal initial={request} onClose={() => setRequest(null)}/>}</>;
 }
 
 export default function App() {
