@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "description": "The measured feature topology of the Uzbekistan hydrography, declared rather than expanded. Each entry becomes one relationship-table Distribution carrying its predicate, its subject and object types and its measured row count, so the graph knows the links exist and what they mean without holding 126,000 rows a curator would never review. Ownership follows the subject: a reach-to-basin table belongs to the river dataset, not the basin dataset.",
+  "description": "The measured feature topology of the Uzbekistan hydrography, declared rather than expanded. Each entry becomes one relationship-table Distribution carrying its predicate, its subject and object types and its measured row count, so the graph knows the links exist and what they mean without holding hundreds of thousands of rows a curator would never review. Ownership follows the subject where the subject is one dataset's features: a reach-to-basin table belongs to the river dataset, not the basin dataset. Where a table's subjects span many datasets, as the atlas overlay does, it belongs to the reference it was measured against.",
   "tables": [
     {
       "id": "hydrography-river-downstream",
@@ -100,6 +100,25 @@
       "objectColumn": "parent_pfaf_id",
       "scopeColumn": "parent_selected",
       "identifierScheme": "PFAF_ID"
+    },
+    {
+      "id": "atlas-basin-coverage",
+      "dataset": "basinatlas-uz-v10",
+      "label": "Environmental atlas layers by level-12 basin",
+      "note": "A measured overlay of every atlas package that has published vector geometry onto the basin reference, with overlap area for polygons, length for lines and a feature count for points. This is what lets a basin id reach the atlas: before it, the 134 packages were pinned to the country and nothing finer. Raster packages with only a PNG preview are absent until scripts/raster_to_geojson.py gives them geometry; the manifest names them.",
+      "predicate": "uz:coversBasin",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "storage/derived/atlas-basin-links.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "dataset_id",
+      "objectColumn": "basin_id",
+      "scopeColumn": null,
+      "measureColumn": "measure",
+      "measureUnitColumn": "measure_unit",
+      "identifierScheme": "HYBAS_ID",
+      "rowCountFrom": {"manifest": "atlasBasinLinks", "key": "atlasBasinLinks"}
     },
     {
       "id": "hydrobasins-lake-uz-downstream",

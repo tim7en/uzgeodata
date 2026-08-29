@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T15:46:37+00:00",
+  "generatedAt": "2026-08-29T15:52:21+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -7795,6 +7795,8 @@
       "subjectColumn": "lake_id",
       "objectColumn": "basin_id",
       "scopeColumn": "basin_scope",
+      "measureColumn": null,
+      "measureUnitColumn": null,
       "containerTable": "lake_basin_links",
       "identifierScheme": "HYBAS_ID",
       "rowCount": 647
@@ -7815,6 +7817,8 @@
       "subjectColumn": "river_id",
       "objectColumn": "basin_id",
       "scopeColumn": "basin_scope",
+      "measureColumn": null,
+      "measureUnitColumn": null,
       "containerTable": "river_basin_links",
       "identifierScheme": "HYBAS_ID",
       "rowCount": 17447
@@ -7835,6 +7839,8 @@
       "subjectColumn": "source_id",
       "objectColumn": "target_id",
       "scopeColumn": "target_scope",
+      "measureColumn": null,
+      "measureUnitColumn": null,
       "containerTable": "river_downstream_links",
       "identifierScheme": "HYRIV_ID",
       "rowCount": 17447

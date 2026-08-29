@@ -306,6 +306,14 @@ class GraphBuilder:
         self.relationship_tables = read_json(
             root / "ontology" / "vocab" / "relationship-tables.json", {"tables": []}
         )
+        # Row counts a producing build already measured, keyed by the name a
+        # table declares in rowCountFrom.manifest.
+        self.relationship_counts = {
+            "hydrography": (self.hydrography or {}).get("counts", {}),
+            "atlasBasinLinks": (read_json(
+                root / "ontology" / "instances" / "atlas-basin-links.json", {}
+            ) or {}).get("counts", {}),
+        }
 
     # ------------------------------------------------------------------ build
 
@@ -982,7 +990,7 @@ class GraphBuilder:
             if location:
                 by_location[location.replace("\\", "/").lower()] = entity["id"]
 
-        counts = (self.hydrography or {}).get("counts", {})
+        counts = self.relationship_counts
         registered = 0
         for table in tables:
             dataset = f"uz:ds/{table['dataset']}"
@@ -1042,6 +1050,8 @@ class GraphBuilder:
                 "subjectColumn": table["subjectColumn"],
                 "objectColumn": table["objectColumn"],
                 "scopeColumn": table.get("scopeColumn"),
+                "measureColumn": table.get("measureColumn"),
+                "measureUnitColumn": table.get("measureUnitColumn"),
                 "containerTable": table.get("containerTable"),
                 "identifierScheme": table["identifierScheme"],
                 "rowCount": row_count,
@@ -1069,7 +1079,7 @@ class GraphBuilder:
         """Measure the table, or read the count the producing build already measured."""
         source = table.get("rowCountFrom")
         if source:
-            value = counts.get(source["key"])
+            value = counts.get(source["manifest"], {}).get(source["key"])
             return int(value) if value is not None else None
         path = self.root / table["container"]
         if not path.exists():

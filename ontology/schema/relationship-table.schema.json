@@ -37,8 +37,19 @@
             "pattern": "^uz:[a-zA-Z]+$",
             "description": "The registered predicate every row asserts. Must be declared viaRelationshipTable and must not be mlProposable."
           },
-          "subjectType": {"enum": ["Basin", "RiverReach", "WaterBody"]},
-          "objectType": {"enum": ["Basin", "RiverReach", "WaterBody"]},
+          "subjectType": {
+            "enum": ["Basin", "RiverReach", "WaterBody", "Dataset"],
+            "description": "Dataset is admitted because a measured overlay puts a catalogue record on one end and a feature on the other: an atlas layer covers a basin."
+          },
+          "objectType": {"enum": ["Basin", "RiverReach", "WaterBody", "Dataset"]},
+          "measureColumn": {
+            "type": ["string", "null"],
+            "description": "Column holding the magnitude of the link, where the relation is measured rather than merely present: overlap area, length inside the basin, or a feature count."
+          },
+          "measureUnitColumn": {
+            "type": ["string", "null"],
+            "description": "Column naming the unit of measureColumn, for a table whose rows mix polygon, line and point layers."
+          },
           "container": {
             "type": "string",
             "minLength": 1,
@@ -66,7 +77,10 @@
             "required": ["manifest", "key"],
             "additionalProperties": false,
             "properties": {
-              "manifest": {"enum": ["hydrography"]},
+              "manifest": {
+                "enum": ["hydrography", "atlasBasinLinks"],
+                "description": "Which build's manifest already measured this table."
+              },
               "key": {"type": "string", "minLength": 1}
             }
           }

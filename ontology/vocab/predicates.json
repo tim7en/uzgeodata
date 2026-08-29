@@ -203,6 +203,16 @@
       "viaRelationshipTable": true
     },
     {
+      "id": "uz:coversBasin",
+      "label": "covers basin",
+      "definition": "A measured overlay: this dataset has features inside this level-12 basin, with the magnitude recorded alongside. Overlap area for polygons, length inside the basin for lines, a feature count for points. It replaces uz:coversPlace at country level for anything the atlas can actually be intersected with, and unlike uz:coversPlace it is measured rather than mapped by a curator.",
+      "domain": ["Dataset"],
+      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
       "id": "uz:subBasinOf",
       "label": "sub-basin of",
       "definition": "Containment in the Pfafstetter hierarchy: the basin one level up that this basin nests inside. Established by Pfafstetter code prefix confirmed by spatial overlap, so every child resolves to exactly one parent at the adjacent level.",

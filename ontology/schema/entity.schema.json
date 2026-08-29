@@ -99,6 +99,8 @@
                 "subjectColumn": {"type": "string", "minLength": 1, "description": "Column holding the subject identifier."},
                 "objectColumn": {"type": "string", "minLength": 1, "description": "Column holding the object identifier."},
                 "scopeColumn": {"type": ["string", "null"], "description": "Column recording whether the object resolves inside the selection, where the producing pipeline writes one."},
+                "measureColumn": {"type": ["string", "null"], "description": "Column holding the magnitude of the link, where the relation is measured rather than merely present."},
+                "measureUnitColumn": {"type": ["string", "null"], "description": "Column naming the unit of measureColumn, for a table whose rows mix geometry types."},
                 "containerTable": {"type": ["string", "null"], "description": "Table name inside the container, for a GeoPackage or database. Null for a standalone file."},
                 "identifierScheme": {"type": "string", "description": "Which identifier the columns carry, e.g. HYBAS_ID, HYRIV_ID, Hylak_id, PFAF_ID."},
                 "rowCount": {"type": "integer", "minimum": 0, "description": "Measured row count, not an estimate."}
