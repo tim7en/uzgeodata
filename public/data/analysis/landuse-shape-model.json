@@ -1,0 +1,1030 @@
+{
+  "generatedAt": "2026-08-28T14:55:45+00:00",
+  "source": {
+    "dataset": "uz:ds/landcover-training-samples",
+    "file": "landcover_training.shp",
+    "polygonsUsed": 198539,
+    "classesUsed": [
+      "Agri",
+      "forest",
+      "land_stock",
+      "non_residential",
+      "residential",
+      "residential_private",
+      "roads_highways",
+      "shared_lands",
+      "water"
+    ],
+    "classesDropped": {
+      "protected": 71,
+      "railways": 5
+    },
+    "droppedRule": "fewer than 100 samples"
+  },
+  "model": {
+    "estimator": "HistGradientBoostingClassifier",
+    "maxIter": 150,
+    "features": [
+      "log_area",
+      "log_perimeter",
+      "compactness",
+      "convexity",
+      "rectangularity",
+      "elongation",
+      "log_vertices",
+      "parts",
+      "centroid_lon",
+      "centroid_lat"
+    ],
+    "featureNote": "geometry and location only; no imagery, no attributes"
+  },
+  "validation": {
+    "random": {
+      "scheme": "random",
+      "accuracy": 0.8152,
+      "macroF1": 0.7394,
+      "weightedF1": 0.7989
+    },
+    "spatial": {
+      "scheme": "spatial",
+      "accuracy": 0.6643,
+      "macroF1": 0.5055,
+      "weightedF1": 0.6048
+    },
+    "blockDegrees": 0.5,
+    "blocks": 208,
+    "optimismGap": 0.1509,
+    "note": "The gap is how much a random split would have overstated field performance."
+  },
+  "perClass": {
+    "Agri": {
+      "f1": 0.796,
+      "precision": 0.752,
+      "recall": 0.845,
+      "support": 30035
+    },
+    "forest": {
+      "f1": 0.342,
+      "precision": 0.333,
+      "recall": 0.35,
+      "support": 3414
+    },
+    "land_stock": {
+      "f1": 0.664,
+      "precision": 0.686,
+      "recall": 0.645,
+      "support": 12721
+    },
+    "non_residential": {
+      "f1": 0.34,
+      "precision": 0.484,
+      "recall": 0.262,
+      "support": 19993
+    },
+    "residential": {
+      "f1": 0.739,
+      "precision": 0.621,
+      "recall": 0.911,
+      "support": 72813
+    },
+    "residential_private": {
+      "f1": 0.039,
+      "precision": 0.563,
+      "recall": 0.02,
+      "support": 19591
+    },
+    "roads_highways": {
+      "f1": 0.89,
+      "precision": 0.859,
+      "recall": 0.922,
+      "support": 19992
+    },
+    "shared_lands": {
+      "f1": 0.07,
+      "precision": 0.572,
+      "recall": 0.037,
+      "support": 9982
+    },
+    "water": {
+      "f1": 0.671,
+      "precision": 0.715,
+      "recall": 0.632,
+      "support": 9998
+    }
+  },
+  "confusionMatrix": {
+    "labels": [
+      "Agri",
+      "forest",
+      "land_stock",
+      "non_residential",
+      "residential",
+      "residential_private",
+      "roads_highways",
+      "shared_lands",
+      "water"
+    ],
+    "counts": [
+      [
+        25370,
+        752,
+        1242,
+        1013,
+        1305,
+        58,
+        89,
+        6,
+        200
+      ],
+      [
+        1164,
+        1196,
+        808,
+        97,
+        33,
+        5,
+        40,
+        0,
+        71
+      ],
+      [
+        2190,
+        387,
+        8200,
+        375,
+        151,
+        18,
+        470,
+        17,
+        913
+      ],
+      [
+        2247,
+        234,
+        321,
+        5235,
+        11651,
+        81,
+        23,
+        108,
+        93
+      ],
+      [
+        2256,
+        800,
+        102,
+        2805,
+        66360,
+        130,
+        71,
+        121,
+        168
+      ],
+      [
+        87,
+        96,
+        49,
+        1039,
+        17903,
+        396,
+        1,
+        17,
+        3
+      ],
+      [
+        66,
+        10,
+        304,
+        4,
+        109,
+        0,
+        18434,
+        3,
+        1062
+      ],
+      [
+        86,
+        49,
+        17,
+        238,
+        9181,
+        10,
+        16,
+        371,
+        14
+      ],
+      [
+        258,
+        65,
+        917,
+        18,
+        101,
+        5,
+        2308,
+        6,
+        6320
+      ]
+    ]
+  },
+  "featureImportance": [
+    {
+      "feature": "log_area",
+      "importance": 0.1391
+    },
+    {
+      "feature": "compactness",
+      "importance": 0.1291
+    },
+    {
+      "feature": "log_perimeter",
+      "importance": 0.066
+    },
+    {
+      "feature": "centroid_lon",
+      "importance": 0.059
+    },
+    {
+      "feature": "rectangularity",
+      "importance": 0.019
+    },
+    {
+      "feature": "convexity",
+      "importance": 0.0182
+    },
+    {
+      "feature": "centroid_lat",
+      "importance": 0.0137
+    },
+    {
+      "feature": "log_vertices",
+      "importance": 0.0122
+    },
+    {
+      "feature": "parts",
+      "importance": 0.0037
+    },
+    {
+      "feature": "elongation",
+      "importance": -0.0012
+    }
+  ],
+  "spatialAccuracyGrid": [
+    {
+      "block": "138_82",
+      "samples": 39364,
+      "accuracy": 0.347,
+      "lon": 69.2533,
+      "lat": 41.2965
+    },
+    {
+      "block": "144_81",
+      "samples": 8369,
+      "accuracy": 0.721,
+      "lon": 72.2569,
+      "lat": 40.7458
+    },
+    {
+      "block": "121_83",
+      "samples": 7080,
+      "accuracy": 0.763,
+      "lon": 60.7011,
+      "lat": 41.6379
+    },
+    {
+      "block": "120_83",
+      "samples": 6474,
+      "accuracy": 0.746,
+      "lon": 60.3086,
+      "lat": 41.7342
+    },
+    {
+      "block": "143_81",
+      "samples": 6325,
+      "accuracy": 0.812,
+      "lon": 71.748,
+      "lat": 40.7958
+    },
+    {
+      "block": "121_82",
+      "samples": 5910,
+      "accuracy": 0.81,
+      "lon": 60.7389,
+      "lat": 41.3854
+    },
+    {
+      "block": "143_80",
+      "samples": 5520,
+      "accuracy": 0.757,
+      "lon": 71.7688,
+      "lat": 40.3829
+    },
+    {
+      "block": "143_82",
+      "samples": 5143,
+      "accuracy": 0.709,
+      "lon": 71.7118,
+      "lat": 41.1478
+    },
+    {
+      "block": "133_79",
+      "samples": 4962,
+      "accuracy": 0.722,
+      "lon": 66.8374,
+      "lat": 39.739
+    },
+    {
+      "block": "142_81",
+      "samples": 4845,
+      "accuracy": 0.643,
+      "lon": 71.2168,
+      "lat": 40.7383
+    },
+    {
+      "block": "128_79",
+      "samples": 4166,
+      "accuracy": 0.7,
+      "lon": 64.3569,
+      "lat": 39.7948
+    },
+    {
+      "block": "120_82",
+      "samples": 3595,
+      "accuracy": 0.814,
+      "lon": 60.3528,
+      "lat": 41.4141
+    },
+    {
+      "block": "122_82",
+      "samples": 3535,
+      "accuracy": 0.722,
+      "lon": 61.1505,
+      "lat": 41.2992
+    },
+    {
+      "block": "131_77",
+      "samples": 3435,
+      "accuracy": 0.689,
+      "lon": 65.7498,
+      "lat": 38.8014
+    },
+    {
+      "block": "135_80",
+      "samples": 3404,
+      "accuracy": 0.719,
+      "lon": 67.8343,
+      "lat": 40.2046
+    },
+    {
+      "block": "137_81",
+      "samples": 3074,
+      "accuracy": 0.788,
+      "lon": 68.7931,
+      "lat": 40.7519
+    },
+    {
+      "block": "141_81",
+      "samples": 2971,
+      "accuracy": 0.731,
+      "lon": 70.8675,
+      "lat": 40.6233
+    },
+    {
+      "block": "138_81",
+      "samples": 2683,
+      "accuracy": 0.728,
+      "lon": 69.2209,
+      "lat": 40.8126
+    },
+    {
+      "block": "145_81",
+      "samples": 2665,
+      "accuracy": 0.789,
+      "lon": 72.6972,
+      "lat": 40.7316
+    },
+    {
+      "block": "142_80",
+      "samples": 2658,
+      "accuracy": 0.79,
+      "lon": 71.2407,
+      "lat": 40.3836
+    },
+    {
+      "block": "119_84",
+      "samples": 2619,
+      "accuracy": 0.732,
+      "lon": 59.6205,
+      "lat": 42.4198
+    },
+    {
+      "block": "130_80",
+      "samples": 2403,
+      "accuracy": 0.638,
+      "lon": 65.3234,
+      "lat": 40.14
+    },
+    {
+      "block": "134_79",
+      "samples": 2370,
+      "accuracy": 0.732,
+      "lon": 67.1952,
+      "lat": 39.6854
+    },
+    {
+      "block": "135_76",
+      "samples": 2254,
+      "accuracy": 0.78,
+      "lon": 67.8676,
+      "lat": 38.2593
+    },
+    {
+      "block": "119_85",
+      "samples": 2227,
+      "accuracy": 0.89,
+      "lon": 59.7085,
+      "lat": 42.7537
+    },
+    {
+      "block": "133_78",
+      "samples": 2220,
+      "accuracy": 0.697,
+      "lon": 66.7872,
+      "lat": 39.0995
+    },
+    {
+      "block": "137_80",
+      "samples": 2198,
+      "accuracy": 0.75,
+      "lon": 68.7817,
+      "lat": 40.3426
+    },
+    {
+      "block": "139_82",
+      "samples": 2169,
+      "accuracy": 0.797,
+      "lon": 69.6016,
+      "lat": 41.3839
+    },
+    {
+      "block": "138_80",
+      "samples": 2103,
+      "accuracy": 0.72,
+      "lon": 69.1859,
+      "lat": 40.3069
+    },
+    {
+      "block": "134_74",
+      "samples": 2063,
+      "accuracy": 0.705,
+      "lon": 67.2692,
+      "lat": 37.3084
+    },
+    {
+      "block": "136_80",
+      "samples": 1999,
+      "accuracy": 0.793,
+      "lon": 68.2278,
+      "lat": 40.2688
+    },
+    {
+      "block": "141_80",
+      "samples": 1920,
+      "accuracy": 0.764,
+      "lon": 70.764,
+      "lat": 40.4077
+    },
+    {
+      "block": "129_80",
+      "samples": 1865,
+      "accuracy": 0.703,
+      "lon": 64.7092,
+      "lat": 40.0967
+    },
+    {
+      "block": "130_77",
+      "samples": 1531,
+      "accuracy": 0.658,
+      "lon": 65.3228,
+      "lat": 38.8391
+    },
+    {
+      "block": "134_75",
+      "samples": 1518,
+      "accuracy": 0.777,
+      "lon": 67.2651,
+      "lat": 37.6619
+    },
+    {
+      "block": "132_79",
+      "samples": 1498,
+      "accuracy": 0.671,
+      "lon": 66.3031,
+      "lat": 39.8717
+    },
+    {
+      "block": "139_81",
+      "samples": 1488,
+      "accuracy": 0.816,
+      "lon": 69.6508,
+      "lat": 40.8825
+    },
+    {
+      "block": "136_81",
+      "samples": 1439,
+      "accuracy": 0.812,
+      "lon": 68.1674,
+      "lat": 40.61
+    },
+    {
+      "block": "132_77",
+      "samples": 1431,
+      "accuracy": 0.658,
+      "lon": 66.2985,
+      "lat": 38.7654
+    },
+    {
+      "block": "120_84",
+      "samples": 1381,
+      "accuracy": 0.883,
+      "lon": 60.1138,
+      "lat": 42.1247
+    },
+    {
+      "block": "134_78",
+      "samples": 1344,
+      "accuracy": 0.722,
+      "lon": 67.201,
+      "lat": 39.3532
+    },
+    {
+      "block": "129_79",
+      "samples": 1280,
+      "accuracy": 0.72,
+      "lon": 64.5982,
+      "lat": 39.7737
+    },
+    {
+      "block": "118_85",
+      "samples": 1137,
+      "accuracy": 0.8,
+      "lon": 59.2169,
+      "lat": 42.7278
+    },
+    {
+      "block": "142_82",
+      "samples": 1136,
+      "accuracy": 0.584,
+      "lon": 71.2825,
+      "lat": 41.0856
+    },
+    {
+      "block": "133_77",
+      "samples": 1051,
+      "accuracy": 0.604,
+      "lon": 66.7298,
+      "lat": 38.8898
+    },
+    {
+      "block": "122_83",
+      "samples": 1008,
+      "accuracy": 0.839,
+      "lon": 61.0834,
+      "lat": 41.6848
+    },
+    {
+      "block": "144_82",
+      "samples": 984,
+      "accuracy": 0.809,
+      "lon": 72.1445,
+      "lat": 41.0623
+    },
+    {
+      "block": "118_84",
+      "samples": 978,
+      "accuracy": 0.803,
+      "lon": 59.4336,
+      "lat": 42.4121
+    },
+    {
+      "block": "128_80",
+      "samples": 976,
+      "accuracy": 0.832,
+      "lon": 64.3358,
+      "lat": 40.083
+    },
+    {
+      "block": "117_86",
+      "samples": 944,
+      "accuracy": 0.839,
+      "lon": 58.8414,
+      "lat": 43.0762
+    },
+    {
+      "block": "140_82",
+      "samples": 937,
+      "accuracy": 0.74,
+      "lon": 70.1044,
+      "lat": 41.0355
+    },
+    {
+      "block": "131_78",
+      "samples": 929,
+      "accuracy": 0.723,
+      "lon": 65.6713,
+      "lat": 39.106
+    },
+    {
+      "block": "130_78",
+      "samples": 918,
+      "accuracy": 0.651,
+      "lon": 65.2343,
+      "lat": 39.1733
+    },
+    {
+      "block": "133_80",
+      "samples": 917,
+      "accuracy": 0.637,
+      "lon": 66.7222,
+      "lat": 40.1605
+    },
+    {
+      "block": "131_80",
+      "samples": 885,
+      "accuracy": 0.704,
+      "lon": 65.7815,
+      "lat": 40.0946
+    },
+    {
+      "block": "131_79",
+      "samples": 823,
+      "accuracy": 0.776,
+      "lon": 65.8851,
+      "lat": 39.9162
+    },
+    {
+      "block": "139_83",
+      "samples": 817,
+      "accuracy": 0.76,
+      "lon": 69.7986,
+      "lat": 41.5785
+    },
+    {
+      "block": "135_75",
+      "samples": 806,
+      "accuracy": 0.783,
+      "lon": 67.6294,
+      "lat": 37.8211
+    },
+    {
+      "block": "132_80",
+      "samples": 770,
+      "accuracy": 0.747,
+      "lon": 66.2283,
+      "lat": 40.15
+    },
+    {
+      "block": "127_78",
+      "samples": 759,
+      "accuracy": 0.744,
+      "lon": 63.8085,
+      "lat": 39.4143
+    },
+    {
+      "block": "117_85",
+      "samples": 709,
+      "accuracy": 0.801,
+      "lon": 58.8829,
+      "lat": 42.7591
+    },
+    {
+      "block": "144_80",
+      "samples": 696,
+      "accuracy": 0.665,
+      "lon": 72.1594,
+      "lat": 40.4403
+    },
+    {
+      "block": "120_86",
+      "samples": 685,
+      "accuracy": 0.854,
+      "lon": 60.1886,
+      "lat": 43.0598
+    },
+    {
+      "block": "127_79",
+      "samples": 664,
+      "accuracy": 0.729,
+      "lon": 63.8287,
+      "lat": 39.5733
+    },
+    {
+      "block": "132_78",
+      "samples": 643,
+      "accuracy": 0.737,
+      "lon": 66.2911,
+      "lat": 39.2275
+    },
+    {
+      "block": "135_79",
+      "samples": 578,
+      "accuracy": 0.73,
+      "lon": 67.6545,
+      "lat": 39.8112
+    },
+    {
+      "block": "137_82",
+      "samples": 574,
+      "accuracy": 0.805,
+      "lon": 68.8886,
+      "lat": 41.0774
+    },
+    {
+      "block": "135_81",
+      "samples": 517,
+      "accuracy": 0.718,
+      "lon": 67.8922,
+      "lat": 40.6216
+    },
+    {
+      "block": "140_80",
+      "samples": 516,
+      "accuracy": 0.89,
+      "lon": 70.4447,
+      "lat": 40.4225
+    },
+    {
+      "block": "134_80",
+      "samples": 478,
+      "accuracy": 0.713,
+      "lon": 67.2189,
+      "lat": 40.2549
+    },
+    {
+      "block": "128_83",
+      "samples": 478,
+      "accuracy": 0.531,
+      "lon": 64.2043,
+      "lat": 41.575
+    },
+    {
+      "block": "119_86",
+      "samples": 462,
+      "accuracy": 0.894,
+      "lon": 59.7378,
+      "lat": 43.1344
+    },
+    {
+      "block": "136_76",
+      "samples": 436,
+      "accuracy": 0.706,
+      "lon": 68.086,
+      "lat": 38.3454
+    },
+    {
+      "block": "127_84",
+      "samples": 435,
+      "accuracy": 0.526,
+      "lon": 63.5685,
+      "lat": 42.1633
+    },
+    {
+      "block": "133_74",
+      "samples": 379,
+      "accuracy": 0.765,
+      "lon": 66.851,
+      "lat": 37.4428
+    },
+    {
+      "block": "136_79",
+      "samples": 373,
+      "accuracy": 0.708,
+      "lon": 68.3048,
+      "lat": 39.9081
+    },
+    {
+      "block": "118_87",
+      "samples": 352,
+      "accuracy": 0.756,
+      "lon": 59.0764,
+      "lat": 43.707
+    },
+    {
+      "block": "134_76",
+      "samples": 298,
+      "accuracy": 0.732,
+      "lon": 67.2067,
+      "lat": 38.1805
+    },
+    {
+      "block": "118_86",
+      "samples": 278,
+      "accuracy": 0.827,
+      "lon": 59.2272,
+      "lat": 43.1246
+    },
+    {
+      "block": "124_81",
+      "samples": 274,
+      "accuracy": 0.664,
+      "lon": 62.0431,
+      "lat": 40.863
+    },
+    {
+      "block": "131_76",
+      "samples": 266,
+      "accuracy": 0.605,
+      "lon": 65.6294,
+      "lat": 38.4397
+    },
+    {
+      "block": "133_76",
+      "samples": 236,
+      "accuracy": 0.665,
+      "lon": 66.6545,
+      "lat": 38.3135
+    },
+    {
+      "block": "129_78",
+      "samples": 234,
+      "accuracy": 0.705,
+      "lon": 64.7922,
+      "lat": 39.4559
+    },
+    {
+      "block": "131_81",
+      "samples": 215,
+      "accuracy": 0.66,
+      "lon": 65.7124,
+      "lat": 40.6081
+    },
+    {
+      "block": "133_75",
+      "samples": 213,
+      "accuracy": 0.732,
+      "lon": 66.8667,
+      "lat": 37.6093
+    },
+    {
+      "block": "134_77",
+      "samples": 208,
+      "accuracy": 0.702,
+      "lon": 67.152,
+      "lat": 38.8973
+    },
+    {
+      "block": "140_83",
+      "samples": 208,
+      "accuracy": 0.745,
+      "lon": 70.1286,
+      "lat": 41.6825
+    },
+    {
+      "block": "137_79",
+      "samples": 200,
+      "accuracy": 0.625,
+      "lon": 68.7335,
+      "lat": 39.929
+    },
+    {
+      "block": "142_79",
+      "samples": 196,
+      "accuracy": 0.709,
+      "lon": 71.1395,
+      "lat": 39.9468
+    },
+    {
+      "block": "120_85",
+      "samples": 145,
+      "accuracy": 0.903,
+      "lon": 60.227,
+      "lat": 42.9551
+    },
+    {
+      "block": "132_76",
+      "samples": 144,
+      "accuracy": 0.653,
+      "lon": 66.4082,
+      "lat": 38.3333
+    },
+    {
+      "block": "130_81",
+      "samples": 130,
+      "accuracy": 0.685,
+      "lon": 65.2499,
+      "lat": 40.574
+    },
+    {
+      "block": "140_81",
+      "samples": 129,
+      "accuracy": 0.837,
+      "lon": 70.0611,
+      "lat": 40.9742
+    },
+    {
+      "block": "133_81",
+      "samples": 105,
+      "accuracy": 0.638,
+      "lon": 66.7789,
+      "lat": 40.6213
+    },
+    {
+      "block": "141_82",
+      "samples": 101,
+      "accuracy": 0.782,
+      "lon": 70.7657,
+      "lat": 41.0817
+    },
+    {
+      "block": "116_86",
+      "samples": 93,
+      "accuracy": 0.71,
+      "lon": 58.2951,
+      "lat": 43.1677
+    },
+    {
+      "block": "132_81",
+      "samples": 86,
+      "accuracy": 0.442,
+      "lon": 66.2768,
+      "lat": 40.6419
+    },
+    {
+      "block": "146_81",
+      "samples": 70,
+      "accuracy": 0.614,
+      "lon": 73.0264,
+      "lat": 40.7913
+    },
+    {
+      "block": "130_76",
+      "samples": 67,
+      "accuracy": 0.672,
+      "lon": 65.4376,
+      "lat": 38.4327
+    },
+    {
+      "block": "119_83",
+      "samples": 65,
+      "accuracy": 1.0,
+      "lon": 59.9729,
+      "lat": 41.9764
+    },
+    {
+      "block": "135_77",
+      "samples": 60,
+      "accuracy": 0.75,
+      "lon": 67.7355,
+      "lat": 38.609
+    },
+    {
+      "block": "123_82",
+      "samples": 59,
+      "accuracy": 0.373,
+      "lon": 61.8919,
+      "lat": 41.1071
+    },
+    {
+      "block": "126_80",
+      "samples": 58,
+      "accuracy": 0.517,
+      "lon": 63.4411,
+      "lat": 40.1517
+    },
+    {
+      "block": "143_83",
+      "samples": 54,
+      "accuracy": 0.667,
+      "lon": 71.7074,
+      "lat": 41.525
+    },
+    {
+      "block": "134_81",
+      "samples": 54,
+      "accuracy": 0.352,
+      "lon": 67.2482,
+      "lat": 40.6234
+    },
+    {
+      "block": "130_79",
+      "samples": 51,
+      "accuracy": 0.745,
+      "lon": 65.1388,
+      "lat": 39.8779
+    },
+    {
+      "block": "112_89",
+      "samples": 51,
+      "accuracy": 0.784,
+      "lon": 56.1837,
+      "lat": 44.7769
+    },
+    {
+      "block": "117_87",
+      "samples": 50,
+      "accuracy": 0.56,
+      "lon": 58.9132,
+      "lat": 43.6974
+    }
+  ],
+  "runtimeSeconds": 79.6
+}

@@ -139,30 +139,41 @@ function EnvironmentalMap() {
   </section>
 }
 
-const ontologyDomains = [
-  {name:'Climate',x:270,y:175,color:'#b8c6cc'},
-  {name:'Infrastructure',x:555,y:115,color:'#8f9698'},
-  {name:'Water',x:875,y:175,color:'#45bad5'},
-  {name:'Land & agriculture',x:970,y:410,color:'#e4a94d'},
-  {name:'Forests & carbon',x:760,y:600,color:'#8bb78c'},
-  {name:'Biodiversity',x:390,y:600,color:'#d3d0b2'},
-  {name:'Hazards & terrain',x:170,y:410,color:'#ff6a2d'},
-];
-const ontologyConcepts = {
-  'Change over time': {x:105,y:85}, 'Observation & index': {x:1080,y:85},
-  'Risk & exposure': {x:1110,y:660}, 'Resource system': {x:90,y:660},
-  'Environmental feature': {x:600,y:690},
+// Layout only. What each node *is* comes from /data/ontology-graph.json, which the
+// build projects from the stored graph — titles are no longer parsed at render time.
+const domainLayout = {
+  'uz:theme/climate': {x:270,y:175}, 'uz:theme/infrastructure': {x:555,y:115},
+  'uz:theme/water': {x:875,y:175}, 'uz:theme/land-agriculture': {x:970,y:410},
+  'uz:theme/forests-carbon': {x:760,y:600}, 'uz:theme/biodiversity': {x:390,y:600},
+  'uz:theme/hazards-terrain': {x:170,y:410},
 };
-function inferConcept(title='') {
-  if (/risk|earthquake|flood|hazard|loss|fatal|adverse|mudflow/i.test(title)) return 'Risk & exposure';
-  if (/trend|dynamics|change|1990|2000|2001|2005|2010|2023|2024|2040|2100/i.test(title)) return 'Change over time';
-  if (/index|ndvi|evi|score|richness|intactness|integrity|productivity/i.test(title)) return 'Observation & index';
-  if (/management|access|use|irrig|balance|drainage|canal|yield|livestock|sanitation/i.test(title)) return 'Resource system';
-  return 'Environmental feature';
-}
+const conceptLayout = {
+  'uz:analysis/change-over-time': {x:105,y:85}, 'uz:analysis/state-observation': {x:1080,y:85},
+  'uz:analysis/risk-exposure': {x:1110,y:660}, 'uz:analysis/resource-system': {x:90,y:660},
+  'uz:analysis/environmental-feature': {x:600,y:690},
+};
+const agentLabels = {
+  'uz:agent/atlas-source':'atlas metadata', 'uz:agent/extraction-pipeline':'measured',
+  'uz:agent/rule-lexical-v1':'rule', 'uz:agent/model-tfidf-knn-v1':'model',
+  'uz:agent/curator':'curator', 'uz:agent/openstreetmap':'OpenStreetMap',
+  'uz:agent/uzkad':'cadastre', 'uz:agent/uzhydromet':'Uzhydromet',
+};
+const flagLabels = {
+  'extent-exceeds-uzbekistan':'Extent reaches beyond Uzbekistan',
+  'crs-not-wgs84':'Not in WGS 84 — reproject before overlay',
+  'attribute-encoding-cp1251':'Attributes need cp1251 decoding',
+  'station-key-not-wmo-index':'Station keys do not match the climate series',
+  'stations-missing-coordinates':'Some stations have no coordinates',
+  'severe-class-imbalance':'Severe class imbalance',
+  'licence-not-cleared-for-publication':'Licence not cleared for publication',
+  'originating-agency-unconfirmed':'Originating agency unconfirmed',
+  'may-contain-personal-data':'May contain personal data',
+  'out-of-scope-for-the-portal':'Out of scope for the portal',
+};
+const prettyFlag = flag => flagLabels[flag] || flag.replaceAll('-',' ');
 
 function OntologyExplorer({ onRequest }) {
-  const [catalog,setCatalog] = useState([]);
+  const [model,setModel] = useState(null);
   const [selectedId,setSelectedId] = useState(null);
   const [hoveredId,setHoveredId] = useState(null);
   const [query,setQuery] = useState('');
@@ -170,27 +181,38 @@ function OntologyExplorer({ onRequest }) {
   const [zoom,setZoom] = useState(1);
   const [touring,setTouring] = useState(true);
   const [reducedMotion,setReducedMotion] = useState(false);
-  useEffect(()=>{fetch('/data/archive-catalog.json').then(r=>r.json()).then(items=>{setCatalog(items);setSelectedId(items[0]?.id)})},[]);
+  useEffect(()=>{fetch('/data/ontology-graph.json').then(r=>r.json()).then(data=>{setModel(data);setSelectedId(data.datasets[0]?.id)})},[]);
   useEffect(()=>{
     const media=window.matchMedia('(prefers-reduced-motion: reduce)');
     const update=()=>{setReducedMotion(media.matches);if(media.matches)setTouring(false)};
     update(); media.addEventListener('change',update);
     return()=>media.removeEventListener('change',update);
   },[]);
+  const labelOf=useMemo(()=>{
+    const index={};
+    if(model)['themes','analysis','properties','usecases','places'].forEach(scheme=>
+      (model.vocabularies[scheme]||[]).forEach(concept=>{index[concept.id]=concept.prefLabel}));
+    return id=>index[id]||id;
+  },[model]);
+  const ontologyDomains=useMemo(()=>(model?.vocabularies.themes||[])
+    .filter(theme=>domainLayout[theme.id])
+    .map(theme=>({id:theme.id,name:theme.prefLabel,color:theme.color,...domainLayout[theme.id]})),[model]);
   const graph = useMemo(()=>{
     const datasetNodes=[];
     ontologyDomains.forEach(domain=>{
-      const items=catalog.filter(item=>normalizeDomain(item.category)===domain.name);
+      const items=(model?.datasets||[]).filter(item=>item.theme===domain.id);
       items.forEach((item,index)=>{
         const ring=Math.floor(index/10); const position=index%10; const count=Math.min(10,items.length-ring*10);
         const radius=54+ring*19; const angle=(position/Math.max(count,1))*Math.PI*2+(ring%2)*.27;
-        datasetNodes.push({...item,category:normalizeDomain(item.category),x:domain.x+Math.cos(angle)*radius,y:domain.y+Math.sin(angle)*radius,domain,concept:inferConcept(item.title)});
+        datasetNodes.push({...item,title:item.label,category:domain.name,x:domain.x+Math.cos(angle)*radius,y:domain.y+Math.sin(angle)*radius,domain,concept:item.analysis});
       });
     });
     return datasetNodes;
-  },[catalog]);
+  },[model,ontologyDomains]);
   const queryLower=query.trim().toLowerCase();
-  const visibleNodes=useMemo(()=>graph.filter(node=>(activeDomain==='All domains'||node.category===activeDomain)&&(!queryLower||`${node.title} ${node.sourceTitle} ${node.category} ${node.concept}`.toLowerCase().includes(queryLower))),[graph,activeDomain,queryLower]);
+  const searchText=node=>[node.title,node.sourceTitle,node.category,labelOf(node.concept),
+    ...node.observes.map(o=>labelOf(o.concept)),...node.useCases.map(labelOf)].join(' ').toLowerCase();
+  const visibleNodes=useMemo(()=>graph.filter(node=>(activeDomain==='All domains'||node.category===activeDomain)&&(!queryLower||searchText(node).includes(queryLower))),[graph,activeDomain,queryLower]);
   const visibleIds=useMemo(()=>new Set(visibleNodes.map(node=>node.id)),[visibleNodes]);
   const isVisible=node=>visibleIds.has(node.id);
   const selected=graph.find(node=>node.id===selectedId);

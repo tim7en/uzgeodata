@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          71.5442,
+          37.1286
+        ]
+      },
+      "properties": {
+        "id": 1,
+        "events": 4206,
+        "maxMagnitude": 7.5,
+        "medianDepthKm": 134.5,
+        "centroidInUzBbox": false,
+        "topPlace": "Afghanistan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.1576,
+          39.1878
+        ]
+      },
+      "properties": {
+        "id": 0,
+        "events": 1078,
+        "maxMagnitude": 6.7,
+        "medianDepthKm": 33.0,
+        "centroidInUzBbox": true,
+        "topPlace": "Tajikistan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.5741,
+          40.906
+        ]
+      },
+      "properties": {
+        "id": 3,
+        "events": 91,
+        "maxMagnitude": 6.2,
+        "medianDepthKm": 33.0,
+        "centroidInUzBbox": true,
+        "topPlace": "Kyrgyzstan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.5165,
+          36.792
+        ]
+      },
+      "properties": {
+        "id": 2,
+        "events": 70,
+        "maxMagnitude": 5.2,
+        "medianDepthKm": 33.0,
+        "centroidInUzBbox": false,
+        "topPlace": "Afghanistan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.4316,
+          41.9408
+        ]
+      },
+      "properties": {
+        "id": 4,
+        "events": 54,
+        "maxMagnitude": 7.3,
+        "medianDepthKm": 33.0,
+        "centroidInUzBbox": false,
+        "topPlace": "Kyrgyzstan"
+      }
+    }
+  ]
+}

@@ -1,0 +1,564 @@
+{
+  "generatedAt": "2026-08-28T14:52:35+00:00",
+  "source": {
+    "dataset": "uz:ds/a205-earthquakes-19902024",
+    "file": "/data/earthquakes.geojson",
+    "events": 6472,
+    "period": {
+      "start": 1990,
+      "end": 2024
+    }
+  },
+  "coverage": {
+    "insideUzbekistanBbox": 2898,
+    "outsideShare": 0.552,
+    "note": "The catalogue is regional. Rates computed over all events describe Uzbekistan and its neighbours, not Uzbekistan alone."
+  },
+  "completeness": {
+    "magnitudeOfCompleteness": 4.3,
+    "method": "maximum curvature + 0.2",
+    "eventsAboveMc": 3393,
+    "shareAboveMc": 0.524
+  },
+  "recurrence": {
+    "b": 1.317,
+    "bStdError": 0.023,
+    "a": 9.194,
+    "eventsUsed": 3393,
+    "mc": 4.3
+  },
+  "recurrenceCurve": [
+    {
+      "magnitude": 2.0,
+      "cumulativeCount": 6472
+    },
+    {
+      "magnitude": 2.2,
+      "cumulativeCount": 6472
+    },
+    {
+      "magnitude": 2.4,
+      "cumulativeCount": 6472
+    },
+    {
+      "magnitude": 2.6,
+      "cumulativeCount": 6472
+    },
+    {
+      "magnitude": 2.8,
+      "cumulativeCount": 6472
+    },
+    {
+      "magnitude": 3.0,
+      "cumulativeCount": 6472
+    },
+    {
+      "magnitude": 3.2,
+      "cumulativeCount": 6454
+    },
+    {
+      "magnitude": 3.4,
+      "cumulativeCount": 6401
+    },
+    {
+      "magnitude": 3.6,
+      "cumulativeCount": 6256
+    },
+    {
+      "magnitude": 3.8,
+      "cumulativeCount": 5964
+    },
+    {
+      "magnitude": 4.0,
+      "cumulativeCount": 5480
+    },
+    {
+      "magnitude": 4.2,
+      "cumulativeCount": 4097
+    },
+    {
+      "magnitude": 4.4,
+      "cumulativeCount": 2658
+    },
+    {
+      "magnitude": 4.6,
+      "cumulativeCount": 1351
+    },
+    {
+      "magnitude": 4.8,
+      "cumulativeCount": 674
+    },
+    {
+      "magnitude": 5.0,
+      "cumulativeCount": 348
+    },
+    {
+      "magnitude": 5.2,
+      "cumulativeCount": 182
+    },
+    {
+      "magnitude": 5.4,
+      "cumulativeCount": 102
+    },
+    {
+      "magnitude": 5.6,
+      "cumulativeCount": 68
+    },
+    {
+      "magnitude": 5.8,
+      "cumulativeCount": 43
+    },
+    {
+      "magnitude": 6.0,
+      "cumulativeCount": 29
+    },
+    {
+      "magnitude": 6.2,
+      "cumulativeCount": 22
+    },
+    {
+      "magnitude": 6.4,
+      "cumulativeCount": 14
+    },
+    {
+      "magnitude": 6.6,
+      "cumulativeCount": 10
+    },
+    {
+      "magnitude": 6.8,
+      "cumulativeCount": 5
+    },
+    {
+      "magnitude": 7.0,
+      "cumulativeCount": 4
+    },
+    {
+      "magnitude": 7.2,
+      "cumulativeCount": 4
+    },
+    {
+      "magnitude": 7.4,
+      "cumulativeCount": 2
+    }
+  ],
+  "magnitudeHistogram": [
+    {
+      "magnitude": 2.0,
+      "count": 0
+    },
+    {
+      "magnitude": 2.5,
+      "count": 0
+    },
+    {
+      "magnitude": 3.0,
+      "count": 130
+    },
+    {
+      "magnitude": 3.5,
+      "count": 862
+    },
+    {
+      "magnitude": 4.0,
+      "count": 3544
+    },
+    {
+      "magnitude": 4.5,
+      "count": 1588
+    },
+    {
+      "magnitude": 5.0,
+      "count": 268
+    },
+    {
+      "magnitude": 5.5,
+      "count": 51
+    },
+    {
+      "magnitude": 6.0,
+      "count": 16
+    },
+    {
+      "magnitude": 6.5,
+      "count": 9
+    },
+    {
+      "magnitude": 7.0,
+      "count": 3
+    },
+    {
+      "magnitude": 7.5,
+      "count": 1
+    }
+  ],
+  "depth": {
+    "medianKm": 76.1,
+    "shallowShareUnder20km": 0.167,
+    "histogram": [
+      {
+        "depthKm": 0,
+        "count": 105
+      },
+      {
+        "depthKm": 10,
+        "count": 977
+      },
+      {
+        "depthKm": 20,
+        "count": 173
+      },
+      {
+        "depthKm": 30,
+        "count": 1400
+      },
+      {
+        "depthKm": 40,
+        "count": 224
+      },
+      {
+        "depthKm": 50,
+        "count": 173
+      },
+      {
+        "depthKm": 60,
+        "count": 128
+      },
+      {
+        "depthKm": 70,
+        "count": 97
+      },
+      {
+        "depthKm": 80,
+        "count": 89
+      },
+      {
+        "depthKm": 90,
+        "count": 160
+      },
+      {
+        "depthKm": 100,
+        "count": 271
+      },
+      {
+        "depthKm": 110,
+        "count": 238
+      },
+      {
+        "depthKm": 120,
+        "count": 245
+      }
+    ]
+  },
+  "annual": [
+    {
+      "year": 1990,
+      "events": 171,
+      "eventsAboveMc": 119
+    },
+    {
+      "year": 1991,
+      "events": 134,
+      "eventsAboveMc": 75
+    },
+    {
+      "year": 1992,
+      "events": 201,
+      "eventsAboveMc": 134
+    },
+    {
+      "year": 1993,
+      "events": 110,
+      "eventsAboveMc": 76
+    },
+    {
+      "year": 1994,
+      "events": 94,
+      "eventsAboveMc": 71
+    },
+    {
+      "year": 1995,
+      "events": 132,
+      "eventsAboveMc": 65
+    },
+    {
+      "year": 1996,
+      "events": 134,
+      "eventsAboveMc": 34
+    },
+    {
+      "year": 1997,
+      "events": 106,
+      "eventsAboveMc": 36
+    },
+    {
+      "year": 1998,
+      "events": 227,
+      "eventsAboveMc": 77
+    },
+    {
+      "year": 1999,
+      "events": 142,
+      "eventsAboveMc": 60
+    },
+    {
+      "year": 2000,
+      "events": 165,
+      "eventsAboveMc": 66
+    },
+    {
+      "year": 2001,
+      "events": 185,
+      "eventsAboveMc": 75
+    },
+    {
+      "year": 2002,
+      "events": 178,
+      "eventsAboveMc": 61
+    },
+    {
+      "year": 2003,
+      "events": 168,
+      "eventsAboveMc": 68
+    },
+    {
+      "year": 2004,
+      "events": 207,
+      "eventsAboveMc": 91
+    },
+    {
+      "year": 2005,
+      "events": 162,
+      "eventsAboveMc": 60
+    },
+    {
+      "year": 2006,
+      "events": 223,
+      "eventsAboveMc": 91
+    },
+    {
+      "year": 2007,
+      "events": 279,
+      "eventsAboveMc": 159
+    },
+    {
+      "year": 2008,
+      "events": 469,
+      "eventsAboveMc": 216
+    },
+    {
+      "year": 2009,
+      "events": 72,
+      "eventsAboveMc": 60
+    },
+    {
+      "year": 2010,
+      "events": 109,
+      "eventsAboveMc": 89
+    },
+    {
+      "year": 2011,
+      "events": 89,
+      "eventsAboveMc": 73
+    },
+    {
+      "year": 2012,
+      "events": 125,
+      "eventsAboveMc": 66
+    },
+    {
+      "year": 2013,
+      "events": 175,
+      "eventsAboveMc": 91
+    },
+    {
+      "year": 2014,
+      "events": 194,
+      "eventsAboveMc": 101
+    },
+    {
+      "year": 2015,
+      "events": 258,
+      "eventsAboveMc": 142
+    },
+    {
+      "year": 2016,
+      "events": 319,
+      "eventsAboveMc": 212
+    },
+    {
+      "year": 2017,
+      "events": 223,
+      "eventsAboveMc": 136
+    },
+    {
+      "year": 2018,
+      "events": 204,
+      "eventsAboveMc": 118
+    },
+    {
+      "year": 2019,
+      "events": 166,
+      "eventsAboveMc": 103
+    },
+    {
+      "year": 2020,
+      "events": 208,
+      "eventsAboveMc": 130
+    },
+    {
+      "year": 2021,
+      "events": 205,
+      "eventsAboveMc": 124
+    },
+    {
+      "year": 2022,
+      "events": 175,
+      "eventsAboveMc": 86
+    },
+    {
+      "year": 2023,
+      "events": 251,
+      "eventsAboveMc": 126
+    },
+    {
+      "year": 2024,
+      "events": 212,
+      "eventsAboveMc": 102
+    }
+  ],
+  "clusters": [
+    {
+      "id": 1,
+      "events": 4206,
+      "lon": 71.5442,
+      "lat": 37.1286,
+      "maxMagnitude": 7.5,
+      "medianDepthKm": 134.5,
+      "centroidInUzBbox": false,
+      "topPlace": "Afghanistan"
+    },
+    {
+      "id": 0,
+      "events": 1078,
+      "lon": 72.1576,
+      "lat": 39.1878,
+      "maxMagnitude": 6.7,
+      "medianDepthKm": 33.0,
+      "centroidInUzBbox": true,
+      "topPlace": "Tajikistan"
+    },
+    {
+      "id": 3,
+      "events": 91,
+      "lon": 72.5741,
+      "lat": 40.906,
+      "maxMagnitude": 6.2,
+      "medianDepthKm": 33.0,
+      "centroidInUzBbox": true,
+      "topPlace": "Kyrgyzstan"
+    },
+    {
+      "id": 2,
+      "events": 70,
+      "lon": 68.5165,
+      "lat": 36.792,
+      "maxMagnitude": 5.2,
+      "medianDepthKm": 33.0,
+      "centroidInUzBbox": false,
+      "topPlace": "Afghanistan"
+    },
+    {
+      "id": 4,
+      "events": 54,
+      "lon": 73.4316,
+      "lat": 41.9408,
+      "maxMagnitude": 7.3,
+      "medianDepthKm": 33.0,
+      "centroidInUzBbox": false,
+      "topPlace": "Kyrgyzstan"
+    }
+  ],
+  "unclusteredEvents": 973,
+  "largestEvents": [
+    {
+      "date": "2015-10-26",
+      "magnitude": 7.5,
+      "depthKm": 231.0,
+      "place": "Hindu Kush region, Afghanistan",
+      "lon": 70.36760000000004,
+      "lat": 36.52440000000007
+    },
+    {
+      "date": "2002-03-03",
+      "magnitude": 7.4,
+      "depthKm": 225.6,
+      "place": "51 km SW of Jurm, Afghanistan",
+      "lon": 70.48200000000003,
+      "lat": 36.502000000000066
+    },
+    {
+      "date": "1992-08-19",
+      "magnitude": 7.3,
+      "depthKm": 27.4,
+      "place": "60 km ENE of Toktogul, Kyrgyzstan",
+      "lon": 73.57500000000005,
+      "lat": 42.14200000000005
+    },
+    {
+      "date": "2015-12-07",
+      "magnitude": 7.2,
+      "depthKm": 22.0,
+      "place": "104 km W of Murghob, Tajikistan",
+      "lon": 72.77970000000005,
+      "lat": 38.21070000000003
+    },
+    {
+      "date": "2023-02-23",
+      "magnitude": 6.9,
+      "depthKm": 9.0,
+      "place": "65 km WSW of Murghob, Tajikistan",
+      "lon": 73.22870000000006,
+      "lat": 38.05520000000007
+    },
+    {
+      "date": "2008-10-05",
+      "magnitude": 6.7,
+      "depthKm": 27.4,
+      "place": "131 km SE of Nookat, Kyrgyzstan",
+      "lon": 73.82400000000007,
+      "lat": 39.53300000000007
+    },
+    {
+      "date": "2016-11-25",
+      "magnitude": 6.6,
+      "depthKm": 17.0,
+      "place": "122 km N of Murghob, Tajikistan",
+      "lon": 73.97760000000005,
+      "lat": 39.27320000000003
+    },
+    {
+      "date": "2004-04-05",
+      "magnitude": 6.6,
+      "depthKm": 187.1,
+      "place": "Afghanistan-Tajikistan-Pakistan region",
+      "lon": 71.02900000000005,
+      "lat": 36.51200000000006
+    },
+    {
+      "date": "1998-05-30",
+      "magnitude": 6.6,
+      "depthKm": 33.0,
+      "place": "24 km E of Rust?q, Afghanistan",
+      "lon": 70.11000000000007,
+      "lat": 37.10600000000005
+    },
+    {
+      "date": "1992-08-19",
+      "magnitude": 6.6,
+      "depthKm": 18.5,
+      "place": "35 km NE of Toktogul, Kyrgyzstan",
+      "lon": 73.23700000000008,
+      "lat": 42.10400000000004
+    }
+  ]
+}
