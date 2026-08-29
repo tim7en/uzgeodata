@@ -18,6 +18,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from contextlib import closing
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -119,7 +120,7 @@ def saved_state(output: Path, layer_name: str) -> tuple[int, int]:
         return 0, -1
     table = quote_identifier(layer_name)
     try:
-        with sqlite3.connect(output) as connection:
+        with closing(sqlite3.connect(output)) as connection, connection:
             row = connection.execute(
                 f"SELECT COUNT(*), COALESCE(MAX(id), -1) FROM {table}"
             ).fetchone()
@@ -192,7 +193,7 @@ def append_page(
 def add_source_id_index(output: Path, layer_name: str) -> None:
     index_name = quote_identifier(f"idx_{layer_name}_source_id")
     table = quote_identifier(layer_name)
-    with sqlite3.connect(output) as connection:
+    with closing(sqlite3.connect(output)) as connection, connection:
         connection.execute(
             f"CREATE UNIQUE INDEX IF NOT EXISTS {index_name} ON {table} (id)"
         )
@@ -201,7 +202,7 @@ def add_source_id_index(output: Path, layer_name: str) -> None:
 def normalize_output_schema(output: Path, layer_name: str) -> None:
     """Apply authoritative ArcGIS types that GeoJSON cannot fully express."""
     table = quote_identifier(layer_name)
-    with sqlite3.connect(output) as connection:
+    with closing(sqlite3.connect(output)) as connection, connection:
         geometry_row = connection.execute(
             "SELECT column_name FROM gpkg_geometry_columns WHERE table_name = ?",
             (layer_name,),
@@ -279,12 +280,24 @@ def sha256sum(path: Path) -> str:
     return digest.hexdigest()
 
 
+def stabilize_geopackage(path: Path) -> None:
+    """Checkpoint inherited WAL state before calculating a container hash."""
+    connection = sqlite3.connect(path)
+    try:
+        connection.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()
+        connection.execute("PRAGMA journal_mode=DELETE").fetchone()
+    finally:
+        connection.close()
+
+
 def write_metadata(
     output: Path,
     layer_name: str,
     where: str,
     feature_count: int,
+    null_geometry_count: int,
 ) -> Path:
+    stabilize_geopackage(output)
     metadata_path = output.with_suffix(".metadata.json")
     metadata = {
         "source_layer_url": LAYER_URL,
@@ -295,6 +308,7 @@ def write_metadata(
         "source_object_id_field": "id",
         "geometry_type": "MultiPolygon",
         "crs": NATIVE_CRS,
+        "null_geometry_count": null_geometry_count,
         "downloaded_at_utc": datetime.now(timezone.utc).isoformat(),
         "sha256": sha256sum(output),
     }
@@ -310,23 +324,24 @@ def validate_source_ids(
     output: Path,
     layer_name: str,
     where: str,
-) -> int:
+) -> tuple[int, int]:
     payload = query_json(
         session,
         {"where": where, "returnIdsOnly": "true", "f": "json"},
     )
     source_ids = {int(value) for value in payload.get("objectIds") or []}
     table = quote_identifier(layer_name)
-    with sqlite3.connect(output) as connection:
+    with closing(sqlite3.connect(output)) as connection, connection:
         local_ids = {
             int(row[0])
             for row in connection.execute(f"SELECT id FROM {table}")
         }
-        null_geometry_count = int(
-            connection.execute(
-                f"SELECT COUNT(*) FROM {table} WHERE geom IS NULL"
-            ).fetchone()[0]
-        )
+        local_null_geometry_ids = {
+            int(row[0])
+            for row in connection.execute(
+                f"SELECT id FROM {table} WHERE geom IS NULL"
+            )
+        }
         geometry_metadata = connection.execute(
             "SELECT geometry_type_name, srs_id FROM gpkg_geometry_columns "
             "WHERE table_name = ?",
@@ -339,8 +354,37 @@ def validate_source_ids(
         raise RuntimeError(
             f"Source ID mismatch: {missing:,} missing and {extra:,} extra features"
         )
-    if null_geometry_count:
-        raise RuntimeError(f"Output contains {null_geometry_count:,} null geometries")
+    if local_null_geometry_ids:
+        source_null_geometry_ids: set[int] = set()
+        null_ids = sorted(local_null_geometry_ids)
+        for offset in range(0, len(null_ids), 500):
+            batch = null_ids[offset : offset + 500]
+            payload = query_json(
+                session,
+                {
+                    "where": f"id IN ({','.join(map(str, batch))})",
+                    "outFields": "id",
+                    "returnGeometry": "true",
+                    "outSR": "32642",
+                    "f": "geojson",
+                },
+            )
+            returned_ids: set[int] = set()
+            for feature in payload.get("features") or []:
+                source_id = int(feature["properties"]["id"])
+                returned_ids.add(source_id)
+                if feature.get("geometry") is None:
+                    source_null_geometry_ids.add(source_id)
+            if returned_ids != set(batch):
+                raise RuntimeError("Could not re-query every locally null geometry")
+        if source_null_geometry_ids != local_null_geometry_ids:
+            raise RuntimeError(
+                "Local and source null-geometry IDs do not match exactly"
+            )
+        print(
+            f"Preserved {len(local_null_geometry_ids):,} source record(s) with null geometry",
+            flush=True,
+        )
     if geometry_metadata != ("MULTIPOLYGON", 32642):
         raise RuntimeError(
             f"Unexpected geometry metadata: {geometry_metadata!r}"
@@ -349,7 +393,7 @@ def validate_source_ids(
         f"Verified all {len(source_ids):,} source IDs; no missing or extra features",
         flush=True,
     )
-    return len(source_ids)
+    return len(source_ids), len(local_null_geometry_ids)
 
 
 def resolve_ogr2ogr(candidate: Path) -> Path:
@@ -432,7 +476,7 @@ def main() -> int:
         )
     normalize_output_schema(output, args.layer_name)
     add_source_id_index(output, args.layer_name)
-    verified_count = validate_source_ids(
+    verified_count, null_geometry_count = validate_source_ids(
         session, output, args.layer_name, args.where
     )
     if verified_count != final_count:
@@ -440,7 +484,11 @@ def main() -> int:
             f"Verified ID count mismatch: {verified_count:,} != {final_count:,}"
         )
     metadata_path = write_metadata(
-        output, args.layer_name, args.where, final_count
+        output,
+        args.layer_name,
+        args.where,
+        final_count,
+        null_geometry_count,
     )
     print(f"Complete: {output} ({final_count:,} features, {NATIVE_CRS})", flush=True)
     print(f"Metadata: {metadata_path}", flush=True)
