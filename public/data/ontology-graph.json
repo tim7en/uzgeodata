@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T15:16:54+00:00",
+  "generatedAt": "2026-08-29T15:39:26+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -8600,5 +8600,6 @@
     "stations": 190,
     "publishedAssertions": 3091,
     "proposedAssertions": 577
-  }
+  },
+  "triples": "/data/ontology-triples.json"
 }

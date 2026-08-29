@@ -79,6 +79,30 @@ def write_json(path: Path, payload) -> None:
     replace_with_retry(tmp, path)
 
 
+def write_json_rows(path: Path, payload, rows_key: str) -> None:
+    """Write a table one row per line.
+
+    The triple table is thousands of uniform records. Indenting it triples the
+    bytes the browser has to fetch; collapsing it to one line makes every
+    rebuild an unreadable diff. One row per line is neither.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    rows = payload[rows_key]
+    head = {k: v for k, v in payload.items() if k != rows_key}
+    with tmp.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write("{\n")
+        for key, value in head.items():
+            handle.write(f"  {json.dumps(key)}: {json.dumps(value, ensure_ascii=False)},\n")
+        handle.write(f"  {json.dumps(rows_key)}: [\n")
+        for index, row in enumerate(rows):
+            trailing = "," if index < len(rows) - 1 else ""
+            handle.write("    " + json.dumps(row, ensure_ascii=False, separators=(",", ":"))
+                         + trailing + "\n")
+        handle.write("  ]\n}\n")
+    replace_with_retry(tmp, path)
+
+
 def replace_with_retry(tmp: Path, path: Path, attempts: int = 5) -> None:
     """Atomic rename, retried.
 
@@ -1426,6 +1450,71 @@ class GraphBuilder:
                 "publishedAssertions": len(published),
                 "proposedAssertions": sum(1 for a in self.assertions.values() if a["status"] == "proposed"),
             },
+            # Proposals and rejections are deliberately not inlined here: this is
+            # what the portal renders, and the portal renders facts. The review
+            # table fetches the companion file instead, so the front page never
+            # pays for rows it does not show.
+            "triples": "/data/ontology-triples.json",
+        }
+
+    def triple_table(self) -> dict:
+        """Every assertion, flat, for the relationship table.
+
+        The portal graph publishes only what is asserted, which is right for a
+        page that presents facts. A review table has the opposite job: the
+        proposals and the rejections are its most interesting rows, because they
+        are the backlog and the negative labels. So they get their own file and
+        the portal keeps fetching only what it renders.
+        """
+        labels = {e["id"]: e["label"] for e in self.entities.values()}
+        types = {e["id"]: e["type"] for e in self.entities.values()}
+        for scheme in (self.themes, self.properties, self.analysis, self.usecases, self.places):
+            for concept in scheme:
+                labels[concept["id"]] = concept["prefLabel"]
+                types[concept["id"]] = "Concept"
+
+        predicates = read_json(
+            self.root / "ontology" / "vocab" / "predicates.json", {"predicates": []}
+        )["predicates"]
+
+        rows = [
+            {
+                "id": a["id"],
+                "s": a["subject"],
+                "p": a["predicate"],
+                "o": a.get("object"),
+                "v": a.get("value"),
+                "st": a["status"],
+                "a": a["assertedBy"],
+                "c": a["confidence"],
+                "r": a.get("reviewedBy"),
+                "m": a.get("method"),
+            }
+            for a in sorted(self.assertions.values(),
+                            key=lambda a: (a["subject"], a["predicate"], a["id"]))
+        ]
+
+        used = {row["s"] for row in rows} | {row["o"] for row in rows if row["o"]}
+        counts: dict[str, int] = {"total": len(rows)}
+        for row in rows:
+            counts[row["st"]] = counts.get(row["st"], 0) + 1
+        return {
+            "version": "1.0",
+            "generatedAt": self.generated_at,
+            "promoteThreshold": PROMOTE_THRESHOLD,
+            "counts": counts,
+            "predicates": [
+                {"id": p["id"], "label": p["label"], "definition": p["definition"],
+                 "cardinality": p["cardinality"],
+                 "mlProposable": bool(p.get("mlProposable")),
+                 "viaRelationshipTable": bool(p.get("viaRelationshipTable"))}
+                for p in predicates
+            ],
+            "agents": [{"id": a["id"], "label": a["label"], "kind": a["agentKind"],
+                        "trustTier": a["trustTier"]} for a in self.agents],
+            "labels": {k: v for k, v in sorted(labels.items()) if k in used},
+            "types": {k: v for k, v in sorted(types.items()) if k in used},
+            "triples": rows,
         }
 
     def save(self) -> dict:
@@ -1443,6 +1532,8 @@ class GraphBuilder:
         )
         graph = self.portal_graph()
         write_json(self.root / "public" / "data" / "ontology-graph.json", graph)
+        write_json_rows(self.root / "public" / "data" / "ontology-triples.json",
+                        self.triple_table(), "triples")
         return graph
 
 
