@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-08-29T01:08:55.512384+05:00",
+  "selection": "positive-area ADM0 intersection; full basin geometries retained",
+  "vector_crs": "EPSG:4326",
+  "area_crs": "EPSG:6933",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "unique_hybas_id_within_each_level": true,
+  "all_selected_pfaf_children_have_selected_parent": true,
+  "children_without_spatial_parent_match": 0,
+  "native_topology_targets_missing_from_sources": 0,
+  "coverage_within_0_1_percent_each_level": true,
+  "gpkg_declared_geometry_type": "MULTIPOLYGON",
+  "boundary_source_used": "https://services-ap1.arcgis.com/SarAB44oRF1yeedk/ArcGIS/rest/services/uzb_admbnda_adm0_2018b/FeatureServer/0/query?where=1%3D1&outFields=ADM0_EN%2CADM0_RU%2CADM0_UZ%2CADM0ALT1EN%2CADM0_PCODE&returnGeometry=true&outSR=4326&f=geojson",
+  "shapefile_source_geometries_unchanged": true,
+  "gpkg_geometry_normalization": "Polygon records wrapped as MultiPolygon; coordinates unchanged"
+}

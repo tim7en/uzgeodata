@@ -1,0 +1,35 @@
+{
+  "basinatlas_gdb": "D:\\dev\\uzgeodata\\BasinATLAS_Data_v10.gdb\\BasinATLAS_v10.gdb",
+  "boundary_source": "D:\\dev\\uzgeodata\\earth_engine\\earth_engine\\uzbekistan_hydrobasins_lake_v1c\\boundary\\uzb_admbnda_adm0_2018b_recovered.geojson",
+  "country_area_km2": 450964.028437,
+  "country_area_geodesic_km2": 450991.181264,
+  "country_area_lake_package_km2": 450941.333851,
+  "country_area_convention_gap_pct": 0.006021,
+  "area_convention_note": "EPSG:6933 is a planar equal-area projection; projecting a lat/lon outline into it without densifying leaves a small, documented gap against the geodesic area. Kept for consistency with the lake package rather than silently improved.",
+  "boundary_provenance": "reused from uzbekistan_hydrobasins_lake_v1c, itself recovered from the uzb_admbnda_adm0_2018b ArcGIS Feature Service",
+  "selection_predicate": "positive-area intersection",
+  "geometry_output": "complete source polygons, not clipped",
+  "vector_crs": "EPSG:4326",
+  "area_crs": "EPSG:6933",
+  "added_fields": [
+    "SRC_LAYER",
+    "UZB_KM2",
+    "UZB_PCT"
+  ],
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "shapefile_note": "shapefiles carry only the core HydroBASINS fields; the format caps attributes at 255 and field names at 10 characters. Full BasinATLAS attributes are in the GeoPackage and in attributes/*.csv.",
+  "schema_note": "BasinATLAS has no LAKE or SIDE fields, so downstream_links omits them; SRC_TILE is replaced by SRC_LAYER because the source is a single global layer set rather than regional tiles."
+}

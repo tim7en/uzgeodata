@@ -1,0 +1,391 @@
+{
+  "package": "uzbekistan_hydrobasins_lake_v1c",
+  "created_at": "2026-08-29T01:08:55.512384+05:00",
+  "sources": {
+    "eu": "D:\\earth_engine\\hybas_lake_eu_lev01-12_v1c",
+    "as": "D:\\earth_engine\\hybas_lake_as_lev01-12_v1c",
+    "adm0": "https://services-ap1.arcgis.com/SarAB44oRF1yeedk/ArcGIS/rest/services/uzb_admbnda_adm0_2018b/FeatureServer/0/query?where=1%3D1&outFields=ADM0_EN%2CADM0_RU%2CADM0_UZ%2CADM0ALT1EN%2CADM0_PCODE&returnGeometry=true&outSR=4326&f=geojson"
+  },
+  "files": [
+    {
+      "path": "boundary/uzb_admbnda_adm0_2018b_recovered.geojson",
+      "bytes": 114522,
+      "sha256": "9a4bfb8186636b66b58494be14b37c5f5e192160857f4b3d2ea5409b19c49119"
+    },
+    {
+      "path": "documentation/HydroBASINS_TechDoc_v1c.pdf",
+      "bytes": 269329,
+      "sha256": "5b042271b41cd855a3c72fc9156baae6bc73ad72297ccd0e8f9ae99a1241b570"
+    },
+    {
+      "path": "level_summary.csv",
+      "bytes": 800,
+      "sha256": "d59bcbb070d078aab31f3c024347574bb7e02e7cecde58bf3c22e395f129afae"
+    },
+    {
+      "path": "preflight_io_test.json",
+      "bytes": 489,
+      "sha256": "3995f4468c01903bfb2ce71ebb48575221db7d84456e2be4ffb7597a29d9c660"
+    },
+    {
+      "path": "processing_parameters.json",
+      "bytes": 594,
+      "sha256": "3a5ce24ec22bfcd5d98ec92ac27690571191dabd28e3af22ebaf88ade89fac60"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2220,
+      "sha256": "7044453a9f3b7686b498f0a6b1ed848395ca9f1bb899000b72a23849740c012b"
+    },
+    {
+      "path": "relationships/downstream_links.csv",
+      "bytes": 1803355,
+      "sha256": "a5e8995dab4ffb3734383c8eb3b10f1de58b5845dd6e411f7f8c74805b382791"
+    },
+    {
+      "path": "relationships/feature_hierarchy_links.csv",
+      "bytes": 1533262,
+      "sha256": "5889261015f2a99298cf1e0b26975fab838280ef3a6d35374e6729dee7109401"
+    },
+    {
+      "path": "relationships/pfaf_hierarchy.csv",
+      "bytes": 420956,
+      "sha256": "74e58f84ef90e6b4ef9de81864c5cd792c971820a96dc831bc5c266bf113d60d"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev01_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev01_v1c.dbf",
+      "bytes": 942,
+      "sha256": "5124b78fa1a3f486b22e25c82eaef4edf79c81960500698ab904782e4afebd0e"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev01_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev01_v1c.shp",
+      "bytes": 7365292,
+      "sha256": "73174e7cef9e06918e7bd636aa4bd6e4779e9c74a758bc1bc69c65ae45c73156"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev01_v1c.shx",
+      "bytes": 116,
+      "sha256": "7e81e0c8eae8d584eeea9e49a4d466acf421eb9308073d91de8d125a6fec432a"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev02_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev02_v1c.dbf",
+      "bytes": 942,
+      "sha256": "05ad953e79c181e180aa12b9f9fd0e4e762ff20e2e6a6e7dd85d82997949320b"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev02_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev02_v1c.shp",
+      "bytes": 700792,
+      "sha256": "1e521c3880523596be34b1bb223f1f07bc6d170f5f49a5f39500a86d10fa0d2c"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev02_v1c.shx",
+      "bytes": 116,
+      "sha256": "bbf048efa85b583c3c1d707b521569876ca2499871594200a8521e91b82021f0"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev03_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev03_v1c.dbf",
+      "bytes": 1274,
+      "sha256": "f8075148963b2069d047b12f36fd67659bb4d053d2b329517f2341e215b9b328"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev03_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev03_v1c.shp",
+      "bytes": 744148,
+      "sha256": "257816ad0292a6ec7594efea1771c5160c297064b700d7d4e727e60f9cbae305"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev03_v1c.shx",
+      "bytes": 132,
+      "sha256": "91bf96311489777d4704eae27aae85af972b564f7c36a0710577df5f405cad22"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev04_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev04_v1c.dbf",
+      "bytes": 2768,
+      "sha256": "ede96a9b70579858c8f17c3c78c750ebf3d9e8aa7afcf9c855d12d41bd61d8fb"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev04_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev04_v1c.shp",
+      "bytes": 893720,
+      "sha256": "6f30d98a3e5ee2c6a0cf8a3e7a0aa629197a26fa728c5b13081471595e10cb02"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev04_v1c.shx",
+      "bytes": 204,
+      "sha256": "0ded3c42c5b38e9e358baa1cf70dfaabb794fc44aef664ad49aa2ce80c5c93f8"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev05_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev05_v1c.dbf",
+      "bytes": 6254,
+      "sha256": "f6c95582434b933decce6007fc03173d5dc8d79a8d6d14cd3d4a2bc215e7b587"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev05_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev05_v1c.shp",
+      "bytes": 919868,
+      "sha256": "748d00634da37404288d2033fc2aed14dd38cbcc43462cca73489b6d738ed584"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev05_v1c.shx",
+      "bytes": 372,
+      "sha256": "378cf9c945ded953a779b5f120d51ec1bc902bc9d9bccabda0e34a7f6ea617b5"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev06_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev06_v1c.dbf",
+      "bytes": 15052,
+      "sha256": "40529c8b71320de886166cea2946d2f13f19475d52bc2f2362bed9a5fa1ed572"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev06_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev06_v1c.shp",
+      "bytes": 1145320,
+      "sha256": "bae3a51021147c9e62367039d8edc7df00d1c127dfccf638735543bee2afda9d"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev06_v1c.shx",
+      "bytes": 796,
+      "sha256": "2fe0bb989c923d0beb78d228c580fe24afbe21c2760b7afeabfbaaa1887ec55b"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev07_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev07_v1c.dbf",
+      "bytes": 42940,
+      "sha256": "387f05bbcf03eeddebf95de5021c2e5f2da428ea3d5c83b2ab75f7fd290167d8"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev07_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev07_v1c.shp",
+      "bytes": 1665292,
+      "sha256": "a46caa0f9c906576844aebeeb11519deec1024fdddcba34facd6679e9062b1d7"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev07_v1c.shx",
+      "bytes": 2140,
+      "sha256": "6fae5b3f90ca70fb857111dfc526cf540496c242106dfaa9cdfa0b808a915a75"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev08_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev08_v1c.dbf",
+      "bytes": 141391,
+      "sha256": "fb3ab1cc43eb1bb4512b406dad5057eaf97333776326ee1f3066745283d9341c"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev08_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev08_v1c.shp",
+      "bytes": 2624524,
+      "sha256": "149b5031c190b2959eae96ab2a97b545d2937c366b88841a11f6ecd0e18c2699"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev08_v1c.shx",
+      "bytes": 6844,
+      "sha256": "d65c86af142fae0366cde8079bbc793a0bf8af66b75c6a3796e68d8c69cf4f02"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev09_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev09_v1c.dbf",
+      "bytes": 343162,
+      "sha256": "dfc26ecbc29e0fb26558e76290f99b09d608d717e39457aef2198e1f2689f3d0"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev09_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev09_v1c.shp",
+      "bytes": 3809136,
+      "sha256": "a338aff4623cf31cbe287d6c81c7d4d3fc8018e51eaa2bb23f33c433b4ef171e"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev09_v1c.shx",
+      "bytes": 16412,
+      "sha256": "22f3f58c1dab59fe629f42374d2aa8263540e7d103481e4561a6ca8b22684847"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev10_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev10_v1c.dbf",
+      "bytes": 616277,
+      "sha256": "4f3150d2955da5f29032138b8b7f6f5a287e730948c6784853d1fa26287a1e97"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev10_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev10_v1c.shp",
+      "bytes": 4948360,
+      "sha256": "5090a77a55c9df850b4fc83a074243b8bee3cf1e8df9fd826fadd2e1860cf5ca"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev10_v1c.shx",
+      "bytes": 29244,
+      "sha256": "33a5b4ff02abe931f3cf656665fc9f9e44deafc35cacd2b97e8f2854b281a8c1"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev11_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev11_v1c.dbf",
+      "bytes": 701860,
+      "sha256": "da9caef1afc028c5ef242296035d2119f3ef3866c1b947ab7fcff39d08d04ce9"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev11_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev11_v1c.shp",
+      "bytes": 5258656,
+      "sha256": "214231b9b86a916f0014c653c43a698e46aad6b0d1d09261017ed3522ccad6a6"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev11_v1c.shx",
+      "bytes": 33100,
+      "sha256": "2142c1fcd950cec5425d9edf63f2052d14efe783b9cad1022335bdcccfa8d2e1"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev12_v1c.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev12_v1c.dbf",
+      "bytes": 709747,
+      "sha256": "61649a0bf048af0c2299f0fdd8691d56a985ddb84e7e4d21ae384c0eb948edfb"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev12_v1c.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev12_v1c.shp",
+      "bytes": 5275824,
+      "sha256": "cda5937823e27a5b7d037ea62287bd47ccb00c73410a2adc756fa974a5a5cad1"
+    },
+    {
+      "path": "shapefiles/hybas_lake_uz_lev12_v1c.shx",
+      "bytes": 33276,
+      "sha256": "f4255f93720850cd4d87b36b45eb65c5c51eea8cf658a552f2b95644055f30e7"
+    },
+    {
+      "path": "shapefiles/uzb_adm0_selection_boundary.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/uzb_adm0_selection_boundary.dbf",
+      "bytes": 595,
+      "sha256": "0ba240c9a7b7d0002352c7ae742c4abece8a0a90dff830cdfabaf83a213967e2"
+    },
+    {
+      "path": "shapefiles/uzb_adm0_selection_boundary.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/uzb_adm0_selection_boundary.shp",
+      "bytes": 51228,
+      "sha256": "ff12df11c4a1932f81305a0ff6951c223f5fd43d338c9e37b2fdc4a5b40a63c5"
+    },
+    {
+      "path": "shapefiles/uzb_adm0_selection_boundary.shx",
+      "bytes": 108,
+      "sha256": "b5cb3e2c1016a2502f292c6bbfb2f87eb8d9fe03f38dda98c749dbdf7eaaf514"
+    },
+    {
+      "path": "uzbekistan_hydrobasins_lake_v1c.gpkg",
+      "bytes": 47812608,
+      "sha256": "7c636960d4c07f6ea35233d76913f0f753bf0d80136dfb399525f2140df1b353"
+    },
+    {
+      "path": "validation_report.json",
+      "bytes": 1038,
+      "sha256": "c94773d178beeec891f62130bde9f7885091ba2708abe5019c7569328f631814"
+    }
+  ]
+}

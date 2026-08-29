@@ -1,0 +1,415 @@
+{
+  "package": "uzbekistan_basinatlas_v10",
+  "created_at": "2026-08-29T11:20:38.264535+05:00",
+  "sources": {
+    "basinatlas": "D:\\dev\\uzgeodata\\BasinATLAS_Data_v10.gdb\\BasinATLAS_v10.gdb",
+    "adm0": "D:\\dev\\uzgeodata\\earth_engine\\earth_engine\\uzbekistan_hydrobasins_lake_v1c\\boundary\\uzb_admbnda_adm0_2018b_recovered.geojson"
+  },
+  "files": [
+    {
+      "path": "attributes/basinatlas_uz_lev01.csv",
+      "bytes": 5256,
+      "sha256": "252fac26b95ce2ffd49d9f4236d1ad3f4167d24f299b9e73e3b4df66566faa8a"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev02.csv",
+      "bytes": 5290,
+      "sha256": "154efbec909ce7371e074a2679f72b528dda706f11af5be0e51ee5156330f476"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev03.csv",
+      "bytes": 7278,
+      "sha256": "964291673fd3ab4119e6303a9ff5a48a921279542683937b0e1c7a48edebbc34"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev04.csv",
+      "bytes": 15266,
+      "sha256": "edc7d82e541eb6ec48fd3be972c7ab5a7debb3e77b62d9f8884aaaa38b1348da"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev05.csv",
+      "bytes": 33818,
+      "sha256": "c88113a9e1e6138d47c3063cac8186609a0da52207c3be9ec26a50e09522b579"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev06.csv",
+      "bytes": 94290,
+      "sha256": "11cdf77c8a60de2cf2d6a4948846ed77200d77ff442cae2feafa84039a8b7e44"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev07.csv",
+      "bytes": 260592,
+      "sha256": "415f38d1fe7344e7578dab28d0630f874288dd3e92744d7c53b0e127f0f949f9"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev08.csv",
+      "bytes": 786167,
+      "sha256": "c44f85b0f724dce2fef4eabce433014d2c76540440a0c7582e3a9f2c900d364a"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev09.csv",
+      "bytes": 1931189,
+      "sha256": "58e01d0826ce72a31c71b9e389a23a9835cda3c0174c52a59c2f33ef91247543"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev10.csv",
+      "bytes": 3497181,
+      "sha256": "c84994a6044e9219c4fdd46257fb1401dbed06da39816d2285baa826c35db27c"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev11.csv",
+      "bytes": 3841806,
+      "sha256": "82657e9cbf27c6f67bc930d2d4a5d7ac12580683258b939d3228e9019958ce5d"
+    },
+    {
+      "path": "attributes/basinatlas_uz_lev12.csv",
+      "bytes": 3865923,
+      "sha256": "64f06d8583e2ea7d532f37ba5e14834dc72afe3acd813dd6c2963d11e381408f"
+    },
+    {
+      "path": "boundary/uzb_admbnda_adm0_2018b_recovered.geojson",
+      "bytes": 139323,
+      "sha256": "62a448e9b339a7879ff052dd7a2c998097ceeea765aaa56f4627d338e40e6fc3"
+    },
+    {
+      "path": "level_summary.csv",
+      "bytes": 785,
+      "sha256": "ff55eeaab1a51388daa22a4446e394f8a56621ccbbda194247e3ca94d623562a"
+    },
+    {
+      "path": "processing_parameters.json",
+      "bytes": 1599,
+      "sha256": "4ab3b27b715a29f8e8b0f9410aaccddde46dfd962f52c83270c37a81457405bd"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3715,
+      "sha256": "fdc854164307d2aa09ce4aef3ac4e353abf99793bce10c731dc2f27c86c855c2"
+    },
+    {
+      "path": "relationships/downstream_links.csv",
+      "bytes": 2020581,
+      "sha256": "3fde24647eeceaadcbd2d7ecaf6d7f9df2c8e4a48778a01aaf2e322ba19580cb"
+    },
+    {
+      "path": "relationships/feature_hierarchy_links.csv",
+      "bytes": 1488407,
+      "sha256": "368acead70f600a0481ee84683a3bbf2225aeb84ed3e7934d568a5ac6143a1b1"
+    },
+    {
+      "path": "relationships/pfaf_hierarchy.csv",
+      "bytes": 446267,
+      "sha256": "194a354c3cdf6aeedc9492cf81af400cf7c5082a0dc6cb34259e143393c510da"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev01.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev01.dbf",
+      "bytes": 1248,
+      "sha256": "2c4fc387c7fc5e56c2f214646c429ac08c4b0eaa17af38dc850a56c9e3bb666c"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev01.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev01.shp",
+      "bytes": 7653888,
+      "sha256": "34ddca38f821961ad08174da60c0f9a0c1d63f756e66c5e5fa03915cb83f7b55"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev01.shx",
+      "bytes": 116,
+      "sha256": "c6e8c7e66c8344ea6875fe81b1592c2af5a10b870333ff67a6e81cf8d8388330"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev02.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev02.dbf",
+      "bytes": 1248,
+      "sha256": "d4078d1b3bb8b0d65e99b2f2eba09264e4b3a32d67b0fd79c75daa427ff99cd7"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev02.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev02.shp",
+      "bytes": 927696,
+      "sha256": "2ffacb60ef327597a37e98e632fda3a10650655b325253cd369683b0c8aea3b0"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev02.shx",
+      "bytes": 116,
+      "sha256": "beb66de866062ae41c079e0ebb20d7870148318f625274c5b4f1563bfb056f7f"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev03.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev03.dbf",
+      "bytes": 1950,
+      "sha256": "e3d56f65dc4510eeeaeb2870339b4ad56e87e22a8381c172c490bfd8bcbbaa58"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev03.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev03.shp",
+      "bytes": 745220,
+      "sha256": "40fbe4bceda6616d3b27686b3a13072fc25e42ca8a1188a302bcf5c37556479b"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev03.shx",
+      "bytes": 132,
+      "sha256": "ac6c481af9ed5d5bade57d9bb13d8581bb075c635fb60a5d2da67432c003a8a6"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev04.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev04.dbf",
+      "bytes": 4758,
+      "sha256": "6b213de13901d2b9b05a0ad1dd41e98071ea0f3a11444026c40b7b0ceb1b01a1"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev04.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev04.shp",
+      "bytes": 845432,
+      "sha256": "ebb8afe382abd800eb5917b530ba1b83a00338a0f996853b65dec196ac66ceb0"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev04.shx",
+      "bytes": 196,
+      "sha256": "afcc66212edf4fc5df5a346fba3f0461b855ce75b3f2c12bb4744712207d88e9"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev05.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev05.dbf",
+      "bytes": 11427,
+      "sha256": "bf79b5d7a7dacbca074af75ab86522c49f5ceefa6a98f984625bc688f825d88b"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev05.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev05.shp",
+      "bytes": 858400,
+      "sha256": "cbffe2cf495cf1ee7195f27d598d56abf17de68fa0026d69ee676598cc452ec2"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev05.shx",
+      "bytes": 348,
+      "sha256": "664f7366151ab472b5faf659b625c05912b7036f068b941d8bebc197d52a6804"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev06.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev06.dbf",
+      "bytes": 32838,
+      "sha256": "52fa58ad7a577fce591d864ab7f23a21963d3129fba352217ad7dc6616fa278d"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev06.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev06.shp",
+      "bytes": 1153772,
+      "sha256": "7a3849b9c521b56945fedabb77205813d69c1889c4cab89da565b8637da8f727"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev06.shx",
+      "bytes": 836,
+      "sha256": "89252e93a581ccb1a0576dbd30bea5bf3a3b11e7fdd467c02c2b14c972545e6e"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev07.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev07.dbf",
+      "bytes": 92859,
+      "sha256": "5c15088eba0611ea34dee0550be19a1ebf2b8e51b9a10301acc9e4f0c5c7bfdc"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev07.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev07.shp",
+      "bytes": 1678408,
+      "sha256": "a916f34a92cbddcb721aa365b6153237edefb15f74f7bad67d2abd80e47d59b1"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev07.shx",
+      "bytes": 2204,
+      "sha256": "1f4510b9181634694443739d536c309f3a71bee21b1b78a11afc627a9dfd2028"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev08.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev08.dbf",
+      "bytes": 283101,
+      "sha256": "d4d5764e4ab64cadcd07a015ec5f90e3e4b91a436409045414fbe64da798865b"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev08.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev08.shp",
+      "bytes": 2585660,
+      "sha256": "c0ac744b6ffdfc865c5a684c027244b10c0004e85e6aeaa90725c87bd2d296a6"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev08.shx",
+      "bytes": 6540,
+      "sha256": "41458f36a4b542538366dcfe59d3b49280a217468b49967353afea2b22666a35"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev09.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev09.dbf",
+      "bytes": 698685,
+      "sha256": "0a58cda9a3f49f1872009330550e17c26ad108970995857c0cdcf863dcf15ee5"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev09.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev09.shp",
+      "bytes": 3798748,
+      "sha256": "399c9d2e6debfdcff658ca1b1986dd33dc578a0bf2b5dfa1dae5e71e29b28313"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev09.shx",
+      "bytes": 16012,
+      "sha256": "a2fa5df7f7ef56fe2f87ca59d39a6bb4de5bb3610b6de482755ff3668b9e617c"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev10.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev10.dbf",
+      "bytes": 1299426,
+      "sha256": "9296d6894f3426e543ae12ad644f78591cc28185f975ce155fe445415c3854fe"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev10.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev10.shp",
+      "bytes": 5008868,
+      "sha256": "223e1de789e9510520622885e3b01869d67c3329dcde41742c6a394a6b582684"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev10.shx",
+      "bytes": 28964,
+      "sha256": "adfdce614dd1b949ea7c033d39016e0cd5c1d5df567b1dbed50c1d3460e7e261"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev11.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev11.dbf",
+      "bytes": 1426146,
+      "sha256": "0f4ad26a83201d2d3f314c4c6ae977e2cbf454b4286414ecc29ebc000184ba1c"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev11.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev11.shp",
+      "bytes": 5237672,
+      "sha256": "78a4439713bd851edbe78a89451c0ac1576c4037845e5e6c672c24e78d8374f5"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev11.shx",
+      "bytes": 31780,
+      "sha256": "8c5205d268ba4ae16bdd7c698df9c95a143c41f8ce65745718b2d50ee0f93f5b"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev12.cpg",
+      "bytes": 5,
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev12.dbf",
+      "bytes": 1433706,
+      "sha256": "988e70e32cbad571bee485514551f057c918ea365cc0661b13b080b72935326a"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev12.prj",
+      "bytes": 145,
+      "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev12.shp",
+      "bytes": 5254800,
+      "sha256": "d5116aa1da512ec97192700863fd9f6a28f209a8609ef50f08dba7afbb300652"
+    },
+    {
+      "path": "shapefiles/basinatlas_uz_lev12.shx",
+      "bytes": 31948,
+      "sha256": "1d7e93e2f815abda550b16415f50fbe3dc3e6c88d4a88ec82cfbe9eb6334d15a"
+    },
+    {
+      "path": "uzbekistan_basinatlas_v10.gpkg",
+      "bytes": 63422464,
+      "sha256": "fa66df2bd2d430e0df878a081b0a842191824c6a9c59b10f98bbc61dd6c91829"
+    },
+    {
+      "path": "validation_report.json",
+      "bytes": 1222,
+      "sha256": "0f89e74a326bfa9b581a2aa24ab91cb31cf93dd5196b2de77607a89e6462e3cf"
+    }
+  ]
+}

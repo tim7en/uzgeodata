@@ -1,0 +1,8 @@
+{
+  "hydrobasins_eu": "D:\\earth_engine\\hybas_lake_eu_lev01-12_v1c",
+  "hydrobasins_as": "D:\\earth_engine\\hybas_lake_as_lev01-12_v1c",
+  "local_adm0_unreadable": "D:\\earth_engine\\uzb_admbnda_adm0_2018b.zip",
+  "recovered_adm0": "https://services-ap1.arcgis.com/SarAB44oRF1yeedk/ArcGIS/rest/services/uzb_admbnda_adm0_2018b/FeatureServer/0/query?where=1%3D1&outFields=ADM0_EN%2CADM0_RU%2CADM0_UZ%2CADM0ALT1EN%2CADM0_PCODE&returnGeometry=true&outSR=4326&f=geojson",
+  "selection_predicate": "positive-area intersection",
+  "geometry_output": "complete source polygons, not clipped"
+}
