@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import L from 'leaflet';
 import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import {
@@ -249,7 +249,7 @@ function OntologyExplorer({ onRequest }) {
   const isVisible=node=>visibleIds.has(node.id);
   const selected=graph.find(node=>node.id===selectedId);
   const focused=graph.find(node=>node.id===hoveredId)||selected;
-  const focusedConcept=focused&&ontologyConcepts[focused.concept];
+  const focusedConcept=focused&&conceptLayout[focused.concept];
   const matchCount=visibleNodes.length;
   useEffect(()=>{
     if(!touring||reducedMotion||hoveredId||visibleNodes.length<2)return;
@@ -268,7 +268,7 @@ function OntologyExplorer({ onRequest }) {
         <g className="ontology-core-links">{ontologyDomains.map(domain=><line key={domain.name} x1="600" y1="360" x2={domain.x} y2={domain.y}/>)}</g>
         <g className="ontology-data-links">{graph.map(node=><line key={node.id} x1={node.domain.x} y1={node.domain.y} x2={node.x} y2={node.y} style={{'--link-delay':`${(Number(node.id.split('-')[1])%16)*90}ms`}} className={`${isVisible(node)?'visible':'dim'} ${focused?.id===node.id?'focused-link':''} ${focused&&focused.category!==node.category?'context-dim':''}`}/>)}</g>
         {focused&&focusedConcept&&<line className="concept-link" x1={focused.x} y1={focused.y} x2={focusedConcept.x} y2={focusedConcept.y}/>}
-        <g className="concept-nodes">{Object.entries(ontologyConcepts).map(([name,position])=><g key={name} transform={`translate(${position.x} ${position.y})`} className={focused?.concept===name?'related':''}><rect x="-53" y="-13" width="106" height="26"/><text>{name.toUpperCase()}</text></g>)}</g>
+        <g className="concept-nodes">{Object.entries(conceptLayout).map(([name,position])=><g key={name} transform={`translate(${position.x} ${position.y})`} className={focused?.concept===name?'related':''}><rect x="-53" y="-13" width="106" height="26"/><text>{name.toUpperCase()}</text></g>)}</g>
         <g className="root-node" transform="translate(600 360)"><circle className="root-halo" r="63"/><circle className="root-shell" r="49"/><circle className="root-core" r="38"/><Network size={25} x="-12.5" y="-23"/><text y="16">UZGEODATA</text><text className="root-subtitle" y="29">CATALOG MODEL</text></g>
         <g className="domain-nodes">{ontologyDomains.map((domain,index)=>{const count=graph.filter(node=>node.category===domain.name).length;const related=focused?.category===domain.name;return <g key={domain.name} transform={`translate(${domain.x} ${domain.y})`} className={`${activeDomain===domain.name?'selected-domain':''} ${related?'related-domain':''}`} onClick={()=>selectDomain(domain.name)}><circle className="domain-halo" r="42" style={{stroke:domain.color,'--domain-delay':`${index*.35}s`}}/><circle className="domain-shell" r="31" style={{stroke:domain.color}}/><circle className="domain-core" r="23"/><text y="-2">{domain.name.toUpperCase()}</text><text className="domain-count" y="12">{count} DATASETS</text></g>})}</g>
         <g className="dataset-nodes">{graph.map((node,index)=>{const focusedNode=focused?.id===node.id;return <g key={node.id} transform={`translate(${node.x} ${node.y})`} style={{'--node-delay':`${Math.min(index*12,900)}ms`}} className={`${isVisible(node)?'visible':'dim'} ${selectedId===node.id?'selected':''} ${focusedNode?'focused-node':''} ${focused&&focused.category===node.category?'related-node':''}`} onMouseEnter={()=>setHoveredId(node.id)} onMouseLeave={()=>setHoveredId(null)} onClick={()=>selectNode(node.id)}>{focusedNode&&<circle className="node-focus-ring" r="13"/>}<circle className="dataset-dot" r={selectedId===node.id?7:4} style={{fill:node.domain.color}}/><title>{node.title}</title></g>})}</g>
