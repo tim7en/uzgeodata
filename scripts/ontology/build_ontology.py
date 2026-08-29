@@ -291,6 +291,7 @@ class GraphBuilder:
         self.build_public_layers()
         self.build_external_sources()
         self.build_hydrography_sources()
+        self.assert_hydroatlas_attributes()
         self.seed_semantics()
         self.merge_preserved_assertions()
 
@@ -917,6 +918,41 @@ class GraphBuilder:
             self.add(subject, "uz:relatedTo", related, agent=AGENT_CURATOR,
                      confidence=1.0, status="asserted", method="curator-mapping",
                      evidence=evidence)
+
+    def assert_hydroatlas_attributes(self) -> None:
+        """Say what BasinATLAS measures, one property at a time.
+
+        The dataset carries 281 attribute columns. Registering it as observing a
+        single 'drainage basin' concept hides that it also holds temperature,
+        precipitation, irrigated extent, population and two dozen other measured
+        properties the portal already has concepts for. The decoding comes from
+        the official catalogue, so each link cites the columns behind it.
+        """
+        columns = read_json(self.root / "ontology" / "instances" / "hydroatlas-columns.json", {})
+        decoded = columns.get("columns") or {}
+        if not decoded:
+            return
+        target = "uz:ds/basinatlas-uz-v10"
+        if target not in self.entities:
+            return
+
+        by_property: dict[str, list[str]] = {}
+        for column, meaning in decoded.items():
+            if meaning.get("property"):
+                by_property.setdefault(meaning["property"], []).append(column)
+
+        for concept, source_columns in sorted(by_property.items()):
+            self.add(
+                target, "uz:observes", concept, agent=AGENT_PIPELINE, confidence=1.0,
+                status="asserted", method="hydroatlas-catalog",
+                evidence={
+                    "source": columns.get("catalogSource", "BasinATLAS catalogue"),
+                    "matchedTerms": sorted(source_columns)[:6],
+                    "featureCount": len(source_columns),
+                    "note": f"{len(source_columns)} BasinATLAS columns measure this property",
+                },
+            )
+        self.log(f"  hydroatlas: {len(by_property)} properties from {len(decoded)} decoded columns")
 
     def assert_external_semantics(self, ds_id: str, source: dict, dataset: dict) -> None:
         evidence = {"source": "external-sources.json",

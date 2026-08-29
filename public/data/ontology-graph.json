@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T06:24:24+00:00",
+  "generatedAt": "2026-08-29T07:06:56+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -6886,11 +6886,39 @@
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
+        },
+        {
+          "concept": "uz:prop/air-temperature",
+          "confidence": 1.0,
+          "by": "uz:agent/extraction-pipeline",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/climate-classification",
+          "confidence": 1.0,
+          "by": "uz:agent/extraction-pipeline",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/climatic-water-deficit",
+          "confidence": 1.0,
+          "by": "uz:agent/extraction-pipeline",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/cropland-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/extraction-pipeline",
+          "reviewed": false
         }
       ],
       "useCases": [
+        "uz:usecase/carbon-accounting",
+        "uz:usecase/conservation-planning",
         "uz:usecase/drought-early-warning",
         "uz:usecase/irrigation-planning",
+        "uz:usecase/land-degradation-monitoring",
+        "uz:usecase/urban-and-settlement-planning",
         "uz:usecase/water-resource-allocation"
       ],
       "places": [
@@ -8570,7 +8598,7 @@
   "counts": {
     "datasets": 177,
     "stations": 190,
-    "publishedAssertions": 3054,
+    "publishedAssertions": 3085,
     "proposedAssertions": 577
   }
 }

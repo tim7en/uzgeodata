@@ -63,6 +63,7 @@ def validate(root: Path, strict: bool = False) -> Report:
         "analysis.json": concept_schema,
         "usecases.json": concept_schema,
         "places.json": concept_schema,
+        "hydroatlas-attributes.json": concept_schema,
         "predicates.json": predicate_schema,
     }
     concepts: dict[str, dict] = {}

@@ -10,6 +10,10 @@
     "scheme": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
     "title": {"type": "string"},
     "description": {"type": "string"},
+    "reference": {
+      "type": "string",
+      "description": "Citation for the scheme as a whole, where it is derived from published work."
+    },
     "version": {"type": "string", "pattern": "^[0-9]+[.][0-9]+$"},
     "concepts": {
       "type": "array",

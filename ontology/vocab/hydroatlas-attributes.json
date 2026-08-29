@@ -1,0 +1,769 @@
+{
+  "scheme": "hydroatlas",
+  "title": "HydroATLAS attributes",
+  "description": "The BasinATLAS v1.0 attribute set, parsed from the official BasinATLAS_Catalog_v10.pdf. Each variable keeps its source dataset, citation, licence, units and native resolution so any value shown in the portal can be traced to the study it came from. Column names are decoded against the catalogue's own suffix syntax.",
+  "version": "1.0",
+  "reference": "Linke, S., Lehner, B., Ouellet Dallaire, C. et al. (2019). Global hydro-environmental sub-basin and river reach characteristics at high spatial resolution. Scientific Data 6, 283. doi:10.1038/s41597-019-0300-6",
+  "concepts": [
+    {
+      "id": "uz:hydroatlas/pop",
+      "prefLabel": "Population Count",
+      "altLabels": [
+        "pop",
+        "pop_ct"
+      ],
+      "definition": "Population Count. Source: Gridded Population of the World (GPW) v4. Units: count (thousands). Native format: 30 arc-second grid.",
+      "unit": "count (thousands)",
+      "note": "Catalogue A01 (Anthropogenic). Citation: CIESIN 2016. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: ssu  |  usu.",
+      "related": [
+        "uz:prop/settlement-extent"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/ppd",
+      "prefLabel": "Population Density",
+      "altLabels": [
+        "ppd",
+        "ppd_pk"
+      ],
+      "definition": "Population Density. Source: Gridded Population of the World (GPW) v4. Units: people per km². Native format: 30 arc-second grid.",
+      "unit": "people per km²",
+      "note": "Catalogue A02 (Anthropogenic). Citation: CIESIN 2016. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav  |  uav.",
+      "related": [
+        "uz:prop/settlement-extent"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/urb",
+      "prefLabel": "Urban Extent",
+      "altLabels": [
+        "urb",
+        "urb_pc"
+      ],
+      "definition": "Urban Extent. Source: Global Human Settlement (GHS) Settlement Model v1.0 (2016). Units: percent cover. Native format: 1-km grid.",
+      "unit": "percent cover",
+      "note": "Catalogue A03 (Anthropogenic). Citation: Pesaresi & Freire 2016. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: cse  |  use.",
+      "related": [
+        "uz:prop/settlement-extent"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/nli",
+      "prefLabel": "Nighttime Lights",
+      "altLabels": [
+        "nli",
+        "nli_ix"
+      ],
+      "definition": "Nighttime Lights. Source: DMSP-OLS Nighttime Lights v4. Units: index value (x100). Native format: 30 arc-second grid.",
+      "unit": "index value (x100)",
+      "note": "Catalogue A04 (Anthropogenic). Citation: Doll 2008. Licence: Public Domain -- HydroATLAS: Creative Commons CC-BY 4.0. Suffixes in this release: sav  |  uav.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/rdd",
+      "prefLabel": "Road Density",
+      "altLabels": [
+        "rdd",
+        "rdd_mk"
+      ],
+      "definition": "Road Density. Source: Global Roads Inventory Project (GRIP) v4. Units: meters per km². Native format: 5 arc-min grid.",
+      "unit": "meters per km²",
+      "note": "Catalogue A05 (Anthropogenic). Citation: Meijer et al. 2018. Licence: see source. Suffixes in this release: sav  |  uav.",
+      "related": [
+        "uz:prop/road-density"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/hft",
+      "prefLabel": "Human Footprint",
+      "altLabels": [
+        "hft",
+        "hft_ix"
+      ],
+      "definition": "Human Footprint. Source: Global Human Footprint v2. Units: index value (x10). Native format: 30 arc-second grid.",
+      "unit": "index value (x10)",
+      "note": "Catalogue A06 (Anthropogenic). Citation: Venter et al. 2016. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: s93  |  u93  |  s09  |  u09.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/gad",
+      "prefLabel": "Global Administrative Areas",
+      "altLabels": [
+        "gad",
+        "gad_id"
+      ],
+      "definition": "Global Administrative Areas. Source: Global Administrative Areas (GADM) v2.0. Units: ID number. Native format: Polygons.",
+      "unit": "ID number",
+      "note": "Catalogue A07 (Anthropogenic). Citation: University of Berkeley 2012. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/gdp",
+      "prefLabel": "Gross Domestic Product",
+      "altLabels": [
+        "gdp",
+        "gdp_ud"
+      ],
+      "definition": "Gross Domestic Product. Source: Gross Domestic Product Purchasing Power Parity (GDP PPP) v2. Units: US dollars. Native format: 5 arc-min grid.",
+      "unit": "US dollars",
+      "note": "Catalogue A08 (Anthropogenic). Citation: Kummu et al. 2018. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav  |  ssu  |  usu.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/hdi",
+      "prefLabel": "Human Development Index",
+      "altLabels": [
+        "hdi",
+        "hdi_ix"
+      ],
+      "definition": "Human Development Index. Source: Human Development Index (HDI) v2. Units: index value (x1000). Native format: 5 arc-min grid.",
+      "unit": "index value (x1000)",
+      "note": "Catalogue A09 (Anthropogenic). Citation: Kummu et al. 2018. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/clz",
+      "prefLabel": "Climate Zones",
+      "altLabels": [
+        "clz",
+        "clz_cl"
+      ],
+      "definition": "Climate Zones. Source: Global Environmental Stratification (GEnS). Units: classes (18). Native format: Polygons.",
+      "unit": "classes (18)",
+      "note": "Catalogue C01 (Climate). Citation: Metzger et al. 2013. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": [
+        "uz:prop/climate-classification"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/cls",
+      "prefLabel": "Climate Strata",
+      "altLabels": [
+        "cls",
+        "cls_cl"
+      ],
+      "definition": "Climate Strata. Source: Global Environmental Stratification (GEnS). Units: classes (125). Native format: Polygons.",
+      "unit": "classes (125)",
+      "note": "Catalogue C02 (Climate). Citation: Metzger et al. 2013. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": [
+        "uz:prop/climate-classification"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/tmp",
+      "prefLabel": "Air Temperature",
+      "altLabels": [
+        "tmp",
+        "tmp_dc"
+      ],
+      "definition": "Air Temperature. Source: WorldClim v1.4. Units: degrees Celsius (x10). Native format: 30 arc-second grid.",
+      "unit": "degrees Celsius (x10)",
+      "note": "Catalogue C03 (Climate). Citation: Hijmans et al. 2005. Licence: Creative Commons CC-BY-SA 4.0 -- HydroATLAS: Creative Commons CC-BY 4.0. Suffixes in this release: syr  |  smn  |  smx  |  s01-s12  |  uyr.",
+      "related": [
+        "uz:prop/air-temperature"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/pre",
+      "prefLabel": "Precipitation",
+      "altLabels": [
+        "pre",
+        "pre_mm"
+      ],
+      "definition": "Precipitation. Source: WorldClim v1.4. Units: millimeters. Native format: 30 arc-second grid.",
+      "unit": "millimeters",
+      "note": "Catalogue C04 (Climate). Citation: Hijmans et al. 2005. Licence: Creative Commons CC-BY-SA 4.0 -- HydroATLAS: Creative Commons CC-BY 4.0. Suffixes in this release: syr  |  s01-s12  |  uyr.",
+      "related": [
+        "uz:prop/precipitation"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/pet",
+      "prefLabel": "Potential Evapotranspiration",
+      "altLabels": [
+        "pet",
+        "pet_mm"
+      ],
+      "definition": "Potential Evapotranspiration. Source: Global-PET v1. Units: millimeters. Native format: 30 arc-second grid.",
+      "unit": "millimeters",
+      "note": "Catalogue C05 (Climate). Citation: Zomer et al. 2008. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: syr  |  s01-s12  |  uyr.",
+      "related": [
+        "uz:prop/evapotranspiration"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/aet",
+      "prefLabel": "Actual Evapotranspiration",
+      "altLabels": [
+        "aet",
+        "aet_mm"
+      ],
+      "definition": "Actual Evapotranspiration. Source: Global High-Resolution Soil-Water Balance. Units: millimeters. Native format: 30 arc-second grid.",
+      "unit": "millimeters",
+      "note": "Catalogue C06 (Climate). Citation: Trabucco & Zomer 2010. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: syr  |  s01-s12  |  uyr.",
+      "related": [
+        "uz:prop/evapotranspiration"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/ari",
+      "prefLabel": "Global Aridity Index",
+      "altLabels": [
+        "ari",
+        "ari_ix"
+      ],
+      "definition": "Global Aridity Index. Source: Global Aridity Index v1. Units: index value (x100). Native format: 30 arc-second grid.",
+      "unit": "index value (x100)",
+      "note": "Catalogue C07 (Climate). Citation: Zomer et al. 2008. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav  |  uav.",
+      "related": [
+        "uz:prop/climatic-water-deficit"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/cmi",
+      "prefLabel": "Climate Moisture Index",
+      "altLabels": [
+        "cmi",
+        "cmi_ix"
+      ],
+      "definition": "Climate Moisture Index. Source: WorldClim v1.4 and Global-PET v1. Units: index value (x100). Native format: 30 arc-second grids.",
+      "unit": "index value (x100)",
+      "note": "Catalogue C08 (Climate). Citation: Hijmans et al. 2005. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: syr  |  s01-s12  |  uyr.",
+      "related": [
+        "uz:prop/climatic-water-deficit"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/snw",
+      "prefLabel": "Snow Cover Extent",
+      "altLabels": [
+        "snw",
+        "snw_pc"
+      ],
+      "definition": "Snow Cover Extent. Source: MODIS/Aqua Snow Cover (MYD10CM). Units: percent cover. Native format: 15 arc-second grid.",
+      "unit": "percent cover",
+      "note": "Catalogue C09 (Climate). Citation: Hall & Riggs 2016. Licence: Public Domain -- HydroATLAS: Creative Commons CC-BY 4.0. Suffixes in this release: syr  |  smx  |  s01-s12  |  uyr.",
+      "related": [
+        "uz:prop/snow-cover-depth"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/dis",
+      "prefLabel": "Natural Discharge",
+      "altLabels": [
+        "dis",
+        "dis_m3"
+      ],
+      "definition": "Natural Discharge. Source: WaterGAP v2.2 (data of 2014). Units: cubic meters/second. Native format: 15 arc-second grid.",
+      "unit": "cubic meters/second",
+      "note": "Catalogue H01 (Hydrology). Citation: Döll et al. 2003. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: pyr  |  pmn  |  pmx.",
+      "related": [
+        "uz:prop/surface-runoff"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/run",
+      "prefLabel": "Land Surface Runoff",
+      "altLabels": [
+        "run",
+        "run_mm"
+      ],
+      "definition": "Land Surface Runoff. Source: WaterGAP v2.2 (data of 2014). Units: millimeters. Native format: 15 arc-second grid.",
+      "unit": "millimeters",
+      "note": "Catalogue H02 (Hydrology). Citation: Döll et al. 2003. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: syr.",
+      "related": [
+        "uz:prop/surface-runoff"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/inu",
+      "prefLabel": "Inundation Extent",
+      "altLabels": [
+        "inu",
+        "inu_pc"
+      ],
+      "definition": "Inundation Extent. Source: Global Inundation Extent from Multi-Satellites (GIEMS-D15). Units: percent cover. Native format: 15 arc-second grid.",
+      "unit": "percent cover",
+      "note": "Catalogue H03 (Hydrology). Citation: Fluet-Chouinard et al. 2015. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smn  |  smx  |  slt  |  umn  |  umx  |  ult.",
+      "related": [
+        "uz:prop/surface-water-extent"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/lka",
+      "prefLabel": "Limnicity (Percent Lake Area)",
+      "altLabels": [
+        "lka",
+        "lka_pc"
+      ],
+      "definition": "Limnicity (Percent Lake Area). Source: HydroLAKES. Units: percent cover (x10). Native format: Polygons.",
+      "unit": "percent cover (x10)",
+      "note": "Catalogue H04 (Hydrology). Citation: Messager et al. 2016. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": [
+        "uz:prop/surface-water-extent"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/lkv",
+      "prefLabel": "Lake Volume",
+      "altLabels": [
+        "lkv",
+        "lkv_mc"
+      ],
+      "definition": "Lake Volume. Source: HydroLAKES. Units: million cubic meters. Native format: Polygons.",
+      "unit": "million cubic meters",
+      "note": "Catalogue H05 (Hydrology). Citation: Messager et al. 2016. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: usu.",
+      "related": [
+        "uz:prop/reservoir-volume"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/rev",
+      "prefLabel": "Reservoir Volume",
+      "altLabels": [
+        "rev",
+        "rev_mc"
+      ],
+      "definition": "Reservoir Volume. Source: Global Reservoir and Dams (GRanD) database v1.1. Units: million cubic meters. Native format: Polygons.",
+      "unit": "million cubic meters",
+      "note": "Catalogue H06 (Hydrology). Citation: Lehner et al. 2011. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: usu.",
+      "related": [
+        "uz:prop/reservoir-volume"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/dor",
+      "prefLabel": "Degree of Regulation",
+      "altLabels": [
+        "dor",
+        "dor_pc"
+      ],
+      "definition": "Degree of Regulation. Source: HydroSHEDS and Global Reservoir and Dams (GRanD) database v1.1. Units: percent (x10). Native format: Polygons.",
+      "unit": "percent (x10)",
+      "note": "Catalogue H07 (Hydrology). Citation: Lehner et al. 2011. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: pva.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/ria",
+      "prefLabel": "River Area",
+      "altLabels": [
+        "ria",
+        "ria_ha"
+      ],
+      "definition": "River Area. Source: HydroSHEDS and WaterGAP v2.2. Units: hectares. Native format: 15 arc-second grid.",
+      "unit": "hectares",
+      "note": "Catalogue H08 (Hydrology). Citation: Lehner & Grill 2013. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: ssu  |  usu.",
+      "related": [
+        "uz:prop/river-network"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/riv",
+      "prefLabel": "River Volume",
+      "altLabels": [
+        "riv",
+        "riv_tc"
+      ],
+      "definition": "River Volume. Source: HydroSHEDS and WaterGAP v2.2. Units: thousand cubic meters. Native format: 15 arc-second grid.",
+      "unit": "thousand cubic meters",
+      "note": "Catalogue H09 (Hydrology). Citation: Lehner & Grill 2013. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: ssu  |  usu.",
+      "related": [
+        "uz:prop/river-network"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/gwt",
+      "prefLabel": "Groundwater Table Depth",
+      "altLabels": [
+        "gwt",
+        "gwt_cm"
+      ],
+      "definition": "Groundwater Table Depth. Source: Global Groundwater Map. Units: centimeters. Native format: 30 arc-second grid.",
+      "unit": "centimeters",
+      "note": "Catalogue H10 (Hydrology). Citation: Fan et al. 2013. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav.",
+      "related": [
+        "uz:prop/groundwater-depth"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/glc-cl",
+      "prefLabel": "Land Cover Classes",
+      "altLabels": [
+        "glc",
+        "glc_cl"
+      ],
+      "definition": "Land Cover Classes. Source: GLC2000. Units: classes (22). Native format: 30 arc-second grid.",
+      "unit": "classes (22)",
+      "note": "Catalogue L01 (Landcover). Citation: Bartholomé & Belward 2005. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": [
+        "uz:prop/land-cover"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/glc-pc",
+      "prefLabel": "Land Cover Extent",
+      "altLabels": [
+        "glc",
+        "glc_pc"
+      ],
+      "definition": "Land Cover Extent. Source: GLC2000. Units: percent cover. Native format: 30 arc-second grid.",
+      "unit": "percent cover",
+      "note": "Catalogue L02 (Landcover). Citation: Bartholomé & Belward 2005. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: s01-s22  |  u01-u22.",
+      "related": [
+        "uz:prop/land-cover"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/pnv-cl",
+      "prefLabel": "Potential Natural Vegetation Classes",
+      "altLabels": [
+        "pnv",
+        "pnv_cl"
+      ],
+      "definition": "Potential Natural Vegetation Classes. Source: EarthStat. Units: classes (15). Native format: 5 arc-min grid.",
+      "unit": "classes (15)",
+      "note": "Catalogue L03 (Landcover). Citation: Ramankutty & Foley 1999. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": [
+        "uz:prop/vegetation-formation"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/pnv-pc",
+      "prefLabel": "Potential Natural Vegetation Extent",
+      "altLabels": [
+        "pnv",
+        "pnv_pc"
+      ],
+      "definition": "Potential Natural Vegetation Extent. Source: EarthStat. Units: percent cover. Native format: 5 arc-min grid.",
+      "unit": "percent cover",
+      "note": "Catalogue L04 (Landcover). Citation: Ramankutty & Foley 1999. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: s01-s15  |  u01-u15.",
+      "related": [
+        "uz:prop/vegetation-formation"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/wet-cl",
+      "prefLabel": "Wetland Classes",
+      "altLabels": [
+        "wet",
+        "wet_cl"
+      ],
+      "definition": "Wetland Classes. Source: Global Lakes and Wetlands Database (GLWD). Units: classes (12). Native format: Polygons.",
+      "unit": "classes (12)",
+      "note": "Catalogue L05 (Landcover). Citation: Lehner & Döll 2004. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": [
+        "uz:prop/water-ecosystem-extent"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/wet-pc",
+      "prefLabel": "Wetland Extent",
+      "altLabels": [
+        "wet",
+        "wet_pc"
+      ],
+      "definition": "Wetland Extent. Source: Global Lakes and Wetlands Database (GLWD). Units: percent cover. Native format: Polygons.",
+      "unit": "percent cover",
+      "note": "Catalogue L06 (Landcover). Citation: Lehner & Döll 2004. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: s01-s09  |  sg1  |  sg2  |  u01-u09  |  ug1  |  ug2.",
+      "related": [
+        "uz:prop/water-ecosystem-extent"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/for",
+      "prefLabel": "Forest Cover Extent",
+      "altLabels": [
+        "for",
+        "for_pc"
+      ],
+      "definition": "Forest Cover Extent. Source: GLC2000. Units: percent cover. Native format: 30 arc-second grid.",
+      "unit": "percent cover",
+      "note": "Catalogue L07 (Landcover). Citation: Bartholomé & Belward 2005. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": [
+        "uz:prop/forest-cover"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/crp",
+      "prefLabel": "Cropland Extent",
+      "altLabels": [
+        "crp",
+        "crp_pc"
+      ],
+      "definition": "Cropland Extent. Source: EarthStat. Units: percent cover. Native format: 5 arc-min grid.",
+      "unit": "percent cover",
+      "note": "Catalogue L08 (Landcover). Citation: Ramankutty et al. 2008. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": [
+        "uz:prop/cropland-extent"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/pst",
+      "prefLabel": "Pasture Extent",
+      "altLabels": [
+        "pst",
+        "pst_pc"
+      ],
+      "definition": "Pasture Extent. Source: EarthStat. Units: percent cover. Native format: 5 arc-min grid.",
+      "unit": "percent cover",
+      "note": "Catalogue L09 (Landcover). Citation: Ramankutty et al. 2008. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": [
+        "uz:prop/pasture-vegetation"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/ire",
+      "prefLabel": "Irrigated Area Extent (Equipped)",
+      "altLabels": [
+        "ire",
+        "ire_pc"
+      ],
+      "definition": "Irrigated Area Extent (Equipped). Source: Historical Irrigation Dataset (HID) v1.0. Units: percent cover. Native format: 5 arc-min grid.",
+      "unit": "percent cover",
+      "note": "Catalogue L10 (Landcover). Citation: Siebert et al. 2015. Licence: Creative Commons CC-0 -- HydroATLAS: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": [
+        "uz:prop/irrigated-area"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/gla",
+      "prefLabel": "Glacier Extent",
+      "altLabels": [
+        "gla",
+        "gla_pc"
+      ],
+      "definition": "Glacier Extent. Source: Global Land Ice Measurements from Space (GLIMS). Units: percent cover. Native format: Polygons.",
+      "unit": "percent cover",
+      "note": "Catalogue L11 (Landcover). Citation: GLIMS & NSIDC 2012. Licence: Public Domain -- HydroATLAS: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": [
+        "uz:prop/glacier-volume"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/prm",
+      "prefLabel": "Permafrost Extent",
+      "altLabels": [
+        "prm",
+        "prm_pc"
+      ],
+      "definition": "Permafrost Extent. Source: Permafrost Zonation Index (PZI). Units: percent cover. Native format: 30 arc-second grid.",
+      "unit": "percent cover",
+      "note": "Catalogue L12 (Landcover). Citation: Gruber 2012. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/pac",
+      "prefLabel": "Protected Area Extent",
+      "altLabels": [
+        "pac",
+        "pac_pc"
+      ],
+      "definition": "Protected Area Extent. Source: World Database on Protected Areas (WDPA). Units: percent cover. Native format: Polygons & points.",
+      "unit": "percent cover",
+      "note": "Catalogue L13 (Landcover). Citation: IUCN & UNEP-WCMC 2014. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": [
+        "uz:prop/protected-area"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/tbi",
+      "prefLabel": "Terrestrial Biomes",
+      "altLabels": [
+        "tbi",
+        "tbi_cl"
+      ],
+      "definition": "Terrestrial Biomes. Source: Terrestrial Ecoregions of the World (TEOW). Units: classes (14). Native format: Polygons.",
+      "unit": "classes (14)",
+      "note": "Catalogue L14 (Landcover). Citation: Dinerstein et al. 2017. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": [
+        "uz:prop/landscape-type"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/tec",
+      "prefLabel": "Terrestrial Ecoregions",
+      "altLabels": [
+        "tec",
+        "tec_cl"
+      ],
+      "definition": "Terrestrial Ecoregions. Source: Terrestrial Ecoregions of the World (TEOW). Units: classes (846). Native format: Polygons.",
+      "unit": "classes (846)",
+      "note": "Catalogue L15 (Landcover). Citation: Dinerstein et al. 2017. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": [
+        "uz:prop/ecoregion"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/fmh",
+      "prefLabel": "Freshwater Major Habitat Types",
+      "altLabels": [
+        "fmh",
+        "fmh_cl"
+      ],
+      "definition": "Freshwater Major Habitat Types. Source: Freshwater Ecoregions of the World (FEOW). Units: classes (13). Native format: Polygons.",
+      "unit": "classes (13)",
+      "note": "Catalogue L16 (Landcover). Citation: Abell et al. 2008. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/fec",
+      "prefLabel": "Freshwater Ecoregions",
+      "altLabels": [
+        "fec",
+        "fec_cl"
+      ],
+      "definition": "Freshwater Ecoregions. Source: Freshwater Ecoregions of the World (FEOW). Units: classes (426). Native format: Polygons.",
+      "unit": "classes (426)",
+      "note": "Catalogue L17 (Landcover). Citation: Abell et al. 2008. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": [
+        "uz:prop/ecoregion"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/ele",
+      "prefLabel": "Elevation",
+      "altLabels": [
+        "ele",
+        "ele_mt"
+      ],
+      "definition": "Elevation. Source: EarthEnv-DEM90. Units: meters a.s.l.. Native format: 3 arc-second grid.",
+      "unit": "meters a.s.l.",
+      "note": "Catalogue P01 (Physiography). Citation: Robinson et al. 2014. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav  |  smn  |  smx  |  uav.",
+      "related": [
+        "uz:prop/elevation"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/slp",
+      "prefLabel": "Terrain Slope",
+      "altLabels": [
+        "slp",
+        "slp_dg"
+      ],
+      "definition": "Terrain Slope. Source: EarthEnv-DEM90. Units: degrees (x10). Native format: 3 arc-second grid.",
+      "unit": "degrees (x10)",
+      "note": "Catalogue P02 (Physiography). Citation: Robinson et al. 2014. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav  |  uav.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/sgr",
+      "prefLabel": "Stream Gradient",
+      "altLabels": [
+        "sgr",
+        "sgr_dk"
+      ],
+      "definition": "Stream Gradient. Source: EarthEnv-DEM90. Units: decimeters per km. Native format: 3 arc-second grid.",
+      "unit": "decimeters per km",
+      "note": "Catalogue P03 (Physiography). Citation: Robinson et al. 2014. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/cly",
+      "prefLabel": "Clay Fraction in Soil",
+      "altLabels": [
+        "cly",
+        "cly_pc"
+      ],
+      "definition": "Clay Fraction in Soil. Source: SoilGrids1km. Units: percent. Native format: 30 arc-second grid.",
+      "unit": "percent",
+      "note": "Catalogue S01 (Soils & Geology). Citation: Hengl et al. 2014. Licence: see source. Suffixes in this release: sav  |  uav.",
+      "related": [
+        "uz:prop/soil-chemistry"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/slt",
+      "prefLabel": "Silt Fraction in Soil",
+      "altLabels": [
+        "slt",
+        "slt_pc"
+      ],
+      "definition": "Silt Fraction in Soil. Source: SoilGrids1km. Units: percent. Native format: 30 arc-second grid.",
+      "unit": "percent",
+      "note": "Catalogue S02 (Soils & Geology). Citation: Hengl et al. 2014. Licence: see source. Suffixes in this release: sav  |  uav.",
+      "related": [
+        "uz:prop/soil-chemistry"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/snd",
+      "prefLabel": "Sand Fraction in Soil",
+      "altLabels": [
+        "snd",
+        "snd_pc"
+      ],
+      "definition": "Sand Fraction in Soil. Source: SoilGrids1km. Units: percent. Native format: 30 arc-second grid.",
+      "unit": "percent",
+      "note": "Catalogue S03 (Soils & Geology). Citation: Hengl et al. 2014. Licence: see source. Suffixes in this release: sav  |  uav.",
+      "related": [
+        "uz:prop/soil-chemistry"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/soc",
+      "prefLabel": "Organic Carbon Content in Soil",
+      "altLabels": [
+        "soc",
+        "soc_th"
+      ],
+      "definition": "Organic Carbon Content in Soil. Source: SoilGrids1km. Units: tonnes/hectare. Native format: 30 arc-second grid.",
+      "unit": "tonnes/hectare",
+      "note": "Catalogue S04 (Soils & Geology). Citation: Hengl et al. 2014. Licence: see source. Suffixes in this release: sav  |  uav.",
+      "related": [
+        "uz:prop/soil-organic-carbon"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/swc",
+      "prefLabel": "Soil Water Content",
+      "altLabels": [
+        "swc",
+        "swc_pc"
+      ],
+      "definition": "Soil Water Content. Source: Global High-Resolution Soil-Water Balance. Units: percent. Native format: 30 arc-second grid.",
+      "unit": "percent",
+      "note": "Catalogue S05 (Soils & Geology). Citation: Trabucco & Zomer 2010. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: syr  |  s01-s12  |  uyr.",
+      "related": [
+        "uz:prop/soil-chemistry"
+      ]
+    },
+    {
+      "id": "uz:hydroatlas/lit",
+      "prefLabel": "Lithological Classes",
+      "altLabels": [
+        "lit",
+        "lit_cl"
+      ],
+      "definition": "Lithological Classes. Source: Global Lithological Map (GLiM). Units: classes (16). Native format: 30 arc-minute grid.",
+      "unit": "classes (16)",
+      "note": "Catalogue S06 (Soils & Geology). Citation: Hartmann & Moosdorf 2012. Licence: Creative Commons CC-BY 3.0 -- HydroATLAS: Creative Commons CC-BY 4.0. Suffixes in this release: smj.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/kar",
+      "prefLabel": "Karst Area Extent",
+      "altLabels": [
+        "kar",
+        "kar_pc"
+      ],
+      "definition": "Karst Area Extent. Source: World Map of Carbonate Rock Outcrops v3.0. Units: percent cover. Native format: Polygons.",
+      "unit": "percent cover",
+      "note": "Catalogue S07 (Soils & Geology). Citation: Williams & Ford 2006. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sse  |  use.",
+      "related": []
+    },
+    {
+      "id": "uz:hydroatlas/ero",
+      "prefLabel": "Soil Erosion",
+      "altLabels": [
+        "ero",
+        "ero_kh"
+      ],
+      "definition": "Soil Erosion. Source: RUSLE-based Global Soil Erosion Modelling platform (GloSEM) v1.2. Units: kg/hectare per year. Native format: 250-m grid.",
+      "unit": "kg/hectare per year",
+      "note": "Catalogue S08 (Soils & Geology). Citation: Borrelli et al. 2017. Licence: Creative Commons CC-BY 4.0. Suffixes in this release: sav  |  uav.",
+      "related": [
+        "uz:prop/land-productivity"
+      ]
+    }
+  ]
+}
