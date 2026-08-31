@@ -5,7 +5,9 @@ import {
   ArrowUpRight, ChevronRight, Crosshair, Database, Droplets, Landmark, Layers,
   LoaderCircle, MapPin, Network, Search, Share2, Waves, Workflow,
 } from 'lucide-react';
-import { aggregateAdmin, buildUpstreamMap, traceCoverage, traceUpstream } from './basinTrace.js';
+import {
+  aggregateAdmin, basinsAboveReach, buildUpstreamMap, traceCoverage, traceUpstream,
+} from './basinTrace.js';
 import BasinAttributes from './BasinAttributes.jsx';
 
 const INDEX_URL = '/data/hydrography/relationships.json';
@@ -126,28 +128,47 @@ export default function HydrographyExplorer() {
       push(basinRivers, river.basinId, river.id);
     });
     index.lakes.forEach(lake => push(basinLakes, lake.basinId, lake.id));
-    return { upstream, basinRivers, basinLakes, basinChildren: buildUpstreamMap(index.basins) };
+    return {
+      upstream, basinRivers, basinLakes,
+      basinChildren: buildUpstreamMap(index.basins),
+      riverBasin: new Map(index.rivers.map(river => [river.id, river.basinId])),
+    };
   }, [index]);
 
   const detailType = selected ? TYPES[selected.type] : null;
   const detailRecord = selected ? records[selected.type]?.get(selected.id) : null;
 
-  // Every selection resolves to one basin, so a river or a lake traces the
-  // catchment of the basin it sits in rather than offering nothing to trace.
+  // Every selection resolves to a set of basins. A basin or a lake traces from
+  // the basin itself; a reach traces through the river network first, because
+  // what lies above a reach is not the same as what lies above the whole basin it
+  // sits in — and because roughly a sixth of reaches carry a basin id the basin
+  // layer does not hold, which going straight to it would turn into no catchment
+  // at all.
   const basinRecords = records.basins;
   const outletId = detailRecord
     ? (selected.type === 'basins' ? detailRecord.id : detailRecord.basinId)
     : null;
+  const knownBasins = useMemo(() => new Set((index?.basins || []).map(basin => basin.id)), [index]);
 
-  const traced = useMemo(
-    () => (outletId && graph ? traceUpstream(outletId, graph.basinChildren) : null),
-    [outletId, graph],
-  );
+  const traced = useMemo(() => {
+    if (!detailRecord || !graph) return null;
+    if (selected.type === 'rivers') {
+      return basinsAboveReach(
+        detailRecord.id, graph.upstream, graph.riverBasin, graph.basinChildren, knownBasins,
+      );
+    }
+    return outletId && knownBasins.has(outletId) ? traceUpstream(outletId, graph.basinChildren) : null;
+  }, [detailRecord, graph, selected, outletId, knownBasins]);
 
-  const coverage = useMemo(
-    () => (traced && basinRecords ? traceCoverage(traced.ids, basinRecords, basinRecords.get(outletId)) : null),
-    [traced, basinRecords, outletId],
-  );
+  // A reach reports its own upstream area, which is the figure for that point on
+  // the network; a basin reports the basin's.
+  const coverage = useMemo(() => {
+    if (!traced || !basinRecords) return null;
+    const reported = selected.type === 'rivers'
+      ? { upstreamKm2: detailRecord?.upstreamKm2 }
+      : basinRecords.get(outletId);
+    return traceCoverage(traced.ids, basinRecords, reported);
+  }, [traced, basinRecords, outletId, selected, detailRecord]);
 
   const basinWeights = useMemo(
     () => new Map((index?.basins || []).map(basin => [basin.id, basin.uzbekistanKm2 || 0])),
@@ -174,9 +195,9 @@ export default function HydrographyExplorer() {
     loadLayer(type, index.layers[type]);
     // A trace is drawn as basin polygons even while the rivers or lakes tab is
     // open, so that layer is pulled in as soon as there is a trace to show.
-    if (outletId) loadLayer('basins', index.layers.basins);
+    if (traced) loadLayer('basins', index.layers.basins);
     if (showAdmin) loadLayer(adminLevel, ADMIN_LAYERS[adminLevel]);
-  }, [index, type, loadLayer, outletId, showAdmin, adminLevel]);
+  }, [index, type, loadLayer, traced, showAdmin, adminLevel]);
 
   // The administrative overlay is small next to the attribute payload, but it is
   // still only useful once something is selected, so it loads on the same cue.
@@ -422,12 +443,19 @@ export default function HydrographyExplorer() {
               }}
             />}
             {showTrace && traced && geo.basins && <GeoJSON
-              key={`trace-${outletId}`}
+              key={`trace-${selected.type}-${selected.id}`}
               data={geo.basins}
               filter={feature => traced.ids.has(feature.properties.HYBAS_ID)}
               style={feature => (feature.properties.HYBAS_ID === outletId
                 ? { color: SELECTED_COLOR, weight: 2.2, fillColor: SELECTED_COLOR, fillOpacity: 0.42 }
                 : { color: TRACE_COLOR, weight: 0.8, fillColor: TRACE_COLOR, fillOpacity: 0.24 })}
+              interactive={false}
+            />}
+            {showAdmin && adminUnits && geo[adminLevel] && <GeoJSON
+              key={`admin-${adminLevel}-${selected.type}-${selected.id}`}
+              data={geo[adminLevel]}
+              filter={feature => adminUnits.units.some(unit => unit.pcode === feature.properties.pcode)}
+              style={{ color: ADMIN_COLOR, weight: 1.4, fill: false, dashArray: '4 3', opacity: 0.9 }}
               interactive={false}
             />}
             <MapFocus bounds={focus}/>
@@ -440,6 +468,7 @@ export default function HydrographyExplorer() {
             <span><i style={{ background: config.color }}/>{config.label}</span>
             <span><i className="selected"/>Selected</span>
             {traced && <span><i style={{ background: TRACE_COLOR }}/>Traced catchment</span>}
+            {showAdmin && adminUnits && <span><i style={{ background: ADMIN_COLOR }}/>{ADMIN_LEVELS[adminLevel]}</span>}
             <span><i className="boundary"/>Boundary</span>
           </div>
           {(loadingGeo && !activeGeo) && <div className="hydro-map-loading"><LoaderCircle size={15}/> Loading {config.label} geometry</div>}
@@ -463,7 +492,10 @@ export default function HydrographyExplorer() {
             {coverage && <div className="hydro-trace">
               <div className="hydro-trace-head">
                 <Workflow size={13}/><span>UPSTREAM TRACE</span>
-                <small>{num(coverage.basins)} basins &middot; {num(traced.depth)} deep</small>
+                <small>
+                  {num(coverage.basins)} basins &middot; {num(traced.depth)} deep
+                  {traced.reaches !== undefined && ` · ${num(traced.reaches)} reaches`}
+                </small>
               </div>
               <div className="hydro-trace-figures">
                 <div><span>Traced catchment</span><strong>{num(coverage.catchmentKm2)} km²</strong></div>
@@ -492,6 +524,46 @@ export default function HydrographyExplorer() {
                 }}><Crosshair size={12}/> Zoom to catchment</button>
               </div>
             </div>}
+            {adminUnits && !!adminUnits.units.length && <div className="hydro-admin">
+              <div className="hydro-admin-head">
+                <Landmark size={13}/><span>DRAINS FROM</span>
+                <small>{num(adminUnits.units.length)} {adminLevel === 'adm1' ? 'units' : 'districts'}</small>
+              </div>
+              <div className="hydro-admin-tabs">
+                {Object.entries(ADMIN_LEVELS).map(([key, label]) => <button
+                  key={key}
+                  className={key === adminLevel ? 'active' : undefined}
+                  onClick={() => setAdminLevel(key)}
+                >{label}</button>)}
+                <button
+                  className={showAdmin ? 'active' : undefined}
+                  onClick={() => setShowAdmin(current => !current)}
+                  title="Outline these units on the map"
+                >Map</button>
+              </div>
+              <div className="hydro-admin-list">
+                {adminUnits.units.slice(0, 12).map(unit => {
+                  const record = adminNames[unit.pcode];
+                  return <div key={unit.pcode} className="hydro-admin-row">
+                    <div>
+                      <strong>{record ? record.nameEn : unit.pcode}</strong>
+                      <span>{num(unit.km2, 0)} km² &middot; {(unit.share * 100).toFixed(1)}%</span>
+                    </div>
+                    <i style={{ width: `${Math.max(unit.share * 100, 1)}%` }}/>
+                    {record && adminLevel === 'adm2' && <small>{adminNames[record.parent]?.nameEn}</small>}
+                  </div>;
+                })}
+              </div>
+              {adminUnits.units.length > 12 && <div className="hydro-admin-more">
+                and {num(adminUnits.units.length - 12)} more, each under {(adminUnits.units[12].share * 100).toFixed(1)}%.
+              </div>}
+              <p className="hydro-admin-note">
+                Shares are of the {num(adminUnits.sharedKm2, 0)} km² these boundaries cover. Where a
+                catchment reaches past the border there is no administrative geography here to
+                attribute the rest to.
+              </p>
+            </div>}
+
             <div className="hydro-relation-title">
               <Network size={13}/><span>CONNECTED RECORDS</span><small>{relations.length}</small>
             </div>
@@ -522,9 +594,9 @@ export default function HydrographyExplorer() {
       <section className="hydro-attributes" id="attributes">
         <div className="hydro-panel-label">
           <Database size={13}/><span>BASIN ATTRIBUTE TABLES</span>
-          <small>{outletId ? `outlet basin ${outletId}` : 'no selection'}</small>
+          <small>{traced ? `${num(traced.ids.size)} basins traced` : 'no selection'}</small>
         </div>
-        {outletId ? <BasinAttributes
+        {traced ? <BasinAttributes
           outlet={basinRecords?.get(outletId) || { id: outletId }}
           traced={traced}
           attributes={atlas?.attributes}
@@ -534,9 +606,12 @@ export default function HydrographyExplorer() {
           error={atlasError}
         /> : <div className="hydro-attr-empty">
           <Database size={20}/>
-          <div>
-            Select a basin, or any river or lake inside one, to read the 281 documented BasinATLAS
-            attributes for it and for everything that drains into it.
+          <div>{detailRecord
+            ? `Nothing above ${detailType.name(detailRecord)} sits in a basin this layer holds, so there is `
+              + 'no catchment to describe. The river and basin layers were clipped to the boundary '
+              + 'separately, which leaves some reaches referring to a basin that did not survive the clip.'
+            : 'Select a basin, or any river or lake inside one, to read the 281 documented BasinATLAS '
+              + 'attributes for it and for everything that drains into it.'}
           </div>
         </div>}
       </section>

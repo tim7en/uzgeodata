@@ -38,8 +38,21 @@ export function buildUpstreamMap(basins) {
  * bad rebuild could introduce.
  */
 export function traceUpstream(rootId, upstream) {
-  const seen = new Set([rootId]);
-  let frontier = [rootId];
+  return traceUpstreamFrom([rootId], upstream);
+}
+
+/**
+ * The same walk from several starting points at once.
+ *
+ * Tracing a river reach needs this: the reaches above it sit in many basins, and
+ * walking up from each in turn would revisit the shared trunk once per branch.
+ * One frontier seeded with all of them visits each basin exactly once, and the
+ * depth it reports is the distance from the furthest headwater to the nearest
+ * seed rather than to any particular one.
+ */
+export function traceUpstreamFrom(rootIds, upstream) {
+  const seen = new Set(rootIds);
+  let frontier = [...seen];
   let depth = 0;
   while (frontier.length) {
     const next = [];
@@ -54,6 +67,31 @@ export function traceUpstream(rootId, upstream) {
     frontier = next;
   }
   return { ids: seen, depth };
+}
+
+/**
+ * The basins draining to a river reach.
+ *
+ * Going through the reach network rather than straight to the reach's own basin
+ * is both more faithful to the question — what lies above *this reach*, not above
+ * the whole basin it happens to sit in — and more robust. Roughly a sixth of
+ * reaches carry a basin id that is not in the published basin layer, because the
+ * two were clipped to the boundary independently; seeding from every upstream
+ * reach recovers a catchment for those instead of returning the reach alone.
+ *
+ * Basins the layer does not hold are dropped rather than carried as ids nothing
+ * can draw or measure.
+ */
+export function basinsAboveReach(reachId, reachUpstream, basinOfReach, basinUpstream, knownBasins) {
+  const reaches = traceUpstream(reachId, reachUpstream).ids;
+  const seeds = new Set();
+  for (const reach of reaches) {
+    const basin = basinOfReach.get(reach);
+    if (basin && knownBasins.has(basin)) seeds.add(basin);
+  }
+  if (!seeds.size) return { ids: new Set(), depth: 0, reaches: reaches.size, seeds: 0 };
+  const traced = traceUpstreamFrom([...seeds], basinUpstream);
+  return { ...traced, reaches: reaches.size, seeds: seeds.size };
 }
 
 /**

@@ -22,6 +22,7 @@
     "hydrography:atlaslinks": "python PIPELINES/build_atlas_basin_links.py",
     "hydrography:zonalstats": "python PIPELINES/build_basin_zonal_stats.py",
     "hydrography:attributes": "python PIPELINES/build_basin_attributes.py",
+    "hydrography:adminlinks": "python PIPELINES/build_admin_basin_links.py",
     "catalogue:build": "python PIPELINES/build_data_catalogue.py"
   },
   "dependencies": {

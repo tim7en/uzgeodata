@@ -130,3 +130,41 @@ test('a trace with no administrative overlay reports nothing rather than zero-di
   assert.deepEqual(units, []);
   assert.equal(sharedKm2, 0);
 });
+
+// Reach network:  r40 -> r30 -> r10   and   r20 -> r10
+// r10 sits in basin 1, r20 in basin 3, r30 in basin 2, r40 in a basin the
+// published layer does not hold — the case that motivated tracing through the
+// reaches instead of straight to the selected reach's own basin.
+const REACHES = [
+  { id: 10, nextDown: 0, basinId: 1 },
+  { id: 20, nextDown: 10, basinId: 3 },
+  { id: 30, nextDown: 10, basinId: 2 },
+  { id: 40, nextDown: 30, basinId: 999 },
+];
+const reachUpstream = buildUpstreamMap(REACHES);
+const basinOfReach = new Map(REACHES.map(r => [r.id, r.basinId]));
+const known = new Set([1, 2, 3, 4, 5]);
+
+test('a reach gathers the basins of every reach above it', async () => {
+  const { basinsAboveReach } = await import('../INTERFACE/basinTrace.js');
+  const result = basinsAboveReach(10, reachUpstream, basinOfReach, upstream, known);
+  assert.equal(result.reaches, 4, 'all four reaches are upstream of the outlet reach');
+  assert.equal(result.seeds, 3, 'basin 999 is not in the layer and is dropped');
+  // seeds 1, 2 and 3 expand up the basin network to take in 4 and 5 as well.
+  assert.deepEqual([...result.ids].sort((a, b) => a - b), [1, 2, 3, 4, 5]);
+});
+
+test('a reach whose basin is missing still resolves through its upstream reaches', async () => {
+  const { basinsAboveReach } = await import('../INTERFACE/basinTrace.js');
+  // Reach 30's own basin is 2, but seed from 40 — whose basin 999 is unknown.
+  const result = basinsAboveReach(40, reachUpstream, basinOfReach, upstream, known);
+  assert.equal(result.seeds, 0, 'nothing above reach 40 sits in a known basin');
+  assert.deepEqual([...result.ids], [], 'and so it reports no catchment rather than a wrong one');
+});
+
+test('multi-source tracing visits a shared trunk once', async () => {
+  const { traceUpstreamFrom } = await import('../INTERFACE/basinTrace.js');
+  const result = traceUpstreamFrom([2, 3], upstream);
+  assert.deepEqual([...result.ids].sort((a, b) => a - b), [2, 3, 4, 5]);
+  assert.equal(result.depth, 1, 'one level above the two seeds');
+});
