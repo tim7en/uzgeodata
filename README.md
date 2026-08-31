@@ -42,6 +42,7 @@ npm run hydrography:attributes # publish the 281 BasinATLAS attributes per basin
 npm run hydrography:adminlinks # overlay provinces and districts onto the basins
 npm run catalogue:build        # pivot the graph into the dataset catalogue
 npm run data:groups            # group every data reference and check what is on this machine
+npm run data:items             # name every reference inside those groups, present or not
 npm run review:build           # export every held layer to GeoJSON and index it for review
 npm run test:trace             # the upstream-trace and aggregation guard rails
 ```

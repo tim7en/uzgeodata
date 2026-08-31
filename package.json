@@ -25,6 +25,7 @@
     "hydrography:adminlinks": "python PIPELINES/build_admin_basin_links.py",
     "catalogue:build": "python PIPELINES/build_data_catalogue.py",
     "data:groups": "python PIPELINES/build_data_groups.py",
+    "data:items": "python PIPELINES/build_data_items.py",
     "review:build": "python PIPELINES/build_review_layers.py"
   },
   "dependencies": {

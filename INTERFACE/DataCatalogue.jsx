@@ -15,6 +15,16 @@ import {
 
 const CATALOGUE_URL = '/data/data-catalogue.json';
 const GROUPS_URL = '/data/data-groups.json';
+const ITEMS_URL = '/data/data-items.json';
+
+// Item-level status. A group can be "partly here"; a single named reference is
+// either on the disk or it is not, and if it is not, the reason is the useful part.
+const ITEM_STATUS = {
+  HELD: { tone: 'ok', label: 'Held' },
+  WORKSPACE: { tone: 'warn', label: 'In workspace' },
+  OFFLINE: { tone: 'cold', label: 'Offline drive' },
+  NEVER_FETCHED: { tone: 'bad', label: 'Never fetched' },
+};
 
 // The status a group carries is measured against this working copy, not declared,
 // so the colour says something real: green means the bytes are on the disk you are
@@ -139,6 +149,8 @@ function Row({ row, expanded, onToggle }) {
 export default function DataCatalogue() {
   const [data, setData] = useState(null);
   const [groups, setGroups] = useState(null);
+  const [items, setItems] = useState(null);
+  const [openGroup, setOpenGroup] = useState(null);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
   const [theme, setTheme] = useState('all');
@@ -154,6 +166,10 @@ export default function DataCatalogue() {
       .then(response => (response.ok ? response.json() : Promise.reject(new Error())))
       .then(setGroups)
       .catch(() => setGroups(null));
+    fetch(ITEMS_URL)
+      .then(response => (response.ok ? response.json() : Promise.reject(new Error())))
+      .then(setItems)
+      .catch(() => setItems(null));
   }, []);
 
   const rows = useMemo(() => {
@@ -264,24 +280,66 @@ export default function DataCatalogue() {
             <tbody>
               {groups.groups.map(group => {
                 const state = GROUP_STATUS[group.status] || GROUP_STATUS.ABSENT;
-                return <tr key={group.code} className="cat-row">
-                  <td><code className="cat-code">{group.code}</code></td>
-                  <td><strong>{group.title}</strong><em className="cat-group-source">{group.source}</em></td>
-                  <td className="cat-group-what">
-                    {group.what}
-                    {group.note && <span className="cat-group-note">{group.note}</span>}
-                  </td>
-                  <td className="cat-mono">{group.scale || '—'}</td>
-                  <td className="cat-mono">{group.bytes ? bytes(group.bytes) : '—'}</td>
-                  <td><span className={`cat-badge cat-badge-${state.tone}`}>{state.label}</span></td>
-                </tr>;
+                const named = items ? items.items.filter(row => row.group === group.code) : [];
+                const expanded = openGroup === group.code;
+                return <React.Fragment key={group.code}>
+                  <tr
+                    className={expanded ? 'cat-row cat-row-open' : 'cat-row'}
+                    onClick={() => named.length && setOpenGroup(expanded ? null : group.code)}
+                  >
+                    <td>
+                      <code className="cat-code">{group.code}</code>
+                      {!!named.length && <span className="cat-item-count">
+                        {expanded ? <ChevronDown size={11}/> : <ChevronRight size={11}/>}
+                        {named.length}
+                      </span>}
+                    </td>
+                    <td><strong>{group.title}</strong><em className="cat-group-source">{group.source}</em></td>
+                    <td className="cat-group-what">
+                      {group.what}
+                      {group.note && <span className="cat-group-note">{group.note}</span>}
+                    </td>
+                    <td className="cat-mono">{group.scale || '—'}</td>
+                    <td className="cat-mono">{group.bytes ? bytes(group.bytes) : '—'}</td>
+                    <td><span className={`cat-badge cat-badge-${state.tone}`}>{state.label}</span></td>
+                  </tr>
+                  {expanded && <tr className="cat-detail-row"><td colSpan={6}>
+                    <div className="cat-items">
+                      <div className="cat-items-head">
+                        {group.code} &middot; {named.length} named references
+                        <span>{Object.entries(named.reduce((tally, row) => (
+                          { ...tally, [row.status]: (tally[row.status] || 0) + 1 }), {}))
+                          .map(([status, count]) => `${ITEM_STATUS[status].label} ${count}`).join(' · ')}</span>
+                      </div>
+                      <table className="cat-item-table">
+                        <thead><tr><th>Name</th><th>What it is</th><th>Kind</th><th>Where it is</th><th>Status</th></tr></thead>
+                        <tbody>
+                          {named.map(row => {
+                            const tone = ITEM_STATUS[row.status] || ITEM_STATUS.OFFLINE;
+                            return <tr key={row.name + row.where}>
+                              <td><code className="cat-item-name">{row.name}</code></td>
+                              <td>{row.title}{row.detail && <em>{row.detail}</em>}</td>
+                              <td className="cat-mono">{row.kind}</td>
+                              <td className="cat-item-where"><code>{row.where}</code></td>
+                              <td><span className={`cat-badge cat-badge-${tone.tone}`}>{tone.label}</span></td>
+                            </tr>;
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </td></tr>}
+                </React.Fragment>;
               })}
             </tbody>
           </table>
         </div>
         <div className="cat-table-foot">
-          Checked {new Date(groups.generatedAt).toLocaleString('en-GB')}. Rebuild with
-          {' '}<code>npm run data:groups</code>.
+          {items
+            ? <>Select a group to read its {items.items.length.toLocaleString()} named references — every
+               one is listed whether or not the file is here. Checked
+               {' '}{new Date(groups.generatedAt).toLocaleString('en-GB')}; rebuild with
+               {' '}<code>npm run data:groups && npm run data:items</code>.</>
+            : <>Checked {new Date(groups.generatedAt).toLocaleString('en-GB')}. Rebuild with <code>npm run data:groups</code>.</>}
         </div>
       </section>}
 
