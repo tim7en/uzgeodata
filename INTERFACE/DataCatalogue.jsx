@@ -196,6 +196,7 @@ export default function DataCatalogue() {
         <a href="/">Portal</a>
         <a href="/hydrography.html">Explorer</a>
         <a href="/relationships.html">Tables</a>
+        <a href="/review.html">Review</a>
         <a href="#groups" className="active">Groups</a>
         <a href="#inventory">Catalogue</a>
         <a href="#scope">Scope</a>

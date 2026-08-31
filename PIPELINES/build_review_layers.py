@@ -44,6 +44,7 @@ PACKAGES = [
         "group": "HYDROBASINS",
         "path": "GEODATA/uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg",
         "source": "BasinATLAS v1.0 Uzbekistan extraction (HydroSHEDS)",
+        "label": "BasinATLAS",
         "titles": {"uzbekistan_adm0": "Uzbekistan boundary (as used for the extraction)"},
     },
     {
@@ -51,6 +52,7 @@ PACKAGES = [
         "group": "HYDROBASINS",
         "path": "GEODATA/uzbekistan_hydrobasins_lake_v1c/uzbekistan_hydrobasins_lake_v1c.gpkg",
         "source": "HydroBASINS v1c lake-format Uzbekistan extraction (HydroSHEDS)",
+        "label": "HydroBASINS-lake",
         "titles": {"uzb_adm0_selection_boundary": "Selection boundary (as used for the extraction)"},
     },
 ]
@@ -71,6 +73,22 @@ PUBLISHED = [
     ("PROTECTED", "Protected areas", "/data/protected-areas.geojson", "Atlas derivative"),
     ("WATERMGMT", "Water management zones", "/data/water-management.geojson", "Atlas derivative"),
 ]
+
+
+def readable(table: str, package: dict) -> str:
+    """A title a reviewer can scan, rather than the table name.
+
+    Level tables all differ by two digits at the end, which is exactly the part a
+    raw name buries; naming the delivery in front of the level is what keeps the
+    two packages apart in one list.
+    """
+    override = package["titles"].get(table)
+    if override:
+        return override
+    marker = "_lev"
+    if marker in table:
+        return f"{package['label']} level {table.rsplit(marker, 1)[1]}"
+    return table.replace("_", " ")
 
 
 def decode(blob: bytes):
@@ -150,7 +168,7 @@ def export_package(package: dict) -> list[dict]:
         entries.append({
             "id": f"{package['slug']}/{table}",
             "group": package["group"],
-            "title": package["titles"].get(table, table.replace("_", " ")),
+            "title": readable(table, package),
             "layer": table,
             "package": package["slug"],
             "url": f"/data/review/{package['slug']}/{table}.geojson",

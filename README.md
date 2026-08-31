@@ -42,6 +42,7 @@ npm run hydrography:attributes # publish the 281 BasinATLAS attributes per basin
 npm run hydrography:adminlinks # overlay provinces and districts onto the basins
 npm run catalogue:build        # pivot the graph into the dataset catalogue
 npm run data:groups            # group every data reference and check what is on this machine
+npm run review:build           # export every held layer to GeoJSON and index it for review
 npm run test:trace             # the upstream-trace and aggregation guard rails
 ```
 
@@ -61,4 +62,5 @@ The remaining geospatial pipelines need `geopandas`, `rasterio` and `py7zr`;
 | `/` | The portal SPA. |
 | `/hydrography.html` | Rivers, lakes and sub-basins on a map. Selecting anything traces the catchment upstream of it, reads the BasinATLAS attributes for the traced set, and names the provinces and districts that drain to it, weighted by the area each contributes. A reach traces through the river network first, so what is reported is what lies above that reach rather than above the whole basin it sits in. |
 | `/relationships.html` | The stored facts themselves, as sortable and exportable tables. |
+| `/review.html` | Every layer the project holds, one at a time on a map, with its extent, geometry type and a sample of every attribute column. Stepping with the arrows walks the whole set; the fill percentage next to each field is what shows a column that carries nothing. |
 | `/catalogue.html` | Opens with the data groups — every kind of data the project references, under a short code, with its status checked against the working copy. Below that, every dataset the graph describes: what it measures, where it came from, and whether this checkout can actually open it. Availability is checked against the filesystem, not taken from the recorded URL. |
