@@ -8,8 +8,9 @@ const here = path => fileURLToPath(new URL(path, import.meta.url));
 // rather than /INTERFACE/hydrography.html — because Vite emits each HTML entry at
 // its path relative to the root, and every page sits directly in it.
 //
-// Multi-page build: the portal SPA, the standalone hydrography explorer and the
-// relationship tables that browse the stored graph.
+// Multi-page build: the portal SPA, the standalone hydrography explorer, the
+// relationship tables that browse the stored graph, and the data catalogue that
+// reads it back as an inventory.
 // JSX is left to Vite's default esbuild transform, matching how the portal built before.
 export default defineConfig({
   root: here('./INTERFACE'),
@@ -22,6 +23,7 @@ export default defineConfig({
         main: here('./INTERFACE/index.html'),
         hydrography: here('./INTERFACE/hydrography.html'),
         relationships: here('./INTERFACE/relationships.html'),
+        catalogue: here('./INTERFACE/catalogue.html'),
       },
     },
   },

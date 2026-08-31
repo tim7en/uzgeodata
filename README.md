@@ -12,7 +12,7 @@ Each top-level folder is named for the kind of information it holds.
 | --- | --- |
 | `ONTOLOGY/` | The knowledge graph: JSON Schema in `schema/`, controlled vocabularies in `vocab/`, the built graph and pipeline manifests in `instances/`. See [ONTOLOGY/README.md](ONTOLOGY/README.md). |
 | `PIPELINES/` | Every build and analysis script. `ontology/` projects the registries into the graph; the rest extract, convert and measure geodata. |
-| `INTERFACE/` | The browser application — React sources, stylesheets, and the three page entry points. This is Vite's root. |
+| `INTERFACE/` | The browser application — React sources, stylesheets, and the four page entry points. This is Vite's root. |
 | `PUBLISHED/` | Files the browser fetches, served at `/`. `data/` is a public URL namespace, so it stays lowercase. |
 | `GEODATA/` | Source deliveries: the HydroSHEDS and BasinATLAS geodatabases and the Uzbekistan extractions taken from them. Subfolders keep their package names because manifests and licences reference them. |
 | `WORKSPACE/` | Derived data, uploads and the private dataset registry. Not in version control. |
@@ -38,8 +38,23 @@ npm run test:ontology          # the guard-rail tests
 npm run hydrography:build      # river, lake and basin reference (needs GDAL)
 npm run hydrography:atlaslinks # overlay atlas vectors onto basins
 npm run hydrography:zonalstats # read atlas rasters per basin
+npm run hydrography:attributes # publish the 281 BasinATLAS attributes per basin
+npm run catalogue:build        # pivot the graph into the dataset catalogue
+npm run test:trace             # the upstream-trace and aggregation guard rails
 ```
 
-`ontology:build` needs only the standard library. The geospatial pipelines need
-`geopandas`, `rasterio` and `py7zr`; `ontology:validate` and the tests need
-`jsonschema` and `pytest`.
+`ontology:build` needs only the standard library, and so do
+`hydrography:attributes` and `catalogue:build` — a GeoPackage is a SQLite
+database, so the attribute table is read with `sqlite3` rather than GDAL. The
+remaining geospatial pipelines need `geopandas`, `rasterio` and `py7zr`;
+`ontology:validate` and the Python tests need `jsonschema` and `pytest`.
+`test:trace` runs on Node's built-in test runner and needs nothing extra.
+
+## The pages
+
+| Page | What it does |
+| --- | --- |
+| `/` | The portal SPA. |
+| `/hydrography.html` | Rivers, lakes and sub-basins on a map. Selecting anything traces the catchment upstream of it and reads the BasinATLAS attributes for the traced set, against what HydroSHEDS reports is really upstream — the reference stops at the border, and the trace says by how much. |
+| `/relationships.html` | The stored facts themselves, as sortable and exportable tables. |
+| `/catalogue.html` | Every dataset the graph describes: what it measures, where it came from, and whether this checkout can actually open it. Availability is checked against the filesystem, not taken from the recorded URL. |

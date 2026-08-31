@@ -606,6 +606,7 @@ export default function RelationshipTables() {
           <a href="/">Portal</a>
           <a href="/hydrography.html">Map explorer</a>
           <a href="/relationships.html" className="active">Tables</a>
+          <a href="/catalogue.html">Catalogue</a>
         </nav>
       </header>
 
