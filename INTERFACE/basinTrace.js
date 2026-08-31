@@ -144,3 +144,39 @@ export function aggregateColumn(rule, ids, outletId, index, column, weights) {
   }
   return { value: weight > 0 ? total / weight : null, basins: counted, rule };
 }
+
+/**
+ * Which administrative units a traced catchment drains from, and how much of it
+ * each one contributes.
+ *
+ * The overlay measured the area every basin shares with every province and
+ * district, so summing that over a traced set answers the question a water
+ * manager actually asks — *whose land drains to this point* — weighted by the
+ * area each unit really contributes rather than by whether it happens to touch
+ * the catchment. A district clipping one corner of one headwater basin ranks
+ * where it belongs instead of appearing beside the province that supplies half
+ * the flow.
+ *
+ * `sharedKm2` totals only the part of the catchment these boundaries cover, and
+ * that is the denominator for `share`: upstream of the border there is no
+ * administrative geography here to attribute to, so a share is a share of the
+ * domestic catchment, never of the whole one.
+ */
+export function aggregateAdmin(ids, byBasin, level) {
+  const totals = new Map();
+  let sharedKm2 = 0;
+  for (const id of ids) {
+    const entry = byBasin[id];
+    const units = entry && entry[level];
+    if (!units) continue;
+    for (const pcode in units) {
+      const km2 = units[pcode];
+      totals.set(pcode, (totals.get(pcode) || 0) + km2);
+      sharedKm2 += km2;
+    }
+  }
+  const units = [...totals.entries()]
+    .map(([pcode, km2]) => ({ pcode, km2, share: sharedKm2 > 0 ? km2 / sharedKm2 : 0 }))
+    .sort((a, b) => b.km2 - a.km2);
+  return { units, sharedKm2 };
+}

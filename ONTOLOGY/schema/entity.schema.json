@@ -4,118 +4,417 @@
   "title": "Entity graph",
   "description": "Canonical records for the things the portal talks about. Intrinsic attributes live here; everything relational lives in assertions.json.",
   "type": "object",
-  "required": ["version", "generatedAt", "entities"],
+  "required": [
+    "version",
+    "generatedAt",
+    "entities"
+  ],
   "additionalProperties": false,
   "properties": {
-    "version": {"type": "string"},
-    "generatedAt": {"type": "string", "format": "date-time"},
+    "version": {
+      "type": "string"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
     "entities": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "type", "label"],
+        "required": [
+          "id",
+          "type",
+          "label"
+        ],
         "properties": {
-          "id": {"type": "string", "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water)/[a-z0-9-]+$"},
-          "type": {
-            "enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Agent", "Basin", "RiverReach", "WaterBody"],
-            "description": "Basin, RiverReach and WaterBody are the hydrographic feature types. They are declared so predicates and relationship tables can be typed against them; individual features are deliberately not minted as entities, because the topology runs to more than 126,000 links and belongs in the GeoPackage that measures it. A relationship-table Distribution says which features a table relates, under which predicate, and where to read it."
+          "id": {
+            "type": "string",
+            "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water)/[a-z0-9-]+$"
           },
-          "label": {"type": "string", "minLength": 1},
+          "type": {
+            "enum": [
+              "Dataset",
+              "Distribution",
+              "MapLayer",
+              "MonitoringStation",
+              "Agent",
+              "Basin",
+              "RiverReach",
+              "WaterBody",
+              "AdminArea"
+            ],
+            "description": "Basin, RiverReach and WaterBody are the hydrographic feature types. They are declared so predicates and relationship tables can be typed against them; individual features are deliberately not minted as entities, because the topology runs to more than 126,000 links and belongs in the GeoPackage that measures it. A relationship-table Distribution says which features a table relates, under which predicate, and where to read it. AdminArea is the administrative geography: provinces and districts from the OCHA Common Operational Dataset. Like the hydrographic types, individual units are not minted as entities — the basin overlay runs to thousands of rows and belongs in a relationship table. First-level units correspond to concepts in the place scheme; second-level units deliberately do not, because 199 districts would swamp a vocabulary meant to be read by a person."
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
           "labels": {
             "type": "object",
             "description": "Language-tagged labels. ru holds the original atlas title.",
-            "additionalProperties": {"type": "string"}
+            "additionalProperties": {
+              "type": "string"
+            }
           },
-          "description": {"type": "string"}
+          "description": {
+            "type": "string"
+          }
         },
         "allOf": [
           {
-            "if": {"properties": {"type": {"const": "Dataset"}}},
-            "then": {
-              "required": ["sourceKey"],
+            "if": {
               "properties": {
-                "sourceKey": {"type": "string", "minLength": 1, "description": "Immutable natural key from the source archive; identity is minted from this once and then frozen."},
-                "atlasNumber": {"type": ["integer", "null"]},
-                "catalogId": {"type": ["string", "null"], "description": "Legacy sequential public-catalog id, kept only as a cross-reference."},
-                "repositoryId": {"type": ["string", "null"], "description": "UUID of the record in the private repository."}
+                "type": {
+                  "const": "Dataset"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "sourceKey"
+              ],
+              "properties": {
+                "sourceKey": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Immutable natural key from the source archive; identity is minted from this once and then frozen."
+                },
+                "atlasNumber": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "catalogId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Legacy sequential public-catalog id, kept only as a cross-reference."
+                },
+                "repositoryId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "UUID of the record in the private repository."
+                }
               }
             }
-          },
-          {
-            "if": {"properties": {"type": {"const": "Distribution"}}},
-            "then": {
-              "required": ["role", "format"],
-              "properties": {
-                "role": {"enum": ["source-package", "source-document", "web-vector", "web-raster-preview", "raster-polygonized", "external-vector", "external-table", "external-document", "external-archive", "relationship-table"]},
-                "format": {"type": "string"},
-                "byteSize": {"type": ["integer", "null"], "minimum": 0},
-                "storedName": {"type": ["string", "null"]},
-                "url": {"type": ["string", "null"]},
-                "accessPolicy": {"enum": ["free", "request", "licensed", "internal"]}
-              }
-            }
-          },
-          {
-            "if": {"properties": {"type": {"const": "MapLayer"}}},
-            "then": {
-              "required": ["geometryType"],
-              "properties": {
-                "geometryType": {"enum": ["point", "line", "polygon", "shape", "raster", "unknown"]},
-                "featureCount": {"type": ["integer", "null"], "minimum": 0},
-                "url": {"type": ["string", "null"]},
-                "legend": {"type": ["object", "null"]}
-              }
-            }
-          },
-          {
-            "if": {"properties": {"type": {"const": "MonitoringStation"}}},
-            "then": {
-              "required": ["network", "longitude", "latitude"],
-              "properties": {
-                "network": {"type": "string", "description": "Which network operates it, e.g. uzhydromet-meteo, uzhydromet-gauge."},
-                "stationKey": {"type": ["string", "null"], "description": "Identifier used by the operator; null where the source leaves it unset."},
-                "stationClass": {"type": ["string", "null"], "description": "Operator's station category, verbatim."},
-                "longitude": {"type": "number", "minimum": -180, "maximum": 180},
-                "latitude": {"type": "number", "minimum": -90, "maximum": 90}
-              }
-            }
-          },
-          {
-            "if": {"properties": {"type": {"const": "Distribution"}}},
-            "then": {"properties": {"externalPath": {"type": ["string", "null"]}}}
           },
           {
             "if": {
-              "required": ["type", "role"],
-              "properties": {"type": {"const": "Distribution"}, "role": {"const": "relationship-table"}}
+              "properties": {
+                "type": {
+                  "const": "Distribution"
+                }
+              }
             },
             "then": {
-              "required": ["predicate", "subjectType", "objectType", "subjectColumn", "objectColumn", "rowCount", "container"],
-              "description": "A measured edge list kept outside the graph. The ontology records what the table means and where it is; the rows stay in the file that produced them.",
+              "required": [
+                "role",
+                "format"
+              ],
               "properties": {
-                "predicate": {"type": "string", "pattern": "^uz:[a-zA-Z]+$", "description": "The registered predicate every row of this table asserts."},
-                "container": {"type": "string", "minLength": 1, "description": "Repo-relative path of the file holding the rows. storedName and externalPath record where the bytes sit, which depends on the machine that profiled them; this identifies the declared table itself."},
-                "subjectType": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Basin", "RiverReach", "WaterBody"]},
-                "objectType": {"enum": ["Dataset", "Distribution", "MapLayer", "MonitoringStation", "Basin", "RiverReach", "WaterBody"]},
-                "subjectColumn": {"type": "string", "minLength": 1, "description": "Column holding the subject identifier."},
-                "objectColumn": {"type": "string", "minLength": 1, "description": "Column holding the object identifier."},
-                "scopeColumn": {"type": ["string", "null"], "description": "Column recording whether the object resolves inside the selection, where the producing pipeline writes one."},
-                "measureColumn": {"type": ["string", "null"], "description": "Column holding the magnitude of the link, where the relation is measured rather than merely present."},
-                "measureUnitColumn": {"type": ["string", "null"], "description": "Column naming the unit of measureColumn, for a table whose rows mix geometry types."},
-                "containerTable": {"type": ["string", "null"], "description": "Table name inside the container, for a GeoPackage or database. Null for a standalone file."},
-                "identifierScheme": {"type": "string", "description": "Which identifier the columns carry, e.g. HYBAS_ID, HYRIV_ID, Hylak_id, PFAF_ID."},
-                "rowCount": {"type": "integer", "minimum": 0, "description": "Measured row count, not an estimate."}
+                "role": {
+                  "enum": [
+                    "source-package",
+                    "source-document",
+                    "web-vector",
+                    "web-raster-preview",
+                    "raster-polygonized",
+                    "external-vector",
+                    "external-table",
+                    "external-document",
+                    "external-archive",
+                    "relationship-table"
+                  ]
+                },
+                "format": {
+                  "type": "string"
+                },
+                "byteSize": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "storedName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "url": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "accessPolicy": {
+                  "enum": [
+                    "free",
+                    "request",
+                    "licensed",
+                    "internal"
+                  ]
+                }
               }
             }
           },
           {
-            "if": {"properties": {"type": {"const": "Agent"}}},
-            "then": {
-              "required": ["agentKind"],
+            "if": {
               "properties": {
-                "agentKind": {"enum": ["organisation", "person", "rule", "model"]},
-                "agentVersion": {"type": "string"},
-                "trustTier": {"enum": ["authoritative", "curated", "heuristic", "predicted"]}
+                "type": {
+                  "const": "MapLayer"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "geometryType"
+              ],
+              "properties": {
+                "geometryType": {
+                  "enum": [
+                    "point",
+                    "line",
+                    "polygon",
+                    "shape",
+                    "raster",
+                    "unknown"
+                  ]
+                },
+                "featureCount": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "url": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "legend": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "MonitoringStation"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "network",
+                "longitude",
+                "latitude"
+              ],
+              "properties": {
+                "network": {
+                  "type": "string",
+                  "description": "Which network operates it, e.g. uzhydromet-meteo, uzhydromet-gauge."
+                },
+                "stationKey": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Identifier used by the operator; null where the source leaves it unset."
+                },
+                "stationClass": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Operator's station category, verbatim."
+                },
+                "longitude": {
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180
+                },
+                "latitude": {
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "Distribution"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "externalPath": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "type",
+                "role"
+              ],
+              "properties": {
+                "type": {
+                  "const": "Distribution"
+                },
+                "role": {
+                  "const": "relationship-table"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "predicate",
+                "subjectType",
+                "objectType",
+                "subjectColumn",
+                "objectColumn",
+                "rowCount",
+                "container"
+              ],
+              "description": "A measured edge list kept outside the graph. The ontology records what the table means and where it is; the rows stay in the file that produced them.",
+              "properties": {
+                "predicate": {
+                  "type": "string",
+                  "pattern": "^uz:[a-zA-Z]+$",
+                  "description": "The registered predicate every row of this table asserts."
+                },
+                "container": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Repo-relative path of the file holding the rows. storedName and externalPath record where the bytes sit, which depends on the machine that profiled them; this identifies the declared table itself."
+                },
+                "subjectType": {
+                  "enum": [
+                    "Dataset",
+                    "Distribution",
+                    "MapLayer",
+                    "MonitoringStation",
+                    "Basin",
+                    "RiverReach",
+                    "WaterBody"
+                  ]
+                },
+                "objectType": {
+                  "enum": [
+                    "Dataset",
+                    "Distribution",
+                    "MapLayer",
+                    "MonitoringStation",
+                    "Basin",
+                    "RiverReach",
+                    "WaterBody"
+                  ]
+                },
+                "subjectColumn": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Column holding the subject identifier."
+                },
+                "objectColumn": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Column holding the object identifier."
+                },
+                "scopeColumn": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Column recording whether the object resolves inside the selection, where the producing pipeline writes one."
+                },
+                "measureColumn": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Column holding the magnitude of the link, where the relation is measured rather than merely present."
+                },
+                "measureUnitColumn": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Column naming the unit of measureColumn, for a table whose rows mix geometry types."
+                },
+                "containerTable": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Table name inside the container, for a GeoPackage or database. Null for a standalone file."
+                },
+                "identifierScheme": {
+                  "type": "string",
+                  "description": "Which identifier the columns carry, e.g. HYBAS_ID, HYRIV_ID, Hylak_id, PFAF_ID."
+                },
+                "rowCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Measured row count, not an estimate."
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "Agent"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "agentKind"
+              ],
+              "properties": {
+                "agentKind": {
+                  "enum": [
+                    "organisation",
+                    "person",
+                    "rule",
+                    "model"
+                  ]
+                },
+                "agentVersion": {
+                  "type": "string"
+                },
+                "trustTier": {
+                  "enum": [
+                    "authoritative",
+                    "curated",
+                    "heuristic",
+                    "predicted"
+                  ]
+                }
               }
             }
           }

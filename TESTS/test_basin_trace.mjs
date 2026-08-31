@@ -103,3 +103,30 @@ test('an outlet with no atlas match yields no value rather than a wrong one', ()
   assert.equal(result.value, null);
   assert.equal(result.basins, 0);
 });
+
+// Basin 1 straddles two provinces, 2 and 4 sit wholly in one, 3 in another, and
+// 5 has no overlay row at all — the case a basin outside the boundary produces.
+const OVERLAY = {
+  1: { adm1: { UZ27: 60, UZ26: 40 } },
+  2: { adm1: { UZ27: 50 } },
+  3: { adm1: { UZ03: 30 } },
+  4: { adm1: { UZ27: 20 } },
+};
+
+test('administrative contributions are summed and ranked by area', async () => {
+  const { aggregateAdmin } = await import('../INTERFACE/basinTrace.js');
+  const { ids } = traceUpstream(1, upstream);
+  const { units, sharedKm2 } = aggregateAdmin(ids, OVERLAY, 'adm1');
+  assert.equal(sharedKm2, 200, 'basin 5 contributes nothing, having no overlay row');
+  assert.deepEqual(units.map(u => u.pcode), ['UZ27', 'UZ26', 'UZ03'], 'ranked by area, not by name');
+  assert.equal(units[0].km2, 130);       // 60 + 50 + 20
+  assert.equal(units[0].share, 0.65);    // of the area the boundaries cover
+  assert.equal(units.reduce((total, u) => total + u.share, 0), 1);
+});
+
+test('a trace with no administrative overlay reports nothing rather than zero-dividing', async () => {
+  const { aggregateAdmin } = await import('../INTERFACE/basinTrace.js');
+  const { units, sharedKm2 } = aggregateAdmin(new Set([5]), OVERLAY, 'adm1');
+  assert.deepEqual(units, []);
+  assert.equal(sharedKm2, 0);
+});

@@ -17,7 +17,10 @@
       "objectColumn": "target_id",
       "scopeColumn": "target_scope",
       "identifierScheme": "HYRIV_ID",
-      "rowCountFrom": {"manifest": "hydrography", "key": "downstreamLinks"}
+      "rowCountFrom": {
+        "manifest": "hydrography",
+        "key": "downstreamLinks"
+      }
     },
     {
       "id": "hydrography-river-basin",
@@ -34,7 +37,10 @@
       "objectColumn": "basin_id",
       "scopeColumn": "basin_scope",
       "identifierScheme": "HYBAS_ID",
-      "rowCountFrom": {"manifest": "hydrography", "key": "riverBasinLinks"}
+      "rowCountFrom": {
+        "manifest": "hydrography",
+        "key": "riverBasinLinks"
+      }
     },
     {
       "id": "hydrography-lake-basin",
@@ -51,7 +57,10 @@
       "objectColumn": "basin_id",
       "scopeColumn": "basin_scope",
       "identifierScheme": "HYBAS_ID",
-      "rowCountFrom": {"manifest": "hydrography", "key": "lakeBasinLinks"}
+      "rowCountFrom": {
+        "manifest": "hydrography",
+        "key": "lakeBasinLinks"
+      }
     },
     {
       "id": "basinatlas-uz-downstream",
@@ -118,7 +127,10 @@
       "measureColumn": "measure",
       "measureUnitColumn": "measure_unit",
       "identifierScheme": "HYBAS_ID",
-      "rowCountFrom": {"manifest": "atlasBasinLinks", "key": "atlasBasinLinks"}
+      "rowCountFrom": {
+        "manifest": "atlasBasinLinks",
+        "key": "atlasBasinLinks"
+      }
     },
     {
       "id": "atlas-basin-statistics",
@@ -137,7 +149,10 @@
       "measureColumn": "mean",
       "measureUnitColumn": null,
       "identifierScheme": "HYBAS_ID",
-      "rowCountFrom": {"manifest": "basinZonalStats", "key": "basinStatistics"}
+      "rowCountFrom": {
+        "manifest": "basinZonalStats",
+        "key": "basinStatistics"
+      }
     },
     {
       "id": "hydrobasins-lake-uz-downstream",
@@ -186,6 +201,50 @@
       "objectColumn": "parent_pfaf_id",
       "scopeColumn": "parent_selected",
       "identifierScheme": "PFAF_ID"
+    },
+    {
+      "id": "admin-basin-province",
+      "dataset": "hydrobasins-level12-uzbekistan",
+      "label": "Level-12 basins by province",
+      "note": "Level-12 basins against the 14 first-level units — provinces, the autonomous republic and Tashkent city. Each row carries the area the two share, so a traced catchment can be attributed to the provinces that feed it. Every unit resolves to a place concept in the ontology, matched by P-code because the COD spellings differ from the vocabulary's.",
+      "predicate": "uz:intersectsAdminArea",
+      "subjectType": "Basin",
+      "objectType": "AdminArea",
+      "container": "PUBLISHED/data/hydrography/admin-basin-links.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "basin_id",
+      "objectColumn": "pcode",
+      "scopeColumn": "admin_level",
+      "measureColumn": "shared_km2",
+      "measureUnitColumn": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCountFrom": {
+        "manifest": "adminBasinLinks",
+        "key": "provinceLinks"
+      }
+    },
+    {
+      "id": "admin-basin-district",
+      "dataset": "hydrobasins-level12-uzbekistan",
+      "label": "Level-12 basins by district",
+      "note": "The same overlay at the second level, across 199 districts, independent cities and gorhokimiyat towns. This is the resolution at which water administration actually happens, and the reason the districts carry no place concept: they are features, and the schema puts features in a table.",
+      "predicate": "uz:intersectsAdminArea",
+      "subjectType": "Basin",
+      "objectType": "AdminArea",
+      "container": "PUBLISHED/data/hydrography/admin-basin-links.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "basin_id",
+      "objectColumn": "pcode",
+      "scopeColumn": "admin_level",
+      "measureColumn": "shared_km2",
+      "measureUnitColumn": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCountFrom": {
+        "manifest": "adminBasinLinks",
+        "key": "districtLinks"
+      }
     }
   ]
 }

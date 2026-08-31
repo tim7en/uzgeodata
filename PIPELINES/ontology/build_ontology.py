@@ -342,6 +342,9 @@ class GraphBuilder:
             "basinZonalStats": (read_json(
                 root / "ONTOLOGY" / "instances" / "basin-zonal-stats.json", {}
             ) or {}).get("counts", {}),
+            "adminBasinLinks": (read_json(
+                root / "ONTOLOGY" / "instances" / "admin-basin-links.json", {}
+            ) or {}).get("counts", {}),
         }
 
     # ------------------------------------------------------------------ build

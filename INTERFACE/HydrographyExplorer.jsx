@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { GeoJSON, MapContainer, ScaleControl, TileLayer, ZoomControl, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import {
-  ArrowUpRight, ChevronRight, Crosshair, Database, Droplets, Layers, LoaderCircle,
-  MapPin, Network, Search, Share2, Waves, Workflow,
+  ArrowUpRight, ChevronRight, Crosshair, Database, Droplets, Landmark, Layers,
+  LoaderCircle, MapPin, Network, Search, Share2, Waves, Workflow,
 } from 'lucide-react';
-import { buildUpstreamMap, traceCoverage, traceUpstream } from './basinTrace.js';
+import { aggregateAdmin, buildUpstreamMap, traceCoverage, traceUpstream } from './basinTrace.js';
 import BasinAttributes from './BasinAttributes.jsx';
 
 const INDEX_URL = '/data/hydrography/relationships.json';
@@ -15,6 +15,10 @@ const LIST_LIMIT = 220;
 const DRAW_LIMIT = 6000;
 const SELECTED_COLOR = '#ff5a1f';
 const TRACE_COLOR = '#f0c74c';
+const ADMIN_COLOR = '#c084fc';
+const ADMIN_URL = '/data/hydrography/admin-basin-links.json';
+const ADMIN_LAYERS = { adm1: '/data/admin/adm1.geojson', adm2: '/data/admin/adm2.geojson' };
+const ADMIN_LEVELS = { adm1: 'Provinces', adm2: 'Districts' };
 
 function num(value, digits = 0) {
   if (value === null || value === undefined || Number.isNaN(value)) return '—';
@@ -75,8 +79,12 @@ export default function HydrographyExplorer() {
   const [showTrace, setShowTrace] = useState(true);
   const [atlas, setAtlas] = useState(null);
   const [atlasError, setAtlasError] = useState(null);
+  const [admin, setAdmin] = useState(null);
+  const [adminLevel, setAdminLevel] = useState('adm1');
+  const [showAdmin, setShowAdmin] = useState(false);
   const requested = useRef(new Set());
   const atlasRequested = useRef(false);
+  const adminRequested = useRef(false);
 
   useEffect(() => {
     let live = true;
@@ -167,7 +175,29 @@ export default function HydrographyExplorer() {
     // A trace is drawn as basin polygons even while the rivers or lakes tab is
     // open, so that layer is pulled in as soon as there is a trace to show.
     if (outletId) loadLayer('basins', index.layers.basins);
-  }, [index, type, loadLayer, outletId]);
+    if (showAdmin) loadLayer(adminLevel, ADMIN_LAYERS[adminLevel]);
+  }, [index, type, loadLayer, outletId, showAdmin, adminLevel]);
+
+  // The administrative overlay is small next to the attribute payload, but it is
+  // still only useful once something is selected, so it loads on the same cue.
+  useEffect(() => {
+    if (!outletId || adminRequested.current) return;
+    adminRequested.current = true;
+    fetch(ADMIN_URL)
+      .then(response => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+      .then(setAdmin)
+      .catch(() => setAdmin(null));
+  }, [outletId]);
+
+  const adminNames = useMemo(() => {
+    if (!admin) return {};
+    return Object.fromEntries([...admin.provinces, ...admin.districts].map(unit => [unit.pcode, unit]));
+  }, [admin]);
+
+  const adminUnits = useMemo(
+    () => (traced && admin ? aggregateAdmin(traced.ids, admin.byBasin, adminLevel) : null),
+    [traced, admin, adminLevel],
+  );
 
   const config = TYPES[type];
   const threshold = thresholds[type];

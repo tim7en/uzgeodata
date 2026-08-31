@@ -5,8 +5,15 @@
       "id": "uz:belongsToTheme",
       "label": "belongs to theme",
       "definition": "Places a dataset in exactly one top-level thematic domain of the atlas.",
-      "domain": ["Dataset"],
-      "range": {"kind": "concept", "schemes": ["theme"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "concept",
+        "schemes": [
+          "theme"
+        ]
+      },
       "cardinality": "one",
       "mlProposable": true
     },
@@ -14,8 +21,15 @@
       "id": "uz:observes",
       "label": "observes",
       "definition": "The environmental property or phenomenon the dataset measures. A dataset may observe several properties; this is the main semantic link and the primary target for model-assisted enrichment.",
-      "domain": ["Dataset"],
-      "range": {"kind": "concept", "schemes": ["property"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "concept",
+        "schemes": [
+          "property"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": true
     },
@@ -23,8 +37,15 @@
       "id": "uz:hasAnalysisConcept",
       "label": "has analysis concept",
       "definition": "How the dataset is analytically shaped: a state observation, a change series, a risk view, a managed resource system or a mapped feature. Replaces the title regex previously used by the portal.",
-      "domain": ["Dataset"],
-      "range": {"kind": "concept", "schemes": ["analysis"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "concept",
+        "schemes": [
+          "analysis"
+        ]
+      },
       "cardinality": "one",
       "mlProposable": true
     },
@@ -32,8 +53,15 @@
       "id": "uz:supportsUseCase",
       "label": "supports use case",
       "definition": "A decision or workflow the dataset can feed. Drives the portal's 'what can I do with this' surfaces.",
-      "domain": ["Dataset"],
-      "range": {"kind": "concept", "schemes": ["usecase"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "concept",
+        "schemes": [
+          "usecase"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": true
     },
@@ -41,8 +69,16 @@
       "id": "uz:coversPlace",
       "label": "covers place",
       "definition": "Geographic area the data actually covers, which is not always the area implied by the title.",
-      "domain": ["Dataset", "MapLayer"],
-      "range": {"kind": "concept", "schemes": ["place"]},
+      "domain": [
+        "Dataset",
+        "MapLayer"
+      ],
+      "range": {
+        "kind": "concept",
+        "schemes": [
+          "place"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": true
     },
@@ -50,8 +86,15 @@
       "id": "uz:relatedTo",
       "label": "related to",
       "definition": "Symmetric association between datasets that are useful together. Populated by similarity search and confirmed by curators.",
-      "domain": ["Dataset"],
-      "range": {"kind": "entity", "entityTypes": ["Dataset"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Dataset"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": true
     },
@@ -59,8 +102,13 @@
       "id": "uz:temporalCoverage",
       "label": "temporal coverage",
       "definition": "Closed interval of observation as {start, end} years, or a single year for a snapshot.",
-      "domain": ["Dataset"],
-      "range": {"kind": "literal", "literalType": "interval"},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "literal",
+        "literalType": "interval"
+      },
       "cardinality": "one",
       "mlProposable": true
     },
@@ -68,8 +116,14 @@
       "id": "uz:spatialExtent",
       "label": "spatial extent",
       "definition": "Bounding box in EPSG:4326 as [west, south, east, north], measured from the extracted geometry rather than declared.",
-      "domain": ["Dataset", "MapLayer"],
-      "range": {"kind": "literal", "literalType": "bbox"},
+      "domain": [
+        "Dataset",
+        "MapLayer"
+      ],
+      "range": {
+        "kind": "literal",
+        "literalType": "bbox"
+      },
       "cardinality": "one",
       "mlProposable": false
     },
@@ -77,8 +131,15 @@
       "id": "uz:hasDistribution",
       "label": "has distribution",
       "definition": "Links a dataset to one concrete encoding of it: the source package, a document, a web layer or a polygonised raster.",
-      "domain": ["Dataset"],
-      "range": {"kind": "entity", "entityTypes": ["Distribution"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Distribution"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": false
     },
@@ -86,8 +147,15 @@
       "id": "uz:derivedFrom",
       "label": "derived from",
       "definition": "Provenance between distributions: which source file a web derivative was produced from. Records the choice the extraction pipeline made.",
-      "domain": ["Distribution"],
-      "range": {"kind": "entity", "entityTypes": ["Distribution"]},
+      "domain": [
+        "Distribution"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Distribution"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": false
     },
@@ -95,8 +163,15 @@
       "id": "uz:rendersDistribution",
       "label": "renders distribution",
       "definition": "Links a browser map layer to the distribution it draws.",
-      "domain": ["MapLayer"],
-      "range": {"kind": "entity", "entityTypes": ["Distribution"]},
+      "domain": [
+        "MapLayer"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Distribution"
+        ]
+      },
       "cardinality": "one",
       "mlProposable": false
     },
@@ -104,8 +179,13 @@
       "id": "uz:hasField",
       "label": "has field",
       "definition": "An attribute name present in a vector distribution. Weak but real evidence about what the data contains, and a feature for the enrichment model.",
-      "domain": ["Distribution"],
-      "range": {"kind": "literal", "literalType": "string"},
+      "domain": [
+        "Distribution"
+      ],
+      "range": {
+        "kind": "literal",
+        "literalType": "string"
+      },
       "cardinality": "many",
       "mlProposable": false
     },
@@ -113,8 +193,13 @@
       "id": "uz:license",
       "label": "licence",
       "definition": "The licence a dataset is held under, as an SPDX-style identifier. Recorded on the dataset because redistribution terms travel with every derivative made from it.",
-      "domain": ["Dataset"],
-      "range": {"kind": "literal", "literalType": "string"},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "literal",
+        "literalType": "string"
+      },
       "cardinality": "one",
       "mlProposable": false
     },
@@ -122,8 +207,13 @@
       "id": "uz:attributedTo",
       "label": "attributed to",
       "definition": "The attribution string that must be displayed wherever the data is shown. ODbL and similar licences make this a condition of use, not a courtesy.",
-      "domain": ["Dataset"],
-      "range": {"kind": "literal", "literalType": "string"},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "literal",
+        "literalType": "string"
+      },
       "cardinality": "one",
       "mlProposable": false
     },
@@ -131,8 +221,13 @@
       "id": "uz:externalLocation",
       "label": "external location",
       "definition": "Absolute path of a source asset that is referenced in place rather than copied into the project, so large deliveries can be catalogued without being ingested.",
-      "domain": ["Distribution"],
-      "range": {"kind": "literal", "literalType": "string"},
+      "domain": [
+        "Distribution"
+      ],
+      "range": {
+        "kind": "literal",
+        "literalType": "string"
+      },
       "cardinality": "one",
       "mlProposable": false
     },
@@ -140,8 +235,15 @@
       "id": "uz:measuredAtStation",
       "label": "measured at station",
       "definition": "Links a time series to the monitoring station that produced it, which is what turns a spreadsheet of numbers into something mappable.",
-      "domain": ["Dataset"],
-      "range": {"kind": "entity", "entityTypes": ["MonitoringStation"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "MonitoringStation"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": true
     },
@@ -149,8 +251,15 @@
       "id": "uz:operatesStation",
       "label": "operates station",
       "definition": "Links a station-network dataset to the individual stations it inventories.",
-      "domain": ["Dataset"],
-      "range": {"kind": "entity", "entityTypes": ["MonitoringStation"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "MonitoringStation"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": false
     },
@@ -158,8 +267,13 @@
       "id": "uz:hasClassLabel",
       "label": "has class label",
       "definition": "A class present in a labelled training dataset, with its sample count in the evidence. Makes class balance a fact in the graph rather than something a modeller has to rediscover.",
-      "domain": ["Dataset"],
-      "range": {"kind": "literal", "literalType": "string"},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "literal",
+        "literalType": "string"
+      },
       "cardinality": "many",
       "mlProposable": false
     },
@@ -167,8 +281,15 @@
       "id": "uz:qualityFlag",
       "label": "quality flag",
       "definition": "A known defect or caveat, e.g. coverage extending beyond Uzbekistan, or unparseable area values. Kept in the graph so the portal can display caveats instead of hiding them.",
-      "domain": ["Dataset", "Distribution", "MapLayer"],
-      "range": {"kind": "literal", "literalType": "string"},
+      "domain": [
+        "Dataset",
+        "Distribution",
+        "MapLayer"
+      ],
+      "range": {
+        "kind": "literal",
+        "literalType": "string"
+      },
       "cardinality": "many",
       "mlProposable": true
     },
@@ -176,8 +297,17 @@
       "id": "uz:flowsInto",
       "label": "flows into",
       "definition": "Measured downstream routing: the next reach or basin the water leaves this one for. Read from the native NEXT_DOWN of HydroRIVERS and HydroBASINS, never inferred. A terminal feature carries no such fact rather than a null one.",
-      "domain": ["RiverReach", "Basin"],
-      "range": {"kind": "entity", "entityTypes": ["RiverReach", "Basin"]},
+      "domain": [
+        "RiverReach",
+        "Basin"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "RiverReach",
+          "Basin"
+        ]
+      },
       "cardinality": "one",
       "mlProposable": false,
       "viaRelationshipTable": true
@@ -186,8 +316,15 @@
       "id": "uz:drainsToBasin",
       "label": "drains to basin",
       "definition": "The level-12 catchment a river reach drains, from the reach's own HYBAS_L12. This is the join that makes basins the reference frame for the river network, so it is resolved against the published basin set and a reach whose basin falls outside it is recorded with that scope rather than dropped.",
-      "domain": ["RiverReach"],
-      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "domain": [
+        "RiverReach"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Basin"
+        ]
+      },
       "cardinality": "one",
       "mlProposable": false,
       "viaRelationshipTable": true
@@ -196,8 +333,15 @@
       "id": "uz:withinBasin",
       "label": "within basin",
       "definition": "The level-12 catchment a water body sits in, resolved from its pour point and, failing that, its centroid. Spatial containment measured against the published basin polygons.",
-      "domain": ["WaterBody"],
-      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "domain": [
+        "WaterBody"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Basin"
+        ]
+      },
       "cardinality": "one",
       "mlProposable": false,
       "viaRelationshipTable": true
@@ -206,8 +350,15 @@
       "id": "uz:coversBasin",
       "label": "covers basin",
       "definition": "A measured overlay: this dataset has features inside this level-12 basin, with the magnitude recorded alongside. Overlap area for polygons, length inside the basin for lines, a feature count for points. It replaces uz:coversPlace at country level for anything the atlas can actually be intersected with, and unlike uz:coversPlace it is measured rather than mapped by a curator.",
-      "domain": ["Dataset"],
-      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Basin"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": false,
       "viaRelationshipTable": true
@@ -216,8 +367,15 @@
       "id": "uz:hasBasinStatistic",
       "label": "has basin statistic",
       "definition": "What a raster surface reads inside a basin: pixel count, mean, minimum, maximum, standard deviation, and the majority class where the surface is categorical. This is the counterpart to uz:coversBasin, which measures how much of a layer is present. For NDVI or drought severity the useful question is not how much of it is here but what it says here, and binning a continuous surface to answer the first question destroys the answer to the second.",
-      "domain": ["Dataset"],
-      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Basin"
+        ]
+      },
       "cardinality": "many",
       "mlProposable": false,
       "viaRelationshipTable": true
@@ -226,9 +384,33 @@
       "id": "uz:subBasinOf",
       "label": "sub-basin of",
       "definition": "Containment in the Pfafstetter hierarchy: the basin one level up that this basin nests inside. Established by Pfafstetter code prefix confirmed by spatial overlap, so every child resolves to exactly one parent at the adjacent level.",
-      "domain": ["Basin"],
-      "range": {"kind": "entity", "entityTypes": ["Basin"]},
+      "domain": [
+        "Basin"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Basin"
+        ]
+      },
       "cardinality": "one",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:intersectsAdminArea",
+      "label": "intersects administrative area",
+      "definition": "A measured overlay: this level-12 basin shares area with this province or district, with the shared area in km2 recorded alongside. It is what connects the drainage network to the administrative geography — trace upstream of a reach, sum this over the basins the trace reaches, and the result is the provinces and districts that drain to that point, weighted by how much of each really contributes rather than by whether it happens to touch.",
+      "domain": [
+        "Basin"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "AdminArea"
+        ]
+      },
+      "cardinality": "many",
       "mlProposable": false,
       "viaRelationshipTable": true
     }
