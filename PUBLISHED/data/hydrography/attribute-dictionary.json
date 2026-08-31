@@ -1,26 +1,12 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T07:05:44+00:00",
+  "generatedAt": "2026-08-31T12:01:13+00:00",
   "catalogSource": "BasinATLAS_Data_v10.gdb/BasinATLAS_Catalog_v10.pdf",
   "reference": "Linke, S., Lehner, B., Ouellet Dallaire, C. et al. (2019). Global hydro-environmental sub-basin and river reach characteristics at high spatial resolution. Scientific Data 6, 283. doi:10.1038/s41597-019-0300-6",
-  "suffixSyntax": {
-    "spatialExtent": {
-      "s": "this sub-basin",
-      "u": "the whole upstream catchment",
-      "p": "at the sub-basin pour point"
-    },
-    "dimension": {
-      "yr": "annual average",
-      "mn": "annual minimum",
-      "mx": "annual maximum",
-      "se": "spatial extent (percent)",
-      "mj": "majority class",
-      "av": "average",
-      "su": "sum",
-      "ix": "index value",
-      "cl": "class"
-    },
-    "numeric": "A numeric suffix is a calendar month for the monthly climate variables, a legend class for glc, pnv and wet, and a year for hft"
+  "aggregationRules": {
+    "outlet": "Taken from the outlet basin alone. These columns already describe the whole upstream catchment or the pour point, so combining them across basins would count the same water twice.",
+    "majority": "The class covering the most area across the set.",
+    "areaWeightedMean": "Mean over the set, each basin weighted by its area inside Uzbekistan."
   },
   "columns": {
     "dis_m3_pyr": {
@@ -36,7 +22,8 @@
       "concept": "uz:hydroatlas/dis",
       "catalogId": "H01",
       "category": "Hydrology",
-      "property": "uz:prop/surface-runoff"
+      "property": "uz:prop/surface-runoff",
+      "aggregation": "outlet"
     },
     "dis_m3_pmn": {
       "column": "dis_m3_pmn",
@@ -51,7 +38,8 @@
       "concept": "uz:hydroatlas/dis",
       "catalogId": "H01",
       "category": "Hydrology",
-      "property": "uz:prop/surface-runoff"
+      "property": "uz:prop/surface-runoff",
+      "aggregation": "outlet"
     },
     "dis_m3_pmx": {
       "column": "dis_m3_pmx",
@@ -66,7 +54,8 @@
       "concept": "uz:hydroatlas/dis",
       "catalogId": "H01",
       "category": "Hydrology",
-      "property": "uz:prop/surface-runoff"
+      "property": "uz:prop/surface-runoff",
+      "aggregation": "outlet"
     },
     "run_mm_syr": {
       "column": "run_mm_syr",
@@ -81,7 +70,8 @@
       "concept": "uz:hydroatlas/run",
       "catalogId": "H02",
       "category": "Hydrology",
-      "property": "uz:prop/surface-runoff"
+      "property": "uz:prop/surface-runoff",
+      "aggregation": "areaWeightedMean"
     },
     "inu_pc_smn": {
       "column": "inu_pc_smn",
@@ -96,7 +86,8 @@
       "concept": "uz:hydroatlas/inu",
       "catalogId": "H03",
       "category": "Hydrology",
-      "property": "uz:prop/surface-water-extent"
+      "property": "uz:prop/surface-water-extent",
+      "aggregation": "areaWeightedMean"
     },
     "inu_pc_umn": {
       "column": "inu_pc_umn",
@@ -111,7 +102,8 @@
       "concept": "uz:hydroatlas/inu",
       "catalogId": "H03",
       "category": "Hydrology",
-      "property": "uz:prop/surface-water-extent"
+      "property": "uz:prop/surface-water-extent",
+      "aggregation": "outlet"
     },
     "inu_pc_smx": {
       "column": "inu_pc_smx",
@@ -126,7 +118,8 @@
       "concept": "uz:hydroatlas/inu",
       "catalogId": "H03",
       "category": "Hydrology",
-      "property": "uz:prop/surface-water-extent"
+      "property": "uz:prop/surface-water-extent",
+      "aggregation": "areaWeightedMean"
     },
     "inu_pc_umx": {
       "column": "inu_pc_umx",
@@ -141,7 +134,8 @@
       "concept": "uz:hydroatlas/inu",
       "catalogId": "H03",
       "category": "Hydrology",
-      "property": "uz:prop/surface-water-extent"
+      "property": "uz:prop/surface-water-extent",
+      "aggregation": "outlet"
     },
     "inu_pc_slt": {
       "column": "inu_pc_slt",
@@ -156,7 +150,8 @@
       "concept": "uz:hydroatlas/inu",
       "catalogId": "H03",
       "category": "Hydrology",
-      "property": "uz:prop/surface-water-extent"
+      "property": "uz:prop/surface-water-extent",
+      "aggregation": "areaWeightedMean"
     },
     "inu_pc_ult": {
       "column": "inu_pc_ult",
@@ -171,7 +166,8 @@
       "concept": "uz:hydroatlas/inu",
       "catalogId": "H03",
       "category": "Hydrology",
-      "property": "uz:prop/surface-water-extent"
+      "property": "uz:prop/surface-water-extent",
+      "aggregation": "outlet"
     },
     "lka_pc_sse": {
       "column": "lka_pc_sse",
@@ -186,7 +182,8 @@
       "concept": "uz:hydroatlas/lka",
       "catalogId": "H04",
       "category": "Hydrology",
-      "property": "uz:prop/surface-water-extent"
+      "property": "uz:prop/surface-water-extent",
+      "aggregation": "areaWeightedMean"
     },
     "lka_pc_use": {
       "column": "lka_pc_use",
@@ -201,7 +198,8 @@
       "concept": "uz:hydroatlas/lka",
       "catalogId": "H04",
       "category": "Hydrology",
-      "property": "uz:prop/surface-water-extent"
+      "property": "uz:prop/surface-water-extent",
+      "aggregation": "outlet"
     },
     "lkv_mc_usu": {
       "column": "lkv_mc_usu",
@@ -216,7 +214,8 @@
       "concept": "uz:hydroatlas/lkv",
       "catalogId": "H05",
       "category": "Hydrology",
-      "property": "uz:prop/reservoir-volume"
+      "property": "uz:prop/reservoir-volume",
+      "aggregation": "outlet"
     },
     "rev_mc_usu": {
       "column": "rev_mc_usu",
@@ -231,7 +230,8 @@
       "concept": "uz:hydroatlas/rev",
       "catalogId": "H06",
       "category": "Hydrology",
-      "property": "uz:prop/reservoir-volume"
+      "property": "uz:prop/reservoir-volume",
+      "aggregation": "outlet"
     },
     "dor_pc_pva": {
       "column": "dor_pc_pva",
@@ -246,7 +246,8 @@
       "concept": "uz:hydroatlas/dor",
       "catalogId": "H07",
       "category": "Hydrology",
-      "property": null
+      "property": null,
+      "aggregation": "outlet"
     },
     "ria_ha_ssu": {
       "column": "ria_ha_ssu",
@@ -261,7 +262,8 @@
       "concept": "uz:hydroatlas/ria",
       "catalogId": "H08",
       "category": "Hydrology",
-      "property": "uz:prop/river-network"
+      "property": "uz:prop/river-network",
+      "aggregation": "areaWeightedMean"
     },
     "ria_ha_usu": {
       "column": "ria_ha_usu",
@@ -276,7 +278,8 @@
       "concept": "uz:hydroatlas/ria",
       "catalogId": "H08",
       "category": "Hydrology",
-      "property": "uz:prop/river-network"
+      "property": "uz:prop/river-network",
+      "aggregation": "outlet"
     },
     "riv_tc_ssu": {
       "column": "riv_tc_ssu",
@@ -291,7 +294,8 @@
       "concept": "uz:hydroatlas/riv",
       "catalogId": "H09",
       "category": "Hydrology",
-      "property": "uz:prop/river-network"
+      "property": "uz:prop/river-network",
+      "aggregation": "areaWeightedMean"
     },
     "riv_tc_usu": {
       "column": "riv_tc_usu",
@@ -306,7 +310,8 @@
       "concept": "uz:hydroatlas/riv",
       "catalogId": "H09",
       "category": "Hydrology",
-      "property": "uz:prop/river-network"
+      "property": "uz:prop/river-network",
+      "aggregation": "outlet"
     },
     "gwt_cm_sav": {
       "column": "gwt_cm_sav",
@@ -321,7 +326,8 @@
       "concept": "uz:hydroatlas/gwt",
       "catalogId": "H10",
       "category": "Hydrology",
-      "property": "uz:prop/groundwater-depth"
+      "property": "uz:prop/groundwater-depth",
+      "aggregation": "areaWeightedMean"
     },
     "ele_mt_sav": {
       "column": "ele_mt_sav",
@@ -336,7 +342,8 @@
       "concept": "uz:hydroatlas/ele",
       "catalogId": "P01",
       "category": "Physiography",
-      "property": "uz:prop/elevation"
+      "property": "uz:prop/elevation",
+      "aggregation": "areaWeightedMean"
     },
     "ele_mt_uav": {
       "column": "ele_mt_uav",
@@ -351,7 +358,8 @@
       "concept": "uz:hydroatlas/ele",
       "catalogId": "P01",
       "category": "Physiography",
-      "property": "uz:prop/elevation"
+      "property": "uz:prop/elevation",
+      "aggregation": "outlet"
     },
     "ele_mt_smn": {
       "column": "ele_mt_smn",
@@ -366,7 +374,8 @@
       "concept": "uz:hydroatlas/ele",
       "catalogId": "P01",
       "category": "Physiography",
-      "property": "uz:prop/elevation"
+      "property": "uz:prop/elevation",
+      "aggregation": "areaWeightedMean"
     },
     "ele_mt_smx": {
       "column": "ele_mt_smx",
@@ -381,7 +390,8 @@
       "concept": "uz:hydroatlas/ele",
       "catalogId": "P01",
       "category": "Physiography",
-      "property": "uz:prop/elevation"
+      "property": "uz:prop/elevation",
+      "aggregation": "areaWeightedMean"
     },
     "slp_dg_sav": {
       "column": "slp_dg_sav",
@@ -396,7 +406,8 @@
       "concept": "uz:hydroatlas/slp",
       "catalogId": "P02",
       "category": "Physiography",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "slp_dg_uav": {
       "column": "slp_dg_uav",
@@ -411,7 +422,8 @@
       "concept": "uz:hydroatlas/slp",
       "catalogId": "P02",
       "category": "Physiography",
-      "property": null
+      "property": null,
+      "aggregation": "outlet"
     },
     "sgr_dk_sav": {
       "column": "sgr_dk_sav",
@@ -426,7 +438,8 @@
       "concept": "uz:hydroatlas/sgr",
       "catalogId": "P03",
       "category": "Physiography",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "clz_cl_smj": {
       "column": "clz_cl_smj",
@@ -441,7 +454,8 @@
       "concept": "uz:hydroatlas/clz",
       "catalogId": "C01",
       "category": "Climate",
-      "property": "uz:prop/climate-classification"
+      "property": "uz:prop/climate-classification",
+      "aggregation": "majority"
     },
     "cls_cl_smj": {
       "column": "cls_cl_smj",
@@ -456,7 +470,8 @@
       "concept": "uz:hydroatlas/cls",
       "catalogId": "C02",
       "category": "Climate",
-      "property": "uz:prop/climate-classification"
+      "property": "uz:prop/climate-classification",
+      "aggregation": "majority"
     },
     "tmp_dc_syr": {
       "column": "tmp_dc_syr",
@@ -471,7 +486,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_uyr": {
       "column": "tmp_dc_uyr",
@@ -486,7 +502,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "outlet"
     },
     "tmp_dc_smn": {
       "column": "tmp_dc_smn",
@@ -501,7 +518,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_smx": {
       "column": "tmp_dc_smx",
@@ -516,7 +534,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s01": {
       "column": "tmp_dc_s01",
@@ -531,7 +550,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s02": {
       "column": "tmp_dc_s02",
@@ -546,7 +566,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s03": {
       "column": "tmp_dc_s03",
@@ -561,7 +582,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s04": {
       "column": "tmp_dc_s04",
@@ -576,7 +598,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s05": {
       "column": "tmp_dc_s05",
@@ -591,7 +614,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s06": {
       "column": "tmp_dc_s06",
@@ -606,7 +630,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s07": {
       "column": "tmp_dc_s07",
@@ -621,7 +646,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s08": {
       "column": "tmp_dc_s08",
@@ -636,7 +662,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s09": {
       "column": "tmp_dc_s09",
@@ -651,7 +678,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s10": {
       "column": "tmp_dc_s10",
@@ -666,7 +694,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s11": {
       "column": "tmp_dc_s11",
@@ -681,7 +710,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "tmp_dc_s12": {
       "column": "tmp_dc_s12",
@@ -696,7 +726,8 @@
       "concept": "uz:hydroatlas/tmp",
       "catalogId": "C03",
       "category": "Climate",
-      "property": "uz:prop/air-temperature"
+      "property": "uz:prop/air-temperature",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_syr": {
       "column": "pre_mm_syr",
@@ -711,7 +742,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_uyr": {
       "column": "pre_mm_uyr",
@@ -726,7 +758,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "outlet"
     },
     "pre_mm_s01": {
       "column": "pre_mm_s01",
@@ -741,7 +774,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s02": {
       "column": "pre_mm_s02",
@@ -756,7 +790,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s03": {
       "column": "pre_mm_s03",
@@ -771,7 +806,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s04": {
       "column": "pre_mm_s04",
@@ -786,7 +822,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s05": {
       "column": "pre_mm_s05",
@@ -801,7 +838,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s06": {
       "column": "pre_mm_s06",
@@ -816,7 +854,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s07": {
       "column": "pre_mm_s07",
@@ -831,7 +870,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s08": {
       "column": "pre_mm_s08",
@@ -846,7 +886,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s09": {
       "column": "pre_mm_s09",
@@ -861,7 +902,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s10": {
       "column": "pre_mm_s10",
@@ -876,7 +918,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s11": {
       "column": "pre_mm_s11",
@@ -891,7 +934,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pre_mm_s12": {
       "column": "pre_mm_s12",
@@ -906,7 +950,8 @@
       "concept": "uz:hydroatlas/pre",
       "catalogId": "C04",
       "category": "Climate",
-      "property": "uz:prop/precipitation"
+      "property": "uz:prop/precipitation",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_syr": {
       "column": "pet_mm_syr",
@@ -921,7 +966,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_uyr": {
       "column": "pet_mm_uyr",
@@ -936,7 +982,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "outlet"
     },
     "pet_mm_s01": {
       "column": "pet_mm_s01",
@@ -951,7 +998,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s02": {
       "column": "pet_mm_s02",
@@ -966,7 +1014,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s03": {
       "column": "pet_mm_s03",
@@ -981,7 +1030,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s04": {
       "column": "pet_mm_s04",
@@ -996,7 +1046,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s05": {
       "column": "pet_mm_s05",
@@ -1011,7 +1062,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s06": {
       "column": "pet_mm_s06",
@@ -1026,7 +1078,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s07": {
       "column": "pet_mm_s07",
@@ -1041,7 +1094,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s08": {
       "column": "pet_mm_s08",
@@ -1056,7 +1110,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s09": {
       "column": "pet_mm_s09",
@@ -1071,7 +1126,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s10": {
       "column": "pet_mm_s10",
@@ -1086,7 +1142,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s11": {
       "column": "pet_mm_s11",
@@ -1101,7 +1158,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "pet_mm_s12": {
       "column": "pet_mm_s12",
@@ -1116,7 +1174,8 @@
       "concept": "uz:hydroatlas/pet",
       "catalogId": "C05",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_syr": {
       "column": "aet_mm_syr",
@@ -1131,7 +1190,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_uyr": {
       "column": "aet_mm_uyr",
@@ -1146,7 +1206,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "outlet"
     },
     "aet_mm_s01": {
       "column": "aet_mm_s01",
@@ -1161,7 +1222,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s02": {
       "column": "aet_mm_s02",
@@ -1176,7 +1238,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s03": {
       "column": "aet_mm_s03",
@@ -1191,7 +1254,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s04": {
       "column": "aet_mm_s04",
@@ -1206,7 +1270,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s05": {
       "column": "aet_mm_s05",
@@ -1221,7 +1286,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s06": {
       "column": "aet_mm_s06",
@@ -1236,7 +1302,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s07": {
       "column": "aet_mm_s07",
@@ -1251,7 +1318,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s08": {
       "column": "aet_mm_s08",
@@ -1266,7 +1334,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s09": {
       "column": "aet_mm_s09",
@@ -1281,7 +1350,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s10": {
       "column": "aet_mm_s10",
@@ -1296,7 +1366,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s11": {
       "column": "aet_mm_s11",
@@ -1311,7 +1382,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "aet_mm_s12": {
       "column": "aet_mm_s12",
@@ -1326,7 +1398,8 @@
       "concept": "uz:hydroatlas/aet",
       "catalogId": "C06",
       "category": "Climate",
-      "property": "uz:prop/evapotranspiration"
+      "property": "uz:prop/evapotranspiration",
+      "aggregation": "areaWeightedMean"
     },
     "ari_ix_sav": {
       "column": "ari_ix_sav",
@@ -1341,7 +1414,8 @@
       "concept": "uz:hydroatlas/ari",
       "catalogId": "C07",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "ari_ix_uav": {
       "column": "ari_ix_uav",
@@ -1356,7 +1430,8 @@
       "concept": "uz:hydroatlas/ari",
       "catalogId": "C07",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "outlet"
     },
     "cmi_ix_syr": {
       "column": "cmi_ix_syr",
@@ -1371,7 +1446,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_uyr": {
       "column": "cmi_ix_uyr",
@@ -1386,7 +1462,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "outlet"
     },
     "cmi_ix_s01": {
       "column": "cmi_ix_s01",
@@ -1401,7 +1478,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s02": {
       "column": "cmi_ix_s02",
@@ -1416,7 +1494,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s03": {
       "column": "cmi_ix_s03",
@@ -1431,7 +1510,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s04": {
       "column": "cmi_ix_s04",
@@ -1446,7 +1526,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s05": {
       "column": "cmi_ix_s05",
@@ -1461,7 +1542,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s06": {
       "column": "cmi_ix_s06",
@@ -1476,7 +1558,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s07": {
       "column": "cmi_ix_s07",
@@ -1491,7 +1574,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s08": {
       "column": "cmi_ix_s08",
@@ -1506,7 +1590,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s09": {
       "column": "cmi_ix_s09",
@@ -1521,7 +1606,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s10": {
       "column": "cmi_ix_s10",
@@ -1536,7 +1622,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s11": {
       "column": "cmi_ix_s11",
@@ -1551,7 +1638,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "cmi_ix_s12": {
       "column": "cmi_ix_s12",
@@ -1566,7 +1654,8 @@
       "concept": "uz:hydroatlas/cmi",
       "catalogId": "C08",
       "category": "Climate",
-      "property": "uz:prop/climatic-water-deficit"
+      "property": "uz:prop/climatic-water-deficit",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_syr": {
       "column": "snw_pc_syr",
@@ -1581,7 +1670,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_uyr": {
       "column": "snw_pc_uyr",
@@ -1596,7 +1686,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "outlet"
     },
     "snw_pc_smx": {
       "column": "snw_pc_smx",
@@ -1611,7 +1702,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s01": {
       "column": "snw_pc_s01",
@@ -1626,7 +1718,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s02": {
       "column": "snw_pc_s02",
@@ -1641,7 +1734,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s03": {
       "column": "snw_pc_s03",
@@ -1656,7 +1750,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s04": {
       "column": "snw_pc_s04",
@@ -1671,7 +1766,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s05": {
       "column": "snw_pc_s05",
@@ -1686,7 +1782,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s06": {
       "column": "snw_pc_s06",
@@ -1701,7 +1798,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s07": {
       "column": "snw_pc_s07",
@@ -1716,7 +1814,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s08": {
       "column": "snw_pc_s08",
@@ -1731,7 +1830,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s09": {
       "column": "snw_pc_s09",
@@ -1746,7 +1846,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s10": {
       "column": "snw_pc_s10",
@@ -1761,7 +1862,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s11": {
       "column": "snw_pc_s11",
@@ -1776,7 +1878,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "snw_pc_s12": {
       "column": "snw_pc_s12",
@@ -1791,7 +1894,8 @@
       "concept": "uz:hydroatlas/snw",
       "catalogId": "C09",
       "category": "Climate",
-      "property": "uz:prop/snow-cover-depth"
+      "property": "uz:prop/snow-cover-depth",
+      "aggregation": "areaWeightedMean"
     },
     "glc_cl_smj": {
       "column": "glc_cl_smj",
@@ -1806,7 +1910,8 @@
       "concept": "uz:hydroatlas/glc-cl",
       "catalogId": "L01",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "majority"
     },
     "glc_pc_s01": {
       "column": "glc_pc_s01",
@@ -1821,7 +1926,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s02": {
       "column": "glc_pc_s02",
@@ -1836,7 +1942,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s03": {
       "column": "glc_pc_s03",
@@ -1851,7 +1958,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s04": {
       "column": "glc_pc_s04",
@@ -1866,7 +1974,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s05": {
       "column": "glc_pc_s05",
@@ -1881,7 +1990,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s06": {
       "column": "glc_pc_s06",
@@ -1896,7 +2006,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s07": {
       "column": "glc_pc_s07",
@@ -1911,7 +2022,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s08": {
       "column": "glc_pc_s08",
@@ -1926,7 +2038,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s09": {
       "column": "glc_pc_s09",
@@ -1941,7 +2054,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s10": {
       "column": "glc_pc_s10",
@@ -1956,7 +2070,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s11": {
       "column": "glc_pc_s11",
@@ -1971,7 +2086,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s12": {
       "column": "glc_pc_s12",
@@ -1986,7 +2102,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s13": {
       "column": "glc_pc_s13",
@@ -2001,7 +2118,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s14": {
       "column": "glc_pc_s14",
@@ -2016,7 +2134,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s15": {
       "column": "glc_pc_s15",
@@ -2031,7 +2150,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s16": {
       "column": "glc_pc_s16",
@@ -2046,7 +2166,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s17": {
       "column": "glc_pc_s17",
@@ -2061,7 +2182,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s18": {
       "column": "glc_pc_s18",
@@ -2076,7 +2198,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s19": {
       "column": "glc_pc_s19",
@@ -2091,7 +2214,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s20": {
       "column": "glc_pc_s20",
@@ -2106,7 +2230,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s21": {
       "column": "glc_pc_s21",
@@ -2121,7 +2246,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_s22": {
       "column": "glc_pc_s22",
@@ -2136,7 +2262,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "areaWeightedMean"
     },
     "glc_pc_u01": {
       "column": "glc_pc_u01",
@@ -2151,7 +2278,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u02": {
       "column": "glc_pc_u02",
@@ -2166,7 +2294,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u03": {
       "column": "glc_pc_u03",
@@ -2181,7 +2310,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u04": {
       "column": "glc_pc_u04",
@@ -2196,7 +2326,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u05": {
       "column": "glc_pc_u05",
@@ -2211,7 +2342,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u06": {
       "column": "glc_pc_u06",
@@ -2226,7 +2358,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u07": {
       "column": "glc_pc_u07",
@@ -2241,7 +2374,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u08": {
       "column": "glc_pc_u08",
@@ -2256,7 +2390,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u09": {
       "column": "glc_pc_u09",
@@ -2271,7 +2406,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u10": {
       "column": "glc_pc_u10",
@@ -2286,7 +2422,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u11": {
       "column": "glc_pc_u11",
@@ -2301,7 +2438,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u12": {
       "column": "glc_pc_u12",
@@ -2316,7 +2454,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u13": {
       "column": "glc_pc_u13",
@@ -2331,7 +2470,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u14": {
       "column": "glc_pc_u14",
@@ -2346,7 +2486,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u15": {
       "column": "glc_pc_u15",
@@ -2361,7 +2502,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u16": {
       "column": "glc_pc_u16",
@@ -2376,7 +2518,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u17": {
       "column": "glc_pc_u17",
@@ -2391,7 +2534,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u18": {
       "column": "glc_pc_u18",
@@ -2406,7 +2550,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u19": {
       "column": "glc_pc_u19",
@@ -2421,7 +2566,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u20": {
       "column": "glc_pc_u20",
@@ -2436,7 +2582,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u21": {
       "column": "glc_pc_u21",
@@ -2451,7 +2598,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "glc_pc_u22": {
       "column": "glc_pc_u22",
@@ -2466,7 +2614,8 @@
       "concept": "uz:hydroatlas/glc-pc",
       "catalogId": "L02",
       "category": "Landcover",
-      "property": "uz:prop/land-cover"
+      "property": "uz:prop/land-cover",
+      "aggregation": "outlet"
     },
     "pnv_cl_smj": {
       "column": "pnv_cl_smj",
@@ -2481,7 +2630,8 @@
       "concept": "uz:hydroatlas/pnv-cl",
       "catalogId": "L03",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "majority"
     },
     "pnv_pc_s01": {
       "column": "pnv_pc_s01",
@@ -2496,7 +2646,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s02": {
       "column": "pnv_pc_s02",
@@ -2511,7 +2662,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s03": {
       "column": "pnv_pc_s03",
@@ -2526,7 +2678,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s04": {
       "column": "pnv_pc_s04",
@@ -2541,7 +2694,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s05": {
       "column": "pnv_pc_s05",
@@ -2556,7 +2710,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s06": {
       "column": "pnv_pc_s06",
@@ -2571,7 +2726,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s07": {
       "column": "pnv_pc_s07",
@@ -2586,7 +2742,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s08": {
       "column": "pnv_pc_s08",
@@ -2601,7 +2758,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s09": {
       "column": "pnv_pc_s09",
@@ -2616,7 +2774,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s10": {
       "column": "pnv_pc_s10",
@@ -2631,7 +2790,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s11": {
       "column": "pnv_pc_s11",
@@ -2646,7 +2806,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s12": {
       "column": "pnv_pc_s12",
@@ -2661,7 +2822,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s13": {
       "column": "pnv_pc_s13",
@@ -2676,7 +2838,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s14": {
       "column": "pnv_pc_s14",
@@ -2691,7 +2854,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_s15": {
       "column": "pnv_pc_s15",
@@ -2706,7 +2870,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "areaWeightedMean"
     },
     "pnv_pc_u01": {
       "column": "pnv_pc_u01",
@@ -2721,7 +2886,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u02": {
       "column": "pnv_pc_u02",
@@ -2736,7 +2902,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u03": {
       "column": "pnv_pc_u03",
@@ -2751,7 +2918,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u04": {
       "column": "pnv_pc_u04",
@@ -2766,7 +2934,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u05": {
       "column": "pnv_pc_u05",
@@ -2781,7 +2950,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u06": {
       "column": "pnv_pc_u06",
@@ -2796,7 +2966,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u07": {
       "column": "pnv_pc_u07",
@@ -2811,7 +2982,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u08": {
       "column": "pnv_pc_u08",
@@ -2826,7 +2998,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u09": {
       "column": "pnv_pc_u09",
@@ -2841,7 +3014,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u10": {
       "column": "pnv_pc_u10",
@@ -2856,7 +3030,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u11": {
       "column": "pnv_pc_u11",
@@ -2871,7 +3046,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u12": {
       "column": "pnv_pc_u12",
@@ -2886,7 +3062,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u13": {
       "column": "pnv_pc_u13",
@@ -2901,7 +3078,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u14": {
       "column": "pnv_pc_u14",
@@ -2916,7 +3094,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "pnv_pc_u15": {
       "column": "pnv_pc_u15",
@@ -2931,7 +3110,8 @@
       "concept": "uz:hydroatlas/pnv-pc",
       "catalogId": "L04",
       "category": "Landcover",
-      "property": "uz:prop/vegetation-formation"
+      "property": "uz:prop/vegetation-formation",
+      "aggregation": "outlet"
     },
     "wet_cl_smj": {
       "column": "wet_cl_smj",
@@ -2946,7 +3126,8 @@
       "concept": "uz:hydroatlas/wet-cl",
       "catalogId": "L05",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "majority"
     },
     "wet_pc_sg1": {
       "column": "wet_pc_sg1",
@@ -2961,7 +3142,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_ug1": {
       "column": "wet_pc_ug1",
@@ -2976,7 +3158,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_sg2": {
       "column": "wet_pc_sg2",
@@ -2991,7 +3174,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_ug2": {
       "column": "wet_pc_ug2",
@@ -3006,7 +3190,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_s01": {
       "column": "wet_pc_s01",
@@ -3021,7 +3206,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_s02": {
       "column": "wet_pc_s02",
@@ -3036,7 +3222,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_s03": {
       "column": "wet_pc_s03",
@@ -3051,7 +3238,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_s04": {
       "column": "wet_pc_s04",
@@ -3066,7 +3254,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_s05": {
       "column": "wet_pc_s05",
@@ -3081,7 +3270,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_s06": {
       "column": "wet_pc_s06",
@@ -3096,7 +3286,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_s07": {
       "column": "wet_pc_s07",
@@ -3111,7 +3302,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_s08": {
       "column": "wet_pc_s08",
@@ -3126,7 +3318,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_s09": {
       "column": "wet_pc_s09",
@@ -3141,7 +3334,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "areaWeightedMean"
     },
     "wet_pc_u01": {
       "column": "wet_pc_u01",
@@ -3156,7 +3350,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_u02": {
       "column": "wet_pc_u02",
@@ -3171,7 +3366,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_u03": {
       "column": "wet_pc_u03",
@@ -3186,7 +3382,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_u04": {
       "column": "wet_pc_u04",
@@ -3201,7 +3398,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_u05": {
       "column": "wet_pc_u05",
@@ -3216,7 +3414,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_u06": {
       "column": "wet_pc_u06",
@@ -3231,7 +3430,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_u07": {
       "column": "wet_pc_u07",
@@ -3246,7 +3446,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_u08": {
       "column": "wet_pc_u08",
@@ -3261,7 +3462,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "wet_pc_u09": {
       "column": "wet_pc_u09",
@@ -3276,7 +3478,8 @@
       "concept": "uz:hydroatlas/wet-pc",
       "catalogId": "L06",
       "category": "Landcover",
-      "property": "uz:prop/water-ecosystem-extent"
+      "property": "uz:prop/water-ecosystem-extent",
+      "aggregation": "outlet"
     },
     "for_pc_sse": {
       "column": "for_pc_sse",
@@ -3291,7 +3494,8 @@
       "concept": "uz:hydroatlas/for",
       "catalogId": "L07",
       "category": "Landcover",
-      "property": "uz:prop/forest-cover"
+      "property": "uz:prop/forest-cover",
+      "aggregation": "areaWeightedMean"
     },
     "for_pc_use": {
       "column": "for_pc_use",
@@ -3306,7 +3510,8 @@
       "concept": "uz:hydroatlas/for",
       "catalogId": "L07",
       "category": "Landcover",
-      "property": "uz:prop/forest-cover"
+      "property": "uz:prop/forest-cover",
+      "aggregation": "outlet"
     },
     "crp_pc_sse": {
       "column": "crp_pc_sse",
@@ -3321,7 +3526,8 @@
       "concept": "uz:hydroatlas/crp",
       "catalogId": "L08",
       "category": "Landcover",
-      "property": "uz:prop/cropland-extent"
+      "property": "uz:prop/cropland-extent",
+      "aggregation": "areaWeightedMean"
     },
     "crp_pc_use": {
       "column": "crp_pc_use",
@@ -3336,7 +3542,8 @@
       "concept": "uz:hydroatlas/crp",
       "catalogId": "L08",
       "category": "Landcover",
-      "property": "uz:prop/cropland-extent"
+      "property": "uz:prop/cropland-extent",
+      "aggregation": "outlet"
     },
     "pst_pc_sse": {
       "column": "pst_pc_sse",
@@ -3351,7 +3558,8 @@
       "concept": "uz:hydroatlas/pst",
       "catalogId": "L09",
       "category": "Landcover",
-      "property": "uz:prop/pasture-vegetation"
+      "property": "uz:prop/pasture-vegetation",
+      "aggregation": "areaWeightedMean"
     },
     "pst_pc_use": {
       "column": "pst_pc_use",
@@ -3366,7 +3574,8 @@
       "concept": "uz:hydroatlas/pst",
       "catalogId": "L09",
       "category": "Landcover",
-      "property": "uz:prop/pasture-vegetation"
+      "property": "uz:prop/pasture-vegetation",
+      "aggregation": "outlet"
     },
     "ire_pc_sse": {
       "column": "ire_pc_sse",
@@ -3381,7 +3590,8 @@
       "concept": "uz:hydroatlas/ire",
       "catalogId": "L10",
       "category": "Landcover",
-      "property": "uz:prop/irrigated-area"
+      "property": "uz:prop/irrigated-area",
+      "aggregation": "areaWeightedMean"
     },
     "ire_pc_use": {
       "column": "ire_pc_use",
@@ -3396,7 +3606,8 @@
       "concept": "uz:hydroatlas/ire",
       "catalogId": "L10",
       "category": "Landcover",
-      "property": "uz:prop/irrigated-area"
+      "property": "uz:prop/irrigated-area",
+      "aggregation": "outlet"
     },
     "gla_pc_sse": {
       "column": "gla_pc_sse",
@@ -3411,7 +3622,8 @@
       "concept": "uz:hydroatlas/gla",
       "catalogId": "L11",
       "category": "Landcover",
-      "property": "uz:prop/glacier-volume"
+      "property": "uz:prop/glacier-volume",
+      "aggregation": "areaWeightedMean"
     },
     "gla_pc_use": {
       "column": "gla_pc_use",
@@ -3426,7 +3638,8 @@
       "concept": "uz:hydroatlas/gla",
       "catalogId": "L11",
       "category": "Landcover",
-      "property": "uz:prop/glacier-volume"
+      "property": "uz:prop/glacier-volume",
+      "aggregation": "outlet"
     },
     "prm_pc_sse": {
       "column": "prm_pc_sse",
@@ -3441,7 +3654,8 @@
       "concept": "uz:hydroatlas/prm",
       "catalogId": "L12",
       "category": "Landcover",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "prm_pc_use": {
       "column": "prm_pc_use",
@@ -3456,7 +3670,8 @@
       "concept": "uz:hydroatlas/prm",
       "catalogId": "L12",
       "category": "Landcover",
-      "property": null
+      "property": null,
+      "aggregation": "outlet"
     },
     "pac_pc_sse": {
       "column": "pac_pc_sse",
@@ -3471,7 +3686,8 @@
       "concept": "uz:hydroatlas/pac",
       "catalogId": "L13",
       "category": "Landcover",
-      "property": "uz:prop/protected-area"
+      "property": "uz:prop/protected-area",
+      "aggregation": "areaWeightedMean"
     },
     "pac_pc_use": {
       "column": "pac_pc_use",
@@ -3486,7 +3702,8 @@
       "concept": "uz:hydroatlas/pac",
       "catalogId": "L13",
       "category": "Landcover",
-      "property": "uz:prop/protected-area"
+      "property": "uz:prop/protected-area",
+      "aggregation": "outlet"
     },
     "tbi_cl_smj": {
       "column": "tbi_cl_smj",
@@ -3501,7 +3718,8 @@
       "concept": "uz:hydroatlas/tbi",
       "catalogId": "L14",
       "category": "Landcover",
-      "property": "uz:prop/landscape-type"
+      "property": "uz:prop/landscape-type",
+      "aggregation": "majority"
     },
     "tec_cl_smj": {
       "column": "tec_cl_smj",
@@ -3516,7 +3734,8 @@
       "concept": "uz:hydroatlas/tec",
       "catalogId": "L15",
       "category": "Landcover",
-      "property": "uz:prop/ecoregion"
+      "property": "uz:prop/ecoregion",
+      "aggregation": "majority"
     },
     "fmh_cl_smj": {
       "column": "fmh_cl_smj",
@@ -3531,7 +3750,8 @@
       "concept": "uz:hydroatlas/fmh",
       "catalogId": "L16",
       "category": "Landcover",
-      "property": null
+      "property": null,
+      "aggregation": "majority"
     },
     "fec_cl_smj": {
       "column": "fec_cl_smj",
@@ -3546,7 +3766,8 @@
       "concept": "uz:hydroatlas/fec",
       "catalogId": "L17",
       "category": "Landcover",
-      "property": "uz:prop/ecoregion"
+      "property": "uz:prop/ecoregion",
+      "aggregation": "majority"
     },
     "cly_pc_sav": {
       "column": "cly_pc_sav",
@@ -3561,7 +3782,8 @@
       "concept": "uz:hydroatlas/cly",
       "catalogId": "S01",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "cly_pc_uav": {
       "column": "cly_pc_uav",
@@ -3576,7 +3798,8 @@
       "concept": "uz:hydroatlas/cly",
       "catalogId": "S01",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "outlet"
     },
     "slt_pc_sav": {
       "column": "slt_pc_sav",
@@ -3591,7 +3814,8 @@
       "concept": "uz:hydroatlas/slt",
       "catalogId": "S02",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "slt_pc_uav": {
       "column": "slt_pc_uav",
@@ -3606,7 +3830,8 @@
       "concept": "uz:hydroatlas/slt",
       "catalogId": "S02",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "outlet"
     },
     "snd_pc_sav": {
       "column": "snd_pc_sav",
@@ -3621,7 +3846,8 @@
       "concept": "uz:hydroatlas/snd",
       "catalogId": "S03",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "snd_pc_uav": {
       "column": "snd_pc_uav",
@@ -3636,7 +3862,8 @@
       "concept": "uz:hydroatlas/snd",
       "catalogId": "S03",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "outlet"
     },
     "soc_th_sav": {
       "column": "soc_th_sav",
@@ -3651,7 +3878,8 @@
       "concept": "uz:hydroatlas/soc",
       "catalogId": "S04",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-organic-carbon"
+      "property": "uz:prop/soil-organic-carbon",
+      "aggregation": "areaWeightedMean"
     },
     "soc_th_uav": {
       "column": "soc_th_uav",
@@ -3666,7 +3894,8 @@
       "concept": "uz:hydroatlas/soc",
       "catalogId": "S04",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-organic-carbon"
+      "property": "uz:prop/soil-organic-carbon",
+      "aggregation": "outlet"
     },
     "swc_pc_syr": {
       "column": "swc_pc_syr",
@@ -3681,7 +3910,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_uyr": {
       "column": "swc_pc_uyr",
@@ -3696,7 +3926,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "outlet"
     },
     "swc_pc_s01": {
       "column": "swc_pc_s01",
@@ -3711,7 +3942,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s02": {
       "column": "swc_pc_s02",
@@ -3726,7 +3958,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s03": {
       "column": "swc_pc_s03",
@@ -3741,7 +3974,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s04": {
       "column": "swc_pc_s04",
@@ -3756,7 +3990,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s05": {
       "column": "swc_pc_s05",
@@ -3771,7 +4006,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s06": {
       "column": "swc_pc_s06",
@@ -3786,7 +4022,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s07": {
       "column": "swc_pc_s07",
@@ -3801,7 +4038,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s08": {
       "column": "swc_pc_s08",
@@ -3816,7 +4054,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s09": {
       "column": "swc_pc_s09",
@@ -3831,7 +4070,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s10": {
       "column": "swc_pc_s10",
@@ -3846,7 +4086,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s11": {
       "column": "swc_pc_s11",
@@ -3861,7 +4102,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "swc_pc_s12": {
       "column": "swc_pc_s12",
@@ -3876,7 +4118,8 @@
       "concept": "uz:hydroatlas/swc",
       "catalogId": "S05",
       "category": "Soils & Geology",
-      "property": "uz:prop/soil-chemistry"
+      "property": "uz:prop/soil-chemistry",
+      "aggregation": "areaWeightedMean"
     },
     "lit_cl_smj": {
       "column": "lit_cl_smj",
@@ -3891,7 +4134,8 @@
       "concept": "uz:hydroatlas/lit",
       "catalogId": "S06",
       "category": "Soils & Geology",
-      "property": null
+      "property": null,
+      "aggregation": "majority"
     },
     "kar_pc_sse": {
       "column": "kar_pc_sse",
@@ -3906,7 +4150,8 @@
       "concept": "uz:hydroatlas/kar",
       "catalogId": "S07",
       "category": "Soils & Geology",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "kar_pc_use": {
       "column": "kar_pc_use",
@@ -3921,7 +4166,8 @@
       "concept": "uz:hydroatlas/kar",
       "catalogId": "S07",
       "category": "Soils & Geology",
-      "property": null
+      "property": null,
+      "aggregation": "outlet"
     },
     "ero_kh_sav": {
       "column": "ero_kh_sav",
@@ -3936,7 +4182,8 @@
       "concept": "uz:hydroatlas/ero",
       "catalogId": "S08",
       "category": "Soils & Geology",
-      "property": "uz:prop/land-productivity"
+      "property": "uz:prop/land-productivity",
+      "aggregation": "areaWeightedMean"
     },
     "ero_kh_uav": {
       "column": "ero_kh_uav",
@@ -3951,7 +4198,8 @@
       "concept": "uz:hydroatlas/ero",
       "catalogId": "S08",
       "category": "Soils & Geology",
-      "property": "uz:prop/land-productivity"
+      "property": "uz:prop/land-productivity",
+      "aggregation": "outlet"
     },
     "pop_ct_ssu": {
       "column": "pop_ct_ssu",
@@ -3966,7 +4214,8 @@
       "concept": "uz:hydroatlas/pop",
       "catalogId": "A01",
       "category": "Anthropogenic",
-      "property": "uz:prop/settlement-extent"
+      "property": "uz:prop/settlement-extent",
+      "aggregation": "areaWeightedMean"
     },
     "pop_ct_usu": {
       "column": "pop_ct_usu",
@@ -3981,7 +4230,8 @@
       "concept": "uz:hydroatlas/pop",
       "catalogId": "A01",
       "category": "Anthropogenic",
-      "property": "uz:prop/settlement-extent"
+      "property": "uz:prop/settlement-extent",
+      "aggregation": "outlet"
     },
     "ppd_pk_sav": {
       "column": "ppd_pk_sav",
@@ -3996,7 +4246,8 @@
       "concept": "uz:hydroatlas/ppd",
       "catalogId": "A02",
       "category": "Anthropogenic",
-      "property": "uz:prop/settlement-extent"
+      "property": "uz:prop/settlement-extent",
+      "aggregation": "areaWeightedMean"
     },
     "ppd_pk_uav": {
       "column": "ppd_pk_uav",
@@ -4011,7 +4262,8 @@
       "concept": "uz:hydroatlas/ppd",
       "catalogId": "A02",
       "category": "Anthropogenic",
-      "property": "uz:prop/settlement-extent"
+      "property": "uz:prop/settlement-extent",
+      "aggregation": "outlet"
     },
     "urb_pc_sse": {
       "column": "urb_pc_sse",
@@ -4026,7 +4278,8 @@
       "concept": "uz:hydroatlas/urb",
       "catalogId": "A03",
       "category": "Anthropogenic",
-      "property": "uz:prop/settlement-extent"
+      "property": "uz:prop/settlement-extent",
+      "aggregation": "areaWeightedMean"
     },
     "urb_pc_use": {
       "column": "urb_pc_use",
@@ -4041,7 +4294,8 @@
       "concept": "uz:hydroatlas/urb",
       "catalogId": "A03",
       "category": "Anthropogenic",
-      "property": "uz:prop/settlement-extent"
+      "property": "uz:prop/settlement-extent",
+      "aggregation": "outlet"
     },
     "nli_ix_sav": {
       "column": "nli_ix_sav",
@@ -4056,7 +4310,8 @@
       "concept": "uz:hydroatlas/nli",
       "catalogId": "A04",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "nli_ix_uav": {
       "column": "nli_ix_uav",
@@ -4071,7 +4326,8 @@
       "concept": "uz:hydroatlas/nli",
       "catalogId": "A04",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "outlet"
     },
     "rdd_mk_sav": {
       "column": "rdd_mk_sav",
@@ -4086,7 +4342,8 @@
       "concept": "uz:hydroatlas/rdd",
       "catalogId": "A05",
       "category": "Anthropogenic",
-      "property": "uz:prop/road-density"
+      "property": "uz:prop/road-density",
+      "aggregation": "areaWeightedMean"
     },
     "rdd_mk_uav": {
       "column": "rdd_mk_uav",
@@ -4101,7 +4358,8 @@
       "concept": "uz:hydroatlas/rdd",
       "catalogId": "A05",
       "category": "Anthropogenic",
-      "property": "uz:prop/road-density"
+      "property": "uz:prop/road-density",
+      "aggregation": "outlet"
     },
     "hft_ix_s93": {
       "column": "hft_ix_s93",
@@ -4116,7 +4374,8 @@
       "concept": "uz:hydroatlas/hft",
       "catalogId": "A06",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "hft_ix_u93": {
       "column": "hft_ix_u93",
@@ -4131,7 +4390,8 @@
       "concept": "uz:hydroatlas/hft",
       "catalogId": "A06",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "outlet"
     },
     "hft_ix_s09": {
       "column": "hft_ix_s09",
@@ -4146,7 +4406,8 @@
       "concept": "uz:hydroatlas/hft",
       "catalogId": "A06",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "hft_ix_u09": {
       "column": "hft_ix_u09",
@@ -4161,7 +4422,8 @@
       "concept": "uz:hydroatlas/hft",
       "catalogId": "A06",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "outlet"
     },
     "gad_id_smj": {
       "column": "gad_id_smj",
@@ -4176,7 +4438,8 @@
       "concept": "uz:hydroatlas/gad",
       "catalogId": "A07",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "majority"
     },
     "gdp_ud_sav": {
       "column": "gdp_ud_sav",
@@ -4191,7 +4454,8 @@
       "concept": "uz:hydroatlas/gdp",
       "catalogId": "A08",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "gdp_ud_ssu": {
       "column": "gdp_ud_ssu",
@@ -4206,7 +4470,8 @@
       "concept": "uz:hydroatlas/gdp",
       "catalogId": "A08",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     },
     "gdp_ud_usu": {
       "column": "gdp_ud_usu",
@@ -4221,7 +4486,8 @@
       "concept": "uz:hydroatlas/gdp",
       "catalogId": "A08",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "outlet"
     },
     "hdi_ix_sav": {
       "column": "hdi_ix_sav",
@@ -4236,8 +4502,8 @@
       "concept": "uz:hydroatlas/hdi",
       "catalogId": "A09",
       "category": "Anthropogenic",
-      "property": null
+      "property": null,
+      "aggregation": "areaWeightedMean"
     }
-  },
-  "undecodedColumns": []
+  }
 }

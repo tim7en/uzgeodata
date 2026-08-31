@@ -1332,7 +1332,7 @@
     },
     "glc_pc_s01": {
       "column": "glc_pc_s01",
-      "label": "Land Cover Extent - January average, this sub-basin",
+      "label": "Land Cover Extent - class 1, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1343,7 +1343,7 @@
     },
     "glc_pc_s02": {
       "column": "glc_pc_s02",
-      "label": "Land Cover Extent - February average, this sub-basin",
+      "label": "Land Cover Extent - class 2, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1354,7 +1354,7 @@
     },
     "glc_pc_s03": {
       "column": "glc_pc_s03",
-      "label": "Land Cover Extent - March average, this sub-basin",
+      "label": "Land Cover Extent - class 3, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1365,7 +1365,7 @@
     },
     "glc_pc_s04": {
       "column": "glc_pc_s04",
-      "label": "Land Cover Extent - April average, this sub-basin",
+      "label": "Land Cover Extent - class 4, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1376,7 +1376,7 @@
     },
     "glc_pc_s05": {
       "column": "glc_pc_s05",
-      "label": "Land Cover Extent - May average, this sub-basin",
+      "label": "Land Cover Extent - class 5, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1387,7 +1387,7 @@
     },
     "glc_pc_s06": {
       "column": "glc_pc_s06",
-      "label": "Land Cover Extent - June average, this sub-basin",
+      "label": "Land Cover Extent - class 6, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1398,7 +1398,7 @@
     },
     "glc_pc_s07": {
       "column": "glc_pc_s07",
-      "label": "Land Cover Extent - July average, this sub-basin",
+      "label": "Land Cover Extent - class 7, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1409,7 +1409,7 @@
     },
     "glc_pc_s08": {
       "column": "glc_pc_s08",
-      "label": "Land Cover Extent - August average, this sub-basin",
+      "label": "Land Cover Extent - class 8, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1420,7 +1420,7 @@
     },
     "glc_pc_s09": {
       "column": "glc_pc_s09",
-      "label": "Land Cover Extent - September average, this sub-basin",
+      "label": "Land Cover Extent - class 9, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1431,7 +1431,7 @@
     },
     "glc_pc_s10": {
       "column": "glc_pc_s10",
-      "label": "Land Cover Extent - October average, this sub-basin",
+      "label": "Land Cover Extent - class 10, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1442,7 +1442,7 @@
     },
     "glc_pc_s11": {
       "column": "glc_pc_s11",
-      "label": "Land Cover Extent - November average, this sub-basin",
+      "label": "Land Cover Extent - class 11, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1453,7 +1453,7 @@
     },
     "glc_pc_s12": {
       "column": "glc_pc_s12",
-      "label": "Land Cover Extent - December average, this sub-basin",
+      "label": "Land Cover Extent - class 12, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1464,7 +1464,7 @@
     },
     "glc_pc_s13": {
       "column": "glc_pc_s13",
-      "label": "Land Cover Extent - month 13, this sub-basin",
+      "label": "Land Cover Extent - class 13, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1475,7 +1475,7 @@
     },
     "glc_pc_s14": {
       "column": "glc_pc_s14",
-      "label": "Land Cover Extent - month 14, this sub-basin",
+      "label": "Land Cover Extent - class 14, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1486,7 +1486,7 @@
     },
     "glc_pc_s15": {
       "column": "glc_pc_s15",
-      "label": "Land Cover Extent - month 15, this sub-basin",
+      "label": "Land Cover Extent - class 15, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1497,7 +1497,7 @@
     },
     "glc_pc_s16": {
       "column": "glc_pc_s16",
-      "label": "Land Cover Extent - month 16, this sub-basin",
+      "label": "Land Cover Extent - class 16, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1508,7 +1508,7 @@
     },
     "glc_pc_s17": {
       "column": "glc_pc_s17",
-      "label": "Land Cover Extent - month 17, this sub-basin",
+      "label": "Land Cover Extent - class 17, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1519,7 +1519,7 @@
     },
     "glc_pc_s18": {
       "column": "glc_pc_s18",
-      "label": "Land Cover Extent - month 18, this sub-basin",
+      "label": "Land Cover Extent - class 18, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1530,7 +1530,7 @@
     },
     "glc_pc_s19": {
       "column": "glc_pc_s19",
-      "label": "Land Cover Extent - month 19, this sub-basin",
+      "label": "Land Cover Extent - class 19, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1541,7 +1541,7 @@
     },
     "glc_pc_s20": {
       "column": "glc_pc_s20",
-      "label": "Land Cover Extent - month 20, this sub-basin",
+      "label": "Land Cover Extent - class 20, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1552,7 +1552,7 @@
     },
     "glc_pc_s21": {
       "column": "glc_pc_s21",
-      "label": "Land Cover Extent - month 21, this sub-basin",
+      "label": "Land Cover Extent - class 21, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1563,7 +1563,7 @@
     },
     "glc_pc_s22": {
       "column": "glc_pc_s22",
-      "label": "Land Cover Extent - month 22, this sub-basin",
+      "label": "Land Cover Extent - class 22, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1574,7 +1574,7 @@
     },
     "glc_pc_u01": {
       "column": "glc_pc_u01",
-      "label": "Land Cover Extent - January average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 1, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1585,7 +1585,7 @@
     },
     "glc_pc_u02": {
       "column": "glc_pc_u02",
-      "label": "Land Cover Extent - February average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 2, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1596,7 +1596,7 @@
     },
     "glc_pc_u03": {
       "column": "glc_pc_u03",
-      "label": "Land Cover Extent - March average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 3, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1607,7 +1607,7 @@
     },
     "glc_pc_u04": {
       "column": "glc_pc_u04",
-      "label": "Land Cover Extent - April average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 4, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1618,7 +1618,7 @@
     },
     "glc_pc_u05": {
       "column": "glc_pc_u05",
-      "label": "Land Cover Extent - May average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 5, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1629,7 +1629,7 @@
     },
     "glc_pc_u06": {
       "column": "glc_pc_u06",
-      "label": "Land Cover Extent - June average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 6, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1640,7 +1640,7 @@
     },
     "glc_pc_u07": {
       "column": "glc_pc_u07",
-      "label": "Land Cover Extent - July average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 7, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1651,7 +1651,7 @@
     },
     "glc_pc_u08": {
       "column": "glc_pc_u08",
-      "label": "Land Cover Extent - August average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 8, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1662,7 +1662,7 @@
     },
     "glc_pc_u09": {
       "column": "glc_pc_u09",
-      "label": "Land Cover Extent - September average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 9, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1673,7 +1673,7 @@
     },
     "glc_pc_u10": {
       "column": "glc_pc_u10",
-      "label": "Land Cover Extent - October average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 10, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1684,7 +1684,7 @@
     },
     "glc_pc_u11": {
       "column": "glc_pc_u11",
-      "label": "Land Cover Extent - November average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 11, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1695,7 +1695,7 @@
     },
     "glc_pc_u12": {
       "column": "glc_pc_u12",
-      "label": "Land Cover Extent - December average, the whole upstream catchment",
+      "label": "Land Cover Extent - class 12, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1706,7 +1706,7 @@
     },
     "glc_pc_u13": {
       "column": "glc_pc_u13",
-      "label": "Land Cover Extent - month 13, the whole upstream catchment",
+      "label": "Land Cover Extent - class 13, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1717,7 +1717,7 @@
     },
     "glc_pc_u14": {
       "column": "glc_pc_u14",
-      "label": "Land Cover Extent - month 14, the whole upstream catchment",
+      "label": "Land Cover Extent - class 14, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1728,7 +1728,7 @@
     },
     "glc_pc_u15": {
       "column": "glc_pc_u15",
-      "label": "Land Cover Extent - month 15, the whole upstream catchment",
+      "label": "Land Cover Extent - class 15, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1739,7 +1739,7 @@
     },
     "glc_pc_u16": {
       "column": "glc_pc_u16",
-      "label": "Land Cover Extent - month 16, the whole upstream catchment",
+      "label": "Land Cover Extent - class 16, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1750,7 +1750,7 @@
     },
     "glc_pc_u17": {
       "column": "glc_pc_u17",
-      "label": "Land Cover Extent - month 17, the whole upstream catchment",
+      "label": "Land Cover Extent - class 17, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1761,7 +1761,7 @@
     },
     "glc_pc_u18": {
       "column": "glc_pc_u18",
-      "label": "Land Cover Extent - month 18, the whole upstream catchment",
+      "label": "Land Cover Extent - class 18, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1772,7 +1772,7 @@
     },
     "glc_pc_u19": {
       "column": "glc_pc_u19",
-      "label": "Land Cover Extent - month 19, the whole upstream catchment",
+      "label": "Land Cover Extent - class 19, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1783,7 +1783,7 @@
     },
     "glc_pc_u20": {
       "column": "glc_pc_u20",
-      "label": "Land Cover Extent - month 20, the whole upstream catchment",
+      "label": "Land Cover Extent - class 20, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1794,7 +1794,7 @@
     },
     "glc_pc_u21": {
       "column": "glc_pc_u21",
-      "label": "Land Cover Extent - month 21, the whole upstream catchment",
+      "label": "Land Cover Extent - class 21, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1805,7 +1805,7 @@
     },
     "glc_pc_u22": {
       "column": "glc_pc_u22",
-      "label": "Land Cover Extent - month 22, the whole upstream catchment",
+      "label": "Land Cover Extent - class 22, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L02",
@@ -1832,7 +1832,7 @@
     },
     "pnv_pc_s01": {
       "column": "pnv_pc_s01",
-      "label": "Potential Natural Vegetation Extent - January average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 1, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1843,7 +1843,7 @@
     },
     "pnv_pc_s02": {
       "column": "pnv_pc_s02",
-      "label": "Potential Natural Vegetation Extent - February average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 2, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1854,7 +1854,7 @@
     },
     "pnv_pc_s03": {
       "column": "pnv_pc_s03",
-      "label": "Potential Natural Vegetation Extent - March average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 3, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1865,7 +1865,7 @@
     },
     "pnv_pc_s04": {
       "column": "pnv_pc_s04",
-      "label": "Potential Natural Vegetation Extent - April average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 4, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1876,7 +1876,7 @@
     },
     "pnv_pc_s05": {
       "column": "pnv_pc_s05",
-      "label": "Potential Natural Vegetation Extent - May average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 5, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1887,7 +1887,7 @@
     },
     "pnv_pc_s06": {
       "column": "pnv_pc_s06",
-      "label": "Potential Natural Vegetation Extent - June average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 6, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1898,7 +1898,7 @@
     },
     "pnv_pc_s07": {
       "column": "pnv_pc_s07",
-      "label": "Potential Natural Vegetation Extent - July average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 7, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1909,7 +1909,7 @@
     },
     "pnv_pc_s08": {
       "column": "pnv_pc_s08",
-      "label": "Potential Natural Vegetation Extent - August average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 8, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1920,7 +1920,7 @@
     },
     "pnv_pc_s09": {
       "column": "pnv_pc_s09",
-      "label": "Potential Natural Vegetation Extent - September average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 9, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1931,7 +1931,7 @@
     },
     "pnv_pc_s10": {
       "column": "pnv_pc_s10",
-      "label": "Potential Natural Vegetation Extent - October average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 10, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1942,7 +1942,7 @@
     },
     "pnv_pc_s11": {
       "column": "pnv_pc_s11",
-      "label": "Potential Natural Vegetation Extent - November average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 11, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1953,7 +1953,7 @@
     },
     "pnv_pc_s12": {
       "column": "pnv_pc_s12",
-      "label": "Potential Natural Vegetation Extent - December average, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 12, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1964,7 +1964,7 @@
     },
     "pnv_pc_s13": {
       "column": "pnv_pc_s13",
-      "label": "Potential Natural Vegetation Extent - month 13, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 13, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1975,7 +1975,7 @@
     },
     "pnv_pc_s14": {
       "column": "pnv_pc_s14",
-      "label": "Potential Natural Vegetation Extent - month 14, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 14, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1986,7 +1986,7 @@
     },
     "pnv_pc_s15": {
       "column": "pnv_pc_s15",
-      "label": "Potential Natural Vegetation Extent - month 15, this sub-basin",
+      "label": "Potential Natural Vegetation Extent - class 15, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -1997,7 +1997,7 @@
     },
     "pnv_pc_u01": {
       "column": "pnv_pc_u01",
-      "label": "Potential Natural Vegetation Extent - January average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 1, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2008,7 +2008,7 @@
     },
     "pnv_pc_u02": {
       "column": "pnv_pc_u02",
-      "label": "Potential Natural Vegetation Extent - February average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 2, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2019,7 +2019,7 @@
     },
     "pnv_pc_u03": {
       "column": "pnv_pc_u03",
-      "label": "Potential Natural Vegetation Extent - March average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 3, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2030,7 +2030,7 @@
     },
     "pnv_pc_u04": {
       "column": "pnv_pc_u04",
-      "label": "Potential Natural Vegetation Extent - April average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 4, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2041,7 +2041,7 @@
     },
     "pnv_pc_u05": {
       "column": "pnv_pc_u05",
-      "label": "Potential Natural Vegetation Extent - May average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 5, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2052,7 +2052,7 @@
     },
     "pnv_pc_u06": {
       "column": "pnv_pc_u06",
-      "label": "Potential Natural Vegetation Extent - June average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 6, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2063,7 +2063,7 @@
     },
     "pnv_pc_u07": {
       "column": "pnv_pc_u07",
-      "label": "Potential Natural Vegetation Extent - July average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 7, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2074,7 +2074,7 @@
     },
     "pnv_pc_u08": {
       "column": "pnv_pc_u08",
-      "label": "Potential Natural Vegetation Extent - August average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 8, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2085,7 +2085,7 @@
     },
     "pnv_pc_u09": {
       "column": "pnv_pc_u09",
-      "label": "Potential Natural Vegetation Extent - September average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 9, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2096,7 +2096,7 @@
     },
     "pnv_pc_u10": {
       "column": "pnv_pc_u10",
-      "label": "Potential Natural Vegetation Extent - October average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 10, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2107,7 +2107,7 @@
     },
     "pnv_pc_u11": {
       "column": "pnv_pc_u11",
-      "label": "Potential Natural Vegetation Extent - November average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 11, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2118,7 +2118,7 @@
     },
     "pnv_pc_u12": {
       "column": "pnv_pc_u12",
-      "label": "Potential Natural Vegetation Extent - December average, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 12, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2129,7 +2129,7 @@
     },
     "pnv_pc_u13": {
       "column": "pnv_pc_u13",
-      "label": "Potential Natural Vegetation Extent - month 13, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 13, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2140,7 +2140,7 @@
     },
     "pnv_pc_u14": {
       "column": "pnv_pc_u14",
-      "label": "Potential Natural Vegetation Extent - month 14, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 14, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2151,7 +2151,7 @@
     },
     "pnv_pc_u15": {
       "column": "pnv_pc_u15",
-      "label": "Potential Natural Vegetation Extent - month 15, the whole upstream catchment",
+      "label": "Potential Natural Vegetation Extent - class 15, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L04",
@@ -2222,7 +2222,7 @@
     },
     "wet_pc_s01": {
       "column": "wet_pc_s01",
-      "label": "Wetland Extent - January average, this sub-basin",
+      "label": "Wetland Extent - class 1, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2233,7 +2233,7 @@
     },
     "wet_pc_s02": {
       "column": "wet_pc_s02",
-      "label": "Wetland Extent - February average, this sub-basin",
+      "label": "Wetland Extent - class 2, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2244,7 +2244,7 @@
     },
     "wet_pc_s03": {
       "column": "wet_pc_s03",
-      "label": "Wetland Extent - March average, this sub-basin",
+      "label": "Wetland Extent - class 3, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2255,7 +2255,7 @@
     },
     "wet_pc_s04": {
       "column": "wet_pc_s04",
-      "label": "Wetland Extent - April average, this sub-basin",
+      "label": "Wetland Extent - class 4, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2266,7 +2266,7 @@
     },
     "wet_pc_s05": {
       "column": "wet_pc_s05",
-      "label": "Wetland Extent - May average, this sub-basin",
+      "label": "Wetland Extent - class 5, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2277,7 +2277,7 @@
     },
     "wet_pc_s06": {
       "column": "wet_pc_s06",
-      "label": "Wetland Extent - June average, this sub-basin",
+      "label": "Wetland Extent - class 6, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2288,7 +2288,7 @@
     },
     "wet_pc_s07": {
       "column": "wet_pc_s07",
-      "label": "Wetland Extent - July average, this sub-basin",
+      "label": "Wetland Extent - class 7, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2299,7 +2299,7 @@
     },
     "wet_pc_s08": {
       "column": "wet_pc_s08",
-      "label": "Wetland Extent - August average, this sub-basin",
+      "label": "Wetland Extent - class 8, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2310,7 +2310,7 @@
     },
     "wet_pc_s09": {
       "column": "wet_pc_s09",
-      "label": "Wetland Extent - September average, this sub-basin",
+      "label": "Wetland Extent - class 9, this sub-basin",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2321,7 +2321,7 @@
     },
     "wet_pc_u01": {
       "column": "wet_pc_u01",
-      "label": "Wetland Extent - January average, the whole upstream catchment",
+      "label": "Wetland Extent - class 1, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2332,7 +2332,7 @@
     },
     "wet_pc_u02": {
       "column": "wet_pc_u02",
-      "label": "Wetland Extent - February average, the whole upstream catchment",
+      "label": "Wetland Extent - class 2, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2343,7 +2343,7 @@
     },
     "wet_pc_u03": {
       "column": "wet_pc_u03",
-      "label": "Wetland Extent - March average, the whole upstream catchment",
+      "label": "Wetland Extent - class 3, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2354,7 +2354,7 @@
     },
     "wet_pc_u04": {
       "column": "wet_pc_u04",
-      "label": "Wetland Extent - April average, the whole upstream catchment",
+      "label": "Wetland Extent - class 4, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2365,7 +2365,7 @@
     },
     "wet_pc_u05": {
       "column": "wet_pc_u05",
-      "label": "Wetland Extent - May average, the whole upstream catchment",
+      "label": "Wetland Extent - class 5, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2376,7 +2376,7 @@
     },
     "wet_pc_u06": {
       "column": "wet_pc_u06",
-      "label": "Wetland Extent - June average, the whole upstream catchment",
+      "label": "Wetland Extent - class 6, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2387,7 +2387,7 @@
     },
     "wet_pc_u07": {
       "column": "wet_pc_u07",
-      "label": "Wetland Extent - July average, the whole upstream catchment",
+      "label": "Wetland Extent - class 7, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2398,7 +2398,7 @@
     },
     "wet_pc_u08": {
       "column": "wet_pc_u08",
-      "label": "Wetland Extent - August average, the whole upstream catchment",
+      "label": "Wetland Extent - class 8, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2409,7 +2409,7 @@
     },
     "wet_pc_u09": {
       "column": "wet_pc_u09",
-      "label": "Wetland Extent - September average, the whole upstream catchment",
+      "label": "Wetland Extent - class 9, the whole upstream catchment",
       "units": "percent cover",
       "category": "Landcover",
       "catalogId": "L06",
@@ -2960,7 +2960,7 @@
     "ppd_pk_sav": {
       "column": "ppd_pk_sav",
       "label": "Population Density - average, this sub-basin",
-      "units": "people per km²",
+      "units": "people per km\u00b2",
       "category": "Anthropogenic",
       "catalogId": "A02",
       "basinsWithData": 3981,
@@ -2971,7 +2971,7 @@
     "ppd_pk_uav": {
       "column": "ppd_pk_uav",
       "label": "Population Density - average, the whole upstream catchment",
-      "units": "people per km²",
+      "units": "people per km\u00b2",
       "category": "Anthropogenic",
       "catalogId": "A02",
       "basinsWithData": 3981,
@@ -3026,7 +3026,7 @@
     "rdd_mk_sav": {
       "column": "rdd_mk_sav",
       "label": "Road Density - average, this sub-basin",
-      "units": "meters per km²",
+      "units": "meters per km\u00b2",
       "category": "Anthropogenic",
       "catalogId": "A05",
       "basinsWithData": 3981,
@@ -3037,7 +3037,7 @@
     "rdd_mk_uav": {
       "column": "rdd_mk_uav",
       "label": "Road Density - average, the whole upstream catchment",
-      "units": "meters per km²",
+      "units": "meters per km\u00b2",
       "category": "Anthropogenic",
       "catalogId": "A05",
       "basinsWithData": 3981,
@@ -3047,7 +3047,7 @@
     },
     "hft_ix_s93": {
       "column": "hft_ix_s93",
-      "label": "Human Footprint - month 93, this sub-basin",
+      "label": "Human Footprint - 1993, this sub-basin",
       "units": "index value (x10)",
       "category": "Anthropogenic",
       "catalogId": "A06",
@@ -3058,7 +3058,7 @@
     },
     "hft_ix_u93": {
       "column": "hft_ix_u93",
-      "label": "Human Footprint - month 93, the whole upstream catchment",
+      "label": "Human Footprint - 1993, the whole upstream catchment",
       "units": "index value (x10)",
       "category": "Anthropogenic",
       "catalogId": "A06",
@@ -3069,7 +3069,7 @@
     },
     "hft_ix_s09": {
       "column": "hft_ix_s09",
-      "label": "Human Footprint - September average, this sub-basin",
+      "label": "Human Footprint - 2009, this sub-basin",
       "units": "index value (x10)",
       "category": "Anthropogenic",
       "catalogId": "A06",
@@ -3080,7 +3080,7 @@
     },
     "hft_ix_u09": {
       "column": "hft_ix_u09",
-      "label": "Human Footprint - September average, the whole upstream catchment",
+      "label": "Human Footprint - 2009, the whole upstream catchment",
       "units": "index value (x10)",
       "category": "Anthropogenic",
       "catalogId": "A06",

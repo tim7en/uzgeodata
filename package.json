@@ -16,10 +16,12 @@
     "ontology:review": "python PIPELINES/ontology/review_assertions.py",
     "hydrography:build": "powershell -NoProfile -ExecutionPolicy Bypass -File PIPELINES/run_hydrography_build.ps1",
     "test:ontology": "python -m pytest TESTS/test_ontology.py -q",
+    "test:trace": "node --test TESTS/test_basin_trace.mjs",
     "hydrography:basinatlas": "python PIPELINES/extract_uz_basinatlas.py",
     "ontology:hydroatlas": "python PIPELINES/ontology/build_hydroatlas_vocabulary.py",
     "hydrography:atlaslinks": "python PIPELINES/build_atlas_basin_links.py",
-    "hydrography:zonalstats": "python PIPELINES/build_basin_zonal_stats.py"
+    "hydrography:zonalstats": "python PIPELINES/build_basin_zonal_stats.py",
+    "hydrography:attributes": "python PIPELINES/build_basin_attributes.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

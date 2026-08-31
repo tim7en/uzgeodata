@@ -2,14 +2,19 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { GeoJSON, MapContainer, ScaleControl, TileLayer, ZoomControl, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import {
-  ArrowUpRight, ChevronRight, Database, Droplets, Layers, LoaderCircle,
-  MapPin, Network, Search, Share2, Waves,
+  ArrowUpRight, ChevronRight, Crosshair, Database, Droplets, Layers, LoaderCircle,
+  MapPin, Network, Search, Share2, Waves, Workflow,
 } from 'lucide-react';
+import { buildUpstreamMap, traceCoverage, traceUpstream } from './basinTrace.js';
+import BasinAttributes from './BasinAttributes.jsx';
 
 const INDEX_URL = '/data/hydrography/relationships.json';
+const ATTRIBUTES_URL = '/data/hydrography/basin-attributes.json';
+const DICTIONARY_URL = '/data/hydrography/attribute-dictionary.json';
 const LIST_LIMIT = 220;
 const DRAW_LIMIT = 6000;
 const SELECTED_COLOR = '#ff5a1f';
+const TRACE_COLOR = '#f0c74c';
 
 function num(value, digits = 0) {
   if (value === null || value === undefined || Number.isNaN(value)) return '—';
@@ -67,7 +72,11 @@ export default function HydrographyExplorer() {
   const [geo, setGeo] = useState({});
   const [loadingGeo, setLoadingGeo] = useState(true);
   const [focus, setFocus] = useState(null);
+  const [showTrace, setShowTrace] = useState(true);
+  const [atlas, setAtlas] = useState(null);
+  const [atlasError, setAtlasError] = useState(null);
   const requested = useRef(new Set());
+  const atlasRequested = useRef(false);
 
   useEffect(() => {
     let live = true;
@@ -89,12 +98,6 @@ export default function HydrographyExplorer() {
       .finally(() => setLoadingGeo(false));
   }, []);
 
-  useEffect(() => {
-    if (!index) return;
-    loadLayer('boundary', index.layers.boundary);
-    loadLayer(type, index.layers[type]);
-  }, [index, type, loadLayer]);
-
   const records = useMemo(() => {
     if (!index) return {};
     return Object.fromEntries(Object.keys(TYPES).map(key => [key, new Map(index[key].map(r => [r.id, r]))]));
@@ -105,7 +108,6 @@ export default function HydrographyExplorer() {
     const upstream = new Map();
     const basinRivers = new Map();
     const basinLakes = new Map();
-    const basinChildren = new Map();
     const push = (map, key, value) => {
       if (!key) return;
       const bucket = map.get(key);
@@ -116,9 +118,56 @@ export default function HydrographyExplorer() {
       push(basinRivers, river.basinId, river.id);
     });
     index.lakes.forEach(lake => push(basinLakes, lake.basinId, lake.id));
-    index.basins.forEach(basin => push(basinChildren, basin.nextDown, basin.id));
-    return { upstream, basinRivers, basinLakes, basinChildren };
+    return { upstream, basinRivers, basinLakes, basinChildren: buildUpstreamMap(index.basins) };
   }, [index]);
+
+  const detailType = selected ? TYPES[selected.type] : null;
+  const detailRecord = selected ? records[selected.type]?.get(selected.id) : null;
+
+  // Every selection resolves to one basin, so a river or a lake traces the
+  // catchment of the basin it sits in rather than offering nothing to trace.
+  const basinRecords = records.basins;
+  const outletId = detailRecord
+    ? (selected.type === 'basins' ? detailRecord.id : detailRecord.basinId)
+    : null;
+
+  const traced = useMemo(
+    () => (outletId && graph ? traceUpstream(outletId, graph.basinChildren) : null),
+    [outletId, graph],
+  );
+
+  const coverage = useMemo(
+    () => (traced && basinRecords ? traceCoverage(traced.ids, basinRecords, basinRecords.get(outletId)) : null),
+    [traced, basinRecords, outletId],
+  );
+
+  const basinWeights = useMemo(
+    () => new Map((index?.basins || []).map(basin => [basin.id, basin.uzbekistanKm2 || 0])),
+    [index],
+  );
+
+  // The attribute payload is a couple of megabytes, so it is fetched the first
+  // time a selection gives it something to describe rather than on page load.
+  useEffect(() => {
+    if (!outletId || atlasRequested.current) return;
+    atlasRequested.current = true;
+    Promise.all([ATTRIBUTES_URL, DICTIONARY_URL].map(url => fetch(url).then(
+      response => (response.ok ? response.json() : Promise.reject(new Error(`${response.status} on ${url}`))),
+    )))
+      .then(([attributes, dictionary]) => setAtlas({ attributes, dictionary: dictionary.columns }))
+      .catch(cause => setAtlasError(
+        `BasinATLAS attributes unavailable (${cause.message}). Build them with npm run hydrography:attributes.`,
+      ));
+  }, [outletId]);
+
+  useEffect(() => {
+    if (!index) return;
+    loadLayer('boundary', index.layers.boundary);
+    loadLayer(type, index.layers[type]);
+    // A trace is drawn as basin polygons even while the rivers or lakes tab is
+    // open, so that layer is pulled in as soon as there is a trace to show.
+    if (outletId) loadLayer('basins', index.layers.basins);
+  }, [index, type, loadLayer, outletId]);
 
   const config = TYPES[type];
   const threshold = thresholds[type];
@@ -136,8 +185,6 @@ export default function HydrographyExplorer() {
   const drawable = useMemo(() => new Set(matches.slice(0, DRAW_LIMIT).map(record => record.id)), [matches]);
 
   const activeRecord = selected && selected.type === type ? records[type]?.get(selected.id) : null;
-  const detailType = selected ? TYPES[selected.type] : null;
-  const detailRecord = selected ? records[selected.type]?.get(selected.id) : null;
 
   const select = useCallback((nextType, id, moveMap = true) => {
     setSelected({ type: nextType, id });
@@ -231,6 +278,7 @@ export default function HydrographyExplorer() {
         <a href="/">Portal</a>
         <a href="/relationships.html">Tables</a>
         <a href="#workspace" className="active">Explorer</a>
+        <a href="#attributes">Attributes</a>
         <a href="#database">Database</a>
       </nav>
     </header>
@@ -342,6 +390,15 @@ export default function HydrographyExplorer() {
                 layer.on('click', () => select(type, feature.properties[config.idField], false));
               }}
             />}
+            {showTrace && traced && geo.basins && <GeoJSON
+              key={`trace-${outletId}`}
+              data={geo.basins}
+              filter={feature => traced.ids.has(feature.properties.HYBAS_ID)}
+              style={feature => (feature.properties.HYBAS_ID === outletId
+                ? { color: SELECTED_COLOR, weight: 2.2, fillColor: SELECTED_COLOR, fillOpacity: 0.42 }
+                : { color: TRACE_COLOR, weight: 0.8, fillColor: TRACE_COLOR, fillOpacity: 0.24 })}
+              interactive={false}
+            />}
             <MapFocus bounds={focus}/>
           </MapContainer>
           <div className="hydro-map-meta">
@@ -351,6 +408,7 @@ export default function HydrographyExplorer() {
           <div className="hydro-map-legend">
             <span><i style={{ background: config.color }}/>{config.label}</span>
             <span><i className="selected"/>Selected</span>
+            {traced && <span><i style={{ background: TRACE_COLOR }}/>Traced catchment</span>}
             <span><i className="boundary"/>Boundary</span>
           </div>
           {(loadingGeo && !activeGeo) && <div className="hydro-map-loading"><LoaderCircle size={15}/> Loading {config.label} geometry</div>}
@@ -370,6 +428,39 @@ export default function HydrographyExplorer() {
             <div className="hydro-metrics">
               {metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
             </div>
+
+            {coverage && <div className="hydro-trace">
+              <div className="hydro-trace-head">
+                <Workflow size={13}/><span>UPSTREAM TRACE</span>
+                <small>{num(coverage.basins)} basins &middot; {num(traced.depth)} deep</small>
+              </div>
+              <div className="hydro-trace-figures">
+                <div><span>Traced catchment</span><strong>{num(coverage.catchmentKm2)} km²</strong></div>
+                <div><span>Of which in Uzbekistan</span><strong>{num(coverage.uzbekistanKm2)} km²</strong></div>
+                <div><span>Reported by HydroSHEDS</span><strong>{num(coverage.reportedKm2)} km²</strong></div>
+              </div>
+              {coverage.coverage !== null && <div className="hydro-trace-bar">
+                <i style={{ width: `${Math.max(coverage.coverage * 100, 1.2)}%` }}/>
+                <span>{(coverage.coverage * 100).toFixed(1)}% of the real catchment is inside this network</span>
+              </div>}
+              {coverage.coverage !== null && coverage.coverage < 0.95 && <p className="hydro-trace-caveat">
+                The rest drains from beyond the border, where the reference stops. Sub-basin averages below
+                describe the traced part only; the whole-catchment table carries figures HydroSHEDS computed
+                across the full area.
+              </p>}
+              <div className="hydro-trace-actions">
+                <button
+                  className={showTrace ? 'active' : undefined}
+                  onClick={() => setShowTrace(current => !current)}
+                >{showTrace ? 'Hide' : 'Show'} on map</button>
+                <button onClick={() => {
+                  const collection = geo.basins;
+                  if (!collection) return;
+                  const members = collection.features.filter(item => traced.ids.has(item.properties.HYBAS_ID));
+                  if (members.length) setFocus(L.geoJSON({ type: 'FeatureCollection', features: members }).getBounds());
+                }}><Crosshair size={12}/> Zoom to catchment</button>
+              </div>
+            </div>}
             <div className="hydro-relation-title">
               <Network size={13}/><span>CONNECTED RECORDS</span><small>{relations.length}</small>
             </div>
@@ -395,6 +486,28 @@ export default function HydrographyExplorer() {
             <div>Select a {config.singular} from the browser or the map to trace its upstream and downstream links.</div>
           </div>}
         </div>
+      </section>
+
+      <section className="hydro-attributes" id="attributes">
+        <div className="hydro-panel-label">
+          <Database size={13}/><span>BASIN ATTRIBUTE TABLES</span>
+          <small>{outletId ? `outlet basin ${outletId}` : 'no selection'}</small>
+        </div>
+        {outletId ? <BasinAttributes
+          outlet={basinRecords?.get(outletId) || { id: outletId }}
+          traced={traced}
+          attributes={atlas?.attributes}
+          dictionary={atlas?.dictionary}
+          weights={basinWeights}
+          loading={!atlas && !atlasError}
+          error={atlasError}
+        /> : <div className="hydro-attr-empty">
+          <Database size={20}/>
+          <div>
+            Select a basin, or any river or lake inside one, to read the 281 documented BasinATLAS
+            attributes for it and for everything that drains into it.
+          </div>
+        </div>}
       </section>
 
       <section className="hydro-database-note" id="database">

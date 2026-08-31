@@ -58,6 +58,21 @@ DIMENSION = {
 MONTHS = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"]
 
+# What a numeric suffix counts, per variable. HydroATLAS reuses the two digits for
+# three different things, and the columns themselves say which is which: the
+# monthly variables stop at 12, while glc runs to 22, pnv to 15 and wet carries
+# g1/g2 beside its digits — none of which is a month. Human Footprint uses the
+# year, 93 and 09 being the 1993 and 2009 snapshots.
+#
+# Reading every numeric suffix as a month, as this once did, published
+# "Land Cover Extent - September average" for GLC class 9 and "Human Footprint -
+# September average" for the 2009 index. Class names would need the catalog PDF,
+# so the class number is given plainly rather than guessed at.
+NUMERIC_DIMENSION = {
+    "glc": "class", "pnv": "class", "wet": "class", "hft": "year",
+}
+NUMERIC_DEFAULT = "month"
+
 # Attributes the ontology already has a property concept for. Anything not listed
 # stays a HydroATLAS attribute only - inventing a property per column would bloat
 # the vocabulary without telling anyone anything new.
@@ -172,9 +187,21 @@ def decode(column: str, catalog: dict) -> dict | None:
         return None
 
     extent, dimension = suffix[0], suffix[1:]
-    if dimension.isdigit():
+    kind = NUMERIC_DIMENSION.get(variable, NUMERIC_DEFAULT)
+    if dimension.isdigit() and kind == "year":
+        # Two-digit years, and the atlas predates 2020: 93 is 1993, 09 is 2009.
         index = int(dimension)
-        dimension_label = f"{MONTHS[index - 1]} average" if 1 <= index <= 12 else f"month {index}"
+        dimension_label = f"{1900 + index if index >= 90 else 2000 + index}"
+    elif dimension.isdigit() and kind == "class":
+        dimension_label = f"class {int(dimension)}"
+    elif dimension.isdigit():
+        index = int(dimension)
+        if not 1 <= index <= 12:
+            raise ValueError(
+                f"{column}: {variable} is read as monthly, but {dimension} is not a month. "
+                "Give the variable an entry in NUMERIC_DIMENSION."
+            )
+        dimension_label = f"{MONTHS[index - 1]} average"
     else:
         dimension_label = DIMENSION.get(dimension, dimension)
 
@@ -344,7 +371,8 @@ def main(argv=None) -> int:
         "catalogSource": CATALOG,
         "reference": scheme["reference"],
         "suffixSyntax": {"spatialExtent": SPATIAL_EXTENT, "dimension": DIMENSION,
-                         "months": "01-12 are calendar-month averages"},
+                         "numeric": "A numeric suffix is a calendar month for the monthly climate variables, "
+                                    "a legend class for glc, pnv and wet, and a year for hft"},
         "columns": decoded,
         "undecodedColumns": undecoded,
     })
