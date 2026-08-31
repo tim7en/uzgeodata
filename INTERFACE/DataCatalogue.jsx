@@ -14,6 +14,18 @@ import {
 // datasets into a picture of scope.
 
 const CATALOGUE_URL = '/data/data-catalogue.json';
+const GROUPS_URL = '/data/data-groups.json';
+
+// The status a group carries is measured against this working copy, not declared,
+// so the colour says something real: green means the bytes are on the disk you are
+// reading this from.
+const GROUP_STATUS = {
+  HELD: { tone: 'ok', label: 'On this PC' },
+  PARTIAL: { tone: 'warn', label: 'Partly here' },
+  WORKSPACE: { tone: 'warn', label: 'In workspace' },
+  OFFLINE: { tone: 'cold', label: 'Offline drive' },
+  ABSENT: { tone: 'bad', label: 'Not here' },
+};
 
 const AVAILABILITY = {
   published: {
@@ -126,6 +138,7 @@ function Row({ row, expanded, onToggle }) {
 
 export default function DataCatalogue() {
   const [data, setData] = useState(null);
+  const [groups, setGroups] = useState(null);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
   const [theme, setTheme] = useState('all');
@@ -137,6 +150,10 @@ export default function DataCatalogue() {
       .then(response => (response.ok ? response.json() : Promise.reject(new Error(`${response.status} ${response.statusText}`))))
       .then(setData)
       .catch(cause => setError(cause.message));
+    fetch(GROUPS_URL)
+      .then(response => (response.ok ? response.json() : Promise.reject(new Error())))
+      .then(setGroups)
+      .catch(() => setGroups(null));
   }, []);
 
   const rows = useMemo(() => {
@@ -179,7 +196,8 @@ export default function DataCatalogue() {
         <a href="/">Portal</a>
         <a href="/hydrography.html">Explorer</a>
         <a href="/relationships.html">Tables</a>
-        <a href="#inventory" className="active">Catalogue</a>
+        <a href="#groups" className="active">Groups</a>
+        <a href="#inventory">Catalogue</a>
         <a href="#scope">Scope</a>
       </nav>
     </header>
@@ -215,6 +233,56 @@ export default function DataCatalogue() {
           </div>;
         })}
       </section>
+
+      {groups && <section className="cat-groups" id="groups">
+        <div className="cat-section-head">
+          <span className="cat-kicker">DATA GROUPS</span>
+          <h2>What this project has, and where</h2>
+          <p>
+            Every kind of data the project references, with a short code to refer to it by. The
+            status is checked against this working copy rather than taken from a record, because
+            most of what the graph describes lives somewhere else — an untracked workspace, a
+            Windows drive that was profiled once, or a service that has never been fetched here.
+          </p>
+        </div>
+
+        <div className="cat-group-key">
+          {Object.entries(GROUP_STATUS).map(([key, entry]) => <span key={key} className={`cat-badge cat-badge-${entry.tone}`}>
+            {entry.label}
+            <em>{groups.summary[key] || 0}</em>
+          </span>)}
+        </div>
+
+        <div className="cat-table-shell">
+          <table className="cat-table cat-group-table">
+            <thead>
+              <tr>
+                <th>Code</th><th>Group</th><th>What it is</th><th>Scale</th><th>Size here</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {groups.groups.map(group => {
+                const state = GROUP_STATUS[group.status] || GROUP_STATUS.ABSENT;
+                return <tr key={group.code} className="cat-row">
+                  <td><code className="cat-code">{group.code}</code></td>
+                  <td><strong>{group.title}</strong><em className="cat-group-source">{group.source}</em></td>
+                  <td className="cat-group-what">
+                    {group.what}
+                    {group.note && <span className="cat-group-note">{group.note}</span>}
+                  </td>
+                  <td className="cat-mono">{group.scale || '—'}</td>
+                  <td className="cat-mono">{group.bytes ? bytes(group.bytes) : '—'}</td>
+                  <td><span className={`cat-badge cat-badge-${state.tone}`}>{state.label}</span></td>
+                </tr>;
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="cat-table-foot">
+          Checked {new Date(groups.generatedAt).toLocaleString('en-GB')}. Rebuild with
+          {' '}<code>npm run data:groups</code>.
+        </div>
+      </section>}
 
       <section className="cat-inventory" id="inventory">
         <div className="cat-controls">

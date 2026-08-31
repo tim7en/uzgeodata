@@ -23,7 +23,8 @@
     "hydrography:zonalstats": "python PIPELINES/build_basin_zonal_stats.py",
     "hydrography:attributes": "python PIPELINES/build_basin_attributes.py",
     "hydrography:adminlinks": "python PIPELINES/build_admin_basin_links.py",
-    "catalogue:build": "python PIPELINES/build_data_catalogue.py"
+    "catalogue:build": "python PIPELINES/build_data_catalogue.py",
+    "data:groups": "python PIPELINES/build_data_groups.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
