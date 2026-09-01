@@ -28,7 +28,8 @@
     "data:items": "python PIPELINES/build_data_items.py",
     "review:build": "python PIPELINES/build_review_layers.py",
     "landcover:cog": "python PIPELINES/analyse_landcover_district.py",
-    "landcover:gee": "python PIPELINES/analyse_landcover_gee.py"
+    "landcover:gee": "python PIPELINES/analyse_landcover_gee.py",
+    "landcover:stats": "python PIPELINES/build_landcover_statistics.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

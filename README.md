@@ -44,6 +44,7 @@ npm run catalogue:build        # pivot the graph into the dataset catalogue
 npm run data:groups            # group every data reference and check what is on this machine
 npm run data:items             # name every reference inside those groups, present or not
 npm run review:build           # export every held layer to GeoJSON and index it for review
+npm run landcover:stats        # annual land cover area per district or basin, from Earth Engine
 npm run test:trace             # the upstream-trace and aggregation guard rails
 ```
 
@@ -52,6 +53,13 @@ npm run test:trace             # the upstream-trace and aggregation guard rails
 database, so the attribute table is read with `sqlite3` rather than GDAL.
 `hydrography:adminlinks` needs `pyshp`, `shapely` and `pyproj`, which is the
 whole of what a shapefile overlay takes and a good deal less than the full stack.
+The land cover pipelines need `earthengine-api` and an authenticated session:
+run `earthengine authenticate --project ee-sabitovty` once, in a terminal with a
+browser, because Earth Engine mints its token through a sign-in that cannot be
+scripted. A token from an OAuth client still in testing status lasts seven days.
+`landcover:cog` needs no Earth Engine at all — it reads the same product from its
+open Cloud-Optimised GeoTIFF mirror, and is the cross-check on the Earth Engine
+numbers.
 The remaining geospatial pipelines need `geopandas`, `rasterio` and `py7zr`;
 `ontology:validate` and the Python tests need `jsonschema` and `pytest`.
 `test:trace` runs on Node's built-in test runner and needs nothing extra.

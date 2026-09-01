@@ -153,6 +153,28 @@
                 "minLength": 1
               }
             }
+          },
+          "dimensionColumns": {
+            "type": "array",
+            "description": "Extra columns a row is keyed by, beyond subject and object. A measurement repeated over time or broken down by class needs them: without a year column a land cover table would silently hold nine rows per unit that look like duplicates. Order is the key order.",
+            "items": {
+              "type": "object",
+              "required": [
+                "column",
+                "meaning"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "column": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "meaning": {
+                  "type": "string",
+                  "minLength": 4
+                }
+              }
+            }
           }
         }
       }

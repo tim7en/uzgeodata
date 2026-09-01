@@ -413,6 +413,23 @@
       "cardinality": "many",
       "mlProposable": false,
       "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:hasAdminStatistic",
+      "label": "has administrative statistic",
+      "definition": "What a surface reads inside a province or district: the counterpart of uz:hasBasinStatistic, for the administrative geography rather than the hydrological one. The same measurement answers different questions through the two — a basin says where water carries something, a district says who is responsible for it.",
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "AdminArea"
+        ]
+      },
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
     }
   ]
 }

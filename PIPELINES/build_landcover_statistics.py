@@ -51,6 +51,7 @@ SOURCES = {
         "output": "landcover-admin-year.csv",
         "unitColumn": "pcode",
         "subjectType": "AdminArea",
+        "dataset": "esri-io-landcover-10m",
         "predicate": "uz:hasAdminStatistic",
         "scale": 10,
     },
@@ -61,6 +62,7 @@ SOURCES = {
         "output": "landcover-basin-year.csv",
         "unitColumn": "basin_id",
         "subjectType": "Basin",
+        "dataset": "esri-io-landcover-10m",
         "predicate": "uz:hasBasinStatistic",
         # Level 12 averages about 110 km2 and there are thousands of them, so the
         # reduction runs coarser by default. At 30 m the area of a class inside a
@@ -138,7 +140,8 @@ def main() -> None:
     with target.open("a", encoding="utf8", newline="") as handle:
         writer = csv.writer(handle)
         if fresh:
-            writer.writerow([unit_column, "unit_name", "year", "class_code", "class_name", "km2"])
+            writer.writerow(["dataset_id", unit_column, "unit_name", "year",
+                             "class_code", "class_name", "km2"])
         for position, (unit, label, geometry, year) in enumerate(todo, start=1):
             region = ee.Geometry(geometry)
             try:
@@ -152,8 +155,8 @@ def main() -> None:
                 continue
             for group in grouped.get("groups", []):
                 code = int(group["class"])
-                writer.writerow([unit, label, year, code, CLASSES.get(code, str(code)),
-                                 round(group["sum"] / 1e6, 4)])
+                writer.writerow([config["dataset"], unit, label, year, code,
+                                 CLASSES.get(code, str(code)), round(group["sum"] / 1e6, 4)])
                 written += 1
             handle.flush()
             if position % 25 == 0 or position == len(todo):

@@ -245,6 +245,62 @@
         "manifest": "adminBasinLinks",
         "key": "districtLinks"
       }
+    },
+    {
+      "id": "landcover-admin-year",
+      "dataset": "esri-io-landcover-10m",
+      "label": "Land cover area by district and year",
+      "note": "Area of each land cover class inside each of the 199 second-level units, once per year. Measured on Earth Engine with pixelArea summed per class, so ground area is right whatever projection the reduction lands in. This is the first table in the graph with a time dimension: a row is keyed by unit, year and class together.",
+      "predicate": "uz:hasAdminStatistic",
+      "subjectType": "Dataset",
+      "objectType": "AdminArea",
+      "container": "PUBLISHED/data/analysis/landcover-admin-year.csv",
+      "objectColumn": "pcode",
+      "identifierScheme": "ADM2_PCODE",
+      "format": "CSV",
+      "containerTable": null,
+      "subjectColumn": "dataset_id",
+      "measureColumn": "km2",
+      "measureUnitColumn": null,
+      "scopeColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "the calendar year the mosaic covers"
+        },
+        {
+          "column": "class_code",
+          "meaning": "land cover class code in the product's 9-class scheme"
+        }
+      ]
+    },
+    {
+      "id": "landcover-basin-year",
+      "dataset": "esri-io-landcover-10m",
+      "label": "Land cover area by level-12 basin and year",
+      "note": "The same measurement against the hydrological frame. Only level 12 is stored: a parent basin's land cover is the sum of its children, so the coarser levels are derivable through the Pfafstetter hierarchy and storing them as well would be twelve times the rows and a second set of numbers that could disagree with the first.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/analysis/landcover-basin-year.csv",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "format": "CSV",
+      "containerTable": null,
+      "subjectColumn": "dataset_id",
+      "measureColumn": "km2",
+      "measureUnitColumn": null,
+      "scopeColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "the calendar year the mosaic covers"
+        },
+        {
+          "column": "class_code",
+          "meaning": "land cover class code in the product's 9-class scheme"
+        }
+      ]
     }
   ]
 }

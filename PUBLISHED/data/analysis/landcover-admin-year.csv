@@ -1,38 +1,396 @@
-pcode,unit_name,year,class_code,class_name,km2
-UZ22220,Termez,2017,1,Water,37.0987
-UZ22220,Termez,2017,2,Trees,0.6466
-UZ22220,Termez,2017,4,Flooded vegetation,3.9361
-UZ22220,Termez,2017,5,Crops,184.2525
-UZ22220,Termez,2017,7,Built area,83.1481
-UZ22220,Termez,2017,8,Bare ground,143.3824
-UZ22220,Termez,2017,11,Rangeland,383.9995
-UZ22220,Termez,2025,1,Water,33.8133
-UZ22220,Termez,2025,2,Trees,0.0154
-UZ22220,Termez,2025,4,Flooded vegetation,2.3368
-UZ22220,Termez,2025,5,Crops,157.2081
-UZ22220,Termez,2025,7,Built area,97.9509
-UZ22220,Termez,2025,8,Bare ground,82.2834
-UZ22220,Termez,2025,11,Rangeland,462.856
-UZ12238,Nurata,2017,1,Water,588.6236
-UZ12238,Nurata,2017,2,Trees,1.2128
-UZ12238,Nurata,2017,4,Flooded vegetation,2.8297
-UZ12238,Nurata,2017,5,Crops,381.7826
-UZ12238,Nurata,2017,7,Built area,106.7888
-UZ12238,Nurata,2017,8,Bare ground,364.6818
-UZ12238,Nurata,2017,9,Snow/ice,0.0064
-UZ12238,Nurata,2017,11,Rangeland,5871.5156
-UZ12238,Nurata,2025,1,Water,550.7461
-UZ12238,Nurata,2025,2,Trees,1.0403
-UZ12238,Nurata,2025,4,Flooded vegetation,0.5223
-UZ12238,Nurata,2025,5,Crops,401.6133
-UZ12238,Nurata,2025,7,Built area,136.7284
-UZ12238,Nurata,2025,8,Bare ground,42.3757
-UZ12238,Nurata,2025,9,Snow/ice,0.0003
-UZ12238,Nurata,2025,11,Rangeland,6184.4149
-UZ12401,Navoi city,2017,7,Built area,0.254
-UZ12401,Navoi city,2017,8,Bare ground,1.9597
-UZ12401,Navoi city,2017,11,Rangeland,11.014
-UZ12401,Navoi city,2025,1,Water,0.0019
-UZ12401,Navoi city,2025,7,Built area,0.5338
-UZ12401,Navoi city,2025,8,Bare ground,1.3021
-UZ12401,Navoi city,2025,11,Rangeland,11.3899
+dataset_id,pcode,unit_name,year,class_code,class_name,km2
+esri-io-landcover-10m,UZ22220,Termez,2017,1,Water,37.0987
+esri-io-landcover-10m,UZ22220,Termez,2017,2,Trees,0.6466
+esri-io-landcover-10m,UZ22220,Termez,2017,4,Flooded vegetation,3.9361
+esri-io-landcover-10m,UZ22220,Termez,2017,5,Crops,184.2525
+esri-io-landcover-10m,UZ22220,Termez,2017,7,Built area,83.1481
+esri-io-landcover-10m,UZ22220,Termez,2017,8,Bare ground,143.3824
+esri-io-landcover-10m,UZ22220,Termez,2017,11,Rangeland,383.9995
+esri-io-landcover-10m,UZ22220,Termez,2018,1,Water,36.5326
+esri-io-landcover-10m,UZ22220,Termez,2018,2,Trees,0.2816
+esri-io-landcover-10m,UZ22220,Termez,2018,4,Flooded vegetation,2.0376
+esri-io-landcover-10m,UZ22220,Termez,2018,5,Crops,151.8202
+esri-io-landcover-10m,UZ22220,Termez,2018,7,Built area,91.4308
+esri-io-landcover-10m,UZ22220,Termez,2018,8,Bare ground,137.4443
+esri-io-landcover-10m,UZ22220,Termez,2018,11,Rangeland,416.9169
+esri-io-landcover-10m,UZ22220,Termez,2019,1,Water,39.4981
+esri-io-landcover-10m,UZ22220,Termez,2019,2,Trees,2.5573
+esri-io-landcover-10m,UZ22220,Termez,2019,4,Flooded vegetation,2.7882
+esri-io-landcover-10m,UZ22220,Termez,2019,5,Crops,144.3965
+esri-io-landcover-10m,UZ22220,Termez,2019,7,Built area,98.3377
+esri-io-landcover-10m,UZ22220,Termez,2019,8,Bare ground,115.7041
+esri-io-landcover-10m,UZ22220,Termez,2019,11,Rangeland,433.182
+esri-io-landcover-10m,UZ22220,Termez,2020,1,Water,38.3856
+esri-io-landcover-10m,UZ22220,Termez,2020,2,Trees,1.2024
+esri-io-landcover-10m,UZ22220,Termez,2020,4,Flooded vegetation,2.1867
+esri-io-landcover-10m,UZ22220,Termez,2020,5,Crops,147.9013
+esri-io-landcover-10m,UZ22220,Termez,2020,7,Built area,98.5767
+esri-io-landcover-10m,UZ22220,Termez,2020,8,Bare ground,87.7265
+esri-io-landcover-10m,UZ22220,Termez,2020,11,Rangeland,460.4847
+esri-io-landcover-10m,UZ22220,Termez,2021,1,Water,35.6439
+esri-io-landcover-10m,UZ22220,Termez,2021,2,Trees,0.426
+esri-io-landcover-10m,UZ22220,Termez,2021,4,Flooded vegetation,1.5738
+esri-io-landcover-10m,UZ22220,Termez,2021,5,Crops,147.2349
+esri-io-landcover-10m,UZ22220,Termez,2021,7,Built area,99.407
+esri-io-landcover-10m,UZ22220,Termez,2021,8,Bare ground,87.5141
+esri-io-landcover-10m,UZ22220,Termez,2021,11,Rangeland,464.6642
+esri-io-landcover-10m,UZ22220,Termez,2022,1,Water,34.6512
+esri-io-landcover-10m,UZ22220,Termez,2022,2,Trees,0.1283
+esri-io-landcover-10m,UZ22220,Termez,2022,4,Flooded vegetation,0.9474
+esri-io-landcover-10m,UZ22220,Termez,2022,5,Crops,139.1284
+esri-io-landcover-10m,UZ22220,Termez,2022,7,Built area,97.6119
+esri-io-landcover-10m,UZ22220,Termez,2022,8,Bare ground,88.332
+esri-io-landcover-10m,UZ22220,Termez,2022,11,Rangeland,475.6645
+esri-io-landcover-10m,UZ22220,Termez,2023,1,Water,34.7635
+esri-io-landcover-10m,UZ22220,Termez,2023,2,Trees,0.0505
+esri-io-landcover-10m,UZ22220,Termez,2023,4,Flooded vegetation,0.7624
+esri-io-landcover-10m,UZ22220,Termez,2023,5,Crops,151.7137
+esri-io-landcover-10m,UZ22220,Termez,2023,7,Built area,99.9474
+esri-io-landcover-10m,UZ22220,Termez,2023,8,Bare ground,86.4927
+esri-io-landcover-10m,UZ22220,Termez,2023,11,Rangeland,462.7336
+esri-io-landcover-10m,UZ22220,Termez,2024,1,Water,35.1851
+esri-io-landcover-10m,UZ22220,Termez,2024,2,Trees,0.0602
+esri-io-landcover-10m,UZ22220,Termez,2024,4,Flooded vegetation,1.8964
+esri-io-landcover-10m,UZ22220,Termez,2024,5,Crops,145.5928
+esri-io-landcover-10m,UZ22220,Termez,2024,7,Built area,104.5439
+esri-io-landcover-10m,UZ22220,Termez,2024,8,Bare ground,83.9777
+esri-io-landcover-10m,UZ22220,Termez,2024,11,Rangeland,465.2077
+esri-io-landcover-10m,UZ22220,Termez,2025,1,Water,33.8133
+esri-io-landcover-10m,UZ22220,Termez,2025,2,Trees,0.0154
+esri-io-landcover-10m,UZ22220,Termez,2025,4,Flooded vegetation,2.3368
+esri-io-landcover-10m,UZ22220,Termez,2025,5,Crops,157.2081
+esri-io-landcover-10m,UZ22220,Termez,2025,7,Built area,97.9509
+esri-io-landcover-10m,UZ22220,Termez,2025,8,Bare ground,82.2834
+esri-io-landcover-10m,UZ22220,Termez,2025,11,Rangeland,462.856
+esri-io-landcover-10m,UZ12238,Nurata,2017,1,Water,588.6236
+esri-io-landcover-10m,UZ12238,Nurata,2017,2,Trees,1.2128
+esri-io-landcover-10m,UZ12238,Nurata,2017,4,Flooded vegetation,2.8297
+esri-io-landcover-10m,UZ12238,Nurata,2017,5,Crops,381.7826
+esri-io-landcover-10m,UZ12238,Nurata,2017,7,Built area,106.7888
+esri-io-landcover-10m,UZ12238,Nurata,2017,8,Bare ground,364.6818
+esri-io-landcover-10m,UZ12238,Nurata,2017,9,Snow/ice,0.0064
+esri-io-landcover-10m,UZ12238,Nurata,2017,11,Rangeland,5871.5156
+esri-io-landcover-10m,UZ12238,Nurata,2018,1,Water,587.9087
+esri-io-landcover-10m,UZ12238,Nurata,2018,2,Trees,0.5596
+esri-io-landcover-10m,UZ12238,Nurata,2018,4,Flooded vegetation,2.2911
+esri-io-landcover-10m,UZ12238,Nurata,2018,5,Crops,361.3138
+esri-io-landcover-10m,UZ12238,Nurata,2018,7,Built area,110.6996
+esri-io-landcover-10m,UZ12238,Nurata,2018,8,Bare ground,218.2072
+esri-io-landcover-10m,UZ12238,Nurata,2018,11,Rangeland,6036.4614
+esri-io-landcover-10m,UZ12238,Nurata,2019,1,Water,590.5144
+esri-io-landcover-10m,UZ12238,Nurata,2019,2,Trees,1.5547
+esri-io-landcover-10m,UZ12238,Nurata,2019,4,Flooded vegetation,2.8107
+esri-io-landcover-10m,UZ12238,Nurata,2019,5,Crops,416.3007
+esri-io-landcover-10m,UZ12238,Nurata,2019,7,Built area,114.0377
+esri-io-landcover-10m,UZ12238,Nurata,2019,8,Bare ground,124.7693
+esri-io-landcover-10m,UZ12238,Nurata,2019,9,Snow/ice,0.0004
+esri-io-landcover-10m,UZ12238,Nurata,2019,11,Rangeland,6067.4535
+esri-io-landcover-10m,UZ12238,Nurata,2020,1,Water,588.5174
+esri-io-landcover-10m,UZ12238,Nurata,2020,2,Trees,0.9593
+esri-io-landcover-10m,UZ12238,Nurata,2020,4,Flooded vegetation,2.1366
+esri-io-landcover-10m,UZ12238,Nurata,2020,5,Crops,395.2727
+esri-io-landcover-10m,UZ12238,Nurata,2020,7,Built area,120.4946
+esri-io-landcover-10m,UZ12238,Nurata,2020,8,Bare ground,88.5312
+esri-io-landcover-10m,UZ12238,Nurata,2020,11,Rangeland,6121.5296
+esri-io-landcover-10m,UZ12238,Nurata,2021,1,Water,574.7739
+esri-io-landcover-10m,UZ12238,Nurata,2021,2,Trees,0.4317
+esri-io-landcover-10m,UZ12238,Nurata,2021,4,Flooded vegetation,0.5946
+esri-io-landcover-10m,UZ12238,Nurata,2021,5,Crops,384.9568
+esri-io-landcover-10m,UZ12238,Nurata,2021,7,Built area,123.9511
+esri-io-landcover-10m,UZ12238,Nurata,2021,8,Bare ground,94.5794
+esri-io-landcover-10m,UZ12238,Nurata,2021,9,Snow/ice,0.004
+esri-io-landcover-10m,UZ12238,Nurata,2021,11,Rangeland,6138.1498
+esri-io-landcover-10m,UZ12238,Nurata,2022,1,Water,566.5061
+esri-io-landcover-10m,UZ12238,Nurata,2022,2,Trees,1.6663
+esri-io-landcover-10m,UZ12238,Nurata,2022,4,Flooded vegetation,0.701
+esri-io-landcover-10m,UZ12238,Nurata,2022,5,Crops,430.468
+esri-io-landcover-10m,UZ12238,Nurata,2022,7,Built area,124.8825
+esri-io-landcover-10m,UZ12238,Nurata,2022,8,Bare ground,50.45
+esri-io-landcover-10m,UZ12238,Nurata,2022,11,Rangeland,6142.7673
+esri-io-landcover-10m,UZ12238,Nurata,2023,1,Water,555.7096
+esri-io-landcover-10m,UZ12238,Nurata,2023,2,Trees,0.7025
+esri-io-landcover-10m,UZ12238,Nurata,2023,4,Flooded vegetation,0.3864
+esri-io-landcover-10m,UZ12238,Nurata,2023,5,Crops,407.8371
+esri-io-landcover-10m,UZ12238,Nurata,2023,7,Built area,130.7421
+esri-io-landcover-10m,UZ12238,Nurata,2023,8,Bare ground,49.8588
+esri-io-landcover-10m,UZ12238,Nurata,2023,11,Rangeland,6172.2047
+esri-io-landcover-10m,UZ12238,Nurata,2024,1,Water,552.72
+esri-io-landcover-10m,UZ12238,Nurata,2024,2,Trees,1.8108
+esri-io-landcover-10m,UZ12238,Nurata,2024,4,Flooded vegetation,0.6511
+esri-io-landcover-10m,UZ12238,Nurata,2024,5,Crops,448.939
+esri-io-landcover-10m,UZ12238,Nurata,2024,7,Built area,135.7568
+esri-io-landcover-10m,UZ12238,Nurata,2024,8,Bare ground,45.1958
+esri-io-landcover-10m,UZ12238,Nurata,2024,9,Snow/ice,0.0004
+esri-io-landcover-10m,UZ12238,Nurata,2024,11,Rangeland,6132.3675
+esri-io-landcover-10m,UZ12238,Nurata,2025,1,Water,550.7461
+esri-io-landcover-10m,UZ12238,Nurata,2025,2,Trees,1.0403
+esri-io-landcover-10m,UZ12238,Nurata,2025,4,Flooded vegetation,0.5223
+esri-io-landcover-10m,UZ12238,Nurata,2025,5,Crops,401.6133
+esri-io-landcover-10m,UZ12238,Nurata,2025,7,Built area,136.7284
+esri-io-landcover-10m,UZ12238,Nurata,2025,8,Bare ground,42.3757
+esri-io-landcover-10m,UZ12238,Nurata,2025,9,Snow/ice,0.0003
+esri-io-landcover-10m,UZ12238,Nurata,2025,11,Rangeland,6184.4149
+esri-io-landcover-10m,UZ12401,Navoi city,2017,7,Built area,0.254
+esri-io-landcover-10m,UZ12401,Navoi city,2017,8,Bare ground,1.9597
+esri-io-landcover-10m,UZ12401,Navoi city,2017,11,Rangeland,11.014
+esri-io-landcover-10m,UZ12401,Navoi city,2018,7,Built area,0.1942
+esri-io-landcover-10m,UZ12401,Navoi city,2018,8,Bare ground,1.8383
+esri-io-landcover-10m,UZ12401,Navoi city,2018,11,Rangeland,11.1953
+esri-io-landcover-10m,UZ12401,Navoi city,2019,7,Built area,0.4862
+esri-io-landcover-10m,UZ12401,Navoi city,2019,8,Bare ground,1.1105
+esri-io-landcover-10m,UZ12401,Navoi city,2019,11,Rangeland,11.6311
+esri-io-landcover-10m,UZ12401,Navoi city,2020,7,Built area,0.5732
+esri-io-landcover-10m,UZ12401,Navoi city,2020,8,Bare ground,0.9469
+esri-io-landcover-10m,UZ12401,Navoi city,2020,11,Rangeland,11.7076
+esri-io-landcover-10m,UZ12401,Navoi city,2021,7,Built area,0.4613
+esri-io-landcover-10m,UZ12401,Navoi city,2021,8,Bare ground,1.0735
+esri-io-landcover-10m,UZ12401,Navoi city,2021,11,Rangeland,11.6929
+esri-io-landcover-10m,UZ12401,Navoi city,2022,7,Built area,0.7097
+esri-io-landcover-10m,UZ12401,Navoi city,2022,8,Bare ground,0.9872
+esri-io-landcover-10m,UZ12401,Navoi city,2022,11,Rangeland,11.5308
+esri-io-landcover-10m,UZ12401,Navoi city,2023,7,Built area,0.7789
+esri-io-landcover-10m,UZ12401,Navoi city,2023,8,Bare ground,1.1537
+esri-io-landcover-10m,UZ12401,Navoi city,2023,11,Rangeland,11.2951
+esri-io-landcover-10m,UZ12401,Navoi city,2024,1,Water,0.0018
+esri-io-landcover-10m,UZ12401,Navoi city,2024,7,Built area,0.9451
+esri-io-landcover-10m,UZ12401,Navoi city,2024,8,Bare ground,0.912
+esri-io-landcover-10m,UZ12401,Navoi city,2024,11,Rangeland,11.3689
+esri-io-landcover-10m,UZ12401,Navoi city,2025,1,Water,0.0019
+esri-io-landcover-10m,UZ12401,Navoi city,2025,7,Built area,0.5338
+esri-io-landcover-10m,UZ12401,Navoi city,2025,8,Bare ground,1.3021
+esri-io-landcover-10m,UZ12401,Navoi city,2025,11,Rangeland,11.3899
+esri-io-landcover-10m,UZ06246,Jondor,2017,1,Water,25.8957
+esri-io-landcover-10m,UZ06246,Jondor,2017,4,Flooded vegetation,45.4291
+esri-io-landcover-10m,UZ06246,Jondor,2017,5,Crops,398.7032
+esri-io-landcover-10m,UZ06246,Jondor,2017,7,Built area,124.5118
+esri-io-landcover-10m,UZ06246,Jondor,2017,8,Bare ground,3776.6344
+esri-io-landcover-10m,UZ06246,Jondor,2017,11,Rangeland,903.8847
+esri-io-landcover-10m,UZ06246,Jondor,2018,1,Water,31.2937
+esri-io-landcover-10m,UZ06246,Jondor,2018,2,Trees,0.2295
+esri-io-landcover-10m,UZ06246,Jondor,2018,4,Flooded vegetation,34.4291
+esri-io-landcover-10m,UZ06246,Jondor,2018,5,Crops,386.2833
+esri-io-landcover-10m,UZ06246,Jondor,2018,7,Built area,128.4862
+esri-io-landcover-10m,UZ06246,Jondor,2018,8,Bare ground,3723.8138
+esri-io-landcover-10m,UZ06246,Jondor,2018,11,Rangeland,970.5233
+esri-io-landcover-10m,UZ06246,Jondor,2019,1,Water,24.7921
+esri-io-landcover-10m,UZ06246,Jondor,2019,2,Trees,0.0025
+esri-io-landcover-10m,UZ06246,Jondor,2019,4,Flooded vegetation,49.2334
+esri-io-landcover-10m,UZ06246,Jondor,2019,5,Crops,381.605
+esri-io-landcover-10m,UZ06246,Jondor,2019,7,Built area,132.8061
+esri-io-landcover-10m,UZ06246,Jondor,2019,8,Bare ground,3454.7204
+esri-io-landcover-10m,UZ06246,Jondor,2019,11,Rangeland,1231.8994
+esri-io-landcover-10m,UZ06246,Jondor,2020,1,Water,25.6903
+esri-io-landcover-10m,UZ06246,Jondor,2020,2,Trees,0.0078
+esri-io-landcover-10m,UZ06246,Jondor,2020,4,Flooded vegetation,43.9744
+esri-io-landcover-10m,UZ06246,Jondor,2020,5,Crops,375.1366
+esri-io-landcover-10m,UZ06246,Jondor,2020,7,Built area,134.1179
+esri-io-landcover-10m,UZ06246,Jondor,2020,8,Bare ground,3235.1706
+esri-io-landcover-10m,UZ06246,Jondor,2020,11,Rangeland,1460.9614
+esri-io-landcover-10m,UZ06246,Jondor,2021,1,Water,23.7102
+esri-io-landcover-10m,UZ06246,Jondor,2021,4,Flooded vegetation,39.1584
+esri-io-landcover-10m,UZ06246,Jondor,2021,5,Crops,381.042
+esri-io-landcover-10m,UZ06246,Jondor,2021,7,Built area,132.9386
+esri-io-landcover-10m,UZ06246,Jondor,2021,8,Bare ground,3227.6426
+esri-io-landcover-10m,UZ06246,Jondor,2021,11,Rangeland,1470.5672
+esri-io-landcover-10m,UZ06246,Jondor,2022,1,Water,19.2065
+esri-io-landcover-10m,UZ06246,Jondor,2022,2,Trees,0.0004
+esri-io-landcover-10m,UZ06246,Jondor,2022,4,Flooded vegetation,39.9463
+esri-io-landcover-10m,UZ06246,Jondor,2022,5,Crops,386.6245
+esri-io-landcover-10m,UZ06246,Jondor,2022,7,Built area,134.4296
+esri-io-landcover-10m,UZ06246,Jondor,2022,8,Bare ground,3226.8973
+esri-io-landcover-10m,UZ06246,Jondor,2022,11,Rangeland,1467.9545
+esri-io-landcover-10m,UZ06246,Jondor,2023,1,Water,25.8034
+esri-io-landcover-10m,UZ06246,Jondor,2023,4,Flooded vegetation,31.749
+esri-io-landcover-10m,UZ06246,Jondor,2023,5,Crops,374.8552
+esri-io-landcover-10m,UZ06246,Jondor,2023,7,Built area,137.3
+esri-io-landcover-10m,UZ06246,Jondor,2023,8,Bare ground,3217.9408
+esri-io-landcover-10m,UZ06246,Jondor,2023,11,Rangeland,1487.4106
+esri-io-landcover-10m,UZ06246,Jondor,2024,1,Water,24.8619
+esri-io-landcover-10m,UZ06246,Jondor,2024,2,Trees,0.0009
+esri-io-landcover-10m,UZ06246,Jondor,2024,4,Flooded vegetation,34.0635
+esri-io-landcover-10m,UZ06246,Jondor,2024,5,Crops,390.1351
+esri-io-landcover-10m,UZ06246,Jondor,2024,7,Built area,137.651
+esri-io-landcover-10m,UZ06246,Jondor,2024,8,Bare ground,3210.9736
+esri-io-landcover-10m,UZ06246,Jondor,2024,11,Rangeland,1477.3729
+esri-io-landcover-10m,UZ06246,Jondor,2025,1,Water,24.5552
+esri-io-landcover-10m,UZ06246,Jondor,2025,4,Flooded vegetation,33.0015
+esri-io-landcover-10m,UZ06246,Jondor,2025,5,Crops,388.5747
+esri-io-landcover-10m,UZ06246,Jondor,2025,7,Built area,137.7748
+esri-io-landcover-10m,UZ06246,Jondor,2025,8,Bare ground,3200.8523
+esri-io-landcover-10m,UZ06246,Jondor,2025,11,Rangeland,1490.3003
+esri-io-landcover-10m,UZ06207,Bukhara,2017,1,Water,55.2408
+esri-io-landcover-10m,UZ06207,Bukhara,2017,2,Trees,0.0198
+esri-io-landcover-10m,UZ06207,Bukhara,2017,4,Flooded vegetation,9.456
+esri-io-landcover-10m,UZ06207,Bukhara,2017,5,Crops,231.2569
+esri-io-landcover-10m,UZ06207,Bukhara,2017,7,Built area,98.4781
+esri-io-landcover-10m,UZ06207,Bukhara,2017,8,Bare ground,637.6794
+esri-io-landcover-10m,UZ06207,Bukhara,2017,11,Rangeland,340.7447
+esri-io-landcover-10m,UZ06207,Bukhara,2018,1,Water,54.7735
+esri-io-landcover-10m,UZ06207,Bukhara,2018,2,Trees,0.0066
+esri-io-landcover-10m,UZ06207,Bukhara,2018,4,Flooded vegetation,4.7427
+esri-io-landcover-10m,UZ06207,Bukhara,2018,5,Crops,226.2687
+esri-io-landcover-10m,UZ06207,Bukhara,2018,7,Built area,99.9266
+esri-io-landcover-10m,UZ06207,Bukhara,2018,8,Bare ground,631.7657
+esri-io-landcover-10m,UZ06207,Bukhara,2018,11,Rangeland,355.392
+esri-io-landcover-10m,UZ06207,Bukhara,2019,1,Water,49.9198
+esri-io-landcover-10m,UZ06207,Bukhara,2019,2,Trees,0.1588
+esri-io-landcover-10m,UZ06207,Bukhara,2019,4,Flooded vegetation,10.0474
+esri-io-landcover-10m,UZ06207,Bukhara,2019,5,Crops,223.5947
+esri-io-landcover-10m,UZ06207,Bukhara,2019,7,Built area,102.8941
+esri-io-landcover-10m,UZ06207,Bukhara,2019,8,Bare ground,591.885
+esri-io-landcover-10m,UZ06207,Bukhara,2019,11,Rangeland,394.3759
+esri-io-landcover-10m,UZ06207,Bukhara,2020,1,Water,51.8729
+esri-io-landcover-10m,UZ06207,Bukhara,2020,2,Trees,0.027
+esri-io-landcover-10m,UZ06207,Bukhara,2020,4,Flooded vegetation,9.7317
+esri-io-landcover-10m,UZ06207,Bukhara,2020,5,Crops,224.6762
+esri-io-landcover-10m,UZ06207,Bukhara,2020,7,Built area,103.6959
+esri-io-landcover-10m,UZ06207,Bukhara,2020,8,Bare ground,548.6803
+esri-io-landcover-10m,UZ06207,Bukhara,2020,11,Rangeland,434.1918
+esri-io-landcover-10m,UZ06207,Bukhara,2021,1,Water,45.8307
+esri-io-landcover-10m,UZ06207,Bukhara,2021,2,Trees,0.0144
+esri-io-landcover-10m,UZ06207,Bukhara,2021,4,Flooded vegetation,8.4492
+esri-io-landcover-10m,UZ06207,Bukhara,2021,5,Crops,230.5133
+esri-io-landcover-10m,UZ06207,Bukhara,2021,7,Built area,104.0535
+esri-io-landcover-10m,UZ06207,Bukhara,2021,8,Bare ground,552.5115
+esri-io-landcover-10m,UZ06207,Bukhara,2021,11,Rangeland,431.503
+esri-io-landcover-10m,UZ06207,Bukhara,2022,1,Water,33.5173
+esri-io-landcover-10m,UZ06207,Bukhara,2022,2,Trees,0.0011
+esri-io-landcover-10m,UZ06207,Bukhara,2022,4,Flooded vegetation,8.7148
+esri-io-landcover-10m,UZ06207,Bukhara,2022,5,Crops,230.0585
+esri-io-landcover-10m,UZ06207,Bukhara,2022,7,Built area,103.4054
+esri-io-landcover-10m,UZ06207,Bukhara,2022,8,Bare ground,561.5248
+esri-io-landcover-10m,UZ06207,Bukhara,2022,11,Rangeland,435.6539
+esri-io-landcover-10m,UZ06207,Bukhara,2023,1,Water,26.1716
+esri-io-landcover-10m,UZ06207,Bukhara,2023,2,Trees,0.0162
+esri-io-landcover-10m,UZ06207,Bukhara,2023,4,Flooded vegetation,6.5037
+esri-io-landcover-10m,UZ06207,Bukhara,2023,5,Crops,233.8344
+esri-io-landcover-10m,UZ06207,Bukhara,2023,7,Built area,104.0943
+esri-io-landcover-10m,UZ06207,Bukhara,2023,8,Bare ground,564.8592
+esri-io-landcover-10m,UZ06207,Bukhara,2023,11,Rangeland,437.3964
+esri-io-landcover-10m,UZ06207,Bukhara,2024,1,Water,32.5565
+esri-io-landcover-10m,UZ06207,Bukhara,2024,2,Trees,0.1196
+esri-io-landcover-10m,UZ06207,Bukhara,2024,4,Flooded vegetation,8.8634
+esri-io-landcover-10m,UZ06207,Bukhara,2024,5,Crops,246.1173
+esri-io-landcover-10m,UZ06207,Bukhara,2024,7,Built area,104.663
+esri-io-landcover-10m,UZ06207,Bukhara,2024,8,Bare ground,536.2119
+esri-io-landcover-10m,UZ06207,Bukhara,2024,10,Clouds,0.0002
+esri-io-landcover-10m,UZ06207,Bukhara,2024,11,Rangeland,444.3439
+esri-io-landcover-10m,UZ06207,Bukhara,2025,1,Water,28.1303
+esri-io-landcover-10m,UZ06207,Bukhara,2025,2,Trees,0.0579
+esri-io-landcover-10m,UZ06207,Bukhara,2025,4,Flooded vegetation,7.5221
+esri-io-landcover-10m,UZ06207,Bukhara,2025,5,Crops,238.1729
+esri-io-landcover-10m,UZ06207,Bukhara,2025,7,Built area,105.2655
+esri-io-landcover-10m,UZ06207,Bukhara,2025,8,Bare ground,532.2228
+esri-io-landcover-10m,UZ06207,Bukhara,2025,11,Rangeland,461.5044
+esri-io-landcover-10m,UZ06204,Alat,2017,1,Water,245.6857
+esri-io-landcover-10m,UZ06204,Alat,2017,2,Trees,0.0012
+esri-io-landcover-10m,UZ06204,Alat,2017,4,Flooded vegetation,7.7239
+esri-io-landcover-10m,UZ06204,Alat,2017,5,Crops,207.5662
+esri-io-landcover-10m,UZ06204,Alat,2017,7,Built area,76.4827
+esri-io-landcover-10m,UZ06204,Alat,2017,8,Bare ground,1543.2337
+esri-io-landcover-10m,UZ06204,Alat,2017,11,Rangeland,847.5497
+esri-io-landcover-10m,UZ06204,Alat,2018,1,Water,240.5668
+esri-io-landcover-10m,UZ06204,Alat,2018,2,Trees,0.0012
+esri-io-landcover-10m,UZ06204,Alat,2018,4,Flooded vegetation,4.7587
+esri-io-landcover-10m,UZ06204,Alat,2018,5,Crops,203.5877
+esri-io-landcover-10m,UZ06204,Alat,2018,7,Built area,76.1666
+esri-io-landcover-10m,UZ06204,Alat,2018,8,Bare ground,1540.0471
+esri-io-landcover-10m,UZ06204,Alat,2018,9,Snow/ice,0.0033
+esri-io-landcover-10m,UZ06204,Alat,2018,11,Rangeland,863.1118
+esri-io-landcover-10m,UZ06204,Alat,2019,1,Water,244.462
+esri-io-landcover-10m,UZ06204,Alat,2019,2,Trees,0.0015
+esri-io-landcover-10m,UZ06204,Alat,2019,4,Flooded vegetation,6.6853
+esri-io-landcover-10m,UZ06204,Alat,2019,5,Crops,199.7942
+esri-io-landcover-10m,UZ06204,Alat,2019,7,Built area,81.9507
+esri-io-landcover-10m,UZ06204,Alat,2019,8,Bare ground,1413.3217
+esri-io-landcover-10m,UZ06204,Alat,2019,11,Rangeland,982.0277
+esri-io-landcover-10m,UZ06204,Alat,2020,1,Water,250.5792
+esri-io-landcover-10m,UZ06204,Alat,2020,2,Trees,0.0008
+esri-io-landcover-10m,UZ06204,Alat,2020,4,Flooded vegetation,7.3881
+esri-io-landcover-10m,UZ06204,Alat,2020,5,Crops,200.8791
+esri-io-landcover-10m,UZ06204,Alat,2020,7,Built area,81.1865
+esri-io-landcover-10m,UZ06204,Alat,2020,8,Bare ground,1292.4908
+esri-io-landcover-10m,UZ06204,Alat,2020,11,Rangeland,1095.7185
+esri-io-landcover-10m,UZ06204,Alat,2021,1,Water,251.4689
+esri-io-landcover-10m,UZ06204,Alat,2021,2,Trees,0.0023
+esri-io-landcover-10m,UZ06204,Alat,2021,4,Flooded vegetation,6.4825
+esri-io-landcover-10m,UZ06204,Alat,2021,5,Crops,207.3951
+esri-io-landcover-10m,UZ06204,Alat,2021,7,Built area,78.9318
+esri-io-landcover-10m,UZ06204,Alat,2021,8,Bare ground,1290.2442
+esri-io-landcover-10m,UZ06204,Alat,2021,11,Rangeland,1093.7181
+esri-io-landcover-10m,UZ06204,Alat,2022,1,Water,241.958
+esri-io-landcover-10m,UZ06204,Alat,2022,2,Trees,0.0002
+esri-io-landcover-10m,UZ06204,Alat,2022,4,Flooded vegetation,6.2352
+esri-io-landcover-10m,UZ06204,Alat,2022,5,Crops,206.7555
+esri-io-landcover-10m,UZ06204,Alat,2022,7,Built area,79.0034
+esri-io-landcover-10m,UZ06204,Alat,2022,8,Bare ground,1294.1446
+esri-io-landcover-10m,UZ06204,Alat,2022,11,Rangeland,1100.1462
+esri-io-landcover-10m,UZ06204,Alat,2023,1,Water,246.4114
+esri-io-landcover-10m,UZ06204,Alat,2023,4,Flooded vegetation,4.5624
+esri-io-landcover-10m,UZ06204,Alat,2023,5,Crops,208.3166
+esri-io-landcover-10m,UZ06204,Alat,2023,7,Built area,79.4045
+esri-io-landcover-10m,UZ06204,Alat,2023,8,Bare ground,1284.4982
+esri-io-landcover-10m,UZ06204,Alat,2023,11,Rangeland,1105.05
+esri-io-landcover-10m,UZ06204,Alat,2024,1,Water,246.9027
+esri-io-landcover-10m,UZ06204,Alat,2024,2,Trees,0.0168
+esri-io-landcover-10m,UZ06204,Alat,2024,4,Flooded vegetation,5.5181
+esri-io-landcover-10m,UZ06204,Alat,2024,5,Crops,211.9496
+esri-io-landcover-10m,UZ06204,Alat,2024,7,Built area,81.9206
+esri-io-landcover-10m,UZ06204,Alat,2024,8,Bare ground,1234.1752
+esri-io-landcover-10m,UZ06204,Alat,2024,11,Rangeland,1147.7601
+esri-io-landcover-10m,UZ06204,Alat,2025,1,Water,245.751
+esri-io-landcover-10m,UZ06204,Alat,2025,2,Trees,0.012
+esri-io-landcover-10m,UZ06204,Alat,2025,4,Flooded vegetation,4.7377
+esri-io-landcover-10m,UZ06204,Alat,2025,5,Crops,216.4269
+esri-io-landcover-10m,UZ06204,Alat,2025,7,Built area,82.0241
+esri-io-landcover-10m,UZ06204,Alat,2025,8,Bare ground,1206.3945
+esri-io-landcover-10m,UZ06204,Alat,2025,11,Rangeland,1172.8969
+esri-io-landcover-10m,UZ06230,Karakul,2017,1,Water,12.2848
+esri-io-landcover-10m,UZ06230,Karakul,2017,2,Trees,7.1838
+esri-io-landcover-10m,UZ06230,Karakul,2017,4,Flooded vegetation,2.6559
+esri-io-landcover-10m,UZ06230,Karakul,2017,5,Crops,233.162
+esri-io-landcover-10m,UZ06230,Karakul,2017,7,Built area,136.1708
+esri-io-landcover-10m,UZ06230,Karakul,2017,8,Bare ground,3612.467
+esri-io-landcover-10m,UZ06230,Karakul,2017,11,Rangeland,1803.2466
+esri-io-landcover-10m,UZ06230,Karakul,2018,1,Water,9.104
+esri-io-landcover-10m,UZ06230,Karakul,2018,2,Trees,3.3018
+esri-io-landcover-10m,UZ06230,Karakul,2018,4,Flooded vegetation,0.9409
+esri-io-landcover-10m,UZ06230,Karakul,2018,5,Crops,226.9854
+esri-io-landcover-10m,UZ06230,Karakul,2018,7,Built area,136.3369
+esri-io-landcover-10m,UZ06230,Karakul,2018,8,Bare ground,3560.1359
+esri-io-landcover-10m,UZ06230,Karakul,2018,11,Rangeland,1870.3658
+esri-io-landcover-10m,UZ06230,Karakul,2019,1,Water,12.6607
+esri-io-landcover-10m,UZ06230,Karakul,2019,2,Trees,3.9806
+esri-io-landcover-10m,UZ06230,Karakul,2019,4,Flooded vegetation,2.2407
+esri-io-landcover-10m,UZ06230,Karakul,2019,5,Crops,220.9622
+esri-io-landcover-10m,UZ06230,Karakul,2019,7,Built area,141.8847
+esri-io-landcover-10m,UZ06230,Karakul,2019,8,Bare ground,3224.2101
+esri-io-landcover-10m,UZ06230,Karakul,2019,11,Rangeland,2201.2319
+esri-io-landcover-10m,UZ06230,Karakul,2020,1,Water,10.6326
+esri-io-landcover-10m,UZ06230,Karakul,2020,2,Trees,2.9457
+esri-io-landcover-10m,UZ06230,Karakul,2020,4,Flooded vegetation,1.3872
+esri-io-landcover-10m,UZ06230,Karakul,2020,5,Crops,221.1756
+esri-io-landcover-10m,UZ06230,Karakul,2020,7,Built area,141.4991
+esri-io-landcover-10m,UZ06230,Karakul,2020,8,Bare ground,3016.8193
+esri-io-landcover-10m,UZ06230,Karakul,2020,11,Rangeland,2412.7114
+esri-io-landcover-10m,UZ06230,Karakul,2021,1,Water,10.1315
+esri-io-landcover-10m,UZ06230,Karakul,2021,2,Trees,1.6639
+esri-io-landcover-10m,UZ06230,Karakul,2021,4,Flooded vegetation,0.997
+esri-io-landcover-10m,UZ06230,Karakul,2021,5,Crops,225.6735
+esri-io-landcover-10m,UZ06230,Karakul,2021,7,Built area,140.144
+esri-io-landcover-10m,UZ06230,Karakul,2021,8,Bare ground,2985.7473
+esri-io-landcover-10m,UZ06230,Karakul,2021,11,Rangeland,2442.8137
+esri-io-landcover-10m,UZ06230,Karakul,2022,1,Water,9.588
+esri-io-landcover-10m,UZ06230,Karakul,2022,2,Trees,0.1536
+esri-io-landcover-10m,UZ06230,Karakul,2022,4,Flooded vegetation,1.0821
+esri-io-landcover-10m,UZ06230,Karakul,2022,5,Crops,227.8257
+esri-io-landcover-10m,UZ06230,Karakul,2022,7,Built area,140.5322
+esri-io-landcover-10m,UZ06230,Karakul,2022,8,Bare ground,2983.6632
+esri-io-landcover-10m,UZ06230,Karakul,2022,11,Rangeland,2444.3259
+esri-io-landcover-10m,UZ06230,Karakul,2023,1,Water,9.9582
+esri-io-landcover-10m,UZ06230,Karakul,2023,2,Trees,0.3222
+esri-io-landcover-10m,UZ06230,Karakul,2023,4,Flooded vegetation,0.9289
+esri-io-landcover-10m,UZ06230,Karakul,2023,5,Crops,221.8728
+esri-io-landcover-10m,UZ06230,Karakul,2023,7,Built area,141.8388
+esri-io-landcover-10m,UZ06230,Karakul,2023,8,Bare ground,2969.7246
+esri-io-landcover-10m,UZ06230,Karakul,2023,11,Rangeland,2462.5255
