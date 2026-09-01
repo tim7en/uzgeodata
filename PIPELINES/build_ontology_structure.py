@@ -268,17 +268,38 @@ def main() -> None:
         # which is how CFSv2 ended up with its data under 1.1 while the tree
         # expected 1.3, beside an empty folder at the new number.
         existing = [d for d in TREE.glob(f"*/*_{row['name']}") if d.is_dir()]
-        current = existing[0] if len(existing) == 1 else None
+        # More than one folder can carry the name after a renumber: the old one
+        # holding the data and an empty one created at the new number. Drop the
+        # empties first, or they block the rename that would fix it.
+        # DATASET.json is this tool's own card, written into whatever folder the
+        # numbering said at the time. It is not evidence that a folder holds the
+        # dataset; only the table itself is.
+        def holds_data(folder: Path) -> bool:
+            return any(f.name != "DATASET.json" for f in folder.iterdir())
+
+        filled = [d for d in existing if holds_data(d)]
+        for shell in [d for d in existing if d not in filled and d != target.parent]:
+            for leftover in shell.iterdir():
+                leftover.unlink()
+            shell.rmdir()
+        if len(filled) > 1:
+            raise SystemExit(
+                f"{row['name']} has data in {len(filled)} folders: "
+                + ", ".join(str(d.relative_to(ROOT)) for d in filled)
+                + "\n  Merge them by hand; this tool will not guess which is current.")
+        current = filled[0] if filled else None
         if current is not None and current != target.parent:
-            if any(current.iterdir()):
-                target.parent.parent.mkdir(parents=True, exist_ok=True)
-                if target.parent.exists() and not any(target.parent.iterdir()):
-                    target.parent.rmdir()
-                if not target.parent.exists():
-                    current.rename(target.parent)
-                    renumbered.append(f"{row['name']}: {current.name} -> {target.parent.name}")
-            elif not any(current.iterdir()):
-                current.rmdir()
+            target.parent.parent.mkdir(parents=True, exist_ok=True)
+            # The destination may already hold a card this tool wrote on an earlier
+            # run under the old numbering. That is not data and must not block the
+            # folder that actually holds the table from taking its place.
+            if target.parent.exists() and not holds_data(target.parent):
+                for leftover in target.parent.iterdir():
+                    leftover.unlink()
+                target.parent.rmdir()
+            if not target.parent.exists():
+                current.rename(target.parent)
+                renumbered.append(f"{row['name']}: {current.name} -> {target.parent.name}")
         already_home = source.resolve() == target.resolve() if source.exists() else False
         landed = target.exists()
         if in_place:
