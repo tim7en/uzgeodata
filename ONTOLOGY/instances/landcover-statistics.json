@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T06:09:36+00:00",
+  "generatedAt": "2026-09-01T09:13:58+00:00",
   "predicate": "uz:hasAdminStatistic",
   "subjectType": "Dataset",
   "objectType": "AdminArea",
@@ -15,12 +15,19 @@
   "scaleMetres": 10,
   "years": [
     2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
     2025
   ],
   "counts": {
-    "units": 3,
-    "years": 2,
-    "rows": 37
+    "units": 199,
+    "years": 9,
+    "rows": 2117
   },
-  "output": "PUBLISHED/data/analysis/landcover-admin-year.csv"
+  "output": "PUBLISHED/data/ontology/_LAND/_esri-io-landcover-10m/landcover-admin-year.csv"
 }
