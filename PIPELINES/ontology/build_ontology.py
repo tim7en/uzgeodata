@@ -45,6 +45,7 @@ AGENT_PIPELINE = "uz:agent/extraction-pipeline"
 AGENT_RULES = "uz:agent/rule-lexical-v1"
 AGENT_CURATOR = "uz:agent/curator"
 AGENT_HYDROSHEDS = "uz:agent/hydrosheds"
+AGENT_EE_REGISTRY = "uz:agent/earth-engine-registry"
 
 # The five layers published to the public map, keyed by the atlas number their
 # extraction script pulls them from (PIPELINES/build_web_layers.py).
@@ -302,7 +303,14 @@ class GraphBuilder:
     def load_sources(self) -> None:
         root = self.root
         self.catalog = read_json(root / "PUBLISHED" / "data" / "archive-catalog.json", [])
-        self.repository = read_json(root / "WORKSPACE" / "datasets.json", [])
+        repository_path = root / "WORKSPACE" / "datasets.json"
+        if not repository_path.exists():
+            raise FileNotFoundError(
+                f"Required source registry is missing: {repository_path}. "
+                "Refusing a partial rebuild because it would silently remove private-source "
+                "datasets from the generated ontology."
+            )
+        self.repository = read_json(repository_path, [])
         self.layers = read_json(root / "WORKSPACE" / "derived" / "all-map-layers.json", [])
         self.rasters = read_json(root / "WORKSPACE" / "derived" / "raster-geojson.json", [])
         self.public_layers = read_json(root / "PUBLISHED" / "data" / "map-layers.json", [])
@@ -332,6 +340,9 @@ class GraphBuilder:
         self.relationship_tables = read_json(
             root / "ONTOLOGY" / "vocab" / "relationship-tables.json", {"tables": []}
         )
+        self.earth_engine_sources = read_json(
+            root / "ONTOLOGY" / "vocab" / "earth-engine-sources.json", {"sources": []}
+        )
         # Row counts a producing build already measured, keyed by the name a
         # table declares in rowCountFrom.manifest.
         self.relationship_counts = {
@@ -358,6 +369,7 @@ class GraphBuilder:
         self.build_public_layers()
         self.build_external_sources()
         self.build_hydrography_sources()
+        self.build_earth_engine_sources()
         self.build_relationship_tables()
         self.assert_hydroatlas_attributes()
         self.seed_semantics()
@@ -990,6 +1002,169 @@ class GraphBuilder:
                      confidence=1.0, status="asserted", method="curator-mapping",
                      evidence=evidence)
 
+    def build_earth_engine_sources(self) -> None:
+        """Project declared remote collections and their local derived products.
+
+        Earth Engine collections have no archive file for the normal source
+        profiler to discover.  Their registry is therefore authoritative, but
+        the graph still models the remote collection as a source Distribution so
+        lineage and external-location predicates remain correctly typed.
+        """
+        sources = self.earth_engine_sources.get("sources", [])
+        self.earth_engine_source_distributions: dict[str, str] = {}
+        if not sources:
+            self.warn("no Earth Engine sources declared")
+            return
+
+        registry_agent = {
+            "id": AGENT_EE_REGISTRY,
+            "type": "Agent",
+            "label": "Earth Engine source registry",
+            "agentKind": "rule",
+            "agentVersion": "1.0",
+            "trustTier": "curated",
+            "description": "Curated declarations for remote Earth Engine collections.",
+        }
+        self.add_entity(registry_agent)
+        if not any(a["id"] == AGENT_EE_REGISTRY for a in self.agents):
+            self.agents.append(registry_agent)
+
+        for source in sources:
+            producer = {
+                "id": source["agent"],
+                "type": "Agent",
+                "label": source["agentLabel"],
+                "agentKind": "organisation",
+                "trustTier": "authoritative",
+                "description": f"Producer of {source['label']}.",
+            }
+            self.add_entity(producer)
+            if not any(a["id"] == producer["id"] for a in self.agents):
+                self.agents.append(producer)
+
+            source_key = f"earth-engine/{source['asset']}"
+            dataset = self.dataset_id(source_key, None, source["label"], preferred=source["slug"])
+            source_dist = f"uz:dist/{source['slug']}-earth-engine-source"
+            self.earth_engine_source_distributions[dataset] = source_dist
+            self.add_entity({
+                "id": dataset,
+                "type": "Dataset",
+                "label": source["label"],
+                "labels": {"en": source["label"]},
+                "sourceKey": source_key,
+                "atlasNumber": None,
+                "catalogId": None,
+                "repositoryId": None,
+                "description": source["note"],
+            })
+            self.add_entity({
+                "id": source_dist,
+                "type": "Distribution",
+                "label": f"{source['label']} Earth Engine collection",
+                "role": "source-package",
+                "format": "Earth Engine ImageCollection",
+                "byteSize": None,
+                "storedName": None,
+                "url": None,
+                "accessPolicy": "free",
+            })
+            evidence = {
+                "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+                "note": f"Earth Engine asset {source['asset']}",
+            }
+            self.add(dataset, "uz:hasDistribution", source_dist, agent=AGENT_EE_REGISTRY,
+                     confidence=1.0, status="asserted", method="declaration", evidence=evidence)
+            self.add(source_dist, "uz:externalLocation", value=f"earth-engine://{source['asset']}",
+                     agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                     method="declaration", evidence=evidence)
+            self.add(dataset, "uz:belongsToTheme", source["theme"], agent=AGENT_EE_REGISTRY,
+                     confidence=1.0, status="asserted", method="declaration", evidence=evidence)
+            self.add(dataset, "uz:hasAnalysisConcept", source["analysis"],
+                     agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                     method="declaration", evidence=evidence)
+            for prop in source["observes"]:
+                self.add(dataset, "uz:observes", prop, agent=AGENT_EE_REGISTRY,
+                         confidence=1.0, status="asserted", method="declaration", evidence=evidence)
+            for place in source["places"]:
+                self.add(dataset, "uz:coversPlace", place, agent=AGENT_EE_REGISTRY,
+                         confidence=1.0, status="asserted", method="declaration", evidence=evidence)
+            for predicate, value in (
+                ("uz:license", source["licence"]),
+                ("uz:attributedTo", source["attribution"]),
+                ("uz:temporalCoverage", source["temporal"]),
+            ):
+                self.add(dataset, predicate, value=value, agent=AGENT_EE_REGISTRY,
+                         confidence=1.0, status="asserted", method="declaration", evidence=evidence)
+            for flag in source.get("qualityFlags", []):
+                self.add(dataset, "uz:qualityFlag", value=flag, agent=AGENT_EE_REGISTRY,
+                         confidence=1.0, status="asserted", method="declaration", evidence=evidence)
+
+            for product in source.get("derivedProducts", []):
+                product_key = f"derived/{product['container']}"
+                product_id = self.dataset_id(product_key, None, product["label"],
+                                             preferred=product["slug"])
+                product_dist = f"uz:dist/{product['slug']}"
+                local = self.root / product["container"]
+                self.add_entity({
+                    "id": product_id,
+                    "type": "Dataset",
+                    "label": product["label"],
+                    "labels": {"en": product["label"]},
+                    "sourceKey": product_key,
+                    "atlasNumber": None,
+                    "catalogId": None,
+                    "repositoryId": None,
+                    "description": product["description"],
+                })
+                self.add_entity({
+                    "id": product_dist,
+                    "type": "Distribution",
+                    "label": product["label"],
+                    "role": "derived-table",
+                    "format": "CSV",
+                    "byteSize": local.stat().st_size if local.exists() else None,
+                    "storedName": product["container"],
+                    "url": None,
+                    "accessPolicy": "free",
+                })
+                self.add(product_id, "uz:hasDistribution", product_dist,
+                         agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                         method="declaration", evidence=evidence)
+                self.add(product_dist, "uz:derivedFrom", source_dist, agent=AGENT_PIPELINE,
+                         confidence=1.0, status="asserted", method="earth-engine-reduction",
+                         evidence=evidence)
+                self.add(product_id, "uz:relatedTo", dataset, agent=AGENT_EE_REGISTRY,
+                         confidence=1.0, status="asserted", method="declaration", evidence=evidence)
+                self.add(product_id, "uz:belongsToTheme", source["theme"],
+                         agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                         method="declaration", evidence=evidence)
+                self.add(product_id, "uz:hasAnalysisConcept", source["analysis"],
+                         agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                         method="declaration", evidence=evidence)
+                for prop in product["observes"]:
+                    self.add(product_id, "uz:observes", prop, agent=AGENT_EE_REGISTRY,
+                             confidence=1.0, status="asserted", method="declaration",
+                             evidence=evidence)
+                for place in source["places"]:
+                    self.add(product_id, "uz:coversPlace", place, agent=AGENT_EE_REGISTRY,
+                             confidence=1.0, status="asserted", method="declaration",
+                             evidence=evidence)
+                self.add(product_id, "uz:temporalCoverage", value=product["temporal"],
+                         agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                         method="declaration", evidence=evidence)
+                self.add(product_id, "uz:license", value=source["licence"],
+                         agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                         method="declaration", evidence=evidence)
+                self.add(product_id, "uz:attributedTo", value=source["attribution"],
+                         agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                         method="declaration", evidence=evidence)
+                for flag in product.get("qualityFlags", []):
+                    self.add(product_id, "uz:qualityFlag", value=flag,
+                             agent=AGENT_EE_REGISTRY, confidence=1.0, status="asserted",
+                             method="declaration", evidence=evidence)
+
+        self.log(f"  Earth Engine: {len(sources)} sources projected")
+
     def build_relationship_tables(self) -> None:
         """Register the measured feature topology without expanding it.
 
@@ -1051,12 +1226,18 @@ class GraphBuilder:
                 existing = match_by_path_tail(container, by_location)
             dist_id = existing or f"uz:dist/{table['id']}"
 
+            # A previous registry version incorrectly put the object column in
+            # subjectColumn for fixed-dataset statistic tables.  Remove that
+            # stale attribute before updating an existing Distribution.
+            if table.get("subjectFixed") and dist_id in self.entities:
+                self.entities[dist_id].pop("subjectColumn", None)
+
             local = self.root / container
             evidence = {
                 "source": "ONTOLOGY/vocab/relationship-tables.json",
                 "note": table.get("note", table["label"]),
             }
-            self.add_entity({
+            table_entity = {
                 "id": dist_id,
                 "type": "Distribution",
                 "label": table["label"],
@@ -1074,7 +1255,6 @@ class GraphBuilder:
                 "predicate": table["predicate"],
                 "subjectType": table["subjectType"],
                 "objectType": table["objectType"],
-                "subjectColumn": table["subjectColumn"],
                 "objectColumn": table["objectColumn"],
                 # The file this table stands for, repo-relative. storedName and
                 # externalPath say where the bytes are, which depends on the
@@ -1087,7 +1267,12 @@ class GraphBuilder:
                 "containerTable": table.get("containerTable"),
                 "identifierScheme": table["identifierScheme"],
                 "rowCount": row_count,
-            })
+            }
+            if table.get("subjectFixed"):
+                table_entity["subjectFixed"] = table["subjectFixed"]
+            else:
+                table_entity["subjectColumn"] = table["subjectColumn"]
+            self.add_entity(table_entity)
             self.add(dataset, "uz:hasDistribution", dist_id, agent=AGENT_PIPELINE,
                      confidence=1.0, status="asserted", method="relationship-table",
                      evidence=evidence)
@@ -1099,6 +1284,11 @@ class GraphBuilder:
                     self.add(dist_id, "uz:derivedFrom", database, agent=AGENT_PIPELINE,
                              confidence=1.0, status="asserted", method="hydrography-build",
                              evidence=evidence)
+            source_dist = getattr(self, "earth_engine_source_distributions", {}).get(dataset)
+            if source_dist:
+                self.add(dist_id, "uz:derivedFrom", source_dist, agent=AGENT_PIPELINE,
+                         confidence=1.0, status="asserted", method="earth-engine-reduction",
+                         evidence=evidence)
             registered += 1
 
         total = sum(
@@ -1477,7 +1667,9 @@ class GraphBuilder:
                 "places": trim(self.places),
             },
             "agents": [{"id": a["id"], "label": a["label"], "kind": a["agentKind"],
-                        "trustTier": a["trustTier"]} for a in self.agents],
+                        "trustTier": a["trustTier"]}
+                       for a in sorted(self.entities.values(), key=lambda e: e["id"])
+                       if a["type"] == "Agent"],
             "datasets": sorted(nodes, key=lambda n: (n["atlasNumber"] is None, n["atlasNumber"] or 0)),
             "stations": [
                 {"id": e["id"], "label": e["label"], "network": e["network"],
@@ -1564,7 +1756,9 @@ class GraphBuilder:
                 for p in predicates
             ],
             "agents": [{"id": a["id"], "label": a["label"], "kind": a["agentKind"],
-                        "trustTier": a["trustTier"]} for a in self.agents],
+                        "trustTier": a["trustTier"]}
+                       for a in sorted(self.entities.values(), key=lambda e: e["id"])
+                       if a["type"] == "Agent"],
             "labels": {k: v for k, v in sorted(labels.items()) if k in used},
             "types": {k: v for k, v in sorted(types.items()) if k in used},
             "triples": rows,

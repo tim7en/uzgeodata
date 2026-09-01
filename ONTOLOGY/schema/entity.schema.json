@@ -128,6 +128,7 @@
                     "external-table",
                     "external-document",
                     "external-archive",
+                    "derived-table",
                     "relationship-table"
                   ]
                 },
@@ -294,7 +295,6 @@
                 "predicate",
                 "subjectType",
                 "objectType",
-                "subjectColumn",
                 "objectColumn",
                 "rowCount",
                 "container"
@@ -334,9 +334,17 @@
                   ]
                 },
                 "subjectColumn": {
-                  "type": "string",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
                   "minLength": 1,
-                  "description": "Column holding the subject identifier."
+                  "description": "Column holding the subject identifier, or null when subjectFixed supplies it."
+                },
+                "subjectFixed": {
+                  "type": "string",
+                  "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water)/[a-z0-9-]+$",
+                  "description": "Fixed subject entity for every row when the file does not repeat it."
                 },
                 "objectColumn": {
                   "type": "string",
@@ -380,7 +388,34 @@
                   "minimum": 0,
                   "description": "Measured row count, not an estimate."
                 }
-              }
+              },
+              "oneOf": [
+                {
+                  "required": [
+                    "subjectColumn"
+                  ],
+                  "properties": {
+                    "subjectColumn": {
+                      "type": "string"
+                    }
+                  },
+                  "not": {
+                    "required": [
+                      "subjectFixed"
+                    ]
+                  }
+                },
+                {
+                  "required": [
+                    "subjectFixed"
+                  ],
+                  "properties": {
+                    "subjectColumn": {
+                      "type": "null"
+                    }
+                  }
+                }
+              ]
             }
           },
           {

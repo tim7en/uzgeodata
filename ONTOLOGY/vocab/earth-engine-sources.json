@@ -8,7 +8,7 @@
       "asset": "ECMWF/CAMS/NRT",
       "agent": "uz:agent/ecmwf",
       "agentLabel": "European Centre for Medium-Range Weather Forecasts",
-      "licence": "CC-BY-4.0-equivalent, free use with attribution",
+      "licence": "Copernicus Licence 1.2",
       "attribution": "Copernicus Atmosphere Monitoring Service, ECMWF",
       "theme": "uz:theme/hazards-terrain",
       "analysis": "uz:analysis/state-observation",
@@ -18,7 +18,27 @@
       "gridMetres": 44453,
       "basinLevel": 6,
       "qualityFlags": ["forecast-product-verified-against-own-analysis"],
-      "note": "A forecast system, not an observing one. The +0h analysis is the assimilated state and is what the ontology stores; the forecast tables record how far ahead it can be believed. Only aerosol optical depth and PM2.5 exist before 2021-07-01."
+      "note": "A forecast system, not an observing one. The +0h analysis is the assimilated state and is what the ontology stores; the forecast tables record how far ahead it can be believed. Only aerosol optical depth and PM2.5 exist before 2021-07-01.",
+      "derivedProducts": [
+        {
+          "slug": "cams-forecast-skill",
+          "label": "CAMS forecast skill against its own analysis",
+          "description": "Mean absolute error, bias and correlation by lead time. This is internal forecast-to-analysis verification, not independent validation against ground observations.",
+          "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
+          "observes": ["uz:prop/aerosol-optical-depth", "uz:prop/particulate-matter"],
+          "temporal": {"start": 2026, "end": 2026},
+          "qualityFlags": ["verified-against-own-analysis"]
+        },
+        {
+          "slug": "cams-event-verification",
+          "label": "CAMS event detection verification at Tashkent",
+          "description": "Event detection, false-alarm, correlation and bias metrics at one CAMS grid cell. The grid cell is not a street-level city monitor and the reference is the model analysis.",
+          "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
+          "observes": ["uz:prop/aerosol-optical-depth", "uz:prop/particulate-matter", "uz:prop/dust-load"],
+          "temporal": {"start": 2024, "end": 2026},
+          "qualityFlags": ["verified-against-own-analysis", "single-grid-cell-not-ground-monitor"]
+        }
+      ]
     },
     {
       "slug": "cfsv2-noaa",

@@ -308,7 +308,8 @@
       "objectType": "Basin",
       "format": "CSV",
       "containerTable": null,
-      "subjectColumn": "basin_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/cfsv2-noaa",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "scopeColumn": null,
@@ -340,7 +341,8 @@
       "objectType": "Basin",
       "format": "CSV",
       "containerTable": null,
-      "subjectColumn": "basin_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/cfsv2-noaa",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "scopeColumn": null,
@@ -368,7 +370,8 @@
       "objectType": "Basin",
       "format": "CSV",
       "containerTable": null,
-      "subjectColumn": "basin_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/cfsv2-noaa",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "scopeColumn": null,
@@ -405,7 +408,8 @@
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
       "containerTable": null,
       "format": "CSV",
-      "subjectColumn": "basin_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/chirps-v3",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "scopeColumn": null,
@@ -441,7 +445,8 @@
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
       "containerTable": null,
       "format": "CSV",
-      "subjectColumn": "basin_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/chirts",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "scopeColumn": null,
@@ -473,7 +478,8 @@
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
       "containerTable": null,
       "format": "CSV",
-      "subjectColumn": "basin_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/cpc-temperature",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "scopeColumn": null,
@@ -499,7 +505,8 @@
       "format": "CSV",
       "containerTable": null,
       "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
-      "subjectColumn": "unit_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/csp-ghm",
       "objectColumn": "unit_id",
       "measureColumn": "value",
       "measureUnitColumn": "unit",
@@ -527,7 +534,8 @@
       "format": "CSV",
       "containerTable": null,
       "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
-      "subjectColumn": "unit_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/csp-ghm",
       "objectColumn": "unit_id",
       "measureColumn": "value",
       "measureUnitColumn": "unit",
@@ -551,17 +559,18 @@
       "identifierScheme": "ADM2_PCODE"
     },
     {
-      "id": "cams-basin-daily",
+      "id": "cams-basin-monthly",
       "dataset": "cams-nrt",
       "label": "CAMS atmospheric composition by basin",
       "note": "Monthly mean of the CAMS +0h analysis per level-6 basin: aerosol optical depth at 550 nm and PM2.5. Only these two parameters exist before 2021-07-01, so reading just them gives a record that runs the whole way back without silently changing content partway through. PM2.5 is converted from kg/m3 to micrograms per cubic metre, which is the unit air quality is discussed in. Level 6 because the 0.4 degree grid is 1,470 km2 at this latitude and a level-7 basin covers only 1.9 pixels. This is the analysis, not a forecast — see cams-forecast-skill for how much the forecasts drift from it.",
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_DAILY/cams-basin-daily.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
       "containerTable": null,
       "format": "CSV",
-      "subjectColumn": "basin_id",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/cams-nrt",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "scopeColumn": null,
@@ -579,78 +588,6 @@
         {
           "column": "variable",
           "meaning": "which atmospheric variable"
-        }
-      ]
-    },
-    {
-      "id": "cams-forecast-skill",
-      "dataset": "cams-nrt",
-      "label": "CAMS forecast skill against its own analysis",
-      "note": "Mean absolute error, bias and correlation between each forecast lead time and the +0h analysis valid at the same moment, over Uzbekistan. CAMS issues two five-day forecasts a day, so any moment has up to eleven images aiming at it and their disagreement is measurable from the collection alone. Read the scope carefully: this verifies forecast against analysis, and the analysis is itself a model state constrained by assimilated satellite retrievals, not a measurement. A forecast agreeing with it means the model agreed with itself. Independent verification would need surface monitors or AERONET sites, of which Uzbekistan has very few. Carries no quality column because it is derived: every row is a statistic computed over pairs the state table already accepted, and the pairs column records how many went into it, so a thin month is visible rather than hidden.",
-      "predicate": "uz:hasBasinStatistic",
-      "subjectType": "Dataset",
-      "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
-      "containerTable": null,
-      "format": "CSV",
-      "subjectColumn": "variable",
-      "objectColumn": "variable",
-      "identifierScheme": "CAMS_VARIABLE",
-      "scopeColumn": "metric",
-      "measureColumn": "value",
-      "measureUnitColumn": "unit",
-      "dimensionColumns": [
-        {
-          "column": "year",
-          "meaning": "calendar year"
-        },
-        {
-          "column": "month",
-          "meaning": "calendar month, 1-12"
-        },
-        {
-          "column": "lead_hours",
-          "meaning": "forecast lead time in hours"
-        },
-        {
-          "column": "metric",
-          "meaning": "which skill statistic"
-        }
-      ]
-    },
-    {
-      "id": "cams-event-verification",
-      "dataset": "cams-nrt",
-      "label": "CAMS event detection skill at a point",
-      "note": "Probability of detection, false alarm ratio, correlation and bias for values above a percentile of the analysis record, by forecast lead time. Kept apart from cams-forecast-skill because a model can follow the mean and miss every episode, and an air quality warning is about the episode. For Tashkent 2024-2026 above the 95th percentile the two variables behave completely differently: dust optical depth is detected 75% of the time at 24 hours and still 66% at 120, while surface PM10 falls from 48% to 19%. The gap is physical — dust is a transported column driven by synoptic weather, surface PM10 adds local emission and boundary-layer mixing. Carries no quality column because it is derived: every row is a statistic over pairs, and the pairs column shows how many. The point samples a 1,470 km2 cell, so this verifies the cell containing a city, not the city.",
-      "predicate": "uz:hasBasinStatistic",
-      "subjectType": "Dataset",
-      "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
-      "containerTable": null,
-      "format": "CSV",
-      "subjectColumn": "site",
-      "objectColumn": "site",
-      "identifierScheme": "SITE_NAME",
-      "scopeColumn": "metric",
-      "measureColumn": "value",
-      "measureUnitColumn": "unit",
-      "dimensionColumns": [
-        {
-          "column": "variable",
-          "meaning": "which pollutant or aerosol measure"
-        },
-        {
-          "column": "lead_hours",
-          "meaning": "forecast lead time in hours"
-        },
-        {
-          "column": "percentile",
-          "meaning": "the percentile defining an event"
-        },
-        {
-          "column": "metric",
-          "meaning": "which verification statistic"
         }
       ]
     }

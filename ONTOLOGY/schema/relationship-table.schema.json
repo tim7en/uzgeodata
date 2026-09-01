@@ -31,7 +31,6 @@
           "objectType",
           "container",
           "format",
-          "subjectColumn",
           "objectColumn",
           "identifierScheme"
         ],
@@ -111,8 +110,17 @@
             ]
           },
           "subjectColumn": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "description": "Column holding the subject identifier. Null when every row has the same subject declared by subjectFixed."
+          },
+          "subjectFixed": {
             "type": "string",
-            "minLength": 1
+            "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water)/[a-z0-9-]+$",
+            "description": "Fixed subject entity for every row. Use this for a dataset statistic table that does not repeat dataset_id in every row."
           },
           "objectColumn": {
             "type": "string",
@@ -176,7 +184,34 @@
               }
             }
           }
-        }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "subjectColumn"
+            ],
+            "properties": {
+              "subjectColumn": {
+                "type": "string"
+              }
+            },
+            "not": {
+              "required": [
+                "subjectFixed"
+              ]
+            }
+          },
+          {
+            "required": [
+              "subjectFixed"
+            ],
+            "properties": {
+              "subjectColumn": {
+                "type": "null"
+              }
+            }
+          }
+        ]
       }
     }
   }
