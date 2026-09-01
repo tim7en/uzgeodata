@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-01T06:09:36+00:00",
+  "predicate": "uz:hasAdminStatistic",
+  "subjectType": "Dataset",
+  "objectType": "AdminArea",
+  "source": {
+    "platform": "Google Earth Engine",
+    "project": "ee-sabitovty",
+    "asset": "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
+    "product": "Impact Observatory / Esri 10 m Annual Land Use Land Cover, 9-class"
+  },
+  "measure": "area of each land cover class inside the unit, km2",
+  "method": "ee.Image.pixelArea() summed per class through a grouped reducer, so ground area is correct whatever projection the reduction lands in. Deriving area from the scale would be wrong here: the collection mosaics UTM tiles, and a nominal 10 m pixel covers 100·cos(latitude) m2 in the geographic fallback.",
+  "scaleMetres": 10,
+  "years": [
+    2017,
+    2025
+  ],
+  "counts": {
+    "units": 3,
+    "years": 2,
+    "rows": 37
+  },
+  "output": "PUBLISHED/data/analysis/landcover-admin-year.csv"
+}

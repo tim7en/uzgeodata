@@ -1,0 +1,312 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-01T04:57:33+00:00",
+  "engine": {
+    "platform": "Google Earth Engine",
+    "project": "ee-sabitovty",
+    "asset": "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
+    "scale": 10,
+    "reducer": "ee.Image.pixelArea() summed per class, grouped, server-side"
+  },
+  "district": {
+    "pcode": "UZ33217",
+    "name": "Urgench",
+    "province": "Khorezm"
+  },
+  "years": {
+    "2017": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 324.65,
+          "percent": 66.04
+        },
+        "Built area": {
+          "km2": 141.223,
+          "percent": 28.73
+        },
+        "Rangeland": {
+          "km2": 16.112,
+          "percent": 3.28
+        },
+        "Water": {
+          "km2": 7.219,
+          "percent": 1.47
+        },
+        "Bare ground": {
+          "km2": 2.406,
+          "percent": 0.49
+        },
+        "Flooded vegetation": {
+          "km2": 0.012,
+          "percent": 0.0
+        },
+        "Trees": {
+          "km2": 0.005,
+          "percent": 0.0
+        }
+      }
+    },
+    "2018": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 316.907,
+          "percent": 64.46
+        },
+        "Built area": {
+          "km2": 142.824,
+          "percent": 29.05
+        },
+        "Rangeland": {
+          "km2": 24.021,
+          "percent": 4.89
+        },
+        "Water": {
+          "km2": 6.382,
+          "percent": 1.3
+        },
+        "Bare ground": {
+          "km2": 1.466,
+          "percent": 0.3
+        },
+        "Flooded vegetation": {
+          "km2": 0.028,
+          "percent": 0.01
+        }
+      }
+    },
+    "2019": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 315.87,
+          "percent": 64.25
+        },
+        "Built area": {
+          "km2": 144.491,
+          "percent": 29.39
+        },
+        "Rangeland": {
+          "km2": 22.615,
+          "percent": 4.6
+        },
+        "Water": {
+          "km2": 7.559,
+          "percent": 1.54
+        },
+        "Bare ground": {
+          "km2": 1.09,
+          "percent": 0.22
+        },
+        "Flooded vegetation": {
+          "km2": 0.002,
+          "percent": 0.0
+        },
+        "Trees": {
+          "km2": 0.001,
+          "percent": 0.0
+        }
+      }
+    },
+    "2020": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 319.289,
+          "percent": 64.95
+        },
+        "Built area": {
+          "km2": 145.74,
+          "percent": 29.64
+        },
+        "Rangeland": {
+          "km2": 18.524,
+          "percent": 3.77
+        },
+        "Water": {
+          "km2": 6.995,
+          "percent": 1.42
+        },
+        "Bare ground": {
+          "km2": 1.079,
+          "percent": 0.22
+        },
+        "Trees": {
+          "km2": 0.0,
+          "percent": 0.0
+        }
+      }
+    },
+    "2021": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 321.091,
+          "percent": 65.31
+        },
+        "Built area": {
+          "km2": 144.646,
+          "percent": 29.42
+        },
+        "Rangeland": {
+          "km2": 18.269,
+          "percent": 3.72
+        },
+        "Water": {
+          "km2": 6.542,
+          "percent": 1.33
+        },
+        "Bare ground": {
+          "km2": 1.076,
+          "percent": 0.22
+        },
+        "Trees": {
+          "km2": 0.003,
+          "percent": 0.0
+        }
+      }
+    },
+    "2022": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 312.399,
+          "percent": 63.54
+        },
+        "Built area": {
+          "km2": 149.641,
+          "percent": 30.44
+        },
+        "Rangeland": {
+          "km2": 21.444,
+          "percent": 4.36
+        },
+        "Water": {
+          "km2": 7.071,
+          "percent": 1.44
+        },
+        "Bare ground": {
+          "km2": 1.049,
+          "percent": 0.21
+        },
+        "Trees": {
+          "km2": 0.024,
+          "percent": 0.0
+        },
+        "Flooded vegetation": {
+          "km2": 0.001,
+          "percent": 0.0
+        }
+      }
+    },
+    "2023": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 309.277,
+          "percent": 62.91
+        },
+        "Built area": {
+          "km2": 152.3,
+          "percent": 30.98
+        },
+        "Rangeland": {
+          "km2": 21.489,
+          "percent": 4.37
+        },
+        "Water": {
+          "km2": 7.513,
+          "percent": 1.53
+        },
+        "Bare ground": {
+          "km2": 1.012,
+          "percent": 0.21
+        },
+        "Trees": {
+          "km2": 0.032,
+          "percent": 0.01
+        },
+        "Flooded vegetation": {
+          "km2": 0.004,
+          "percent": 0.0
+        }
+      }
+    },
+    "2024": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 307.912,
+          "percent": 62.63
+        },
+        "Built area": {
+          "km2": 154.047,
+          "percent": 31.33
+        },
+        "Rangeland": {
+          "km2": 21.563,
+          "percent": 4.39
+        },
+        "Water": {
+          "km2": 7.088,
+          "percent": 1.44
+        },
+        "Bare ground": {
+          "km2": 0.991,
+          "percent": 0.2
+        },
+        "Trees": {
+          "km2": 0.028,
+          "percent": 0.01
+        },
+        "Flooded vegetation": {
+          "km2": 0.0,
+          "percent": 0.0
+        }
+      }
+    },
+    "2025": {
+      "areaKm2": 491.628,
+      "classes": {
+        "Crops": {
+          "km2": 308.776,
+          "percent": 62.81
+        },
+        "Built area": {
+          "km2": 154.502,
+          "percent": 31.43
+        },
+        "Rangeland": {
+          "km2": 20.531,
+          "percent": 4.18
+        },
+        "Water": {
+          "km2": 6.828,
+          "percent": 1.39
+        },
+        "Bare ground": {
+          "km2": 0.867,
+          "percent": 0.18
+        },
+        "Trees": {
+          "km2": 0.121,
+          "percent": 0.02
+        },
+        "Flooded vegetation": {
+          "km2": 0.003,
+          "percent": 0.0
+        }
+      }
+    }
+  },
+  "changeKm2": {
+    "Crops": -15.874,
+    "Built area": 13.279,
+    "Rangeland": 4.419,
+    "Water": -0.391,
+    "Bare ground": -1.539,
+    "Trees": 0.116,
+    "Flooded vegetation": -0.009
+  }
+}

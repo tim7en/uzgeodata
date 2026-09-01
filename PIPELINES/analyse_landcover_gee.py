@@ -87,7 +87,9 @@ def main() -> None:
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pcode", default="UZ33217", help="ADM2 P-code (default Urgench, Khorezm).")
     parser.add_argument("--asset", default=DEFAULT_ASSET, help="Earth Engine ImageCollection id.")
-    parser.add_argument("--scale", type=int, default=10, help="Reduction scale in metres.")
+    parser.add_argument("--scale", type=int, default=10,
+                        help="Reduction scale in metres. Sets sampling density only — "
+                             "area comes from pixelArea(), not from this.")
     parser.add_argument("--years", nargs="*", type=int, help="Restrict to these years.")
     args = parser.parse_args()
 
@@ -133,27 +135,33 @@ def main() -> None:
             print(f"  {year}: no image")
             continue
         mosaic = annual.mosaic().clip(region)
-        histogram = mosaic.reduceRegion(
-            reducer=ee.Reducer.frequencyHistogram(),
+        # Area comes from ee.Image.pixelArea(), never from the scale.
+        #
+        # The collection is a mosaic of UTM tiles, so it has no single native
+        # projection and the reduction falls back to a geographic one, where a
+        # nominal 10 m pixel does not cover 100 m² on the ground — it covers
+        # 100·cos(latitude). Multiplying a pixel count by scale² therefore
+        # overstated this district by a third, which is exactly 1/cos(41.6°).
+        # pixelArea() reports the true ground area of each pixel whatever
+        # projection the reduction lands in, so summing it per class is right
+        # regardless.
+        grouped = ee.Image.pixelArea().addBands(mosaic).reduceRegion(
+            reducer=ee.Reducer.sum().group(groupField=1, groupName="class"),
             geometry=region,
             scale=args.scale,
             maxPixels=1e10,
             bestEffort=False,
         ).getInfo()
-        band = next(iter(histogram.values())) or {}
-        counts = {int(float(code)): int(count) for code, count in band.items()}
-        total = sum(counts.values())
-        pixel_area = args.scale ** 2
+        areas = {int(group["class"]): float(group["sum"]) for group in grouped.get("groups", [])}
+        total_area = sum(areas.values())
         per_year[year] = {
-            "pixels": total,
-            "areaKm2": round(total * pixel_area / 1e6, 3),
+            "areaKm2": round(total_area / 1e6, 3),
             "classes": {CLASSES.get(code, str(code)): {
-                "pixels": count,
-                "km2": round(count * pixel_area / 1e6, 3),
-                "percent": round(count / total * 100, 2) if total else 0,
-            } for code, count in sorted(counts.items(), key=lambda kv: -kv[1])},
+                "km2": round(square_metres / 1e6, 3),
+                "percent": round(square_metres / total_area * 100, 2) if total_area else 0,
+            } for code, square_metres in sorted(areas.items(), key=lambda kv: -kv[1])},
         }
-        print(f"  {year}: {total:,} pixels ({total * pixel_area / 1e6:,.1f} km²)")
+        print(f"  {year}: {total_area / 1e6:,.1f} km² over {len(areas)} classes")
 
     if not per_year:
         raise SystemExit("No year produced a histogram; check the asset and the region.")
@@ -184,7 +192,7 @@ def main() -> None:
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "engine": {"platform": "Google Earth Engine", "project": PROJECT,
                    "asset": args.asset, "scale": args.scale,
-                   "reducer": "frequencyHistogram, computed server-side"},
+                   "reducer": "ee.Image.pixelArea() summed per class, grouped, server-side"},
         "district": {"pcode": args.pcode, "name": properties["nameEn"], "province": province},
         "years": per_year,
         "changeKm2": changes,
