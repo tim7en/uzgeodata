@@ -25,6 +25,14 @@ nothing here needs to choose between them.
 
     python PIPELINES/chirps_basin_service.py --start 2026-01 --end 2026-07
     python PIPELINES/chirps_basin_service.py --start 2011-01 --end 2025-12   # baseline
+
+Basin level is chosen per product, from the source grid — not once for the whole
+ontology. A basin smaller than the pixel it samples cannot hold a value of its
+own; it inherits its neighbour's. CFSv2 is 34.8 km, so a level-12 basin covers a
+tenth of a pixel and level 7 is as fine as it goes. CHIRPS and CHIRTS are 5.6 km,
+where a level-12 basin covers about four pixels, so level 12 is honest for them —
+and costs no more, because a reduction is priced by the raster it reads rather
+than by the number of polygons laid over it.
 """
 
 from __future__ import annotations
@@ -37,7 +45,7 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-BASINS = ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" / "basinatlas_uz_lev07.geojson"
+BASINS = ROOT / "PUBLISHED" / "data" / "hydrography" / "basins.geojson"
 OUTPUT = (ROOT / "PUBLISHED" / "data" / "ontology" / "1_ATMOSPHERE"
           / "1.4_CHIRPS_V3_BASIN_PENTAD" / "chirps-v3-basin-pentad.csv")
 
@@ -97,7 +105,7 @@ def main() -> None:
     todo = [row for row in pentads(args.start, args.end)
             if (str(row[0]), str(row[1]), str(row[2])) not in done]
 
-    print(f"CHIRPS v3 PENTAD · {len(document['features'])} level-7 basins · {len(todo)} pentads to measure")
+    print(f"CHIRPS v3 PENTAD · {len(document['features'])} level-12 basins · {len(todo)} pentads to measure")
     if not todo:
         print("  nothing to do")
         return

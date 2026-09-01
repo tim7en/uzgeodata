@@ -26,6 +26,14 @@ as Celsius, or as a maximum, would be wrong in two different ways at once.
 
     python PIPELINES/chirts_basin_service.py --start 2014-01 --end 2016-12
     python PIPELINES/chirts_basin_service.py --start 1983-01 --end 2016-12   # the whole record
+
+Basin level is chosen per product, from the source grid — not once for the whole
+ontology. A basin smaller than the pixel it samples cannot hold a value of its
+own; it inherits its neighbour's. CFSv2 is 34.8 km, so a level-12 basin covers a
+tenth of a pixel and level 7 is as fine as it goes. CHIRPS and CHIRTS are 5.6 km,
+where a level-12 basin covers about four pixels, so level 12 is honest for them —
+and costs no more, because a reduction is priced by the raster it reads rather
+than by the number of polygons laid over it.
 """
 
 from __future__ import annotations
@@ -37,7 +45,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-BASINS = ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" / "basinatlas_uz_lev07.geojson"
+BASINS = ROOT / "PUBLISHED" / "data" / "hydrography" / "basins.geojson"
 OUTPUT = (ROOT / "PUBLISHED" / "data" / "ontology" / "1_ATMOSPHERE"
           / "1.5_CHIRTS_BASIN_MONTHLY" / "chirts-basin-monthly.csv")
 
@@ -100,7 +108,7 @@ def main() -> None:
             done = {(r["year"], r["month"]) for r in csv.DictReader(handle)}
     todo = [(y, m) for y, m in months(args.start, args.end) if (str(y), str(m)) not in done]
 
-    print(f"CHIRTS-daily · {len(document['features'])} level-7 basins · {len(todo)} months to measure")
+    print(f"CHIRTS-daily · {len(document['features'])} level-12 basins · {len(todo)} months to measure")
     if not todo:
         print("  nothing to do")
         return

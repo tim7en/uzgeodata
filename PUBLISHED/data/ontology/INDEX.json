@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T07:57:01+00:00",
+  "generatedAt": "2026-09-01T08:03:09+00:00",
   "convention": {
     "naming": "Upper case, digits and underscores only.",
     "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
@@ -72,7 +72,7 @@
       "name": "CHIRPS_V3_BASIN_PENTAD",
       "folder": "1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD",
       "table": "chirps-v3-basin-pentad",
-      "what": "Pentadal precipitation total per level-7 basin at 5.6 km — six per month. CHIRPS is computed at this scale and its daily product is a disaggregation of it, so this is the authoritative quantity. Monthly and seasonal totals are sums of pentads and are derived rather than stored."
+      "what": "Pentadal precipitation total per level-12 basin at 5.6 km — six per month. CHIRPS is computed at this scale and its daily product is a disaggregation of it, so this is the authoritative quantity. Monthly and seasonal totals are sums of pentads and are derived rather than stored."
     },
     {
       "number": "1.5",
@@ -81,7 +81,7 @@
       "name": "CHIRTS_BASIN_MONTHLY",
       "folder": "1_ATMOSPHERE/1.5_CHIRTS_BASIN_MONTHLY",
       "table": "chirts-basin-monthly",
-      "what": "Monthly temperature and humidity statistics per level-7 basin from CHIRTS-daily at 5.6 km, including counts of days above 35 and 40 degrees that only a daily record can give. Closed: the record runs 1983 to 2016 and stops."
+      "what": "Monthly temperature and humidity statistics per level-12 basin from CHIRTS-daily at 5.6 km, including counts of days above 35 and 40 degrees that only a daily record can give. Closed: the record runs 1983 to 2016 and stops."
     },
     {
       "number": "2.1",

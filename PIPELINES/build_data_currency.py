@@ -56,12 +56,12 @@ SOURCES = {
         "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
     },
     "chirps-v3-basin-pentad": {
-        "cadence": "monthly", "latest": "chirps", "units": 263,
+        "cadence": "monthly", "latest": "chirps", "units": 2732,
         "command": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
         "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
     },
     "chirts-basin-monthly": {
-        "cadence": "closed", "latest": "chirts", "units": 263,
+        "cadence": "closed", "latest": "chirts", "units": 2732,
         "command": "npm run chirts:observe -- --start <YYYY-MM> --end <YYYY-MM>",
         "note": "The upstream record ended at 2016-12. Complete once it reaches that, and never behind.",
     },

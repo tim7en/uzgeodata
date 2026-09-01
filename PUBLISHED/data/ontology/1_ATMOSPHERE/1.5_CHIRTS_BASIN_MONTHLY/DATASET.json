@@ -2,7 +2,7 @@
   "name": "CHIRTS_BASIN_MONTHLY",
   "number": "1.5",
   "domain": "ATMOSPHERE",
-  "what": "Monthly temperature and humidity statistics per level-7 basin from CHIRTS-daily at 5.6 km, including counts of days above 35 and 40 degrees that only a daily record can give. Closed: the record runs 1983 to 2016 and stops.",
+  "what": "Monthly temperature and humidity statistics per level-12 basin from CHIRTS-daily at 5.6 km, including counts of days above 35 and 40 degrees that only a daily record can give. Closed: the record runs 1983 to 2016 and stops.",
   "tables": [
     "chirts-basin-monthly"
   ],

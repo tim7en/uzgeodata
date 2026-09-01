@@ -85,7 +85,7 @@ DATASETS = {
     "CHIRPS_V3_BASIN_PENTAD": {
         "domain": "ATMOSPHERE", "table": "chirps-v3-basin-pentad",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
-        "what": ("Pentadal precipitation total per level-7 basin at 5.6 km — six per month. "
+        "what": ("Pentadal precipitation total per level-12 basin at 5.6 km — six per month. "
                  "CHIRPS is computed at this scale and its daily product is a disaggregation "
                  "of it, so this is the authoritative quantity. Monthly and seasonal totals "
                  "are sums of pentads and are derived rather than stored."),
@@ -93,7 +93,7 @@ DATASETS = {
     "CHIRTS_BASIN_MONTHLY": {
         "domain": "ATMOSPHERE", "table": "chirts-basin-monthly",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
-        "what": ("Monthly temperature and humidity statistics per level-7 basin from CHIRTS-daily "
+        "what": ("Monthly temperature and humidity statistics per level-12 basin from CHIRTS-daily "
                  "at 5.6 km, including counts of days above 35 and 40 degrees that only a daily "
                  "record can give. Closed: the record runs 1983 to 2016 and stops."),
     },
