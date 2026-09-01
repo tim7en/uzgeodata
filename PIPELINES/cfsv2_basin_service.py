@@ -307,7 +307,7 @@ def climatology(args) -> None:
     thin = 0
     with CLIMATOLOGY.open("w", encoding="utf8", newline="") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["basin_id", "month", "variable", "mean", "sd", "years",
+        writer.writerow(["basin_id", "month", "variable", "mean", "sd", "unit", "years",
                          "baseline_start", "baseline_end"])
         for (basin, month, variable), values in sorted(buckets.items()):
             # A standard deviation from two points is not a baseline; say so by
@@ -315,9 +315,11 @@ def climatology(args) -> None:
             sd = statistics.pstdev(values) if len(values) >= 3 else ""
             if len(values) < 3:
                 thin += 1
+            # The graph declares this table's unit column, so it has to be here:
+            # a baseline in unknown units is a number nobody can check.
             writer.writerow([basin, month, variable, round(statistics.mean(values), 5),
-                             round(sd, 5) if sd != "" else "", len(values),
-                             args.start, args.end])
+                             round(sd, 5) if sd != "" else "", UNITS.get(variable, ""),
+                             len(values), args.start, args.end])
     print(f"climatology · baseline {args.start}-{args.end} · {len(buckets):,} basin-month-variable cells")
     if thin:
         print(f"  {thin:,} cells have fewer than three years and carry no standard deviation")
