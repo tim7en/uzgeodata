@@ -39,6 +39,8 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+from ontology_paths import dataset_dir
+
 try:
     import pyproj
     import shapefile
@@ -53,11 +55,16 @@ except ImportError as error:  # pragma: no cover - depends on the workstation
     ) from error
 
 ROOT = Path(__file__).resolve().parent.parent
-BASINS = ROOT / "PUBLISHED" / "data" / "hydrography" / "basins.geojson"
+# BasinATLAS is the canonical basin identity frame used by the atmospheric and
+# land pipelines.  The hydrography browser also publishes a basin layer, but an
+# older build used the lake-format HydroBASINS identifiers; using that derivative
+# here left roughly 22 percent of Uzbekistan outside the administrative overlay.
+BASINS = (ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" /
+          "basinatlas_uz_lev12.geojson")
 ADMIN_DIR = ROOT / "GEODATA"
 WEB_DIR = ROOT / "PUBLISHED" / "data" / "admin"
 LINKS_OUT = ROOT / "PUBLISHED" / "data" / "hydrography" / "admin-basin-links.json"
-CSV_OUT = ROOT / "PUBLISHED" / "data" / "hydrography" / "admin-basin-links.csv"
+CSV_OUT = dataset_dir("ADMIN_BASIN_LINKS", "REFERENCE") / "admin-basin-links.csv"
 MANIFEST_OUT = ROOT / "ONTOLOGY" / "instances" / "admin-basin-links.json"
 
 VECTOR_CRS = "EPSG:4326"
@@ -221,7 +228,10 @@ def main() -> None:
         "version": "1.0",
         "generatedAt": generated_at,
         "source": "OCHA/HDX Common Operational Dataset, uzb_admbnda 2018b",
-        "basinReference": "PUBLISHED/data/hydrography/basins.geojson (HydroBASINS level 12)",
+        "basinReference": (
+            "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev12.geojson "
+            "(BasinATLAS v10, level 12)"
+        ),
         "vectorCrs": VECTOR_CRS,
         "areaCrs": AREA_CRS,
         "minOverlapKm2": MIN_OVERLAP_KM2,
@@ -273,7 +283,7 @@ def main() -> None:
             "basins": len(basin_ids), "basinsWithoutProvince": unmatched,
         },
         "placeConcepts": PLACE_BY_PCODE,
-        "output": "PUBLISHED/data/hydrography/admin-basin-links.json",
+        "output": str(CSV_OUT.relative_to(ROOT)),
         "note": (
             "First-level units carry the ontology place concept they correspond to, matched "
             "by P-code because the COD spellings differ from the vocabulary's. Second-level "

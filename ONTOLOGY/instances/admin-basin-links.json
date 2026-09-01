@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-31T12:42:41+00:00",
+  "generatedAt": "2026-09-01T09:38:01+00:00",
   "predicate": "uz:intersectsAdminArea",
   "subjectType": "Basin",
   "objectType": "AdminArea",
@@ -15,10 +15,10 @@
   "counts": {
     "provinces": 14,
     "districts": 199,
-    "provinceLinks": 3104,
-    "districtLinks": 4538,
-    "basins": 2736,
-    "basinsWithoutProvince": 0
+    "provinceLinks": 4374,
+    "districtLinks": 6009,
+    "basins": 3981,
+    "basinsWithoutProvince": 2
   },
   "placeConcepts": {
     "UZ03": "uz:place/andijan",
@@ -36,6 +36,6 @@
     "UZ33": "uz:place/khorezm",
     "UZ35": "uz:place/karakalpakstan"
   },
-  "output": "PUBLISHED/data/hydrography/admin-basin-links.json",
+  "output": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
   "note": "First-level units carry the ontology place concept they correspond to, matched by P-code because the COD spellings differ from the vocabulary's. Second-level units get no concept: 199 districts would swamp a vocabulary meant to be read, and the entity schema already says individual features belong in a relationship table rather than in the graph. Basins with no province are those lying wholly outside the boundary — the basin reference keeps whole sub-basins, so a catchment clipped at the border can sit entirely beyond it."
 }

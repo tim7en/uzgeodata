@@ -92,6 +92,15 @@ def done_already(target: Path, unit_column: str) -> set[tuple[str, int]]:
         return {(row[unit_column], int(row["year"])) for row in csv.DictReader(handle)}
 
 
+def table_counts(target: Path, unit_column: str) -> tuple[int, int]:
+    """Return physical rows and complete unit-year keys in the stored table."""
+    if not target.exists():
+        return 0, 0
+    with target.open(encoding="utf8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    return len(rows), len({(row[unit_column], int(row["year"])) for row in rows})
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -167,6 +176,7 @@ def main() -> None:
                 print(f"  {position:,}/{len(todo):,} unit-years · {rate:.1f}s each · "
                       f"{left / 60:.0f} min left", flush=True)
 
+    stored_rows, stored_unit_years = table_counts(target, unit_column)
     MANIFEST.write_text(json.dumps({
         "version": "1.0",
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -182,7 +192,12 @@ def main() -> None:
                    "nominal 10 m pixel covers 100·cos(latitude) m2 in the geographic fallback."),
         "scaleMetres": scale,
         "years": args.years,
-        "counts": {"units": len(rows), "years": len(args.years), "rows": written + len(already)},
+        "counts": {
+            "units": len(rows),
+            "years": len(args.years),
+            "unitYears": stored_unit_years,
+            "rows": stored_rows,
+        },
         "output": str(target.relative_to(ROOT)),
     }, ensure_ascii=False, indent=2), encoding="utf8")
 
