@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T08:09:28+00:00",
+  "generatedAt": "2026-09-01T08:23:11+00:00",
   "convention": {
     "naming": "Upper case, digits and underscores only.",
     "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
@@ -82,6 +82,15 @@
       "folder": "1_ATMOSPHERE/1.5_CHIRTS_BASIN_MONTHLY",
       "table": "chirts-basin-monthly",
       "what": "Monthly temperature and humidity statistics per level-12 basin from CHIRTS-daily at 5.6 km, including counts of days above 35 and 40 degrees that only a daily record can give. Closed: the record runs 1983 to 2016 and stops."
+    },
+    {
+      "number": "1.6",
+      "domain": "ATMOSPHERE",
+      "domainNumber": "1",
+      "name": "CPC_BASIN_MONTHLY",
+      "folder": "1_ATMOSPHERE/1.6_CPC_BASIN_MONTHLY",
+      "table": "cpc-basin-monthly",
+      "what": "Monthly temperature statistics per level-6 basin from the CPC gauge-based half-degree analysis, 1979 to the present, with the station count that informed each cell."
     },
     {
       "number": "2.1",

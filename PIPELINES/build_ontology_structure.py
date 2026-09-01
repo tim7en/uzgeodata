@@ -97,6 +97,13 @@ DATASETS = {
                  "at 5.6 km, including counts of days above 35 and 40 degrees that only a daily "
                  "record can give. Closed: the record runs 1983 to 2016 and stops."),
     },
+    "CPC_BASIN_MONTHLY": {
+        "domain": "ATMOSPHERE", "table": "cpc-basin-monthly",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+        "what": ("Monthly temperature statistics per level-6 basin from the CPC gauge-based "
+                 "half-degree analysis, 1979 to the present, with the station count that "
+                 "informed each cell."),
+    },
     "LANDCOVER_ADMIN_YEAR": {
         "domain": "LAND", "table": "landcover-admin-year",
         "source": "PUBLISHED/data/analysis/landcover-admin-year.csv",

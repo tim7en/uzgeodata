@@ -461,6 +461,38 @@
           "meaning": "which statistic"
         }
       ]
+    },
+    {
+      "id": "cpc-basin-monthly",
+      "dataset": "cpc-temperature",
+      "label": "CPC basin monthly temperature",
+      "note": "Gauge-based half-degree temperature reduced to monthly statistics per level-6 basin, with counts of hot and frost days. Level 6 because a half-degree cell at this latitude is 55.3 by 41.7 km — about 2,305 km², nearly twice a CFSv2 pixel — so a level-7 basin covers only 1.2 cells. Uniquely here the source carries its own quality signal: nmax and nmin give the stations informing each cell, and over Uzbekistan that averages 0.13 per day with 51% of basin-months seeing none at all. Those rows are marked ok-interpolated: the product is long and current, but over this country it is mostly interpolation from distant reports rather than local observation, and should be weighted accordingly against CHIRTS.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "basin_id",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "which statistic"
+        }
+      ]
     }
   ]
 }
