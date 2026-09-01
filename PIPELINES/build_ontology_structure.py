@@ -82,9 +82,9 @@ DATASETS = {
         "crossDomain": {"LAND": ["soil_moisture_5cm", "soil_moisture_25cm",
                                  "soil_moisture_70cm", "soil_moisture_150cm"]},
     },
-    "CAMS_BASIN_DAILY": {
-        "domain": "ATMOSPHERE", "table": "cams-basin-daily",
-        "source": "PUBLISHED/data/ontology/_ATMOSPHERE/_CAMS_BASIN_DAILY/cams-basin-daily.csv",
+    "CAMS_BASIN_MONTHLY": {
+        "domain": "ATMOSPHERE", "table": "cams-basin-monthly",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
         "what": ("Aerosol optical depth and PM2.5 per level-6 basin from the CAMS +0h analysis — "
                  "the assimilated estimate of what the atmosphere was, not a forecast."),
     },

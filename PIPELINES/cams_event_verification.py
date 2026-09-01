@@ -38,6 +38,7 @@ import json
 import math
 import statistics
 import sys
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -61,6 +62,25 @@ BANDS = {
 }
 FACTOR = {"pm10": 1e9, "pm2p5": 1e9, "dust_aod": 1.0}
 UNIT = {"pm10": "ug/m3", "pm2p5": "ug/m3", "dust_aod": "index"}
+FIELDS = ["site", "lat", "lon", "period_start", "period_end", "variable",
+          "lead_hours", "percentile", "pairs", "metric", "value", "unit"]
+
+
+def read_rows(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
+    with path.open(encoding="utf-8-sig", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def write_rows(path: Path, rows: list[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    with temporary.open("w", encoding="utf8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
+    temporary.replace(path)
 
 
 def series(ee, lead: int, point, start: str, end: str) -> dict:
@@ -87,7 +107,8 @@ def main() -> None:
     parser.add_argument("--lat", type=float, default=41.30)
     parser.add_argument("--name", default="TASHKENT")
     parser.add_argument("--start", default="2024-01-01")
-    parser.add_argument("--end", default="2026-09-05")
+    parser.add_argument("--end", default=date.today().isoformat(),
+                        help="Exclusive end date. Default: today; never a future hard-coded date.")
     parser.add_argument("--percentile", type=int, default=95,
                         help="An event is an analysis value at or above this percentile.")
     args = parser.parse_args()
@@ -160,13 +181,15 @@ def main() -> None:
                              args.start[:10], args.end[:10], name, lead,
                              args.percentile, len(common), metric, round(value, 6), unit])
 
-    fresh = not OUTPUT.exists()
-    with OUTPUT.open("a", encoding="utf8", newline="") as handle:
-        writer = csv.writer(handle)
-        if fresh:
-            writer.writerow(["site", "lat", "lon", "period_start", "period_end", "variable",
-                             "lead_hours", "percentile", "pairs", "metric", "value", "unit"])
-        writer.writerows(rows)
+    stored = read_rows(OUTPUT)
+    run_key = (args.name, f"{args.lat:.4f}", f"{args.lon:.4f}", args.start[:10],
+               args.end[:10], str(args.percentile))
+    stored = [row for row in stored if (
+        row["site"], f"{float(row['lat']):.4f}", f"{float(row['lon']):.4f}",
+        row["period_start"], row["period_end"], row["percentile"]
+    ) != run_key]
+    stored.extend(dict(zip(FIELDS, row)) for row in rows)
+    write_rows(OUTPUT, stored)
     print(f"\n  {len(rows):,} verification metrics -> {OUTPUT.relative_to(ROOT)}")
 
 

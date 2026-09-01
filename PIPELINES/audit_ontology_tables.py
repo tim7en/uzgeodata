@@ -43,7 +43,7 @@ GRIDS = {
     "cfsv2-basin-anomaly": 34771,
     "chirps-v3-basin-pentad": 5566, "chirts-basin-monthly": 5566,
     "landcover-basin-year": 10, "landcover-admin-year": 10,
-    "cpc-basin-monthly": 55660, "cams-basin-daily": 44453,
+    "cpc-basin-monthly": 55660, "cams-basin-monthly": 44453,
     "ghm-basin-modification": 1000, "ghm-district-modification": 1000,
 }
 # Which unit table a basin id belongs to, and its mean area in km2.

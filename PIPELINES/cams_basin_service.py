@@ -8,8 +8,8 @@ at it. They disagree, and the disagreement is itself a measurement.
 
 So this writes two tables.
 
-    state       The +0h analysis per basin per day — the assimilated estimate of
-                what the atmosphere actually was. This is the layer to join
+    state       Monthly mean of the +0h analyses per basin — the assimilated
+                estimate of atmospheric state. This is the layer to join
                 against everything else in the ontology.
 
     skill       Forecast against analysis at each lead time, as mean absolute
@@ -52,7 +52,7 @@ from ontology_paths import dataset_dir
 
 ROOT = Path(__file__).resolve().parent.parent
 BASINS = ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" / "basinatlas_uz_lev06.geojson"
-STATE = dataset_dir("CAMS_BASIN_DAILY", "ATMOSPHERE") / "cams-basin-daily.csv"
+STATE = dataset_dir("CAMS_BASIN_MONTHLY", "ATMOSPHERE") / "cams-basin-monthly.csv"
 SKILL = dataset_dir("CAMS_FORECAST_SKILL", "ATMOSPHERE") / "cams-forecast-skill.csv"
 
 PROJECT = "ee-sabitovty"
@@ -68,6 +68,8 @@ VARIABLES = {
     "particulate_matter_d_less_than_25_um_surface": ("pm2p5", "ug/m3", 1e9),
 }
 LEADS = (24, 48, 72, 96, 120)
+STATE_FIELDS = ["basin_id", "year", "month", "analyses", "variable", "value", "unit", "quality"]
+SKILL_FIELDS = ["year", "month", "variable", "lead_hours", "pairs", "metric", "value", "unit"]
 
 
 def months(start: str, end: str):
@@ -99,16 +101,40 @@ def basins(ee):
         for f in document["features"]]), len(document["features"])
 
 
+def read_rows(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
+    with path.open(encoding="utf-8-sig", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def write_rows(path: Path, fields: list[str], rows: list[dict]) -> None:
+    """Atomically replace a CSV so an interrupted month cannot leave half a table."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    with temporary.open("w", encoding="utf8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
+    temporary.replace(path)
+
+
 def state(args) -> None:
     """Monthly mean of the +0h analysis per basin."""
     ee = initialise()
     collection, count = basins(ee)
     source = ee.ImageCollection(ASSET).filter(ee.Filter.eq("model_forecast_hour", 0))
 
-    done = set()
-    if STATE.exists():
-        with STATE.open(encoding="utf-8-sig", newline="") as handle:
-            done = {(r["year"], r["month"]) for r in csv.DictReader(handle)}
+    stored = read_rows(STATE)
+    per_month: dict[tuple[str, str], dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    for row in stored:
+        per_month[(row["year"], row["month"])][row["variable"]].add(row["basin_id"])
+    minimum_basins = math.ceil(count * 0.95)
+    done = {
+        key for key, variables in per_month.items()
+        if set(variables) == {value[0] for value in VARIABLES.values()}
+        and all(len(ids) >= minimum_basins for ids in variables.values())
+    }
     todo = [(y, m) for y, m in months(args.start, args.end) if (str(y), str(m)) not in done]
 
     print(f"CAMS state · {count} level-6 basins · {len(todo)} months")
@@ -116,41 +142,48 @@ def state(args) -> None:
         print("  nothing to do")
         return
 
-    STATE.parent.mkdir(parents=True, exist_ok=True)
-    fresh = not STATE.exists()
     started, rows = time.time(), 0
-    with STATE.open("a", encoding="utf8", newline="") as handle:
-        writer = csv.writer(handle)
-        if fresh:
-            writer.writerow(["basin_id", "year", "month", "analyses",
-                             "variable", "value", "unit", "quality"])
-        for position, (year, month) in enumerate(todo, start=1):
-            start = ee.Date.fromYMD(year, month, 1)
-            window = source.filterDate(start, start.advance(1, "month")).select(list(VARIABLES))
-            n = window.size().getInfo()
-            if n == 0:
-                print(f"  {year}-{month:02d}: no analyses", flush=True)
-                continue
-            try:
-                result = window.mean().reduceRegions(
-                    collection=collection, reducer=ee.Reducer.mean(), scale=SCALE).getInfo()
-            except Exception as error:
-                print(f"  ! {year}-{month:02d}: {str(error).strip()[:100]}", flush=True)
-                continue
-            for feature in result["features"]:
-                properties = feature["properties"]
-                for band, (name, unit, factor) in VARIABLES.items():
-                    raw = properties.get(band)
-                    if raw is None:
-                        continue
-                    value = raw * factor
-                    writer.writerow([properties["basin"], year, month, n, name,
-                                     round(value, 6), unit,
-                                     "ok" if value >= 0 else "implausible"])
-                    rows += 1
-            handle.flush()
-            rate = (time.time() - started) / position
-            print(f"  {year}-{month:02d} · {position}/{len(todo)} · {rate:.0f}s each", flush=True)
+    for position, (year, month) in enumerate(todo, start=1):
+        start = ee.Date.fromYMD(year, month, 1)
+        window = source.filterDate(start, start.advance(1, "month")).select(list(VARIABLES))
+        n = window.size().getInfo()
+        if n == 0:
+            print(f"  {year}-{month:02d}: no analyses", flush=True)
+            continue
+        try:
+            result = window.mean().reduceRegions(
+                collection=collection, reducer=ee.Reducer.mean(), scale=SCALE).getInfo()
+        except Exception as error:
+            print(f"  ! {year}-{month:02d}: {str(error).strip()[:100]}", flush=True)
+            continue
+        month_rows = []
+        for feature in result["features"]:
+            properties = feature["properties"]
+            for band, (name, unit, factor) in VARIABLES.items():
+                raw = properties.get(band)
+                if raw is None:
+                    continue
+                value = raw * factor
+                month_rows.append({
+                    "basin_id": properties["basin"], "year": year, "month": month,
+                    "analyses": n, "variable": name, "value": round(value, 6),
+                    "unit": unit, "quality": "ok" if value >= 0 else "implausible",
+                })
+                rows += 1
+        variables = defaultdict(set)
+        for row in month_rows:
+            variables[row["variable"]].add(str(row["basin_id"]))
+        if (set(variables) != {value[0] for value in VARIABLES.values()}
+                or any(len(ids) < minimum_basins for ids in variables.values())):
+            print(f"  ! {year}-{month:02d}: incomplete reduction; existing rows retained",
+                  flush=True)
+            continue
+        stored = [row for row in stored
+                  if (row["year"], row["month"]) != (str(year), str(month))]
+        stored.extend(month_rows)
+        write_rows(STATE, STATE_FIELDS, stored)
+        rate = (time.time() - started) / position
+        print(f"  {year}-{month:02d} · {position}/{len(todo)} · {rate:.0f}s each", flush=True)
     print(f"\n  {rows:,} observations -> {STATE.relative_to(ROOT)}")
 
 
@@ -214,14 +247,11 @@ def skill(args) -> None:
     if not rows:
         print("  nothing measured")
         return
-    SKILL.parent.mkdir(parents=True, exist_ok=True)
-    fresh = not SKILL.exists()
-    with SKILL.open("a", encoding="utf8", newline="") as handle:
-        writer = csv.writer(handle)
-        if fresh:
-            writer.writerow(["year", "month", "variable", "lead_hours", "pairs",
-                             "metric", "value", "unit"])
-        writer.writerows(rows)
+    stored = read_rows(SKILL)
+    replaced_months = {(str(row[0]), str(row[1])) for row in rows}
+    stored = [row for row in stored if (row["year"], row["month"]) not in replaced_months]
+    stored.extend(dict(zip(SKILL_FIELDS, row)) for row in rows)
+    write_rows(SKILL, SKILL_FIELDS, stored)
     print(f"\n  {len(rows):,} skill metrics -> {SKILL.relative_to(ROOT)}")
 
 
