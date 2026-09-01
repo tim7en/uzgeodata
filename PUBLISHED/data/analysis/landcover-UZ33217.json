@@ -1,0 +1,320 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-08-31T13:34:16+00:00",
+  "source": {
+    "collection": "io-lulc-annual-v02",
+    "title": "Impact Observatory / Esri 10 m Annual Land Use Land Cover (9-class) V2",
+    "via": "Microsoft Planetary Computer STAC, Cloud-Optimised GeoTIFF",
+    "licence": "CC-BY-4.0",
+    "earthEngineEquivalent": "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+  },
+  "district": {
+    "pcode": "UZ33217",
+    "name": "Urgench",
+    "province": "Khorezm",
+    "type": "district",
+    "nameRu": "Ургенчский",
+    "nameUz": "Urganch",
+    "bbox": [
+      60.29557,
+      41.44187,
+      60.75906,
+      41.70468
+    ]
+  },
+  "palette": {
+    "Water": "#1a5bab",
+    "Trees": "#358221",
+    "Flooded vegetation": "#87d19e",
+    "Crops": "#ffdb5c",
+    "Built area": "#ed022a",
+    "Bare ground": "#ede9e4",
+    "Snow/ice": "#f2faff",
+    "Clouds": "#c8c8c8",
+    "Rangeland": "#c6ad8d"
+  },
+  "years": {
+    "2017": {
+      "pixels": 4917537,
+      "areaKm2": 491.754,
+      "classes": {
+        "Crops": {
+          "pixels": 3247363,
+          "km2": 324.736,
+          "percent": 66.04
+        },
+        "Built area": {
+          "pixels": 1412525,
+          "km2": 141.252,
+          "percent": 28.72
+        },
+        "Rangeland": {
+          "pixels": 161209,
+          "km2": 16.121,
+          "percent": 3.28
+        },
+        "Water": {
+          "pixels": 72210,
+          "km2": 7.221,
+          "percent": 1.47
+        },
+        "Bare ground": {
+          "pixels": 24065,
+          "km2": 2.406,
+          "percent": 0.49
+        },
+        "Flooded vegetation": {
+          "pixels": 120,
+          "km2": 0.012,
+          "percent": 0.0
+        },
+        "Trees": {
+          "pixels": 45,
+          "km2": 0.004,
+          "percent": 0.0
+        }
+      }
+    },
+    "2018": {
+      "pixels": 4917537,
+      "areaKm2": 491.754,
+      "classes": {
+        "Crops": {
+          "pixels": 3169886,
+          "km2": 316.989,
+          "percent": 64.46
+        },
+        "Built area": {
+          "pixels": 1428568,
+          "km2": 142.857,
+          "percent": 29.05
+        },
+        "Rangeland": {
+          "pixels": 240268,
+          "km2": 24.027,
+          "percent": 4.89
+        },
+        "Water": {
+          "pixels": 63848,
+          "km2": 6.385,
+          "percent": 1.3
+        },
+        "Bare ground": {
+          "pixels": 14683,
+          "km2": 1.468,
+          "percent": 0.3
+        },
+        "Flooded vegetation": {
+          "pixels": 284,
+          "km2": 0.028,
+          "percent": 0.01
+        }
+      }
+    },
+    "2019": {
+      "pixels": 4917537,
+      "areaKm2": 491.754,
+      "classes": {
+        "Crops": {
+          "pixels": 3159540,
+          "km2": 315.954,
+          "percent": 64.25
+        },
+        "Built area": {
+          "pixels": 1445259,
+          "km2": 144.526,
+          "percent": 29.39
+        },
+        "Rangeland": {
+          "pixels": 226158,
+          "km2": 22.616,
+          "percent": 4.6
+        },
+        "Water": {
+          "pixels": 75637,
+          "km2": 7.564,
+          "percent": 1.54
+        },
+        "Bare ground": {
+          "pixels": 10915,
+          "km2": 1.091,
+          "percent": 0.22
+        },
+        "Flooded vegetation": {
+          "pixels": 18,
+          "km2": 0.002,
+          "percent": 0.0
+        },
+        "Trees": {
+          "pixels": 10,
+          "km2": 0.001,
+          "percent": 0.0
+        }
+      }
+    },
+    "2020": {
+      "pixels": 4917537,
+      "areaKm2": 491.754,
+      "classes": {
+        "Crops": {
+          "pixels": 3193713,
+          "km2": 319.371,
+          "percent": 64.95
+        },
+        "Built area": {
+          "pixels": 1457768,
+          "km2": 145.777,
+          "percent": 29.64
+        },
+        "Rangeland": {
+          "pixels": 185271,
+          "km2": 18.527,
+          "percent": 3.77
+        },
+        "Water": {
+          "pixels": 69984,
+          "km2": 6.998,
+          "percent": 1.42
+        },
+        "Bare ground": {
+          "pixels": 10797,
+          "km2": 1.08,
+          "percent": 0.22
+        },
+        "Trees": {
+          "pixels": 4,
+          "km2": 0.0,
+          "percent": 0.0
+        }
+      }
+    },
+    "2021": {
+      "pixels": 4917537,
+      "areaKm2": 491.754,
+      "classes": {
+        "Crops": {
+          "pixels": 3211710,
+          "km2": 321.171,
+          "percent": 65.31
+        },
+        "Built area": {
+          "pixels": 1446794,
+          "km2": 144.679,
+          "percent": 29.42
+        },
+        "Rangeland": {
+          "pixels": 182729,
+          "km2": 18.273,
+          "percent": 3.72
+        },
+        "Water": {
+          "pixels": 65489,
+          "km2": 6.549,
+          "percent": 1.33
+        },
+        "Bare ground": {
+          "pixels": 10784,
+          "km2": 1.078,
+          "percent": 0.22
+        },
+        "Trees": {
+          "pixels": 31,
+          "km2": 0.003,
+          "percent": 0.0
+        }
+      }
+    },
+    "2022": {
+      "pixels": 4917537,
+      "areaKm2": 491.754,
+      "classes": {
+        "Crops": {
+          "pixels": 3124731,
+          "km2": 312.473,
+          "percent": 63.54
+        },
+        "Built area": {
+          "pixels": 1496832,
+          "km2": 149.683,
+          "percent": 30.44
+        },
+        "Rangeland": {
+          "pixels": 214526,
+          "km2": 21.453,
+          "percent": 4.36
+        },
+        "Water": {
+          "pixels": 70702,
+          "km2": 7.07,
+          "percent": 1.44
+        },
+        "Bare ground": {
+          "pixels": 10500,
+          "km2": 1.05,
+          "percent": 0.21
+        },
+        "Trees": {
+          "pixels": 236,
+          "km2": 0.024,
+          "percent": 0.0
+        },
+        "Flooded vegetation": {
+          "pixels": 10,
+          "km2": 0.001,
+          "percent": 0.0
+        }
+      }
+    },
+    "2023": {
+      "pixels": 4917537,
+      "areaKm2": 491.754,
+      "classes": {
+        "Crops": {
+          "pixels": 3093635,
+          "km2": 309.363,
+          "percent": 62.91
+        },
+        "Built area": {
+          "pixels": 1523341,
+          "km2": 152.334,
+          "percent": 30.98
+        },
+        "Rangeland": {
+          "pixels": 214934,
+          "km2": 21.493,
+          "percent": 4.37
+        },
+        "Water": {
+          "pixels": 75149,
+          "km2": 7.515,
+          "percent": 1.53
+        },
+        "Bare ground": {
+          "pixels": 10124,
+          "km2": 1.012,
+          "percent": 0.21
+        },
+        "Trees": {
+          "pixels": 317,
+          "km2": 0.032,
+          "percent": 0.01
+        },
+        "Flooded vegetation": {
+          "pixels": 37,
+          "km2": 0.004,
+          "percent": 0.0
+        }
+      }
+    }
+  },
+  "changeKm2": {
+    "Crops": -15.373,
+    "Built area": 11.082,
+    "Rangeland": 5.372,
+    "Water": 0.294,
+    "Bare ground": -1.394,
+    "Trees": 0.028,
+    "Flooded vegetation": -0.008
+  },
+  "note": "Pixel counts are taken in the mosaic's own UTM projection, so a pixel is 10 m by 10 m on the ground and area is a count times 100 m². The district polygon is reprojected to the raster rather than the raster to the polygon: resampling a categorical surface would blend class codes into classes that do not exist."
+}
