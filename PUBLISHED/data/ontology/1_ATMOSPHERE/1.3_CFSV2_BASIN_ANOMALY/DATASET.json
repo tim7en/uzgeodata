@@ -1,0 +1,23 @@
+{
+  "name": "CFSV2_BASIN_ANOMALY",
+  "number": "1.3",
+  "domain": "ATMOSPHERE",
+  "what": "Basin monthly state expressed as z-scores against its own climatological normal.",
+  "tables": [
+    "cfsv2-basin-anomaly"
+  ],
+  "predicate": "uz:hasBasinAnomaly",
+  "file": "cfsv2-basin-anomaly.csv",
+  "storedInPlace": false,
+  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
+  "present": false,
+  "crossDomain": {
+    "LAND": [
+      "soil_moisture_5cm",
+      "soil_moisture_25cm",
+      "soil_moisture_70cm",
+      "soil_moisture_150cm"
+    ]
+  },
+  "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
+}

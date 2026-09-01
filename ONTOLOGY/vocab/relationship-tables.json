@@ -317,7 +317,7 @@
       "label": "CFSv2 basin monthly state",
       "note": "Monthly mean of the 6-hourly CFSv2 field over each level-7 basin: precipitation, temperature, four soil-moisture depths, evaporative demand, radiation and humidity. Level 7 because the grid is 34.8 km and roughly nine and a half level-12 basins share a single pixel. Pure measurement, no interpretation.",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
       "measureColumn": "value",
       "dimensionColumns": [
         {
@@ -349,7 +349,7 @@
       "label": "CFSv2 basin climatological baseline",
       "note": "Mean and standard deviation per basin, calendar month and variable over a stated reference period. The period stays inside the operational CFSv2 era: the record reaches 1979, but 25 cm soil moisture steps up 1.41 standard deviations at the 2011 CFSR handover, and a baseline spanning that would bias every anomaly drawn against it. Cells with fewer than three years carry no standard deviation. Carries no quality column because it is derived: its producer reads only rows the observation table marked ok, so every row here is one by construction.",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
       "measureColumn": "mean",
       "dimensionColumns": [
         {
@@ -377,7 +377,7 @@
       "label": "CFSv2 basin anomaly",
       "note": "Observations expressed as z-scores against the baseline, with a symmetric classification from extremely dry to extremely wet. Derived and rebuildable: it holds no measurement the other two tables do not already have, and it moves whenever the reference period is redefined. Carries no quality column because it is derived: its producer reads only rows the observation table marked ok, so every row here is one by construction.",
       "predicate": "uz:hasBasinAnomaly",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
       "measureColumn": "z_score",
       "dimensionColumns": [
         {
@@ -402,7 +402,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
@@ -438,7 +438,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
@@ -470,7 +470,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
@@ -549,6 +549,74 @@
       "subjectType": "Dataset",
       "objectType": "AdminArea",
       "identifierScheme": "ADM2_PCODE"
+    },
+    {
+      "id": "cams-basin-daily",
+      "dataset": "cams-nrt",
+      "label": "CAMS atmospheric composition by basin",
+      "note": "Monthly mean of the CAMS +0h analysis per level-6 basin: aerosol optical depth at 550 nm and PM2.5. Only these two parameters exist before 2021-07-01, so reading just them gives a record that runs the whole way back without silently changing content partway through. PM2.5 is converted from kg/m3 to micrograms per cubic metre, which is the unit air quality is discussed in. Level 6 because the 0.4 degree grid is 1,470 km2 at this latitude and a level-7 basin covers only 1.9 pixels. This is the analysis, not a forecast — see cams-forecast-skill for how much the forecasts drift from it.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_DAILY/cams-basin-daily.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "basin_id",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "which atmospheric variable"
+        }
+      ]
+    },
+    {
+      "id": "cams-forecast-skill",
+      "dataset": "cams-nrt",
+      "label": "CAMS forecast skill against its own analysis",
+      "note": "Mean absolute error, bias and correlation between each forecast lead time and the +0h analysis valid at the same moment, over Uzbekistan. CAMS issues two five-day forecasts a day, so any moment has up to eleven images aiming at it and their disagreement is measurable from the collection alone. Read the scope carefully: this verifies forecast against analysis, and the analysis is itself a model state constrained by assimilated satellite retrievals, not a measurement. A forecast agreeing with it means the model agreed with itself. Independent verification would need surface monitors or AERONET sites, of which Uzbekistan has very few.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "variable",
+      "objectColumn": "variable",
+      "identifierScheme": "CAMS_VARIABLE",
+      "scopeColumn": "metric",
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "lead_hours",
+          "meaning": "forecast lead time in hours"
+        },
+        {
+          "column": "metric",
+          "meaning": "which skill statistic"
+        }
+      ]
     }
   ]
 }

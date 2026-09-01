@@ -3,6 +3,8 @@
   "number": "1",
   "definition": "What happens above the surface: precipitation, temperature, humidity, radiation and evaporative demand.",
   "datasets": [
+    "CAMS_BASIN_DAILY",
+    "CAMS_FORECAST_SKILL",
     "CFSV2_BASIN_ANOMALY",
     "CFSV2_BASIN_CLIMATOLOGY",
     "CFSV2_BASIN_MONTHLY",

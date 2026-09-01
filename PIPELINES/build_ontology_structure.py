@@ -82,6 +82,19 @@ DATASETS = {
         "crossDomain": {"LAND": ["soil_moisture_5cm", "soil_moisture_25cm",
                                  "soil_moisture_70cm", "soil_moisture_150cm"]},
     },
+    "CAMS_BASIN_DAILY": {
+        "domain": "ATMOSPHERE", "table": "cams-basin-daily",
+        "source": "PUBLISHED/data/ontology/_ATMOSPHERE/_CAMS_BASIN_DAILY/cams-basin-daily.csv",
+        "what": ("Aerosol optical depth and PM2.5 per level-6 basin from the CAMS +0h analysis — "
+                 "the assimilated estimate of what the atmosphere was, not a forecast."),
+    },
+    "CAMS_FORECAST_SKILL": {
+        "domain": "ATMOSPHERE", "table": "cams-forecast-skill",
+        "source": "PUBLISHED/data/ontology/_ATMOSPHERE/_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
+        "what": ("How far CAMS forecasts diverge from their own analysis at 24 to 120 hours "
+                 "ahead: error, bias and correlation per lead time. Tells a user of the state "
+                 "table how far ahead the product is worth believing."),
+    },
     "CHIRPS_V3_BASIN_PENTAD": {
         "domain": "ATMOSPHERE", "table": "chirps-v3-basin-pentad",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
@@ -243,13 +256,35 @@ def main() -> None:
     print("-" * 100)
     moved = missing = 0
     deferred: list[str] = []
+    renumbered: list[str] = []
     for row in rows:
         source = ROOT / row["source"]
         in_place = row.get("inPlace", False)
         target = TREE / row["folder"] / Path(row["source"]).name
-        already_home = source.resolve() == target.resolve()
+
+        # Find the dataset's folder by name, wherever it is currently numbered.
+        # Renumbering happens whenever a dataset is inserted alphabetically, and
+        # a recorded path with a number in it goes stale the moment it does —
+        # which is how CFSv2 ended up with its data under 1.1 while the tree
+        # expected 1.3, beside an empty folder at the new number.
+        existing = [d for d in TREE.glob(f"*/*_{row['name']}") if d.is_dir()]
+        current = existing[0] if len(existing) == 1 else None
+        if current is not None and current != target.parent:
+            if any(current.iterdir()):
+                target.parent.parent.mkdir(parents=True, exist_ok=True)
+                if target.parent.exists() and not any(target.parent.iterdir()):
+                    target.parent.rmdir()
+                if not target.parent.exists():
+                    current.rename(target.parent)
+                    renumbered.append(f"{row['name']}: {current.name} -> {target.parent.name}")
+            elif not any(current.iterdir()):
+                current.rmdir()
+        already_home = source.resolve() == target.resolve() if source.exists() else False
+        landed = target.exists()
         if in_place:
             state = "in delivery" if source.exists() else "absent"
+        elif landed:
+            state = "filed"
         elif already_home:
             # Its pipeline writes straight into the tree; nothing to move.
             state = "filed" if source.exists() else "absent"
@@ -290,6 +325,10 @@ def main() -> None:
     print(f"  {len(rows)} datasets across {len(DOMAINS)} domains"
           + (f" · {moved} files moved" if args.apply else " · dry run, nothing moved")
           + (f" · {missing} not yet built" if missing else ""))
+    if renumbered:
+        print(f"  {len(renumbered)} folders renumbered in place:")
+        for line in renumbered:
+            print(f"      {line}")
     if deferred:
         print(f"  {len(deferred)} deferred while being written: {', '.join(deferred)}")
         print("  Re-run --apply once those pipelines finish.")

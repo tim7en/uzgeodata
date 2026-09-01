@@ -37,6 +37,8 @@
     "chirts:observe": "python PIPELINES/chirts_basin_service.py",
     "cpc:observe": "python PIPELINES/cpc_basin_service.py",
     "ghm:observe": "python PIPELINES/ghm_unit_service.py",
+    "cams:state": "python PIPELINES/cams_basin_service.py state",
+    "cams:skill": "python PIPELINES/cams_basin_service.py skill",
     "data:currency": "python PIPELINES/build_data_currency.py",
     "ontology:structure": "python PIPELINES/build_ontology_structure.py",
     "ontology:audit": "python PIPELINES/audit_ontology_tables.py"
