@@ -53,10 +53,10 @@ SOURCES = {
         "command": "npm run cfsv2:climatology",
         "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
     },
-    "chirps-v3-basin-monthly": {
+    "chirps-v3-basin-pentad": {
         "cadence": "monthly", "latest": "chirps", "units": 263,
         "command": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
-        "note": "CHIRPS v3 publishes daily with a few weeks' lag; a month is complete once it ends.",
+        "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
     },
     "landcover-admin-year": {
         "cadence": "annual", "latest": "landcover", "units": 199,

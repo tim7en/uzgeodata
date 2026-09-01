@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T07:35:33+00:00",
+  "generatedAt": "2026-09-01T07:49:40+00:00",
   "convention": {
     "naming": "Upper case, digits and underscores only.",
     "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
@@ -69,10 +69,10 @@
       "number": "1.4",
       "domain": "ATMOSPHERE",
       "domainNumber": "1",
-      "name": "CHIRPS_V3_BASIN_MONTHLY",
-      "folder": "1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_MONTHLY",
-      "table": "chirps-v3-basin-monthly",
-      "what": "Monthly precipitation total per level-7 basin from CHIRPS v3 daily, at 5.6 km."
+      "name": "CHIRPS_V3_BASIN_PENTAD",
+      "folder": "1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD",
+      "table": "chirps-v3-basin-pentad",
+      "what": "Pentadal precipitation total per level-7 basin at 5.6 km — six per month. CHIRPS is computed at this scale and its daily product is a disaggregation of it, so this is the authoritative quantity. Monthly and seasonal totals are sums of pentads and are derived rather than stored."
     },
     {
       "number": "2.1",

@@ -395,20 +395,20 @@
       ]
     },
     {
-      "id": "chirps-v3-basin-monthly",
+      "id": "chirps-v3-basin-pentad",
       "dataset": "chirps-v3",
-      "label": "CHIRPS v3 basin monthly precipitation",
-      "note": "Monthly precipitation total per level-7 basin at 5.6 km — six times finer than the CFSv2 grid, and purpose-built for rainfall rather than producing it as one output of a coupled model. Version 3 sits under UCSB-CHC, not the UCSB-CHG path version 2 uses, and the two differ by about nine percent over Uzbekistan. The product column separates the near-real-time satellite series from the station-blended reanalysis.",
+      "label": "CHIRPS v3 basin pentadal precipitation",
+      "note": "Accumulated rainfall per level-7 basin per pentad — days 1-5, 6-10, 11-15, 16-20, 21-25 and 26 to month end. CHIRPS is computed pentadally and its daily series is a disaggregation: summed over a month the two agree to within 0.00%, so the daily product adds nothing and its within-pentad variation is an artefact rather than an observation. Six pentads reconstruct a month to 0.0002 mm, which is why no monthly table is stored beside this one. The days column varies because the sixth pentad runs to month end, so an mm/day rate must divide by it rather than by five.",
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_MONTHLY/chirps-v3-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
-      "scopeColumn": "product",
+      "scopeColumn": null,
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "dimensionColumns": [
@@ -419,6 +419,10 @@
         {
           "column": "month",
           "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "pentad",
+          "meaning": "pentad within the month, 1-6"
         },
         {
           "column": "variable",

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T07:34:52+00:00",
+  "generatedAt": "2026-09-01T07:49:56+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
@@ -26,12 +26,34 @@
     }
   },
   "counts": {
+    "BEHIND": 1,
     "INCOMPLETE": 1,
     "MISSING": 7,
-    "CURRENT": 2,
+    "CURRENT": 1,
     "STATIC": 9
   },
   "tables": [
+    {
+      "id": "chirps-v3-basin-pentad",
+      "label": "CHIRPS v3 basin pentadal precipitation",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+      "exists": true,
+      "rows": 1578,
+      "units": 263,
+      "expectedUnits": 263,
+      "coverage": {
+        "from": "2026-05",
+        "to": "2026-05"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": "2026-05 → 2026-07",
+      "status": "BEHIND",
+      "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
+      "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
+      "lastModified": "2026-09-01T07:48:25+00:00"
+    },
     {
       "id": "cfsv2-basin-anomaly",
       "label": "CFSv2 basin anomaly",
@@ -199,27 +221,6 @@
       "refresh": "npm run cfsv2:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "CFSv2 publishes six-hourly with a short lag; a month is complete once it ends.",
       "lastModified": "2026-09-01T07:23:26+00:00"
-    },
-    {
-      "id": "chirps-v3-basin-monthly",
-      "label": "CHIRPS v3 basin monthly precipitation",
-      "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_MONTHLY/chirps-v3-basin-monthly.csv",
-      "exists": true,
-      "rows": 789,
-      "units": 263,
-      "expectedUnits": 263,
-      "coverage": {
-        "from": "2026-05",
-        "to": "2026-07"
-      },
-      "cadence": "monthly",
-      "upstreamLatest": "2026-07",
-      "gap": null,
-      "status": "CURRENT",
-      "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
-      "note": "CHIRPS v3 publishes daily with a few weeks' lag; a month is complete once it ends.",
-      "lastModified": "2026-09-01T07:32:33+00:00"
     },
     {
       "id": "admin-basin-district",

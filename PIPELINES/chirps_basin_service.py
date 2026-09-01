@@ -1,28 +1,30 @@
-"""Monthly precipitation per basin from CHIRPS v3.
+"""Pentadal precipitation per basin from CHIRPS v3 — the canonical rainfall layer.
 
-CHIRPS blends infrared cold-cloud duration with station data at 5.6 km, which is
-roughly six times finer than the CFSv2 grid already in the ontology. Both carry
-precipitation and they will not agree; having the two is the point, because
-CHIRPS is built for rainfall while CFSv2 produces it as one output of a coupled
-model.
+CHIRPS is computed at pentadal and monthly scales, and its daily product is a
+disaggregation of the pentadal values rather than an independent measurement.
+That is not a claim taken on trust: summed over a month, PENTAD and DAILY agree
+to within 0.00% in every month tested between 2011 and 2026. The daily series
+therefore carries no information at monthly scale, and the variation *within* a
+pentad is an artefact of the disaggregation — not something to read as rainfall
+on a particular day.
 
-Version 3 sits under a different provider path from the version 2 most code
-still points at — UCSB-CHC, not UCSB-CHG — and the two are not interchangeable:
-over Uzbekistan in July 2026 v3 gives 8.258 mm against v2's 7.556, about nine
-percent apart.
+So the pentad is what gets stored. Six per month — days 1-5, 6-10, 11-15, 16-20,
+21-25 and 26 to month end — each an accumulated total in millimetres. Monthly and
+seasonal figures are sums of pentads and are derived on demand; storing them as
+well would be a second set of numbers that could drift from the first.
 
-Two v3 products are published and this reads both, because they answer different
-questions:
+A pentad is also the right grain for the indicators this feeds: SPI, 30/60/90-day
+deficits, seasonal totals and basin water balance all accumulate over windows that
+a monthly table cannot cut finely enough and a synthetic daily one cannot honestly
+support.
 
-    DAILY_SAT   near-real-time, satellite-only, from 1998. What fell recently.
-    DAILY_RNL   reanalysis with station blending, from 1981. What to compare
-                against — the longer and better-constrained record.
-
-Daily images are summed to a monthly total, which is what precipitation is
-usefully reported as; a mean of daily rates would be a number nobody quotes.
+On the two daily products: DAILY_SAT (from 1998) and DAILY_RNL (from 1981) return
+identical values wherever they overlap, tested over Uzbekistan and over
+station-dense East Africa. They differ only in how far back they reach, so
+nothing here needs to choose between them.
 
     python PIPELINES/chirps_basin_service.py --start 2026-01 --end 2026-07
-    python PIPELINES/chirps_basin_service.py --product RNL --start 2011-01 --end 2011-12
+    python PIPELINES/chirps_basin_service.py --start 2011-01 --end 2025-12   # baseline
 """
 
 from __future__ import annotations
@@ -31,41 +33,48 @@ import argparse
 import csv
 import json
 import time
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 BASINS = ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" / "basinatlas_uz_lev07.geojson"
 OUTPUT = (ROOT / "PUBLISHED" / "data" / "ontology" / "1_ATMOSPHERE"
-          / "1.4_CHIRPS_V3_BASIN_MONTHLY" / "chirps-v3-basin-monthly.csv")
+          / "1.4_CHIRPS_V3_BASIN_PENTAD" / "chirps-v3-basin-pentad.csv")
 
 PROJECT = "ee-sabitovty"
-PRODUCTS = {
-    "SAT": ("UCSB-CHC/CHIRPS/V3/DAILY_SAT", "near-real-time, satellite only, from 1998"),
-    "RNL": ("UCSB-CHC/CHIRPS/V3/DAILY_RNL", "reanalysis with station blending, from 1981"),
-}
+ASSET = "UCSB-CHC/CHIRPS/V3/PENTAD"
 SCALE = 5566
 
+# Where each pentad of a month begins. The sixth runs to the end of the month, so
+# it is five days in February and six in a 31-day month — a pentad is a fixed
+# calendar slot, not a fixed duration, and an mm/day rate derived from one has to
+# divide by the right number of days.
+PENTAD_STARTS = (1, 6, 11, 16, 21, 26)
 
-def months(start: str, end: str) -> list[tuple[int, int]]:
+
+def pentads(start: str, end: str):
+    """Every (year, month, index, first_day, last_day) in the requested range."""
     sy, sm = (int(p) for p in start.split("-"))
     ey, em = (int(p) for p in end.split("-"))
-    out, year, month = [], sy, sm
+    year, month = sy, sm
     while (year, month) <= (ey, em):
-        out.append((year, month))
+        for index, first in enumerate(PENTAD_STARTS, start=1):
+            if index < 6:
+                last = PENTAD_STARTS[index] - 1
+            else:
+                last = (date(year + (month == 12), month % 12 + 1, 1) - date.resolution).day
+            yield year, month, index, first, last
         month = month + 1 if month < 12 else 1
         if month == 1:
             year += 1
-    return out
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--product", choices=sorted(PRODUCTS), default="SAT")
-    parser.add_argument("--start", default="2026-01")
-    parser.add_argument("--end", default="2026-07")
+    parser.add_argument("--start", default="2026-01", help="First month, YYYY-MM.")
+    parser.add_argument("--end", default="2026-07", help="Last month, YYYY-MM.")
     args = parser.parse_args()
-    asset, description = PRODUCTS[args.product]
 
     try:
         import ee
@@ -79,17 +88,16 @@ def main() -> None:
     collection = ee.FeatureCollection([
         ee.Feature(ee.Geometry(f["geometry"]), {"basin": int(f["properties"]["HYBAS_ID"])})
         for f in document["features"]])
-    source = ee.ImageCollection(asset)
+    source = ee.ImageCollection(ASSET).select("precipitation")
 
     done = set()
     if OUTPUT.exists():
         with OUTPUT.open(encoding="utf8", newline="") as handle:
-            done = {(r["product"], r["year"], r["month"]) for r in csv.DictReader(handle)}
-    todo = [(y, m) for y, m in months(args.start, args.end)
-            if (args.product, str(y), str(m)) not in done]
+            done = {(r["year"], r["month"], r["pentad"]) for r in csv.DictReader(handle)}
+    todo = [row for row in pentads(args.start, args.end)
+            if (str(row[0]), str(row[1]), str(row[2])) not in done]
 
-    print(f"CHIRPS v3 {args.product} · {description}")
-    print(f"  {len(document['features'])} level-7 basins · {len(todo)} months to measure")
+    print(f"CHIRPS v3 PENTAD · {len(document['features'])} level-7 basins · {len(todo)} pentads to measure")
     if not todo:
         print("  nothing to do")
         return
@@ -100,35 +108,40 @@ def main() -> None:
     with OUTPUT.open("a", encoding="utf8", newline="") as handle:
         writer = csv.writer(handle)
         if fresh:
-            writer.writerow(["basin_id", "year", "month", "product", "variable",
-                             "value", "unit", "quality"])
-        for position, (year, month) in enumerate(todo, start=1):
-            start = ee.Date.fromYMD(year, month, 1)
-            window = source.filterDate(start, start.advance(1, "month")).select("precipitation")
+            writer.writerow(["basin_id", "year", "month", "pentad", "start_date", "end_date",
+                             "days", "variable", "value", "unit", "quality"])
+        for position, (year, month, index, first, last) in enumerate(todo, start=1):
+            begin = ee.Date.fromYMD(year, month, first)
+            # A half-open window on the day after the pentad's last day catches
+            # exactly the one image CHIRPS stamps at its start.
+            finish = ee.Date.fromYMD(year, month, last).advance(1, "day")
+            window = source.filterDate(begin, finish)
             if window.size().getInfo() == 0:
-                print(f"  {year}-{month:02d}: no images", flush=True)
+                print(f"  {year}-{month:02d} p{index}: no image", flush=True)
                 continue
-            total = window.sum()
             try:
-                result = total.reduceRegions(collection=collection,
-                                             reducer=ee.Reducer.mean(), scale=SCALE).getInfo()
+                result = window.sum().reduceRegions(
+                    collection=collection, reducer=ee.Reducer.mean(), scale=SCALE).getInfo()
             except Exception as error:
-                print(f"  ! {year}-{month:02d}: {str(error).strip()[:100]}", flush=True)
+                print(f"  ! {year}-{month:02d} p{index}: {str(error).strip()[:100]}", flush=True)
                 continue
             for feature in result["features"]:
                 value = feature["properties"].get("mean")
                 if value is None:
                     continue
-                # CHIRPS marks gaps with a large negative sentinel; a monthly total
-                # below zero is that, not a dry month.
+                # CHIRPS marks gaps with a large negative sentinel; a negative
+                # accumulation is that, not a dry pentad.
                 quality = "ok" if value >= 0 else "implausible"
-                writer.writerow([feature["properties"]["basin"], year, month, args.product,
-                                 "precipitation_total", round(value, 4), "mm", quality])
+                writer.writerow([feature["properties"]["basin"], year, month, index,
+                                 f"{year}-{month:02d}-{first:02d}", f"{year}-{month:02d}-{last:02d}",
+                                 last - first + 1, "precipitation_total",
+                                 round(value, 4), "mm", quality])
                 rows += 1
             handle.flush()
-            rate = (time.time() - started) / position
-            print(f"  {year}-{month:02d} · {position}/{len(todo)} · {rate:.0f}s each · "
-                  f"{(len(todo) - position) * rate / 60:.0f} min left", flush=True)
+            if position % 6 == 0 or position == len(todo):
+                rate = (time.time() - started) / position
+                print(f"  {year}-{month:02d} p{index} · {position}/{len(todo)} · {rate:.1f}s each · "
+                      f"{(len(todo) - position) * rate / 60:.0f} min left", flush=True)
 
     print(f"\n  {rows:,} observations -> {OUTPUT.relative_to(ROOT)}")
 

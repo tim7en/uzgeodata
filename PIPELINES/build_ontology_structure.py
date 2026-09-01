@@ -82,10 +82,13 @@ DATASETS = {
         "crossDomain": {"LAND": ["soil_moisture_5cm", "soil_moisture_25cm",
                                  "soil_moisture_70cm", "soil_moisture_150cm"]},
     },
-    "CHIRPS_V3_BASIN_MONTHLY": {
-        "domain": "ATMOSPHERE", "table": "chirps-v3-basin-monthly",
-        "source": "PUBLISHED/data/analysis/chirps-v3-basin-monthly.csv",
-        "what": "Monthly precipitation total per level-7 basin from CHIRPS v3 daily, at 5.6 km.",
+    "CHIRPS_V3_BASIN_PENTAD": {
+        "domain": "ATMOSPHERE", "table": "chirps-v3-basin-pentad",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+        "what": ("Pentadal precipitation total per level-7 basin at 5.6 km — six per month. "
+                 "CHIRPS is computed at this scale and its daily product is a disaggregation "
+                 "of it, so this is the authoritative quantity. Monthly and seasonal totals "
+                 "are sums of pentads and are derived rather than stored."),
     },
     "LANDCOVER_ADMIN_YEAR": {
         "domain": "LAND", "table": "landcover-admin-year",
@@ -194,8 +197,12 @@ def main() -> None:
         source = ROOT / row["source"]
         in_place = row.get("inPlace", False)
         target = TREE / row["folder"] / Path(row["source"]).name
+        already_home = source.resolve() == target.resolve()
         if in_place:
             state = "in delivery" if source.exists() else "absent"
+        elif already_home:
+            # Its pipeline writes straight into the tree; nothing to move.
+            state = "filed" if source.exists() else "absent"
         else:
             state = "present" if source.exists() else ("filed" if target.exists() else "absent")
         if state == "absent":
@@ -205,7 +212,7 @@ def main() -> None:
         if not args.apply:
             continue
         target.parent.mkdir(parents=True, exist_ok=True)
-        if source.exists() and not in_place:
+        if source.exists() and not in_place and not already_home:
             if in_use(source):
                 deferred.append(row["name"])
                 print(f"       ^ deferred: something is still writing to {row['source']}")
