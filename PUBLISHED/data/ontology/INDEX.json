@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T08:23:11+00:00",
+  "generatedAt": "2026-09-01T08:36:58+00:00",
   "convention": {
     "naming": "Upper case, digits and underscores only.",
     "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
@@ -96,17 +96,29 @@
       "number": "2.1",
       "domain": "LAND",
       "domainNumber": "2",
-      "name": "LANDCOVER_ADMIN_YEAR",
-      "folder": "2_LAND/2.1_LANDCOVER_ADMIN_YEAR",
-      "table": "landcover-admin-year",
-      "what": "Area of each land cover class per district per year."
+      "name": "GHM_UNIT_MODIFICATION",
+      "folder": "2_LAND/2.1_GHM_UNIT_MODIFICATION",
+      "table": "ghm-basin-modification",
+      "alsoTables": [
+        "ghm-district-modification"
+      ],
+      "what": "Human modification index for 2016 at 1 km, reduced over both level-12 basins and districts: the mean plus the share of area in each modification band. The only timeless layer here — one image, no timestamp."
     },
     {
       "number": "2.2",
       "domain": "LAND",
       "domainNumber": "2",
+      "name": "LANDCOVER_ADMIN_YEAR",
+      "folder": "2_LAND/2.2_LANDCOVER_ADMIN_YEAR",
+      "table": "landcover-admin-year",
+      "what": "Area of each land cover class per district per year."
+    },
+    {
+      "number": "2.3",
+      "domain": "LAND",
+      "domainNumber": "2",
       "name": "LANDCOVER_BASIN_YEAR",
-      "folder": "2_LAND/2.2_LANDCOVER_BASIN_YEAR",
+      "folder": "2_LAND/2.3_LANDCOVER_BASIN_YEAR",
       "table": "landcover-basin-year",
       "what": "Area of each land cover class per level-12 basin per year. Not yet built."
     },

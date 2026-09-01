@@ -3,6 +3,7 @@
   "number": "2",
   "definition": "The surface itself: cover, use, soil and terrain.",
   "datasets": [
+    "GHM_UNIT_MODIFICATION",
     "LANDCOVER_ADMIN_YEAR",
     "LANDCOVER_BASIN_YEAR"
   ]

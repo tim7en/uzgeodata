@@ -35,10 +35,12 @@ import json
 import time
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 ROOT = Path(__file__).resolve().parent.parent
 BASINS = ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" / "basinatlas_uz_lev06.geojson"
-OUTPUT = (ROOT / "PUBLISHED" / "data" / "ontology" / "1_ATMOSPHERE"
-          / "1.6_CPC_BASIN_MONTHLY" / "cpc-basin-monthly.csv")
+from ontology_paths import dataset_dir
+OUTPUT = dataset_dir("CPC_BASIN_MONTHLY", "ATMOSPHERE") / "cpc-basin-monthly.csv"
 
 PROJECT = "ee-sabitovty"
 ASSET = "NOAA/CPC/Temperature"

@@ -44,6 +44,7 @@ GRIDS = {
     "chirps-v3-basin-pentad": 5566, "chirts-basin-monthly": 5566,
     "landcover-basin-year": 10, "landcover-admin-year": 10,
     "cpc-basin-monthly": 55660,
+    "ghm-basin-modification": 1000, "ghm-district-modification": 1000,
 }
 # Which unit table a basin id belongs to, and its mean area in km2.
 LEVEL_AREA = {}

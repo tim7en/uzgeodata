@@ -31,8 +31,10 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 ROOT = Path(__file__).resolve().parent.parent
-OUT_DIR = ROOT / "PUBLISHED" / "data" / "ontology"
+from ontology_paths import dataset_dir
 MANIFEST = ROOT / "ONTOLOGY" / "instances" / "landcover-statistics.json"
 
 PROJECT = "ee-sabitovty"
@@ -48,7 +50,7 @@ SOURCES = {
         "path": "PUBLISHED/data/admin/adm2.geojson",
         "key": "pcode",
         "label": "nameEn",
-        "output": "2_LAND/2.1_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
+        "dataset": "LANDCOVER_ADMIN_YEAR", "file": "landcover-admin-year.csv",
         "unitColumn": "pcode",
         "subjectType": "AdminArea",
         "dataset": "esri-io-landcover-10m",
@@ -59,7 +61,7 @@ SOURCES = {
         "path": "PUBLISHED/data/hydrography/basins.geojson",
         "key": "HYBAS_ID",
         "label": "HYBAS_ID",
-        "output": "2_LAND/2.2_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
+        "dataset": "LANDCOVER_BASIN_YEAR", "file": "landcover-basin-year.csv",
         "unitColumn": "basin_id",
         "subjectType": "Basin",
         "dataset": "esri-io-landcover-10m",
@@ -102,7 +104,7 @@ def main() -> None:
 
     config = SOURCES[args.level]
     scale = args.scale or config["scale"]
-    target = OUT_DIR / config["output"]
+    target = dataset_dir(config["dataset"], "LAND") / config["file"]
     unit_column = config["unitColumn"]
 
     try:
@@ -132,7 +134,7 @@ def main() -> None:
         print("  nothing to do")
         return
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    target.parent.mkdir(parents=True, exist_ok=True)
     fresh = not target.exists()
     started = time.time()
     written = 0

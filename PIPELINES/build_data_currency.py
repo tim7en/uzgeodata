@@ -65,6 +65,12 @@ SOURCES = {
         "command": "npm run chirts:observe -- --start <YYYY-MM> --end <YYYY-MM>",
         "note": "The upstream record ended at 2016-12. Complete once it reaches that, and never behind.",
     },
+    "ghm-basin-modification": {"cadence": "static", "latest": None,
+        "command": "npm run ghm:observe",
+        "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published."},
+    "ghm-district-modification": {"cadence": "static", "latest": None,
+        "command": "npm run ghm:observe",
+        "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published."},
     "landcover-admin-year": {
         "cadence": "annual", "latest": "landcover", "units": 199,
         "command": "npm run landcover:stats -- --level admin",

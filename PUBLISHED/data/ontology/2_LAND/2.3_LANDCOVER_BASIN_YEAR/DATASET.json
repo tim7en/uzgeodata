@@ -1,0 +1,16 @@
+{
+  "name": "LANDCOVER_BASIN_YEAR",
+  "number": "2.3",
+  "domain": "LAND",
+  "what": "Area of each land cover class per level-12 basin per year. Not yet built.",
+  "tables": [
+    "landcover-basin-year"
+  ],
+  "predicate": "uz:hasBasinStatistic",
+  "file": "landcover-basin-year.csv",
+  "storedInPlace": false,
+  "path": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
+  "present": false,
+  "crossDomain": {},
+  "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
+}

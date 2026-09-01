@@ -104,6 +104,14 @@ DATASETS = {
                  "half-degree analysis, 1979 to the present, with the station count that "
                  "informed each cell."),
     },
+    "GHM_UNIT_MODIFICATION": {
+        "domain": "LAND", "table": "ghm-basin-modification",
+        "alsoTables": ["ghm-district-modification"],
+        "source": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+        "what": ("Human modification index for 2016 at 1 km, reduced over both level-12 basins "
+                 "and districts: the mean plus the share of area in each modification band. The "
+                 "only timeless layer here — one image, no timestamp."),
+    },
     "LANDCOVER_ADMIN_YEAR": {
         "domain": "LAND", "table": "landcover-admin-year",
         "source": "PUBLISHED/data/analysis/landcover-admin-year.csv",
@@ -289,6 +297,30 @@ def main() -> None:
     if not args.apply:
         print("\n  Re-run with --apply to create the tree and move the tables.")
         return
+
+    # The numbering is this tool's to assign, so the container paths that carry it
+    # are this tool's to keep correct. Leaving them to be edited by hand is how
+    # LANDCOVER_ADMIN_YEAR ended up with a pipeline writing to 2.1 and a graph
+    # pointing at 2.2 after a new dataset took the slot.
+    registry_path = TABLES
+    registry_doc = json.loads(registry_path.read_text(encoding="utf8"))
+    by_table = {}
+    for row in rows:
+        for name in [row["table"], *row.get("alsoTables", [])]:
+            by_table[name] = row
+    repointed = 0
+    for table in registry_doc["tables"]:
+        row = by_table.get(table["id"])
+        if not row or row.get("inPlace"):
+            continue
+        want = str((TREE / row["folder"] / Path(row["source"]).name).relative_to(ROOT))
+        if table["container"] != want:
+            table["container"] = want
+            repointed += 1
+    if repointed:
+        registry_path.write_text(json.dumps(registry_doc, ensure_ascii=False, indent=2) + "\n",
+                                 encoding="utf8")
+        print(f"  {repointed} container paths repointed to their current numbers")
 
     for domain_index, domain in enumerate(sorted(DOMAINS), start=1):
         folder = TREE / f"{domain_index}_{domain}"

@@ -254,7 +254,7 @@
       "predicate": "uz:hasAdminStatistic",
       "subjectType": "Dataset",
       "objectType": "AdminArea",
-      "container": "PUBLISHED/data/ontology/2_LAND/2.1_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
       "objectColumn": "pcode",
       "identifierScheme": "ADM2_PCODE",
       "format": "CSV",
@@ -282,7 +282,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "format": "CSV",
@@ -493,6 +493,62 @@
           "meaning": "which statistic"
         }
       ]
+    },
+    {
+      "dataset": "csp-ghm",
+      "format": "CSV",
+      "containerTable": null,
+      "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+      "subjectColumn": "unit_id",
+      "objectColumn": "unit_id",
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "scopeColumn": "frame",
+      "dimensionColumns": [
+        {
+          "column": "frame",
+          "meaning": "which geography the unit belongs to"
+        },
+        {
+          "column": "variable",
+          "meaning": "the index, or the area share in one band"
+        }
+      ],
+      "id": "ghm-basin-modification",
+      "label": "Human modification by level-12 basin",
+      "note": "Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "identifierScheme": "HYBAS_ID"
+    },
+    {
+      "dataset": "csp-ghm",
+      "format": "CSV",
+      "containerTable": null,
+      "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+      "subjectColumn": "unit_id",
+      "objectColumn": "unit_id",
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "scopeColumn": "frame",
+      "dimensionColumns": [
+        {
+          "column": "frame",
+          "meaning": "which geography the unit belongs to"
+        },
+        {
+          "column": "variable",
+          "meaning": "the index, or the area share in one band"
+        }
+      ],
+      "id": "ghm-district-modification",
+      "label": "Human modification by district",
+      "note": "Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it.",
+      "predicate": "uz:hasAdminStatistic",
+      "subjectType": "Dataset",
+      "objectType": "AdminArea",
+      "identifierScheme": "ADM2_PCODE"
     }
   ]
 }

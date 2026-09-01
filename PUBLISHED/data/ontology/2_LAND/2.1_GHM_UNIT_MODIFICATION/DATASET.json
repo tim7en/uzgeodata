@@ -1,0 +1,17 @@
+{
+  "name": "GHM_UNIT_MODIFICATION",
+  "number": "2.1",
+  "domain": "LAND",
+  "what": "Human modification index for 2016 at 1 km, reduced over both level-12 basins and districts: the mean plus the share of area in each modification band. The only timeless layer here — one image, no timestamp.",
+  "tables": [
+    "ghm-basin-modification",
+    "ghm-district-modification"
+  ],
+  "predicate": "uz:hasBasinStatistic",
+  "file": "ghm-unit-modification.csv",
+  "storedInPlace": false,
+  "path": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+  "present": true,
+  "crossDomain": {},
+  "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
+}

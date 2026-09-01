@@ -55,14 +55,16 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 ROOT = Path(__file__).resolve().parent.parent
 BASINS = ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" / "basinatlas_uz_lev07.geojson"
-TREE = ROOT / "PUBLISHED" / "data" / "ontology" / "1_ATMOSPHERE"
+from ontology_paths import dataset_dir
 MANIFEST = ROOT / "ONTOLOGY" / "instances" / "cfsv2-basin-service.json"
 
-OBSERVATIONS = TREE / "1.3_CFSV2_BASIN_MONTHLY" / "cfsv2-basin-monthly.csv"
-CLIMATOLOGY = TREE / "1.2_CFSV2_BASIN_CLIMATOLOGY" / "cfsv2-basin-climatology.csv"
-ANOMALIES = TREE / "1.1_CFSV2_BASIN_ANOMALY" / "cfsv2-basin-anomaly.csv"
+OBSERVATIONS = dataset_dir("CFSV2_BASIN_MONTHLY", "ATMOSPHERE") / "cfsv2-basin-monthly.csv"
+CLIMATOLOGY = dataset_dir("CFSV2_BASIN_CLIMATOLOGY", "ATMOSPHERE") / "cfsv2-basin-climatology.csv"
+ANOMALIES = dataset_dir("CFSV2_BASIN_ANOMALY", "ATMOSPHERE") / "cfsv2-basin-anomaly.csv"
 
 PROJECT = "ee-sabitovty"
 ASSET = "NOAA/CFSV2/FOR6H_HARMONIZED"

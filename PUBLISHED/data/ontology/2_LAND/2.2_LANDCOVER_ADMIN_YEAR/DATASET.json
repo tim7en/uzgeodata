@@ -1,6 +1,6 @@
 {
   "name": "LANDCOVER_ADMIN_YEAR",
-  "number": "2.1",
+  "number": "2.2",
   "domain": "LAND",
   "what": "Area of each land cover class per district per year.",
   "tables": [
@@ -9,8 +9,8 @@
   "predicate": "uz:hasAdminStatistic",
   "file": "landcover-admin-year.csv",
   "storedInPlace": false,
-  "path": "PUBLISHED/data/ontology/2_LAND/2.1_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
-  "present": false,
+  "path": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
+  "present": true,
   "crossDomain": {},
   "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
 }
