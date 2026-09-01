@@ -35,7 +35,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 BASINS = ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" / "basinatlas_uz_lev07.geojson"
-OUTPUT = ROOT / "PUBLISHED" / "data" / "analysis" / "chirps-v3-basin-monthly.csv"
+OUTPUT = (ROOT / "PUBLISHED" / "data" / "ontology" / "1_ATMOSPHERE"
+          / "1.4_CHIRPS_V3_BASIN_MONTHLY" / "chirps-v3-basin-monthly.csv")
 
 PROJECT = "ee-sabitovty"
 PRODUCTS = {

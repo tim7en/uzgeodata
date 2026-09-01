@@ -1,0 +1,13 @@
+{
+  "domain": "WATER",
+  "number": "4",
+  "definition": "Water in the landscape: catchments, rivers, lakes and the routing between them.",
+  "datasets": [
+    "BASINATLAS_DOWNSTREAM_ROUTING",
+    "BASINATLAS_PFAFSTETTER_HIERARCHY",
+    "BASINATLAS_SUBBASIN_HIERARCHY",
+    "HYDROBASINS_LAKE_DOWNSTREAM_ROUTING",
+    "HYDROBASINS_LAKE_PFAFSTETTER_HIERARCHY",
+    "HYDROBASINS_LAKE_SUBBASIN_HIERARCHY"
+  ]
+}

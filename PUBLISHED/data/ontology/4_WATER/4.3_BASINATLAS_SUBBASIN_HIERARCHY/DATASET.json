@@ -1,0 +1,16 @@
+{
+  "name": "BASINATLAS_SUBBASIN_HIERARCHY",
+  "number": "4.3",
+  "domain": "WATER",
+  "what": "Basin containment confirmed by spatial overlap rather than by code alone.",
+  "tables": [
+    "basinatlas-uz-hierarchy"
+  ],
+  "predicate": "uz:subBasinOf",
+  "file": "feature_hierarchy_links.csv",
+  "storedInPlace": true,
+  "path": "GEODATA/uzbekistan_basinatlas_v10/relationships/feature_hierarchy_links.csv",
+  "present": true,
+  "crossDomain": {},
+  "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
+}

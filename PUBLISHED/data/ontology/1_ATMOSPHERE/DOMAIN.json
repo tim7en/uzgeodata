@@ -1,0 +1,11 @@
+{
+  "domain": "ATMOSPHERE",
+  "number": "1",
+  "definition": "What happens above the surface: precipitation, temperature, humidity, radiation and evaporative demand.",
+  "datasets": [
+    "CFSV2_BASIN_ANOMALY",
+    "CFSV2_BASIN_CLIMATOLOGY",
+    "CFSV2_BASIN_MONTHLY",
+    "CHIRPS_V3_BASIN_MONTHLY"
+  ]
+}

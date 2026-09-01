@@ -1,0 +1,16 @@
+{
+  "name": "HYDROBASINS_LAKE_SUBBASIN_HIERARCHY",
+  "number": "4.6",
+  "domain": "WATER",
+  "what": "Basin containment in the lake-format extraction.",
+  "tables": [
+    "hydrobasins-lake-uz-hierarchy"
+  ],
+  "predicate": "uz:subBasinOf",
+  "file": "feature_hierarchy_links.csv",
+  "storedInPlace": true,
+  "path": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/feature_hierarchy_links.csv",
+  "present": true,
+  "crossDomain": {},
+  "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
+}

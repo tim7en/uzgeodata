@@ -210,7 +210,7 @@
       "predicate": "uz:intersectsAdminArea",
       "subjectType": "Basin",
       "objectType": "AdminArea",
-      "container": "PUBLISHED/data/hydrography/admin-basin-links.csv",
+      "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
@@ -232,7 +232,7 @@
       "predicate": "uz:intersectsAdminArea",
       "subjectType": "Basin",
       "objectType": "AdminArea",
-      "container": "PUBLISHED/data/hydrography/admin-basin-links.csv",
+      "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
@@ -254,7 +254,7 @@
       "predicate": "uz:hasAdminStatistic",
       "subjectType": "Dataset",
       "objectType": "AdminArea",
-      "container": "PUBLISHED/data/analysis/landcover-admin-year.csv",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.1_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
       "objectColumn": "pcode",
       "identifierScheme": "ADM2_PCODE",
       "format": "CSV",
@@ -282,7 +282,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/analysis/landcover-basin-year.csv",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
       "objectColumn": "basin_id",
       "identifierScheme": "HYBAS_ID",
       "format": "CSV",
@@ -317,7 +317,7 @@
       "label": "CFSv2 basin monthly state",
       "note": "Monthly mean of the 6-hourly CFSv2 field over each level-7 basin: precipitation, temperature, four soil-moisture depths, evaporative demand, radiation and humidity. Level 7 because the grid is 34.8 km and roughly nine and a half level-12 basins share a single pixel. Pure measurement, no interpretation.",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/analysis/cfsv2-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
       "measureColumn": "value",
       "dimensionColumns": [
         {
@@ -349,7 +349,7 @@
       "label": "CFSv2 basin climatological baseline",
       "note": "Mean and standard deviation per basin, calendar month and variable over a stated reference period. The period stays inside the operational CFSv2 era: the record reaches 1979, but 25 cm soil moisture steps up 1.41 standard deviations at the 2011 CFSR handover, and a baseline spanning that would bias every anomaly drawn against it. Cells with fewer than three years carry no standard deviation.",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/analysis/cfsv2-basin-climatology.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
       "measureColumn": "mean",
       "dimensionColumns": [
         {
@@ -377,8 +377,40 @@
       "label": "CFSv2 basin anomaly",
       "note": "Observations expressed as z-scores against the baseline, with a symmetric classification from extremely dry to extremely wet. Derived and rebuildable: it holds no measurement the other two tables do not already have, and it moves whenever the reference period is redefined.",
       "predicate": "uz:hasBasinAnomaly",
-      "container": "PUBLISHED/data/analysis/cfsv2-basin-anomaly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
       "measureColumn": "z_score",
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "which environmental variable"
+        }
+      ]
+    },
+    {
+      "id": "chirps-v3-basin-monthly",
+      "dataset": "chirps-v3",
+      "label": "CHIRPS v3 basin monthly precipitation",
+      "note": "Monthly precipitation total per level-7 basin at 5.6 km — six times finer than the CFSv2 grid, and purpose-built for rainfall rather than producing it as one output of a coupled model. Version 3 sits under UCSB-CHC, not the UCSB-CHG path version 2 uses, and the two differ by about nine percent over Uzbekistan. The product column separates the near-real-time satellite series from the station-blended reanalysis.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_MONTHLY/chirps-v3-basin-monthly.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "basin_id",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": "product",
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
       "dimensionColumns": [
         {
           "column": "year",

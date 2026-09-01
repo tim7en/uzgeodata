@@ -32,7 +32,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT_DIR = ROOT / "PUBLISHED" / "data" / "analysis"
+OUT_DIR = ROOT / "PUBLISHED" / "data" / "ontology"
 MANIFEST = ROOT / "ONTOLOGY" / "instances" / "landcover-statistics.json"
 
 PROJECT = "ee-sabitovty"
@@ -48,7 +48,7 @@ SOURCES = {
         "path": "PUBLISHED/data/admin/adm2.geojson",
         "key": "pcode",
         "label": "nameEn",
-        "output": "landcover-admin-year.csv",
+        "output": "2_LAND/2.1_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
         "unitColumn": "pcode",
         "subjectType": "AdminArea",
         "dataset": "esri-io-landcover-10m",
@@ -59,7 +59,7 @@ SOURCES = {
         "path": "PUBLISHED/data/hydrography/basins.geojson",
         "key": "HYBAS_ID",
         "label": "HYBAS_ID",
-        "output": "landcover-basin-year.csv",
+        "output": "2_LAND/2.2_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
         "unitColumn": "basin_id",
         "subjectType": "Basin",
         "dataset": "esri-io-landcover-10m",

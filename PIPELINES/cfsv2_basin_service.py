@@ -57,12 +57,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 BASINS = ROOT / "PUBLISHED" / "data" / "review" / "basinatlas" / "basinatlas_uz_lev07.geojson"
-OUT_DIR = ROOT / "PUBLISHED" / "data" / "analysis"
+TREE = ROOT / "PUBLISHED" / "data" / "ontology" / "1_ATMOSPHERE"
 MANIFEST = ROOT / "ONTOLOGY" / "instances" / "cfsv2-basin-service.json"
 
-OBSERVATIONS = OUT_DIR / "cfsv2-basin-monthly.csv"
-CLIMATOLOGY = OUT_DIR / "cfsv2-basin-climatology.csv"
-ANOMALIES = OUT_DIR / "cfsv2-basin-anomaly.csv"
+OBSERVATIONS = TREE / "1.3_CFSV2_BASIN_MONTHLY" / "cfsv2-basin-monthly.csv"
+CLIMATOLOGY = TREE / "1.2_CFSV2_BASIN_CLIMATOLOGY" / "cfsv2-basin-climatology.csv"
+ANOMALIES = TREE / "1.1_CFSV2_BASIN_ANOMALY" / "cfsv2-basin-anomaly.csv"
 
 PROJECT = "ee-sabitovty"
 ASSET = "NOAA/CFSV2/FOR6H_HARMONIZED"
@@ -220,7 +220,7 @@ def observe(args) -> None:
         print("  nothing to do")
         return
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    OBSERVATIONS.parent.mkdir(parents=True, exist_ok=True)
     fresh = not OBSERVATIONS.exists()
     started = time.time()
     rows = 0
@@ -303,7 +303,7 @@ def climatology(args) -> None:
     if not buckets:
         raise SystemExit(f"No observations inside {args.start}-{args.end}.")
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    OBSERVATIONS.parent.mkdir(parents=True, exist_ok=True)
     thin = 0
     with CLIMATOLOGY.open("w", encoding="utf8", newline="") as handle:
         writer = csv.writer(handle)

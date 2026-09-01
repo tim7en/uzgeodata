@@ -53,6 +53,11 @@ SOURCES = {
         "command": "npm run cfsv2:climatology",
         "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
     },
+    "chirps-v3-basin-monthly": {
+        "cadence": "monthly", "latest": "chirps", "units": 263,
+        "command": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
+        "note": "CHIRPS v3 publishes daily with a few weeks' lag; a month is complete once it ends.",
+    },
     "landcover-admin-year": {
         "cadence": "annual", "latest": "landcover", "units": 199,
         "command": "npm run landcover:stats -- --level admin",
@@ -76,6 +81,8 @@ SOURCES = {
 UPSTREAM = {
     "cfsv2": {"latest": "2026-08", "checked": "2026-09-01",
               "how": "ee.ImageCollection('NOAA/CFSV2/FOR6H_HARMONIZED') reduceColumns on system:time_start"},
+    "chirps": {"latest": "2026-07", "checked": "2026-09-01",
+               "how": "ee.ImageCollection('UCSB-CHC/CHIRPS/V3/DAILY_SAT') reduceColumns on system:time_start"},
     "landcover": {"latest": "2025", "checked": "2026-09-01",
                   "how": "the Impact Observatory / Esri annual series, last complete mosaic"},
 }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T07:23:57+00:00",
+  "generatedAt": "2026-09-01T07:34:52+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
@@ -14,6 +14,11 @@
       "checked": "2026-09-01",
       "how": "ee.ImageCollection('NOAA/CFSV2/FOR6H_HARMONIZED') reduceColumns on system:time_start"
     },
+    "chirps": {
+      "latest": "2026-07",
+      "checked": "2026-09-01",
+      "how": "ee.ImageCollection('UCSB-CHC/CHIRPS/V3/DAILY_SAT') reduceColumns on system:time_start"
+    },
     "landcover": {
       "latest": "2025",
       "checked": "2026-09-01",
@@ -21,9 +26,9 @@
     }
   },
   "counts": {
-    "INCOMPLETE": 2,
-    "MISSING": 6,
-    "CURRENT": 1,
+    "INCOMPLETE": 1,
+    "MISSING": 7,
+    "CURRENT": 2,
     "STATIC": 9
   },
   "tables": [
@@ -31,7 +36,7 @@
       "id": "cfsv2-basin-anomaly",
       "label": "CFSv2 basin anomaly",
       "predicate": "uz:hasBasinAnomaly",
-      "container": "PUBLISHED/data/analysis/cfsv2-basin-anomaly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
       "exists": true,
       "rows": 90105,
       "units": 260,
@@ -47,27 +52,6 @@
       "refresh": "npm run cfsv2:anomaly",
       "note": "Derived. Rebuilds in seconds once observations and climatology are current.",
       "lastModified": "2026-09-01T07:23:57+00:00"
-    },
-    {
-      "id": "landcover-admin-year",
-      "label": "Land cover area by district and year",
-      "predicate": "uz:hasAdminStatistic",
-      "container": "PUBLISHED/data/analysis/landcover-admin-year.csv",
-      "exists": true,
-      "rows": 3864,
-      "units": 67,
-      "expectedUnits": 199,
-      "coverage": {
-        "from": "2017",
-        "to": "2025"
-      },
-      "cadence": "annual",
-      "upstreamLatest": "2025",
-      "gap": "67/199 units",
-      "status": "INCOMPLETE",
-      "refresh": "npm run landcover:stats -- --level admin",
-      "note": "The land cover product publishes one mosaic per calendar year.",
-      "lastModified": "2026-09-01T07:23:56+00:00"
     },
     {
       "id": "atlas-basin-coverage",
@@ -160,10 +144,28 @@
       "lastModified": null
     },
     {
+      "id": "landcover-admin-year",
+      "label": "Land cover area by district and year",
+      "predicate": "uz:hasAdminStatistic",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.1_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
+      "exists": false,
+      "rows": null,
+      "units": null,
+      "expectedUnits": 199,
+      "coverage": null,
+      "cadence": "annual",
+      "upstreamLatest": "2025",
+      "gap": null,
+      "status": "MISSING",
+      "refresh": "npm run landcover:stats -- --level admin",
+      "note": "The land cover product publishes one mosaic per calendar year.",
+      "lastModified": null
+    },
+    {
       "id": "landcover-basin-year",
       "label": "Land cover area by level-12 basin and year",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/analysis/landcover-basin-year.csv",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
       "exists": false,
       "rows": null,
       "units": null,
@@ -181,7 +183,7 @@
       "id": "cfsv2-basin-monthly",
       "label": "CFSv2 basin monthly state",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/analysis/cfsv2-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
       "exists": true,
       "rows": 99143,
       "units": 263,
@@ -199,10 +201,31 @@
       "lastModified": "2026-09-01T07:23:26+00:00"
     },
     {
+      "id": "chirps-v3-basin-monthly",
+      "label": "CHIRPS v3 basin monthly precipitation",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_MONTHLY/chirps-v3-basin-monthly.csv",
+      "exists": true,
+      "rows": 789,
+      "units": 263,
+      "expectedUnits": 263,
+      "coverage": {
+        "from": "2026-05",
+        "to": "2026-07"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
+      "note": "CHIRPS v3 publishes daily with a few weeks' lag; a month is complete once it ends.",
+      "lastModified": "2026-09-01T07:32:33+00:00"
+    },
+    {
       "id": "admin-basin-district",
       "label": "Level-12 basins by district",
       "predicate": "uz:intersectsAdminArea",
-      "container": "PUBLISHED/data/hydrography/admin-basin-links.csv",
+      "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "exists": true,
       "rows": 7642,
       "units": 213,
@@ -220,7 +243,7 @@
       "id": "admin-basin-province",
       "label": "Level-12 basins by province",
       "predicate": "uz:intersectsAdminArea",
-      "container": "PUBLISHED/data/hydrography/admin-basin-links.csv",
+      "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "exists": true,
       "rows": 7642,
       "units": 213,
@@ -292,7 +315,7 @@
       "id": "cfsv2-basin-climatology",
       "label": "CFSv2 basin climatological baseline",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/analysis/cfsv2-basin-climatology.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
       "exists": true,
       "rows": 8505,
       "units": 260,

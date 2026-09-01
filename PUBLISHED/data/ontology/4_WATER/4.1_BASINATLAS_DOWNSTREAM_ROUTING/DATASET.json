@@ -1,0 +1,16 @@
+{
+  "name": "BASINATLAS_DOWNSTREAM_ROUTING",
+  "number": "4.1",
+  "domain": "WATER",
+  "what": "Which basin each BasinATLAS basin drains into.",
+  "tables": [
+    "basinatlas-uz-downstream"
+  ],
+  "predicate": "uz:flowsInto",
+  "file": "downstream_links.csv",
+  "storedInPlace": true,
+  "path": "GEODATA/uzbekistan_basinatlas_v10/relationships/downstream_links.csv",
+  "present": true,
+  "crossDomain": {},
+  "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
+}

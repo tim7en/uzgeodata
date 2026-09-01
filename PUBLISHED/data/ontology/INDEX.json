@@ -1,0 +1,168 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-01T07:33:18+00:00",
+  "convention": {
+    "naming": "Upper case, digits and underscores only.",
+    "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
+    "numbering": "<domain>.<dataset>, recomputed on every run.",
+    "identity": "The name is the stable identifier. The number is a position and moves when a dataset is inserted alphabetically, so nothing should store it.",
+    "domains": {
+      "ATMOSPHERE": "What happens above the surface: precipitation, temperature, humidity, radiation and evaporative demand.",
+      "LAND": "The surface itself: cover, use, soil and terrain.",
+      "REFERENCE": "The frames everything else is measured against — administrative and hydrological geography that is not itself a measurement.",
+      "WATER": "Water in the landscape: catchments, rivers, lakes and the routing between them."
+    }
+  },
+  "datasets": [
+    {
+      "number": "1.1",
+      "domain": "ATMOSPHERE",
+      "domainNumber": "1",
+      "name": "CFSV2_BASIN_ANOMALY",
+      "folder": "1_ATMOSPHERE/1.1_CFSV2_BASIN_ANOMALY",
+      "table": "cfsv2-basin-anomaly",
+      "what": "Basin monthly state expressed as z-scores against its own climatological normal.",
+      "crossDomain": {
+        "LAND": [
+          "soil_moisture_5cm",
+          "soil_moisture_25cm",
+          "soil_moisture_70cm",
+          "soil_moisture_150cm"
+        ]
+      }
+    },
+    {
+      "number": "1.2",
+      "domain": "ATMOSPHERE",
+      "domainNumber": "1",
+      "name": "CFSV2_BASIN_CLIMATOLOGY",
+      "folder": "1_ATMOSPHERE/1.2_CFSV2_BASIN_CLIMATOLOGY",
+      "table": "cfsv2-basin-climatology",
+      "what": "Mean and standard deviation per basin, month and variable over a stated baseline.",
+      "crossDomain": {
+        "LAND": [
+          "soil_moisture_5cm",
+          "soil_moisture_25cm",
+          "soil_moisture_70cm",
+          "soil_moisture_150cm"
+        ]
+      }
+    },
+    {
+      "number": "1.3",
+      "domain": "ATMOSPHERE",
+      "domainNumber": "1",
+      "name": "CFSV2_BASIN_MONTHLY",
+      "folder": "1_ATMOSPHERE/1.3_CFSV2_BASIN_MONTHLY",
+      "table": "cfsv2-basin-monthly",
+      "what": "Monthly mean land-atmosphere state per level-7 basin from the 6-hourly CFSv2 field.",
+      "crossDomain": {
+        "LAND": [
+          "soil_moisture_5cm",
+          "soil_moisture_25cm",
+          "soil_moisture_70cm",
+          "soil_moisture_150cm"
+        ]
+      }
+    },
+    {
+      "number": "1.4",
+      "domain": "ATMOSPHERE",
+      "domainNumber": "1",
+      "name": "CHIRPS_V3_BASIN_MONTHLY",
+      "folder": "1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_MONTHLY",
+      "table": "chirps-v3-basin-monthly",
+      "what": "Monthly precipitation total per level-7 basin from CHIRPS v3 daily, at 5.6 km."
+    },
+    {
+      "number": "2.1",
+      "domain": "LAND",
+      "domainNumber": "2",
+      "name": "LANDCOVER_ADMIN_YEAR",
+      "folder": "2_LAND/2.1_LANDCOVER_ADMIN_YEAR",
+      "table": "landcover-admin-year",
+      "what": "Area of each land cover class per district per year."
+    },
+    {
+      "number": "2.2",
+      "domain": "LAND",
+      "domainNumber": "2",
+      "name": "LANDCOVER_BASIN_YEAR",
+      "folder": "2_LAND/2.2_LANDCOVER_BASIN_YEAR",
+      "table": "landcover-basin-year",
+      "what": "Area of each land cover class per level-12 basin per year. Not yet built."
+    },
+    {
+      "number": "3.1",
+      "domain": "REFERENCE",
+      "domainNumber": "3",
+      "name": "ADMIN_BASIN_LINKS",
+      "folder": "3_REFERENCE/3.1_ADMIN_BASIN_LINKS",
+      "table": "admin-basin-province",
+      "what": "Shared area between every level-12 basin and every province and district.",
+      "alsoTables": [
+        "admin-basin-district"
+      ]
+    },
+    {
+      "number": "4.1",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "BASINATLAS_DOWNSTREAM_ROUTING",
+      "folder": "4_WATER/4.1_BASINATLAS_DOWNSTREAM_ROUTING",
+      "table": "basinatlas-uz-downstream",
+      "inPlace": true,
+      "what": "Which basin each BasinATLAS basin drains into."
+    },
+    {
+      "number": "4.2",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "BASINATLAS_PFAFSTETTER_HIERARCHY",
+      "folder": "4_WATER/4.2_BASINATLAS_PFAFSTETTER_HIERARCHY",
+      "table": "basinatlas-uz-pfaf",
+      "inPlace": true,
+      "what": "Parent and child basins by Pfafstetter code, level 1 to 12."
+    },
+    {
+      "number": "4.3",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "BASINATLAS_SUBBASIN_HIERARCHY",
+      "folder": "4_WATER/4.3_BASINATLAS_SUBBASIN_HIERARCHY",
+      "table": "basinatlas-uz-hierarchy",
+      "inPlace": true,
+      "what": "Basin containment confirmed by spatial overlap rather than by code alone."
+    },
+    {
+      "number": "4.4",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "HYDROBASINS_LAKE_DOWNSTREAM_ROUTING",
+      "folder": "4_WATER/4.4_HYDROBASINS_LAKE_DOWNSTREAM_ROUTING",
+      "table": "hydrobasins-lake-uz-downstream",
+      "inPlace": true,
+      "what": "Downstream routing in the lake-format HydroBASINS extraction."
+    },
+    {
+      "number": "4.5",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "HYDROBASINS_LAKE_PFAFSTETTER_HIERARCHY",
+      "folder": "4_WATER/4.5_HYDROBASINS_LAKE_PFAFSTETTER_HIERARCHY",
+      "table": "hydrobasins-lake-uz-pfaf",
+      "inPlace": true,
+      "what": "Pfafstetter parentage in the lake-format extraction."
+    },
+    {
+      "number": "4.6",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "HYDROBASINS_LAKE_SUBBASIN_HIERARCHY",
+      "folder": "4_WATER/4.6_HYDROBASINS_LAKE_SUBBASIN_HIERARCHY",
+      "table": "hydrobasins-lake-uz-hierarchy",
+      "inPlace": true,
+      "what": "Basin containment in the lake-format extraction."
+    }
+  ]
+}
