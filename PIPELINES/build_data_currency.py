@@ -16,6 +16,8 @@ this script learning anything about it.
     BEHIND      the source has moved on; the refresh command would extend it
     INCOMPLETE  the periods are current but units are missing — a run that has
                 not finished, which reads as up to date if you only look at dates
+    ARCHIVAL    the upstream record has ended; the table is complete once it
+                reaches that final period, and can never fall behind
     STATIC      no time dimension — it is current by construction
     MISSING     the container the graph names is not on this machine
 
@@ -58,6 +60,11 @@ SOURCES = {
         "command": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
         "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
     },
+    "chirts-basin-monthly": {
+        "cadence": "closed", "latest": "chirts", "units": 263,
+        "command": "npm run chirts:observe -- --start <YYYY-MM> --end <YYYY-MM>",
+        "note": "The upstream record ended at 2016-12. Complete once it reaches that, and never behind.",
+    },
     "landcover-admin-year": {
         "cadence": "annual", "latest": "landcover", "units": 199,
         "command": "npm run landcover:stats -- --level admin",
@@ -81,6 +88,8 @@ SOURCES = {
 UPSTREAM = {
     "cfsv2": {"latest": "2026-08", "checked": "2026-09-01",
               "how": "ee.ImageCollection('NOAA/CFSV2/FOR6H_HARMONIZED') reduceColumns on system:time_start"},
+    "chirts": {"latest": "2016-12", "checked": "2026-09-01", "closed": True,
+               "how": "ee.ImageCollection('UCSB-CHG/CHIRTS/DAILY') — zero images after 2016-12-31"},
     "chirps": {"latest": "2026-07", "checked": "2026-09-01",
                "how": "ee.ImageCollection('UCSB-CHC/CHIRPS/V3/DAILY_SAT') reduceColumns on system:time_start"},
     "landcover": {"latest": "2025", "checked": "2026-09-01",
@@ -123,6 +132,14 @@ def main() -> None:
 
         if not container.exists():
             status, behind = "MISSING", None
+        elif source.get("cadence") == "closed":
+            # A closed source cannot move on, so BEHIND would be a lie: the only
+            # question is whether the table has reached the end of the record.
+            expected = UPSTREAM.get(source["latest"], {}).get("latest")
+            if expected and last and last < expected:
+                status, behind = "INCOMPLETE", f"{last} → {expected} (record ends)"
+            else:
+                status, behind = "ARCHIVAL", None
         elif source.get("cadence") in (None, "static") or last is None:
             status, behind = "STATIC", None
         else:
@@ -154,7 +171,7 @@ def main() -> None:
                              .isoformat(timespec="seconds") if container.exists() else None),
         })
 
-    order = {"BEHIND": 0, "INCOMPLETE": 1, "MISSING": 2, "CURRENT": 3, "STATIC": 4}
+    order = {"BEHIND": 0, "INCOMPLETE": 1, "MISSING": 2, "CURRENT": 3, "ARCHIVAL": 4, "STATIC": 5}
     report.sort(key=lambda row: (order[row["status"]], row["id"]))
 
     counts: dict[str, int] = {}
@@ -168,6 +185,7 @@ def main() -> None:
             "CURRENT": "Reaches the latest period the source can supply, for every unit.",
             "BEHIND": "The source has moved on; the refresh command would extend it.",
             "INCOMPLETE": "Periods are current but units are missing — usually a run still going.",
+            "ARCHIVAL": "The upstream record has ended; complete once it reaches that period.",
             "STATIC": "No time dimension, or a baseline held deliberately still.",
             "MISSING": "The container the graph names is not on this machine.",
         },

@@ -429,6 +429,38 @@
           "meaning": "which environmental variable"
         }
       ]
+    },
+    {
+      "id": "chirts-basin-monthly",
+      "dataset": "chirts",
+      "label": "CHIRTS basin monthly temperature and humidity",
+      "note": "Station-blended temperature at the same 5.6 km grid as CHIRPS, reduced to monthly statistics per level-7 basin. The day counts above 35 and 40 degrees are the reason for reading a daily product: a monthly mean cannot say how many days crossed a threshold. The record is closed at 2016-12-31, so this is a historical baseline and not a monitoring layer. heat_index_max is in Fahrenheit and derived from the daily mean temperature, unlike every other column here, which is metric.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "basin_id",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "which statistic"
+        }
+      ]
     }
   ]
 }

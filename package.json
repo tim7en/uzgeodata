@@ -34,6 +34,7 @@
     "cfsv2:climatology": "python PIPELINES/cfsv2_basin_service.py climatology",
     "cfsv2:anomaly": "python PIPELINES/cfsv2_basin_service.py anomaly",
     "chirps:observe": "python PIPELINES/chirps_basin_service.py",
+    "chirts:observe": "python PIPELINES/chirts_basin_service.py",
     "data:currency": "python PIPELINES/build_data_currency.py",
     "ontology:structure": "python PIPELINES/build_ontology_structure.py"
   },

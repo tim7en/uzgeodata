@@ -90,6 +90,13 @@ DATASETS = {
                  "of it, so this is the authoritative quantity. Monthly and seasonal totals "
                  "are sums of pentads and are derived rather than stored."),
     },
+    "CHIRTS_BASIN_MONTHLY": {
+        "domain": "ATMOSPHERE", "table": "chirts-basin-monthly",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+        "what": ("Monthly temperature and humidity statistics per level-7 basin from CHIRTS-daily "
+                 "at 5.6 km, including counts of days above 35 and 40 degrees that only a daily "
+                 "record can give. Closed: the record runs 1983 to 2016 and stops."),
+    },
     "LANDCOVER_ADMIN_YEAR": {
         "domain": "LAND", "table": "landcover-admin-year",
         "source": "PUBLISHED/data/analysis/landcover-admin-year.csv",
