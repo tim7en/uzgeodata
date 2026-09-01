@@ -51,6 +51,7 @@ npm run cfsv2:anomaly          # observations as z-scores, classified
 npm run chirps:observe         # pentadal basin precipitation from CHIRPS v3 (canonical rainfall)
 npm run data:currency          # how current every stored relationship is, and what refreshes it
 npm run ontology:structure     # file the datasets by domain, numbered and sorted (--apply to move)
+npm run ontology:audit         # check every table against the conventions the ontology settled on
 npm run test:trace             # the upstream-trace and aggregation guard rails
 ```
 

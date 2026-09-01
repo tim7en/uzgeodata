@@ -141,6 +141,34 @@ DATASETS = {
         "source": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/feature_hierarchy_links.csv",
         "what": "Basin containment in the lake-format extraction.",
     },
+    # Declared by the graph but built into WORKSPACE/, so absent here. They are
+    # classified anyway: a dataset that is missing still has a domain, and leaving
+    # it unfiled would make the tree describe only what happens to be present.
+    "ATLAS_BASIN_COVERAGE": {
+        "domain": "REFERENCE", "table": "atlas-basin-coverage", "inPlace": True,
+        "source": "WORKSPACE/derived/atlas-basin-links.csv",
+        "what": "Which environmental atlas layers overlap which level-12 basin, and by how much.",
+    },
+    "ATLAS_BASIN_STATISTICS": {
+        "domain": "REFERENCE", "table": "atlas-basin-statistics", "inPlace": True,
+        "source": "WORKSPACE/derived/basin-zonal-stats.csv",
+        "what": "What each atlas raster reads inside each level-12 basin.",
+    },
+    "HYDROGRAPHY_LAKE_BASIN": {
+        "domain": "WATER", "table": "hydrography-lake-basin", "inPlace": True,
+        "source": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
+        "what": "Which level-12 basin each lake sits in.",
+    },
+    "HYDROGRAPHY_RIVER_BASIN": {
+        "domain": "WATER", "table": "hydrography-river-basin", "inPlace": True,
+        "source": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
+        "what": "Which level-12 basin each river reach drains.",
+    },
+    "HYDROGRAPHY_RIVER_DOWNSTREAM": {
+        "domain": "WATER", "table": "hydrography-river-downstream", "inPlace": True,
+        "source": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
+        "what": "Reach-to-reach downstream routing for the 17,447 published reaches.",
+    },
     "ADMIN_BASIN_LINKS": {
         "domain": "REFERENCE", "table": "admin-basin-province",
         "source": "PUBLISHED/data/hydrography/admin-basin-links.csv",

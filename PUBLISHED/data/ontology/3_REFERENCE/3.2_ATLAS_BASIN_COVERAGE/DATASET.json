@@ -1,0 +1,16 @@
+{
+  "name": "ATLAS_BASIN_COVERAGE",
+  "number": "3.2",
+  "domain": "REFERENCE",
+  "what": "Which environmental atlas layers overlap which level-12 basin, and by how much.",
+  "tables": [
+    "atlas-basin-coverage"
+  ],
+  "predicate": "uz:coversBasin",
+  "file": "atlas-basin-links.csv",
+  "storedInPlace": true,
+  "path": "WORKSPACE/derived/atlas-basin-links.csv",
+  "present": false,
+  "crossDomain": {},
+  "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
+}

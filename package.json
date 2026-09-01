@@ -36,7 +36,8 @@
     "chirps:observe": "python PIPELINES/chirps_basin_service.py",
     "chirts:observe": "python PIPELINES/chirts_basin_service.py",
     "data:currency": "python PIPELINES/build_data_currency.py",
-    "ontology:structure": "python PIPELINES/build_ontology_structure.py"
+    "ontology:structure": "python PIPELINES/build_ontology_structure.py",
+    "ontology:audit": "python PIPELINES/audit_ontology_tables.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

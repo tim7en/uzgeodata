@@ -68,10 +68,14 @@ def level_of(table: dict, sample_ids: set[str]) -> int | None:
     """Infer the basin level a table is keyed at, from how many distinct ids it holds."""
     if table["objectType"] != "Basin" or not sample_ids:
         return None
-    counts = {1: 2, 2: 2, 3: 4, 4: 12, 5: 31, 6: 92, 7: 263, 8: 805,
-              9: 1989, 10: 3608, 11: 3960, 12: 3981}
+    # Two populations exist per level: the atlas extraction, and the subset
+    # clipped to the national boundary that the portal publishes. Matching only
+    # against the atlas counts made the clipped level-12 tables — 2,732 basins
+    # against the atlas's 3,981 — come out as level 9.
+    counts = {1: (2,), 2: (2,), 3: (4,), 4: (12,), 5: (31,), 6: (92,), 7: (263,),
+              8: (805,), 9: (1989,), 10: (3608,), 11: (3960,), 12: (3981, 2736)}
     n = len(sample_ids)
-    return min(counts, key=lambda level: abs(counts[level] - n))
+    return min(counts, key=lambda level: min(abs(c - n) for c in counts[level]))
 
 
 def audit() -> list[dict]:
@@ -115,10 +119,15 @@ def audit() -> list[dict]:
                 issues.append(f"declared but not in the file: {', '.join(absent)}")
 
             if ours:
-                if "quality" not in columns:
-                    issues.append("no quality column")
-                if not table.get("measureUnitColumn"):
-                    issues.append("no unit column declared")
+                # A missing quality column is only a finding when the table has
+                # not said why. Derived and geometric tables have a standing
+                # reason recorded in their note; sensor readings do not.
+                exempt = ("derived" in (table.get("note") or "")
+                          or "measured geometric overlap" in (table.get("note") or ""))
+                if "quality" not in columns and not exempt:
+                    issues.append("no quality column and no stated reason")
+                if not table.get("measureUnitColumn") and "km2" not in (table.get("measureColumn") or ""):
+                    issues.append("no unit column and none implied by the measure name")
 
             level = level_of(table, ids)
             grid = GRIDS.get(table["id"])

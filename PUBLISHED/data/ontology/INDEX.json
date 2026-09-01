@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T08:03:09+00:00",
+  "generatedAt": "2026-09-01T08:09:28+00:00",
   "convention": {
     "naming": "Upper case, digits and underscores only.",
     "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
@@ -114,6 +114,26 @@
       ]
     },
     {
+      "number": "3.2",
+      "domain": "REFERENCE",
+      "domainNumber": "3",
+      "name": "ATLAS_BASIN_COVERAGE",
+      "folder": "3_REFERENCE/3.2_ATLAS_BASIN_COVERAGE",
+      "table": "atlas-basin-coverage",
+      "inPlace": true,
+      "what": "Which environmental atlas layers overlap which level-12 basin, and by how much."
+    },
+    {
+      "number": "3.3",
+      "domain": "REFERENCE",
+      "domainNumber": "3",
+      "name": "ATLAS_BASIN_STATISTICS",
+      "folder": "3_REFERENCE/3.3_ATLAS_BASIN_STATISTICS",
+      "table": "atlas-basin-statistics",
+      "inPlace": true,
+      "what": "What each atlas raster reads inside each level-12 basin."
+    },
+    {
       "number": "4.1",
       "domain": "WATER",
       "domainNumber": "4",
@@ -172,6 +192,36 @@
       "table": "hydrobasins-lake-uz-hierarchy",
       "inPlace": true,
       "what": "Basin containment in the lake-format extraction."
+    },
+    {
+      "number": "4.7",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "HYDROGRAPHY_LAKE_BASIN",
+      "folder": "4_WATER/4.7_HYDROGRAPHY_LAKE_BASIN",
+      "table": "hydrography-lake-basin",
+      "inPlace": true,
+      "what": "Which level-12 basin each lake sits in."
+    },
+    {
+      "number": "4.8",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "HYDROGRAPHY_RIVER_BASIN",
+      "folder": "4_WATER/4.8_HYDROGRAPHY_RIVER_BASIN",
+      "table": "hydrography-river-basin",
+      "inPlace": true,
+      "what": "Which level-12 basin each river reach drains."
+    },
+    {
+      "number": "4.9",
+      "domain": "WATER",
+      "domainNumber": "4",
+      "name": "HYDROGRAPHY_RIVER_DOWNSTREAM",
+      "folder": "4_WATER/4.9_HYDROGRAPHY_RIVER_DOWNSTREAM",
+      "table": "hydrography-river-downstream",
+      "inPlace": true,
+      "what": "Reach-to-reach downstream routing for the 17,447 published reaches."
     }
   ]
 }

@@ -3,6 +3,8 @@
   "number": "3",
   "definition": "The frames everything else is measured against — administrative and hydrological geography that is not itself a measurement.",
   "datasets": [
-    "ADMIN_BASIN_LINKS"
+    "ADMIN_BASIN_LINKS",
+    "ATLAS_BASIN_COVERAGE",
+    "ATLAS_BASIN_STATISTICS"
   ]
 }
