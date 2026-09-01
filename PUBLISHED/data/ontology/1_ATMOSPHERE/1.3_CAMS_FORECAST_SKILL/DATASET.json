@@ -1,6 +1,6 @@
 {
   "name": "CAMS_FORECAST_SKILL",
-  "number": "1.2",
+  "number": "1.3",
   "domain": "ATMOSPHERE",
   "what": "How far CAMS forecasts diverge from their own analysis at 24 to 120 hours ahead: error, bias and correlation per lead time. Tells a user of the state table how far ahead the product is worth believing.",
   "tables": [
@@ -9,7 +9,7 @@
   "predicate": "uz:hasBasinStatistic",
   "file": "cams-forecast-skill.csv",
   "storedInPlace": false,
-  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
+  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
   "present": true,
   "crossDomain": {},
   "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."

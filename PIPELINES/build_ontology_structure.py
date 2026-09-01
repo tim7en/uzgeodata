@@ -88,6 +88,13 @@ DATASETS = {
         "what": ("Aerosol optical depth and PM2.5 per level-6 basin from the CAMS +0h analysis — "
                  "the assimilated estimate of what the atmosphere was, not a forecast."),
     },
+    "CAMS_EVENT_VERIFICATION": {
+        "domain": "ATMOSPHERE", "table": "cams-event-verification",
+        "source": "PUBLISHED/data/ontology/_ATMOSPHERE/_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
+        "what": ("Whether CAMS forecasts caught pollution and dust events at a point, by lead "
+                 "time: detection rate, false alarms and bias above a percentile threshold. "
+                 "Events, not averages — a product can track the mean and miss every spike."),
+    },
     "CAMS_FORECAST_SKILL": {
         "domain": "ATMOSPHERE", "table": "cams-forecast-skill",
         "source": "PUBLISHED/data/ontology/_ATMOSPHERE/_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",

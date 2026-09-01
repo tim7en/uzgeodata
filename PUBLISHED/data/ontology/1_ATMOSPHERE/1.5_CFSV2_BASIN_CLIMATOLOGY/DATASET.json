@@ -1,6 +1,6 @@
 {
   "name": "CFSV2_BASIN_CLIMATOLOGY",
-  "number": "1.4",
+  "number": "1.5",
   "domain": "ATMOSPHERE",
   "what": "Mean and standard deviation per basin, month and variable over a stated baseline.",
   "tables": [
@@ -9,7 +9,7 @@
   "predicate": "uz:hasBasinStatistic",
   "file": "cfsv2-basin-climatology.csv",
   "storedInPlace": false,
-  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
+  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
   "present": true,
   "crossDomain": {
     "LAND": [

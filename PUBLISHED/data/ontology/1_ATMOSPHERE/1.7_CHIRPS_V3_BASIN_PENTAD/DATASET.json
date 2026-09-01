@@ -1,6 +1,6 @@
 {
   "name": "CHIRPS_V3_BASIN_PENTAD",
-  "number": "1.6",
+  "number": "1.7",
   "domain": "ATMOSPHERE",
   "what": "Pentadal precipitation total per level-12 basin at 5.6 km — six per month. CHIRPS is computed at this scale and its daily product is a disaggregation of it, so this is the authoritative quantity. Monthly and seasonal totals are sums of pentads and are derived rather than stored.",
   "tables": [
@@ -9,7 +9,7 @@
   "predicate": "uz:hasBasinStatistic",
   "file": "chirps-v3-basin-pentad.csv",
   "storedInPlace": false,
-  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
   "present": true,
   "crossDomain": {},
   "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."

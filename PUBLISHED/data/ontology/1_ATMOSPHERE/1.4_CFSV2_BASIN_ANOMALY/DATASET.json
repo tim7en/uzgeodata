@@ -1,15 +1,15 @@
 {
-  "name": "CFSV2_BASIN_MONTHLY",
-  "number": "1.5",
+  "name": "CFSV2_BASIN_ANOMALY",
+  "number": "1.4",
   "domain": "ATMOSPHERE",
-  "what": "Monthly mean land-atmosphere state per level-7 basin from the 6-hourly CFSv2 field.",
+  "what": "Basin monthly state expressed as z-scores against its own climatological normal.",
   "tables": [
-    "cfsv2-basin-monthly"
+    "cfsv2-basin-anomaly"
   ],
-  "predicate": "uz:hasBasinStatistic",
-  "file": "cfsv2-basin-monthly.csv",
+  "predicate": "uz:hasBasinAnomaly",
+  "file": "cfsv2-basin-anomaly.csv",
   "storedInPlace": false,
-  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
+  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
   "present": true,
   "crossDomain": {
     "LAND": [

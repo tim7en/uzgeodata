@@ -1,0 +1,16 @@
+{
+  "name": "CAMS_EVENT_VERIFICATION",
+  "number": "1.2",
+  "domain": "ATMOSPHERE",
+  "what": "Whether CAMS forecasts caught pollution and dust events at a point, by lead time: detection rate, false alarms and bias above a percentile threshold. Events, not averages — a product can track the mean and miss every spike.",
+  "tables": [
+    "cams-event-verification"
+  ],
+  "predicate": "uz:hasBasinStatistic",
+  "file": "cams-event-verification.csv",
+  "storedInPlace": false,
+  "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
+  "present": true,
+  "crossDomain": {},
+  "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
+}

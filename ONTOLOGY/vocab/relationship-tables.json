@@ -317,7 +317,7 @@
       "label": "CFSv2 basin monthly state",
       "note": "Monthly mean of the 6-hourly CFSv2 field over each level-7 basin: precipitation, temperature, four soil-moisture depths, evaporative demand, radiation and humidity. Level 7 because the grid is 34.8 km and roughly nine and a half level-12 basins share a single pixel. Pure measurement, no interpretation.",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
       "measureColumn": "value",
       "dimensionColumns": [
         {
@@ -349,7 +349,7 @@
       "label": "CFSv2 basin climatological baseline",
       "note": "Mean and standard deviation per basin, calendar month and variable over a stated reference period. The period stays inside the operational CFSv2 era: the record reaches 1979, but 25 cm soil moisture steps up 1.41 standard deviations at the 2011 CFSR handover, and a baseline spanning that would bias every anomaly drawn against it. Cells with fewer than three years carry no standard deviation. Carries no quality column because it is derived: its producer reads only rows the observation table marked ok, so every row here is one by construction.",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
       "measureColumn": "mean",
       "dimensionColumns": [
         {
@@ -377,7 +377,7 @@
       "label": "CFSv2 basin anomaly",
       "note": "Observations expressed as z-scores against the baseline, with a symmetric classification from extremely dry to extremely wet. Derived and rebuildable: it holds no measurement the other two tables do not already have, and it moves whenever the reference period is redefined. Carries no quality column because it is derived: its producer reads only rows the observation table marked ok, so every row here is one by construction.",
       "predicate": "uz:hasBasinAnomaly",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
       "measureColumn": "z_score",
       "dimensionColumns": [
         {
@@ -402,7 +402,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
@@ -438,7 +438,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
@@ -470,7 +470,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "basin_id",
@@ -590,7 +590,7 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
       "containerTable": null,
       "format": "CSV",
       "subjectColumn": "variable",
@@ -615,6 +615,42 @@
         {
           "column": "metric",
           "meaning": "which skill statistic"
+        }
+      ]
+    },
+    {
+      "id": "cams-event-verification",
+      "dataset": "cams-nrt",
+      "label": "CAMS event detection skill at a point",
+      "note": "Probability of detection, false alarm ratio, correlation and bias for values above a percentile of the analysis record, by forecast lead time. Kept apart from cams-forecast-skill because a model can follow the mean and miss every episode, and an air quality warning is about the episode. For Tashkent 2024-2026 above the 95th percentile the two variables behave completely differently: dust optical depth is detected 75% of the time at 24 hours and still 66% at 120, while surface PM10 falls from 48% to 19%. The gap is physical — dust is a transported column driven by synoptic weather, surface PM10 adds local emission and boundary-layer mixing. Carries no quality column because it is derived: every row is a statistic over pairs, and the pairs column shows how many. The point samples a 1,470 km2 cell, so this verifies the cell containing a city, not the city.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "site",
+      "objectColumn": "site",
+      "identifierScheme": "SITE_NAME",
+      "scopeColumn": "metric",
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "dimensionColumns": [
+        {
+          "column": "variable",
+          "meaning": "which pollutant or aerosol measure"
+        },
+        {
+          "column": "lead_hours",
+          "meaning": "forecast lead time in hours"
+        },
+        {
+          "column": "percentile",
+          "meaning": "the percentile defining an event"
+        },
+        {
+          "column": "metric",
+          "meaning": "which verification statistic"
         }
       ]
     }
