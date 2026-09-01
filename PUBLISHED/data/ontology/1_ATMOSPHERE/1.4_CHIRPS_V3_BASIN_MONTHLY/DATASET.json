@@ -6,7 +6,7 @@
   "tables": [
     "chirps-v3-basin-monthly"
   ],
-  "predicate": null,
+  "predicate": "uz:hasBasinStatistic",
   "file": "chirps-v3-basin-monthly.csv",
   "storedInPlace": false,
   "path": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_MONTHLY/chirps-v3-basin-monthly.csv",
