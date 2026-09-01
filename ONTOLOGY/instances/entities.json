@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-08-29T18:11:00+00:00",
+  "generatedAt": "2026-09-01T09:11:05+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -10562,6 +10562,151 @@
       "stationClass": "M-II",
       "longitude": 71.053289,
       "latitude": 40.4586
+    },
+    {
+      "id": "uz:agent/earth-engine-registry",
+      "type": "Agent",
+      "label": "Earth Engine source registry",
+      "agentKind": "rule",
+      "agentVersion": "1.0",
+      "trustTier": "curated",
+      "description": "Facts written down in ONTOLOGY/vocab/earth-engine-sources.json rather than measured from an archive: a remote collection has no bytes on disk to profile, so its licence, producer and meaning have to be asserted."
+    },
+    {
+      "id": "uz:agent/ecmwf",
+      "type": "Agent",
+      "label": "European Centre for Medium-Range Weather Forecasts",
+      "agentKind": "organisation",
+      "agentVersion": null,
+      "trustTier": "authoritative",
+      "description": "Producer of CAMS global near-real-time atmospheric composition."
+    },
+    {
+      "id": "uz:ds/cams-nrt",
+      "type": "Dataset",
+      "label": "CAMS global near-real-time atmospheric composition",
+      "labels": {
+        "en": "CAMS global near-real-time atmospheric composition"
+      },
+      "sourceKey": "earth-engine/ECMWF/CAMS/NRT",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "A forecast system, not an observing one. The +0h analysis is the assimilated state and is what the ontology stores; the forecast tables record how far ahead it can be believed. Only aerosol optical depth and PM2.5 exist before 2021-07-01."
+    },
+    {
+      "id": "uz:agent/noaa",
+      "type": "Agent",
+      "label": "NOAA National Centers for Environmental Prediction",
+      "agentKind": "organisation",
+      "agentVersion": null,
+      "trustTier": "authoritative",
+      "description": "Producer of NCEP Climate Forecast System v2, 6-hourly harmonized."
+    },
+    {
+      "id": "uz:ds/cfsv2-noaa",
+      "type": "Dataset",
+      "label": "NCEP Climate Forecast System v2, 6-hourly harmonized",
+      "labels": {
+        "en": "NCEP Climate Forecast System v2, 6-hourly harmonized"
+      },
+      "sourceKey": "earth-engine/NOAA/CFSV2/FOR6H_HARMONIZED",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Coupled model output, not observation. CFSR feeds the record to 2010 and operational CFSv2 from 2011, and 25 cm soil moisture steps 1.41 standard deviations across that boundary, so baselines stay inside the operational era."
+    },
+    {
+      "id": "uz:agent/chc",
+      "type": "Agent",
+      "label": "Climate Hazards Center, UC Santa Barbara",
+      "agentKind": "organisation",
+      "agentVersion": null,
+      "trustTier": "authoritative",
+      "description": "Producer of CHIRPS v3 precipitation."
+    },
+    {
+      "id": "uz:ds/chirps-v3",
+      "type": "Dataset",
+      "label": "CHIRPS v3 precipitation",
+      "labels": {
+        "en": "CHIRPS v3 precipitation"
+      },
+      "sourceKey": "earth-engine/UCSB-CHC/CHIRPS/V3/PENTAD",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Computed pentadally; the daily product is a disaggregation of it and agrees to 0.00% over a month. Version 3 sits under UCSB-CHC, not the UCSB-CHG path version 2 uses, and differs from it by about nine percent here."
+    },
+    {
+      "id": "uz:ds/chirts",
+      "type": "Dataset",
+      "label": "CHIRTS daily temperature",
+      "labels": {
+        "en": "CHIRTS daily temperature"
+      },
+      "sourceKey": "earth-engine/UCSB-CHG/CHIRTS/DAILY",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Closed: the record stops at 2016-12-31. A historical baseline rather than a monitoring layer. Its heat index column is Fahrenheit and derived from the daily mean while every other column is metric."
+    },
+    {
+      "id": "uz:ds/cpc-temperature",
+      "type": "Dataset",
+      "label": "CPC global unified temperature",
+      "labels": {
+        "en": "CPC global unified temperature"
+      },
+      "sourceKey": "earth-engine/NOAA/CPC/Temperature",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Gauge-based and long, but the GTS feed over Uzbekistan is thin: 0.13 stations per cell per day, with 51% of basin-months seeing none. Mostly interpolation from distant reports here, and weighted accordingly against CHIRTS."
+    },
+    {
+      "id": "uz:agent/csp",
+      "type": "Agent",
+      "label": "Conservation Science Partners",
+      "agentKind": "organisation",
+      "agentVersion": null,
+      "trustTier": "authoritative",
+      "description": "Producer of Global Human Modification."
+    },
+    {
+      "id": "uz:ds/csp-ghm",
+      "type": "Dataset",
+      "label": "Global Human Modification",
+      "labels": {
+        "en": "Global Human Modification"
+      },
+      "sourceKey": "earth-engine/CSP/HM/GlobalHumanModification",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "A single image with no timestamp — timeless rather than archival. Measured over both basins and districts because the frame changes the answer: 0.33 by basin against 0.61 by district."
+    },
+    {
+      "id": "uz:agent/impact-observatory",
+      "type": "Agent",
+      "label": "Impact Observatory and Esri",
+      "agentKind": "organisation",
+      "agentVersion": null,
+      "trustTier": "authoritative",
+      "description": "Producer of Impact Observatory / Esri 10 m annual land cover."
+    },
+    {
+      "id": "uz:ds/esri-io-landcover-10m",
+      "type": "Dataset",
+      "label": "Impact Observatory / Esri 10 m annual land cover",
+      "labels": {
+        "en": "Impact Observatory / Esri 10 m annual land cover"
+      },
+      "sourceKey": "earth-engine/projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Nine annual mosaics in a 9-class scheme. Area must come from pixelArea rather than a pixel count: the collection mosaics UTM tiles and the reduction falls back to a geographic projection where pixel ground area varies with latitude."
     }
   ]
 }

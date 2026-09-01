@@ -4,109 +4,1065 @@
   "description": "What a dataset actually measures, as opposed to which folder it sits in. Derived from the 134 packages in the environmental atlas. altLabels carry the Russian terms used in the source filenames so multilingual search and the enrichment model share one vocabulary. 'broader' may point at a theme concept, expressing the domain a property primarily belongs to.",
   "version": "1.0",
   "concepts": [
-    {"id": "uz:prop/air-temperature", "prefLabel": "Air temperature", "altLabels": ["temperature", "температура"], "definition": "Near-surface air temperature, as a level or a trend.", "unit": "degC", "broader": "uz:theme/climate"},
-    {"id": "uz:prop/precipitation", "prefLabel": "Precipitation", "altLabels": ["rainfall", "осадки"], "definition": "Depth of precipitation over a period, as a level or a trend.", "unit": "mm", "broader": "uz:theme/climate"},
-    {"id": "uz:prop/snow-cover-depth", "prefLabel": "Snow cover depth", "altLabels": ["snow", "снежный покров"], "definition": "Depth of accumulated snow, a control on spring runoff.", "unit": "cm", "broader": "uz:theme/climate"},
-    {"id": "uz:prop/climatic-water-deficit", "prefLabel": "Climatic water deficit", "altLabels": ["water deficit", "дефицит влаги"], "definition": "Gap between potential and actual evapotranspiration; a physical measure of moisture shortage.", "unit": "mm", "broader": "uz:theme/climate"},
-    {"id": "uz:prop/growing-season-timing", "prefLabel": "Growing season timing", "altLabels": ["growing season", "вегетационный период"], "definition": "Start, peak, end or duration of the vegetation growing season.", "unit": "day-of-year", "broader": "uz:theme/climate"},
-    {"id": "uz:prop/climate-classification", "prefLabel": "Climate classification", "altLabels": ["climate type", "local climate zone", "типы климата"], "definition": "Categorical climate or local climate zone classification.", "broader": "uz:theme/climate"},
-    {"id": "uz:prop/climate-projection", "prefLabel": "Climate projection", "altLabels": ["projected", "scenario", "прогноз"], "definition": "Modelled future climate condition under a scenario, for a stated horizon.", "broader": "uz:theme/climate"},
-
-    {"id": "uz:prop/surface-runoff", "prefLabel": "Surface runoff", "altLabels": ["runoff", "сток"], "definition": "Volume of water flowing from a catchment over a year.", "unit": "m3/yr", "broader": "uz:theme/water"},
-    {"id": "uz:prop/reservoir-volume", "prefLabel": "Lake and reservoir volume", "altLabels": ["reservoir", "водохранилище"], "definition": "Stored water volume in lakes and reservoirs.", "unit": "m3", "broader": "uz:theme/water"},
-    {"id": "uz:prop/groundwater-depth", "prefLabel": "Groundwater depth", "altLabels": ["water table", "уровень грунтовых вод"], "definition": "Depth from the surface to the water table.", "unit": "m", "broader": "uz:theme/water"},
-    {"id": "uz:prop/groundwater-quality", "prefLabel": "Groundwater quality", "altLabels": ["groundwater pollution", "загрязнение подземных вод"], "definition": "Chemical condition or contamination of groundwater.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/groundwater-resources", "prefLabel": "Groundwater resources", "altLabels": ["aquifer", "подземные воды"], "definition": "Available groundwater stock, including artesian basins.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/water-stress", "prefLabel": "Water stress", "altLabels": ["стресс водных ресурсов"], "definition": "Ratio of demand to available supply; the standard water-scarcity indicator.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/water-balance", "prefLabel": "Water balance", "altLabels": ["водный баланс"], "definition": "Accounting of inflows, outflows and storage change for a unit of territory.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/irrigated-area", "prefLabel": "Irrigated area", "altLabels": ["irrigation", "орошаемые земли"], "definition": "Extent of land under irrigation, by catchment or district.", "unit": "ha", "broader": "uz:theme/water"},
-    {"id": "uz:prop/irrigation-canal-network", "prefLabel": "Irrigation canal network", "altLabels": ["canal", "каналы"], "definition": "Canal infrastructure delivering irrigation water, and its density.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/drainage-network", "prefLabel": "Drainage network", "altLabels": ["drainage", "коллекторно-дренажная сеть"], "definition": "Drainage infrastructure removing excess and saline water from irrigated land.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/drainage-flow", "prefLabel": "Drainage flow", "altLabels": ["collector flow"], "definition": "Volume of water carried by drainage canals, a proxy for leaching and salinity load.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/drinking-water-access", "prefLabel": "Drinking water access", "altLabels": ["water supply", "питьевая вода"], "definition": "Share of population with access to a sustainable drinking-water source.", "unit": "percent", "broader": "uz:theme/water"},
-    {"id": "uz:prop/sanitation-access", "prefLabel": "Sanitation access", "altLabels": ["sanitation", "санитария"], "definition": "Share of population with access to sustainable sanitation.", "unit": "percent", "broader": "uz:theme/water"},
-    {"id": "uz:prop/surface-water-extent", "prefLabel": "Surface water extent", "altLabels": ["flooded ecosystems", "водная поверхность"], "definition": "Area covered by permanent or seasonal surface water.", "unit": "km2", "broader": "uz:theme/water"},
-    {"id": "uz:prop/water-ecosystem-extent", "prefLabel": "Water ecosystem extent", "altLabels": ["wetland", "водные экосистемы"], "definition": "Area of aquatic and wetland ecosystems.", "unit": "km2", "broader": "uz:theme/water"},
-    {"id": "uz:prop/water-management-zone", "prefLabel": "Water management zone", "altLabels": ["water management", "управление водными ресурсами"], "definition": "Administrative or operational unit for allocating and managing water.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/river-network", "prefLabel": "River network", "altLabels": ["river reach", "stream network", "речная сеть"], "definition": "Connected river and stream reaches with stable identifiers, direction and downstream routing.", "broader": "uz:theme/water"},
-    {"id": "uz:prop/drainage-basin", "prefLabel": "Drainage basin", "altLabels": ["catchment", "watershed", "речной бассейн"], "definition": "Hydrologically connected catchment polygons organized by Pfafstetter hierarchy.", "broader": "uz:theme/water"},
-
-    {"id": "uz:prop/land-cover", "prefLabel": "Land cover", "altLabels": ["наземный покров", "земельный покров"], "definition": "Physical material at the surface, as a classified map.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/land-use-type", "prefLabel": "Land use type", "altLabels": ["land use", "виды землепользования"], "definition": "Human function assigned to land, distinct from its physical cover.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/land-use-intensity", "prefLabel": "Land use intensity", "altLabels": ["intensity", "интенсивность использования"], "definition": "How intensively land, particularly arable land, is worked.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/cropland-extent", "prefLabel": "Cropland extent", "altLabels": ["arable land", "пахотные земли"], "definition": "Area of arable and cropped land.", "unit": "ha", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/farming-system", "prefLabel": "Farming system", "altLabels": ["системы земледелия"], "definition": "Characteristic combination of crops, livestock and practices in an area.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/crop-yield", "prefLabel": "Crop yield", "altLabels": ["cotton yield", "урожайность"], "definition": "Harvested output per unit area.", "unit": "t/ha", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/livestock-density", "prefLabel": "Livestock density", "altLabels": ["livestock", "животноводство"], "definition": "Number of animals held per unit area.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/forage-resources", "prefLabel": "Forage resources", "altLabels": ["forage lands", "кормовые угодья"], "definition": "Land providing fodder for livestock.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/pasture-vegetation", "prefLabel": "Pasture vegetation", "altLabels": ["pasture types", "пастбища"], "definition": "Vegetation composition of rangeland and pasture.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/pasture-productivity", "prefLabel": "Pasture productivity", "altLabels": ["продуктивность пастбищ"], "definition": "Biomass a pasture produces per unit area and season.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/pasture-stocking-rate", "prefLabel": "Pasture stocking rate", "altLabels": ["carrying capacity", "нагрузка на пастбища"], "definition": "Recommended or actual grazing load a pasture can sustain.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/soil-salinity", "prefLabel": "Soil salinity", "altLabels": ["salinity", "засоление почв"], "definition": "Degree of salt accumulation in soil, the dominant degradation process in irrigated Uzbekistan.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/soil-chemistry", "prefLabel": "Soil chemistry", "altLabels": ["химизм почв"], "definition": "Chemical composition and reaction of soils.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/soil-organic-carbon", "prefLabel": "Soil organic carbon", "altLabels": ["SOC", "органический углерод почв"], "definition": "Carbon stored in the soil organic fraction.", "unit": "t/ha", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/vegetation-index", "prefLabel": "Vegetation index", "altLabels": ["вегетационный индекс"], "definition": "Remotely sensed index of vegetation greenness or structure.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/ndvi", "prefLabel": "NDVI", "altLabels": ["normalized difference vegetation index", "NDVI", "нормализованный вегетационный индекс"], "definition": "Normalised Difference Vegetation Index, the standard greenness measure.", "broader": "uz:prop/vegetation-index"},
-    {"id": "uz:prop/evi", "prefLabel": "EVI", "altLabels": ["enhanced vegetation index", "улучшенный индекс растительности"], "definition": "Enhanced Vegetation Index, less saturated over dense canopy than NDVI.", "broader": "uz:prop/vegetation-index"},
-    {"id": "uz:prop/leaf-area-index", "prefLabel": "Leaf area index", "altLabels": ["LAI", "индекс листовой поверхности"], "definition": "Leaf area per unit ground area, a structural vegetation measure.", "broader": "uz:prop/vegetation-index"},
-    {"id": "uz:prop/land-productivity", "prefLabel": "Land productivity", "altLabels": ["продуктивность земель"], "definition": "Biological productivity of land and its trajectory, an SDG 15.3.1 sub-indicator.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/bare-surface", "prefLabel": "Bare surface", "altLabels": ["открытая поверхность"], "definition": "Extent of unvegetated ground, a degradation and desertification signal.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/carbon-emission", "prefLabel": "Carbon emission", "altLabels": ["emissions", "выбросы углерода"], "definition": "Carbon released from land, soils or land-use change.", "unit": "tCO2e", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/carbon-balance", "prefLabel": "Net carbon balance", "altLabels": ["баланс углерода"], "definition": "Net of carbon emitted and sequestered for a unit of territory.", "unit": "tCO2e", "broader": "uz:theme/land-agriculture"},
-
-    {"id": "uz:prop/forest-cover", "prefLabel": "Forest cover", "altLabels": ["лесной покров"], "definition": "Extent of forested land, as a state or a change series.", "unit": "ha", "broader": "uz:theme/forests-carbon"},
-    {"id": "uz:prop/forest-type", "prefLabel": "Forest type", "altLabels": ["типы лесов", "saxaul", "саксаул"], "definition": "Compositional class of forest, including saxaul and planted stands.", "broader": "uz:theme/forests-carbon"},
-    {"id": "uz:prop/forest-age", "prefLabel": "Forest age", "altLabels": ["возраст леса"], "definition": "Age class of forest stands, a control on carbon uptake.", "broader": "uz:theme/forests-carbon"},
-    {"id": "uz:prop/canopy-closure", "prefLabel": "Canopy closure", "altLabels": ["сомкнутость крон"], "definition": "Fraction of ground shaded by tree crowns.", "unit": "percent", "broader": "uz:theme/forests-carbon"},
-    {"id": "uz:prop/forest-integrity", "prefLabel": "Forest landscape integrity", "altLabels": ["forest integrity index"], "definition": "Degree to which a forest landscape remains ecologically intact.", "broader": "uz:theme/forests-carbon"},
-    {"id": "uz:prop/carbon-sequestration", "prefLabel": "Carbon sequestration", "altLabels": ["депонирование углерода"], "definition": "Rate or stock of carbon captured by vegetation.", "unit": "tCO2e/yr", "broader": "uz:theme/forests-carbon"},
-    {"id": "uz:prop/reforestation-potential", "prefLabel": "Reforestation potential", "altLabels": ["plantation potential", "потенциал лесовосстановления"], "definition": "Suitability of land for establishing or restoring forest, and the benefit expected from doing so.", "broader": "uz:theme/forests-carbon"},
-
-    {"id": "uz:prop/species-richness", "prefLabel": "Species richness", "altLabels": ["видовое богатство"], "definition": "Count of species present in an area, by taxonomic group.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/species-occurrence", "prefLabel": "Species occurrence", "altLabels": ["distribution", "распространение видов"], "definition": "Presence or distribution of a taxonomic group, including game and useful species.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/habitat-diversity", "prefLabel": "Habitat diversity", "altLabels": ["разнообразие местообитаний"], "definition": "Variety of habitat types within an area.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/habitat-dynamics", "prefLabel": "Habitat dynamics", "altLabels": ["динамика местообитаний"], "definition": "Change in habitat extent or condition over time.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/biodiversity-intactness", "prefLabel": "Biodiversity intactness", "altLabels": ["BII"], "definition": "Share of original biodiversity remaining under current land use.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/ecosystem-resilience", "prefLabel": "Ecosystem resilience", "altLabels": ["bioclimatic resilience", "устойчивость экосистем"], "definition": "Capacity of an ecosystem to persist under bioclimatic change.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/conservation-value", "prefLabel": "Conservation value", "altLabels": ["природоохранная ценность"], "definition": "Composite priority score for protecting an area.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/protected-area", "prefLabel": "Protected area", "altLabels": ["ООПТ", "охраняемые территории", "key biodiversity area"], "definition": "Legally designated conservation area, its type and management.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/ecoregion", "prefLabel": "Ecoregion", "altLabels": ["экорегионы"], "definition": "Biogeographic unit sharing ecological character.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/landscape-type", "prefLabel": "Landscape type", "altLabels": ["ландшафты", "landscape structure"], "definition": "Classification and structure of physical landscapes.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/vegetation-formation", "prefLabel": "Vegetation formation", "altLabels": ["растительность", "plant formations"], "definition": "Phytocoenotic classification of natural vegetation.", "broader": "uz:theme/biodiversity"},
-    {"id": "uz:prop/biogeographic-region", "prefLabel": "Biogeographic region", "altLabels": ["physical-geographic regions", "zoogeographic regions", "физико-географические районы"], "definition": "Physical-geographic or zoogeographic regionalisation of the territory.", "broader": "uz:theme/biodiversity"},
-
-    {"id": "uz:prop/elevation", "prefLabel": "Elevation", "altLabels": ["hypsometry", "рельеф", "высота"], "definition": "Height of the land surface above sea level.", "unit": "m", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/geomorphology", "prefLabel": "Geomorphology", "altLabels": ["геоморфология"], "definition": "Landform classification and the processes that shaped it.", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/seismicity", "prefLabel": "Seismicity", "altLabels": ["earthquake", "землетрясения"], "definition": "Occurrence, magnitude and depth of earthquakes.", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/flood-hazard", "prefLabel": "Flood hazard", "altLabels": ["flood risk", "риск наводнений"], "definition": "Likelihood and severity of flooding at a location.", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/flood-extent", "prefLabel": "Flood extent", "altLabels": ["зона затопления"], "definition": "Area actually inundated by a flood event or scenario.", "unit": "km2", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/mudflow-hazard", "prefLabel": "Mudflow hazard", "altLabels": ["debris flow", "селевые потоки"], "definition": "Exposure to mudflow and debris-flow processes.", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/drought-severity", "prefLabel": "Drought severity", "altLabels": ["PDSI", "Palmer Drought Severity Index", "засуха"], "definition": "Severity of meteorological drought, typically as PDSI for a given year.", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/geodynamic-hazard", "prefLabel": "Geodynamic hazard", "altLabels": ["adverse geodynamic processes", "экзогенные процессы"], "definition": "Exposure to landslides, subsidence, karst and related ground processes.", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/glacier-volume", "prefLabel": "Glacier ice volume", "altLabels": ["glacier", "ледники"], "definition": "Ice volume stored in glaciers, the region's buffer for summer runoff.", "unit": "km3", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/glacial-lake", "prefLabel": "Glacial lake", "altLabels": ["ледниковые озёра"], "definition": "Lakes impounded by glacial processes, and their outburst potential.", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/disaster-mortality", "prefLabel": "Disaster mortality", "altLabels": ["fatalities", "погибшие"], "definition": "Deaths recorded from natural hazard events.", "broader": "uz:theme/hazards-terrain"},
-    {"id": "uz:prop/disaster-economic-loss", "prefLabel": "Disaster economic loss", "altLabels": ["экономический ущерб"], "definition": "Monetary loss recorded from natural hazard events.", "unit": "USD", "broader": "uz:theme/hazards-terrain"},
-
-    {"id": "uz:prop/settlement-extent", "prefLabel": "Settlement extent", "altLabels": ["built-up", "населённые пункты"], "definition": "Share and footprint of built-up settlement area.", "unit": "percent", "broader": "uz:theme/infrastructure"},
-    {"id": "uz:prop/settlement-change", "prefLabel": "Settlement change", "altLabels": ["disappeared settlements", "динамика поселений"], "definition": "Growth, decline or disappearance of settlements over time.", "broader": "uz:theme/infrastructure"},
-    {"id": "uz:prop/road-density", "prefLabel": "Road density", "altLabels": ["дорожная сеть"], "definition": "Length of road network per unit area.", "unit": "km/km2", "broader": "uz:theme/infrastructure"},
-    {"id": "uz:prop/road-network", "prefLabel": "Road network", "altLabels": ["highways", "автодороги"], "definition": "Mapped road and highway geometry, as opposed to its density.", "broader": "uz:theme/infrastructure"},
-    {"id": "uz:prop/railway-network", "prefLabel": "Railway network", "altLabels": ["railways", "железные дороги"], "definition": "Mapped railway lines and corridors.", "broader": "uz:theme/infrastructure"},
-    {"id": "uz:prop/building-footprint", "prefLabel": "Building footprint", "altLabels": ["buildings", "здания", "постройки"], "definition": "Outline of individual buildings at parcel scale.", "broader": "uz:theme/infrastructure"},
-    {"id": "uz:prop/point-of-interest", "prefLabel": "Point of interest", "altLabels": ["POI", "объекты"], "definition": "Named point features such as facilities, amenities and landmarks.", "broader": "uz:theme/infrastructure"},
-    {"id": "uz:prop/administrative-boundary", "prefLabel": "Administrative boundary", "altLabels": ["borders", "границы"], "definition": "Boundary of an administrative unit, used to aggregate statistics.", "broader": "uz:theme/infrastructure"},
-
-    {"id": "uz:prop/cadastral-parcel", "prefLabel": "Cadastral parcel", "altLabels": ["parcel", "кадастр", "участок"], "definition": "Land parcel as registered in the state cadastre, the legal unit of land.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/land-tenure", "prefLabel": "Land tenure", "altLabels": ["ownership", "землевладение", "land stock"], "definition": "Who holds land and under what arrangement: state reserve, shared, private, agency-managed.", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/sown-area", "prefLabel": "Sown area", "altLabels": ["посевные площади", "экин майдонлари"], "definition": "Area planted to a crop in a season, by district and year.", "unit": "ha", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/gross-harvest", "prefLabel": "Gross harvest", "altLabels": ["валовой сбор", "ялпи хосил"], "definition": "Total production harvested, the numerator of yield.", "unit": "t", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/fertiliser-application", "prefLabel": "Fertiliser application", "altLabels": ["удобрение", "fertilizer"], "definition": "Quantity of mineral or organic fertiliser applied per unit area and year.", "unit": "kg/ha", "broader": "uz:theme/land-agriculture"},
-    {"id": "uz:prop/annotation-labels", "prefLabel": "Annotation labels", "altLabels": ["training samples", "labelled polygons"], "definition": "Human- or cadastre-derived class labels attached to geometry, used to train and validate land-cover and land-use models. A machine-learning asset rather than an observation of the environment.", "broader": "uz:theme/land-agriculture"},
-
-    {"id": "uz:prop/evapotranspiration", "prefLabel": "Evapotranspiration", "altLabels": ["ET", "испарение", "эвапотранспирация"], "definition": "Water returned to the atmosphere from soil and vegetation, the demand side of the irrigation balance.", "unit": "mm", "broader": "uz:theme/climate"},
-    {"id": "uz:prop/soil-temperature", "prefLabel": "Soil temperature", "altLabels": ["температура почвы"], "definition": "Temperature measured at standard soil depths, a control on germination and evaporation.", "unit": "degC", "broader": "uz:theme/climate"},
-    {"id": "uz:prop/river-discharge", "prefLabel": "River discharge", "altLabels": ["water discharge", "расход воды", "сток реки"], "definition": "Volume of water passing a gauge per unit time.", "unit": "m3/s", "broader": "uz:theme/water"},
-    {"id": "uz:prop/monitoring-station", "prefLabel": "Monitoring station", "altLabels": ["метеостанция", "gauge", "станция"], "definition": "A fixed installation that measures the environment, and the network it belongs to. The anchor that ties a time series to a place.", "broader": "uz:theme/climate"}
+    {
+      "id": "uz:prop/air-temperature",
+      "prefLabel": "Air temperature",
+      "altLabels": [
+        "temperature",
+        "температура"
+      ],
+      "definition": "Near-surface air temperature, as a level or a trend.",
+      "unit": "degC",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/precipitation",
+      "prefLabel": "Precipitation",
+      "altLabels": [
+        "rainfall",
+        "осадки"
+      ],
+      "definition": "Depth of precipitation over a period, as a level or a trend.",
+      "unit": "mm",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/snow-cover-depth",
+      "prefLabel": "Snow cover depth",
+      "altLabels": [
+        "snow",
+        "снежный покров"
+      ],
+      "definition": "Depth of accumulated snow, a control on spring runoff.",
+      "unit": "cm",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/climatic-water-deficit",
+      "prefLabel": "Climatic water deficit",
+      "altLabels": [
+        "water deficit",
+        "дефицит влаги"
+      ],
+      "definition": "Gap between potential and actual evapotranspiration; a physical measure of moisture shortage.",
+      "unit": "mm",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/growing-season-timing",
+      "prefLabel": "Growing season timing",
+      "altLabels": [
+        "growing season",
+        "вегетационный период"
+      ],
+      "definition": "Start, peak, end or duration of the vegetation growing season.",
+      "unit": "day-of-year",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/climate-classification",
+      "prefLabel": "Climate classification",
+      "altLabels": [
+        "climate type",
+        "local climate zone",
+        "типы климата"
+      ],
+      "definition": "Categorical climate or local climate zone classification.",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/climate-projection",
+      "prefLabel": "Climate projection",
+      "altLabels": [
+        "projected",
+        "scenario",
+        "прогноз"
+      ],
+      "definition": "Modelled future climate condition under a scenario, for a stated horizon.",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/surface-runoff",
+      "prefLabel": "Surface runoff",
+      "altLabels": [
+        "runoff",
+        "сток"
+      ],
+      "definition": "Volume of water flowing from a catchment over a year.",
+      "unit": "m3/yr",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/reservoir-volume",
+      "prefLabel": "Lake and reservoir volume",
+      "altLabels": [
+        "reservoir",
+        "водохранилище"
+      ],
+      "definition": "Stored water volume in lakes and reservoirs.",
+      "unit": "m3",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/groundwater-depth",
+      "prefLabel": "Groundwater depth",
+      "altLabels": [
+        "water table",
+        "уровень грунтовых вод"
+      ],
+      "definition": "Depth from the surface to the water table.",
+      "unit": "m",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/groundwater-quality",
+      "prefLabel": "Groundwater quality",
+      "altLabels": [
+        "groundwater pollution",
+        "загрязнение подземных вод"
+      ],
+      "definition": "Chemical condition or contamination of groundwater.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/groundwater-resources",
+      "prefLabel": "Groundwater resources",
+      "altLabels": [
+        "aquifer",
+        "подземные воды"
+      ],
+      "definition": "Available groundwater stock, including artesian basins.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/water-stress",
+      "prefLabel": "Water stress",
+      "altLabels": [
+        "стресс водных ресурсов"
+      ],
+      "definition": "Ratio of demand to available supply; the standard water-scarcity indicator.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/water-balance",
+      "prefLabel": "Water balance",
+      "altLabels": [
+        "водный баланс"
+      ],
+      "definition": "Accounting of inflows, outflows and storage change for a unit of territory.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/irrigated-area",
+      "prefLabel": "Irrigated area",
+      "altLabels": [
+        "irrigation",
+        "орошаемые земли"
+      ],
+      "definition": "Extent of land under irrigation, by catchment or district.",
+      "unit": "ha",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/irrigation-canal-network",
+      "prefLabel": "Irrigation canal network",
+      "altLabels": [
+        "canal",
+        "каналы"
+      ],
+      "definition": "Canal infrastructure delivering irrigation water, and its density.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/drainage-network",
+      "prefLabel": "Drainage network",
+      "altLabels": [
+        "drainage",
+        "коллекторно-дренажная сеть"
+      ],
+      "definition": "Drainage infrastructure removing excess and saline water from irrigated land.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/drainage-flow",
+      "prefLabel": "Drainage flow",
+      "altLabels": [
+        "collector flow"
+      ],
+      "definition": "Volume of water carried by drainage canals, a proxy for leaching and salinity load.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/drinking-water-access",
+      "prefLabel": "Drinking water access",
+      "altLabels": [
+        "water supply",
+        "питьевая вода"
+      ],
+      "definition": "Share of population with access to a sustainable drinking-water source.",
+      "unit": "percent",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/sanitation-access",
+      "prefLabel": "Sanitation access",
+      "altLabels": [
+        "sanitation",
+        "санитария"
+      ],
+      "definition": "Share of population with access to sustainable sanitation.",
+      "unit": "percent",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/surface-water-extent",
+      "prefLabel": "Surface water extent",
+      "altLabels": [
+        "flooded ecosystems",
+        "водная поверхность"
+      ],
+      "definition": "Area covered by permanent or seasonal surface water.",
+      "unit": "km2",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/water-ecosystem-extent",
+      "prefLabel": "Water ecosystem extent",
+      "altLabels": [
+        "wetland",
+        "водные экосистемы"
+      ],
+      "definition": "Area of aquatic and wetland ecosystems.",
+      "unit": "km2",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/water-management-zone",
+      "prefLabel": "Water management zone",
+      "altLabels": [
+        "water management",
+        "управление водными ресурсами"
+      ],
+      "definition": "Administrative or operational unit for allocating and managing water.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/river-network",
+      "prefLabel": "River network",
+      "altLabels": [
+        "river reach",
+        "stream network",
+        "речная сеть"
+      ],
+      "definition": "Connected river and stream reaches with stable identifiers, direction and downstream routing.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/drainage-basin",
+      "prefLabel": "Drainage basin",
+      "altLabels": [
+        "catchment",
+        "watershed",
+        "речной бассейн"
+      ],
+      "definition": "Hydrologically connected catchment polygons organized by Pfafstetter hierarchy.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/land-cover",
+      "prefLabel": "Land cover",
+      "altLabels": [
+        "наземный покров",
+        "земельный покров"
+      ],
+      "definition": "Physical material at the surface, as a classified map.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/land-use-type",
+      "prefLabel": "Land use type",
+      "altLabels": [
+        "land use",
+        "виды землепользования"
+      ],
+      "definition": "Human function assigned to land, distinct from its physical cover.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/land-use-intensity",
+      "prefLabel": "Land use intensity",
+      "altLabels": [
+        "intensity",
+        "интенсивность использования"
+      ],
+      "definition": "How intensively land, particularly arable land, is worked.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/cropland-extent",
+      "prefLabel": "Cropland extent",
+      "altLabels": [
+        "arable land",
+        "пахотные земли"
+      ],
+      "definition": "Area of arable and cropped land.",
+      "unit": "ha",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/farming-system",
+      "prefLabel": "Farming system",
+      "altLabels": [
+        "системы земледелия"
+      ],
+      "definition": "Characteristic combination of crops, livestock and practices in an area.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/crop-yield",
+      "prefLabel": "Crop yield",
+      "altLabels": [
+        "cotton yield",
+        "урожайность"
+      ],
+      "definition": "Harvested output per unit area.",
+      "unit": "t/ha",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/livestock-density",
+      "prefLabel": "Livestock density",
+      "altLabels": [
+        "livestock",
+        "животноводство"
+      ],
+      "definition": "Number of animals held per unit area.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/forage-resources",
+      "prefLabel": "Forage resources",
+      "altLabels": [
+        "forage lands",
+        "кормовые угодья"
+      ],
+      "definition": "Land providing fodder for livestock.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/pasture-vegetation",
+      "prefLabel": "Pasture vegetation",
+      "altLabels": [
+        "pasture types",
+        "пастбища"
+      ],
+      "definition": "Vegetation composition of rangeland and pasture.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/pasture-productivity",
+      "prefLabel": "Pasture productivity",
+      "altLabels": [
+        "продуктивность пастбищ"
+      ],
+      "definition": "Biomass a pasture produces per unit area and season.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/pasture-stocking-rate",
+      "prefLabel": "Pasture stocking rate",
+      "altLabels": [
+        "carrying capacity",
+        "нагрузка на пастбища"
+      ],
+      "definition": "Recommended or actual grazing load a pasture can sustain.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/soil-salinity",
+      "prefLabel": "Soil salinity",
+      "altLabels": [
+        "salinity",
+        "засоление почв"
+      ],
+      "definition": "Degree of salt accumulation in soil, the dominant degradation process in irrigated Uzbekistan.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/soil-chemistry",
+      "prefLabel": "Soil chemistry",
+      "altLabels": [
+        "химизм почв"
+      ],
+      "definition": "Chemical composition and reaction of soils.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/soil-organic-carbon",
+      "prefLabel": "Soil organic carbon",
+      "altLabels": [
+        "SOC",
+        "органический углерод почв"
+      ],
+      "definition": "Carbon stored in the soil organic fraction.",
+      "unit": "t/ha",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/vegetation-index",
+      "prefLabel": "Vegetation index",
+      "altLabels": [
+        "вегетационный индекс"
+      ],
+      "definition": "Remotely sensed index of vegetation greenness or structure.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/ndvi",
+      "prefLabel": "NDVI",
+      "altLabels": [
+        "normalized difference vegetation index",
+        "NDVI",
+        "нормализованный вегетационный индекс"
+      ],
+      "definition": "Normalised Difference Vegetation Index, the standard greenness measure.",
+      "broader": "uz:prop/vegetation-index"
+    },
+    {
+      "id": "uz:prop/evi",
+      "prefLabel": "EVI",
+      "altLabels": [
+        "enhanced vegetation index",
+        "улучшенный индекс растительности"
+      ],
+      "definition": "Enhanced Vegetation Index, less saturated over dense canopy than NDVI.",
+      "broader": "uz:prop/vegetation-index"
+    },
+    {
+      "id": "uz:prop/leaf-area-index",
+      "prefLabel": "Leaf area index",
+      "altLabels": [
+        "LAI",
+        "индекс листовой поверхности"
+      ],
+      "definition": "Leaf area per unit ground area, a structural vegetation measure.",
+      "broader": "uz:prop/vegetation-index"
+    },
+    {
+      "id": "uz:prop/land-productivity",
+      "prefLabel": "Land productivity",
+      "altLabels": [
+        "продуктивность земель"
+      ],
+      "definition": "Biological productivity of land and its trajectory, an SDG 15.3.1 sub-indicator.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/bare-surface",
+      "prefLabel": "Bare surface",
+      "altLabels": [
+        "открытая поверхность"
+      ],
+      "definition": "Extent of unvegetated ground, a degradation and desertification signal.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/carbon-emission",
+      "prefLabel": "Carbon emission",
+      "altLabels": [
+        "emissions",
+        "выбросы углерода"
+      ],
+      "definition": "Carbon released from land, soils or land-use change.",
+      "unit": "tCO2e",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/carbon-balance",
+      "prefLabel": "Net carbon balance",
+      "altLabels": [
+        "баланс углерода"
+      ],
+      "definition": "Net of carbon emitted and sequestered for a unit of territory.",
+      "unit": "tCO2e",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/forest-cover",
+      "prefLabel": "Forest cover",
+      "altLabels": [
+        "лесной покров"
+      ],
+      "definition": "Extent of forested land, as a state or a change series.",
+      "unit": "ha",
+      "broader": "uz:theme/forests-carbon"
+    },
+    {
+      "id": "uz:prop/forest-type",
+      "prefLabel": "Forest type",
+      "altLabels": [
+        "типы лесов",
+        "saxaul",
+        "саксаул"
+      ],
+      "definition": "Compositional class of forest, including saxaul and planted stands.",
+      "broader": "uz:theme/forests-carbon"
+    },
+    {
+      "id": "uz:prop/forest-age",
+      "prefLabel": "Forest age",
+      "altLabels": [
+        "возраст леса"
+      ],
+      "definition": "Age class of forest stands, a control on carbon uptake.",
+      "broader": "uz:theme/forests-carbon"
+    },
+    {
+      "id": "uz:prop/canopy-closure",
+      "prefLabel": "Canopy closure",
+      "altLabels": [
+        "сомкнутость крон"
+      ],
+      "definition": "Fraction of ground shaded by tree crowns.",
+      "unit": "percent",
+      "broader": "uz:theme/forests-carbon"
+    },
+    {
+      "id": "uz:prop/forest-integrity",
+      "prefLabel": "Forest landscape integrity",
+      "altLabels": [
+        "forest integrity index"
+      ],
+      "definition": "Degree to which a forest landscape remains ecologically intact.",
+      "broader": "uz:theme/forests-carbon"
+    },
+    {
+      "id": "uz:prop/carbon-sequestration",
+      "prefLabel": "Carbon sequestration",
+      "altLabels": [
+        "депонирование углерода"
+      ],
+      "definition": "Rate or stock of carbon captured by vegetation.",
+      "unit": "tCO2e/yr",
+      "broader": "uz:theme/forests-carbon"
+    },
+    {
+      "id": "uz:prop/reforestation-potential",
+      "prefLabel": "Reforestation potential",
+      "altLabels": [
+        "plantation potential",
+        "потенциал лесовосстановления"
+      ],
+      "definition": "Suitability of land for establishing or restoring forest, and the benefit expected from doing so.",
+      "broader": "uz:theme/forests-carbon"
+    },
+    {
+      "id": "uz:prop/species-richness",
+      "prefLabel": "Species richness",
+      "altLabels": [
+        "видовое богатство"
+      ],
+      "definition": "Count of species present in an area, by taxonomic group.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/species-occurrence",
+      "prefLabel": "Species occurrence",
+      "altLabels": [
+        "distribution",
+        "распространение видов"
+      ],
+      "definition": "Presence or distribution of a taxonomic group, including game and useful species.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/habitat-diversity",
+      "prefLabel": "Habitat diversity",
+      "altLabels": [
+        "разнообразие местообитаний"
+      ],
+      "definition": "Variety of habitat types within an area.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/habitat-dynamics",
+      "prefLabel": "Habitat dynamics",
+      "altLabels": [
+        "динамика местообитаний"
+      ],
+      "definition": "Change in habitat extent or condition over time.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/biodiversity-intactness",
+      "prefLabel": "Biodiversity intactness",
+      "altLabels": [
+        "BII"
+      ],
+      "definition": "Share of original biodiversity remaining under current land use.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/ecosystem-resilience",
+      "prefLabel": "Ecosystem resilience",
+      "altLabels": [
+        "bioclimatic resilience",
+        "устойчивость экосистем"
+      ],
+      "definition": "Capacity of an ecosystem to persist under bioclimatic change.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/conservation-value",
+      "prefLabel": "Conservation value",
+      "altLabels": [
+        "природоохранная ценность"
+      ],
+      "definition": "Composite priority score for protecting an area.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/protected-area",
+      "prefLabel": "Protected area",
+      "altLabels": [
+        "ООПТ",
+        "охраняемые территории",
+        "key biodiversity area"
+      ],
+      "definition": "Legally designated conservation area, its type and management.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/ecoregion",
+      "prefLabel": "Ecoregion",
+      "altLabels": [
+        "экорегионы"
+      ],
+      "definition": "Biogeographic unit sharing ecological character.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/landscape-type",
+      "prefLabel": "Landscape type",
+      "altLabels": [
+        "ландшафты",
+        "landscape structure"
+      ],
+      "definition": "Classification and structure of physical landscapes.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/vegetation-formation",
+      "prefLabel": "Vegetation formation",
+      "altLabels": [
+        "растительность",
+        "plant formations"
+      ],
+      "definition": "Phytocoenotic classification of natural vegetation.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/biogeographic-region",
+      "prefLabel": "Biogeographic region",
+      "altLabels": [
+        "physical-geographic regions",
+        "zoogeographic regions",
+        "физико-географические районы"
+      ],
+      "definition": "Physical-geographic or zoogeographic regionalisation of the territory.",
+      "broader": "uz:theme/biodiversity"
+    },
+    {
+      "id": "uz:prop/elevation",
+      "prefLabel": "Elevation",
+      "altLabels": [
+        "hypsometry",
+        "рельеф",
+        "высота"
+      ],
+      "definition": "Height of the land surface above sea level.",
+      "unit": "m",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/geomorphology",
+      "prefLabel": "Geomorphology",
+      "altLabels": [
+        "геоморфология"
+      ],
+      "definition": "Landform classification and the processes that shaped it.",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/seismicity",
+      "prefLabel": "Seismicity",
+      "altLabels": [
+        "earthquake",
+        "землетрясения"
+      ],
+      "definition": "Occurrence, magnitude and depth of earthquakes.",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/flood-hazard",
+      "prefLabel": "Flood hazard",
+      "altLabels": [
+        "flood risk",
+        "риск наводнений"
+      ],
+      "definition": "Likelihood and severity of flooding at a location.",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/flood-extent",
+      "prefLabel": "Flood extent",
+      "altLabels": [
+        "зона затопления"
+      ],
+      "definition": "Area actually inundated by a flood event or scenario.",
+      "unit": "km2",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/mudflow-hazard",
+      "prefLabel": "Mudflow hazard",
+      "altLabels": [
+        "debris flow",
+        "селевые потоки"
+      ],
+      "definition": "Exposure to mudflow and debris-flow processes.",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/drought-severity",
+      "prefLabel": "Drought severity",
+      "altLabels": [
+        "PDSI",
+        "Palmer Drought Severity Index",
+        "засуха"
+      ],
+      "definition": "Severity of meteorological drought, typically as PDSI for a given year.",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/geodynamic-hazard",
+      "prefLabel": "Geodynamic hazard",
+      "altLabels": [
+        "adverse geodynamic processes",
+        "экзогенные процессы"
+      ],
+      "definition": "Exposure to landslides, subsidence, karst and related ground processes.",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/glacier-volume",
+      "prefLabel": "Glacier ice volume",
+      "altLabels": [
+        "glacier",
+        "ледники"
+      ],
+      "definition": "Ice volume stored in glaciers, the region's buffer for summer runoff.",
+      "unit": "km3",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/glacial-lake",
+      "prefLabel": "Glacial lake",
+      "altLabels": [
+        "ледниковые озёра"
+      ],
+      "definition": "Lakes impounded by glacial processes, and their outburst potential.",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/disaster-mortality",
+      "prefLabel": "Disaster mortality",
+      "altLabels": [
+        "fatalities",
+        "погибшие"
+      ],
+      "definition": "Deaths recorded from natural hazard events.",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/disaster-economic-loss",
+      "prefLabel": "Disaster economic loss",
+      "altLabels": [
+        "экономический ущерб"
+      ],
+      "definition": "Monetary loss recorded from natural hazard events.",
+      "unit": "USD",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/settlement-extent",
+      "prefLabel": "Settlement extent",
+      "altLabels": [
+        "built-up",
+        "населённые пункты"
+      ],
+      "definition": "Share and footprint of built-up settlement area.",
+      "unit": "percent",
+      "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/settlement-change",
+      "prefLabel": "Settlement change",
+      "altLabels": [
+        "disappeared settlements",
+        "динамика поселений"
+      ],
+      "definition": "Growth, decline or disappearance of settlements over time.",
+      "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/road-density",
+      "prefLabel": "Road density",
+      "altLabels": [
+        "дорожная сеть"
+      ],
+      "definition": "Length of road network per unit area.",
+      "unit": "km/km2",
+      "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/road-network",
+      "prefLabel": "Road network",
+      "altLabels": [
+        "highways",
+        "автодороги"
+      ],
+      "definition": "Mapped road and highway geometry, as opposed to its density.",
+      "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/railway-network",
+      "prefLabel": "Railway network",
+      "altLabels": [
+        "railways",
+        "железные дороги"
+      ],
+      "definition": "Mapped railway lines and corridors.",
+      "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/building-footprint",
+      "prefLabel": "Building footprint",
+      "altLabels": [
+        "buildings",
+        "здания",
+        "постройки"
+      ],
+      "definition": "Outline of individual buildings at parcel scale.",
+      "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/point-of-interest",
+      "prefLabel": "Point of interest",
+      "altLabels": [
+        "POI",
+        "объекты"
+      ],
+      "definition": "Named point features such as facilities, amenities and landmarks.",
+      "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/administrative-boundary",
+      "prefLabel": "Administrative boundary",
+      "altLabels": [
+        "borders",
+        "границы"
+      ],
+      "definition": "Boundary of an administrative unit, used to aggregate statistics.",
+      "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/cadastral-parcel",
+      "prefLabel": "Cadastral parcel",
+      "altLabels": [
+        "parcel",
+        "кадастр",
+        "участок"
+      ],
+      "definition": "Land parcel as registered in the state cadastre, the legal unit of land.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/land-tenure",
+      "prefLabel": "Land tenure",
+      "altLabels": [
+        "ownership",
+        "землевладение",
+        "land stock"
+      ],
+      "definition": "Who holds land and under what arrangement: state reserve, shared, private, agency-managed.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/sown-area",
+      "prefLabel": "Sown area",
+      "altLabels": [
+        "посевные площади",
+        "экин майдонлари"
+      ],
+      "definition": "Area planted to a crop in a season, by district and year.",
+      "unit": "ha",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/gross-harvest",
+      "prefLabel": "Gross harvest",
+      "altLabels": [
+        "валовой сбор",
+        "ялпи хосил"
+      ],
+      "definition": "Total production harvested, the numerator of yield.",
+      "unit": "t",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/fertiliser-application",
+      "prefLabel": "Fertiliser application",
+      "altLabels": [
+        "удобрение",
+        "fertilizer"
+      ],
+      "definition": "Quantity of mineral or organic fertiliser applied per unit area and year.",
+      "unit": "kg/ha",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/annotation-labels",
+      "prefLabel": "Annotation labels",
+      "altLabels": [
+        "training samples",
+        "labelled polygons"
+      ],
+      "definition": "Human- or cadastre-derived class labels attached to geometry, used to train and validate land-cover and land-use models. A machine-learning asset rather than an observation of the environment.",
+      "broader": "uz:theme/land-agriculture"
+    },
+    {
+      "id": "uz:prop/evapotranspiration",
+      "prefLabel": "Evapotranspiration",
+      "altLabels": [
+        "ET",
+        "испарение",
+        "эвапотранспирация"
+      ],
+      "definition": "Water returned to the atmosphere from soil and vegetation, the demand side of the irrigation balance.",
+      "unit": "mm",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/soil-temperature",
+      "prefLabel": "Soil temperature",
+      "altLabels": [
+        "температура почвы"
+      ],
+      "definition": "Temperature measured at standard soil depths, a control on germination and evaporation.",
+      "unit": "degC",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/river-discharge",
+      "prefLabel": "River discharge",
+      "altLabels": [
+        "water discharge",
+        "расход воды",
+        "сток реки"
+      ],
+      "definition": "Volume of water passing a gauge per unit time.",
+      "unit": "m3/s",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/monitoring-station",
+      "prefLabel": "Monitoring station",
+      "altLabels": [
+        "метеостанция",
+        "gauge",
+        "станция"
+      ],
+      "definition": "A fixed installation that measures the environment, and the network it belongs to. The anchor that ties a time series to a place.",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/soil-moisture",
+      "prefLabel": "Soil moisture",
+      "altLabels": [
+        "volumetric soil water",
+        "влажность почвы"
+      ],
+      "definition": "Water held in the soil column, as a volumetric fraction. Distinct from precipitation, which is what arrives, and from groundwater depth, which is what has drained past the root zone.",
+      "unit": "m3/m3",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/aerosol-optical-depth",
+      "prefLabel": "Aerosol optical depth",
+      "altLabels": [
+        "AOD",
+        "аэрозольная оптическая толщина"
+      ],
+      "definition": "How much the whole atmospheric column dims sunlight through suspended particles. A column measure, not a surface concentration: high AOD with clean air at ground level is ordinary when the aerosol is aloft.",
+      "unit": "index",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/particulate-matter",
+      "prefLabel": "Particulate matter",
+      "altLabels": [
+        "PM2.5",
+        "PM10",
+        "твёрдые частицы"
+      ],
+      "definition": "Mass of suspended particles per volume of air at the surface, by size fraction. The fraction matters: dust is mostly coarse, so a fine-only measure understates exactly the episodes people notice.",
+      "unit": "ug/m3",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/dust-load",
+      "prefLabel": "Atmospheric dust",
+      "altLabels": [
+        "dust storm",
+        "пыльная буря"
+      ],
+      "definition": "The dust component of atmospheric aerosol, separated from smoke, sea salt and industrial sulphate. What distinguishes a dust storm from other pollution episodes.",
+      "unit": "index",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
+      "id": "uz:prop/specific-humidity",
+      "prefLabel": "Specific humidity",
+      "altLabels": [
+        "humidity",
+        "влажность воздуха"
+      ],
+      "definition": "Mass of water vapour per mass of air. With temperature it sets evaporative demand, which is what dries soil and stresses crops.",
+      "unit": "kg/kg",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/solar-radiation",
+      "prefLabel": "Solar radiation",
+      "altLabels": [
+        "shortwave",
+        "солнечная радиация"
+      ],
+      "definition": "Downward shortwave energy reaching the surface, the energy input driving evaporation and photosynthesis.",
+      "unit": "W/m2",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/human-modification",
+      "prefLabel": "Human modification",
+      "altLabels": [
+        "anthropogenic pressure",
+        "антропогенная нагрузка"
+      ],
+      "definition": "Cumulative human alteration of the land surface, combining settlement, agriculture, transport, mining and energy into one index. Deliberately cross-cutting: it is a summary of several themes rather than a member of one.",
+      "unit": "index",
+      "broader": "uz:theme/infrastructure"
+    }
   ]
 }
