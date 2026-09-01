@@ -84,29 +84,82 @@ VARIABLES = [
     ("Volumetric_Soil_Moisture_Content_depth_below_surface_layer_25_cm", "soil_moisture_25cm", "m3/m3", 1.0, 0.0),
     ("Volumetric_Soil_Moisture_Content_depth_below_surface_layer_70_cm", "soil_moisture_70cm", "m3/m3", 1.0, 0.0),
     ("Volumetric_Soil_Moisture_Content_depth_below_surface_layer_150_cm", "soil_moisture_150cm", "m3/m3", 1.0, 0.0),
-    ("Potential_Evaporation_Rate_surface_6_Hour_Average", "potential_evaporation", "mm/day", 86400.0, 0.0),
+    # W/m2, not a mass flux: this band is an energy rate like the radiation ones,
+    # and multiplying it by 86400 as though it were kg/m2/s produced values in the
+    # tens of millions.
+    ("Potential_Evaporation_Rate_surface_6_Hour_Average", "potential_evaporation", "W/m2", 1.0, 0.0),
     ("Downward_Short-Wave_Radiation_Flux_surface_6_Hour_Average", "shortwave_down", "W/m2", 1.0, 0.0),
     ("Specific_humidity_height_above_ground", "specific_humidity", "kg/kg", 1.0, 0.0),
 ]
+# Physically possible ranges, used to flag rather than to silently drop. The
+# upstream product is not always right: CFSv2 potential evaporation for 2026 reads
+# about 6,700 W/m2 over Uzbekistan against 500 to 570 in every earlier year, which
+# cannot happen when the shortwave input is 318 W/m2. A value like that must not
+# reach a baseline or an anomaly, and must not vanish without trace either.
+PLAUSIBLE = {
+    "precipitation": (0.0, 500.0),
+    "temperature_mean": (-60.0, 60.0),
+    "temperature_max": (-60.0, 70.0),
+    "temperature_min": (-70.0, 60.0),
+    "soil_moisture_5cm": (0.0, 1.0),
+    "soil_moisture_25cm": (0.0, 1.0),
+    "soil_moisture_70cm": (0.0, 1.0),
+    "soil_moisture_150cm": (0.0, 1.0),
+    "potential_evaporation": (0.0, 1500.0),
+    "shortwave_down": (0.0, 600.0),
+    "specific_humidity": (0.0, 0.06),
+}
+
+
+# Three level-7 basins are outlet slivers of 0.4 to 1.4 km2 — thousandths of a
+# 1,209 km2 pixel — so an area-weighted reduction finds no pixel centre inside
+# them and returns nothing. Sampling the pixel that contains the basin instead
+# gives a defensible value for a polygon that small, but it is a different
+# measurement from a spatial mean, so it is labelled rather than blended in.
+SUBPIXEL_QUALITY = "ok-centroid"
+
+
+def quality_of(name: str, value: float) -> str:
+    low, high = PLAUSIBLE.get(name, (float("-inf"), float("inf")))
+    return "ok" if low <= value <= high else "implausible"
+
+
 BANDS = [entry[0] for entry in VARIABLES]
 NAMES = {band: name for band, name, *_ in VARIABLES}
 UNITS = {name: unit for _, name, unit, *_ in VARIABLES}
 CONVERT = {band: (scale, offset) for band, _, _, scale, offset in VARIABLES}
 
-# Standard anomaly bands. Deliberately symmetric: the same cut that calls a
-# drought severe calls a wet spell extreme, so the vocabulary does not smuggle in
-# an assumption that dry is the only interesting direction.
-CLASSES = [
-    (-math.inf, -2.0, "extremely dry"), (-2.0, -1.0, "dry"),
-    (-1.0, 1.0, "normal"), (1.0, 2.0, "wet"), (2.0, math.inf, "extremely wet"),
-]
+# Anomaly bands are symmetric — the same cut that calls a drought severe calls a
+# wet spell extreme — but the words are not shared across variables. A
+# temperature two standard deviations above its normal is not "extremely wet";
+# saying so would put a moisture reading into the ontology where a thermal one
+# belongs, and anything reasoning over the table afterwards would inherit the
+# error. Each variable therefore names its own poles.
+CUTS = [(-math.inf, -2.0), (-2.0, -1.0), (-1.0, 1.0), (1.0, 2.0), (2.0, math.inf)]
+
+VOCABULARIES = {
+    "moisture": ["extremely dry", "dry", "normal", "wet", "extremely wet"],
+    "thermal": ["extremely cold", "cold", "normal", "hot", "extremely hot"],
+    "energy": ["very low", "low", "normal", "high", "very high"],
+}
+
+DIRECTION = {
+    "precipitation": "moisture", "soil_moisture_5cm": "moisture",
+    "soil_moisture_25cm": "moisture", "soil_moisture_70cm": "moisture",
+    "soil_moisture_150cm": "moisture", "specific_humidity": "moisture",
+    "temperature_mean": "thermal", "temperature_max": "thermal", "temperature_min": "thermal",
+    # Evaporative demand and radiation are neither wet nor hot: a high value is
+    # simply a lot of it, and what it means depends on what else is happening.
+    "potential_evaporation": "energy", "shortwave_down": "energy",
+}
 
 
-def classify(z: float) -> str:
-    for low, high, label in CLASSES:
+def classify(z: float, variable: str) -> str:
+    labels = VOCABULARIES[DIRECTION.get(variable, "energy")]
+    for (low, high), label in zip(CUTS, labels):
         if low <= z < high:
             return label
-    return "normal"
+    return labels[2]
 
 
 def initialise():
@@ -123,9 +176,12 @@ def initialise():
 
 def basin_collection(ee):
     document = json.loads(BASINS.read_text(encoding="utf8"))
-    features = [ee.Feature(ee.Geometry(f["geometry"]), {"basin": int(f["properties"]["HYBAS_ID"])})
-                for f in document["features"]]
-    return ee.FeatureCollection(features), len(features)
+    features, geometries = [], {}
+    for f in document["features"]:
+        basin = int(f["properties"]["HYBAS_ID"])
+        features.append(ee.Feature(ee.Geometry(f["geometry"]), {"basin": basin}))
+        geometries[basin] = f["geometry"]
+    return ee.FeatureCollection(features), len(features), geometries
 
 
 def months(start: str, end: str) -> list[tuple[int, int]]:
@@ -152,7 +208,7 @@ def existing(path: Path, keys: tuple[str, ...]) -> set:
 
 def observe(args) -> None:
     ee = initialise()
-    collection, count = basin_collection(ee)
+    collection, count, centroids = basin_collection(ee)
     source = ee.ImageCollection(ASSET)
     wanted = months(args.start, args.end)
     done = existing(OBSERVATIONS, ("year", "month"))
@@ -171,7 +227,7 @@ def observe(args) -> None:
     with OBSERVATIONS.open("a", encoding="utf8", newline="") as handle:
         writer = csv.writer(handle)
         if fresh:
-            writer.writerow(["basin_id", "year", "month", "variable", "value", "unit"])
+            writer.writerow(["basin_id", "year", "month", "variable", "value", "unit", "quality"])
         for position, (year, month) in enumerate(todo, start=1):
             start = ee.Date.fromYMD(year, month, 1)
             monthly = source.filterDate(start, start.advance(1, "month")).select(BANDS).mean()
@@ -181,16 +237,39 @@ def observe(args) -> None:
             except Exception as error:
                 print(f"  ! {year}-{month:02d}: {str(error).strip()[:110]}", flush=True)
                 continue
+            missing = [f["properties"]["basin"] for f in result["features"]
+                       if f["properties"].get(BANDS[0]) is None]
+            sampled = {}
+            if missing:
+                # One extra call covers every sliver, at the pixel that contains it.
+                points = ee.FeatureCollection([
+                    ee.Feature(ee.Geometry(geom).centroid(maxError=1), {"basin": basin})
+                    for basin, geom in centroids.items() if basin in missing])
+                try:
+                    fallback = monthly.reduceRegions(
+                        collection=points, reducer=ee.Reducer.first(), scale=SCALE).getInfo()
+                    sampled = {f["properties"]["basin"]: f["properties"]
+                               for f in fallback["features"]}
+                except Exception as error:
+                    print(f"  ! centroid fallback failed: {str(error).strip()[:90]}", flush=True)
+
             for feature in result["features"]:
                 properties = feature["properties"]
                 basin = properties["basin"]
+                by_centroid = properties.get(BANDS[0]) is None and basin in sampled
+                if by_centroid:
+                    properties = sampled[basin]
                 for band in BANDS:
                     raw = properties.get(band)
                     if raw is None:
                         continue
                     scale, offset = CONVERT[band]
-                    writer.writerow([basin, year, month, NAMES[band],
-                                     round(raw * scale + offset, 5), UNITS[NAMES[band]]])
+                    name = NAMES[band]
+                    value = round(raw * scale + offset, 5)
+                    quality = quality_of(name, value)
+                    if quality == "ok" and by_centroid:
+                        quality = SUBPIXEL_QUALITY
+                    writer.writerow([basin, year, month, name, value, UNITS[name], quality])
                     rows += 1
             handle.flush()
             rate = (time.time() - started) / position
@@ -216,6 +295,8 @@ def climatology(args) -> None:
         for row in csv.DictReader(handle):
             year = int(row["year"])
             if not args.start <= year <= args.end:
+                continue
+            if not row.get("quality", "ok").startswith("ok"):
                 continue
             buckets[(row["basin_id"], row["month"], row["variable"])].append(float(row["value"]))
 
@@ -260,8 +341,12 @@ def anomaly(args) -> None:
             ANOMALIES.open("w", encoding="utf8", newline="") as target:
         writer = csv.writer(target)
         writer.writerow(["basin_id", "year", "month", "variable", "value", "unit",
-                         "baseline_mean", "baseline_sd", "z_score", "classification"])
+                         "baseline_mean", "baseline_sd", "z_score", "classification",
+                         "baseline_years"])
         for row in csv.DictReader(source):
+            if not row.get("quality", "ok").startswith("ok"):
+                skipped += 1
+                continue
             key = (row["basin_id"], row["month"], row["variable"])
             stats = baseline.get(key)
             if not stats or not stats["sd"]:
@@ -276,7 +361,7 @@ def anomaly(args) -> None:
             z = (float(row["value"]) - float(stats["mean"])) / sd
             writer.writerow([row["basin_id"], row["year"], row["month"], row["variable"],
                              row["value"], row["unit"], stats["mean"], stats["sd"],
-                             round(z, 3), classify(z)])
+                             round(z, 3), classify(z, row["variable"]), stats["years"]])
             written += 1
 
     print(f"anomaly · {written:,} z-scores written, {skipped:,} skipped for want of a usable baseline")
@@ -299,9 +384,12 @@ def anomaly(args) -> None:
         "basinLevel": BASIN_LEVEL,
         "variables": [{"name": name, "unit": unit, "band": band}
                       for band, name, unit, *_ in VARIABLES],
-        "classification": [{"from": None if low == -math.inf else low,
-                            "to": None if high == math.inf else high, "label": label}
-                           for low, high, label in CLASSES],
+        "classification": {
+            "cuts": [{"from": None if low == -math.inf else low,
+                      "to": None if high == math.inf else high} for low, high in CUTS],
+            "vocabularies": VOCABULARIES,
+            "variableDirection": DIRECTION,
+        },
         "caveats": [
             f"The grid is {SCALE / 1000:.1f} km, so a pixel covers about "
             f"{(SCALE / 1000) ** 2:,.0f} km². Level-12 basins average 127 km² and roughly nine "

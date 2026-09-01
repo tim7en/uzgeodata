@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T06:58:28+00:00",
+  "generatedAt": "2026-09-01T07:23:57+00:00",
   "services": {
     "observe": {
       "scope": "measurement",
@@ -75,7 +75,7 @@
     },
     {
       "name": "potential_evaporation",
-      "unit": "mm/day",
+      "unit": "W/m2",
       "band": "Potential_Evaporation_Rate_surface_6_Hour_Average"
     },
     {
@@ -89,33 +89,66 @@
       "band": "Specific_humidity_height_above_ground"
     }
   ],
-  "classification": [
-    {
-      "from": null,
-      "to": -2.0,
-      "label": "extremely dry"
+  "classification": {
+    "cuts": [
+      {
+        "from": null,
+        "to": -2.0
+      },
+      {
+        "from": -2.0,
+        "to": -1.0
+      },
+      {
+        "from": -1.0,
+        "to": 1.0
+      },
+      {
+        "from": 1.0,
+        "to": 2.0
+      },
+      {
+        "from": 2.0,
+        "to": null
+      }
+    ],
+    "vocabularies": {
+      "moisture": [
+        "extremely dry",
+        "dry",
+        "normal",
+        "wet",
+        "extremely wet"
+      ],
+      "thermal": [
+        "extremely cold",
+        "cold",
+        "normal",
+        "hot",
+        "extremely hot"
+      ],
+      "energy": [
+        "very low",
+        "low",
+        "normal",
+        "high",
+        "very high"
+      ]
     },
-    {
-      "from": -2.0,
-      "to": -1.0,
-      "label": "dry"
-    },
-    {
-      "from": -1.0,
-      "to": 1.0,
-      "label": "normal"
-    },
-    {
-      "from": 1.0,
-      "to": 2.0,
-      "label": "wet"
-    },
-    {
-      "from": 2.0,
-      "to": null,
-      "label": "extremely wet"
+    "variableDirection": {
+      "precipitation": "moisture",
+      "soil_moisture_5cm": "moisture",
+      "soil_moisture_25cm": "moisture",
+      "soil_moisture_70cm": "moisture",
+      "soil_moisture_150cm": "moisture",
+      "specific_humidity": "moisture",
+      "temperature_mean": "thermal",
+      "temperature_max": "thermal",
+      "temperature_min": "thermal",
+      "potential_evaporation": "energy",
+      "shortwave_down": "energy"
     }
-  ],
+  },
   "caveats": [
     "The grid is 35.0 km, so a pixel covers about 1,225 km². Level-12 basins average 127 km² and roughly nine and a half of them share one pixel, which is why this reads level 7.",
     "The record starts in 1979 but is not homogeneous: CFSR feeds it to 2010 and operational CFSv2 from 2011, and 25 cm soil moisture steps up by 1.41 standard deviations across that boundary. The baseline stays inside the operational era.",

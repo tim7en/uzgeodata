@@ -48,6 +48,7 @@ npm run landcover:stats        # annual land cover area per district or basin, f
 npm run cfsv2:observe          # basin monthly state from CFSv2 (measurement)
 npm run cfsv2:climatology      # the reference baseline the anomalies are measured against
 npm run cfsv2:anomaly          # observations as z-scores, classified
+npm run data:currency          # how current every stored relationship is, and what refreshes it
 npm run test:trace             # the upstream-trace and aggregation guard rails
 ```
 

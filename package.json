@@ -32,7 +32,8 @@
     "landcover:stats": "python PIPELINES/build_landcover_statistics.py",
     "cfsv2:observe": "python PIPELINES/cfsv2_basin_service.py observe",
     "cfsv2:climatology": "python PIPELINES/cfsv2_basin_service.py climatology",
-    "cfsv2:anomaly": "python PIPELINES/cfsv2_basin_service.py anomaly"
+    "cfsv2:anomaly": "python PIPELINES/cfsv2_basin_service.py anomaly",
+    "data:currency": "python PIPELINES/build_data_currency.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
