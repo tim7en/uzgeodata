@@ -301,6 +301,98 @@
           "meaning": "land cover class code in the product's 9-class scheme"
         }
       ]
+    },
+    {
+      "dataset": "cfsv2-noaa",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "format": "CSV",
+      "containerTable": null,
+      "subjectColumn": "basin_id",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": null,
+      "measureUnitColumn": "unit",
+      "id": "cfsv2-basin-monthly",
+      "label": "CFSv2 basin monthly state",
+      "note": "Monthly mean of the 6-hourly CFSv2 field over each level-7 basin: precipitation, temperature, four soil-moisture depths, evaporative demand, radiation and humidity. Level 7 because the grid is 34.8 km and roughly nine and a half level-12 basins share a single pixel. Pure measurement, no interpretation.",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/analysis/cfsv2-basin-monthly.csv",
+      "measureColumn": "value",
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "which environmental variable"
+        }
+      ]
+    },
+    {
+      "dataset": "cfsv2-noaa",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "format": "CSV",
+      "containerTable": null,
+      "subjectColumn": "basin_id",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": null,
+      "measureUnitColumn": "unit",
+      "id": "cfsv2-basin-climatology",
+      "label": "CFSv2 basin climatological baseline",
+      "note": "Mean and standard deviation per basin, calendar month and variable over a stated reference period. The period stays inside the operational CFSv2 era: the record reaches 1979, but 25 cm soil moisture steps up 1.41 standard deviations at the 2011 CFSR handover, and a baseline spanning that would bias every anomaly drawn against it. Cells with fewer than three years carry no standard deviation.",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/analysis/cfsv2-basin-climatology.csv",
+      "measureColumn": "mean",
+      "dimensionColumns": [
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "which environmental variable"
+        }
+      ]
+    },
+    {
+      "dataset": "cfsv2-noaa",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "format": "CSV",
+      "containerTable": null,
+      "subjectColumn": "basin_id",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": null,
+      "measureUnitColumn": "unit",
+      "id": "cfsv2-basin-anomaly",
+      "label": "CFSv2 basin anomaly",
+      "note": "Observations expressed as z-scores against the baseline, with a symmetric classification from extremely dry to extremely wet. Derived and rebuildable: it holds no measurement the other two tables do not already have, and it moves whenever the reference period is redefined.",
+      "predicate": "uz:hasBasinAnomaly",
+      "container": "PUBLISHED/data/analysis/cfsv2-basin-anomaly.csv",
+      "measureColumn": "z_score",
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "which environmental variable"
+        }
+      ]
     }
   ]
 }

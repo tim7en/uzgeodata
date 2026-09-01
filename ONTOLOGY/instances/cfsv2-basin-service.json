@@ -1,0 +1,124 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-01T06:58:28+00:00",
+  "services": {
+    "observe": {
+      "scope": "measurement",
+      "output": "PUBLISHED/data/analysis/cfsv2-basin-monthly.csv",
+      "predicate": "uz:hasBasinStatistic"
+    },
+    "climatology": {
+      "scope": "reference baseline",
+      "output": "PUBLISHED/data/analysis/cfsv2-basin-climatology.csv",
+      "baseline": [
+        2011,
+        2025
+      ]
+    },
+    "anomaly": {
+      "scope": "derived indicator",
+      "output": "PUBLISHED/data/analysis/cfsv2-basin-anomaly.csv",
+      "predicate": "uz:hasBasinAnomaly",
+      "derivedFrom": [
+        "observe",
+        "climatology"
+      ]
+    }
+  },
+  "source": {
+    "platform": "Google Earth Engine",
+    "asset": "NOAA/CFSV2/FOR6H_HARMONIZED",
+    "gridMetres": 35000,
+    "cadence": "6-hourly, aggregated to monthly means"
+  },
+  "basinLevel": 7,
+  "variables": [
+    {
+      "name": "precipitation",
+      "unit": "mm/day",
+      "band": "Precipitation_rate_surface_6_Hour_Average"
+    },
+    {
+      "name": "temperature_mean",
+      "unit": "degC",
+      "band": "Temperature_height_above_ground"
+    },
+    {
+      "name": "temperature_max",
+      "unit": "degC",
+      "band": "Maximum_temperature_height_above_ground_6_Hour_Interval"
+    },
+    {
+      "name": "temperature_min",
+      "unit": "degC",
+      "band": "Minimum_temperature_height_above_ground_6_Hour_Interval"
+    },
+    {
+      "name": "soil_moisture_5cm",
+      "unit": "m3/m3",
+      "band": "Volumetric_Soil_Moisture_Content_depth_below_surface_layer_5_cm"
+    },
+    {
+      "name": "soil_moisture_25cm",
+      "unit": "m3/m3",
+      "band": "Volumetric_Soil_Moisture_Content_depth_below_surface_layer_25_cm"
+    },
+    {
+      "name": "soil_moisture_70cm",
+      "unit": "m3/m3",
+      "band": "Volumetric_Soil_Moisture_Content_depth_below_surface_layer_70_cm"
+    },
+    {
+      "name": "soil_moisture_150cm",
+      "unit": "m3/m3",
+      "band": "Volumetric_Soil_Moisture_Content_depth_below_surface_layer_150_cm"
+    },
+    {
+      "name": "potential_evaporation",
+      "unit": "mm/day",
+      "band": "Potential_Evaporation_Rate_surface_6_Hour_Average"
+    },
+    {
+      "name": "shortwave_down",
+      "unit": "W/m2",
+      "band": "Downward_Short-Wave_Radiation_Flux_surface_6_Hour_Average"
+    },
+    {
+      "name": "specific_humidity",
+      "unit": "kg/kg",
+      "band": "Specific_humidity_height_above_ground"
+    }
+  ],
+  "classification": [
+    {
+      "from": null,
+      "to": -2.0,
+      "label": "extremely dry"
+    },
+    {
+      "from": -2.0,
+      "to": -1.0,
+      "label": "dry"
+    },
+    {
+      "from": -1.0,
+      "to": 1.0,
+      "label": "normal"
+    },
+    {
+      "from": 1.0,
+      "to": 2.0,
+      "label": "wet"
+    },
+    {
+      "from": 2.0,
+      "to": null,
+      "label": "extremely wet"
+    }
+  ],
+  "caveats": [
+    "The grid is 35.0 km, so a pixel covers about 1,225 km². Level-12 basins average 127 km² and roughly nine and a half of them share one pixel, which is why this reads level 7.",
+    "The record starts in 1979 but is not homogeneous: CFSR feeds it to 2010 and operational CFSv2 from 2011, and 25 cm soil moisture steps up by 1.41 standard deviations across that boundary. The baseline stays inside the operational era.",
+    "This is the 6-hourly analysis product, not a seasonal forecast. It describes the state that has happened, and nothing about the state to come."
+  ]
+}

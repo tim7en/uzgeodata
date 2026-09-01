@@ -29,7 +29,10 @@
     "review:build": "python PIPELINES/build_review_layers.py",
     "landcover:cog": "python PIPELINES/analyse_landcover_district.py",
     "landcover:gee": "python PIPELINES/analyse_landcover_gee.py",
-    "landcover:stats": "python PIPELINES/build_landcover_statistics.py"
+    "landcover:stats": "python PIPELINES/build_landcover_statistics.py",
+    "cfsv2:observe": "python PIPELINES/cfsv2_basin_service.py observe",
+    "cfsv2:climatology": "python PIPELINES/cfsv2_basin_service.py climatology",
+    "cfsv2:anomaly": "python PIPELINES/cfsv2_basin_service.py anomaly"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

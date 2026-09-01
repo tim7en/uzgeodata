@@ -45,6 +45,9 @@ npm run data:groups            # group every data reference and check what is on
 npm run data:items             # name every reference inside those groups, present or not
 npm run review:build           # export every held layer to GeoJSON and index it for review
 npm run landcover:stats        # annual land cover area per district or basin, from Earth Engine
+npm run cfsv2:observe          # basin monthly state from CFSv2 (measurement)
+npm run cfsv2:climatology      # the reference baseline the anomalies are measured against
+npm run cfsv2:anomaly          # observations as z-scores, classified
 npm run test:trace             # the upstream-trace and aggregation guard rails
 ```
 

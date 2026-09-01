@@ -430,6 +430,23 @@
       "cardinality": "many",
       "mlProposable": false,
       "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:hasBasinAnomaly",
+      "label": "has basin anomaly",
+      "definition": "How far a measured value sits from that basin's own normal for the calendar month, in standard deviations. Distinct from uz:hasBasinStatistic, which records what was measured: an anomaly is derived, carries a stated reference period, and changes whenever the baseline is rebuilt. An absolute soil moisture of 0.19 is a fact about the ground; minus 1.8 sigma is a claim about it being unusual, and the two are not interchangeable.",
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Basin"
+        ]
+      },
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
     }
   ]
 }
