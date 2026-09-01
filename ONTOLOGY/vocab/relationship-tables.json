@@ -586,7 +586,7 @@
       "id": "cams-forecast-skill",
       "dataset": "cams-nrt",
       "label": "CAMS forecast skill against its own analysis",
-      "note": "Mean absolute error, bias and correlation between each forecast lead time and the +0h analysis valid at the same moment, over Uzbekistan. CAMS issues two five-day forecasts a day, so any moment has up to eleven images aiming at it and their disagreement is measurable from the collection alone. Read the scope carefully: this verifies forecast against analysis, and the analysis is itself a model state constrained by assimilated satellite retrievals, not a measurement. A forecast agreeing with it means the model agreed with itself. Independent verification would need surface monitors or AERONET sites, of which Uzbekistan has very few.",
+      "note": "Mean absolute error, bias and correlation between each forecast lead time and the +0h analysis valid at the same moment, over Uzbekistan. CAMS issues two five-day forecasts a day, so any moment has up to eleven images aiming at it and their disagreement is measurable from the collection alone. Read the scope carefully: this verifies forecast against analysis, and the analysis is itself a model state constrained by assimilated satellite retrievals, not a measurement. A forecast agreeing with it means the model agreed with itself. Independent verification would need surface monitors or AERONET sites, of which Uzbekistan has very few. Carries no quality column because it is derived: every row is a statistic computed over pairs the state table already accepted, and the pairs column records how many went into it, so a thin month is visible rather than hidden.",
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
