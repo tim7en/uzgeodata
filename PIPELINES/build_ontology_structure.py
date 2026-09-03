@@ -89,14 +89,21 @@ DATASETS = {
                  "the assimilated estimate of what the atmosphere was, not a forecast."),
     },
     "CAMS_EVENT_VERIFICATION": {
-        "domain": "ATMOSPHERE", "table": "cams-event-verification",
+        "domain": "ATMOSPHERE", "table": None,
+        "tableNote": ("Not a relationship table. Its rows describe how a forecast performed at a "
+                      "point, which is a statement about the dataset rather than a relation "
+                      "between two features, and the registry has no object type that fits a "
+                      "site. It was registered as Dataset-to-Basin once and that was wrong."),
         "source": "PUBLISHED/data/ontology/_ATMOSPHERE/_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
         "what": ("Whether CAMS forecasts caught pollution and dust events at a point, by lead "
                  "time: detection rate, false alarms and bias above a percentile threshold. "
                  "Events, not averages — a product can track the mean and miss every spike."),
     },
     "CAMS_FORECAST_SKILL": {
-        "domain": "ATMOSPHERE", "table": "cams-forecast-skill",
+        "domain": "ATMOSPHERE", "table": None,
+        "tableNote": ("Not a relationship table. Skill is computed over the country as a whole, "
+                      "so there is no basin on the other end of the row; declaring one implied a "
+                      "spatial resolution the numbers do not have."),
         "source": "PUBLISHED/data/ontology/_ATMOSPHERE/_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
         "what": ("How far CAMS forecasts diverge from their own analysis at 24 to 120 hours "
                  "ahead: error, bias and correlation per lead time. Tells a user of the state "
@@ -138,7 +145,9 @@ DATASETS = {
         "what": "Area of each land cover class per district per year.",
     },
     "LANDCOVER_BASIN_YEAR": {
-        "domain": "LAND", "table": "landcover-basin-year",
+        "domain": "LAND", "table": None,
+        "tableNote": ("Planned but never built, so the graph does not declare it. The entry stays "
+                      "so the gap is visible; it gains a table when the basin run produces rows."),
         "source": "PUBLISHED/data/analysis/landcover-basin-year.csv",
         "what": "Area of each land cover class per level-12 basin per year. Not yet built.",
     },
@@ -259,6 +268,20 @@ def main() -> None:
     rows = plan()
     registry = {t["id"]: t for t in json.loads(TABLES.read_text(encoding="utf8"))["tables"]}
 
+    # Every table this tree names must be one the graph declares. Deregistering a
+    # table without updating the tree left three entries pointing at ids that no
+    # longer existed, and nothing noticed: the audit walks tables looking for a
+    # domain, never the other way round.
+    dangling = [(row["name"], name) for row in rows
+                for name in [row.get("table"), *row.get("alsoTables", [])]
+                if name and name not in registry]
+    if dangling:
+        raise SystemExit(
+            "These datasets name a relationship table the graph does not declare:\n"
+            + "\n".join(f"    {n} -> {t}" for n, t in dangling)
+            + "\n  Either register the table in relationship-tables.json, or set table: None "
+              "with a tableNote saying why it has none.")
+
     print(f"{'NO':6}{'DOMAIN':12}{'NAME':30}{'STATE':10}  TABLE")
     print("-" * 100)
     moved = missing = 0
@@ -336,8 +359,9 @@ def main() -> None:
         card = {
             "name": row["name"], "number": row["number"], "domain": row["domain"],
             "what": row["what"],
-            "tables": [row["table"], *row.get("alsoTables", [])],
-            "predicate": registry.get(row["table"], {}).get("predicate"),
+            "tables": [t for t in [row.get("table"), *row.get("alsoTables", [])] if t],
+            "tableNote": row.get("tableNote"),
+            "predicate": registry.get(row.get("table"), {}).get("predicate"),
             "file": Path(row["source"]).name,
             "storedInPlace": in_place,
             "path": row["source"] if in_place else str((target).relative_to(ROOT)),

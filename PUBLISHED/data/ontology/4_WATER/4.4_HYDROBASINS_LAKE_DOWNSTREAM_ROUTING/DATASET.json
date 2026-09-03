@@ -6,6 +6,7 @@
   "tables": [
     "hydrobasins-lake-uz-downstream"
   ],
+  "tableNote": null,
   "predicate": "uz:flowsInto",
   "file": "downstream_links.csv",
   "storedInPlace": true,

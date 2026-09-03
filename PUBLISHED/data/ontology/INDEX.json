@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-03T09:07:45+00:00",
+  "generatedAt": "2026-09-03T09:35:48+00:00",
   "convention": {
     "naming": "Upper case, digits and underscores only.",
     "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
@@ -29,7 +29,8 @@
       "domainNumber": "1",
       "name": "CAMS_EVENT_VERIFICATION",
       "folder": "1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION",
-      "table": "cams-event-verification",
+      "table": null,
+      "tableNote": "Not a relationship table. Its rows describe how a forecast performed at a point, which is a statement about the dataset rather than a relation between two features, and the registry has no object type that fits a site. It was registered as Dataset-to-Basin once and that was wrong.",
       "what": "Whether CAMS forecasts caught pollution and dust events at a point, by lead time: detection rate, false alarms and bias above a percentile threshold. Events, not averages — a product can track the mean and miss every spike."
     },
     {
@@ -38,7 +39,8 @@
       "domainNumber": "1",
       "name": "CAMS_FORECAST_SKILL",
       "folder": "1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL",
-      "table": "cams-forecast-skill",
+      "table": null,
+      "tableNote": "Not a relationship table. Skill is computed over the country as a whole, so there is no basin on the other end of the row; declaring one implied a spatial resolution the numbers do not have.",
       "what": "How far CAMS forecasts diverge from their own analysis at 24 to 120 hours ahead: error, bias and correlation per lead time. Tells a user of the state table how far ahead the product is worth believing."
     },
     {
@@ -146,7 +148,8 @@
       "domainNumber": "2",
       "name": "LANDCOVER_BASIN_YEAR",
       "folder": "2_LAND/2.3_LANDCOVER_BASIN_YEAR",
-      "table": "landcover-basin-year",
+      "table": null,
+      "tableNote": "Planned but never built, so the graph does not declare it. The entry stays so the gap is visible; it gains a table when the basin run produces rows.",
       "what": "Area of each land cover class per level-12 basin per year. Not yet built."
     },
     {

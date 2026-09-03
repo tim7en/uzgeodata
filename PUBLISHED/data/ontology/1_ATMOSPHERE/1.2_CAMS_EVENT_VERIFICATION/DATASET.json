@@ -3,9 +3,8 @@
   "number": "1.2",
   "domain": "ATMOSPHERE",
   "what": "Whether CAMS forecasts caught pollution and dust events at a point, by lead time: detection rate, false alarms and bias above a percentile threshold. Events, not averages — a product can track the mean and miss every spike.",
-  "tables": [
-    "cams-event-verification"
-  ],
+  "tables": [],
+  "tableNote": "Not a relationship table. Its rows describe how a forecast performed at a point, which is a statement about the dataset rather than a relation between two features, and the registry has no object type that fits a site. It was registered as Dataset-to-Basin once and that was wrong.",
   "predicate": null,
   "file": "cams-event-verification.csv",
   "storedInPlace": false,

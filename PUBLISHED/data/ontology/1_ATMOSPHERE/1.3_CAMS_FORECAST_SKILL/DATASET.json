@@ -3,9 +3,8 @@
   "number": "1.3",
   "domain": "ATMOSPHERE",
   "what": "How far CAMS forecasts diverge from their own analysis at 24 to 120 hours ahead: error, bias and correlation per lead time. Tells a user of the state table how far ahead the product is worth believing.",
-  "tables": [
-    "cams-forecast-skill"
-  ],
+  "tables": [],
+  "tableNote": "Not a relationship table. Skill is computed over the country as a whole, so there is no basin on the other end of the row; declaring one implied a spatial resolution the numbers do not have.",
   "predicate": null,
   "file": "cams-forecast-skill.csv",
   "storedInPlace": false,

@@ -3,9 +3,8 @@
   "number": "2.3",
   "domain": "LAND",
   "what": "Area of each land cover class per level-12 basin per year. Not yet built.",
-  "tables": [
-    "landcover-basin-year"
-  ],
+  "tables": [],
+  "tableNote": "Planned but never built, so the graph does not declare it. The entry stays so the gap is visible; it gains a table when the basin run produces rows.",
   "predicate": null,
   "file": "landcover-basin-year.csv",
   "storedInPlace": false,
