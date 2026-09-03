@@ -50,21 +50,21 @@ SOURCES = {
         "path": "PUBLISHED/data/admin/adm2.geojson",
         "key": "pcode",
         "label": "nameEn",
-        "dataset": "LANDCOVER_ADMIN_YEAR", "file": "landcover-admin-year.csv",
+        "folder": "LANDCOVER_ADMIN_YEAR", "file": "landcover-admin-year.csv",
         "unitColumn": "pcode",
         "subjectType": "AdminArea",
-        "dataset": "esri-io-landcover-10m",
+        "sourceId": "esri-io-landcover-10m",
         "predicate": "uz:hasAdminStatistic",
         "scale": 10,
     },
     "basin": {
-        "path": "PUBLISHED/data/hydrography/basins.geojson",
+        "path": "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev12.geojson",
         "key": "HYBAS_ID",
         "label": "HYBAS_ID",
-        "dataset": "LANDCOVER_BASIN_YEAR", "file": "landcover-basin-year.csv",
+        "folder": "LANDCOVER_BASIN_YEAR", "file": "landcover-basin-year.csv",
         "unitColumn": "basin_id",
         "subjectType": "Basin",
-        "dataset": "esri-io-landcover-10m",
+        "sourceId": "esri-io-landcover-10m",
         "predicate": "uz:hasBasinStatistic",
         # Level 12 averages about 110 km2 and there are thousands of them, so the
         # reduction runs coarser by default. At 30 m the area of a class inside a
@@ -101,6 +101,29 @@ def table_counts(target: Path, unit_column: str) -> tuple[int, int]:
     return len(rows), len({(row[unit_column], int(row["year"])) for row in rows})
 
 
+def write_manifest(config: dict, target: Path, rows: list, years: list[int], scale: int) -> None:
+    stored_rows, stored_unit_years = table_counts(target, config["unitColumn"])
+    MANIFEST.write_text(json.dumps({
+        "version": "1.0",
+        "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "predicate": config["predicate"],
+        "subjectType": "Dataset",
+        "objectType": config["subjectType"],
+        "source": {"platform": "Google Earth Engine", "project": PROJECT, "asset": ASSET,
+                   "product": "Impact Observatory / Esri 10 m Annual Land Use Land Cover, 9-class"},
+        "measure": "area of each land cover class inside the unit, km2",
+        "method": ("ee.Image.pixelArea() summed per class through a grouped reducer, so ground "
+                   "area is correct whatever projection the reduction lands in. Deriving area "
+                   "from the scale would be wrong here: the collection mosaics UTM tiles, and a "
+                   "nominal 10 m pixel covers 100·cos(latitude) m2 in the geographic fallback."),
+        "scaleMetres": scale,
+        "years": years,
+        "counts": {"units": len(rows), "years": len(years),
+                   "unitYears": stored_unit_years, "rows": stored_rows},
+        "output": str(target.relative_to(ROOT)),
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -113,8 +136,23 @@ def main() -> None:
 
     config = SOURCES[args.level]
     scale = args.scale or config["scale"]
-    target = dataset_dir(config["dataset"], "LAND") / config["file"]
+    target = dataset_dir(config["folder"], "LAND") / config["file"]
     unit_column = config["unitColumn"]
+
+    rows = units(config)
+    if args.limit:
+        rows = rows[:args.limit]
+    already = done_already(target, unit_column)
+    todo = [(unit, label, geometry, year)
+            for unit, label, geometry in rows
+            for year in args.years if (unit, year) not in already]
+
+    print(f"{args.level}: {len(rows):,} units x {len(args.years)} years at {scale} m")
+    print(f"  {len(already):,} unit-years already in {target.relative_to(ROOT)}, {len(todo):,} to measure")
+    if not todo:
+        write_manifest(config, target, rows, args.years, scale)
+        print("  nothing to do")
+        return
 
     try:
         import ee
@@ -128,20 +166,6 @@ def main() -> None:
     collection = ee.ImageCollection(ASSET)
     mosaics = {year: collection.filterDate(f"{year}-01-01", f"{year + 1}-01-01").mosaic()
                for year in args.years}
-
-    rows = units(config)
-    if args.limit:
-        rows = rows[:args.limit]
-    already = done_already(target, unit_column)
-    todo = [(unit, label, geometry, year)
-            for unit, label, geometry in rows
-            for year in args.years if (unit, year) not in already]
-
-    print(f"{args.level}: {len(rows):,} units x {len(args.years)} years at {scale} m")
-    print(f"  {len(already):,} unit-years already in {target.relative_to(ROOT)}, {len(todo):,} to measure")
-    if not todo:
-        print("  nothing to do")
-        return
 
     target.parent.mkdir(parents=True, exist_ok=True)
     fresh = not target.exists()
@@ -166,7 +190,7 @@ def main() -> None:
                 continue
             for group in grouped.get("groups", []):
                 code = int(group["class"])
-                writer.writerow([config["dataset"], unit, label, year, code,
+                writer.writerow([config["sourceId"], unit, label, year, code,
                                  CLASSES.get(code, str(code)), round(group["sum"] / 1e6, 4)])
                 written += 1
             handle.flush()
@@ -176,30 +200,7 @@ def main() -> None:
                 print(f"  {position:,}/{len(todo):,} unit-years · {rate:.1f}s each · "
                       f"{left / 60:.0f} min left", flush=True)
 
-    stored_rows, stored_unit_years = table_counts(target, unit_column)
-    MANIFEST.write_text(json.dumps({
-        "version": "1.0",
-        "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "predicate": config["predicate"],
-        "subjectType": "Dataset",
-        "objectType": config["subjectType"],
-        "source": {"platform": "Google Earth Engine", "project": PROJECT, "asset": ASSET,
-                   "product": "Impact Observatory / Esri 10 m Annual Land Use Land Cover, 9-class"},
-        "measure": "area of each land cover class inside the unit, km2",
-        "method": ("ee.Image.pixelArea() summed per class through a grouped reducer, so ground "
-                   "area is correct whatever projection the reduction lands in. Deriving area "
-                   "from the scale would be wrong here: the collection mosaics UTM tiles, and a "
-                   "nominal 10 m pixel covers 100·cos(latitude) m2 in the geographic fallback."),
-        "scaleMetres": scale,
-        "years": args.years,
-        "counts": {
-            "units": len(rows),
-            "years": len(args.years),
-            "unitYears": stored_unit_years,
-            "rows": stored_rows,
-        },
-        "output": str(target.relative_to(ROOT)),
-    }, ensure_ascii=False, indent=2), encoding="utf8")
+    write_manifest(config, target, rows, args.years, scale)
 
     print(f"\n  {written:,} rows written · {(time.time() - started) / 60:.1f} min")
     print(f"  -> {target.relative_to(ROOT)}")

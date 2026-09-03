@@ -49,7 +49,7 @@ CLASSES = [("low", 0.0, 0.1), ("moderate", 0.1, 0.4),
 
 FRAMES = {
     "basin": {
-        "path": "PUBLISHED/data/hydrography/basins.geojson",
+        "path": "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev12.geojson",
         "key": "HYBAS_ID", "column": "unit_id", "kind": "Basin",
     },
     "district": {

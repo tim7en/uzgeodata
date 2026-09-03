@@ -1,0 +1,7 @@
+# Validation, tests, and the raster conversion test suite.
+jsonschema>=4.23,<5
+numpy>=2.0,<3
+Pillow>=11,<13
+pytest>=8,<10
+rasterio>=1.4,<2
+requests>=2.32,<3

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T09:15:38+00:00",
+  "generatedAt": "2026-09-03T09:16:22+00:00",
   "assertions": [
     {
       "id": "uz:a/c912e88126afe86d",
@@ -11032,6 +11032,244 @@
       "value": "area"
     },
     {
+      "id": "uz:a/63aa370f2d1d4a47",
+      "subject": "uz:dist/cams-basin-monthly",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cams-nrt-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Monthly mean of the CAMS +0h analysis per level-6 basin: aerosol optical depth at 550 nm and PM2.5. Only these two parameters exist before 2021-07-01, so reading just them gives a record that runs the whole way back without silently changing content partway through. PM2.5 is converted from kg/m3 to micrograms per cubic metre, which is the unit air quality is discussed in. Level 6 because the 0.4 degree grid is 1,470 km2 at this latitude and a level-7 basin covers only 1.9 pixels. This is the analysis, not a forecast — see cams-forecast-skill for how much the forecasts drift from it."
+      }
+    },
+    {
+      "id": "uz:a/b60946a40b8dc40a",
+      "subject": "uz:dist/cams-event-verification",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cams-nrt-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/dd91ffe519cf2320",
+      "subject": "uz:dist/cams-forecast-skill",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cams-nrt-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/23f2535c15399760",
+      "subject": "uz:dist/cams-nrt-earth-engine-source",
+      "predicate": "uz:externalLocation",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "earth-engine://ECMWF/CAMS/NRT",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/e89eb3d67228bcef",
+      "subject": "uz:dist/cfsv2-basin-anomaly",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cfsv2-noaa-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Observations expressed as z-scores against the baseline, with a symmetric classification from extremely dry to extremely wet. Derived and rebuildable: it holds no measurement the other two tables do not already have, and it moves whenever the reference period is redefined. Carries no quality column because it is derived: its producer reads only rows the observation table marked ok, so every row here is one by construction."
+      }
+    },
+    {
+      "id": "uz:a/576935e6feffda2b",
+      "subject": "uz:dist/cfsv2-basin-climatology",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cfsv2-noaa-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Mean and standard deviation per basin, calendar month and variable over a stated reference period. The period stays inside the operational CFSv2 era: the record reaches 1979, but 25 cm soil moisture steps up 1.41 standard deviations at the 2011 CFSR handover, and a baseline spanning that would bias every anomaly drawn against it. Cells with fewer than three years carry no standard deviation. Carries no quality column because it is derived: its producer reads only rows the observation table marked ok, so every row here is one by construction."
+      }
+    },
+    {
+      "id": "uz:a/3d5e58ee19fd2669",
+      "subject": "uz:dist/cfsv2-basin-monthly",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cfsv2-noaa-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Monthly mean of the 6-hourly CFSv2 field over each level-7 basin: precipitation, temperature, four soil-moisture depths, evaporative demand, radiation and humidity. Level 7 because the grid is 34.8 km and roughly nine and a half level-12 basins share a single pixel. Pure measurement, no interpretation."
+      }
+    },
+    {
+      "id": "uz:a/cb2f3cd33e4e7438",
+      "subject": "uz:dist/cfsv2-noaa-earth-engine-source",
+      "predicate": "uz:externalLocation",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "earth-engine://NOAA/CFSV2/FOR6H_HARMONIZED",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/220da73264729032",
+      "subject": "uz:dist/chirps-v3-basin-pentad",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/chirps-v3-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Accumulated rainfall per level-12 basin per pentad — days 1-5, 6-10, 11-15, 16-20, 21-25 and 26 to month end. CHIRPS is computed pentadally and its daily series is a disaggregation: summed over a month the two agree to within 0.00%, so the daily product adds nothing and its within-pentad variation is an artefact rather than an observation. Six pentads reconstruct a month to 0.0002 mm, which is why no monthly table is stored beside this one. The days column varies because the sixth pentad runs to month end, so an mm/day rate must divide by it rather than by five. Read at level 12 rather than level 7: at this product's 5.6 km grid a level-12 basin covers about four pixels, so it carries a value of its own, and the reduction costs no more because it is priced by the raster read rather than the polygon count. CFSv2 stays at level 7 because its 34.8 km grid puts nine and a half level-12 basins inside one pixel."
+      }
+    },
+    {
+      "id": "uz:a/29d8144e9d2deff1",
+      "subject": "uz:dist/chirps-v3-earth-engine-source",
+      "predicate": "uz:externalLocation",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "earth-engine://UCSB-CHC/CHIRPS/V3/PENTAD",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/00c59514670a2130",
+      "subject": "uz:dist/chirts-basin-monthly",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/chirts-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Station-blended temperature at the same 5.6 km grid as CHIRPS, reduced to monthly statistics per level-12 basin. The day counts above 35 and 40 degrees are the reason for reading a daily product: a monthly mean cannot say how many days crossed a threshold. The record is closed at 2016-12-31, so this is a historical baseline and not a monitoring layer. heat_index_max is in Fahrenheit and derived from the daily mean temperature, unlike every other column here, which is metric. Read at level 12 rather than level 7: at this product's 5.6 km grid a level-12 basin covers about four pixels, so it carries a value of its own, and the reduction costs no more because it is priced by the raster read rather than the polygon count. CFSv2 stays at level 7 because its 34.8 km grid puts nine and a half level-12 basins inside one pixel."
+      }
+    },
+    {
+      "id": "uz:a/211cea18e9e4f160",
+      "subject": "uz:dist/chirts-earth-engine-source",
+      "predicate": "uz:externalLocation",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "earth-engine://UCSB-CHG/CHIRTS/DAILY",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/d37d59aa21b26b84",
+      "subject": "uz:dist/cpc-basin-monthly",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cpc-temperature-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Gauge-based half-degree temperature reduced to monthly statistics per level-6 basin, with counts of hot and frost days. Level 6 because a half-degree cell at this latitude is 55.3 by 41.7 km — about 2,305 km², nearly twice a CFSv2 pixel — so a level-7 basin covers only 1.2 cells. Uniquely here the source carries its own quality signal: nmax and nmin give the stations informing each cell, and over Uzbekistan that averages 0.13 per day with 51% of basin-months seeing none at all. Those rows are marked ok-interpolated: the product is long and current, but over this country it is mostly interpolation from distant reports rather than local observation, and should be weighted accordingly against CHIRTS."
+      }
+    },
+    {
+      "id": "uz:a/d4528b21074bd0bc",
+      "subject": "uz:dist/cpc-temperature-earth-engine-source",
+      "predicate": "uz:externalLocation",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "earth-engine://NOAA/CPC/Temperature",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
       "id": "uz:a/1f39076e9a42694b",
       "subject": "uz:dist/crop-production-2005-2021-1-qx-73e93d",
       "predicate": "uz:externalLocation",
@@ -11899,6 +12137,40 @@
       }
     },
     {
+      "id": "uz:a/1e17502bdac43594",
+      "subject": "uz:dist/csp-ghm-earth-engine-source",
+      "predicate": "uz:externalLocation",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "earth-engine://CSP/HM/GlobalHumanModification",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/57a180162e72b966",
+      "subject": "uz:dist/esri-io-landcover-10m-earth-engine-source",
+      "predicate": "uz:externalLocation",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "earth-engine://projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
       "id": "uz:a/7dda915878e5d246",
       "subject": "uz:dist/fertiliser-application-2007-2020-2007-214721",
       "predicate": "uz:externalLocation",
@@ -12423,6 +12695,40 @@
       "evidence": {
         "source": "maps-drop-2026-08",
         "note": "referenced in place, not copied into the project"
+      }
+    },
+    {
+      "id": "uz:a/1615e978e5eb9405",
+      "subject": "uz:dist/ghm-basin-modification",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/csp-ghm-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Legacy compatibility: the currently stored basin rows use the lake-format HydroBASINS v1.c ID family; the next measurement run uses the canonical standard BasinATLAS frame. Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it."
+      }
+    },
+    {
+      "id": "uz:a/30f9009f34e07458",
+      "subject": "uz:dist/ghm-district-modification",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/csp-ghm-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it."
       }
     },
     {
@@ -16908,6 +17214,23 @@
       "evidence": {
         "source": "maps-drop-2026-08",
         "note": "referenced in place, not copied into the project"
+      }
+    },
+    {
+      "id": "uz:a/a53c2f93fffa777a",
+      "subject": "uz:dist/landcover-admin-year",
+      "predicate": "uz:derivedFrom",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "earth-engine-reduction",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/esri-io-landcover-10m-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Area of each land cover class inside each of the 199 second-level units, once per year. Measured on Earth Engine with pixelArea summed per class, so ground area is right whatever projection the reduction lands in. This is the first table in the graph with a time dimension: a row is keyed by unit, year and class together. Carries no quality column because every row is a measured geometric overlap rather than a sensor reading — there is no sentinel or scaling fault for it to record."
       }
     },
     {
@@ -47019,6 +47342,23 @@
       }
     },
     {
+      "id": "uz:a/5652b53cea4203e0",
+      "subject": "uz:ds/basinatlas-uz-v10",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:15:13+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/admin-basin-province",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Level-12 basins against the 14 first-level units — provinces, the autonomous republic and Tashkent city. Each row carries the area the two share, so a traced catchment can be attributed to the provinces that feed it. Every unit resolves to a place concept in the ontology, matched by P-code because the COD spellings differ from the vocabulary's. Carries no quality column because every row is a measured geometric overlap rather than a sensor reading — there is no sentinel or scaling fault for it to record."
+      }
+    },
+    {
       "id": "uz:a/5acb102ea45762fe",
       "subject": "uz:ds/basinatlas-uz-v10",
       "predicate": "uz:hasDistribution",
@@ -47032,6 +47372,23 @@
       "object": "uz:dist/basinatlas-uz-v10-basinatlas-uz-lev01-003e44",
       "evidence": {
         "source": "hydrosheds-uz-2026:uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev01.csv"
+      }
+    },
+    {
+      "id": "uz:a/61655ebcad897c29",
+      "subject": "uz:ds/basinatlas-uz-v10",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:15:13+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/admin-basin-district",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "The same overlay at the second level, across 199 districts, independent cities and gorhokimiyat towns. This is the resolution at which water administration actually happens, and the reason the districts carry no place concept: they are features, and the schema puts features in a table. Carries no quality column because every row is a measured geometric overlap rather than a sensor reading — there is no sentinel or scaling fault for it to record."
       }
     },
     {
@@ -51818,6 +52175,1472 @@
       }
     },
     {
+      "id": "uz:a/c29aec298c993ec3",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Copernicus Atmosphere Monitoring Service, ECMWF",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/645124874cb38b15",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/hazards-terrain",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/7e1332f3c7597d9f",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/d19a6eb0cfb730c0",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/state-observation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/8e13c921cd421e7d",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cams-event-verification",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/724301429d934632",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Copernicus Licence 1.2",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/0799ee1a05da6d36",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/dust-load",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/740658fd6bff30cc",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/particulate-matter",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/b1673060b791d0cf",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/aerosol-optical-depth",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/aa33a94b5d912517",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "verified-against-own-analysis",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/c892358c65dd1321",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "single-grid-cell-not-ground-monitor",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/fe55b4858b81b380",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:relatedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:ds/cams-nrt",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/10e9963d3b3bf5f9",
+      "subject": "uz:ds/cams-event-verification",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 2024,
+        "end": 2026
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/0a4d460e6a029256",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Copernicus Atmosphere Monitoring Service, ECMWF",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/7478b36dbb552e9f",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/hazards-terrain",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/6e8cff2fc31244b4",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/ebe38aa291187c8f",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/state-observation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/c164a3c52d2e10b0",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cams-forecast-skill",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/ca6aa1227c92ef48",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Copernicus Licence 1.2",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/30dfe291c87cabfc",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/particulate-matter",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/41a26083619a89a7",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/aerosol-optical-depth",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/d7154588f9135fc2",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "verified-against-own-analysis",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/b3ab6c0e599bf53a",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:relatedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:ds/cams-nrt",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/8bbb924e286d6511",
+      "subject": "uz:ds/cams-forecast-skill",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 2026,
+        "end": 2026
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/b71cf450404f7eae",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Copernicus Atmosphere Monitoring Service, ECMWF",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/79132f42de7c5dd7",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/hazards-terrain",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/aed1da31573a8dcf",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/c0527d52e4bc327f",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/state-observation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/b10d4895c4dfe416",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cams-basin-monthly",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Monthly mean of the CAMS +0h analysis per level-6 basin: aerosol optical depth at 550 nm and PM2.5. Only these two parameters exist before 2021-07-01, so reading just them gives a record that runs the whole way back without silently changing content partway through. PM2.5 is converted from kg/m3 to micrograms per cubic metre, which is the unit air quality is discussed in. Level 6 because the 0.4 degree grid is 1,470 km2 at this latitude and a level-7 basin covers only 1.9 pixels. This is the analysis, not a forecast — see cams-forecast-skill for how much the forecasts drift from it."
+      }
+    },
+    {
+      "id": "uz:a/b9ae87d005fff896",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cams-nrt-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/f17c07cea7545468",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Copernicus Licence 1.2",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/3425fce3e8ecd7e7",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/aerosol-optical-depth",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/733506e1a746a9d5",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/particulate-matter",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/990a01f31eb8c1b6",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/dust-load",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/2a725e11fade09ea",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "forecast-product-verified-against-own-analysis",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/43c1dd348e70285e",
+      "subject": "uz:ds/cams-nrt",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 2016,
+        "end": 2026
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset ECMWF/CAMS/NRT"
+      }
+    },
+    {
+      "id": "uz:a/ed77218df9991b59",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "NOAA NCEP Climate Forecast System",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/038abc4231e415ac",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/climate",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/f8d558ed2ad6e7a4",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/2498aba13a47e1f8",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/state-observation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/0726da4641f2de1a",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cfsv2-basin-anomaly",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Observations expressed as z-scores against the baseline, with a symmetric classification from extremely dry to extremely wet. Derived and rebuildable: it holds no measurement the other two tables do not already have, and it moves whenever the reference period is redefined. Carries no quality column because it is derived: its producer reads only rows the observation table marked ok, so every row here is one by construction."
+      }
+    },
+    {
+      "id": "uz:a/7ad63b11bc38967f",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cfsv2-basin-climatology",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Mean and standard deviation per basin, calendar month and variable over a stated reference period. The period stays inside the operational CFSv2 era: the record reaches 1979, but 25 cm soil moisture steps up 1.41 standard deviations at the 2011 CFSR handover, and a baseline spanning that would bias every anomaly drawn against it. Cells with fewer than three years carry no standard deviation. Carries no quality column because it is derived: its producer reads only rows the observation table marked ok, so every row here is one by construction."
+      }
+    },
+    {
+      "id": "uz:a/8c6b893d5ba65077",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cfsv2-noaa-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/cf188f5144a11fc5",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cfsv2-basin-monthly",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Monthly mean of the 6-hourly CFSv2 field over each level-7 basin: precipitation, temperature, four soil-moisture depths, evaporative demand, radiation and humidity. Level 7 because the grid is 34.8 km and roughly nine and a half level-12 basins share a single pixel. Pure measurement, no interpretation."
+      }
+    },
+    {
+      "id": "uz:a/9b404548eb67ede1",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "public-domain",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/1bc4c66d8c20cf47",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/precipitation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/2121ab82c02a5791",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/solar-radiation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/328cc1fff0b06a3d",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/air-temperature",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/4c20576017c9bb9b",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/specific-humidity",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/4db86ab3bacbbaaa",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/evapotranspiration",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/f157173613851daa",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/soil-moisture",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/5b3f59eb9f6bbefa",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "potential-evaporation-implausible-2026",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/d7189121ff970ee4",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "record-inhomogeneous-at-2011",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/f49fdc6a7150b7eb",
+      "subject": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 1979,
+        "end": 2026
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
+      }
+    },
+    {
+      "id": "uz:a/21d3023bc2eb9da0",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Climate Hazards Center InfraRed Precipitation with Station data v3",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/40d2775dae3f2666",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/climate",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/b222b1011e89fae2",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/4d1a1b27dedb6d44",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/state-observation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/38b2c697afda3bdb",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/chirps-v3-basin-pentad",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Accumulated rainfall per level-12 basin per pentad — days 1-5, 6-10, 11-15, 16-20, 21-25 and 26 to month end. CHIRPS is computed pentadally and its daily series is a disaggregation: summed over a month the two agree to within 0.00%, so the daily product adds nothing and its within-pentad variation is an artefact rather than an observation. Six pentads reconstruct a month to 0.0002 mm, which is why no monthly table is stored beside this one. The days column varies because the sixth pentad runs to month end, so an mm/day rate must divide by it rather than by five. Read at level 12 rather than level 7: at this product's 5.6 km grid a level-12 basin covers about four pixels, so it carries a value of its own, and the reduction costs no more because it is priced by the raster read rather than the polygon count. CFSv2 stays at level 7 because its 34.8 km grid puts nine and a half level-12 basins inside one pixel."
+      }
+    },
+    {
+      "id": "uz:a/f27b315937d30a19",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/chirps-v3-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/827dfb0c0b353b05",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "public-domain",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/b36eb026a7151a7b",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/precipitation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/443895154f031242",
+      "subject": "uz:ds/chirps-v3",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 1981,
+        "end": 2026
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
+      }
+    },
+    {
+      "id": "uz:a/2632481290dbb2f9",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Climate Hazards Center InfraRed Temperature with Stations",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/8a3c089881572f37",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/climate",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/b0bbadbf2358a1c5",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/da7abf83a94f3b29",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/state-observation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/43f43c2a0de87188",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/chirts-basin-monthly",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Station-blended temperature at the same 5.6 km grid as CHIRPS, reduced to monthly statistics per level-12 basin. The day counts above 35 and 40 degrees are the reason for reading a daily product: a monthly mean cannot say how many days crossed a threshold. The record is closed at 2016-12-31, so this is a historical baseline and not a monitoring layer. heat_index_max is in Fahrenheit and derived from the daily mean temperature, unlike every other column here, which is metric. Read at level 12 rather than level 7: at this product's 5.6 km grid a level-12 basin covers about four pixels, so it carries a value of its own, and the reduction costs no more because it is priced by the raster read rather than the polygon count. CFSv2 stays at level 7 because its 34.8 km grid puts nine and a half level-12 basins inside one pixel."
+      }
+    },
+    {
+      "id": "uz:a/ac29907e271b7cf5",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/chirts-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/8d0896ef5dcc208f",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "public-domain",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/a593e93bd01b7200",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/air-temperature",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/e04398782d0d66fc",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/specific-humidity",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/430f7dea22242623",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "heat-index-in-fahrenheit",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/7176e64fa4cbcaf2",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "record-closed-2016",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/030735af5040ea6b",
+      "subject": "uz:ds/chirts",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 1983,
+        "end": 2016
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
+      }
+    },
+    {
+      "id": "uz:a/de61f5b2d1e00f2b",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "NOAA CPC Global Unified Temperature",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
+      "id": "uz:a/46b6a5e6f52d7771",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/climate",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
+      "id": "uz:a/f2ac7982301f03fe",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
+      "id": "uz:a/52e51ed6b950af6c",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/state-observation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
+      "id": "uz:a/61cf5feb42c8cd0c",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cpc-temperature-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
+      "id": "uz:a/e99d5f40657e9d9c",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/cpc-basin-monthly",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Gauge-based half-degree temperature reduced to monthly statistics per level-6 basin, with counts of hot and frost days. Level 6 because a half-degree cell at this latitude is 55.3 by 41.7 km — about 2,305 km², nearly twice a CFSv2 pixel — so a level-7 basin covers only 1.2 cells. Uniquely here the source carries its own quality signal: nmax and nmin give the stations informing each cell, and over Uzbekistan that averages 0.13 per day with 51% of basin-months seeing none at all. Those rows are marked ok-interpolated: the product is long and current, but over this country it is mostly interpolation from distant reports rather than local observation, and should be weighted accordingly against CHIRTS."
+      }
+    },
+    {
+      "id": "uz:a/3ab9a8900320fdde",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "public-domain",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
+      "id": "uz:a/0ea7b425f8a92f0c",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/air-temperature",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
+      "id": "uz:a/5d3d80eff6d02280",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:qualityFlag",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "sparse-station-coverage-over-uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
+      "id": "uz:a/1661685ebabc4301",
+      "subject": "uz:ds/cpc-temperature",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 1979,
+        "end": 2026
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset NOAA/CPC/Temperature"
+      }
+    },
+    {
       "id": "uz:a/ea8dde59a508b131",
       "subject": "uz:ds/crop-production-2005-2021",
       "predicate": "uz:attributedTo",
@@ -53582,6 +55405,420 @@
       "evidence": {
         "source": "external-sources.json",
         "note": "curator mapping"
+      }
+    },
+    {
+      "id": "uz:a/933bac4918c961ca",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Conservation Science Partners, global Human Modification (gHM)",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/7f9345debfcda730",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/infrastructure",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/42050c979f69d662",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/b2c5f801429df162",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/state-observation",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/0da9c2ee6d0a408d",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/ghm-basin-modification",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Legacy compatibility: the currently stored basin rows use the lake-format HydroBASINS v1.c ID family; the next measurement run uses the canonical standard BasinATLAS frame. Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it."
+      }
+    },
+    {
+      "id": "uz:a/7e707c6ad23ac05a",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/csp-ghm-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/f706ea024bfd5dea",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/ghm-district-modification",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it."
+      }
+    },
+    {
+      "id": "uz:a/447acff7eeb789e8",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "CC-BY-4.0",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/99f3d5d17d168d5c",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/settlement-extent",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/c99b9c1bb3d25a37",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/road-density",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/d100bcb4e271eba6",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/human-modification",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/9f4ef104d7927fd1",
+      "subject": "uz:ds/csp-ghm",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 2016,
+        "end": 2016
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
+      }
+    },
+    {
+      "id": "uz:a/d3400aa4502a7c66",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:attributedTo",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "Impact Observatory / Esri 10 m Annual Land Use Land Cover",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/6a90a402ff906ed4",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:belongsToTheme",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:theme/land-agriculture",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/fb2c87e63b345f5b",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:coversPlace",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:place/uzbekistan",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/52c73c9757031541",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:hasAnalysisConcept",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:analysis/change-over-time",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/25e2f0b948af1de9",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/esri-io-landcover-10m-earth-engine-source",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/4163b1f113f73687",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:hasDistribution",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/extraction-pipeline",
+      "method": "relationship-table",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:dist/landcover-admin-year",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/relationship-tables.json",
+        "note": "Area of each land cover class inside each of the 199 second-level units, once per year. Measured on Earth Engine with pixelArea summed per class, so ground area is right whatever projection the reduction lands in. This is the first table in the graph with a time dimension: a row is keyed by unit, year and class together. Carries no quality column because every row is a measured geometric overlap rather than a sensor reading — there is no sentinel or scaling fault for it to record."
+      }
+    },
+    {
+      "id": "uz:a/19a2180a9a17d3b0",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:license",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": "CC-BY-4.0",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/5342ccad43968546",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/cropland-extent",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/590193fe693988c7",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/settlement-extent",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/72af89db023a4330",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/bare-surface",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/80b15f65b17fe0ca",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:observes",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "object": "uz:prop/land-cover",
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+      }
+    },
+    {
+      "id": "uz:a/d308b964d9c2cd64",
+      "subject": "uz:ds/esri-io-landcover-10m",
+      "predicate": "uz:temporalCoverage",
+      "status": "asserted",
+      "confidence": 1.0,
+      "assertedBy": "uz:agent/earth-engine-registry",
+      "method": "declaration",
+      "generatedAt": "2026-09-03T09:16:22+00:00",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "value": {
+        "start": 2017,
+        "end": 2025
+      },
+      "evidence": {
+        "source": "ONTOLOGY/vocab/earth-engine-sources.json",
+        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
       }
     },
     {
@@ -64406,1523 +66643,6 @@
         73.14895,
         45.59007
       ]
-    },
-    {
-      "id": "uz:a/8c3da297d99efc39",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:belongsToTheme",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:theme/hazards-terrain"
-    },
-    {
-      "id": "uz:a/bc106c23308eca03",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:hasAnalysisConcept",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:analysis/state-observation"
-    },
-    {
-      "id": "uz:a/295b5de68ebbd5b2",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:prop/aerosol-optical-depth"
-    },
-    {
-      "id": "uz:a/7a2bd5c95c685e34",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:prop/particulate-matter"
-    },
-    {
-      "id": "uz:a/b7a2588fa4479955",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:prop/dust-load"
-    },
-    {
-      "id": "uz:a/61067eab0380f374",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:coversPlace",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:place/uzbekistan"
-    },
-    {
-      "id": "uz:a/f7a1f999f02f1ee6",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:license",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "value": "CC-BY-4.0-equivalent, free use with attribution"
-    },
-    {
-      "id": "uz:a/87abf2eea3fd7b70",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:attributedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "value": "Copernicus Atmosphere Monitoring Service, ECMWF"
-    },
-    {
-      "id": "uz:a/f580a557313146a5",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:temporalCoverage",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "value": {
-        "start": 2016,
-        "end": 2026
-      }
-    },
-    {
-      "id": "uz:a/140a30812ad0487c",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:externalLocation",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "value": "earth-engine://ECMWF/CAMS/NRT"
-    },
-    {
-      "id": "uz:a/d6e32d8ba5e3db66",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:qualityFlag",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "value": "forecast-product-verified-against-own-analysis"
-    },
-    {
-      "id": "uz:a/5a0ff7a71a09ba1b",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:dist/cams-basin-daily"
-    },
-    {
-      "id": "uz:a/a32eef9f7a8c8e3c",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:dist/cams-forecast-skill"
-    },
-    {
-      "id": "uz:a/b5c2bc0cfaf3ab86",
-      "subject": "uz:ds/cams-nrt",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset ECMWF/CAMS/NRT"
-      },
-      "object": "uz:dist/cams-event-verification"
-    },
-    {
-      "id": "uz:a/78ec260b1422d3e7",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:belongsToTheme",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:theme/climate"
-    },
-    {
-      "id": "uz:a/a78929cd3731d331",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:hasAnalysisConcept",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:analysis/state-observation"
-    },
-    {
-      "id": "uz:a/32bf59337683632d",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:prop/precipitation"
-    },
-    {
-      "id": "uz:a/46309d0a178a64f5",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:prop/air-temperature"
-    },
-    {
-      "id": "uz:a/fc2f59e2e5005a16",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:prop/soil-moisture"
-    },
-    {
-      "id": "uz:a/b49f9f622b9edf2b",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:prop/evapotranspiration"
-    },
-    {
-      "id": "uz:a/17433d1bd35667a1",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:prop/solar-radiation"
-    },
-    {
-      "id": "uz:a/e96205cf48314832",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:prop/specific-humidity"
-    },
-    {
-      "id": "uz:a/6909ac2f912c1feb",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:coversPlace",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:place/uzbekistan"
-    },
-    {
-      "id": "uz:a/ac404a16efa5ec88",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:license",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "value": "public-domain"
-    },
-    {
-      "id": "uz:a/ab89838897605ead",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:attributedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "value": "NOAA NCEP Climate Forecast System"
-    },
-    {
-      "id": "uz:a/0e84b6fb1ae64842",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:temporalCoverage",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "value": {
-        "start": 1979,
-        "end": 2026
-      }
-    },
-    {
-      "id": "uz:a/0700a8e8c1219f92",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:externalLocation",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "value": "earth-engine://NOAA/CFSV2/FOR6H_HARMONIZED"
-    },
-    {
-      "id": "uz:a/645d1fd6804a3049",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:qualityFlag",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "value": "record-inhomogeneous-at-2011"
-    },
-    {
-      "id": "uz:a/096d602e87ac4357",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:qualityFlag",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "value": "potential-evaporation-implausible-2026"
-    },
-    {
-      "id": "uz:a/91d5b4f4ef417413",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:dist/cfsv2-basin-monthly"
-    },
-    {
-      "id": "uz:a/c77a4dddd42cfd87",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:dist/cfsv2-basin-climatology"
-    },
-    {
-      "id": "uz:a/5a90bd4fa8a8e95b",
-      "subject": "uz:ds/cfsv2-noaa",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CFSV2/FOR6H_HARMONIZED"
-      },
-      "object": "uz:dist/cfsv2-basin-anomaly"
-    },
-    {
-      "id": "uz:a/00bf2cba5138ceb7",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:belongsToTheme",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "object": "uz:theme/climate"
-    },
-    {
-      "id": "uz:a/6a11c96121d0a4e0",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:hasAnalysisConcept",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "object": "uz:analysis/state-observation"
-    },
-    {
-      "id": "uz:a/e1e8d0c299864f0a",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "object": "uz:prop/precipitation"
-    },
-    {
-      "id": "uz:a/e5f868125bcbb23b",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:coversPlace",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "object": "uz:place/uzbekistan"
-    },
-    {
-      "id": "uz:a/7d35446b9bfef9a9",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:license",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "value": "public-domain"
-    },
-    {
-      "id": "uz:a/40c76e04cbaac0e6",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:attributedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "value": "Climate Hazards Center InfraRed Precipitation with Station data v3"
-    },
-    {
-      "id": "uz:a/8c45f5f9f8a56696",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:temporalCoverage",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "value": {
-        "start": 1981,
-        "end": 2026
-      }
-    },
-    {
-      "id": "uz:a/12c4addc234cf492",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:externalLocation",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "value": "earth-engine://UCSB-CHC/CHIRPS/V3/PENTAD"
-    },
-    {
-      "id": "uz:a/c43f1192a5451112",
-      "subject": "uz:ds/chirps-v3",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHC/CHIRPS/V3/PENTAD"
-      },
-      "object": "uz:dist/chirps-v3-basin-pentad"
-    },
-    {
-      "id": "uz:a/ee6d1ab7b50acc27",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:belongsToTheme",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "object": "uz:theme/climate"
-    },
-    {
-      "id": "uz:a/6556ca39d05828bd",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:hasAnalysisConcept",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "object": "uz:analysis/state-observation"
-    },
-    {
-      "id": "uz:a/ffdf513c61ca2cab",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "object": "uz:prop/air-temperature"
-    },
-    {
-      "id": "uz:a/a66b9afc4e86e57b",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "object": "uz:prop/specific-humidity"
-    },
-    {
-      "id": "uz:a/9080e98fafdf4b89",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:coversPlace",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "object": "uz:place/uzbekistan"
-    },
-    {
-      "id": "uz:a/6bf770e19862c44f",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:license",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "value": "public-domain"
-    },
-    {
-      "id": "uz:a/268e0970eba54531",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:attributedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "value": "Climate Hazards Center InfraRed Temperature with Stations"
-    },
-    {
-      "id": "uz:a/ba7bbd964d6954e6",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:temporalCoverage",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "value": {
-        "start": 1983,
-        "end": 2016
-      }
-    },
-    {
-      "id": "uz:a/2237a1e739d939c9",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:externalLocation",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "value": "earth-engine://UCSB-CHG/CHIRTS/DAILY"
-    },
-    {
-      "id": "uz:a/f59b02fdbde52067",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:qualityFlag",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "value": "record-closed-2016"
-    },
-    {
-      "id": "uz:a/c5c9e821cd01a74c",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:qualityFlag",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "value": "heat-index-in-fahrenheit"
-    },
-    {
-      "id": "uz:a/095ef90d8d202857",
-      "subject": "uz:ds/chirts",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset UCSB-CHG/CHIRTS/DAILY"
-      },
-      "object": "uz:dist/chirts-basin-monthly"
-    },
-    {
-      "id": "uz:a/1628efdd6a832df3",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:belongsToTheme",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "object": "uz:theme/climate"
-    },
-    {
-      "id": "uz:a/391e16cbe5b0ac1d",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:hasAnalysisConcept",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "object": "uz:analysis/state-observation"
-    },
-    {
-      "id": "uz:a/3ca77c02eca90623",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "object": "uz:prop/air-temperature"
-    },
-    {
-      "id": "uz:a/1e8888c81a5026e2",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:coversPlace",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "object": "uz:place/uzbekistan"
-    },
-    {
-      "id": "uz:a/307ddd85d7f28e46",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:license",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "value": "public-domain"
-    },
-    {
-      "id": "uz:a/ba9b576e15c96b48",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:attributedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "value": "NOAA CPC Global Unified Temperature"
-    },
-    {
-      "id": "uz:a/849a5594761d416f",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:temporalCoverage",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "value": {
-        "start": 1979,
-        "end": 2026
-      }
-    },
-    {
-      "id": "uz:a/380d807ab9cf221d",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:externalLocation",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "value": "earth-engine://NOAA/CPC/Temperature"
-    },
-    {
-      "id": "uz:a/a92b2c12d09ba5d6",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:qualityFlag",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "value": "sparse-station-coverage-over-uzbekistan"
-    },
-    {
-      "id": "uz:a/2c032769f8e6a4ac",
-      "subject": "uz:ds/cpc-temperature",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset NOAA/CPC/Temperature"
-      },
-      "object": "uz:dist/cpc-basin-monthly"
-    },
-    {
-      "id": "uz:a/7fa0a4770dd83b26",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:belongsToTheme",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "object": "uz:theme/infrastructure"
-    },
-    {
-      "id": "uz:a/0de869bf589ad127",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:hasAnalysisConcept",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "object": "uz:analysis/state-observation"
-    },
-    {
-      "id": "uz:a/b6083ac8d8a0201b",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "object": "uz:prop/human-modification"
-    },
-    {
-      "id": "uz:a/e2ba2b6087b6d0a2",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "object": "uz:prop/settlement-extent"
-    },
-    {
-      "id": "uz:a/c4d9286f6d0ee865",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "object": "uz:prop/road-density"
-    },
-    {
-      "id": "uz:a/c7459bf4ad3f423d",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:coversPlace",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "object": "uz:place/uzbekistan"
-    },
-    {
-      "id": "uz:a/aeb1732ffb996d62",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:license",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "value": "CC-BY-4.0"
-    },
-    {
-      "id": "uz:a/7b8cb2927ccce396",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:attributedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "value": "Conservation Science Partners, global Human Modification (gHM)"
-    },
-    {
-      "id": "uz:a/11713d75df07959b",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:temporalCoverage",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "value": {
-        "start": 2016,
-        "end": 2016
-      }
-    },
-    {
-      "id": "uz:a/2404773973170018",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:externalLocation",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "value": "earth-engine://CSP/HM/GlobalHumanModification"
-    },
-    {
-      "id": "uz:a/211ee01808201b1e",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "object": "uz:dist/ghm-basin-modification"
-    },
-    {
-      "id": "uz:a/0e5be8f03e10b015",
-      "subject": "uz:ds/csp-ghm",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset CSP/HM/GlobalHumanModification"
-      },
-      "object": "uz:dist/ghm-district-modification"
-    },
-    {
-      "id": "uz:a/c07b9686fe19a104",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:belongsToTheme",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:theme/land-agriculture"
-    },
-    {
-      "id": "uz:a/5cc802f6e0f714c8",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:hasAnalysisConcept",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:analysis/change-over-time"
-    },
-    {
-      "id": "uz:a/91e77d2cca556838",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:prop/land-cover"
-    },
-    {
-      "id": "uz:a/67841d6ebc2f50b6",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:prop/cropland-extent"
-    },
-    {
-      "id": "uz:a/bfccca075244e908",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:prop/bare-surface"
-    },
-    {
-      "id": "uz:a/915247b573a3de87",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:observes",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:prop/settlement-extent"
-    },
-    {
-      "id": "uz:a/96dde0bb672464fe",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:coversPlace",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:place/uzbekistan"
-    },
-    {
-      "id": "uz:a/0df41788cfe93375",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:license",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "value": "CC-BY-4.0"
-    },
-    {
-      "id": "uz:a/6a063f0296c66001",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:attributedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "value": "Impact Observatory / Esri 10 m Annual Land Use Land Cover"
-    },
-    {
-      "id": "uz:a/a644d275538b4693",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:temporalCoverage",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "value": {
-        "start": 2017,
-        "end": 2025
-      }
-    },
-    {
-      "id": "uz:a/7a7c9525e48e8b64",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:externalLocation",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "value": "earth-engine://projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-    },
-    {
-      "id": "uz:a/8a5d949025eeed39",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:dist/landcover-admin-year"
-    },
-    {
-      "id": "uz:a/4bc53aad3f2473b1",
-      "subject": "uz:ds/esri-io-landcover-10m",
-      "predicate": "uz:relatedTo",
-      "status": "asserted",
-      "confidence": 1.0,
-      "assertedBy": "uz:agent/earth-engine-registry",
-      "method": "declaration",
-      "generatedAt": "2026-09-01T09:15:38+00:00",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "evidence": {
-        "source": "earth-engine-sources.json",
-        "note": "Earth Engine asset projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
-      },
-      "object": "uz:dist/landcover-basin-year"
     }
   ]
 }

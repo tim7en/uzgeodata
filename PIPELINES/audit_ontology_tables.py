@@ -108,7 +108,12 @@ def audit() -> list[dict]:
                 columns = next(reader)
                 ids, rows = set(), 0
                 position = columns.index(table["objectColumn"]) if table["objectColumn"] in columns else None
+                scope_position = (columns.index(table["scopeColumn"])
+                                  if table.get("scopeValue") and table["scopeColumn"] in columns
+                                  else None)
                 for row in reader:
+                    if scope_position is not None and row[scope_position] != table["scopeValue"]:
+                        continue
                     rows += 1
                     if position is not None and rows <= 200000:
                         ids.add(row[position])

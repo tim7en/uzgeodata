@@ -133,6 +133,11 @@
             ],
             "description": "Column recording whether the object resolves inside the published selection. Present wherever the producing pipeline reports unresolved joins instead of dropping them."
           },
+          "scopeValue": {
+            "type": "string",
+            "minLength": 1,
+            "description": "When multiple declared tables share one CSV, the value in scopeColumn selecting the rows belonging to this table."
+          },
           "identifierScheme": {
             "type": "string",
             "minLength": 2,

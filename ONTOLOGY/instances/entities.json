@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T09:15:38+00:00",
+  "generatedAt": "2026-09-03T09:16:22+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -12,12 +12,45 @@
       "description": "Facts taken verbatim from the source packages: titles, file sizes, formats, package membership."
     },
     {
+      "id": "uz:agent/chc",
+      "type": "Agent",
+      "label": "Climate Hazards Center, UC Santa Barbara",
+      "agentKind": "organisation",
+      "trustTier": "authoritative",
+      "description": "Producer of CHIRTS daily temperature."
+    },
+    {
+      "id": "uz:agent/csp",
+      "type": "Agent",
+      "label": "Conservation Science Partners",
+      "agentKind": "organisation",
+      "trustTier": "authoritative",
+      "description": "Producer of Global Human Modification."
+    },
+    {
       "id": "uz:agent/curator",
       "type": "Agent",
       "label": "Portal curator",
       "agentKind": "person",
       "trustTier": "curated",
       "description": "A human reviewer who promotes, corrects or rejects proposals. Curator decisions are the training labels for the next model."
+    },
+    {
+      "id": "uz:agent/earth-engine-registry",
+      "type": "Agent",
+      "label": "Earth Engine source registry",
+      "agentKind": "rule",
+      "agentVersion": "1.0",
+      "trustTier": "curated",
+      "description": "Curated declarations for remote Earth Engine collections."
+    },
+    {
+      "id": "uz:agent/ecmwf",
+      "type": "Agent",
+      "label": "European Centre for Medium-Range Weather Forecasts",
+      "agentKind": "organisation",
+      "trustTier": "authoritative",
+      "description": "Producer of CAMS global near-real-time atmospheric composition."
     },
     {
       "id": "uz:agent/extraction-pipeline",
@@ -38,6 +71,14 @@
       "description": "Global hydrographic reference data developed by WWF and partners. Stable river, lake and basin identifiers are preserved in the Uzbekistan relationship database together with native downstream routing and Pfafstetter hierarchy."
     },
     {
+      "id": "uz:agent/impact-observatory",
+      "type": "Agent",
+      "label": "Impact Observatory and Esri",
+      "agentKind": "organisation",
+      "trustTier": "authoritative",
+      "description": "Producer of Impact Observatory / Esri 10 m annual land cover."
+    },
+    {
       "id": "uz:agent/model-tfidf-knn-v1",
       "type": "Agent",
       "label": "Character n-gram similarity model v1",
@@ -45,6 +86,14 @@
       "agentVersion": "1.0",
       "trustTier": "predicted",
       "description": "TF-IDF character n-gram model over bilingual titles and field names. Proposes observed properties, analysis concepts and related datasets with calibrated confidence. Replaceable by a satellite-embedding or language-model backend without changing the graph contract."
+    },
+    {
+      "id": "uz:agent/noaa",
+      "type": "Agent",
+      "label": "NOAA Physical Sciences Laboratory",
+      "agentKind": "organisation",
+      "trustTier": "authoritative",
+      "description": "Producer of CPC global unified temperature."
     },
     {
       "id": "uz:agent/openstreetmap",
@@ -2114,6 +2163,97 @@
       "description": "Parcel-level legal geometry. Authoritative for tenure, not for physical land cover. Layer names in the data record the UZKAD export batches they came from."
     },
     {
+      "id": "uz:ds/cams-event-verification",
+      "type": "Dataset",
+      "label": "CAMS event detection verification at Tashkent",
+      "labels": {
+        "en": "CAMS event detection verification at Tashkent"
+      },
+      "sourceKey": "derived/PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Event detection, false-alarm, correlation and bias metrics at one CAMS grid cell. The grid cell is not a street-level city monitor and the reference is the model analysis."
+    },
+    {
+      "id": "uz:ds/cams-forecast-skill",
+      "type": "Dataset",
+      "label": "CAMS forecast skill against its own analysis",
+      "labels": {
+        "en": "CAMS forecast skill against its own analysis"
+      },
+      "sourceKey": "derived/PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Mean absolute error, bias and correlation by lead time. This is internal forecast-to-analysis verification, not independent validation against ground observations."
+    },
+    {
+      "id": "uz:ds/cams-nrt",
+      "type": "Dataset",
+      "label": "CAMS global near-real-time atmospheric composition",
+      "labels": {
+        "en": "CAMS global near-real-time atmospheric composition"
+      },
+      "sourceKey": "earth-engine/ECMWF/CAMS/NRT",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "A forecast system, not an observing one. The +0h analysis is the assimilated state and is what the ontology stores; the forecast tables record how far ahead it can be believed. Only aerosol optical depth and PM2.5 exist before 2021-07-01."
+    },
+    {
+      "id": "uz:ds/cfsv2-noaa",
+      "type": "Dataset",
+      "label": "NCEP Climate Forecast System v2, 6-hourly harmonized",
+      "labels": {
+        "en": "NCEP Climate Forecast System v2, 6-hourly harmonized"
+      },
+      "sourceKey": "earth-engine/NOAA/CFSV2/FOR6H_HARMONIZED",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Coupled model output, not observation. CFSR feeds the record to 2010 and operational CFSv2 from 2011, and 25 cm soil moisture steps 1.41 standard deviations across that boundary, so baselines stay inside the operational era."
+    },
+    {
+      "id": "uz:ds/chirps-v3",
+      "type": "Dataset",
+      "label": "CHIRPS v3 precipitation",
+      "labels": {
+        "en": "CHIRPS v3 precipitation"
+      },
+      "sourceKey": "earth-engine/UCSB-CHC/CHIRPS/V3/PENTAD",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Computed pentadally; the daily product is a disaggregation of it and agrees to 0.00% over a month. Version 3 sits under UCSB-CHC, not the UCSB-CHG path version 2 uses, and differs from it by about nine percent here."
+    },
+    {
+      "id": "uz:ds/chirts",
+      "type": "Dataset",
+      "label": "CHIRTS daily temperature",
+      "labels": {
+        "en": "CHIRTS daily temperature"
+      },
+      "sourceKey": "earth-engine/UCSB-CHG/CHIRTS/DAILY",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Closed: the record stops at 2016-12-31. A historical baseline rather than a monitoring layer. Its heat index column is Fahrenheit and derived from the daily mean while every other column is metric."
+    },
+    {
+      "id": "uz:ds/cpc-temperature",
+      "type": "Dataset",
+      "label": "CPC global unified temperature",
+      "labels": {
+        "en": "CPC global unified temperature"
+      },
+      "sourceKey": "earth-engine/NOAA/CPC/Temperature",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Gauge-based and long, but the GTS feed over Uzbekistan is thin: 0.13 stations per cell per day, with 51% of basin-months seeing none. Mostly interpolation from distant reports here, and weighted accordingly against CHIRTS."
+    },
+    {
       "id": "uz:ds/crop-production-2005-2021",
       "type": "Dataset",
       "label": "Crop production bulletins, 2005-2021",
@@ -2164,6 +2304,32 @@
       "catalogId": null,
       "repositoryId": null,
       "description": ""
+    },
+    {
+      "id": "uz:ds/csp-ghm",
+      "type": "Dataset",
+      "label": "Global Human Modification",
+      "labels": {
+        "en": "Global Human Modification"
+      },
+      "sourceKey": "earth-engine/CSP/HM/GlobalHumanModification",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "A single image with no timestamp — timeless rather than archival. Measured over both basins and districts because the frame changes the answer: 0.33 by basin against 0.61 by district."
+    },
+    {
+      "id": "uz:ds/esri-io-landcover-10m",
+      "type": "Dataset",
+      "label": "Impact Observatory / Esri 10 m annual land cover",
+      "labels": {
+        "en": "Impact Observatory / Esri 10 m annual land cover"
+      },
+      "sourceKey": "earth-engine/projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Nine annual mosaics in a 9-class scheme. Area must come from pixelArea rather than a pixel count: the collection mosaics UTM tiles and the reduction falls back to a geographic projection where pixel ground area varies with latitude."
     },
     {
       "id": "uz:ds/fertiliser-application-2007-2020",
@@ -5535,6 +5701,54 @@
       "accessPolicy": "request"
     },
     {
+      "id": "uz:dist/admin-basin-district",
+      "type": "Distribution",
+      "label": "Level-12 basins by district",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 289827,
+      "storedName": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:intersectsAdminArea",
+      "subjectType": "Basin",
+      "objectType": "AdminArea",
+      "objectColumn": "pcode",
+      "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
+      "scopeColumn": "admin_level",
+      "measureColumn": "shared_km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 6009,
+      "subjectColumn": "basin_id",
+      "scopeValue": "2"
+    },
+    {
+      "id": "uz:dist/admin-basin-province",
+      "type": "Distribution",
+      "label": "Level-12 basins by province",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 289827,
+      "storedName": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:intersectsAdminArea",
+      "subjectType": "Basin",
+      "objectType": "AdminArea",
+      "objectColumn": "pcode",
+      "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
+      "scopeColumn": "admin_level",
+      "measureColumn": "shared_km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 4374,
+      "subjectColumn": "basin_id",
+      "scopeValue": "1"
+    },
+    {
       "id": "uz:dist/atlas-basin-coverage",
       "type": "Distribution",
       "label": "Environmental atlas layers by level-12 basin",
@@ -5922,7 +6136,7 @@
       "label": "Basin downstream routing, levels 01-12",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 2020581,
+      "byteSize": 2005831,
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
@@ -5945,7 +6159,7 @@
       "label": "Basin nesting across levels",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 1488407,
+      "byteSize": 1473659,
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
@@ -5995,7 +6209,7 @@
       "label": "Pfafstetter code nesting",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 446267,
+      "byteSize": 431519,
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
@@ -6235,6 +6449,244 @@
       "externalPath": "C:/Users/User/Desktop/MAPS/Shape_files/Water_production_ready.geojson",
       "featureCount": 9998,
       "crs": "EPSG:4326"
+    },
+    {
+      "id": "uz:dist/cams-basin-monthly",
+      "type": "Distribution",
+      "label": "CAMS atmospheric composition by basin",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 17373,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 360,
+      "subjectFixed": "uz:ds/cams-nrt"
+    },
+    {
+      "id": "uz:dist/cams-event-verification",
+      "type": "Distribution",
+      "label": "CAMS event detection verification at Tashkent",
+      "role": "derived-table",
+      "format": "CSV",
+      "byteSize": 11758,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/cams-forecast-skill",
+      "type": "Distribution",
+      "label": "CAMS forecast skill against its own analysis",
+      "role": "derived-table",
+      "format": "CSV",
+      "byteSize": 4026,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/cams-nrt-earth-engine-source",
+      "type": "Distribution",
+      "label": "CAMS global near-real-time atmospheric composition Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/cfsv2-basin-anomaly",
+      "type": "Distribution",
+      "label": "CFSv2 basin anomaly",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 7488972,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinAnomaly",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
+      "scopeColumn": null,
+      "measureColumn": "z_score",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 90105,
+      "subjectFixed": "uz:ds/cfsv2-noaa"
+    },
+    {
+      "id": "uz:dist/cfsv2-basin-climatology",
+      "type": "Distribution",
+      "label": "CFSv2 basin climatological baseline",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 545366,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
+      "scopeColumn": null,
+      "measureColumn": "mean",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 8505,
+      "subjectFixed": "uz:ds/cfsv2-noaa"
+    },
+    {
+      "id": "uz:dist/cfsv2-basin-monthly",
+      "type": "Distribution",
+      "label": "CFSv2 basin monthly state",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 5333787,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 99143,
+      "subjectFixed": "uz:ds/cfsv2-noaa"
+    },
+    {
+      "id": "uz:dist/cfsv2-noaa-earth-engine-source",
+      "type": "Distribution",
+      "label": "NCEP Climate Forecast System v2, 6-hourly harmonized Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/chirps-v3-basin-pentad",
+      "type": "Distribution",
+      "label": "CHIRPS v3 basin pentadal precipitation",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 8691453,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 114744,
+      "subjectFixed": "uz:ds/chirps-v3"
+    },
+    {
+      "id": "uz:dist/chirps-v3-earth-engine-source",
+      "type": "Distribution",
+      "label": "CHIRPS v3 precipitation Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/chirts-basin-monthly",
+      "type": "Distribution",
+      "label": "CHIRTS basin monthly temperature and humidity",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 1228540,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 24588,
+      "subjectFixed": "uz:ds/chirts"
+    },
+    {
+      "id": "uz:dist/chirts-earth-engine-source",
+      "type": "Distribution",
+      "label": "CHIRTS daily temperature Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/cpc-basin-monthly",
+      "type": "Distribution",
+      "label": "CPC basin monthly temperature",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 6739302,
+      "storedName": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 122850,
+      "subjectFixed": "uz:ds/cpc-temperature"
+    },
+    {
+      "id": "uz:dist/cpc-temperature-earth-engine-source",
+      "type": "Distribution",
+      "label": "CPC global unified temperature Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
     },
     {
       "id": "uz:dist/crop-production-2005-2021-1-qx-73e93d",
@@ -6951,6 +7403,17 @@
       "crs": null
     },
     {
+      "id": "uz:dist/csp-ghm-earth-engine-source",
+      "type": "Distribution",
+      "label": "Global Human Modification Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
       "id": "uz:dist/earthquakes-public-geojson",
       "type": "Distribution",
       "label": "Earthquakes 1990–2024 (published GeoJSON)",
@@ -6959,6 +7422,17 @@
       "byteSize": 1610605,
       "storedName": "earthquakes.geojson",
       "url": "/data/earthquakes.geojson",
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/esri-io-landcover-10m-earth-engine-source",
+      "type": "Distribution",
+      "label": "Impact Observatory / Esri 10 m annual land cover Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
       "accessPolicy": "free"
     },
     {
@@ -7407,6 +7881,54 @@
       "accessPolicy": "free"
     },
     {
+      "id": "uz:dist/ghm-basin-modification",
+      "type": "Distribution",
+      "label": "Human modification by level-12 basin",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 864793,
+      "storedName": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "unit_id",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+      "scopeColumn": "frame",
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID_LAKE_V1C",
+      "rowCount": 13575,
+      "subjectFixed": "uz:ds/csp-ghm",
+      "scopeValue": "basin"
+    },
+    {
+      "id": "uz:dist/ghm-district-modification",
+      "type": "Distribution",
+      "label": "Human modification by district",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 864793,
+      "storedName": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasAdminStatistic",
+      "subjectType": "Dataset",
+      "objectType": "AdminArea",
+      "objectColumn": "unit_id",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+      "scopeColumn": "frame",
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "ADM2_PCODE",
+      "rowCount": 995,
+      "subjectFixed": "uz:ds/csp-ghm",
+      "scopeValue": "district"
+    },
+    {
       "id": "uz:dist/glacial-lakes-public-geojson",
       "type": "Distribution",
       "label": "Glacial lakes (published GeoJSON)",
@@ -7461,7 +7983,7 @@
       "label": "Basin downstream routing, lake format, levels 01-12",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 1803355,
+      "byteSize": 1788157,
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
@@ -7484,7 +8006,7 @@
       "label": "Basin nesting across levels, lake format",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 1533262,
+      "byteSize": 1518056,
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
@@ -7716,7 +8238,7 @@
       "label": "Pfafstetter code nesting, lake format",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 420956,
+      "byteSize": 407034,
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
@@ -8059,6 +8581,29 @@
       "externalPath": "C:/Users/User/Desktop/MAPS/Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Ёпик майдон маъл.+.xlsx",
       "featureCount": null,
       "crs": null
+    },
+    {
+      "id": "uz:dist/landcover-admin-year",
+      "type": "Distribution",
+      "label": "Land cover area by district and year",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 703195,
+      "storedName": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasAdminStatistic",
+      "subjectType": "Dataset",
+      "objectType": "AdminArea",
+      "objectColumn": "pcode",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
+      "scopeColumn": null,
+      "measureColumn": "km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "ADM2_PCODE",
+      "rowCount": 10906,
+      "subjectColumn": "dataset_id"
     },
     {
       "id": "uz:dist/landcover-training-samples-landcover-training-082a6d",
@@ -10562,151 +11107,6 @@
       "stationClass": "M-II",
       "longitude": 71.053289,
       "latitude": 40.4586
-    },
-    {
-      "id": "uz:agent/earth-engine-registry",
-      "type": "Agent",
-      "label": "Earth Engine source registry",
-      "agentKind": "rule",
-      "agentVersion": "1.0",
-      "trustTier": "curated",
-      "description": "Facts written down in ONTOLOGY/vocab/earth-engine-sources.json rather than measured from an archive: a remote collection has no bytes on disk to profile, so its licence, producer and meaning have to be asserted."
-    },
-    {
-      "id": "uz:agent/ecmwf",
-      "type": "Agent",
-      "label": "European Centre for Medium-Range Weather Forecasts",
-      "agentKind": "organisation",
-      "agentVersion": null,
-      "trustTier": "authoritative",
-      "description": "Producer of CAMS global near-real-time atmospheric composition."
-    },
-    {
-      "id": "uz:ds/cams-nrt",
-      "type": "Dataset",
-      "label": "CAMS global near-real-time atmospheric composition",
-      "labels": {
-        "en": "CAMS global near-real-time atmospheric composition"
-      },
-      "sourceKey": "earth-engine/ECMWF/CAMS/NRT",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": null,
-      "description": "A forecast system, not an observing one. The +0h analysis is the assimilated state and is what the ontology stores; the forecast tables record how far ahead it can be believed. Only aerosol optical depth and PM2.5 exist before 2021-07-01."
-    },
-    {
-      "id": "uz:agent/noaa",
-      "type": "Agent",
-      "label": "NOAA National Centers for Environmental Prediction",
-      "agentKind": "organisation",
-      "agentVersion": null,
-      "trustTier": "authoritative",
-      "description": "Producer of NCEP Climate Forecast System v2, 6-hourly harmonized."
-    },
-    {
-      "id": "uz:ds/cfsv2-noaa",
-      "type": "Dataset",
-      "label": "NCEP Climate Forecast System v2, 6-hourly harmonized",
-      "labels": {
-        "en": "NCEP Climate Forecast System v2, 6-hourly harmonized"
-      },
-      "sourceKey": "earth-engine/NOAA/CFSV2/FOR6H_HARMONIZED",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": null,
-      "description": "Coupled model output, not observation. CFSR feeds the record to 2010 and operational CFSv2 from 2011, and 25 cm soil moisture steps 1.41 standard deviations across that boundary, so baselines stay inside the operational era."
-    },
-    {
-      "id": "uz:agent/chc",
-      "type": "Agent",
-      "label": "Climate Hazards Center, UC Santa Barbara",
-      "agentKind": "organisation",
-      "agentVersion": null,
-      "trustTier": "authoritative",
-      "description": "Producer of CHIRPS v3 precipitation."
-    },
-    {
-      "id": "uz:ds/chirps-v3",
-      "type": "Dataset",
-      "label": "CHIRPS v3 precipitation",
-      "labels": {
-        "en": "CHIRPS v3 precipitation"
-      },
-      "sourceKey": "earth-engine/UCSB-CHC/CHIRPS/V3/PENTAD",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": null,
-      "description": "Computed pentadally; the daily product is a disaggregation of it and agrees to 0.00% over a month. Version 3 sits under UCSB-CHC, not the UCSB-CHG path version 2 uses, and differs from it by about nine percent here."
-    },
-    {
-      "id": "uz:ds/chirts",
-      "type": "Dataset",
-      "label": "CHIRTS daily temperature",
-      "labels": {
-        "en": "CHIRTS daily temperature"
-      },
-      "sourceKey": "earth-engine/UCSB-CHG/CHIRTS/DAILY",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": null,
-      "description": "Closed: the record stops at 2016-12-31. A historical baseline rather than a monitoring layer. Its heat index column is Fahrenheit and derived from the daily mean while every other column is metric."
-    },
-    {
-      "id": "uz:ds/cpc-temperature",
-      "type": "Dataset",
-      "label": "CPC global unified temperature",
-      "labels": {
-        "en": "CPC global unified temperature"
-      },
-      "sourceKey": "earth-engine/NOAA/CPC/Temperature",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": null,
-      "description": "Gauge-based and long, but the GTS feed over Uzbekistan is thin: 0.13 stations per cell per day, with 51% of basin-months seeing none. Mostly interpolation from distant reports here, and weighted accordingly against CHIRTS."
-    },
-    {
-      "id": "uz:agent/csp",
-      "type": "Agent",
-      "label": "Conservation Science Partners",
-      "agentKind": "organisation",
-      "agentVersion": null,
-      "trustTier": "authoritative",
-      "description": "Producer of Global Human Modification."
-    },
-    {
-      "id": "uz:ds/csp-ghm",
-      "type": "Dataset",
-      "label": "Global Human Modification",
-      "labels": {
-        "en": "Global Human Modification"
-      },
-      "sourceKey": "earth-engine/CSP/HM/GlobalHumanModification",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": null,
-      "description": "A single image with no timestamp — timeless rather than archival. Measured over both basins and districts because the frame changes the answer: 0.33 by basin against 0.61 by district."
-    },
-    {
-      "id": "uz:agent/impact-observatory",
-      "type": "Agent",
-      "label": "Impact Observatory and Esri",
-      "agentKind": "organisation",
-      "agentVersion": null,
-      "trustTier": "authoritative",
-      "description": "Producer of Impact Observatory / Esri 10 m annual land cover."
-    },
-    {
-      "id": "uz:ds/esri-io-landcover-10m",
-      "type": "Dataset",
-      "label": "Impact Observatory / Esri 10 m annual land cover",
-      "labels": {
-        "en": "Impact Observatory / Esri 10 m annual land cover"
-      },
-      "sourceKey": "earth-engine/projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": null,
-      "description": "Nine annual mosaics in a 9-class scheme. Area must come from pixelArea rather than a pixel count: the collection mosaics UTM tiles and the reduction falls back to a geographic projection where pixel ground area varies with latitude."
     }
   ]
 }

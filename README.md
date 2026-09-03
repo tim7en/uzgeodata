@@ -33,6 +33,7 @@ The data pipelines are Python and run independently of the web app:
 
 ```bash
 npm run ontology:build         # rebuild the graph from the registries
+npm run ontology:earth-engine  # refresh remote EE sources without the private registry
 npm run ontology:validate      # schema, integrity and ML guard rails
 npm run test:ontology          # the guard-rail tests
 npm run hydrography:build      # river, lake and basin reference (needs GDAL)
@@ -40,6 +41,7 @@ npm run hydrography:atlaslinks # overlay atlas vectors onto basins
 npm run hydrography:zonalstats # read atlas rasters per basin
 npm run hydrography:attributes # publish the 281 BasinATLAS attributes per basin
 npm run hydrography:adminlinks # overlay provinces and districts onto the basins
+npm run hydrography:align-basins # publish the canonical BasinATLAS level-12 frame
 npm run catalogue:build        # pivot the graph into the dataset catalogue
 npm run data:groups            # group every data reference and check what is on this machine
 npm run data:items             # name every reference inside those groups, present or not
@@ -53,8 +55,11 @@ npm run data:currency          # how current every stored relationship is, and w
 npm run ontology:structure     # file the datasets by domain, numbered and sorted (--apply to move)
 npm run ontology:audit         # check every table against the conventions the ontology settled on
 npm run test:trace             # the upstream-trace and aggregation guard rails
+npm test                       # all Python/Node tests plus the production web build
 ```
 
+Install the tested base environment with `python -m pip install -r requirements.txt`;
+use `requirements-pipelines.txt` for the full GIS and Earth Engine toolchain.
 `ontology:build` needs only the standard library, and so do
 `hydrography:attributes` and `catalogue:build` — a GeoPackage is a SQLite
 database, so the attribute table is read with `sqlite3` rather than GDAL.
@@ -70,6 +75,11 @@ numbers.
 The remaining geospatial pipelines need `geopandas`, `rasterio` and `py7zr`;
 `ontology:validate` and the Python tests need `jsonschema` and `pytest`.
 `test:trace` runs on Node's built-in test runner and needs nothing extra.
+
+The full ontology build fails fast when `WORKSPACE/datasets.json` is absent,
+because a partial rebuild would erase private-source records. The scoped
+`ontology:earth-engine` command safely refreshes Earth Engine declarations and
+the public graph projections without requiring that private registry.
 
 ## The pages
 

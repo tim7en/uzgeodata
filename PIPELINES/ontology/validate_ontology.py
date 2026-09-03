@@ -213,6 +213,14 @@ def validate(root: Path, strict: bool = False) -> Report:
         if count > 1:
             report.error(f"duplicate triple asserted {count} times: {triple[0]} {triple[1]}")
 
+    distribution_owners: dict[str, set[str]] = {}
+    for assertion in assertions:
+        if assertion["status"] == "asserted" and assertion["predicate"] == "uz:hasDistribution":
+            distribution_owners.setdefault(assertion["object"], set()).add(assertion["subject"])
+    for distribution, owners in distribution_owners.items():
+        if len(owners) > 1:
+            report.error(f"{distribution}: distribution has multiple owners: {', '.join(sorted(owners))}")
+
     # ---------------------------------------------------------------- ML guard rails
     ml_agents = {e["id"] for e in entities.values()
                  if e.get("type") == "Agent" and e.get("agentKind") == "model"}

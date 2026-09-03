@@ -177,6 +177,15 @@
     "hydrosheds-uz-2026/hydrosheds-hydrolakes-global": "uz:ds/hydrosheds-hydrolakes-global",
     "hydrosheds-uz-2026/hydrosheds-hydrorivers-asia": "uz:ds/hydrosheds-hydrorivers-asia",
     "hydrosheds-uz-2026/hydrobasins-uz-lake-v1c": "uz:ds/hydrobasins-uz-lake-v1c",
-    "hydrosheds-uz-2026/basinatlas-uz-v10": "uz:ds/basinatlas-uz-v10"
+    "hydrosheds-uz-2026/basinatlas-uz-v10": "uz:ds/basinatlas-uz-v10",
+    "earth-engine/ECMWF/CAMS/NRT": "uz:ds/cams-nrt",
+    "derived/PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL/cams-forecast-skill.csv": "uz:ds/cams-forecast-skill",
+    "derived/PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION/cams-event-verification.csv": "uz:ds/cams-event-verification",
+    "earth-engine/NOAA/CFSV2/FOR6H_HARMONIZED": "uz:ds/cfsv2-noaa",
+    "earth-engine/UCSB-CHC/CHIRPS/V3/PENTAD": "uz:ds/chirps-v3",
+    "earth-engine/UCSB-CHG/CHIRTS/DAILY": "uz:ds/chirts",
+    "earth-engine/NOAA/CPC/Temperature": "uz:ds/cpc-temperature",
+    "earth-engine/CSP/HM/GlobalHumanModification": "uz:ds/csp-ghm",
+    "earth-engine/projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS": "uz:ds/esri-io-landcover-10m"
   }
 }

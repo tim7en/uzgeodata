@@ -204,7 +204,7 @@
     },
     {
       "id": "admin-basin-province",
-      "dataset": "hydrobasins-level12-uzbekistan",
+      "dataset": "basinatlas-uz-v10",
       "label": "Level-12 basins by province",
       "note": "Level-12 basins against the 14 first-level units — provinces, the autonomous republic and Tashkent city. Each row carries the area the two share, so a traced catchment can be attributed to the provinces that feed it. Every unit resolves to a place concept in the ontology, matched by P-code because the COD spellings differ from the vocabulary's. Carries no quality column because every row is a measured geometric overlap rather than a sensor reading — there is no sentinel or scaling fault for it to record.",
       "predicate": "uz:intersectsAdminArea",
@@ -216,6 +216,7 @@
       "subjectColumn": "basin_id",
       "objectColumn": "pcode",
       "scopeColumn": "admin_level",
+      "scopeValue": "1",
       "measureColumn": "shared_km2",
       "measureUnitColumn": null,
       "identifierScheme": "HYBAS_ID",
@@ -226,7 +227,7 @@
     },
     {
       "id": "admin-basin-district",
-      "dataset": "hydrobasins-level12-uzbekistan",
+      "dataset": "basinatlas-uz-v10",
       "label": "Level-12 basins by district",
       "note": "The same overlay at the second level, across 199 districts, independent cities and gorhokimiyat towns. This is the resolution at which water administration actually happens, and the reason the districts carry no place concept: they are features, and the schema puts features in a table. Carries no quality column because every row is a measured geometric overlap rather than a sensor reading — there is no sentinel or scaling fault for it to record.",
       "predicate": "uz:intersectsAdminArea",
@@ -238,6 +239,7 @@
       "subjectColumn": "basin_id",
       "objectColumn": "pcode",
       "scopeColumn": "admin_level",
+      "scopeValue": "2",
       "measureColumn": "shared_km2",
       "measureUnitColumn": null,
       "identifierScheme": "HYBAS_ID",
@@ -257,34 +259,6 @@
       "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
       "objectColumn": "pcode",
       "identifierScheme": "ADM2_PCODE",
-      "format": "CSV",
-      "containerTable": null,
-      "subjectColumn": "dataset_id",
-      "measureColumn": "km2",
-      "measureUnitColumn": null,
-      "scopeColumn": null,
-      "dimensionColumns": [
-        {
-          "column": "year",
-          "meaning": "the calendar year the mosaic covers"
-        },
-        {
-          "column": "class_code",
-          "meaning": "land cover class code in the product's 9-class scheme"
-        }
-      ]
-    },
-    {
-      "id": "landcover-basin-year",
-      "dataset": "esri-io-landcover-10m",
-      "label": "Land cover area by level-12 basin and year",
-      "note": "The same measurement against the hydrological frame. Only level 12 is stored: a parent basin's land cover is the sum of its children, so the coarser levels are derivable through the Pfafstetter hierarchy and storing them as well would be twelve times the rows and a second set of numbers that could disagree with the first. Carries no quality column because every row is a measured geometric overlap rather than a sensor reading — there is no sentinel or scaling fault for it to record.",
-      "predicate": "uz:hasBasinStatistic",
-      "subjectType": "Dataset",
-      "objectType": "Basin",
-      "container": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
-      "objectColumn": "basin_id",
-      "identifierScheme": "HYBAS_ID",
       "format": "CSV",
       "containerTable": null,
       "subjectColumn": "dataset_id",
@@ -511,6 +485,7 @@
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "scopeColumn": "frame",
+      "scopeValue": "basin",
       "dimensionColumns": [
         {
           "column": "frame",
@@ -523,11 +498,11 @@
       ],
       "id": "ghm-basin-modification",
       "label": "Human modification by level-12 basin",
-      "note": "Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it.",
+      "note": "Legacy compatibility: the currently stored basin rows use the lake-format HydroBASINS v1.c ID family; the next measurement run uses the canonical standard BasinATLAS frame. Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it.",
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "identifierScheme": "HYBAS_ID"
+      "identifierScheme": "HYBAS_ID_LAKE_V1C"
     },
     {
       "dataset": "csp-ghm",
@@ -540,6 +515,7 @@
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "scopeColumn": "frame",
+      "scopeValue": "district",
       "dimensionColumns": [
         {
           "column": "frame",

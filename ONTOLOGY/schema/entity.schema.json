@@ -319,7 +319,8 @@
                     "MonitoringStation",
                     "Basin",
                     "RiverReach",
-                    "WaterBody"
+                    "WaterBody",
+                    "AdminArea"
                   ]
                 },
                 "objectType": {
@@ -330,7 +331,8 @@
                     "MonitoringStation",
                     "Basin",
                     "RiverReach",
-                    "WaterBody"
+                    "WaterBody",
+                    "AdminArea"
                   ]
                 },
                 "subjectColumn": {
@@ -357,6 +359,11 @@
                     "null"
                   ],
                   "description": "Column recording whether the object resolves inside the selection, where the producing pipeline writes one."
+                },
+                "scopeValue": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Value in scopeColumn selecting this logical table from a shared CSV."
                 },
                 "measureColumn": {
                   "type": [

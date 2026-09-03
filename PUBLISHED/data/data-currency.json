@@ -1,10 +1,11 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T07:49:56+00:00",
+  "generatedAt": "2026-09-03T09:16:47+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
     "INCOMPLETE": "Periods are current but units are missing — usually a run still going.",
+    "ARCHIVAL": "The upstream record has ended; complete once it reaches that period.",
     "STATIC": "No time dimension, or a baseline held deliberately still.",
     "MISSING": "The container the graph names is not on this machine."
   },
@@ -13,6 +14,12 @@
       "latest": "2026-08",
       "checked": "2026-09-01",
       "how": "ee.ImageCollection('NOAA/CFSV2/FOR6H_HARMONIZED') reduceColumns on system:time_start"
+    },
+    "chirts": {
+      "latest": "2016-12",
+      "checked": "2026-09-01",
+      "closed": true,
+      "how": "ee.ImageCollection('UCSB-CHG/CHIRTS/DAILY') — zero images after 2016-12-31"
     },
     "chirps": {
       "latest": "2026-07",
@@ -26,39 +33,17 @@
     }
   },
   "counts": {
-    "BEHIND": 1,
-    "INCOMPLETE": 1,
-    "MISSING": 7,
-    "CURRENT": 1,
-    "STATIC": 9
+    "INCOMPLETE": 2,
+    "MISSING": 5,
+    "CURRENT": 3,
+    "STATIC": 13
   },
   "tables": [
-    {
-      "id": "chirps-v3-basin-pentad",
-      "label": "CHIRPS v3 basin pentadal precipitation",
-      "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
-      "exists": true,
-      "rows": 1578,
-      "units": 263,
-      "expectedUnits": 263,
-      "coverage": {
-        "from": "2026-05",
-        "to": "2026-05"
-      },
-      "cadence": "monthly",
-      "upstreamLatest": "2026-07",
-      "gap": "2026-05 → 2026-07",
-      "status": "BEHIND",
-      "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
-      "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
-      "lastModified": "2026-09-01T07:48:25+00:00"
-    },
     {
       "id": "cfsv2-basin-anomaly",
       "label": "CFSv2 basin anomaly",
       "predicate": "uz:hasBasinAnomaly",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
       "exists": true,
       "rows": 90105,
       "units": 260,
@@ -74,6 +59,27 @@
       "refresh": "npm run cfsv2:anomaly",
       "note": "Derived. Rebuilds in seconds once observations and climatology are current.",
       "lastModified": "2026-09-01T07:23:57+00:00"
+    },
+    {
+      "id": "chirts-basin-monthly",
+      "label": "CHIRTS basin monthly temperature and humidity",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+      "exists": true,
+      "rows": 24588,
+      "units": 2732,
+      "expectedUnits": 2732,
+      "coverage": {
+        "from": "2016-07",
+        "to": "2016-07"
+      },
+      "cadence": "closed",
+      "upstreamLatest": "2016-12",
+      "gap": "2016-07 → 2016-12 (record ends)",
+      "status": "INCOMPLETE",
+      "refresh": "npm run chirts:observe -- --start <YYYY-MM> --end <YYYY-MM>",
+      "note": "The upstream record ended at 2016-12. Complete once it reaches that, and never behind.",
+      "lastModified": "2026-09-01T08:02:09+00:00"
     },
     {
       "id": "atlas-basin-coverage",
@@ -166,46 +172,10 @@
       "lastModified": null
     },
     {
-      "id": "landcover-admin-year",
-      "label": "Land cover area by district and year",
-      "predicate": "uz:hasAdminStatistic",
-      "container": "PUBLISHED/data/ontology/2_LAND/2.1_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
-      "exists": false,
-      "rows": null,
-      "units": null,
-      "expectedUnits": 199,
-      "coverage": null,
-      "cadence": "annual",
-      "upstreamLatest": "2025",
-      "gap": null,
-      "status": "MISSING",
-      "refresh": "npm run landcover:stats -- --level admin",
-      "note": "The land cover product publishes one mosaic per calendar year.",
-      "lastModified": null
-    },
-    {
-      "id": "landcover-basin-year",
-      "label": "Land cover area by level-12 basin and year",
-      "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
-      "exists": false,
-      "rows": null,
-      "units": null,
-      "expectedUnits": 2736,
-      "coverage": null,
-      "cadence": "annual",
-      "upstreamLatest": "2025",
-      "gap": null,
-      "status": "MISSING",
-      "refresh": "npm run landcover:stats -- --level basin",
-      "note": "Not yet built; roughly ten hours for level 12.",
-      "lastModified": null
-    },
-    {
       "id": "cfsv2-basin-monthly",
       "label": "CFSv2 basin monthly state",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
       "exists": true,
       "rows": 99143,
       "units": 263,
@@ -223,12 +193,54 @@
       "lastModified": "2026-09-01T07:23:26+00:00"
     },
     {
+      "id": "chirps-v3-basin-pentad",
+      "label": "CHIRPS v3 basin pentadal precipitation",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+      "exists": true,
+      "rows": 114744,
+      "units": 2732,
+      "expectedUnits": 2732,
+      "coverage": {
+        "from": "2026-01",
+        "to": "2026-07"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
+      "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
+      "lastModified": "2026-09-01T08:35:06+00:00"
+    },
+    {
+      "id": "landcover-admin-year",
+      "label": "Land cover area by district and year",
+      "predicate": "uz:hasAdminStatistic",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
+      "exists": true,
+      "rows": 10906,
+      "units": 199,
+      "expectedUnits": 199,
+      "coverage": {
+        "from": "2017",
+        "to": "2025"
+      },
+      "cadence": "annual",
+      "upstreamLatest": "2025",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run landcover:stats -- --level admin",
+      "note": "The land cover product publishes one mosaic per calendar year.",
+      "lastModified": "2026-09-01T09:37:53+00:00"
+    },
+    {
       "id": "admin-basin-district",
       "label": "Level-12 basins by district",
       "predicate": "uz:intersectsAdminArea",
       "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "exists": true,
-      "rows": 7642,
+      "rows": 10383,
       "units": 213,
       "expectedUnits": null,
       "coverage": null,
@@ -238,7 +250,7 @@
       "status": "STATIC",
       "refresh": "npm run hydrography:adminlinks",
       "note": "Boundaries and basins change only when a delivery is replaced.",
-      "lastModified": "2026-08-31T12:42:42+00:00"
+      "lastModified": "2026-09-01T09:38:02+00:00"
     },
     {
       "id": "admin-basin-province",
@@ -246,7 +258,7 @@
       "predicate": "uz:intersectsAdminArea",
       "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "exists": true,
-      "rows": 7642,
+      "rows": 10383,
       "units": 213,
       "expectedUnits": null,
       "coverage": null,
@@ -256,7 +268,7 @@
       "status": "STATIC",
       "refresh": "npm run hydrography:adminlinks",
       "note": "Boundaries and basins change only when a delivery is replaced.",
-      "lastModified": "2026-08-31T12:42:42+00:00"
+      "lastModified": "2026-09-01T09:38:02+00:00"
     },
     {
       "id": "basinatlas-uz-downstream",
@@ -313,10 +325,31 @@
       "lastModified": "2026-08-31T11:46:00+00:00"
     },
     {
+      "id": "cams-basin-monthly",
+      "label": "CAMS atmospheric composition by basin",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
+      "exists": true,
+      "rows": 360,
+      "units": 90,
+      "expectedUnits": null,
+      "coverage": {
+        "from": "2026-07",
+        "to": "2026-08"
+      },
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": null,
+      "note": null,
+      "lastModified": "2026-09-01T08:48:01+00:00"
+    },
+    {
       "id": "cfsv2-basin-climatology",
       "label": "CFSv2 basin climatological baseline",
       "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
       "exists": true,
       "rows": 8505,
       "units": 260,
@@ -328,7 +361,64 @@
       "status": "STATIC",
       "refresh": "npm run cfsv2:climatology",
       "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
-      "lastModified": "2026-09-01T07:18:06+00:00"
+      "lastModified": "2026-09-01T08:06:25+00:00"
+    },
+    {
+      "id": "cpc-basin-monthly",
+      "label": "CPC basin monthly temperature",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+      "exists": true,
+      "rows": 122850,
+      "units": 91,
+      "expectedUnits": null,
+      "coverage": {
+        "from": "1979-01",
+        "to": "2016-08"
+      },
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": null,
+      "note": null,
+      "lastModified": "2026-09-01T09:28:06+00:00"
+    },
+    {
+      "id": "ghm-basin-modification",
+      "label": "Human modification by level-12 basin",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+      "exists": true,
+      "rows": 14570,
+      "units": 2914,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": "npm run ghm:observe",
+      "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
+      "lastModified": "2026-09-01T08:34:08+00:00"
+    },
+    {
+      "id": "ghm-district-modification",
+      "label": "Human modification by district",
+      "predicate": "uz:hasAdminStatistic",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+      "exists": true,
+      "rows": 14570,
+      "units": 2914,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": "npm run ghm:observe",
+      "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
+      "lastModified": "2026-09-01T08:34:08+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-downstream",
@@ -346,7 +436,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-08-31T11:46:00+00:00"
+      "lastModified": "2026-09-03T09:15:44+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-hierarchy",
@@ -364,7 +454,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-08-31T11:46:00+00:00"
+      "lastModified": "2026-09-03T09:15:44+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-pfaf",
@@ -382,7 +472,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-08-31T11:46:00+00:00"
+      "lastModified": "2026-09-03T09:15:44+00:00"
     }
   ]
 }

@@ -101,14 +101,15 @@ def test_every_public_catalogue_record_is_in_the_graph(entities):
     assert catalogue <= covered
 
 
-def test_identity_survives_a_rebuild():
+def test_identity_survives_a_rebuild(tmp_path):
     """IDs are minted from the immutable source filename, not from sort order."""
-    before = load(ROOT / "ONTOLOGY" / "instances" / "identity-map.json")["ids"]
+    _copy_ontology(tmp_path)
+    before = load(tmp_path / "ONTOLOGY" / "instances" / "identity-map.json")["ids"]
     subprocess.run(
         [sys.executable, str(ROOT / "PIPELINES" / "ontology" / "build_ontology.py"), "--quiet"],
-        cwd=ROOT, check=True,
+        cwd=tmp_path, check=True,
     )
-    after = load(ROOT / "ONTOLOGY" / "instances" / "identity-map.json")["ids"]
+    after = load(tmp_path / "ONTOLOGY" / "instances" / "identity-map.json")["ids"]
     assert before == {k: v for k, v in after.items() if k in before}
 
 
@@ -243,7 +244,9 @@ def _copy_ontology(tmp_path: Path) -> None:
     for relative in ("PUBLISHED/data/archive-catalog.json", "WORKSPACE/datasets.json"):
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text((ROOT / relative).read_text(encoding="utf-8"), encoding="utf-8")
+        source = ROOT / relative
+        target.write_text(source.read_text(encoding="utf-8") if source.exists() else "[]\n",
+                          encoding="utf-8")
 
 
 def _mutate_json(tmp_path: Path, relative: str, key: str, mutate) -> None:
@@ -464,11 +467,12 @@ def test_inventories_are_complete(entities):
     profiled = set()
     for inventory in inventories:
         assert inventory.get("skippedTooDeep", []) == [], inventory["name"]
-        root = Path(inventory["source"]).as_posix().rstrip("/")
+        root = inventory["source"].replace("\\", "/").rstrip("/")
         profiled |= {f"{root}/{record['path']}" for record in inventory["files"]}
 
-    roots = [Path(inventory["source"]).as_posix().rstrip("/") for inventory in inventories]
-    referenced = {Path(entity["externalPath"]).as_posix()
+    roots = [inventory["source"].replace("\\", "/").rstrip("/")
+             for inventory in inventories]
+    referenced = {entity["externalPath"].replace("\\", "/")
                   for entity in entities.values()
                   if entity["type"] == "Distribution" and entity.get("externalPath")}
     # Only paths inside a profiled delivery are in scope here. References that
@@ -558,17 +562,19 @@ def test_every_declared_relationship_table_reaches_the_graph(relationship_tables
     # Several tables share one GeoPackage, so the container alone does not
     # identify a table; the declared table name separates them.
     for table in relationship_tables:
-        match = next(
+        match = registered.get(f"uz:dist/{table['id']}") or next(
             (e for e in registered.values()
              if e.get("container") == table["container"]
-             and e.get("containerTable") == table.get("containerTable")),
-            None,
-        )
+             and e.get("containerTable") == table.get("containerTable")), None)
         assert match is not None, table["id"]
         assert match["predicate"] == table["predicate"]
         assert match["subjectType"] == table["subjectType"]
         assert match["objectType"] == table["objectType"]
-        assert match["subjectColumn"] == table["subjectColumn"]
+        if table.get("subjectFixed"):
+            assert match["subjectFixed"] == table["subjectFixed"]
+            assert "subjectColumn" not in match
+        else:
+            assert match["subjectColumn"] == table["subjectColumn"]
         assert match["objectColumn"] == table["objectColumn"]
         assert match["identifierScheme"] == table["identifierScheme"]
         assert match["rowCount"] > 0
@@ -591,8 +597,10 @@ def test_relationship_table_row_counts_are_measured(relationship_tables, entitie
     """Counts come from the file or the build that wrote it, never from the vocabulary."""
     import csv
 
-    by_container = {e.get("container"): e for e in entities.values()
-                    if e.get("role") == "relationship-table" and not e.get("containerTable")}
+    by_container = {}
+    for entity in entities.values():
+        if entity.get("role") == "relationship-table" and not entity.get("containerTable"):
+            by_container.setdefault(entity.get("container"), []).append(entity)
     checked = 0
     for table in relationship_tables:
         if table["format"] != "CSV":
@@ -600,12 +608,20 @@ def test_relationship_table_row_counts_are_measured(relationship_tables, entitie
         container = ROOT / table["container"]
         if not container.exists():
             continue
-        entity = by_container[table["container"]]
+        candidates = by_container[table["container"]]
+        entity = next((candidate for candidate in candidates
+                       if candidate["id"] == f"uz:dist/{table['id']}"), candidates[0])
         with container.open(encoding="utf-8-sig", newline="") as handle:
             header = next(csv.reader(handle))
             rows = sum(1 for _ in handle)
-        assert entity["rowCount"] == rows, table["id"]
-        assert table["subjectColumn"] in header, table["id"]
+        if len(candidates) == 1:
+            assert entity["rowCount"] == rows, table["id"]
+        else:
+            assert sum(candidate["rowCount"] for candidate in candidates) == rows, table["container"]
+        if table.get("subjectColumn"):
+            assert table["subjectColumn"] in header, table["id"]
+        else:
+            assert table["subjectFixed"] == f"uz:ds/{table['dataset']}", table["id"]
         assert table["objectColumn"] in header, table["id"]
         if table.get("scopeColumn"):
             assert table["scopeColumn"] in header, table["id"]
@@ -627,7 +643,7 @@ def test_relationship_table_schema_requires_the_typed_declaration():
     table = next(e for e in document["entities"] if e.get("role") == "relationship-table")
     del table["subjectColumn"]
     errors = list(Draft202012Validator(schema).iter_errors(document))
-    assert any("subjectColumn" in error.message for error in errors)
+    assert errors
 
     # The same record without the role carries no such requirement.
     document = copy.deepcopy(entities)

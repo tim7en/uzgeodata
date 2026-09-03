@@ -20,6 +20,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import re
@@ -151,7 +152,7 @@ def term_matches(haystack: str, term: str) -> bool:
     return re.search(r" " + re.escape(term) + r"[a-zЀ-ӿ]{0,3}(?= )", haystack) is not None
 
 
-def match_by_path_tail(container: str, by_location: dict[str, str]) -> str | None:
+def match_by_path_tail(container: str, by_location: dict[str, set[str]]) -> str | None:
     """Find the distribution that already stands for this file.
 
     A relationship table names its container relative to the repository, while a
@@ -168,8 +169,9 @@ def match_by_path_tail(container: str, by_location: dict[str, str]) -> str | Non
     parts = container.lower().split("/")
     for start in range(len(parts) - 1):
         tail = "/".join(parts[start:])
-        matches = {dist for location, dist in by_location.items()
-                   if location == tail or location.endswith("/" + tail)}
+        matches = {dist for location, distributions in by_location.items()
+                   if location == tail or location.endswith("/" + tail)
+                   for dist in distributions}
         if len(matches) == 1:
             return matches.pop()
         if len(matches) > 1:
@@ -1189,13 +1191,13 @@ class GraphBuilder:
         # A CSV the delivery ships already has a distribution, minted from the
         # file profile as a generic external table. Upgrade that record rather
         # than minting a second one for the same bytes.
-        by_location = {}
+        by_location: dict[str, set[str]] = {}
         for entity in self.entities.values():
             if entity.get("type") != "Distribution":
                 continue
             location = entity.get("externalPath") or entity.get("storedName") or ""
             if location:
-                by_location[location.replace("\\", "/").lower()] = entity["id"]
+                by_location.setdefault(location.replace("\\", "/").lower(), set()).add(entity["id"])
 
         counts = self.relationship_counts
         registered = 0
@@ -1262,6 +1264,7 @@ class GraphBuilder:
                 # is, so nothing downstream has to match paths by guesswork.
                 "container": container,
                 "scopeColumn": table.get("scopeColumn"),
+                "scopeValue": table.get("scopeValue"),
                 "measureColumn": table.get("measureColumn"),
                 "measureUnitColumn": table.get("measureUnitColumn"),
                 "containerTable": table.get("containerTable"),
@@ -1273,6 +1276,14 @@ class GraphBuilder:
             else:
                 table_entity["subjectColumn"] = table["subjectColumn"]
             self.add_entity(table_entity)
+            # A distribution has one owning dataset. Registry corrections (for
+            # example moving the admin overlay from legacy HydroBASINS to the
+            # canonical BasinATLAS frame) must remove the stale inverse link.
+            for assertion_key, assertion in list(self.assertions.items()):
+                if (assertion["predicate"] == "uz:hasDistribution"
+                        and assertion.get("object") == dist_id
+                        and assertion["subject"] != dataset):
+                    del self.assertions[assertion_key]
             self.add(dataset, "uz:hasDistribution", dist_id, agent=AGENT_PIPELINE,
                      confidence=1.0, status="asserted", method="relationship-table",
                      evidence=evidence)
@@ -1307,6 +1318,10 @@ class GraphBuilder:
         if not path.exists():
             return None
         with path.open(encoding="utf-8-sig", newline="") as handle:
+            if table.get("scopeValue"):
+                reader = csv.DictReader(handle)
+                return sum(1 for row in reader
+                           if row.get(table["scopeColumn"]) == table["scopeValue"])
             return max(sum(1 for _ in handle) - 1, 0)  # discount the header
 
     def assert_hydroatlas_attributes(self) -> None:
@@ -1793,7 +1808,11 @@ def main(argv=None) -> int:
     root = Path(args.root).resolve()
     builder = GraphBuilder(root, quiet=args.quiet)
     builder.log("Building ontology instance...")
-    builder.build()
+    try:
+        builder.build()
+    except FileNotFoundError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 2
     graph = builder.save()
 
     by_type: dict[str, int] = {}

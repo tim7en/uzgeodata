@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-01T09:05:06+00:00",
+  "generatedAt": "2026-09-03T09:07:45+00:00",
   "convention": {
     "naming": "Upper case, digits and underscores only.",
     "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
@@ -18,9 +18,9 @@
       "number": "1.1",
       "domain": "ATMOSPHERE",
       "domainNumber": "1",
-      "name": "CAMS_BASIN_DAILY",
-      "folder": "1_ATMOSPHERE/1.1_CAMS_BASIN_DAILY",
-      "table": "cams-basin-daily",
+      "name": "CAMS_BASIN_MONTHLY",
+      "folder": "1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY",
+      "table": "cams-basin-monthly",
       "what": "Aerosol optical depth and PM2.5 per level-6 basin from the CAMS +0h analysis — the assimilated estimate of what the atmosphere was, not a forecast."
     },
     {
