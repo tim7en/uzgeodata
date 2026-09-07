@@ -242,6 +242,11 @@ never confused.
 carry `uz:externalLocation` and no `storedName`. A 1.02 GB package can be
 catalogued, licensed and linked without entering the repository.
 
+If a profiled delivery later moves, keep its inventory-relative paths unchanged
+and add the new parent to that source's `searchRoots` in
+`vocab/external-sources.json`. Validation and catalogue builds will find the
+bytes at the new root while retaining the original profile as provenance.
+
 Licence and attribution are first-class (`uz:license`, `uz:attributedTo`) because
 ODbL and restricted-internal terms both travel with every derivative made from the
 data, and the portal has to be able to display the credit.

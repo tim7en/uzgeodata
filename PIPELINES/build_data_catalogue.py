@@ -11,7 +11,7 @@ of the atlas derivatives live in WORKSPACE/, which is deliberately not in versio
 control, so in a fresh checkout their URLs resolve to the SPA fallback — HTML,
 with a 200, which a client parsing JSON will not notice. Availability is
 therefore decided by looking on disk, never by trusting the field, and every
-dataset lands in one of four states:
+dataset lands in one of five states:
 
     published    the file is in PUBLISHED/ and the portal really serves it
     repository   a local source/derivative, present but not web-facing
