@@ -1,0 +1,268 @@
+"""Project every already-measured basin time series into one shared browser contract.
+
+`build_landcover_web.py` proved the pattern: one relationship table, one compact
+JSON pair, one cinematic map. This is the same projection made generic, because
+the graph already holds seven more basin-level tables that never needed a new
+Earth Engine run — CFSv2 (climate state and anomaly), CHIRPS, CHIRTS, CPC, CAMS
+and GHM are all measured, all keyed to a canonical BasinATLAS level, and all
+declared in `ONTOLOGY/vocab/relationship-tables.json`. What was missing was not
+data, it was a viewer.
+
+Each entry in LAYERS names a CSV the graph already declares, the basin level it
+was measured at (6, 7 or 12 — the reference geometry is read straight from the
+review extraction, `PUBLISHED/data/review/basinatlas/basinatlas_uz_levNN.geojson`),
+and how to fold its rows into `{basin: {period: {variable: {v, [z], [c]}}}}`.
+`kind: "anomaly"` additionally carries the z-score and classification CFSv2's
+anomaly table already computed, which is what lets the map colour a basin by how
+far it sits from its own climatological normal rather than by raw magnitude.
+
+    python PIPELINES/build_basin_layers_web.py
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+from collections import defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+OUTPUT = ROOT / "PUBLISHED/data/basin-layers"
+INDEX = OUTPUT / "index.json"
+
+
+def geometry_for(level: int) -> str:
+    return f"/data/review/basinatlas/basinatlas_uz_lev{level:02d}.geojson"
+
+
+# Friendly label and a stable colour per variable code, so switching variables
+# changes hue meaningfully instead of assigning colour by draw order. Anything
+# not named here still renders — falls back to a rotated palette and a
+# title-cased label built from the code.
+VARIABLES = {
+    "precipitation": {"label": "Precipitation", "color": "#4cc9f0"},
+    "precipitation_total": {"label": "Precipitation", "color": "#4cc9f0"},
+    "temperature_mean": {"label": "Temperature (mean)", "color": "#ff6b4a"},
+    "temperature_max": {"label": "Temperature (max)", "color": "#ff3d3d"},
+    "temperature_min": {"label": "Temperature (min)", "color": "#7fa8ff"},
+    "tmax_mean": {"label": "Max temperature (mean)", "color": "#ff6b4a"},
+    "tmax_absolute": {"label": "Max temperature (absolute)", "color": "#ff3d3d"},
+    "tmin_mean": {"label": "Min temperature (mean)", "color": "#7fa8ff"},
+    "tmin_absolute": {"label": "Min temperature (absolute)", "color": "#3aa0ff"},
+    "soil_moisture_5cm": {"label": "Soil moisture 5 cm", "color": "#2dd4bf"},
+    "soil_moisture_25cm": {"label": "Soil moisture 25 cm", "color": "#22bfae"},
+    "soil_moisture_70cm": {"label": "Soil moisture 70 cm", "color": "#189c8d"},
+    "soil_moisture_150cm": {"label": "Soil moisture 150 cm", "color": "#0f766e"},
+    "potential_evaporation": {"label": "Potential evaporation", "color": "#f4a340"},
+    "shortwave_down": {"label": "Shortwave radiation", "color": "#f4d35e"},
+    "specific_humidity": {"label": "Specific humidity", "color": "#a78bfa"},
+    "rh_mean": {"label": "Relative humidity", "color": "#a78bfa"},
+    "vpd_mean": {"label": "Vapour pressure deficit", "color": "#c084fc"},
+    "heat_index_max": {"label": "Heat index (max)", "color": "#ff5d5d"},
+    "days_tmax_ge_35": {"label": "Days \u2265 35\u00b0C", "color": "#ff8a5c"},
+    "days_tmax_ge_40": {"label": "Days \u2265 40\u00b0C", "color": "#ff3d3d"},
+    "days_frost": {"label": "Frost days", "color": "#7fd4ff"},
+    "stations_max_mean": {"label": "Stations informing max", "color": "#8aa0ad"},
+    "stations_min_mean": {"label": "Stations informing min", "color": "#8aa0ad"},
+    "aod_550nm": {"label": "Aerosol optical depth", "color": "#c9a06a"},
+    "pm2p5": {"label": "PM2.5", "color": "#b0793f"},
+    "ghm_mean": {"label": "Human modification (mean)", "color": "#e0507a"},
+    "share_low": {"label": "Share: low modification", "color": "#4cc9f0"},
+    "share_moderate": {"label": "Share: moderate modification", "color": "#f4a340"},
+    "share_high": {"label": "Share: high modification", "color": "#e0507a"},
+}
+PALETTE = ["#4cc9f0", "#f4a340", "#a78bfa", "#2dd4bf", "#ff6b4a", "#e0507a"]
+
+
+def variable_meta(code: str, position: int) -> dict:
+    known = VARIABLES.get(code)
+    if known:
+        return dict(known)
+    return {"label": code.replace("_", " ").title(), "color": PALETTE[position % len(PALETTE)]}
+
+
+LAYERS = [
+    {
+        "id": "cfsv2-basin-anomaly", "label": "Climate anomaly", "domain": "ATMOSPHERE",
+        "dataset": "uz:ds/cfsv2-noaa", "predicate": "uz:hasBasinAnomaly", "kind": "anomaly",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
+        "basinLevel": 7, "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month",
+        "what": ("Observations expressed as z-scores against each basin's own climatological "
+                 "normal \u2014 how far this month sits from what that basin usually sees, not "
+                 "what the number is in absolute terms."),
+    },
+    {
+        "id": "cfsv2-basin-monthly", "label": "Climate state", "domain": "ATMOSPHERE",
+        "dataset": "uz:ds/cfsv2-noaa", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
+        "basinLevel": 7, "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month",
+        "what": "Monthly mean of the 6-hourly CFSv2 field: precipitation, temperature, four "
+                "soil-moisture depths, evaporative demand, radiation and humidity.",
+    },
+    {
+        "id": "chirps-v3-basin-pentad", "label": "Precipitation (CHIRPS)", "domain": "ATMOSPHERE",
+        "dataset": "uz:ds/chirps-v3", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+        "basinLevel": 12, "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month", "pentad"],
+        "periodGrain": "pentad",
+        "what": "Accumulated rainfall per level-12 basin per pentad at 5.6 km \u2014 six "
+                "measurements a month.",
+    },
+    {
+        "id": "chirts-basin-monthly", "label": "Temperature & humidity (CHIRTS)", "domain": "ATMOSPHERE",
+        "dataset": "uz:ds/chirts", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+        "basinLevel": 12, "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month",
+        "what": "Station-blended temperature and humidity at 5.6 km, 1983\u20132016, including "
+                "day counts above 35\u00b0 and 40\u00b0C a monthly mean cannot give.",
+    },
+    {
+        "id": "cpc-basin-monthly", "label": "Temperature (CPC)", "domain": "ATMOSPHERE",
+        "dataset": "uz:ds/cpc-temperature", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+        "basinLevel": 6, "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month",
+        "what": "Gauge-based half-degree temperature, 1979\u2013present, with the station count "
+                "that informed each cell.",
+    },
+    {
+        "id": "cams-basin-monthly", "label": "Air quality (CAMS)", "domain": "ATMOSPHERE",
+        "dataset": "uz:ds/cams-nrt", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
+        "basinLevel": 6, "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month",
+        "what": "Monthly mean of the CAMS +0h analysis: aerosol optical depth and PM2.5, the "
+                "assimilated estimate of what the atmosphere was, not a forecast.",
+    },
+    {
+        "id": "ghm-basin-modification", "label": "Human modification", "domain": "LAND",
+        "dataset": "uz:ds/csp-ghm", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "source": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+        "basinLevel": 12, "idColumn": "unit_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["epoch"],
+        "periodGrain": "year", "filterColumn": "frame", "filterValue": "basin",
+        "what": "Cumulative human modification for 2016 \u2014 settlement, agriculture, "
+                "transport, mining and energy \u2014 as a 0 to 1 index at 1 km. One image, no "
+                "timestamp: the single period is the whole record.",
+    },
+]
+
+
+def period_key(row: dict, layer: dict) -> str:
+    parts = [int(row[column]) for column in layer["periodColumns"]]
+    if layer["periodGrain"] == "pentad":
+        year, month, pentad = parts
+        return f"{year:04d}-{month:02d}-p{pentad}"
+    if layer["periodGrain"] == "month":
+        year, month = parts
+        return f"{year:04d}-{month:02d}"
+    return str(parts[0])
+
+
+def write_json(path: Path, payload: dict, *, compact: bool = False) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    with temporary.open("w", encoding="utf8", newline="\n") as handle:
+        json.dump(payload, handle, ensure_ascii=False,
+                  separators=(",", ":") if compact else None,
+                  indent=None if compact else 2)
+        handle.write("\n")
+    temporary.replace(path)
+
+
+def build_layer(layer: dict) -> tuple[dict, dict]:
+    # Absolute already (a test handing in a tmp_path) passes through; the
+    # registry's own entries are repo-relative and resolve against ROOT.
+    source = Path(layer["source"])
+    if not source.is_absolute():
+        source = ROOT / source
+    values: dict[str, dict[str, dict[str, dict]]] = defaultdict(lambda: defaultdict(dict))
+    variables: dict[str, dict] = {}
+    periods: set[str] = set()
+    rows_read = 0
+
+    with source.open(encoding="utf8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            if layer.get("filterColumn") and row.get(layer["filterColumn"]) != layer["filterValue"]:
+                continue
+            try:
+                value = float(row[layer["valueColumn"]])
+            except (KeyError, TypeError, ValueError):
+                continue
+            variable = row[layer["variableColumn"]]
+            basin = str(row[layer["idColumn"]])
+            period = period_key(row, layer)
+            cell = {"v": round(value, 5)}
+            if layer["kind"] == "anomaly":
+                z = row.get("z_score")
+                classification = row.get("classification")
+                if z not in (None, ""):
+                    cell["z"] = round(float(z), 3)
+                if classification:
+                    cell["c"] = classification
+            values[basin][period][variable] = cell
+            if variable not in variables:
+                variables[variable] = {"code": variable, "unit": row.get(layer["unitColumn"]) or None,
+                                       **variable_meta(variable, len(variables))}
+            periods.add(period)
+            rows_read += 1
+
+    sorted_periods = sorted(periods)
+    series = {
+        "version": "1.0",
+        "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "dataset": layer["dataset"], "predicate": layer["predicate"],
+        "basins": {basin: {period: cells for period, cells in sorted(annual.items())}
+                  for basin, annual in sorted(values.items())},
+    }
+    entry = {
+        "id": layer["id"], "label": layer["label"], "domain": layer["domain"],
+        "kind": layer["kind"], "dataset": layer["dataset"], "predicate": layer["predicate"],
+        "basinLevel": layer["basinLevel"], "geometry": geometry_for(layer["basinLevel"]),
+        "periodGrain": layer["periodGrain"], "periods": sorted_periods,
+        "variables": sorted(variables.values(), key=lambda item: item["code"]),
+        "what": layer["what"],
+        "series": f"/data/basin-layers/{layer['id']}.json",
+        "coverage": {"rows": rows_read, "basins": len(values), "periods": len(sorted_periods)},
+    }
+    return entry, series
+
+
+def build() -> list[dict]:
+    entries = []
+    for layer in LAYERS:
+        entry, series = build_layer(layer)
+        write_json(OUTPUT / f"{layer['id']}.json", series, compact=True)
+        entries.append(entry)
+        print(f"  {layer['id']:28} {entry['coverage']['rows']:>7,} rows · "
+              f"{entry['coverage']['basins']:>5,} basins · {entry['coverage']['periods']:>5,} periods")
+    return entries
+
+
+def main() -> None:
+    entries = build()
+    write_json(INDEX, {
+        "version": "1.0",
+        "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "title": "Basin climate & land observatory",
+        "description": ("Every already-measured basin time series the ontology declares, "
+                        "projected into one shared map contract: CFSv2 climate state and "
+                        "anomaly, CHIRPS precipitation, CHIRTS and CPC temperature, CAMS air "
+                        "quality, and GHM human modification."),
+        "layers": entries,
+    })
+    print(f"\n  {len(entries)} layers -> {INDEX.relative_to(ROOT)}")
+
+
+if __name__ == "__main__":
+    main()

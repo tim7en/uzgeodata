@@ -1,0 +1,713 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-07T12:58:34+00:00",
+  "title": "Basin climate & land observatory",
+  "description": "Every already-measured basin time series the ontology declares, projected into one shared map contract: CFSv2 climate state and anomaly, CHIRPS precipitation, CHIRTS and CPC temperature, CAMS air quality, and GHM human modification.",
+  "layers": [
+    {
+      "id": "cfsv2-basin-anomaly",
+      "label": "Climate anomaly",
+      "domain": "ATMOSPHERE",
+      "kind": "anomaly",
+      "dataset": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:hasBasinAnomaly",
+      "basinLevel": 7,
+      "geometry": "/data/review/basinatlas/basinatlas_uz_lev07.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "2011-07",
+        "2011-08",
+        "2012-07",
+        "2012-08",
+        "2013-07",
+        "2013-08",
+        "2014-07",
+        "2014-08",
+        "2015-07",
+        "2015-08",
+        "2016-07",
+        "2016-08",
+        "2017-07",
+        "2017-08",
+        "2018-07",
+        "2018-08",
+        "2019-07",
+        "2019-08",
+        "2020-07",
+        "2020-08",
+        "2021-07",
+        "2021-08",
+        "2022-07",
+        "2022-08",
+        "2023-07",
+        "2023-08",
+        "2024-07",
+        "2024-08",
+        "2025-07",
+        "2025-08",
+        "2026-07",
+        "2026-08"
+      ],
+      "variables": [
+        {
+          "code": "potential_evaporation",
+          "unit": "W/m2",
+          "label": "Potential evaporation",
+          "color": "#f4a340"
+        },
+        {
+          "code": "precipitation",
+          "unit": "mm/day",
+          "label": "Precipitation",
+          "color": "#4cc9f0"
+        },
+        {
+          "code": "shortwave_down",
+          "unit": "W/m2",
+          "label": "Shortwave radiation",
+          "color": "#f4d35e"
+        },
+        {
+          "code": "soil_moisture_150cm",
+          "unit": "m3/m3",
+          "label": "Soil moisture 150 cm",
+          "color": "#0f766e"
+        },
+        {
+          "code": "soil_moisture_25cm",
+          "unit": "m3/m3",
+          "label": "Soil moisture 25 cm",
+          "color": "#22bfae"
+        },
+        {
+          "code": "soil_moisture_5cm",
+          "unit": "m3/m3",
+          "label": "Soil moisture 5 cm",
+          "color": "#2dd4bf"
+        },
+        {
+          "code": "soil_moisture_70cm",
+          "unit": "m3/m3",
+          "label": "Soil moisture 70 cm",
+          "color": "#189c8d"
+        },
+        {
+          "code": "specific_humidity",
+          "unit": "kg/kg",
+          "label": "Specific humidity",
+          "color": "#a78bfa"
+        },
+        {
+          "code": "temperature_max",
+          "unit": "degC",
+          "label": "Temperature (max)",
+          "color": "#ff3d3d"
+        },
+        {
+          "code": "temperature_mean",
+          "unit": "degC",
+          "label": "Temperature (mean)",
+          "color": "#ff6b4a"
+        },
+        {
+          "code": "temperature_min",
+          "unit": "degC",
+          "label": "Temperature (min)",
+          "color": "#7fa8ff"
+        }
+      ],
+      "what": "Observations expressed as z-scores against each basin's own climatological normal — how far this month sits from what that basin usually sees, not what the number is in absolute terms.",
+      "series": "/data/basin-layers/cfsv2-basin-anomaly.json",
+      "coverage": {
+        "rows": 90105,
+        "basins": 260,
+        "periods": 32
+      }
+    },
+    {
+      "id": "cfsv2-basin-monthly",
+      "label": "Climate state",
+      "domain": "ATMOSPHERE",
+      "kind": "value",
+      "dataset": "uz:ds/cfsv2-noaa",
+      "predicate": "uz:hasBasinStatistic",
+      "basinLevel": 7,
+      "geometry": "/data/review/basinatlas/basinatlas_uz_lev07.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "2011-07",
+        "2011-08",
+        "2012-07",
+        "2012-08",
+        "2013-07",
+        "2013-08",
+        "2014-07",
+        "2014-08",
+        "2015-07",
+        "2015-08",
+        "2016-07",
+        "2016-08",
+        "2017-07",
+        "2017-08",
+        "2018-07",
+        "2018-08",
+        "2019-07",
+        "2019-08",
+        "2020-07",
+        "2020-08",
+        "2021-07",
+        "2021-08",
+        "2022-07",
+        "2022-08",
+        "2023-07",
+        "2023-08",
+        "2024-07",
+        "2024-08",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08"
+      ],
+      "variables": [
+        {
+          "code": "potential_evaporation",
+          "unit": "W/m2",
+          "label": "Potential evaporation",
+          "color": "#f4a340"
+        },
+        {
+          "code": "precipitation",
+          "unit": "mm/day",
+          "label": "Precipitation",
+          "color": "#4cc9f0"
+        },
+        {
+          "code": "shortwave_down",
+          "unit": "W/m2",
+          "label": "Shortwave radiation",
+          "color": "#f4d35e"
+        },
+        {
+          "code": "soil_moisture_150cm",
+          "unit": "m3/m3",
+          "label": "Soil moisture 150 cm",
+          "color": "#0f766e"
+        },
+        {
+          "code": "soil_moisture_25cm",
+          "unit": "m3/m3",
+          "label": "Soil moisture 25 cm",
+          "color": "#22bfae"
+        },
+        {
+          "code": "soil_moisture_5cm",
+          "unit": "m3/m3",
+          "label": "Soil moisture 5 cm",
+          "color": "#2dd4bf"
+        },
+        {
+          "code": "soil_moisture_70cm",
+          "unit": "m3/m3",
+          "label": "Soil moisture 70 cm",
+          "color": "#189c8d"
+        },
+        {
+          "code": "specific_humidity",
+          "unit": "kg/kg",
+          "label": "Specific humidity",
+          "color": "#a78bfa"
+        },
+        {
+          "code": "temperature_max",
+          "unit": "degC",
+          "label": "Temperature (max)",
+          "color": "#ff3d3d"
+        },
+        {
+          "code": "temperature_mean",
+          "unit": "degC",
+          "label": "Temperature (mean)",
+          "color": "#ff6b4a"
+        },
+        {
+          "code": "temperature_min",
+          "unit": "degC",
+          "label": "Temperature (min)",
+          "color": "#7fa8ff"
+        }
+      ],
+      "what": "Monthly mean of the 6-hourly CFSv2 field: precipitation, temperature, four soil-moisture depths, evaporative demand, radiation and humidity.",
+      "series": "/data/basin-layers/cfsv2-basin-monthly.json",
+      "coverage": {
+        "rows": 99143,
+        "basins": 263,
+        "periods": 35
+      }
+    },
+    {
+      "id": "chirps-v3-basin-pentad",
+      "label": "Precipitation (CHIRPS)",
+      "domain": "ATMOSPHERE",
+      "kind": "value",
+      "dataset": "uz:ds/chirps-v3",
+      "predicate": "uz:hasBasinStatistic",
+      "basinLevel": 12,
+      "geometry": "/data/review/basinatlas/basinatlas_uz_lev12.geojson",
+      "periodGrain": "pentad",
+      "periods": [
+        "2026-01-p1",
+        "2026-01-p2",
+        "2026-01-p3",
+        "2026-01-p4",
+        "2026-01-p5",
+        "2026-01-p6",
+        "2026-02-p1",
+        "2026-02-p2",
+        "2026-02-p3",
+        "2026-02-p4",
+        "2026-02-p5",
+        "2026-02-p6",
+        "2026-03-p1",
+        "2026-03-p2",
+        "2026-03-p3",
+        "2026-03-p4",
+        "2026-03-p5",
+        "2026-03-p6",
+        "2026-04-p1",
+        "2026-04-p2",
+        "2026-04-p3",
+        "2026-04-p4",
+        "2026-04-p5",
+        "2026-04-p6",
+        "2026-05-p1",
+        "2026-05-p2",
+        "2026-05-p3",
+        "2026-05-p4",
+        "2026-05-p5",
+        "2026-05-p6",
+        "2026-06-p1",
+        "2026-06-p2",
+        "2026-06-p3",
+        "2026-06-p4",
+        "2026-06-p5",
+        "2026-06-p6",
+        "2026-07-p1",
+        "2026-07-p2",
+        "2026-07-p3",
+        "2026-07-p4",
+        "2026-07-p5",
+        "2026-07-p6"
+      ],
+      "variables": [
+        {
+          "code": "precipitation_total",
+          "unit": "mm",
+          "label": "Precipitation",
+          "color": "#4cc9f0"
+        }
+      ],
+      "what": "Accumulated rainfall per level-12 basin per pentad at 5.6 km — six measurements a month.",
+      "series": "/data/basin-layers/chirps-v3-basin-pentad.json",
+      "coverage": {
+        "rows": 167076,
+        "basins": 3978,
+        "periods": 42
+      }
+    },
+    {
+      "id": "chirts-basin-monthly",
+      "label": "Temperature & humidity (CHIRTS)",
+      "domain": "ATMOSPHERE",
+      "kind": "value",
+      "dataset": "uz:ds/chirts",
+      "predicate": "uz:hasBasinStatistic",
+      "basinLevel": 12,
+      "geometry": "/data/review/basinatlas/basinatlas_uz_lev12.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "2016-07"
+      ],
+      "variables": [
+        {
+          "code": "days_tmax_ge_35",
+          "unit": "days",
+          "label": "Days ≥ 35°C",
+          "color": "#ff8a5c"
+        },
+        {
+          "code": "days_tmax_ge_40",
+          "unit": "days",
+          "label": "Days ≥ 40°C",
+          "color": "#ff3d3d"
+        },
+        {
+          "code": "heat_index_max",
+          "unit": "degF",
+          "label": "Heat index (max)",
+          "color": "#ff5d5d"
+        },
+        {
+          "code": "rh_mean",
+          "unit": "percent",
+          "label": "Relative humidity",
+          "color": "#a78bfa"
+        },
+        {
+          "code": "tmax_absolute",
+          "unit": "degC",
+          "label": "Max temperature (absolute)",
+          "color": "#ff3d3d"
+        },
+        {
+          "code": "tmax_mean",
+          "unit": "degC",
+          "label": "Max temperature (mean)",
+          "color": "#ff6b4a"
+        },
+        {
+          "code": "tmin_absolute",
+          "unit": "degC",
+          "label": "Min temperature (absolute)",
+          "color": "#3aa0ff"
+        },
+        {
+          "code": "tmin_mean",
+          "unit": "degC",
+          "label": "Min temperature (mean)",
+          "color": "#7fa8ff"
+        },
+        {
+          "code": "vpd_mean",
+          "unit": "kPa",
+          "label": "Vapour pressure deficit",
+          "color": "#c084fc"
+        }
+      ],
+      "what": "Station-blended temperature and humidity at 5.6 km, 1983–2016, including day counts above 35° and 40°C a monthly mean cannot give.",
+      "series": "/data/basin-layers/chirts-basin-monthly.json",
+      "coverage": {
+        "rows": 35802,
+        "basins": 3978,
+        "periods": 1
+      }
+    },
+    {
+      "id": "cpc-basin-monthly",
+      "label": "Temperature (CPC)",
+      "domain": "ATMOSPHERE",
+      "kind": "value",
+      "dataset": "uz:ds/cpc-temperature",
+      "predicate": "uz:hasBasinStatistic",
+      "basinLevel": 6,
+      "geometry": "/data/review/basinatlas/basinatlas_uz_lev06.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "1979-01",
+        "1979-02",
+        "1979-03",
+        "1979-04",
+        "1979-05",
+        "1979-06",
+        "1979-07",
+        "1979-08",
+        "1979-09",
+        "1979-10",
+        "1979-11",
+        "1979-12",
+        "1980-01",
+        "1980-02",
+        "1980-03",
+        "1980-04",
+        "1980-05",
+        "1980-06",
+        "1980-07",
+        "1980-08",
+        "1980-09",
+        "1980-10",
+        "1980-11",
+        "1980-12",
+        "1981-01",
+        "1981-02",
+        "1981-03",
+        "1981-04",
+        "1981-05",
+        "1981-06",
+        "1981-07",
+        "1981-08",
+        "1981-09",
+        "1981-10",
+        "1981-11",
+        "1981-12",
+        "1982-01",
+        "1982-02",
+        "1982-03",
+        "1982-04",
+        "1982-05",
+        "1982-06",
+        "1982-07",
+        "1982-08",
+        "1982-09",
+        "1982-10",
+        "1982-11",
+        "1982-12",
+        "1983-01",
+        "1983-02",
+        "1983-03",
+        "1983-04",
+        "1983-05",
+        "1983-06",
+        "1983-07",
+        "1983-08",
+        "1983-09",
+        "1983-10",
+        "1983-11",
+        "1983-12",
+        "1984-01",
+        "1984-02",
+        "1984-03",
+        "1984-04",
+        "1984-05",
+        "1984-06",
+        "1984-07",
+        "1984-08",
+        "1984-09",
+        "1984-10",
+        "1984-11",
+        "1984-12",
+        "1985-01",
+        "1985-02",
+        "1985-03",
+        "1985-04",
+        "1985-05",
+        "1985-06",
+        "1985-07",
+        "1985-08",
+        "1985-09",
+        "1985-10",
+        "1985-11",
+        "1985-12",
+        "1986-01",
+        "1986-02",
+        "1986-03",
+        "1986-04",
+        "1986-05",
+        "1986-06",
+        "1986-07",
+        "1986-08",
+        "1986-09",
+        "1986-10",
+        "1986-11",
+        "1986-12",
+        "1987-01",
+        "1987-02",
+        "1987-03",
+        "1987-04",
+        "1987-05",
+        "1987-06",
+        "1987-07",
+        "1987-08",
+        "1987-09",
+        "1987-10",
+        "1987-11",
+        "1987-12",
+        "1988-01",
+        "1988-02",
+        "1988-03",
+        "1988-04",
+        "1988-05",
+        "1988-06",
+        "1988-07",
+        "1988-08",
+        "1988-09",
+        "1988-10",
+        "1988-11",
+        "1988-12",
+        "1989-01",
+        "1989-02",
+        "1989-03",
+        "1989-04",
+        "1989-05",
+        "1989-06",
+        "1989-07",
+        "1989-08",
+        "1989-09",
+        "1989-10",
+        "1989-11",
+        "1989-12",
+        "1990-01",
+        "1990-02",
+        "1990-03",
+        "1990-04",
+        "1990-05",
+        "1990-06",
+        "1990-07",
+        "1990-08",
+        "1990-09",
+        "1990-10",
+        "1990-11",
+        "1990-12",
+        "1991-01",
+        "1991-02",
+        "1991-03",
+        "2016-06",
+        "2016-07",
+        "2016-08"
+      ],
+      "variables": [
+        {
+          "code": "days_frost",
+          "unit": "days",
+          "label": "Frost days",
+          "color": "#7fd4ff"
+        },
+        {
+          "code": "days_tmax_ge_35",
+          "unit": "days",
+          "label": "Days ≥ 35°C",
+          "color": "#ff8a5c"
+        },
+        {
+          "code": "days_tmax_ge_40",
+          "unit": "days",
+          "label": "Days ≥ 40°C",
+          "color": "#ff3d3d"
+        },
+        {
+          "code": "stations_max_mean",
+          "unit": "count",
+          "label": "Stations informing max",
+          "color": "#8aa0ad"
+        },
+        {
+          "code": "stations_min_mean",
+          "unit": "count",
+          "label": "Stations informing min",
+          "color": "#8aa0ad"
+        },
+        {
+          "code": "tmax_absolute",
+          "unit": "degC",
+          "label": "Max temperature (absolute)",
+          "color": "#ff3d3d"
+        },
+        {
+          "code": "tmax_mean",
+          "unit": "degC",
+          "label": "Max temperature (mean)",
+          "color": "#ff6b4a"
+        },
+        {
+          "code": "tmin_absolute",
+          "unit": "degC",
+          "label": "Min temperature (absolute)",
+          "color": "#3aa0ff"
+        },
+        {
+          "code": "tmin_mean",
+          "unit": "degC",
+          "label": "Min temperature (mean)",
+          "color": "#7fa8ff"
+        }
+      ],
+      "what": "Gauge-based half-degree temperature, 1979–present, with the station count that informed each cell.",
+      "series": "/data/basin-layers/cpc-basin-monthly.json",
+      "coverage": {
+        "rows": 122850,
+        "basins": 91,
+        "periods": 150
+      }
+    },
+    {
+      "id": "cams-basin-monthly",
+      "label": "Air quality (CAMS)",
+      "domain": "ATMOSPHERE",
+      "kind": "value",
+      "dataset": "uz:ds/cams-nrt",
+      "predicate": "uz:hasBasinStatistic",
+      "basinLevel": 6,
+      "geometry": "/data/review/basinatlas/basinatlas_uz_lev06.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "2026-07",
+        "2026-08"
+      ],
+      "variables": [
+        {
+          "code": "aod_550nm",
+          "unit": "index",
+          "label": "Aerosol optical depth",
+          "color": "#c9a06a"
+        },
+        {
+          "code": "pm2p5",
+          "unit": "ug/m3",
+          "label": "PM2.5",
+          "color": "#b0793f"
+        }
+      ],
+      "what": "Monthly mean of the CAMS +0h analysis: aerosol optical depth and PM2.5, the assimilated estimate of what the atmosphere was, not a forecast.",
+      "series": "/data/basin-layers/cams-basin-monthly.json",
+      "coverage": {
+        "rows": 360,
+        "basins": 90,
+        "periods": 2
+      }
+    },
+    {
+      "id": "ghm-basin-modification",
+      "label": "Human modification",
+      "domain": "LAND",
+      "kind": "value",
+      "dataset": "uz:ds/csp-ghm",
+      "predicate": "uz:hasBasinStatistic",
+      "basinLevel": 12,
+      "geometry": "/data/review/basinatlas/basinatlas_uz_lev12.geojson",
+      "periodGrain": "year",
+      "periods": [
+        "2016"
+      ],
+      "variables": [
+        {
+          "code": "ghm_mean",
+          "unit": "index_0_1",
+          "label": "Human modification (mean)",
+          "color": "#e0507a"
+        },
+        {
+          "code": "share_high",
+          "unit": "fraction",
+          "label": "Share: high modification",
+          "color": "#e0507a"
+        },
+        {
+          "code": "share_low",
+          "unit": "fraction",
+          "label": "Share: low modification",
+          "color": "#4cc9f0"
+        },
+        {
+          "code": "share_moderate",
+          "unit": "fraction",
+          "label": "Share: moderate modification",
+          "color": "#f4a340"
+        },
+        {
+          "code": "share_very_high",
+          "unit": "fraction",
+          "label": "Share Very High",
+          "color": "#ff6b4a"
+        }
+      ],
+      "what": "Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy — as a 0 to 1 index at 1 km. One image, no timestamp: the single period is the whole record.",
+      "series": "/data/basin-layers/ghm-basin-modification.json",
+      "coverage": {
+        "rows": 19315,
+        "basins": 3863,
+        "periods": 1
+      }
+    }
+  ]
+}

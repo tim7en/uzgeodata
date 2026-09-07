@@ -1,0 +1,66 @@
+from __future__ import annotations
+
+import csv
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "PIPELINES"))
+import build_basin_layers_web as web  # noqa: E402
+
+
+def write_csv(path: Path, header: list[str], rows: list[list]) -> None:
+    with path.open("w", encoding="utf8", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(header)
+        writer.writerows(rows)
+
+
+def test_monthly_layer_pivots_by_basin_period_variable(tmp_path):
+    source = tmp_path / "cfsv2.csv"
+    write_csv(source, ["basin_id", "year", "month", "variable", "value", "unit"], [
+        [1, 2024, 1, "precipitation", 0.5, "mm/day"],
+        [1, 2024, 2, "precipitation", 1.5, "mm/day"],
+        [2, 2024, 1, "precipitation", 2.0, "mm/day"],
+    ])
+    layer = {**web.LAYERS[1], "source": source}  # cfsv2-basin-monthly: plain value kind
+    entry, series = web.build_layer(layer)
+
+    assert series["basins"]["1"]["2024-01"]["precipitation"] == {"v": 0.5}
+    assert series["basins"]["1"]["2024-02"]["precipitation"] == {"v": 1.5}
+    assert entry["coverage"] == {"rows": 3, "basins": 2, "periods": 2}
+    assert entry["periods"] == ["2024-01", "2024-02"]
+    assert {v["code"] for v in entry["variables"]} == {"precipitation"}
+
+
+def test_anomaly_layer_carries_z_score_and_classification(tmp_path):
+    source = tmp_path / "anomaly.csv"
+    write_csv(source, ["basin_id", "year", "month", "variable", "value", "unit",
+                       "z_score", "classification"], [
+        [1, 2024, 1, "precipitation", 0.0, "mm/day", -1.5, "dry"],
+    ])
+    layer = {**web.LAYERS[0], "source": source}  # cfsv2-basin-anomaly: anomaly kind
+    entry, series = web.build_layer(layer)
+    assert series["basins"]["1"]["2024-01"]["precipitation"] == {"v": 0.0, "z": -1.5, "c": "dry"}
+    assert entry["kind"] == "anomaly"
+
+
+def test_pentad_layer_keys_periods_with_a_pentad_suffix(tmp_path):
+    source = tmp_path / "chirps.csv"
+    write_csv(source, ["basin_id", "year", "month", "pentad", "variable", "value", "unit"], [
+        [1, 2024, 6, 3, "precipitation_total", 4.2, "mm"],
+    ])
+    layer = {**web.LAYERS[2], "source": source}  # chirps-v3-basin-pentad
+    entry, _ = web.build_layer(layer)
+    assert entry["periods"] == ["2024-06-p3"]
+
+
+def test_ghm_layer_keeps_only_the_basin_frame(tmp_path):
+    source = tmp_path / "ghm.csv"
+    write_csv(source, ["frame", "unit_id", "unit_kind", "epoch", "variable", "value", "unit"], [
+        ["basin", 1, "Basin", 2016, "ghm_mean", 0.2, "index_0_1"],
+        ["district", 1, "District", 2016, "ghm_mean", 0.6, "index_0_1"],
+    ])
+    layer = {**web.LAYERS[-1], "source": source}  # ghm-basin-modification: filtered to frame == basin
+    entry, series = web.build_layer(layer)
+    assert entry["coverage"]["rows"] == 1
+    assert series["basins"]["1"]["2016"]["ghm_mean"] == {"v": 0.2}

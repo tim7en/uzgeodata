@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import L from 'leaflet';
 import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import {
-  ArrowDown, ArrowRight, Building2, Check, Database, Droplets, FileArchive,
+  ArrowDown, ArrowRight, Building2, Check, CloudSun, Database, Droplets, FileArchive,
   File, FlaskConical, Grid3X3, HardDrive, Layers3, Leaf, LoaderCircle,
   LockKeyhole, LogOut, Menu, Minus, Mountain, Network, Orbit, Pause, Play, Plus,
   RotateCcw, Search, ShieldAlert, Trash2, Trees, UploadCloud, Wheat, X
@@ -291,6 +291,15 @@ function Explorers() {
       copy: 'Nine annual 10 m land-cover mosaics become a living BasinATLAS view: animate time, compare class share and annual change, inspect spatial distributions, and open the exact ontology-shaped JSON behind any basin.',
       stats: [['2017—25', 'Annual series'], ['3,981', 'Reference basins'],
               ['10 m', 'Source resolution']],
+    },
+    {
+      href: '/climate.html',
+      icon: CloudSun,
+      kicker: 'Climate & land observatory',
+      title: 'See every basin signal at once.',
+      copy: 'CFSv2 climate anomaly, CHIRPS rainfall, CHIRTS and CPC temperature, CAMS air quality and GHM human modification — seven already-measured basin tables, one shared choropleth, one time slider.',
+      stats: [['7', 'Basin layers'], ['515k+', 'Measured rows'],
+              ['3', 'Basin levels']],
     },
     {
       href: '/hydrography.html',
