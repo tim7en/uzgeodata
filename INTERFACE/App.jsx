@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import L from 'leaflet';
 import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import {
-  ArrowDown, ArrowRight, Building2, Check, CloudSun, Database, Droplets, FileArchive,
+  Activity, ArrowDown, ArrowRight, Building2, Check, CloudSun, Database, Droplets, FileArchive,
   File, FlaskConical, Grid3X3, HardDrive, Layers3, Leaf, LoaderCircle,
   LockKeyhole, LogOut, Menu, Minus, Mountain, Network, Orbit, Pause, Play, Plus,
   RotateCcw, Search, ShieldAlert, Trash2, Trees, UploadCloud, Wheat, X
@@ -33,6 +33,16 @@ let graphRequest = null;
 const loadGraph = () => {
   if (!graphRequest) graphRequest = fetch('/data/ontology-graph.json').then(r => r.json());
   return graphRequest;
+};
+
+let signalRequest = null;
+const loadSignals = () => {
+  if (!signalRequest) signalRequest = Promise.all([
+    fetch('/data/data-currency.json').then(r => r.ok ? r.json() : Promise.reject(new Error('currency unavailable'))),
+    fetch('/data/basin-layers/index.json').then(r => r.ok ? r.json() : Promise.reject(new Error('basin signals unavailable'))),
+    fetch('/data/landcover/index.json').then(r => r.ok ? r.json() : Promise.reject(new Error('land-cover signal unavailable'))),
+  ]).then(([currency, basinLayers, landcover]) => ({currency, basinLayers, landcover}));
+  return signalRequest;
 };
 
 function useGraph() {
@@ -278,6 +288,130 @@ function OntologyExplorer({ onRequest }) {
   </section>
 }
 
+const geographyLayout = {
+  basin: {x:520,y:465,label:'BASIN FRAME',sub:'WATER FOLLOWS TERRAIN'},
+  administrative: {x:680,y:465,label:'ADMIN FRAME',sub:'DATA FOLLOWS JURISDICTION'},
+};
+const qualityScale = {CURRENT:97,ARCHIVAL:92,STATIC:90,INCOMPLETE:63,BEHIND:46,MISSING:24};
+const qualityRank = {MISSING:0,BEHIND:1,INCOMPLETE:2,CURRENT:3,ARCHIVAL:4,STATIC:5};
+const qualityColor = score => score >= 90 ? '#70e1a1' : score >= 75 ? '#c9d46b' : score >= 55 ? '#ffad5c' : '#ff645f';
+const qualityBand = score => score >= 90 ? 'verified' : score >= 75 ? 'good' : score >= 55 ? 'watch' : 'gap';
+const shortPredicate = value => ({
+  'uz:coversPlace':'covers boundary', 'uz:coversBasin':'covers basin',
+  'uz:hasBasinStatistic':'basin values', 'uz:hasBasinAnomaly':'basin anomaly',
+  'uz:hasAdminStatistic':'administrative values',
+})[value] || value?.replace('uz:','').replace(/([A-Z])/g,' $1').toLowerCase();
+const formatCompact = value => new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(value);
+
+function TemporalSignal({ preview, temporal }) {
+  const points=preview?.points||[];
+  if(!points.length) return <div className="temporal-empty"><Orbit size={17}/><div><strong>{temporal?`${temporal.start} — ${temporal.end}`:'No time series declared'}</strong><span>{temporal?'Temporal coverage only; no comparable values are published.':'This is a static or not-yet-profiled dataset.'}</span></div></div>;
+  const width=280,height=72,pad=7;
+  const values=points.map(point=>Number(point.value)).filter(Number.isFinite);
+  const min=Math.min(...values),max=Math.max(...values),span=max-min||1;
+  const coordinates=points.map((point,index)=>({...point,x:pad+(index/Math.max(points.length-1,1))*(width-pad*2),y:height-pad-((Number(point.value)-min)/span)*(height-pad*2)}));
+  const path=coordinates.map((point,index)=>`${index?'L':'M'}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ');
+  const latest=coordinates.at(-1);
+  return <div className="temporal-signal">
+    <div className="signal-heading"><div><span>OBSERVED VALUES OVER TIME</span><strong>{preview.label}</strong></div><b>{latest.value.toLocaleString('en-US',{maximumFractionDigits:2})}<small>{preview.unit||''}</small></b></div>
+    <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={`${preview.label} from ${coordinates[0].period} to ${latest.period}`}>
+      <defs><linearGradient id="signal-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ff6a2d" stopOpacity=".34"/><stop offset="1" stopColor="#ff6a2d" stopOpacity="0"/></linearGradient></defs>
+      <path className="signal-area" d={`${path} L${latest.x},${height} L${coordinates[0].x},${height} Z`}/><path className="signal-line" d={path}/><circle className="signal-last" cx={latest.x} cy={latest.y} r="3"/>
+    </svg>
+    <div className="signal-axis"><span>{coordinates[0].period}</span><em>{preview.aggregation}</em><span>{latest.period}</span></div>
+  </div>;
+}
+
+function LivingOntologyDetail({ selected, labelOf, onRequest }) {
+  if(!selected)return <aside className="ontology-detail"><div className="entity-empty"><Network/><p>Select a node to inspect its relationships.</p></div></aside>;
+  const grouped=(selected.geographies||[]).reduce((all,relation)=>({...all,[relation.frame]:[...(all[relation.frame]||[]),relation]}),{});
+  const period=selected.preview?`${selected.preview.points[0].period} — ${selected.preview.points.at(-1).period}`:selected.temporal?`${selected.temporal.start} — ${selected.temporal.end}`:'Static / unknown';
+  return <aside className="ontology-detail"><div className="entity-content" key={selected.id}>
+    <div className="entity-type"><span>DATASET ENTITY</span><small>{selected.atlasNumber?`ATLAS ${selected.atlasNumber}`:'CONNECTED SOURCE'}</small></div>
+    <div className="entity-summary"><div className="entity-icon"><Network size={26}/></div><div className={`quality-score ${qualityBand(selected.qualityScore)}`}><strong>{selected.qualityScore}</strong><span>QUALITY<br/>SIGNAL</span></div></div>
+    <h3>{selected.title}</h3>{selected.sourceTitle&&<p className="source-name">{selected.sourceTitle}</p>}
+    <div className="quality-strip"><span style={{width:`${selected.qualityScore}%`,background:qualityColor(selected.qualityScore)}}/><i style={{left:`${selected.qualityScore}%`}}/></div>
+    <div className="quality-caption"><b>{selected.qualityStatus}</b><span>{selected.qualityDetail||`${selected.metadataScore}% ontology completeness`}</span></div>
+    <TemporalSignal preview={selected.preview} temporal={selected.temporal}/>
+    <div className="relation-chain"><span>UZGEODATA</span><b>→</b><span>{selected.category}</span><b>→</b><strong>{selected.concept?labelOf(selected.concept):'Semantic review pending'}</strong></div>
+    <div className="geography-relations">{Object.entries(grouped).map(([frame,relations])=><div key={frame} className={frame}><div><i>{frame==='basin'?<Droplets size={14}/>:<Building2 size={14}/>}</i><span><strong>{frame==='basin'?'Basin-specific':'Administrative-specific'}</strong><small>{frame==='basin'?'Hydrological boundary':'Jurisdictional boundary'}</small></span></div>{relations.slice(0,3).map((relation,index)=><p key={`${relation.predicate}-${index}`}><b>{shortPredicate(relation.predicate)}</b><span>{labelOf(relation.detail)}{relation.links?` · ${formatCompact(relation.links)} links`:''}</span></p>)}</div>)}</div>
+    <div className="entity-properties"><div><span>DOMAIN</span><strong>{selected.category}</strong></div><div><span>DISTRIBUTIONS</span><strong>{selected.distributions}</strong></div><div><span>TIME COVERAGE</span><strong>{period}</strong></div><div><span>KNOWN CAVEATS</span><strong>{selected.flags?.length||0}</strong></div></div>
+    {selected.flags?.length>0&&<div className="quality-flags">{selected.flags.slice(0,3).map(flag=><span key={flag}><ShieldAlert size={12}/>{prettyFlag(flag)}</span>)}</div>}
+    <div className="semantic-tags"><span>is a · Dataset</span><span>belongs to · {selected.category}</span>{selected.concept&&<span>analysis · {labelOf(selected.concept)}</span>}</div>
+    {selected.preview?<a className="button" href={selected.preview.href}>Open live observatory <ArrowRight size={16}/></a>:<button className="button" onClick={()=>onRequest(selected.title)}>Request this dataset <ArrowRight size={16}/></button>}
+  </div></aside>;
+}
+
+function LivingOntologyExplorer({ onRequest }) {
+  const [model,setModel]=useState(null);
+  const [signals,setSignals]=useState(null);
+  const [selectedId,setSelectedId]=useState(null);
+  const [hoveredId,setHoveredId]=useState(null);
+  const [query,setQuery]=useState('');
+  const [activeDomain,setActiveDomain]=useState('All domains');
+  const [activeFrame,setActiveFrame]=useState('all');
+  const [zoom,setZoom]=useState(1);
+  const [touring,setTouring]=useState(true);
+  const [reducedMotion,setReducedMotion]=useState(false);
+  useEffect(()=>{loadGraph().then(data=>{setModel(data);setSelectedId(data.datasets.find(item=>item.id==='uz:ds/cfsv2-noaa')?.id||data.datasets[0]?.id)}).catch(()=>{})},[]);
+  useEffect(()=>{loadSignals().then(setSignals).catch(()=>setSignals({currency:{tables:[]},basinLayers:{layers:[]},landcover:null}))},[]);
+  useEffect(()=>{const media=window.matchMedia('(prefers-reduced-motion: reduce)');const update=()=>{setReducedMotion(media.matches);if(media.matches)setTouring(false)};update();media.addEventListener('change',update);return()=>media.removeEventListener('change',update)},[]);
+  const labelOf=useMemo(()=>{const index={};if(model)['themes','analysis','properties','usecases','places'].forEach(scheme=>(model.vocabularies[scheme]||[]).forEach(concept=>{index[concept.id]=concept.prefLabel}));return id=>index[id]||id},[model]);
+  const ontologyDomains=useMemo(()=>(model?.vocabularies.themes||[]).filter(theme=>domainLayout[theme.id]).map(theme=>({id:theme.id,name:theme.prefLabel,color:theme.color,...domainLayout[theme.id]})),[model]);
+  const signalIndex=useMemo(()=>{
+    const index={};
+    (signals?.basinLayers?.layers||[]).forEach(layer=>{if(layer.preview?.points?.length)(index[layer.dataset]||=[]).push({...layer.preview,layerId:layer.id,href:'/climate.html'})});
+    const land=signals?.landcover;
+    if(land?.ontology?.subject&&land.totalsKm2){const built=(land.classes||[]).find(item=>item.code===7);const points=Object.entries(land.totalsKm2).map(([period,classes])=>({period,value:Number(classes['7']||classes[7]||0)}));(index[land.ontology.subject]||=[]).push({label:`${built?.name||'Built area'} · national total`,unit:'km²',aggregation:'sum across published basins',points,layerId:'landcover-basin-year',href:'/landcover.html'})}
+    return index;
+  },[signals]);
+  const currencyIndex=useMemo(()=>Object.fromEntries((signals?.currency?.tables||[]).map(row=>[row.id,row])),[signals]);
+  const graph=useMemo(()=>{
+    const nodes=[];
+    ontologyDomains.forEach(domain=>{
+      const items=(model?.datasets||[]).filter(item=>item.theme===domain.id);
+      items.forEach((item,index)=>{
+        const ring=Math.floor(index/10),position=index%10,ringCount=Math.min(10,items.length-ring*10),radius=54+ring*19,angle=(position/Math.max(ringCount,1))*Math.PI*2+(ring%2)*.27;
+        const tableIds=(model?.relationshipTables||[]).filter(table=>table.dataset===item.id).map(table=>table.id);
+        if(item.catalogId){if((item.geographies||[]).some(relation=>relation.predicate==='uz:coversBasin'))tableIds.push('atlas-basin-coverage');if((item.geographies||[]).some(relation=>relation.predicate==='uz:hasBasinStatistic'))tableIds.push('atlas-basin-statistics')}
+        const currency=[...new Set(tableIds)].map(id=>currencyIndex[id]).filter(Boolean);
+        const worst=currency.slice().sort((a,b)=>(qualityRank[a.status]??9)-(qualityRank[b.status]??9))[0];
+        const checks=[item.theme,item.analysis,item.observes?.length,item.places?.length,item.distributions],metadata=Math.round(checks.filter(Boolean).length/checks.length*100);
+        let score=worst?qualityScale[worst.status]:55+metadata*.4;
+        const completeness=currency.filter(row=>row.expectedUnits&&row.units).map(row=>row.units/row.expectedUnits);if(completeness.length)score=Math.min(score,60+Math.min(...completeness)*40);
+        score=Math.max(18,Math.min(99,Math.round(score-Math.min((item.flags||[]).length*6,24))));
+        const previews=signalIndex[item.id]||[],preview=previews.slice().sort((a,b)=>b.points.length-a.points.length)[0]||null;
+        nodes.push({...item,title:item.label,category:domain.name,x:domain.x+Math.cos(angle)*radius,y:domain.y+Math.sin(angle)*radius,domain,concept:item.analysis,frameIds:new Set((item.geographies||[]).map(relation=>relation.frame)),qualityScore:score,qualityStatus:worst?.status||(item.flags?.length?'REVIEW':'CATALOGUED'),qualityDetail:worst?.gap||worst?.note||null,metadataScore:metadata,preview});
+      });
+    });
+    return nodes;
+  },[model,ontologyDomains,currencyIndex,signalIndex]);
+  const queryLower=query.trim().toLowerCase();
+  const searchText=node=>[node.title,node.sourceTitle,node.category,labelOf(node.concept),...(node.observes||[]).map(item=>labelOf(item.concept)),...(node.useCases||[]).map(labelOf),...(node.geographies||[]).map(relation=>`${relation.frame} ${relation.predicate}`)].join(' ').toLowerCase();
+  const visibleNodes=useMemo(()=>graph.filter(node=>(activeDomain==='All domains'||node.category===activeDomain)&&(activeFrame==='all'||node.frameIds.has(activeFrame))&&(!queryLower||searchText(node).includes(queryLower))),[graph,activeDomain,activeFrame,queryLower,labelOf]);
+  const visibleIds=useMemo(()=>new Set(visibleNodes.map(node=>node.id)),[visibleNodes]);
+  const selected=graph.find(node=>node.id===selectedId),focused=graph.find(node=>node.id===hoveredId)||selected,focusedConcept=focused&&conceptLayout[focused.concept];
+  const frameCounts=useMemo(()=>Object.fromEntries(Object.keys(geographyLayout).map(frame=>[frame,graph.filter(node=>node.frameIds.has(frame)).length])),[graph]);
+  useEffect(()=>{if(!touring||reducedMotion||hoveredId||visibleNodes.length<2)return;const timer=window.setInterval(()=>setSelectedId(current=>{const index=visibleNodes.findIndex(node=>node.id===current);return visibleNodes[(index+1+visibleNodes.length)%visibleNodes.length].id}),3600);return()=>window.clearInterval(timer)},[touring,reducedMotion,hoveredId,visibleNodes]);
+  const selectNode=id=>{setSelectedId(id);setTouring(false)},selectDomain=name=>{setActiveDomain(activeDomain===name?'All domains':name);setTouring(false)},selectFrame=frame=>{setActiveFrame(frame);setTouring(false)};
+  const bridge=model?.geography?.bridge||{};
+  return <section className="ontology living-ontology" id="ontology">
+    <div className="ontology-intro"><div><div className="kicker">04 / Living knowledge graph</div><h2>See the system<br/><span>think.</span></h2></div><p>Each pulse is a real dataset. Branches show its domain, analytical meaning and geographic frame; node health combines measured completeness, currency, metadata and known caveats. The two spatial lenses stay explicit: <strong>basins follow water</strong>, while <strong>administrative boundaries follow governance</strong>.</p></div>
+    <div className="ontology-frame-bar"><div className="frame-explainer"><span>GEOGRAPHIC RELATIONSHIP</span><strong>Choose the boundary that answers the question</strong></div><button className={activeFrame==='basin'?'active':''} aria-pressed={activeFrame==='basin'} onClick={()=>selectFrame(activeFrame==='basin'?'all':'basin')}><i><Droplets size={18}/></i><span><strong>Basin specific</strong><small>{frameCounts.basin||0} datasets · coversBasin / hasBasinStatistic</small></span></button><div className="frame-bridge"><b>{count((bridge.provinceLinks||0)+(bridge.districtLinks||0))}</b><span>measured crosswalks</span></div><button className={activeFrame==='administrative'?'active':''} aria-pressed={activeFrame==='administrative'} onClick={()=>selectFrame(activeFrame==='administrative'?'all':'administrative')}><i><Building2 size={18}/></i><span><strong>Administrative specific</strong><small>{frameCounts.administrative||0} datasets · coversPlace / hasAdminStatistic</small></span></button></div>
+    <div className="ontology-toolbar"><div className="ontology-search"><Search size={17}/><input aria-label="Search ontology" value={query} onChange={event=>{setQuery(event.target.value);setTouring(false)}} placeholder="Find a dataset, domain or concept..."/><span>{visibleNodes.length} objects</span></div><div className="ontology-filters"><button aria-pressed={activeDomain==='All domains'} className={activeDomain==='All domains'?'active':''} onClick={()=>{setActiveDomain('All domains');setTouring(false)}}>All domains</button>{ontologyDomains.map(domain=><button aria-pressed={activeDomain===domain.name} key={domain.name} className={activeDomain===domain.name?'active':''} onClick={()=>selectDomain(domain.name)}><i style={{background:domain.color}}/>{domain.name}</button>)}</div></div>
+    <div className="ontology-workspace"><div className={`ontology-canvas ${touring?'is-touring':''}`}><div className="ontology-controls"><button className={touring?'tour-active':''} onClick={()=>setTouring(value=>!value)} aria-label={touring?'Pause guided tour':'Play guided tour'} aria-pressed={touring}>{touring?<Pause/>:<Play/>}</button><button onClick={()=>setZoom(value=>Math.min(1.35,value+.1))} aria-label="Zoom in"><Plus/></button><button onClick={()=>setZoom(value=>Math.max(.72,value-.1))} aria-label="Zoom out"><Minus/></button><button onClick={()=>setZoom(1)} aria-label="Reset zoom"><RotateCcw/></button></div><div className="ontology-live"><i/><span>{touring?'LIVE GRAPH TOUR':'INTERACTIVE'}</span><b>{focused?.title||'CATALOG READY'}</b></div>
+      <svg viewBox="0 0 1200 740" role="img" aria-label="Living knowledge graph of Uzbekistan environmental datasets"><g style={{transform:`translate(600px, 370px) scale(${zoom}) translate(-600px, -370px)`,transformOrigin:'0 0'}}>
+        <g className="ontology-core-links">{ontologyDomains.map(domain=><line key={domain.name} x1="600" y1="360" x2={domain.x} y2={domain.y}/>)}</g><g className="geography-core-links">{Object.values(geographyLayout).map(frame=><line key={frame.label} x1="600" y1="398" x2={frame.x} y2={frame.y-22}/>)}</g>
+        <g className="ontology-data-links">{graph.map((node,index)=><line key={node.id} x1={node.domain.x} y1={node.domain.y} x2={node.x} y2={node.y} style={{'--link-delay':`${(index%16)*90}ms`}} className={`${visibleIds.has(node.id)?'visible':'dim'} ${focused?.id===node.id?'focused-link':''} ${focused&&focused.category!==node.category?'context-dim':''}`}/>)}</g>
+        <g className="geography-focus-links">{focused&&[...focused.frameIds].filter(frame=>geographyLayout[frame]).map(frame=><line key={frame} x1={focused.x} y1={focused.y} x2={geographyLayout[frame].x} y2={geographyLayout[frame].y} className={frame}/>)}</g>{focused&&focusedConcept&&<line className="concept-link" x1={focused.x} y1={focused.y} x2={focusedConcept.x} y2={focusedConcept.y}/>}<g className="concept-nodes">{Object.entries(conceptLayout).map(([name,position])=><g key={name} transform={`translate(${position.x} ${position.y})`} className={focused?.concept===name?'related':''}><rect x="-53" y="-13" width="106" height="26"/><text>{labelOf(name).toUpperCase()}</text></g>)}</g>
+        <g className="root-node" transform="translate(600 360)"><circle className="root-halo" r="63"/><circle className="root-shell" r="49"/><circle className="root-core" r="38"/><Network size={25} x="-12.5" y="-23"/><text y="16">UZGEODATA</text><text className="root-subtitle" y="29">KNOWLEDGE CORE</text></g>
+        <g className="geography-nodes">{Object.entries(geographyLayout).map(([id,frame])=><g key={id} transform={`translate(${frame.x} ${frame.y})`} className={`${activeFrame===id?'active':''} ${focused?.frameIds.has(id)?'related':''}`} role="button" tabIndex="0" onClick={()=>selectFrame(activeFrame===id?'all':id)} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFrame(activeFrame===id?'all':id)}}}><rect x="-61" y="-23" width="122" height="46" rx="23"/><circle cx="-42" cy="0" r="12"/>{id==='basin'?<Droplets size={12} x="-48" y="-6"/>:<Building2 size={12} x="-48" y="-6"/>}<text x="-24" y="-3">{frame.label}</text><text className="geography-sub" x="-24" y="9">{frame.sub}</text></g>)}</g>
+        <g className="domain-nodes">{ontologyDomains.map((domain,index)=>{const total=graph.filter(node=>node.category===domain.name).length,related=focused?.category===domain.name;return <g key={domain.name} transform={`translate(${domain.x} ${domain.y})`} className={`${activeDomain===domain.name?'selected-domain':''} ${related?'related-domain':''}`} onClick={()=>selectDomain(domain.name)}><circle className="domain-halo" r="42" style={{stroke:domain.color,'--domain-delay':`${index*.35}s`}}/><circle className="domain-shell" r="31" style={{stroke:domain.color}}/><circle className="domain-core" r="23"/><text y="-2">{domain.name.toUpperCase()}</text><text className="domain-count" y="12">{total} DATASETS</text></g>})}</g>
+        <g className="dataset-nodes">{graph.map((node,index)=>{const focusedNode=focused?.id===node.id,color=qualityColor(node.qualityScore);return <g key={node.id} transform={`translate(${node.x} ${node.y})`} style={{'--node-delay':`${Math.min(index*12,900)}ms`,'--quality-color':color,'--quality-speed':`${Math.max(1.8,5-node.qualityScore/32)}s`}} className={`${visibleIds.has(node.id)?'visible':'dim'} ${selectedId===node.id?'selected':''} ${focusedNode?'focused-node':''} ${focused&&focused.category===node.category?'related-node':''} quality-${qualityBand(node.qualityScore)} ${node.preview?'signal-node':''}`} onMouseEnter={()=>setHoveredId(node.id)} onMouseLeave={()=>setHoveredId(null)} onClick={()=>selectNode(node.id)}>{(focusedNode||node.preview)&&<circle className="quality-orbit" r={node.preview?9:8}/>} {focusedNode&&<circle className="node-focus-ring" r="14"/>}<circle className="dataset-dot" r={selectedId===node.id?7:node.preview?5.2:4} style={{fill:node.domain.color}}/><title>{node.title} · quality {node.qualityScore}%</title></g>})}</g>
+      </g></svg><div className="ontology-legend"><span><i className="legend-root"/>Knowledge core</span><span><i className="legend-domain"/>Domain</span><span><i className="legend-data"/>Dataset</span><span><i className="legend-signal"/>Time series</span><span className="legend-health"><b style={{background:'#70e1a1'}}/>verified <b style={{background:'#ffad5c'}}/>watch <b style={{background:'#ff645f'}}/>gap</span></div></div><LivingOntologyDetail selected={selected} labelOf={labelOf} onRequest={onRequest}/></div>
+  </section>;
+}
+
 function Explorers() {
   const graph = useGraph();
   const counts = graph?.counts || {};
@@ -501,7 +635,7 @@ function AdminPanel() {
 function PublicPortal() {
   const [request, setRequest] = useState(null);
   const openRequest = (dataset = '') => setRequest(dataset || 'General data request');
-  return <><Header onAccess={() => openRequest()}/><main><Hero onExplore={() => document.getElementById('catalog').scrollIntoView({behavior:'smooth'})} onAccess={() => openRequest()}/><Catalog onRequest={openRequest}/><EnvironmentalMap/><Explorers/><OntologyExplorer onRequest={openRequest}/><Solutions onRequest={openRequest}/><TrustStrip/><Community/><Standards/><CTA onAccess={() => openRequest()}/></main><Footer/>{request !== null && <AccessModal initial={request} onClose={() => setRequest(null)}/>}</>;
+  return <><Header onAccess={() => openRequest()}/><main><Hero onExplore={() => document.getElementById('catalog').scrollIntoView({behavior:'smooth'})} onAccess={() => openRequest()}/><Catalog onRequest={openRequest}/><EnvironmentalMap/><Explorers/><LivingOntologyExplorer onRequest={openRequest}/><Solutions onRequest={openRequest}/><TrustStrip/><Community/><Standards/><CTA onAccess={() => openRequest()}/></main><Footer/>{request !== null && <AccessModal initial={request} onClose={() => setRequest(null)}/>}</>;
 }
 
 export default function App() {

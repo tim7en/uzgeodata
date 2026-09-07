@@ -102,7 +102,13 @@ def atlas_layers(root: Path) -> list[dict]:
             directory = ROLE_DIRECTORIES.get(dist.get("role"))
             if directory is None or not dist.get("storedName"):
                 continue
-            path = root / directory / dist["storedName"]
+            # Public map derivatives use the same `web-vector` role as the
+            # working extraction, but their storedName resolves below
+            # PUBLISHED/data rather than WORKSPACE/derived/web-layers. Treat the
+            # URL as authoritative when present. These five files used to be
+            # reported as missing even though the portal was serving them.
+            path = (root / "PUBLISHED" / dist["url"].lstrip("/")
+                    if dist.get("url") else root / directory / dist["storedName"])
             layers.append({
                 "dataset": dataset["id"],
                 "label": dataset["label"],
@@ -111,8 +117,20 @@ def atlas_layers(root: Path) -> list[dict]:
                 "role": dist["role"],
                 "path": path,
                 "exists": path.exists(),
+                "published": bool(dist.get("url")),
             })
-    return sorted(layers, key=lambda item: item["dataset"])
+
+    # A published map layer is a derivative of the working atlas extraction.
+    # Overlaying both would double-count the same geometry. Prefer all available
+    # working distributions for a dataset, falling back to its public derivative
+    # only when no working geometry is present.
+    selected = []
+    for dataset_id in sorted({layer["dataset"] for layer in layers}):
+        candidates = [layer for layer in layers if layer["dataset"] == dataset_id]
+        working = [layer for layer in candidates if not layer["published"] and layer["exists"]]
+        selected.extend(working or [layer for layer in candidates if layer["published"]]
+                        or candidates)
+    return sorted(selected, key=lambda item: (item["dataset"], item["distribution"]))
 
 
 def load_basins(root: Path, level: int) -> gpd.GeoDataFrame:

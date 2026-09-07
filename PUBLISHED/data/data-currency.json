@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T10:41:25+00:00",
+  "generatedAt": "2026-09-07T17:16:01+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
@@ -34,9 +34,9 @@
   },
   "counts": {
     "INCOMPLETE": 3,
-    "MISSING": 5,
-    "CURRENT": 2,
-    "STATIC": 13
+    "MISSING": 3,
+    "CURRENT": 3,
+    "STATIC": 15
   },
   "tables": [
     {
@@ -58,7 +58,7 @@
       "status": "INCOMPLETE",
       "refresh": "npm run cfsv2:anomaly",
       "note": "Derived. Rebuilds in seconds once observations and climatology are current.",
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:58+00:00"
     },
     {
       "id": "chirps-v3-basin-pentad",
@@ -79,7 +79,7 @@
       "status": "INCOMPLETE",
       "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
-      "lastModified": "2026-09-07T10:35:12+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "chirts-basin-monthly",
@@ -100,43 +100,7 @@
       "status": "INCOMPLETE",
       "refresh": "npm run chirts:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "The upstream record ended at 2016-12. Complete once it reaches that, and never behind.",
-      "lastModified": "2026-09-07T09:55:58+00:00"
-    },
-    {
-      "id": "atlas-basin-coverage",
-      "label": "Environmental atlas layers by level-12 basin",
-      "predicate": "uz:coversBasin",
-      "container": "WORKSPACE/derived/atlas-basin-links.csv",
-      "exists": false,
-      "rows": null,
-      "units": null,
-      "expectedUnits": null,
-      "coverage": null,
-      "cadence": "static",
-      "upstreamLatest": null,
-      "gap": null,
-      "status": "MISSING",
-      "refresh": null,
-      "note": null,
-      "lastModified": null
-    },
-    {
-      "id": "atlas-basin-statistics",
-      "label": "Atlas raster surfaces read per level-12 basin",
-      "predicate": "uz:hasBasinStatistic",
-      "container": "WORKSPACE/derived/basin-zonal-stats.csv",
-      "exists": false,
-      "rows": null,
-      "units": null,
-      "expectedUnits": null,
-      "coverage": null,
-      "cadence": "static",
-      "upstreamLatest": null,
-      "gap": null,
-      "status": "MISSING",
-      "refresh": null,
-      "note": null,
-      "lastModified": null
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "hydrography-lake-basin",
@@ -211,7 +175,7 @@
       "status": "CURRENT",
       "refresh": "npm run cfsv2:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "CFSv2 publishes six-hourly with a short lag; a month is complete once it ends.",
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:06:58+00:00"
     },
     {
       "id": "landcover-admin-year",
@@ -232,7 +196,28 @@
       "status": "CURRENT",
       "refresh": "npm run landcover:stats -- --level admin",
       "note": "The land cover product publishes one mosaic per calendar year.",
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
+    },
+    {
+      "id": "landcover-basin-year",
+      "label": "Land cover area by basin and year",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
+      "exists": true,
+      "rows": 126151,
+      "units": 3981,
+      "expectedUnits": 3981,
+      "coverage": {
+        "from": "2017",
+        "to": "2025"
+      },
+      "cadence": "annual",
+      "upstreamLatest": "2025",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run landcover:stats -- --level basin",
+      "note": "Not yet built; roughly ten hours for level 12.",
+      "lastModified": "2026-09-07T17:07:00+00:00"
     },
     {
       "id": "admin-basin-district",
@@ -250,7 +235,7 @@
       "status": "STATIC",
       "refresh": "npm run hydrography:adminlinks",
       "note": "Boundaries and basins change only when a delivery is replaced.",
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:07:00+00:00"
     },
     {
       "id": "admin-basin-province",
@@ -268,7 +253,43 @@
       "status": "STATIC",
       "refresh": "npm run hydrography:adminlinks",
       "note": "Boundaries and basins change only when a delivery is replaced.",
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:07:00+00:00"
+    },
+    {
+      "id": "atlas-basin-coverage",
+      "label": "Environmental atlas layers by level-12 basin",
+      "predicate": "uz:coversBasin",
+      "container": "WORKSPACE/derived/atlas-basin-links.csv",
+      "exists": true,
+      "rows": 195649,
+      "units": 3981,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": null,
+      "note": null,
+      "lastModified": "2026-08-29T16:01:58+00:00"
+    },
+    {
+      "id": "atlas-basin-statistics",
+      "label": "Atlas raster surfaces read per level-12 basin",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "WORKSPACE/derived/basin-zonal-stats.csv",
+      "exists": true,
+      "rows": 167309,
+      "units": 3981,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": null,
+      "note": null,
+      "lastModified": "2026-08-29T17:21:08+00:00"
     },
     {
       "id": "basinatlas-uz-downstream",
@@ -286,7 +307,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:30+00:00"
+      "lastModified": "2026-08-29T06:19:56+00:00"
     },
     {
       "id": "basinatlas-uz-hierarchy",
@@ -304,7 +325,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:30+00:00"
+      "lastModified": "2026-08-29T06:19:55+00:00"
     },
     {
       "id": "basinatlas-uz-pfaf",
@@ -322,7 +343,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:30+00:00"
+      "lastModified": "2026-08-29T06:19:26+00:00"
     },
     {
       "id": "cams-basin-monthly",
@@ -343,7 +364,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:57+00:00"
     },
     {
       "id": "cfsv2-basin-climatology",
@@ -361,7 +382,7 @@
       "status": "STATIC",
       "refresh": "npm run cfsv2:climatology",
       "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:58+00:00"
     },
     {
       "id": "cpc-basin-monthly",
@@ -382,7 +403,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "ghm-basin-modification",
@@ -400,7 +421,7 @@
       "status": "STATIC",
       "refresh": "npm run ghm:observe",
       "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
-      "lastModified": "2026-09-07T10:00:29+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "ghm-district-modification",
@@ -418,7 +439,7 @@
       "status": "STATIC",
       "refresh": "npm run ghm:observe",
       "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
-      "lastModified": "2026-09-07T10:00:29+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-downstream",
@@ -436,7 +457,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:55+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-hierarchy",
@@ -454,7 +475,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:55+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-pfaf",
@@ -472,7 +493,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:55+00:00"
     }
   ]
 }

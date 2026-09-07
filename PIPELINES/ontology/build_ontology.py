@@ -347,19 +347,28 @@ class GraphBuilder:
         self.earth_engine_sources = read_json(
             root / "ONTOLOGY" / "vocab" / "earth-engine-sources.json", {"sources": []}
         )
+        # Keep the spatial manifests as well as their counts. The portal uses
+        # them to distinguish a dataset measured on a hydrological frame from
+        # one whose stated extent follows an administrative boundary. Those are
+        # different relationships even when they ultimately describe the same
+        # part of Uzbekistan.
+        self.atlas_basin_links = read_json(
+            root / "ONTOLOGY" / "instances" / "atlas-basin-links.json", {}
+        ) or {}
+        self.basin_zonal_stats = read_json(
+            root / "ONTOLOGY" / "instances" / "basin-zonal-stats.json", {}
+        ) or {}
+        self.admin_basin_links = read_json(
+            root / "ONTOLOGY" / "instances" / "admin-basin-links.json", {}
+        ) or {}
+
         # Row counts a producing build already measured, keyed by the name a
         # table declares in rowCountFrom.manifest.
         self.relationship_counts = {
             "hydrography": (self.hydrography or {}).get("counts", {}),
-            "atlasBasinLinks": (read_json(
-                root / "ONTOLOGY" / "instances" / "atlas-basin-links.json", {}
-            ) or {}).get("counts", {}),
-            "basinZonalStats": (read_json(
-                root / "ONTOLOGY" / "instances" / "basin-zonal-stats.json", {}
-            ) or {}).get("counts", {}),
-            "adminBasinLinks": (read_json(
-                root / "ONTOLOGY" / "instances" / "admin-basin-links.json", {}
-            ) or {}).get("counts", {}),
+            "atlasBasinLinks": self.atlas_basin_links.get("counts", {}),
+            "basinZonalStats": self.basin_zonal_stats.get("counts", {}),
+            "adminBasinLinks": self.admin_basin_links.get("counts", {}),
         }
 
     # ------------------------------------------------------------------ build
@@ -1657,6 +1666,103 @@ class GraphBuilder:
         for assertion in published:
             by_subject.setdefault(assertion["subject"], []).append(assertion)
 
+        def relationship_frame(table: dict) -> str:
+            """Name the geography a relationship is keyed to.
+
+            A Basin -> AdminArea overlay is the bridge between frames, not an
+            administrative statistic and not a basin statistic. Keeping that
+            third state prevents the UI from pretending the two geometries are
+            interchangeable.
+            """
+            if table["subjectType"] == "Basin" and table["objectType"] == "AdminArea":
+                return "bridge"
+            if table["objectType"] == "AdminArea":
+                return "administrative"
+            if table["objectType"] == "Basin" or table["subjectType"] == "Basin":
+                return "basin"
+            return "network"
+
+        relationship_tables = []
+        for table in self.relationship_tables.get("tables", []):
+            relationship_tables.append({
+                "id": table["id"],
+                "dataset": f"uz:ds/{table['dataset']}",
+                "label": table["label"],
+                "predicate": table["predicate"],
+                "subjectType": table["subjectType"],
+                "objectType": table["objectType"],
+                "frame": relationship_frame(table),
+                "rowCount": self.count_relationship_rows(table, self.relationship_counts),
+                "measureColumn": table.get("measureColumn"),
+                "dimensions": [d["column"] for d in table.get("dimensionColumns", [])],
+            })
+
+        geographies: dict[str, list[dict]] = {}
+
+        def add_geography(dataset: str, frame: str, predicate: str, mode: str,
+                          detail: str, links: int | None = None) -> None:
+            relation = {
+                "frame": frame,
+                "predicate": predicate,
+                "mode": mode,
+                "detail": detail,
+            }
+            if links is not None:
+                relation["links"] = int(links)
+            current = geographies.setdefault(dataset, [])
+            key = (frame, predicate, detail)
+            if not any((r["frame"], r["predicate"], r["detail"]) == key for r in current):
+                current.append(relation)
+
+        # Coarse place coverage is the administrative/jurisdictional frame. A
+        # basin named in the place vocabulary remains hydrological. Fine-grained
+        # measured coverage is added from the two spatial build manifests below.
+        basin_places = {
+            "uz:place/amu-darya-basin", "uz:place/syr-darya-basin",
+            "uz:place/aral-sea-basin",
+        }
+        for dataset, facts in by_subject.items():
+            for fact in facts:
+                if fact["predicate"] != "uz:coversPlace":
+                    continue
+                place = fact["object"]
+                add_geography(
+                    dataset,
+                    "basin" if place in basin_places else "administrative",
+                    "uz:coversPlace",
+                    "declared" if fact["assertedBy"] != AGENT_PIPELINE else "measured",
+                    place,
+                )
+
+        for layer in self.atlas_basin_links.get("perLayer", []):
+            if layer.get("dataset") and layer.get("rows", 0):
+                add_geography(
+                    layer["dataset"], "basin", "uz:coversBasin", "measured",
+                    "BasinATLAS level 12", layer["rows"],
+                )
+        for package in self.basin_zonal_stats.get("perPackage", []):
+            if package.get("dataset") and package.get("status") == "ok":
+                add_geography(
+                    package["dataset"], "basin", "uz:hasBasinStatistic", "measured",
+                    "BasinATLAS level 12", package.get("basins"),
+                )
+
+        # Fixed-subject measurement tables are directly attributable to one
+        # dataset. Subject-column tables (such as atlas coverage) are attributed
+        # through their manifest, above, because their rows name many datasets.
+        tables_by_id = {table["id"]: table for table in self.relationship_tables.get("tables", [])}
+        for relation in relationship_tables:
+            table = tables_by_id[relation["id"]]
+            if not table.get("subjectFixed", "").startswith("uz:ds/"):
+                continue
+            frame = relation["frame"]
+            if frame not in ("basin", "administrative"):
+                continue
+            add_geography(
+                table["subjectFixed"], frame, table["predicate"], "measured",
+                table["label"], relation.get("rowCount"),
+            )
+
         nodes = []
         for entity in self.entities.values():
             if entity["type"] != "Dataset":
@@ -1688,6 +1794,10 @@ class GraphBuilder:
                     "flags": sorted({f["value"] for f in facts if f["predicate"] == "uz:qualityFlag"}),
                     "distributions": sum(1 for f in facts if f["predicate"] == "uz:hasDistribution"),
                     "related": [f["object"] for f in facts if f["predicate"] == "uz:relatedTo"],
+                    "geographies": sorted(
+                        geographies.get(entity["id"], []),
+                        key=lambda r: (r["frame"], r["predicate"], r["detail"]),
+                    ),
                 }
             )
 
@@ -1731,6 +1841,31 @@ class GraphBuilder:
                     e.get("rowCount", 0) for e in self.entities.values()
                     if e.get("role") == "relationship-table"),
             },
+            "geography": {
+                "frames": [
+                    {
+                        "id": "basin",
+                        "label": "Hydrological basin",
+                        "definition": "Catchments and drainage topology; the boundary follows water.",
+                        "predicates": ["uz:coversBasin", "uz:hasBasinStatistic",
+                                       "uz:hasBasinAnomaly", "uz:drainsToBasin",
+                                       "uz:withinBasin", "uz:subBasinOf"],
+                    },
+                    {
+                        "id": "administrative",
+                        "label": "Administrative boundary",
+                        "definition": "National, provincial and district jurisdictions; the boundary follows governance.",
+                        "predicates": ["uz:coversPlace", "uz:hasAdminStatistic"],
+                    },
+                ],
+                "bridge": {
+                    "predicate": "uz:intersectsAdminArea",
+                    "label": "Basin intersects administrative area",
+                    "provinceLinks": self.admin_basin_links.get("counts", {}).get("provinceLinks", 0),
+                    "districtLinks": self.admin_basin_links.get("counts", {}).get("districtLinks", 0),
+                },
+            },
+            "relationshipTables": relationship_tables,
             # What the hydrography build measured, so the portal can describe the
             # explorer without fetching its 7 MB relationship graph to count rows.
             "hydrography": (self.hydrography or {}).get("counts", {}),

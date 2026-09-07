@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T12:58:34+00:00",
+  "generatedAt": "2026-09-07T17:36:21+00:00",
   "title": "Basin climate & land observatory",
   "description": "Every already-measured basin time series the ontology declares, projected into one shared map contract: CFSv2 climate state and anomaly, CHIRPS precipitation, CHIRTS and CPC temperature, CAMS air quality, and GHM human modification.",
   "layers": [
@@ -122,6 +122,148 @@
         "rows": 90105,
         "basins": 260,
         "periods": 32
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "states": {
+          "ok": 90105
+        }
+      },
+      "preview": {
+        "variable": "precipitation",
+        "label": "Precipitation",
+        "unit": "z-score",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2011-07",
+            "value": -0.6329
+          },
+          {
+            "period": "2011-08",
+            "value": -0.0218
+          },
+          {
+            "period": "2012-07",
+            "value": 0.0028
+          },
+          {
+            "period": "2012-08",
+            "value": -0.2352
+          },
+          {
+            "period": "2013-07",
+            "value": 0.4556
+          },
+          {
+            "period": "2013-08",
+            "value": 0.4529
+          },
+          {
+            "period": "2014-07",
+            "value": -0.5743
+          },
+          {
+            "period": "2014-08",
+            "value": -0.5745
+          },
+          {
+            "period": "2015-07",
+            "value": -0.1576
+          },
+          {
+            "period": "2015-08",
+            "value": 0.0538
+          },
+          {
+            "period": "2016-07",
+            "value": 1.3805
+          },
+          {
+            "period": "2016-08",
+            "value": -0.1036
+          },
+          {
+            "period": "2017-07",
+            "value": 0.0486
+          },
+          {
+            "period": "2017-08",
+            "value": -0.536
+          },
+          {
+            "period": "2018-07",
+            "value": -0.5685
+          },
+          {
+            "period": "2018-08",
+            "value": 0.4101
+          },
+          {
+            "period": "2019-07",
+            "value": 0.1692
+          },
+          {
+            "period": "2019-08",
+            "value": -0.4389
+          },
+          {
+            "period": "2020-07",
+            "value": 0.8081
+          },
+          {
+            "period": "2020-08",
+            "value": 1.238
+          },
+          {
+            "period": "2021-07",
+            "value": -0.2733
+          },
+          {
+            "period": "2021-08",
+            "value": -0.2002
+          },
+          {
+            "period": "2022-07",
+            "value": -0.2684
+          },
+          {
+            "period": "2022-08",
+            "value": -0.2621
+          },
+          {
+            "period": "2023-07",
+            "value": 0.1196
+          },
+          {
+            "period": "2023-08",
+            "value": 1.1345
+          },
+          {
+            "period": "2024-07",
+            "value": 0.229
+          },
+          {
+            "period": "2024-08",
+            "value": -0.2663
+          },
+          {
+            "period": "2025-07",
+            "value": -0.7384
+          },
+          {
+            "period": "2025-08",
+            "value": -0.6535
+          },
+          {
+            "period": "2026-07",
+            "value": -0.3007
+          },
+          {
+            "period": "2026-08",
+            "value": -0.4543
+          }
+        ]
       }
     },
     {
@@ -245,6 +387,162 @@
         "rows": 99143,
         "basins": 263,
         "periods": 35
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "states": {
+          "implausible": 1021,
+          "ok": 98100,
+          "ok-centroid": 22
+        }
+      },
+      "preview": {
+        "variable": "precipitation",
+        "label": "Precipitation",
+        "unit": "mm/day",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2011-07",
+            "value": 0.096
+          },
+          {
+            "period": "2011-08",
+            "value": 0.1274
+          },
+          {
+            "period": "2012-07",
+            "value": 0.2682
+          },
+          {
+            "period": "2012-08",
+            "value": 0.0857
+          },
+          {
+            "period": "2013-07",
+            "value": 0.2478
+          },
+          {
+            "period": "2013-08",
+            "value": 0.3017
+          },
+          {
+            "period": "2014-07",
+            "value": 0.1348
+          },
+          {
+            "period": "2014-08",
+            "value": 0.0917
+          },
+          {
+            "period": "2015-07",
+            "value": 0.1872
+          },
+          {
+            "period": "2015-08",
+            "value": 0.2222
+          },
+          {
+            "period": "2016-07",
+            "value": 0.5343
+          },
+          {
+            "period": "2016-08",
+            "value": 0.3373
+          },
+          {
+            "period": "2017-07",
+            "value": 0.3424
+          },
+          {
+            "period": "2017-08",
+            "value": 0.0871
+          },
+          {
+            "period": "2018-07",
+            "value": 0.1149
+          },
+          {
+            "period": "2018-08",
+            "value": 0.1437
+          },
+          {
+            "period": "2019-07",
+            "value": 0.2485
+          },
+          {
+            "period": "2019-08",
+            "value": 0.0539
+          },
+          {
+            "period": "2020-07",
+            "value": 0.5774
+          },
+          {
+            "period": "2020-08",
+            "value": 0.3941
+          },
+          {
+            "period": "2021-07",
+            "value": 0.3412
+          },
+          {
+            "period": "2021-08",
+            "value": 0.2503
+          },
+          {
+            "period": "2022-07",
+            "value": 0.0959
+          },
+          {
+            "period": "2022-08",
+            "value": 0.0845
+          },
+          {
+            "period": "2023-07",
+            "value": 0.2599
+          },
+          {
+            "period": "2023-08",
+            "value": 0.3461
+          },
+          {
+            "period": "2024-07",
+            "value": 0.3537
+          },
+          {
+            "period": "2024-08",
+            "value": 0.0746
+          },
+          {
+            "period": "2025-06",
+            "value": 0.2262
+          },
+          {
+            "period": "2025-07",
+            "value": 0.0353
+          },
+          {
+            "period": "2025-08",
+            "value": 0.0119
+          },
+          {
+            "period": "2026-05",
+            "value": 0.5403
+          },
+          {
+            "period": "2026-06",
+            "value": 0.216
+          },
+          {
+            "period": "2026-07",
+            "value": 0.1126
+          },
+          {
+            "period": "2026-08",
+            "value": 0.0403
+          }
+        ]
       }
     },
     {
@@ -315,6 +613,188 @@
         "rows": 167076,
         "basins": 3978,
         "periods": 42
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "states": {
+          "ok": 167076
+        }
+      },
+      "preview": {
+        "variable": "precipitation_total",
+        "label": "Precipitation",
+        "unit": "mm",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2026-01-p1",
+            "value": 0.508
+          },
+          {
+            "period": "2026-01-p2",
+            "value": 3.6211
+          },
+          {
+            "period": "2026-01-p3",
+            "value": 4.1823
+          },
+          {
+            "period": "2026-01-p4",
+            "value": 7.4459
+          },
+          {
+            "period": "2026-01-p5",
+            "value": 19.7866
+          },
+          {
+            "period": "2026-01-p6",
+            "value": 2.7445
+          },
+          {
+            "period": "2026-02-p1",
+            "value": 11.6051
+          },
+          {
+            "period": "2026-02-p2",
+            "value": 12.0389
+          },
+          {
+            "period": "2026-02-p3",
+            "value": 16.0382
+          },
+          {
+            "period": "2026-02-p4",
+            "value": 0.8658
+          },
+          {
+            "period": "2026-02-p5",
+            "value": 1.774
+          },
+          {
+            "period": "2026-02-p6",
+            "value": 0.0007
+          },
+          {
+            "period": "2026-03-p1",
+            "value": 3.9405
+          },
+          {
+            "period": "2026-03-p2",
+            "value": 0.7722
+          },
+          {
+            "period": "2026-03-p3",
+            "value": 0.6207
+          },
+          {
+            "period": "2026-03-p4",
+            "value": 0.0003
+          },
+          {
+            "period": "2026-03-p5",
+            "value": 0.3123
+          },
+          {
+            "period": "2026-03-p6",
+            "value": 7.961
+          },
+          {
+            "period": "2026-04-p1",
+            "value": 1.4368
+          },
+          {
+            "period": "2026-04-p2",
+            "value": 4.3574
+          },
+          {
+            "period": "2026-04-p3",
+            "value": 0.3874
+          },
+          {
+            "period": "2026-04-p4",
+            "value": 1.0174
+          },
+          {
+            "period": "2026-04-p5",
+            "value": 5.3831
+          },
+          {
+            "period": "2026-04-p6",
+            "value": 0.44
+          },
+          {
+            "period": "2026-05-p1",
+            "value": 0.6097
+          },
+          {
+            "period": "2026-05-p2",
+            "value": 7.4794
+          },
+          {
+            "period": "2026-05-p3",
+            "value": 0.2835
+          },
+          {
+            "period": "2026-05-p4",
+            "value": 14.829
+          },
+          {
+            "period": "2026-05-p5",
+            "value": 10.4589
+          },
+          {
+            "period": "2026-05-p6",
+            "value": 7.2991
+          },
+          {
+            "period": "2026-06-p1",
+            "value": 0.3519
+          },
+          {
+            "period": "2026-06-p2",
+            "value": 0.4256
+          },
+          {
+            "period": "2026-06-p3",
+            "value": 0.6024
+          },
+          {
+            "period": "2026-06-p4",
+            "value": 4.4987
+          },
+          {
+            "period": "2026-06-p5",
+            "value": 0.3952
+          },
+          {
+            "period": "2026-06-p6",
+            "value": 0.9222
+          },
+          {
+            "period": "2026-07-p1",
+            "value": 1.5638
+          },
+          {
+            "period": "2026-07-p2",
+            "value": 0.4618
+          },
+          {
+            "period": "2026-07-p3",
+            "value": 0.4816
+          },
+          {
+            "period": "2026-07-p4",
+            "value": 0.4151
+          },
+          {
+            "period": "2026-07-p5",
+            "value": 0.766
+          },
+          {
+            "period": "2026-07-p6",
+            "value": 0.4053
+          }
+        ]
       }
     },
     {
@@ -392,6 +872,24 @@
         "rows": 35802,
         "basins": 3978,
         "periods": 1
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "states": {
+          "ok": 35802
+        }
+      },
+      "preview": {
+        "variable": "tmax_mean",
+        "label": "Max temperature (mean)",
+        "unit": "degC",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2016-07",
+            "value": 35.3486
+          }
+        ]
       }
     },
     {
@@ -618,6 +1116,213 @@
         "rows": 122850,
         "basins": 91,
         "periods": 150
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "states": {
+          "ok": 82348,
+          "ok-interpolated": 40502
+        }
+      },
+      "preview": {
+        "variable": "tmax_mean",
+        "label": "Max temperature (mean)",
+        "unit": "degC",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "1979-01",
+            "value": 0.4315
+          },
+          {
+            "period": "1979-04",
+            "value": 18.079
+          },
+          {
+            "period": "1979-07",
+            "value": 34.2852
+          },
+          {
+            "period": "1979-11",
+            "value": 9.6031
+          },
+          {
+            "period": "1980-02",
+            "value": -1.2592
+          },
+          {
+            "period": "1980-05",
+            "value": 25.9782
+          },
+          {
+            "period": "1980-08",
+            "value": 30.0108
+          },
+          {
+            "period": "1980-11",
+            "value": 11.3673
+          },
+          {
+            "period": "1981-02",
+            "value": 4.2782
+          },
+          {
+            "period": "1981-06",
+            "value": 28.8435
+          },
+          {
+            "period": "1981-09",
+            "value": 26.1137
+          },
+          {
+            "period": "1981-12",
+            "value": 4.6451
+          },
+          {
+            "period": "1982-03",
+            "value": 7.4522
+          },
+          {
+            "period": "1982-06",
+            "value": 30.3608
+          },
+          {
+            "period": "1982-09",
+            "value": 25.3145
+          },
+          {
+            "period": "1983-01",
+            "value": 2.7104
+          },
+          {
+            "period": "1983-04",
+            "value": 21.6387
+          },
+          {
+            "period": "1983-07",
+            "value": 36.0505
+          },
+          {
+            "period": "1983-10",
+            "value": 18.1255
+          },
+          {
+            "period": "1984-01",
+            "value": 0.4335
+          },
+          {
+            "period": "1984-04",
+            "value": 18.5158
+          },
+          {
+            "period": "1984-08",
+            "value": 34.3409
+          },
+          {
+            "period": "1984-11",
+            "value": 9.3842
+          },
+          {
+            "period": "1985-02",
+            "value": 5.8999
+          },
+          {
+            "period": "1985-05",
+            "value": 26.6965
+          },
+          {
+            "period": "1985-08",
+            "value": 30.747
+          },
+          {
+            "period": "1985-11",
+            "value": 9.6207
+          },
+          {
+            "period": "1986-03",
+            "value": 6.827
+          },
+          {
+            "period": "1986-06",
+            "value": 31.2807
+          },
+          {
+            "period": "1986-09",
+            "value": 28.5438
+          },
+          {
+            "period": "1986-12",
+            "value": 2.9922
+          },
+          {
+            "period": "1987-03",
+            "value": 8.3021
+          },
+          {
+            "period": "1987-06",
+            "value": 31.143
+          },
+          {
+            "period": "1987-10",
+            "value": 13.5006
+          },
+          {
+            "period": "1988-01",
+            "value": 1.7138
+          },
+          {
+            "period": "1988-04",
+            "value": 21.457
+          },
+          {
+            "period": "1988-07",
+            "value": 34.8112
+          },
+          {
+            "period": "1988-10",
+            "value": 18.6878
+          },
+          {
+            "period": "1989-01",
+            "value": -0.3197
+          },
+          {
+            "period": "1989-05",
+            "value": 24.915
+          },
+          {
+            "period": "1989-08",
+            "value": 32.9264
+          },
+          {
+            "period": "1989-11",
+            "value": 10.2158
+          },
+          {
+            "period": "1990-02",
+            "value": 3.717
+          },
+          {
+            "period": "1990-05",
+            "value": 27.2975
+          },
+          {
+            "period": "1990-08",
+            "value": 32.6812
+          },
+          {
+            "period": "1990-12",
+            "value": 1.9024
+          },
+          {
+            "period": "1991-03",
+            "value": 9.0674
+          },
+          {
+            "period": "2016-08",
+            "value": 34.4788
+          }
+        ]
       }
     },
     {
@@ -654,6 +1359,28 @@
         "rows": 360,
         "basins": 90,
         "periods": 2
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "states": {
+          "ok": 360
+        }
+      },
+      "preview": {
+        "variable": "pm2p5",
+        "label": "PM2.5",
+        "unit": "ug/m3",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2026-07",
+            "value": 11.7062
+          },
+          {
+            "period": "2026-08",
+            "value": 11.1215
+          }
+        ]
       }
     },
     {
@@ -707,6 +1434,24 @@
         "rows": 19315,
         "basins": 3863,
         "periods": 1
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "states": {
+          "ok": 19315
+        }
+      },
+      "preview": {
+        "variable": "ghm_mean",
+        "label": "Human modification (mean)",
+        "unit": "index_0_1",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2016",
+            "value": 0.286
+          }
+        ]
       }
     }
   ]

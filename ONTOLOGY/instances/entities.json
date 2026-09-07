@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T10:38:39+00:00",
+  "generatedAt": "2026-09-07T17:37:22+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -5716,13 +5716,13 @@
       "objectColumn": "pcode",
       "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "scopeColumn": "admin_level",
+      "scopeValue": "2",
       "measureColumn": "shared_km2",
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
       "rowCount": 6009,
-      "subjectColumn": "basin_id",
-      "scopeValue": "2"
+      "subjectColumn": "basin_id"
     },
     {
       "id": "uz:dist/admin-basin-province",
@@ -5740,13 +5740,13 @@
       "objectColumn": "pcode",
       "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "scopeColumn": "admin_level",
+      "scopeValue": "1",
       "measureColumn": "shared_km2",
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
       "rowCount": 4374,
-      "subjectColumn": "basin_id",
-      "scopeValue": "1"
+      "subjectColumn": "basin_id"
     },
     {
       "id": "uz:dist/atlas-basin-coverage",
@@ -5761,15 +5761,16 @@
       "predicate": "uz:coversBasin",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "subjectColumn": "dataset_id",
       "objectColumn": "basin_id",
       "container": "WORKSPACE/derived/atlas-basin-links.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "measure",
       "measureUnitColumn": "measure_unit",
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 195649
+      "rowCount": 195649,
+      "subjectColumn": "dataset_id"
     },
     {
       "id": "uz:dist/atlas-basin-statistics",
@@ -5784,15 +5785,16 @@
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "subjectColumn": "dataset_id",
       "objectColumn": "basin_id",
       "container": "WORKSPACE/derived/basin-zonal-stats.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "mean",
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 167309
+      "rowCount": 167309,
+      "subjectColumn": "dataset_id"
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-basinatlas-uz-lev01-003e44",
@@ -5804,7 +5806,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev01.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev01.csv",
       "featureCount": null,
       "crs": null
     },
@@ -5818,7 +5820,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev01.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev01.shp",
       "featureCount": 2,
       "crs": "EPSG:4326"
     },
@@ -5832,7 +5834,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev02.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev02.shp",
       "featureCount": 2,
       "crs": "EPSG:4326"
     },
@@ -5846,7 +5848,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev02.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev02.csv",
       "featureCount": null,
       "crs": null
     },
@@ -5860,7 +5862,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev03.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev03.shp",
       "featureCount": 4,
       "crs": "EPSG:4326"
     },
@@ -5874,7 +5876,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev03.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev03.csv",
       "featureCount": null,
       "crs": null
     },
@@ -5888,7 +5890,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev04.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev04.csv",
       "featureCount": null,
       "crs": null
     },
@@ -5902,7 +5904,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev04.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev04.shp",
       "featureCount": 12,
       "crs": "EPSG:4326"
     },
@@ -5916,7 +5918,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev05.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev05.csv",
       "featureCount": null,
       "crs": null
     },
@@ -5930,7 +5932,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev05.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev05.shp",
       "featureCount": 31,
       "crs": "EPSG:4326"
     },
@@ -5944,7 +5946,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev06.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev06.csv",
       "featureCount": null,
       "crs": null
     },
@@ -5958,7 +5960,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev06.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev06.shp",
       "featureCount": 92,
       "crs": "EPSG:4326"
     },
@@ -5972,7 +5974,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev07.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev07.shp",
       "featureCount": 263,
       "crs": "EPSG:4326"
     },
@@ -5986,7 +5988,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev07.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev07.csv",
       "featureCount": null,
       "crs": null
     },
@@ -6000,7 +6002,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev08.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev08.shp",
       "featureCount": 805,
       "crs": "EPSG:4326"
     },
@@ -6014,7 +6016,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev08.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev08.csv",
       "featureCount": null,
       "crs": null
     },
@@ -6028,7 +6030,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev09.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev09.shp",
       "featureCount": 1989,
       "crs": "EPSG:4326"
     },
@@ -6042,7 +6044,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev09.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev09.csv",
       "featureCount": null,
       "crs": null
     },
@@ -6056,7 +6058,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev10.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev10.csv",
       "featureCount": null,
       "crs": null
     },
@@ -6070,7 +6072,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev10.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev10.shp",
       "featureCount": 3608,
       "crs": "EPSG:4326"
     },
@@ -6084,7 +6086,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev11.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev11.csv",
       "featureCount": null,
       "crs": null
     },
@@ -6098,7 +6100,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev11.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev11.shp",
       "featureCount": 3960,
       "crs": "EPSG:4326"
     },
@@ -6112,7 +6114,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev12.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/attributes/basinatlas_uz_lev12.csv",
       "featureCount": null,
       "crs": null
     },
@@ -6126,7 +6128,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev12.shp",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/shapefiles/basinatlas_uz_lev12.shp",
       "featureCount": 3981,
       "crs": "EPSG:4326"
     },
@@ -6140,18 +6142,18 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/relationships/downstream_links.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/relationships/downstream_links.csv",
       "featureCount": null,
       "crs": null,
       "predicate": "uz:flowsInto",
       "subjectType": "Basin",
       "objectType": "Basin",
-      "subjectColumn": "hybas_id",
       "objectColumn": "next_down",
       "container": "GEODATA/uzbekistan_basinatlas_v10/relationships/downstream_links.csv",
       "scopeColumn": "next_down_scope",
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 14749
+      "rowCount": 14749,
+      "subjectColumn": "hybas_id"
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-feature-hierarchy-links-f33226",
@@ -6163,17 +6165,17 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/relationships/feature_hierarchy_links.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/relationships/feature_hierarchy_links.csv",
       "featureCount": null,
       "crs": null,
       "predicate": "uz:subBasinOf",
       "subjectType": "Basin",
       "objectType": "Basin",
-      "subjectColumn": "child_hybas_id",
       "objectColumn": "parent_hybas_id",
       "container": "GEODATA/uzbekistan_basinatlas_v10/relationships/feature_hierarchy_links.csv",
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 14747
+      "rowCount": 14747,
+      "subjectColumn": "child_hybas_id"
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-level-summary-3c73a5",
@@ -6185,7 +6187,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/level_summary.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/level_summary.csv",
       "featureCount": null,
       "crs": null
     },
@@ -6199,7 +6201,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/manifest.json",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/manifest.json",
       "featureCount": null,
       "crs": null
     },
@@ -6213,18 +6215,18 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/relationships/pfaf_hierarchy.csv",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/relationships/pfaf_hierarchy.csv",
       "featureCount": null,
       "crs": null,
       "predicate": "uz:subBasinOf",
       "subjectType": "Basin",
       "objectType": "Basin",
-      "subjectColumn": "child_pfaf_id",
       "objectColumn": "parent_pfaf_id",
       "container": "GEODATA/uzbekistan_basinatlas_v10/relationships/pfaf_hierarchy.csv",
       "scopeColumn": "parent_selected",
       "identifierScheme": "PFAF_ID",
-      "rowCount": 14747
+      "rowCount": 14747,
+      "subjectColumn": "child_pfaf_id"
     },
     {
       "id": "uz:dist/basinatlas-uz-v10-processing-parameters-111d36",
@@ -6236,7 +6238,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/processing_parameters.json",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/processing_parameters.json",
       "featureCount": null,
       "crs": null
     },
@@ -6250,7 +6252,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/README.md",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/README.md",
       "featureCount": null,
       "crs": null
     },
@@ -6264,7 +6266,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/boundary/uzb_admbnda_adm0_2018b_recovered.geojson",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/boundary/uzb_admbnda_adm0_2018b_recovered.geojson",
       "featureCount": 1,
       "crs": "EPSG:4326"
     },
@@ -6278,7 +6280,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg",
+      "externalPath": "GEODATA/uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg",
       "featureCount": null,
       "crs": null
     },
@@ -6466,6 +6468,7 @@
       "objectColumn": "basin_id",
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "containerTable": null,
@@ -6522,6 +6525,7 @@
       "objectColumn": "basin_id",
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "z_score",
       "measureUnitColumn": "unit",
       "containerTable": null,
@@ -6545,6 +6549,7 @@
       "objectColumn": "basin_id",
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.5_CFSV2_BASIN_CLIMATOLOGY/cfsv2-basin-climatology.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "mean",
       "measureUnitColumn": "unit",
       "containerTable": null,
@@ -6568,6 +6573,7 @@
       "objectColumn": "basin_id",
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "containerTable": null,
@@ -6602,6 +6608,7 @@
       "objectColumn": "basin_id",
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "containerTable": null,
@@ -6636,6 +6643,7 @@
       "objectColumn": "basin_id",
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "containerTable": null,
@@ -6670,6 +6678,7 @@
       "objectColumn": "basin_id",
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "containerTable": null,
@@ -7896,13 +7905,13 @@
       "objectColumn": "unit_id",
       "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
       "scopeColumn": "frame",
+      "scopeValue": "basin",
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
       "rowCount": 19315,
-      "subjectFixed": "uz:ds/csp-ghm",
-      "scopeValue": "basin"
+      "subjectFixed": "uz:ds/csp-ghm"
     },
     {
       "id": "uz:dist/ghm-district-modification",
@@ -7920,13 +7929,13 @@
       "objectColumn": "unit_id",
       "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
       "scopeColumn": "frame",
+      "scopeValue": "district",
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "containerTable": null,
       "identifierScheme": "ADM2_PCODE",
       "rowCount": 995,
-      "subjectFixed": "uz:ds/csp-ghm",
-      "scopeValue": "district"
+      "subjectFixed": "uz:ds/csp-ghm"
     },
     {
       "id": "uz:dist/glacial-lakes-public-geojson",
@@ -7949,7 +7958,7 @@
       "storedName": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "url": null,
       "accessPolicy": "free",
-      "featureCount": 2736,
+      "featureCount": 3981,
       "crs": "EPSG:4326"
     },
     {
@@ -7962,7 +7971,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "free",
-      "externalPath": "C:\\earth_engine\\uzbekistan_hydrobasins_lake_v1c\\uzbekistan_hydrobasins_lake_v1c.gpkg"
+      "externalPath": "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev12.geojson"
     },
     {
       "id": "uz:dist/hydrobasins-level12-uzbekistan-web",
@@ -7970,11 +7979,11 @@
       "label": "HydroBASINS level-12 catchments — Uzbekistan (web GeoJSON)",
       "role": "web-vector",
       "format": "GeoJSON",
-      "byteSize": 3019711,
+      "byteSize": 3656482,
       "storedName": "PUBLISHED/data/hydrography/basins.geojson",
       "url": "/data/hydrography/basins.geojson",
       "accessPolicy": "free",
-      "featureCount": 2736,
+      "featureCount": 3981,
       "crs": "EPSG:4326"
     },
     {
@@ -7987,18 +7996,18 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/relationships/downstream_links.csv",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/downstream_links.csv",
       "featureCount": null,
       "crs": null,
       "predicate": "uz:flowsInto",
       "subjectType": "Basin",
       "objectType": "Basin",
-      "subjectColumn": "hybas_id",
       "objectColumn": "next_down",
       "container": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/downstream_links.csv",
       "scopeColumn": "next_down_scope",
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 15194
+      "rowCount": 15194,
+      "subjectColumn": "hybas_id"
     },
     {
       "id": "uz:dist/hydrobasins-uz-lake-v1c-feature-hierarchy-links-100988",
@@ -8010,17 +8019,17 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/relationships/feature_hierarchy_links.csv",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/feature_hierarchy_links.csv",
       "featureCount": null,
       "crs": null,
       "predicate": "uz:subBasinOf",
       "subjectType": "Basin",
       "objectType": "Basin",
-      "subjectColumn": "child_hybas_id",
       "objectColumn": "parent_hybas_id",
       "container": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/feature_hierarchy_links.csv",
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 15202
+      "rowCount": 15202,
+      "subjectColumn": "child_hybas_id"
     },
     {
       "id": "uz:dist/hydrobasins-uz-lake-v1c-hybas-lake-uz-lev01-v1c-17ebd4",
@@ -8032,7 +8041,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev01_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev01_v1c.shp",
       "featureCount": 2,
       "crs": "EPSG:4326"
     },
@@ -8046,7 +8055,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev02_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev02_v1c.shp",
       "featureCount": 2,
       "crs": "EPSG:4326"
     },
@@ -8060,7 +8069,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev03_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev03_v1c.shp",
       "featureCount": 4,
       "crs": "EPSG:4326"
     },
@@ -8074,7 +8083,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev04_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev04_v1c.shp",
       "featureCount": 13,
       "crs": "EPSG:4326"
     },
@@ -8088,7 +8097,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev05_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev05_v1c.shp",
       "featureCount": 34,
       "crs": "EPSG:4326"
     },
@@ -8102,7 +8111,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev06_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev06_v1c.shp",
       "featureCount": 87,
       "crs": "EPSG:4326"
     },
@@ -8116,7 +8125,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev07_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev07_v1c.shp",
       "featureCount": 255,
       "crs": "EPSG:4326"
     },
@@ -8130,7 +8139,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev08_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev08_v1c.shp",
       "featureCount": 843,
       "crs": "EPSG:4326"
     },
@@ -8144,7 +8153,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev09_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev09_v1c.shp",
       "featureCount": 2039,
       "crs": "EPSG:4326"
     },
@@ -8158,7 +8167,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev10_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev10_v1c.shp",
       "featureCount": 3643,
       "crs": "EPSG:4326"
     },
@@ -8172,7 +8181,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev11_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev11_v1c.shp",
       "featureCount": 4125,
       "crs": "EPSG:4326"
     },
@@ -8186,7 +8195,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev12_v1c.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/hybas_lake_uz_lev12_v1c.shp",
       "featureCount": 4147,
       "crs": "EPSG:4326"
     },
@@ -8200,7 +8209,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/documentation/HydroBASINS_TechDoc_v1c.pdf",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/documentation/HydroBASINS_TechDoc_v1c.pdf",
       "featureCount": null,
       "crs": null
     },
@@ -8214,7 +8223,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/level_summary.csv",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/level_summary.csv",
       "featureCount": null,
       "crs": null
     },
@@ -8228,7 +8237,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/manifest.json",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/manifest.json",
       "featureCount": null,
       "crs": null
     },
@@ -8242,18 +8251,18 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/relationships/pfaf_hierarchy.csv",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/pfaf_hierarchy.csv",
       "featureCount": null,
       "crs": null,
       "predicate": "uz:subBasinOf",
       "subjectType": "Basin",
       "objectType": "Basin",
-      "subjectColumn": "child_pfaf_id",
       "objectColumn": "parent_pfaf_id",
       "container": "GEODATA/uzbekistan_hydrobasins_lake_v1c/relationships/pfaf_hierarchy.csv",
       "scopeColumn": "parent_selected",
       "identifierScheme": "PFAF_ID",
-      "rowCount": 13918
+      "rowCount": 13918,
+      "subjectColumn": "child_pfaf_id"
     },
     {
       "id": "uz:dist/hydrobasins-uz-lake-v1c-preflight-io-test-e83efc",
@@ -8265,7 +8274,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/preflight_io_test.json",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/preflight_io_test.json",
       "featureCount": null,
       "crs": null
     },
@@ -8279,7 +8288,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/processing_parameters.json",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/processing_parameters.json",
       "featureCount": null,
       "crs": null
     },
@@ -8293,7 +8302,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/README.md",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/README.md",
       "featureCount": null,
       "crs": null
     },
@@ -8307,7 +8316,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/shapefiles/uzb_adm0_selection_boundary.shp",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/shapefiles/uzb_adm0_selection_boundary.shp",
       "featureCount": 1,
       "crs": "EPSG:4326"
     },
@@ -8321,7 +8330,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/boundary/uzb_admbnda_adm0_2018b_recovered.geojson",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/boundary/uzb_admbnda_adm0_2018b_recovered.geojson",
       "featureCount": 1,
       "crs": "EPSG:4326"
     },
@@ -8335,7 +8344,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/uzbekistan_hydrobasins_lake_v1c.gpkg",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/uzbekistan_hydrobasins_lake_v1c.gpkg",
       "featureCount": null,
       "crs": null
     },
@@ -8349,7 +8358,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/uzbekistan_hydrobasins_lake_v1c/validation_report.json",
+      "externalPath": "GEODATA/uzbekistan_hydrobasins_lake_v1c/validation_report.json",
       "featureCount": null,
       "crs": null
     },
@@ -8366,15 +8375,16 @@
       "predicate": "uz:withinBasin",
       "subjectType": "WaterBody",
       "objectType": "Basin",
-      "subjectColumn": "lake_id",
       "objectColumn": "basin_id",
       "container": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "scopeColumn": "basin_scope",
+      "scopeValue": null,
       "measureColumn": null,
       "measureUnitColumn": null,
       "containerTable": "lake_basin_links",
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 647
+      "rowCount": 647,
+      "subjectColumn": "lake_id"
     },
     {
       "id": "uz:dist/hydrography-river-basin",
@@ -8389,15 +8399,16 @@
       "predicate": "uz:drainsToBasin",
       "subjectType": "RiverReach",
       "objectType": "Basin",
-      "subjectColumn": "river_id",
       "objectColumn": "basin_id",
       "container": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "scopeColumn": "basin_scope",
+      "scopeValue": null,
       "measureColumn": null,
       "measureUnitColumn": null,
       "containerTable": "river_basin_links",
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 17447
+      "rowCount": 17447,
+      "subjectColumn": "river_id"
     },
     {
       "id": "uz:dist/hydrography-river-downstream",
@@ -8412,15 +8423,16 @@
       "predicate": "uz:flowsInto",
       "subjectType": "RiverReach",
       "objectType": "RiverReach",
-      "subjectColumn": "source_id",
       "objectColumn": "target_id",
       "container": "WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg",
       "scopeColumn": "target_scope",
+      "scopeValue": null,
       "measureColumn": null,
       "measureUnitColumn": null,
       "containerTable": "river_downstream_links",
       "identifierScheme": "HYRIV_ID",
-      "rowCount": 17447
+      "rowCount": 17447,
+      "subjectColumn": "source_id"
     },
     {
       "id": "uz:dist/hydrolakes-uzbekistan-relationship-database",
@@ -8445,7 +8457,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "free",
-      "externalPath": "D:\\earth_engine\\HydroLAKES_polys_v10.gdb\\HydroLAKES_polys_v10.gdb"
+      "externalPath": "GEODATA/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb"
     },
     {
       "id": "uz:dist/hydrolakes-uzbekistan-web",
@@ -8483,7 +8495,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "free",
-      "externalPath": "D:\\earth_engine\\HydroRIVERS_v10_as.gdb\\HydroRIVERS_v10_as.gdb"
+      "externalPath": "GEODATA/HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb"
     },
     {
       "id": "uz:dist/hydrorivers-uzbekistan-web",
@@ -8508,7 +8520,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+      "externalPath": "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
       "featureCount": null,
       "crs": null
     },
@@ -8522,7 +8534,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb",
+      "externalPath": "GEODATA/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb",
       "featureCount": null,
       "crs": null
     },
@@ -8536,7 +8548,7 @@
       "storedName": null,
       "url": null,
       "accessPolicy": "internal",
-      "externalPath": "D:/dev/uzgeodata/earth_engine/earth_engine/HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb",
+      "externalPath": "GEODATA/HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb",
       "featureCount": null,
       "crs": null
     },
@@ -8598,11 +8610,36 @@
       "objectColumn": "pcode",
       "container": "PUBLISHED/data/ontology/2_LAND/2.2_LANDCOVER_ADMIN_YEAR/landcover-admin-year.csv",
       "scopeColumn": null,
+      "scopeValue": null,
       "measureColumn": "km2",
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "ADM2_PCODE",
       "rowCount": 10906,
+      "subjectColumn": "dataset_id"
+    },
+    {
+      "id": "uz:dist/landcover-basin-year",
+      "type": "Distribution",
+      "label": "Land cover area by basin and year",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 8764553,
+      "storedName": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
+      "scopeColumn": null,
+      "scopeValue": null,
+      "measureColumn": "km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 126151,
       "subjectColumn": "dataset_id"
     },
     {
@@ -9159,7 +9196,7 @@
       "type": "MapLayer",
       "label": "HydroBASINS level-12 catchments — Uzbekistan",
       "geometryType": "polygon",
-      "featureCount": 2736,
+      "featureCount": 3981,
       "url": "/data/hydrography/basins.geojson",
       "legend": {
         "group": "Hydrography",

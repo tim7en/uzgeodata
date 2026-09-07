@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T10:38:39+00:00",
+  "generatedAt": "2026-09-07T17:37:22+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -998,7 +998,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3962
+        }
+      ]
     },
     {
       "id": "uz:ds/a17-projected-climate-types-for-2100",
@@ -1027,7 +1042,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3962
+        }
+      ]
     },
     {
       "id": "uz:ds/a18-local-climate-zones",
@@ -1056,7 +1086,21 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/a19-average-start-of-the-growing-season-20002024",
@@ -1085,7 +1129,22 @@
       ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3976
+        }
+      ]
     },
     {
       "id": "uz:ds/a20-average-peak-of-the-growing-season-20002024",
@@ -1114,7 +1173,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3980
+        }
+      ]
     },
     {
       "id": "uz:ds/a21-average-growing-season-duration-20002024",
@@ -1143,7 +1217,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3980
+        }
+      ]
     },
     {
       "id": "uz:ds/a22-average-end-of-the-growing-season-20002024",
@@ -1172,7 +1261,22 @@
       ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3976
+        }
+      ]
     },
     {
       "id": "uz:ds/a23-annual-temperature-trend-19602023",
@@ -1201,7 +1305,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 2958
+        }
+      ]
     },
     {
       "id": "uz:ds/a24-annual-temperature-trend-19902023",
@@ -1230,7 +1349,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 2958
+        }
+      ]
     },
     {
       "id": "uz:ds/a25-warm-season-temperature-trend-19602023",
@@ -1259,7 +1393,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 2958
+        }
+      ]
     },
     {
       "id": "uz:ds/a26-warm-season-temperature-trend-19902023",
@@ -1288,7 +1437,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 2958
+        }
+      ]
     },
     {
       "id": "uz:ds/a27-maximum-temperature-trend-19602023",
@@ -1317,7 +1481,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a28-precipitation-trend-19602023",
@@ -1353,7 +1532,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a29-precipitation-trend-19902023",
@@ -1389,7 +1583,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a30-snow-cover-depth-trend-19602024",
@@ -1425,7 +1634,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 2958
+        }
+      ]
     },
     {
       "id": "uz:ds/a31-snow-cover-depth-trend-19902024",
@@ -1461,7 +1685,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 2958
+        }
+      ]
     },
     {
       "id": "uz:ds/a32-climatic-water-deficit-1990",
@@ -1497,7 +1736,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a33-climatic-water-deficit-2023",
@@ -1533,7 +1787,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a34-climatic-water-deficit-trend-19602023",
@@ -1569,7 +1838,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a35-climatic-water-deficit-trend-19902023",
@@ -1605,7 +1889,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a36-projected-temperature-change-by-2040",
@@ -1634,7 +1933,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1628
+        }
+      ]
     },
     {
       "id": "uz:ds/a37-projected-precipitation-change-by-2040",
@@ -1670,7 +1984,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3628
+        }
+      ]
     },
     {
       "id": "uz:ds/a42-share-of-settlement-area",
@@ -1705,7 +2034,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a43-settlement-area-change-19702020",
@@ -1743,7 +2087,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a44-disappeared-settlements-by-basin",
@@ -1778,7 +2137,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 235
+        }
+      ]
     },
     {
       "id": "uz:ds/a45-road-network-density",
@@ -1820,7 +2194,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3952
+        }
+      ]
     },
     {
       "id": "uz:ds/a52-water-management-zones",
@@ -1853,7 +2248,22 @@
       ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3945
+        }
+      ]
     },
     {
       "id": "uz:ds/a53-irrigated-areas-by-catchment",
@@ -1888,7 +2298,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3954
+        }
+      ]
     },
     {
       "id": "uz:ds/a54-areas-using-drainage",
@@ -1914,7 +2339,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 947
+        }
+      ]
     },
     {
       "id": "uz:ds/a55-historical-irrigation-districts",
@@ -1940,7 +2380,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3942
+        }
+      ]
     },
     {
       "id": "uz:ds/a56-annual-runoff-volume",
@@ -1966,7 +2421,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a57-dams-reservoirs-and-glacial-lakes",
@@ -1978,13 +2448,13 @@
       "analysis": null,
       "observes": [
         {
-          "concept": "uz:prop/glacial-lake",
+          "concept": "uz:prop/reservoir-volume",
           "confidence": 0.75,
           "by": "uz:agent/rule-lexical-v1",
           "reviewed": false
         },
         {
-          "concept": "uz:prop/reservoir-volume",
+          "concept": "uz:prop/glacial-lake",
           "confidence": 0.75,
           "by": "uz:agent/rule-lexical-v1",
           "reviewed": false
@@ -2005,7 +2475,22 @@
       ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 20
+        }
+      ]
     },
     {
       "id": "uz:ds/a58-lake-and-reservoir-volume",
@@ -2038,7 +2523,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a59-groundwater-depth",
@@ -2071,7 +2571,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 937
+        }
+      ]
     },
     {
       "id": "uz:ds/a60-groundwater-pollution",
@@ -2097,7 +2612,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 642
+        }
+      ]
     },
     {
       "id": "uz:ds/a61-groundwater-resources",
@@ -2130,7 +2660,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3396
+        }
+      ]
     },
     {
       "id": "uz:ds/a62-artesian-basins",
@@ -2163,7 +2708,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 73
+        }
+      ]
     },
     {
       "id": "uz:ds/a63-irrigation-canal-density",
@@ -2189,7 +2749,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a64-agricultural-land-served-by-canals",
@@ -2215,7 +2790,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1014
+        }
+      ]
     },
     {
       "id": "uz:ds/a73-water-stress",
@@ -2250,7 +2840,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3954
+        }
+      ]
     },
     {
       "id": "uz:ds/a74-water-balance",
@@ -2285,7 +2890,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 62
+        }
+      ]
     },
     {
       "id": "uz:ds/a75-access-to-sustainable-drinking-water",
@@ -2311,7 +2931,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a76-access-to-sustainable-sanitation",
@@ -2337,7 +2972,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a77-water-ecosystem-area",
@@ -2363,7 +3013,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3954
+        }
+      ]
     },
     {
       "id": "uz:ds/a78-change-in-permanently-flooded-ecosystems-2001200",
@@ -2392,7 +3057,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3954
+        }
+      ]
     },
     {
       "id": "uz:ds/a79-change-in-seasonally-flooded-ecosystems-20012004",
@@ -2421,7 +3101,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3954
+        }
+      ]
     },
     {
       "id": "uz:ds/a80-drainage-network",
@@ -2454,7 +3149,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 511
+        }
+      ]
     },
     {
       "id": "uz:ds/a81-flow-in-drainage-canals",
@@ -2480,7 +3190,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 975
+        }
+      ]
     },
     {
       "id": "uz:ds/a90-land-cover-2000",
@@ -2519,7 +3244,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3935
+        }
+      ]
     },
     {
       "id": "uz:ds/a91-land-cover-2010",
@@ -2555,7 +3301,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3923
+        }
+      ]
     },
     {
       "id": "uz:ds/a92-land-cover",
@@ -2581,7 +3342,8 @@
       "extent": null,
       "flags": [],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": []
     },
     {
       "id": "uz:ds/a94-bare-surface",
@@ -2614,7 +3376,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3968
+        }
+      ]
     },
     {
       "id": "uz:ds/a95-soil-chemistry",
@@ -2638,9 +3415,7 @@
           "reviewed": false
         }
       ],
-      "useCases": [
-        "uz:usecase/land-degradation-monitoring"
-      ],
+      "useCases": [],
       "places": [
         "uz:place/uzbekistan"
       ],
@@ -2655,7 +3430,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3116
+        }
+      ]
     },
     {
       "id": "uz:ds/a96-farming-systems",
@@ -2688,7 +3478,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3945
+        }
+      ]
     },
     {
       "id": "uz:ds/a97-land-use-types",
@@ -2721,7 +3526,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3943
+        }
+      ]
     },
     {
       "id": "uz:ds/a98-agricultural-land-types",
@@ -2754,7 +3574,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3941
+        }
+      ]
     },
     {
       "id": "uz:ds/a99-cotton-yield",
@@ -2787,7 +3622,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 931
+        }
+      ]
     },
     {
       "id": "uz:ds/a100-livestock",
@@ -2813,7 +3663,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3945
+        }
+      ]
     },
     {
       "id": "uz:ds/a101-forage-lands",
@@ -2842,7 +3707,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3950
+        }
+      ]
     },
     {
       "id": "uz:ds/a113-arable-land-dynamics",
@@ -2871,7 +3757,21 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/a114-terrestrial-land-cover",
@@ -2897,7 +3797,16 @@
       "extent": null,
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3981
+        }
+      ]
     },
     {
       "id": "uz:ds/a115-soil-salinity",
@@ -2932,7 +3841,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3691
+        }
+      ]
     },
     {
       "id": "uz:ds/a116-irrigated-soil-salinity",
@@ -2967,7 +3891,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 902
+        }
+      ]
     },
     {
       "id": "uz:ds/a117-soil-salinity-dynamics",
@@ -3005,7 +3944,21 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/a118-average-maximum-ndvi-20042024",
@@ -3041,7 +3994,22 @@
       ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3981
+        }
+      ]
     },
     {
       "id": "uz:ds/a119-ndvi-dynamics",
@@ -3074,7 +4042,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3578
+        }
+      ]
     },
     {
       "id": "uz:ds/a120-enhanced-vegetation-index-dynamics",
@@ -3107,7 +4090,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3577
+        }
+      ]
     },
     {
       "id": "uz:ds/a121-leaf-area-index",
@@ -3140,7 +4138,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3527
+        }
+      ]
     },
     {
       "id": "uz:ds/a122-land-productivity-dynamics",
@@ -3175,7 +4188,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3524
+        }
+      ]
     },
     {
       "id": "uz:ds/a123-arable-land-use-intensity",
@@ -3211,7 +4239,21 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/a124-pasture-vegetation-types",
@@ -3244,7 +4286,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 659
+        }
+      ]
     },
     {
       "id": "uz:ds/a125-recommended-pasture-stocking-rate",
@@ -3283,7 +4340,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 659
+        }
+      ]
     },
     {
       "id": "uz:ds/a126-pasture-productivity",
@@ -3316,7 +4388,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 659
+        }
+      ]
     },
     {
       "id": "uz:ds/a127-soil-organic-carbon",
@@ -3351,7 +4438,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3815
+        }
+      ]
     },
     {
       "id": "uz:ds/a128-carbon-emission-volume",
@@ -3386,7 +4488,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 459
+        }
+      ]
     },
     {
       "id": "uz:ds/a129-net-carbon-balance",
@@ -3421,7 +4538,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1409
+        }
+      ]
     },
     {
       "id": "uz:ds/a135-forest-cover-2005",
@@ -3457,7 +4589,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3981
+        }
+      ]
     },
     {
       "id": "uz:ds/a137-forest-types",
@@ -3490,7 +4637,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3844
+        }
+      ]
     },
     {
       "id": "uz:ds/a138-saxaul-distribution",
@@ -3523,7 +4685,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1109
+        }
+      ]
     },
     {
       "id": "uz:ds/a139-natural-and-planted-forests",
@@ -3556,7 +4733,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1109
+        }
+      ]
     },
     {
       "id": "uz:ds/a147-forest-carbon-sequestration",
@@ -3591,7 +4783,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1408
+        }
+      ]
     },
     {
       "id": "uz:ds/a148-forest-plantation-potential",
@@ -3617,7 +4824,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1532
+        }
+      ]
     },
     {
       "id": "uz:ds/a149-carbon-sequestration-potential-from-reforestatio",
@@ -3652,7 +4874,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1532
+        }
+      ]
     },
     {
       "id": "uz:ds/a150-forest-canopy-closure",
@@ -3685,7 +4922,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1109
+        }
+      ]
     },
     {
       "id": "uz:ds/a151-forest-age",
@@ -3718,7 +4970,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1109
+        }
+      ]
     },
     {
       "id": "uz:ds/a152-forest-landscape-integrity-index",
@@ -3754,7 +5021,21 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/a153-forest-cover-change-19822016",
@@ -3790,7 +5071,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3735
+        }
+      ]
     },
     {
       "id": "uz:ds/a158-physical-geographic-regions",
@@ -3816,7 +5112,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3411
+        }
+      ]
     },
     {
       "id": "uz:ds/a159-landscapes",
@@ -3842,7 +5153,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3926
+        }
+      ]
     },
     {
       "id": "uz:ds/a160-landscape-structure",
@@ -3871,7 +5197,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3950
+        }
+      ]
     },
     {
       "id": "uz:ds/a161-plant-formations",
@@ -3900,7 +5247,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3950
+        }
+      ]
     },
     {
       "id": "uz:ds/a162-vegetation",
@@ -3926,7 +5294,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3945
+        }
+      ]
     },
     {
       "id": "uz:ds/a163-zoogeographic-regions",
@@ -3959,7 +5342,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3422
+        }
+      ]
     },
     {
       "id": "uz:ds/a164-bird-species-richness",
@@ -3995,7 +5393,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3917
+        }
+      ]
     },
     {
       "id": "uz:ds/a165-habitat-diversity-index",
@@ -4028,7 +5447,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3692
+        }
+      ]
     },
     {
       "id": "uz:ds/a166-mammal-species-richness",
@@ -4070,7 +5504,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3917
+        }
+      ]
     },
     {
       "id": "uz:ds/a167-useful-plants",
@@ -4103,7 +5558,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 361
+        }
+      ]
     },
     {
       "id": "uz:ds/a168-game-birds",
@@ -4129,7 +5599,8 @@
       "extent": null,
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": []
     },
     {
       "id": "uz:ds/a169-game-mammals",
@@ -4165,7 +5636,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 4,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 2015
+        }
+      ]
     },
     {
       "id": "uz:ds/a170-biodiversity-intactness-index",
@@ -4198,7 +5690,22 @@
       ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1036
+        }
+      ]
     },
     {
       "id": "uz:ds/a171-fish",
@@ -4231,7 +5738,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 154
+        }
+      ]
     },
     {
       "id": "uz:ds/a172-reptiles",
@@ -4264,7 +5786,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 223
+        }
+      ]
     },
     {
       "id": "uz:ds/a173-mammals",
@@ -4297,7 +5834,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 361
+        }
+      ]
     },
     {
       "id": "uz:ds/a174-plants",
@@ -4323,7 +5875,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 10
+        }
+      ]
     },
     {
       "id": "uz:ds/a175-invertebrates",
@@ -4356,7 +5923,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 198
+        }
+      ]
     },
     {
       "id": "uz:ds/a176-birds",
@@ -4389,7 +5971,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 492
+        }
+      ]
     },
     {
       "id": "uz:ds/a185-protected-area-types",
@@ -4424,7 +6021,22 @@
       ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 1036
+        }
+      ]
     },
     {
       "id": "uz:ds/a186-ecoregions",
@@ -4457,7 +6069,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3834
+        }
+      ]
     },
     {
       "id": "uz:ds/a187-protected-areas-and-key-biodiversity-areas",
@@ -4492,7 +6119,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 582
+        }
+      ]
     },
     {
       "id": "uz:ds/a188-nature-conservation",
@@ -4536,7 +6178,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3950
+        }
+      ]
     },
     {
       "id": "uz:ds/a189-conservation-value-index",
@@ -4574,7 +6237,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3981
+        }
+      ]
     },
     {
       "id": "uz:ds/a190-ecosystem-bioclimatic-resilience",
@@ -4600,7 +6284,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3692
+        }
+      ]
     },
     {
       "id": "uz:ds/a191-habitat-dynamics-index",
@@ -4633,7 +6332,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3692
+        }
+      ]
     },
     {
       "id": "uz:ds/a197-hypsometric-map",
@@ -4669,7 +6383,21 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/a198-geomorphology",
@@ -4702,7 +6430,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3395
+        }
+      ]
     },
     {
       "id": "uz:ds/a201-palmer-drought-severity-index-2000",
@@ -4740,7 +6483,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a201-palmer-drought-severity-index-2001",
@@ -4778,7 +6536,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a202-palmer-drought-severity-index-2008",
@@ -4816,7 +6589,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a202-palmer-drought-severity-index-2011",
@@ -4854,7 +6642,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a202-palmer-drought-severity-index-2018",
@@ -4892,7 +6695,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a202-palmer-drought-severity-index-2020",
@@ -4930,7 +6748,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a203-palmer-drought-severity-index-2021",
@@ -4968,7 +6801,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a203-palmer-drought-severity-index-2022",
@@ -5006,7 +6854,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a203-palmer-drought-severity-index-2023",
@@ -5044,7 +6907,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a203-palmer-drought-severity-index-2024",
@@ -5082,7 +6960,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3621
+        }
+      ]
     },
     {
       "id": "uz:ds/a204-exposure-to-adverse-geodynamic-processes",
@@ -5108,7 +7001,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 445
+        }
+      ]
     },
     {
       "id": "uz:ds/a205-earthquakes-19902024",
@@ -5149,7 +7057,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 217
+        }
+      ]
     },
     {
       "id": "uz:ds/a206-mudflow-zones",
@@ -5184,7 +7113,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 939
+        }
+      ]
     },
     {
       "id": "uz:ds/a207-flood-risk",
@@ -5219,7 +7163,22 @@
       ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a208-flood-extent",
@@ -5255,7 +7214,28 @@
         "extent-exceeds-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/central-asia"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3952
+        }
+      ]
     },
     {
       "id": "uz:ds/a209-glacier-ice-volume",
@@ -5288,7 +7268,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3946
+        }
+      ]
     },
     {
       "id": "uz:ds/a213-economic-losses-from-floods-and-earthquakes",
@@ -5323,7 +7318,22 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
       "id": "uz:ds/a214-flood-and-earthquake-fatalities",
@@ -5358,11 +7368,370 @@
       ],
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3957
+        }
+      ]
     },
     {
-      "id": "uz:ds/basinatlas-uz-v10",
-      "label": "Uzbekistan BasinATLAS extraction",
+      "id": "uz:ds/x-forest-cover",
+      "label": "Forest cover",
+      "sourceTitle": "Покрытие_лесами",
+      "atlasNumber": null,
+      "catalogId": "atlas-134",
+      "theme": "uz:theme/forests-carbon",
+      "analysis": null,
+      "observes": [
+        {
+          "concept": "uz:prop/forest-cover",
+          "confidence": 0.75,
+          "by": "uz:agent/rule-lexical-v1",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "license": null,
+      "attribution": null,
+      "extent": [
+        55.99822,
+        37.17149,
+        73.14788,
+        45.59007
+      ],
+      "flags": [],
+      "distributions": 3,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversBasin",
+          "mode": "measured",
+          "detail": "BasinATLAS level 12",
+          "links": 3981
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/x-uzbekistan-national-atlas-environmental-atlas",
+      "label": "Uzbekistan - National Atlas, Environmental Atlas",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": null,
+      "analysis": null,
+      "observes": [],
+      "useCases": [],
+      "places": [],
+      "temporal": null,
+      "license": null,
+      "attribution": null,
+      "extent": null,
+      "flags": [],
+      "distributions": 3,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/osm-buildings",
+      "label": "OSM building footprints",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/building-footprint",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/settlement-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
+      "extent": [
+        55.97842,
+        37.21164,
+        73.11172,
+        45.15597
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/osm-landuse",
+      "label": "OSM land use",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/land-use-type",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
+      "extent": [
+        55.97813,
+        37.19822,
+        73.13119,
+        45.17247
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/osm-natural",
+      "label": "OSM natural features",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/land-cover",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
+      "extent": [
+        57.02493,
+        36.95588,
+        73.20087,
+        46.00791
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/osm-places",
+      "label": "OSM populated places",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/settlement-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
+      "extent": [
+        56.19536,
+        37.20111,
+        73.06099,
+        45.1546
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/osm-points",
+      "label": "OSM points of interest",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/point-of-interest",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
+      "extent": [
+        55.97154,
+        37.02959,
+        73.04246,
+        44.8971
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/osm-railways",
+      "label": "OSM railways",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/railway-network",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
+      "extent": [
+        55.74277,
+        37.02959,
+        72.99965,
+        45.03026
+      ],
+      "flags": [],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/osm-waterways",
+      "label": "OSM waterways",
       "sourceTitle": null,
       "atlasNumber": null,
       "catalogId": null,
@@ -5370,68 +7739,48 @@
       "analysis": "uz:analysis/environmental-feature",
       "observes": [
         {
-          "concept": "uz:prop/surface-runoff",
+          "concept": "uz:prop/surface-water-extent",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
         },
         {
-          "concept": "uz:prop/road-density",
+          "concept": "uz:prop/irrigation-canal-network",
           "confidence": 1.0,
-          "by": "uz:agent/extraction-pipeline",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/river-network",
-          "confidence": 1.0,
-          "by": "uz:agent/extraction-pipeline",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/pasture-vegetation",
-          "confidence": 1.0,
-          "by": "uz:agent/extraction-pipeline",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/vegetation-formation",
-          "confidence": 1.0,
-          "by": "uz:agent/extraction-pipeline",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/surface-water-extent",
-          "confidence": 1.0,
-          "by": "uz:agent/extraction-pipeline",
+          "by": "uz:agent/curator",
           "reviewed": false
         }
       ],
       "useCases": [
-        "uz:usecase/carbon-accounting",
-        "uz:usecase/conservation-planning",
-        "uz:usecase/drought-early-warning",
         "uz:usecase/irrigation-planning",
-        "uz:usecase/land-degradation-monitoring",
-        "uz:usecase/urban-and-settlement-planning",
         "uz:usecase/water-resource-allocation"
       ],
       "places": [
         "uz:place/uzbekistan"
       ],
-      "temporal": null,
-      "license": "hydrosheds-license-agreement",
-      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
       "extent": [
-        55.99663,
-        37.18433,
-        73.13227,
-        45.60519
+        57.60774,
+        36.92503,
+        73.43853,
+        44.14296
       ],
-      "flags": [
-        "licence-terms-to-confirm-before-redistribution"
-      ],
-      "distributions": 37,
-      "related": []
+      "flags": [],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cadastre-agriculture-fields",
@@ -5478,7 +7827,15 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cadastre-apartment-housing",
@@ -5490,13 +7847,13 @@
       "analysis": "uz:analysis/environmental-feature",
       "observes": [
         {
-          "concept": "uz:prop/land-tenure",
+          "concept": "uz:prop/building-footprint",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
         },
         {
-          "concept": "uz:prop/building-footprint",
+          "concept": "uz:prop/land-tenure",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
@@ -5524,7 +7881,15 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cadastre-buildings",
@@ -5564,7 +7929,15 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cadastre-forest-agency-lands",
@@ -5611,135 +7984,15 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/cadastre-highways",
-      "label": "Cadastre: highways",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/infrastructure",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
+      "related": [],
+      "geographies": [
         {
-          "concept": "uz:prop/road-network",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
         }
-      ],
-      "useCases": [
-        "uz:usecase/urban-and-settlement-planning"
-      ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2025,
-        "end": 2025
-      },
-      "license": "restricted-internal",
-      "attribution": "State cadastre (UZKAD) extraction, August 2025",
-      "extent": [
-        56.18238,
-        37.20023,
-        73.02663,
-        44.78315
-      ],
-      "flags": [
-        "licence-not-cleared-for-publication"
-      ],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/cadastre-land-stock",
-      "label": "Cadastre: land stock",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/resource-system",
-      "observes": [
-        {
-          "concept": "uz:prop/cadastral-parcel",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/land-tenure",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2025,
-        "end": 2025
-      },
-      "license": "restricted-internal",
-      "attribution": "State cadastre (UZKAD) extraction, August 2025",
-      "extent": [
-        55.99879,
-        37.19226,
-        73.06243,
-        45.58823
-      ],
-      "flags": [
-        "licence-not-cleared-for-publication"
-      ],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/cadastre-non-residential",
-      "label": "Cadastre: non-residential parcels",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/infrastructure",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
-        {
-          "concept": "uz:prop/land-tenure",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/building-footprint",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2025,
-        "end": 2025
-      },
-      "license": "restricted-internal",
-      "attribution": "State cadastre (UZKAD) extraction, August 2025",
-      "extent": [
-        56.01118,
-        37.20086,
-        73.05241,
-        44.88742
-      ],
-      "flags": [
-        "licence-not-cleared-for-publication"
-      ],
-      "distributions": 1,
-      "related": []
+      ]
     },
     {
       "id": "uz:ds/cadastre-private-plots",
@@ -5783,7 +8036,167 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/cadastre-highways",
+      "label": "Cadastre: highways",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/road-network",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "license": "restricted-internal",
+      "attribution": "State cadastre (UZKAD) extraction, August 2025",
+      "extent": [
+        56.18238,
+        37.20023,
+        73.02663,
+        44.78315
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/cadastre-land-stock",
+      "label": "Cadastre: land stock",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/resource-system",
+      "observes": [
+        {
+          "concept": "uz:prop/land-tenure",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/cadastral-parcel",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "license": "restricted-internal",
+      "attribution": "State cadastre (UZKAD) extraction, August 2025",
+      "extent": [
+        55.99879,
+        37.19226,
+        73.06243,
+        45.58823
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/cadastre-non-residential",
+      "label": "Cadastre: non-residential parcels",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/infrastructure",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/land-tenure",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/building-footprint",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "license": "restricted-internal",
+      "attribution": "State cadastre (UZKAD) extraction, August 2025",
+      "extent": [
+        56.01118,
+        37.20086,
+        73.05241,
+        44.88742
+      ],
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cadastre-protected-areas",
@@ -5823,7 +8236,15 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cadastre-railways",
@@ -5861,7 +8282,15 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cadastre-shared-lands",
@@ -5899,7 +8328,15 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cadastre-water",
@@ -5939,576 +8376,68 @@
         "licence-not-cleared-for-publication"
       ],
       "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/crop-production-2005-2021",
-      "label": "Crop production bulletins, 2005-2021",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
+      "related": [],
+      "geographies": [
         {
-          "concept": "uz:prop/crop-yield",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/gross-harvest",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/sown-area",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
         }
-      ],
-      "useCases": [],
-      "places": [],
-      "temporal": {
-        "start": 2005,
-        "end": 2021
-      },
-      "license": "restricted-internal",
-      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
-      "extent": null,
-      "flags": [
-        "originating-agency-unconfirmed"
-      ],
-      "distributions": 27,
-      "related": []
-    },
-    {
-      "id": "uz:ds/crop-statistics-2005-2011",
-      "label": "Crop statistics, all land, 2005-2011",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
-        {
-          "concept": "uz:prop/sown-area",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/crop-yield",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/gross-harvest",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [],
-      "places": [],
-      "temporal": {
-        "start": 2005,
-        "end": 2011
-      },
-      "license": "restricted-internal",
-      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
-      "extent": null,
-      "flags": [
-        "originating-agency-unconfirmed"
-      ],
-      "distributions": 3,
-      "related": []
-    },
-    {
-      "id": "uz:ds/crop-statistics-2012-2020",
-      "label": "Crop statistics, all and irrigated land, 2012-2020",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
-        {
-          "concept": "uz:prop/sown-area",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/irrigated-area",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/crop-yield",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/gross-harvest",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/irrigation-planning",
-        "uz:usecase/land-degradation-monitoring"
-      ],
-      "places": [],
-      "temporal": {
-        "start": 2012,
-        "end": 2020
-      },
-      "license": "restricted-internal",
-      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
-      "extent": null,
-      "flags": [
-        "originating-agency-unconfirmed"
-      ],
-      "distributions": 18,
-      "related": []
-    },
-    {
-      "id": "uz:ds/crop-statistics-irrigated-2005-2011",
-      "label": "Crop statistics, irrigated land, 2005-2011",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
-        {
-          "concept": "uz:prop/irrigated-area",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/sown-area",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/gross-harvest",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/crop-yield",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/irrigation-planning"
-      ],
-      "places": [],
-      "temporal": {
-        "start": 2005,
-        "end": 2011
-      },
-      "license": "restricted-internal",
-      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
-      "extent": null,
-      "flags": [
-        "originating-agency-unconfirmed"
-      ],
-      "distributions": 3,
-      "related": []
-    },
-    {
-      "id": "uz:ds/fertiliser-application-2007-2020",
-      "label": "Fertiliser application, 2007-2020",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
-        {
-          "concept": "uz:prop/fertiliser-application",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/land-degradation-monitoring"
-      ],
-      "places": [],
-      "temporal": {
-        "start": 2007,
-        "end": 2020
-      },
-      "license": "restricted-internal",
-      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
-      "extent": null,
-      "flags": [
-        "originating-agency-unconfirmed"
-      ],
-      "distributions": 31,
-      "related": []
-    },
-    {
-      "id": "uz:ds/hydrobasins-level12-uzbekistan",
-      "label": "HydroBASINS level-12 catchments — Uzbekistan",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/water",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
-        {
-          "concept": "uz:prop/drainage-basin",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/water-resource-allocation"
-      ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": null,
-      "license": "HydroSHEDS free data licence",
-      "attribution": "HydroSHEDS (Lehner, Grill et al.) and HydroLAKES (Messager et al.)",
-      "extent": [
-        55.99664,
-        37.18433,
-        73.13227,
-        45.60519
-      ],
-      "flags": [],
-      "distributions": 3,
-      "related": [
-        "uz:ds/hydrorivers-uzbekistan",
-        "uz:ds/hydrolakes-uzbekistan"
       ]
     },
     {
-      "id": "uz:ds/hydrobasins-uz-lake-v1c",
-      "label": "Uzbekistan HydroBASINS extraction (lake format)",
+      "id": "uz:ds/tashkent-city-boundary",
+      "label": "Tashkent city boundary",
       "sourceTitle": null,
       "atlasNumber": null,
       "catalogId": null,
-      "theme": "uz:theme/water",
+      "theme": "uz:theme/infrastructure",
       "analysis": "uz:analysis/environmental-feature",
       "observes": [
         {
-          "concept": "uz:prop/surface-water-extent",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/drainage-basin",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/irrigation-planning",
-        "uz:usecase/water-resource-allocation"
-      ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": null,
-      "license": "hydrosheds-license-agreement",
-      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
-      "extent": [
-        55.99663,
-        37.18433,
-        73.13227,
-        45.60519
-      ],
-      "flags": [
-        "licence-terms-to-confirm-before-redistribution"
-      ],
-      "distributions": 25,
-      "related": []
-    },
-    {
-      "id": "uz:ds/hydrolakes-uzbekistan",
-      "label": "HydroLAKES water bodies — Uzbekistan",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/water",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
-        {
-          "concept": "uz:prop/reservoir-volume",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/surface-water-extent",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/elevation",
-          "confidence": 0.75,
-          "by": "uz:agent/rule-lexical-v1",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/water-resource-allocation"
-      ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": null,
-      "license": "HydroSHEDS free data licence",
-      "attribution": "HydroSHEDS (Lehner, Grill et al.) and HydroLAKES (Messager et al.)",
-      "extent": [
-        55.99664,
-        37.18433,
-        73.13227,
-        45.60519
-      ],
-      "flags": [],
-      "distributions": 4,
-      "related": [
-        "uz:ds/hydrobasins-level12-uzbekistan",
-        "uz:ds/hydrorivers-uzbekistan"
-      ]
-    },
-    {
-      "id": "uz:ds/hydrorivers-uzbekistan",
-      "label": "HydroRIVERS river network — Uzbekistan",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/water",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
-        {
-          "concept": "uz:prop/river-network",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/river-discharge",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/water-resource-allocation"
-      ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": null,
-      "license": "HydroSHEDS free data licence",
-      "attribution": "HydroSHEDS (Lehner, Grill et al.) and HydroLAKES (Messager et al.)",
-      "extent": [
-        55.99664,
-        37.18433,
-        73.13227,
-        45.60519
-      ],
-      "flags": [],
-      "distributions": 5,
-      "related": [
-        "uz:ds/hydrobasins-level12-uzbekistan",
-        "uz:ds/hydrolakes-uzbekistan"
-      ]
-    },
-    {
-      "id": "uz:ds/hydrosheds-basinatlas-global",
-      "label": "BasinATLAS v1.0 (global source)",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/water",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
-        {
-          "concept": "uz:prop/drainage-basin",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/water-resource-allocation"
-      ],
-      "places": [],
-      "temporal": null,
-      "license": "hydrosheds-license-agreement",
-      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
-      "extent": null,
-      "flags": [
-        "licence-terms-to-confirm-before-redistribution"
-      ],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/hydrosheds-hydrolakes-global",
-      "label": "HydroLAKES v1.0 (global source)",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/water",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
-        {
-          "concept": "uz:prop/surface-water-extent",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/reservoir-volume",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/water-resource-allocation"
-      ],
-      "places": [],
-      "temporal": null,
-      "license": "hydrosheds-license-agreement",
-      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
-      "extent": null,
-      "flags": [
-        "licence-terms-to-confirm-before-redistribution"
-      ],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/hydrosheds-hydrorivers-asia",
-      "label": "HydroRIVERS v1.0 (Asia source)",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/water",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
-        {
-          "concept": "uz:prop/river-network",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/surface-runoff",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/water-resource-allocation"
-      ],
-      "places": [],
-      "temporal": null,
-      "license": "hydrosheds-license-agreement",
-      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
-      "extent": null,
-      "flags": [
-        "licence-terms-to-confirm-before-redistribution"
-      ],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/kamchik-pass-climate-series",
-      "label": "Kamchik pass temperature and precipitation",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/climate",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
-        {
-          "concept": "uz:prop/air-temperature",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/precipitation",
+          "concept": "uz:prop/administrative-boundary",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
         }
       ],
       "useCases": [],
-      "places": [],
-      "temporal": null,
-      "license": "restricted-internal",
-      "attribution": "Uzhydromet, delivery of 2022-05-26",
-      "extent": null,
-      "flags": [],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/land-use-statistics-2005-2020",
-      "label": "Land-use statistics, 2005-2020",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
-        {
-          "concept": "uz:prop/cropland-extent",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        },
-        {
-          "concept": "uz:prop/land-use-type",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
+      "places": [
+        "uz:place/tashkent-city",
+        "uz:place/uzbekistan"
       ],
-      "useCases": [],
-      "places": [],
       "temporal": {
-        "start": 2005,
-        "end": 2020
+        "start": 2025,
+        "end": 2025
       },
       "license": "restricted-internal",
-      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
-      "extent": null,
-      "flags": [
-        "originating-agency-unconfirmed"
+      "attribution": "State cadastre (UZKAD) extraction, August 2025",
+      "extent": [
+        69.12223,
+        41.16362,
+        69.46989,
+        41.42248
       ],
-      "distributions": 2,
-      "related": []
+      "flags": [
+        "licence-not-cleared-for-publication"
+      ],
+      "distributions": 1,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/tashkent-city"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/landcover-training-samples",
@@ -6555,7 +8484,15 @@
         "severe-class-imbalance"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/meteorological-station-network",
@@ -6593,239 +8530,120 @@
         "stations-missing-coordinates"
       ],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
-      "id": "uz:ds/osm-buildings",
-      "label": "OSM building footprints",
+      "id": "uz:ds/station-air-temperature-series",
+      "label": "Station air-temperature series",
       "sourceTitle": null,
       "atlasNumber": null,
       "catalogId": null,
-      "theme": "uz:theme/infrastructure",
-      "analysis": "uz:analysis/environmental-feature",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
       "observes": [
         {
-          "concept": "uz:prop/building-footprint",
+          "concept": "uz:prop/air-temperature",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
         },
         {
-          "concept": "uz:prop/settlement-extent",
+          "concept": "uz:prop/monitoring-station",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
         }
       ],
       "useCases": [
-        "uz:usecase/urban-and-settlement-planning"
+        "uz:usecase/drought-early-warning"
       ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2014,
-        "end": 2014
-      },
-      "license": "ODbL-1.0",
-      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
-      "extent": [
-        55.97842,
-        37.21164,
-        73.11172,
-        45.15597
-      ],
+      "places": [],
+      "temporal": null,
+      "license": "restricted-internal",
+      "attribution": "Uzhydromet, delivery of 2022-05-26",
+      "extent": null,
       "flags": [],
-      "distributions": 1,
-      "related": []
+      "distributions": 7,
+      "related": [],
+      "geographies": []
     },
     {
-      "id": "uz:ds/osm-landuse",
-      "label": "OSM land use",
+      "id": "uz:ds/station-soil-temperature-series",
+      "label": "Station soil-temperature series",
       "sourceTitle": null,
       "atlasNumber": null,
       "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/environmental-feature",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
       "observes": [
         {
-          "concept": "uz:prop/land-use-type",
+          "concept": "uz:prop/soil-temperature",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/urban-and-settlement-planning"
-      ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2014,
-        "end": 2014
-      },
-      "license": "ODbL-1.0",
-      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
-      "extent": [
-        55.97813,
-        37.19822,
-        73.13119,
-        45.17247
-      ],
-      "flags": [],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/osm-natural",
-      "label": "OSM natural features",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/land-agriculture",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
+        },
         {
-          "concept": "uz:prop/land-cover",
+          "concept": "uz:prop/monitoring-station",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
         }
       ],
       "useCases": [],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2014,
-        "end": 2014
-      },
-      "license": "ODbL-1.0",
-      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
-      "extent": [
-        57.02493,
-        36.95588,
-        73.20087,
-        46.00791
-      ],
+      "places": [],
+      "temporal": null,
+      "license": "restricted-internal",
+      "attribution": "Uzhydromet, delivery of 2022-05-26",
+      "extent": null,
       "flags": [],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": []
     },
     {
-      "id": "uz:ds/osm-places",
-      "label": "OSM populated places",
+      "id": "uz:ds/kamchik-pass-climate-series",
+      "label": "Kamchik pass temperature and precipitation",
       "sourceTitle": null,
       "atlasNumber": null,
       "catalogId": null,
-      "theme": "uz:theme/infrastructure",
-      "analysis": "uz:analysis/environmental-feature",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/change-over-time",
       "observes": [
         {
-          "concept": "uz:prop/settlement-extent",
+          "concept": "uz:prop/air-temperature",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/urban-and-settlement-planning"
-      ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2014,
-        "end": 2014
-      },
-      "license": "ODbL-1.0",
-      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
-      "extent": [
-        56.19536,
-        37.20111,
-        73.06099,
-        45.1546
-      ],
-      "flags": [],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/osm-points",
-      "label": "OSM points of interest",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/infrastructure",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
+        },
         {
-          "concept": "uz:prop/point-of-interest",
+          "concept": "uz:prop/precipitation",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
         }
       ],
       "useCases": [],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2014,
-        "end": 2014
-      },
-      "license": "ODbL-1.0",
-      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
-      "extent": [
-        55.97154,
-        37.02959,
-        73.04246,
-        44.8971
-      ],
+      "places": [],
+      "temporal": null,
+      "license": "restricted-internal",
+      "attribution": "Uzhydromet, delivery of 2022-05-26",
+      "extent": null,
       "flags": [],
       "distributions": 1,
-      "related": []
+      "related": [],
+      "geographies": []
     },
     {
-      "id": "uz:ds/osm-railways",
-      "label": "OSM railways",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/infrastructure",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
-        {
-          "concept": "uz:prop/railway-network",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2014,
-        "end": 2014
-      },
-      "license": "ODbL-1.0",
-      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
-      "extent": [
-        55.74277,
-        37.02959,
-        72.99965,
-        45.03026
-      ],
-      "flags": [],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/osm-waterways",
-      "label": "OSM waterways",
+      "id": "uz:ds/river-gauge-inventory",
+      "label": "River gauge inventory",
       "sourceTitle": null,
       "atlasNumber": null,
       "catalogId": null,
@@ -6833,13 +8651,61 @@
       "analysis": "uz:analysis/environmental-feature",
       "observes": [
         {
-          "concept": "uz:prop/irrigation-canal-network",
+          "concept": "uz:prop/river-discharge",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
         },
         {
-          "concept": "uz:prop/surface-water-extent",
+          "concept": "uz:prop/monitoring-station",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/disaster-risk-reduction",
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [],
+      "temporal": null,
+      "license": "restricted-internal",
+      "attribution": "Uzhydromet, delivery of 2022-05-26",
+      "extent": null,
+      "flags": [],
+      "distributions": 2,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/crop-statistics-2012-2020",
+      "label": "Crop statistics, all and irrigated land, 2012-2020",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/sown-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/gross-harvest",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/crop-yield",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/irrigated-area",
           "confidence": 1.0,
           "by": "uz:agent/curator",
           "reviewed": false
@@ -6847,26 +8713,234 @@
       ],
       "useCases": [
         "uz:usecase/irrigation-planning",
-        "uz:usecase/water-resource-allocation"
+        "uz:usecase/land-degradation-monitoring"
       ],
-      "places": [
-        "uz:place/uzbekistan"
-      ],
+      "places": [],
       "temporal": {
-        "start": 2014,
-        "end": 2014
+        "start": 2012,
+        "end": 2020
       },
-      "license": "ODbL-1.0",
-      "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
-      "extent": [
-        57.60774,
-        36.92503,
-        73.43853,
-        44.14296
+      "license": "restricted-internal",
+      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
       ],
-      "flags": [],
-      "distributions": 1,
-      "related": []
+      "distributions": 18,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/crop-statistics-2005-2011",
+      "label": "Crop statistics, all land, 2005-2011",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/sown-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/gross-harvest",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/crop-yield",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": {
+        "start": 2005,
+        "end": 2011
+      },
+      "license": "restricted-internal",
+      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 3,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/crop-statistics-irrigated-2005-2011",
+      "label": "Crop statistics, irrigated land, 2005-2011",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/sown-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/gross-harvest",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/crop-yield",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/irrigated-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning"
+      ],
+      "places": [],
+      "temporal": {
+        "start": 2005,
+        "end": 2011
+      },
+      "license": "restricted-internal",
+      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 3,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/crop-production-2005-2021",
+      "label": "Crop production bulletins, 2005-2021",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/gross-harvest",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/crop-yield",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/sown-area",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": {
+        "start": 2005,
+        "end": 2021
+      },
+      "license": "restricted-internal",
+      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 27,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/fertiliser-application-2007-2020",
+      "label": "Fertiliser application, 2007-2020",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/fertiliser-application",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/land-degradation-monitoring"
+      ],
+      "places": [],
+      "temporal": {
+        "start": 2007,
+        "end": 2020
+      },
+      "license": "restricted-internal",
+      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 31,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/land-use-statistics-2005-2020",
+      "label": "Land-use statistics, 2005-2020",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/land-agriculture",
+      "analysis": "uz:analysis/change-over-time",
+      "observes": [
+        {
+          "concept": "uz:prop/land-use-type",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/cropland-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [],
+      "temporal": {
+        "start": 2005,
+        "end": 2020
+      },
+      "license": "restricted-internal",
+      "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
+      "extent": null,
+      "flags": [
+        "originating-agency-unconfirmed"
+      ],
+      "distributions": 2,
+      "related": [],
+      "geographies": []
     },
     {
       "id": "uz:ds/regional-evapotranspiration-2020",
@@ -6914,147 +8988,87 @@
         "originating-agency-unconfirmed"
       ],
       "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/river-gauge-inventory",
-      "label": "River gauge inventory",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/water",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
+      "related": [],
+      "geographies": [
         {
-          "concept": "uz:prop/monitoring-station",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/andijan"
         },
         {
-          "concept": "uz:prop/river-discharge",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/disaster-risk-reduction",
-        "uz:usecase/water-resource-allocation"
-      ],
-      "places": [],
-      "temporal": null,
-      "license": "restricted-internal",
-      "attribution": "Uzhydromet, delivery of 2022-05-26",
-      "extent": null,
-      "flags": [],
-      "distributions": 2,
-      "related": []
-    },
-    {
-      "id": "uz:ds/station-air-temperature-series",
-      "label": "Station air-temperature series",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/climate",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
-        {
-          "concept": "uz:prop/monitoring-station",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/bukhara"
         },
         {
-          "concept": "uz:prop/air-temperature",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [
-        "uz:usecase/drought-early-warning"
-      ],
-      "places": [],
-      "temporal": null,
-      "license": "restricted-internal",
-      "attribution": "Uzhydromet, delivery of 2022-05-26",
-      "extent": null,
-      "flags": [],
-      "distributions": 7,
-      "related": []
-    },
-    {
-      "id": "uz:ds/station-soil-temperature-series",
-      "label": "Station soil-temperature series",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/climate",
-      "analysis": "uz:analysis/change-over-time",
-      "observes": [
-        {
-          "concept": "uz:prop/monitoring-station",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/fergana"
         },
         {
-          "concept": "uz:prop/soil-temperature",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
-        }
-      ],
-      "useCases": [],
-      "places": [],
-      "temporal": null,
-      "license": "restricted-internal",
-      "attribution": "Uzhydromet, delivery of 2022-05-26",
-      "extent": null,
-      "flags": [],
-      "distributions": 1,
-      "related": []
-    },
-    {
-      "id": "uz:ds/tashkent-city-boundary",
-      "label": "Tashkent city boundary",
-      "sourceTitle": null,
-      "atlasNumber": null,
-      "catalogId": null,
-      "theme": "uz:theme/infrastructure",
-      "analysis": "uz:analysis/environmental-feature",
-      "observes": [
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/jizzakh"
+        },
         {
-          "concept": "uz:prop/administrative-boundary",
-          "confidence": 1.0,
-          "by": "uz:agent/curator",
-          "reviewed": false
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/karakalpakstan"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/kashkadarya"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/khorezm"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/namangan"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/navoi"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/samarkand"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/surkhandarya"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/syrdarya"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/tashkent-region"
         }
-      ],
-      "useCases": [],
-      "places": [
-        "uz:place/tashkent-city",
-        "uz:place/uzbekistan"
-      ],
-      "temporal": {
-        "start": 2025,
-        "end": 2025
-      },
-      "license": "restricted-internal",
-      "attribution": "State cadastre (UZKAD) extraction, August 2025",
-      "extent": [
-        69.12223,
-        41.16362,
-        69.46989,
-        41.42248
-      ],
-      "flags": [
-        "licence-not-cleared-for-publication"
-      ],
-      "distributions": 1,
-      "related": []
+      ]
     },
     {
       "id": "uz:ds/uzhydromet-survey-responses",
@@ -7076,59 +9090,402 @@
         "out-of-scope-for-the-portal"
       ],
       "distributions": 9,
-      "related": []
+      "related": [],
+      "geographies": []
     },
     {
-      "id": "uz:ds/x-forest-cover",
-      "label": "Forest cover",
-      "sourceTitle": "Покрытие_лесами",
+      "id": "uz:ds/hydrosheds-basinatlas-global",
+      "label": "BasinATLAS v1.0 (global source)",
+      "sourceTitle": null,
       "atlasNumber": null,
-      "catalogId": "atlas-134",
-      "theme": "uz:theme/forests-carbon",
-      "analysis": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
       "observes": [
         {
-          "concept": "uz:prop/forest-cover",
+          "concept": "uz:prop/drainage-basin",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": null,
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 1,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/hydrosheds-hydrolakes-global",
+      "label": "HydroLAKES v1.0 (global source)",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/surface-water-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/reservoir-volume",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": null,
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 1,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/hydrosheds-hydrorivers-asia",
+      "label": "HydroRIVERS v1.0 (Asia source)",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/river-network",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/surface-runoff",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": null,
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 1,
+      "related": [],
+      "geographies": []
+    },
+    {
+      "id": "uz:ds/hydrobasins-uz-lake-v1c",
+      "label": "Uzbekistan HydroBASINS extraction (lake format)",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/drainage-basin",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/surface-water-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/irrigation-planning",
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": [
+        55.99663,
+        37.18433,
+        73.13227,
+        45.60519
+      ],
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 25,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/basinatlas-uz-v10",
+      "label": "Uzbekistan BasinATLAS extraction",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/drainage-basin",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/surface-runoff",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/air-temperature",
+          "confidence": 1.0,
+          "by": "uz:agent/extraction-pipeline",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/climate-classification",
+          "confidence": 1.0,
+          "by": "uz:agent/extraction-pipeline",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/climatic-water-deficit",
+          "confidence": 1.0,
+          "by": "uz:agent/extraction-pipeline",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/cropland-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/extraction-pipeline",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/carbon-accounting",
+        "uz:usecase/conservation-planning",
+        "uz:usecase/drought-early-warning",
+        "uz:usecase/irrigation-planning",
+        "uz:usecase/land-degradation-monitoring",
+        "uz:usecase/urban-and-settlement-planning",
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "license": "hydrosheds-license-agreement",
+      "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
+      "extent": [
+        55.99663,
+        37.18433,
+        73.13227,
+        45.60519
+      ],
+      "flags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "distributions": 37,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/hydrorivers-uzbekistan",
+      "label": "HydroRIVERS river network — Uzbekistan",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/river-network",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/river-discharge",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": null,
+      "license": "HydroSHEDS free data licence",
+      "attribution": "HydroSHEDS (Lehner, Grill et al.), BasinATLAS (Linke, Lehner et al.) and HydroLAKES (Messager et al.)",
+      "extent": [
+        55.99664,
+        37.18433,
+        73.13227,
+        45.60519
+      ],
+      "flags": [],
+      "distributions": 5,
+      "related": [
+        "uz:ds/hydrolakes-uzbekistan",
+        "uz:ds/hydrobasins-level12-uzbekistan"
+      ],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/hydrolakes-uzbekistan",
+      "label": "HydroLAKES water bodies — Uzbekistan",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/surface-water-extent",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/reservoir-volume",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/elevation",
           "confidence": 0.75,
           "by": "uz:agent/rule-lexical-v1",
           "reviewed": false
         }
       ],
-      "useCases": [],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
       "places": [
         "uz:place/uzbekistan"
       ],
       "temporal": null,
-      "license": null,
-      "attribution": null,
+      "license": "HydroSHEDS free data licence",
+      "attribution": "HydroSHEDS (Lehner, Grill et al.), BasinATLAS (Linke, Lehner et al.) and HydroLAKES (Messager et al.)",
       "extent": [
-        55.99822,
-        37.17149,
-        73.14788,
-        45.59007
+        55.99664,
+        37.18433,
+        73.13227,
+        45.60519
       ],
       "flags": [],
-      "distributions": 3,
-      "related": []
+      "distributions": 4,
+      "related": [
+        "uz:ds/hydrorivers-uzbekistan",
+        "uz:ds/hydrobasins-level12-uzbekistan"
+      ],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
-      "id": "uz:ds/x-uzbekistan-national-atlas-environmental-atlas",
-      "label": "Uzbekistan - National Atlas, Environmental Atlas",
+      "id": "uz:ds/hydrobasins-level12-uzbekistan",
+      "label": "HydroBASINS level-12 catchments — Uzbekistan",
       "sourceTitle": null,
       "atlasNumber": null,
       "catalogId": null,
-      "theme": null,
-      "analysis": null,
-      "observes": [],
-      "useCases": [],
-      "places": [],
+      "theme": "uz:theme/water",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/drainage-basin",
+          "confidence": 1.0,
+          "by": "uz:agent/curator",
+          "reviewed": false
+        }
+      ],
+      "useCases": [
+        "uz:usecase/water-resource-allocation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
       "temporal": null,
-      "license": null,
-      "attribution": null,
-      "extent": null,
+      "license": "HydroSHEDS free data licence",
+      "attribution": "HydroSHEDS (Lehner, Grill et al.), BasinATLAS (Linke, Lehner et al.) and HydroLAKES (Messager et al.)",
+      "extent": [
+        55.99664,
+        37.18433,
+        73.13227,
+        45.60519
+      ],
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [
+        "uz:ds/hydrorivers-uzbekistan",
+        "uz:ds/hydrolakes-uzbekistan"
+      ],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "measured",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     },
     {
       "id": "uz:ds/cams-nrt",
@@ -7173,7 +9530,22 @@
         "forecast-product-verified-against-own-analysis"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "CAMS atmospheric composition by basin",
+          "links": 360
+        }
+      ]
     },
     {
       "id": "uz:ds/cams-forecast-skill",
@@ -7214,6 +9586,14 @@
       "distributions": 1,
       "related": [
         "uz:ds/cams-nrt"
+      ],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        }
       ]
     },
     {
@@ -7262,6 +9642,14 @@
       "distributions": 1,
       "related": [
         "uz:ds/cams-nrt"
+      ],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        }
       ]
     },
     {
@@ -7326,7 +9714,36 @@
         "record-inhomogeneous-at-2011"
       ],
       "distributions": 4,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinAnomaly",
+          "mode": "measured",
+          "detail": "CFSv2 basin anomaly",
+          "links": 90105
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "CFSv2 basin climatological baseline",
+          "links": 8505
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "CFSv2 basin monthly state",
+          "links": 99143
+        }
+      ]
     },
     {
       "id": "uz:ds/chirps-v3",
@@ -7357,7 +9774,22 @@
       "extent": null,
       "flags": [],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "CHIRPS v3 basin pentadal precipitation",
+          "links": 167076
+        }
+      ]
     },
     {
       "id": "uz:ds/chirts",
@@ -7397,7 +9829,22 @@
         "record-closed-2016"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "CHIRTS basin monthly temperature and humidity",
+          "links": 35802
+        }
+      ]
     },
     {
       "id": "uz:ds/cpc-temperature",
@@ -7430,7 +9877,22 @@
         "sparse-station-coverage-over-uzbekistan"
       ],
       "distributions": 2,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "CPC basin monthly temperature",
+          "links": 122850
+        }
+      ]
     },
     {
       "id": "uz:ds/csp-ghm",
@@ -7460,7 +9922,9 @@
           "reviewed": false
         }
       ],
-      "useCases": [],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
       "places": [
         "uz:place/uzbekistan"
       ],
@@ -7473,7 +9937,29 @@
       "extent": null,
       "flags": [],
       "distributions": 3,
-      "related": []
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        },
+        {
+          "frame": "administrative",
+          "predicate": "uz:hasAdminStatistic",
+          "mode": "measured",
+          "detail": "Human modification by district",
+          "links": 995
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "Human modification by level-12 basin",
+          "links": 19315
+        }
+      ]
     },
     {
       "id": "uz:ds/esri-io-landcover-10m",
@@ -7509,7 +9995,9 @@
           "reviewed": false
         }
       ],
-      "useCases": [],
+      "useCases": [
+        "uz:usecase/urban-and-settlement-planning"
+      ],
       "places": [
         "uz:place/uzbekistan"
       ],
@@ -7521,8 +10009,16 @@
       "attribution": "Impact Observatory / Esri 10 m Annual Land Use Land Cover",
       "extent": null,
       "flags": [],
-      "distributions": 2,
-      "related": []
+      "distributions": 3,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "administrative",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/uzbekistan"
+        }
+      ]
     }
   ],
   "stations": [
@@ -9051,11 +11547,373 @@
     "datasets": 186,
     "atlasPackages": 134,
     "stations": 190,
-    "publishedAssertions": 3210,
+    "publishedAssertions": 3214,
     "proposedAssertions": 577,
-    "relationshipTables": 23,
-    "relationshipLinks": 1052496
+    "relationshipTables": 24,
+    "relationshipLinks": 1178647
   },
+  "geography": {
+    "frames": [
+      {
+        "id": "basin",
+        "label": "Hydrological basin",
+        "definition": "Catchments and drainage topology; the boundary follows water.",
+        "predicates": [
+          "uz:coversBasin",
+          "uz:hasBasinStatistic",
+          "uz:hasBasinAnomaly",
+          "uz:drainsToBasin",
+          "uz:withinBasin",
+          "uz:subBasinOf"
+        ]
+      },
+      {
+        "id": "administrative",
+        "label": "Administrative boundary",
+        "definition": "National, provincial and district jurisdictions; the boundary follows governance.",
+        "predicates": [
+          "uz:coversPlace",
+          "uz:hasAdminStatistic"
+        ]
+      }
+    ],
+    "bridge": {
+      "predicate": "uz:intersectsAdminArea",
+      "label": "Basin intersects administrative area",
+      "provinceLinks": 4374,
+      "districtLinks": 6009
+    }
+  },
+  "relationshipTables": [
+    {
+      "id": "hydrography-river-downstream",
+      "dataset": "uz:ds/hydrorivers-uzbekistan",
+      "label": "River reach downstream routing",
+      "predicate": "uz:flowsInto",
+      "subjectType": "RiverReach",
+      "objectType": "RiverReach",
+      "frame": "network",
+      "rowCount": 17447,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "hydrography-river-basin",
+      "dataset": "uz:ds/hydrorivers-uzbekistan",
+      "label": "River reach to level-12 basin",
+      "predicate": "uz:drainsToBasin",
+      "subjectType": "RiverReach",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 17447,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "hydrography-lake-basin",
+      "dataset": "uz:ds/hydrolakes-uzbekistan",
+      "label": "Water body to level-12 basin",
+      "predicate": "uz:withinBasin",
+      "subjectType": "WaterBody",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 647,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "basinatlas-uz-downstream",
+      "dataset": "uz:ds/basinatlas-uz-v10",
+      "label": "Basin downstream routing, levels 01-12",
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 14749,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "basinatlas-uz-hierarchy",
+      "dataset": "uz:ds/basinatlas-uz-v10",
+      "label": "Basin nesting across levels",
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 14747,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "basinatlas-uz-pfaf",
+      "dataset": "uz:ds/basinatlas-uz-v10",
+      "label": "Pfafstetter code nesting",
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 14747,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "atlas-basin-coverage",
+      "dataset": "uz:ds/basinatlas-uz-v10",
+      "label": "Environmental atlas layers by level-12 basin",
+      "predicate": "uz:coversBasin",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 195649,
+      "measureColumn": "measure",
+      "dimensions": []
+    },
+    {
+      "id": "atlas-basin-statistics",
+      "dataset": "uz:ds/basinatlas-uz-v10",
+      "label": "Atlas raster surfaces read per level-12 basin",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 167309,
+      "measureColumn": "mean",
+      "dimensions": []
+    },
+    {
+      "id": "hydrobasins-lake-uz-downstream",
+      "dataset": "uz:ds/hydrobasins-uz-lake-v1c",
+      "label": "Basin downstream routing, lake format, levels 01-12",
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 15194,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "hydrobasins-lake-uz-hierarchy",
+      "dataset": "uz:ds/hydrobasins-uz-lake-v1c",
+      "label": "Basin nesting across levels, lake format",
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 15202,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "hydrobasins-lake-uz-pfaf",
+      "dataset": "uz:ds/hydrobasins-uz-lake-v1c",
+      "label": "Pfafstetter code nesting, lake format",
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 13918,
+      "measureColumn": null,
+      "dimensions": []
+    },
+    {
+      "id": "admin-basin-province",
+      "dataset": "uz:ds/basinatlas-uz-v10",
+      "label": "Level-12 basins by province",
+      "predicate": "uz:intersectsAdminArea",
+      "subjectType": "Basin",
+      "objectType": "AdminArea",
+      "frame": "bridge",
+      "rowCount": 4374,
+      "measureColumn": "shared_km2",
+      "dimensions": []
+    },
+    {
+      "id": "admin-basin-district",
+      "dataset": "uz:ds/basinatlas-uz-v10",
+      "label": "Level-12 basins by district",
+      "predicate": "uz:intersectsAdminArea",
+      "subjectType": "Basin",
+      "objectType": "AdminArea",
+      "frame": "bridge",
+      "rowCount": 6009,
+      "measureColumn": "shared_km2",
+      "dimensions": []
+    },
+    {
+      "id": "landcover-admin-year",
+      "dataset": "uz:ds/esri-io-landcover-10m",
+      "label": "Land cover area by district and year",
+      "predicate": "uz:hasAdminStatistic",
+      "subjectType": "Dataset",
+      "objectType": "AdminArea",
+      "frame": "administrative",
+      "rowCount": 10906,
+      "measureColumn": "km2",
+      "dimensions": [
+        "year",
+        "class_code"
+      ]
+    },
+    {
+      "id": "landcover-basin-year",
+      "dataset": "uz:ds/esri-io-landcover-10m",
+      "label": "Land cover area by basin and year",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 126151,
+      "measureColumn": "km2",
+      "dimensions": [
+        "year",
+        "class_code"
+      ]
+    },
+    {
+      "id": "cfsv2-basin-monthly",
+      "dataset": "uz:ds/cfsv2-noaa",
+      "label": "CFSv2 basin monthly state",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 99143,
+      "measureColumn": "value",
+      "dimensions": [
+        "year",
+        "month",
+        "variable"
+      ]
+    },
+    {
+      "id": "cfsv2-basin-climatology",
+      "dataset": "uz:ds/cfsv2-noaa",
+      "label": "CFSv2 basin climatological baseline",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 8505,
+      "measureColumn": "mean",
+      "dimensions": [
+        "month",
+        "variable"
+      ]
+    },
+    {
+      "id": "cfsv2-basin-anomaly",
+      "dataset": "uz:ds/cfsv2-noaa",
+      "label": "CFSv2 basin anomaly",
+      "predicate": "uz:hasBasinAnomaly",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 90105,
+      "measureColumn": "z_score",
+      "dimensions": [
+        "year",
+        "month",
+        "variable"
+      ]
+    },
+    {
+      "id": "chirps-v3-basin-pentad",
+      "dataset": "uz:ds/chirps-v3",
+      "label": "CHIRPS v3 basin pentadal precipitation",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 167076,
+      "measureColumn": "value",
+      "dimensions": [
+        "year",
+        "month",
+        "pentad",
+        "variable"
+      ]
+    },
+    {
+      "id": "chirts-basin-monthly",
+      "dataset": "uz:ds/chirts",
+      "label": "CHIRTS basin monthly temperature and humidity",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 35802,
+      "measureColumn": "value",
+      "dimensions": [
+        "year",
+        "month",
+        "variable"
+      ]
+    },
+    {
+      "id": "cpc-basin-monthly",
+      "dataset": "uz:ds/cpc-temperature",
+      "label": "CPC basin monthly temperature",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 122850,
+      "measureColumn": "value",
+      "dimensions": [
+        "year",
+        "month",
+        "variable"
+      ]
+    },
+    {
+      "id": "ghm-basin-modification",
+      "dataset": "uz:ds/csp-ghm",
+      "label": "Human modification by level-12 basin",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 19315,
+      "measureColumn": "value",
+      "dimensions": [
+        "frame",
+        "variable"
+      ]
+    },
+    {
+      "id": "ghm-district-modification",
+      "dataset": "uz:ds/csp-ghm",
+      "label": "Human modification by district",
+      "predicate": "uz:hasAdminStatistic",
+      "subjectType": "Dataset",
+      "objectType": "AdminArea",
+      "frame": "administrative",
+      "rowCount": 995,
+      "measureColumn": "value",
+      "dimensions": [
+        "frame",
+        "variable"
+      ]
+    },
+    {
+      "id": "cams-basin-monthly",
+      "dataset": "uz:ds/cams-nrt",
+      "label": "CAMS atmospheric composition by basin",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 360,
+      "measureColumn": "value",
+      "dimensions": [
+        "year",
+        "month",
+        "variable"
+      ]
+    }
+  ],
   "hydrography": {
     "rivers": 17447,
     "lakes": 647,

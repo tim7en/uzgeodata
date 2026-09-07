@@ -86,6 +86,7 @@ LAYERS = [
     {
         "id": "cfsv2-basin-anomaly", "label": "Climate anomaly", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/cfsv2-noaa", "predicate": "uz:hasBasinAnomaly", "kind": "anomaly",
+        "previewVariable": "precipitation", "previewMetric": "z_score",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
         "basinLevel": 7, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
@@ -97,6 +98,7 @@ LAYERS = [
     {
         "id": "cfsv2-basin-monthly", "label": "Climate state", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/cfsv2-noaa", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "previewVariable": "precipitation",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
         "basinLevel": 7, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
@@ -107,6 +109,7 @@ LAYERS = [
     {
         "id": "chirps-v3-basin-pentad", "label": "Precipitation (CHIRPS)", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/chirps-v3", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "previewVariable": "precipitation_total",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
         "basinLevel": 12, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month", "pentad"],
@@ -117,6 +120,7 @@ LAYERS = [
     {
         "id": "chirts-basin-monthly", "label": "Temperature & humidity (CHIRTS)", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/chirts", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "previewVariable": "tmax_mean",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
         "basinLevel": 12, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
@@ -127,6 +131,7 @@ LAYERS = [
     {
         "id": "cpc-basin-monthly", "label": "Temperature (CPC)", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/cpc-temperature", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "previewVariable": "tmax_mean",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
         "basinLevel": 6, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
@@ -137,6 +142,7 @@ LAYERS = [
     {
         "id": "cams-basin-monthly", "label": "Air quality (CAMS)", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/cams-nrt", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "previewVariable": "pm2p5",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
         "basinLevel": 6, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
@@ -147,6 +153,7 @@ LAYERS = [
     {
         "id": "ghm-basin-modification", "label": "Human modification", "domain": "LAND",
         "dataset": "uz:ds/csp-ghm", "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "previewVariable": "ghm_mean",
         "source": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
         "basinLevel": 12, "idColumn": "unit_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["epoch"],
@@ -180,6 +187,14 @@ def write_json(path: Path, payload: dict, *, compact: bool = False) -> None:
     temporary.replace(path)
 
 
+def sample_preview(points: list[dict], limit: int = 48) -> list[dict]:
+    """Keep a small, representative sparkline payload in the layer index."""
+    if len(points) <= limit:
+        return points
+    positions = {round(index * (len(points) - 1) / (limit - 1)) for index in range(limit)}
+    return [point for index, point in enumerate(points) if index in positions]
+
+
 def build_layer(layer: dict) -> tuple[dict, dict]:
     # Absolute already (a test handing in a tmp_path) passes through; the
     # registry's own entries are repo-relative and resolve against ROOT.
@@ -190,11 +205,16 @@ def build_layer(layer: dict) -> tuple[dict, dict]:
     variables: dict[str, dict] = {}
     periods: set[str] = set()
     rows_read = 0
+    rows_seen = 0
+    quality_counts: dict[str, int] = defaultdict(int)
+    preview_totals: dict[str, list[float]] = defaultdict(lambda: [0.0, 0])
 
     with source.open(encoding="utf8", newline="") as handle:
         for row in csv.DictReader(handle):
             if layer.get("filterColumn") and row.get(layer["filterColumn"]) != layer["filterValue"]:
                 continue
+            rows_seen += 1
+            quality_counts[row.get("quality") or "ok"] += 1
             try:
                 value = float(row[layer["valueColumn"]])
             except (KeyError, TypeError, ValueError):
@@ -216,8 +236,22 @@ def build_layer(layer: dict) -> tuple[dict, dict]:
                                        **variable_meta(variable, len(variables))}
             periods.add(period)
             rows_read += 1
+            if variable == layer.get("previewVariable"):
+                preview_value = value
+                if layer.get("previewMetric") == "z_score" and row.get("z_score") not in (None, ""):
+                    preview_value = float(row["z_score"])
+                preview_totals[period][0] += preview_value
+                preview_totals[period][1] += 1
 
     sorted_periods = sorted(periods)
+    preview_variable = layer.get("previewVariable")
+    preview_meta = variables.get(preview_variable, {})
+    preview_points = sample_preview([
+        {"period": period, "value": round(preview_totals[period][0] / preview_totals[period][1], 4)}
+        for period in sorted(preview_totals)
+        if preview_totals[period][1]
+    ])
+    valid_percent = round(rows_read / rows_seen * 100, 1) if rows_seen else 0.0
     series = {
         "version": "1.0",
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -234,6 +268,17 @@ def build_layer(layer: dict) -> tuple[dict, dict]:
         "what": layer["what"],
         "series": f"/data/basin-layers/{layer['id']}.json",
         "coverage": {"rows": rows_read, "basins": len(values), "periods": len(sorted_periods)},
+        "quality": {
+            "validPercent": valid_percent,
+            "states": dict(sorted(quality_counts.items())),
+        },
+        "preview": {
+            "variable": preview_variable,
+            "label": preview_meta.get("label", preview_variable),
+            "unit": "z-score" if layer.get("previewMetric") == "z_score" else preview_meta.get("unit"),
+            "aggregation": "mean across published basins",
+            "points": preview_points,
+        },
     }
     return entry, series
 
