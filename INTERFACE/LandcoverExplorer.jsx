@@ -233,7 +233,7 @@ export default function LandcoverExplorer() {
       <header className="land-header">
         <Logo/>
         <div className="land-title"><span>ONTOLOGY APPLICATION / 01</span><strong>Basin land-cover observatory</strong></div>
-        <nav><a href="/">Portal</a><a href="/hydrography.html">Hydrography</a><a href="/climate.html">Climate</a><a href="/relationships.html">Graph</a><a href="/catalogue.html">Catalogue</a></nav>
+        <nav><a href="/">Portal</a><a href="/ontology.html">Living ontology</a><a href="/hydrography.html">Hydrography</a><a href="/climate.html">Climate</a><a href="/relationships.html">Tables</a><a href="/catalogue.html">Catalogue</a></nav>
       </header>
 
       <aside className="land-lens">

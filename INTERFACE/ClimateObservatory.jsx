@@ -247,7 +247,7 @@ export default function ClimateObservatory() {
       <header className="clim-header">
         <Logo/>
         <div className="clim-title"><span>ONTOLOGY APPLICATION / 02</span><strong>Basin climate & land observatory</strong></div>
-        <nav><a href="/">Portal</a><a href="/landcover.html">Land cover</a><a href="/hydrography.html">Hydrography</a><a href="/relationships.html">Graph</a><a href="/catalogue.html">Catalogue</a></nav>
+        <nav><a href="/">Portal</a><a href="/ontology.html">Living ontology</a><a href="/landcover.html">Land cover</a><a href="/hydrography.html">Hydrography</a><a href="/relationships.html">Tables</a><a href="/catalogue.html">Catalogue</a></nav>
       </header>
 
       <aside className="clim-lens">

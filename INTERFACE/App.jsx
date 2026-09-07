@@ -77,7 +77,7 @@ function Header({ onAccess }) {
     <Logo />
     <button className="menu-button" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open} aria-controls="primary-navigation">{open ? <X/> : <Menu/>}</button>
     <nav id="primary-navigation" className={open ? 'open' : ''} onClick={() => setOpen(false)}>
-      <a href="#catalog">Data catalog</a><a href="#map">Map explorer</a><a href="#explorers">Explorers</a><a href="#ontology">Ontology</a><a href="#solutions">Use cases</a><a href="#about">Standards</a>
+      <a href="#catalog">Data catalog</a><a href="#map">Map explorer</a><a href="#explorers">Explorers</a><a href="/ontology.html">Living ontology</a><a href="#solutions">Use cases</a><a href="#about">Standards</a>
     </nav>
     <button className="button button-small desktop-cta" onClick={onAccess}>Request access <ArrowRight size={16}/></button>
   </header>
@@ -421,6 +421,16 @@ function Explorers() {
   const water = graph?.hydrography || {};
   const tools = [
     {
+      href: '/ontology.html',
+      icon: Network,
+      kicker: 'Living ontology',
+      title: 'Touch the network.',
+      copy: 'Enter the hydrological nervous system: animated upstream branches and downstream trunks, clickable river reaches, and a live deviation signal inherited transparently from each reach\u2019s containing basin.',
+      stats: [[count(water.rivers), 'Reach neurons'],
+              [count(water.downstreamLinks), 'Flow relationships'],
+              [count(counts.relationshipLinks), 'Measured edges']],
+    },
+    {
       href: '/landcover.html',
       icon: Layers3,
       kicker: 'Land-cover observatory',
@@ -503,7 +513,7 @@ function Community() {
       <blockquote>“A useful spatial platform does more than publish files. It connects field knowledge, institutional memory and reproducible analysis.”</blockquote>
       <div className="quote-person"><div className="avatar">UZ</div><div><strong>UzGeoData principle</strong><span>Source titles remain visible with every catalog record</span></div></div>
       <div className="community-proof"><div><strong>{count(counts.datasets)}</strong><span>Datasets indexed</span></div><div><strong>{count(counts.stations)}</strong><span>Monitoring stations</span></div></div>
-      <a href="#ontology">Explore the knowledge model <ArrowRight size={18}/></a>
+      <a href="/ontology.html">Explore the living ontology <ArrowRight size={18}/></a>
     </div>
   </section>
 }

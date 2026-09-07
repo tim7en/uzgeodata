@@ -220,6 +220,7 @@ export default function DataCatalogue() {
       </div>
       <nav>
         <a href="/">Portal</a>
+        <a href="/ontology.html">Living ontology</a>
         <a href="/hydrography.html">Explorer</a>
         <a href="/relationships.html">Tables</a>
         <a href="/review.html">Review</a>

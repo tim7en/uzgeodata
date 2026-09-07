@@ -327,6 +327,7 @@ export default function HydrographyExplorer() {
       </div>
       <nav>
         <a href="/">Portal</a>
+        <a href="/ontology.html">Living ontology</a>
         <a href="/relationships.html">Tables</a>
         <a href="/catalogue.html">Catalogue</a>
         <a href="/review.html">Review</a>
