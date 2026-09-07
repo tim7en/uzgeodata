@@ -269,6 +269,42 @@
 .neural-nodes g:nth-child(17n) .synapse-ring { animation: synapsePulse 3s ease-out infinite; }
 .neural-nodes g.selected .synapse-ring { animation: synapsePulse 1.3s ease-out infinite; }
 
+.ontology-downloads {
+  margin-top: 14px;
+  border: 1px solid #2b342f;
+  background: linear-gradient(135deg, rgba(14, 21, 17, .96), rgba(8, 11, 9, .96));
+  padding: 11px;
+}
+
+.download-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.download-heading span { font-size: 7px; font-weight: 800; letter-spacing: .17em; color: var(--orange); }
+.download-heading small { font-size: 5.5px; color: #606a64; }
+.download-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.download-grid button {
+  min-width: 0;
+  min-height: 48px;
+  border: 1px solid #303a34;
+  background: #0b100d;
+  color: #8e9a93;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  padding: 7px 8px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, color .2s;
+}
+.download-grid button:hover:not(:disabled) { border-color: var(--current-signal); background: #101812; color: #eef3f0; }
+.download-grid button:disabled { cursor: wait; opacity: .48; }
+.download-grid button svg { width: 14px; flex: 0 0 auto; color: var(--current-signal); }
+.download-grid button span, .download-grid button b, .download-grid button small { display: block; min-width: 0; }
+.download-grid button b { font: 600 9px 'Barlow Condensed', sans-serif; letter-spacing: .05em; white-space: nowrap; }
+.download-grid button small { font-size: 5.5px; color: #59645e; margin-top: 3px; }
+.download-scope { display: flex; align-items: flex-start; gap: 7px; margin: 9px 0 0; color: #67736c; font-size: 6px; line-height: 1.55; }
+.download-scope svg { width: 12px; flex: 0 0 auto; }
+.download-error { margin: 7px 0 0; color: #ff756d; font-size: 6.5px; }
+.ontology-downloads + .open-observatory { margin-top: 8px; }
+
 @media (max-width: 1100px) {
   .trace-minimap { width: 225px; }
   .minimap-head b { display: none; }

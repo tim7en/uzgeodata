@@ -1,12 +1,13 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
-  Activity, ArrowLeft, ArrowUpRight, Database, Droplets, GitBranch,
+  Activity, ArrowLeft, ArrowUpRight, Database, Download, Droplets, GitBranch,
   MapPin, Minus, Network, Pause, Play, Plus, RotateCcw, Search, Waves, Waypoints, Zap,
 } from 'lucide-react';
 import {
   anomalyTimeline, buildReachNetwork, deviationSummary, findHydroEntities, levelBasinLookup,
   resolveLevelBasin, traceReachNetwork,
 } from './ontologyNetworkModel.js';
+import {downloadPayload, overlayFeatureCollection, temporalSeriesCsv} from './ontologyExportModel.js';
 
 const DEFAULT_REACH = '40197927';
 const DEFAULT_VARIABLE = 'soil_moisture_25cm';
@@ -191,6 +192,8 @@ export default function OntologyUniverse() {
   const [cursor, setCursor] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [graphZoom, setGraphZoom] = useState(1);
+  const [exporting, setExporting] = useState(null);
+  const [exportError, setExportError] = useState(null);
 
   useEffect(() => {
     let live = true;
@@ -278,6 +281,20 @@ export default function OntologyUniverse() {
     ? [...network.byId.values()].filter(reach => traceBasinIds.has(reach.basinId)).map(reach => riverGeometry.get(reach.id)).filter(Boolean)
     : nodes.map(node => riverGeometry.get(node.id)).filter(Boolean), [focusType, network, nodes, riverGeometry, traceBasinIds]);
   const traceBasins = useMemo(() => [...traceBasinIds].map(id => basinGeometry.get(id)).filter(Boolean), [traceBasinIds, basinGeometry]);
+  const traceDirectionById = useMemo(() => new Map(nodes.map(node => [node.id, node.direction])), [nodes]);
+  const upstreamBasinIds = useMemo(() => new Set(nodes
+    .filter(node => node.direction !== 'downstream')
+    .map(node => focusType === 'basin' ? node.id : node.record?.basinId)
+    .filter(Boolean)), [focusType, nodes]);
+  const upstreamRivers = useMemo(() => focusType === 'basin'
+    ? [...network.byId.values()]
+      .filter(reach => upstreamBasinIds.has(reach.basinId))
+      .map(reach => riverGeometry.get(reach.id))
+      .filter(Boolean)
+    : nodes
+      .filter(node => node.direction !== 'downstream')
+      .map(node => riverGeometry.get(node.id))
+      .filter(Boolean), [focusType, network, nodes, riverGeometry, upstreamBasinIds]);
   const signalBasins = useMemo(() => new Set(Object.entries(data?.anomaly?.basins || {}).filter(([, periods]) => Object.values(periods).some(cells => cells[DEFAULT_VARIABLE])).map(([id]) => id)), [data]);
   const topReaches = useMemo(() => [...network.byId.values()].filter(reach => {
     const basin = basinById.get(reach.basinId);
@@ -292,6 +309,137 @@ export default function OntologyUniverse() {
   const selectBasin = id => { setSelectedBasinId(String(id)); setGraphZoom(1); setPlaying(true); };
   const selectGraphEntity = id => focusType === 'basin' ? selectBasin(id) : selectReach(id);
   const zoomGraph = change => setGraphZoom(current => Math.max(.65, Math.min(3.2, Number((current + change).toFixed(2)))));
+  const activePeriod = activePoint?.period || data?.anomalyLayer?.periods?.[Math.min(cursor, Math.max((data?.anomalyLayer?.periods?.length || 1) - 1, 0))] || null;
+  const safeFocusId = String(focusType === 'basin' ? basin12?.pfafId || focusId : focusId).replace(/[^a-zA-Z0-9_-]+/g, '-');
+  const administrativeContext = basinId => {
+    const districts = districtsByBasin.get(String(basinId)) || EMPTY;
+    const province = provinceByCode.get(districts[0]?.parent);
+    return {
+      district: districts[0]?.nameEn || districts[0]?.nameUz || districts[0]?.pcode || null,
+      districtCode: districts[0]?.pcode || null,
+      districts: districts.map(item => item.nameEn || item.nameUz || item.pcode).join(' | ') || null,
+      overlapKm2: districts[0]?.overlapKm2 ?? null,
+      province: province?.nameEn || province?.nameUz || province?.pcode || null,
+      provinceCode: province?.pcode || districts[0]?.parent || null,
+    };
+  };
+  const temporalContext = basinId => {
+    const basin = basinById.get(String(basinId));
+    const basin7Id = resolveLevelBasin(basin, level7);
+    const cell = activePeriod ? data?.anomaly?.basins?.[String(basin7Id)]?.[activePeriod]?.[variable] : null;
+    return {basin, basin7Id, cell};
+  };
+  const featureWithProperties = (feature, properties) => feature ? ({
+    ...feature,
+    properties: {...(feature.properties || {}), ...properties},
+  }) : null;
+  const reachRole = feature => {
+    const reachId = String(feature?.properties?.HYRIV_ID);
+    const reach = network.byId.get(reachId);
+    const direction = focusType === 'basin' ? traceDirectionById.get(reach?.basinId) : traceDirectionById.get(reachId);
+    return direction === 'root' ? 'selected' : direction || 'national-context';
+  };
+  const enrichReach = feature => {
+    const reachId = String(feature?.properties?.HYRIV_ID);
+    const reach = network.byId.get(reachId);
+    const basinId = reach?.basinId || String(feature?.properties?.HYBAS_L12 || '');
+    const admin = administrativeContext(basinId);
+    const temporal = temporalContext(basinId);
+    return featureWithProperties(feature, {
+      UZG_ENTITY: 'river-reach', UZG_ROLE: reachRole(feature), UZG_FOCUS_TYPE: focusType, UZG_FOCUS_ID: focusId,
+      UZG_BASIN_L12: basinId || null, UZG_PFAF_L12: temporal.basin?.pfafId || null, UZG_BASIN_L7: temporal.basin7Id,
+      UZG_DISTRICT: admin.district, UZG_DISTRICT_CODE: admin.districtCode, UZG_DISTRICTS: admin.districts,
+      UZG_PROVINCE: admin.province, UZG_PROVINCE_CODE: admin.provinceCode, UZG_ADMIN_OVERLAP_KM2: admin.overlapKm2,
+      UZG_ADMIN_METHOD: 'inherited from level-12 basin polygon overlap', UZG_DATASET: 'HydroRIVERS v1.0',
+      UZG_TEMP_DATASET: data?.anomaly?.dataset || data?.anomalyLayer?.dataset || null,
+      UZG_TEMP_VARIABLE: variable, UZG_TEMP_PERIOD: activePeriod, UZG_TEMP_VALUE: temporal.cell?.v ?? null,
+      UZG_TEMP_UNIT: variableMeta?.unit || null, UZG_TEMP_Z: temporal.cell?.z ?? null, UZG_TEMP_CLASS: temporal.cell?.c || null,
+      UZG_TEMP_SCOPE: 'level-7 basin context; not a reach measurement',
+    });
+  };
+  const enrichBasin = feature => {
+    const basinId = String(feature?.properties?.HYBAS_ID);
+    const admin = administrativeContext(basinId);
+    const temporal = temporalContext(basinId);
+    const direction = focusType === 'basin' ? traceDirectionById.get(basinId) : (basinId === String(basin12?.id) ? 'selected-context' : 'trace-context');
+    return featureWithProperties(feature, {
+      UZG_ENTITY: 'basin-level-12', UZG_ROLE: direction === 'root' ? 'selected' : direction || 'national-context',
+      UZG_FOCUS_TYPE: focusType, UZG_FOCUS_ID: focusId, UZG_BASIN_L12: basinId,
+      UZG_PFAF_L12: temporal.basin?.pfafId || feature?.properties?.PFAF_ID || null, UZG_BASIN_L7: temporal.basin7Id,
+      UZG_DISTRICT: admin.district, UZG_DISTRICT_CODE: admin.districtCode, UZG_DISTRICTS: admin.districts,
+      UZG_PROVINCE: admin.province, UZG_PROVINCE_CODE: admin.provinceCode, UZG_ADMIN_OVERLAP_KM2: admin.overlapKm2,
+      UZG_ADMIN_METHOD: 'measured polygon overlap', UZG_DATASET: 'HydroBASINS/BasinATLAS level 12',
+      UZG_TEMP_DATASET: data?.anomaly?.dataset || data?.anomalyLayer?.dataset || null,
+      UZG_TEMP_VARIABLE: variable, UZG_TEMP_PERIOD: activePeriod, UZG_TEMP_VALUE: temporal.cell?.v ?? null,
+      UZG_TEMP_UNIT: variableMeta?.unit || null, UZG_TEMP_Z: temporal.cell?.z ?? null, UZG_TEMP_CLASS: temporal.cell?.c || null,
+      UZG_TEMP_SCOPE: 'inherited from containing level-7 basin',
+    });
+  };
+  const enrichLevel7 = feature => {
+    const basin7Id = String(feature?.properties?.HYBAS_ID);
+    const cell = activePeriod ? data?.anomaly?.basins?.[basin7Id]?.[activePeriod]?.[variable] : null;
+    return featureWithProperties(feature, {
+      UZG_ENTITY: 'temporal-basin-level-7', UZG_ROLE: basin7Id === String(parent7) ? 'selected-temporal-context' : 'national-context',
+      UZG_DATASET: 'HydroBASINS/BasinATLAS level 7', UZG_TEMP_DATASET: data?.anomaly?.dataset || data?.anomalyLayer?.dataset || null,
+      UZG_TEMP_VARIABLE: variable, UZG_TEMP_PERIOD: activePeriod, UZG_TEMP_VALUE: cell?.v ?? null,
+      UZG_TEMP_UNIT: variableMeta?.unit || null, UZG_TEMP_Z: cell?.z ?? null, UZG_TEMP_CLASS: cell?.c || null,
+      UZG_TEMP_SCOPE: 'direct level-7 basin aggregate',
+    });
+  };
+  const enrichDistrict = feature => featureWithProperties(feature, {
+    UZG_ENTITY: 'administrative-district',
+    UZG_ROLE: currentDistrictFeatures.some(item => item.properties?.pcode === feature?.properties?.pcode) ? 'selected-context' : 'national-context',
+    UZG_DATASET: 'Uzbekistan ADM2 boundary', UZG_TEMP_SCOPE: 'administrative overlay only; no temporal value assigned',
+  });
+  const exportMetadata = (name, scope, featureCount) => ({
+    name, generatedAt: new Date().toISOString(), scope, featureCount,
+    selectedEntity: {type: focusType, id: focusId, pfafId: basin12?.pfafId || null},
+    temporalProperty: {dataset: data?.anomaly?.dataset || data?.anomalyLayer?.dataset || null, variable, unit: variableMeta?.unit || null, period: activePeriod},
+    provenance: 'Existing published UzGeoData HydroRIVERS, HydroBASINS/BasinATLAS, ADM2 overlap, and CFSv2 anomaly records; no simulated values.',
+    measurementBoundary: 'Reach temporal fields are inherited level-7 basin context, not direct reach observations.',
+  });
+  const requestExport = (key, callback) => {
+    setExportError(null);
+    setExporting(key);
+    window.setTimeout(() => {
+      try { callback(); }
+      catch (cause) { setExportError(cause?.message || 'The export could not be prepared.'); }
+      finally { setExporting(null); }
+    }, 25);
+  };
+  const downloadUpstream = () => requestExport('upstream', () => {
+    const features = upstreamRivers.map(enrichReach);
+    const overlay = overlayFeatureCollection(features, exportMetadata('uzgeodata-upstream-reaches', 'selected reach/basin plus every stored upstream reach; downstream reaches excluded', features.length));
+    downloadPayload(`uzgeodata-${safeFocusId}-upstream-reaches.geojson`, overlay, 'application/geo+json');
+  });
+  const downloadSeries = () => requestExport('series', () => {
+    const csv = temporalSeriesCsv({
+      entityType: focusType, entityId: focusType === 'basin' ? basin12?.pfafId || focusId : selectedReach?.id || focusId,
+      basin12: basin12?.id || null, basin7: parent7,
+      districts: districtContext.map(item => item.nameEn || item.nameUz || item.pcode).join(' | '),
+      province: primaryProvince?.nameEn || primaryProvince?.nameUz || primaryProvince?.pcode || null,
+      dataset: data?.anomaly?.dataset || data?.anomalyLayer?.dataset || null, variable, unit: variableMeta?.unit || null,
+    }, points);
+    downloadPayload(`uzgeodata-${safeFocusId}-${variable}-series.csv`, csv, 'text/csv;charset=utf-8');
+  });
+  const downloadTraceOverlay = () => requestExport('trace', () => {
+    const features = [
+      ...traceRivers.map(enrichReach), ...traceBasins.map(enrichBasin),
+      ...currentDistrictFeatures.map(enrichDistrict), enrichLevel7(parent7Feature),
+    ].filter(Boolean);
+    const overlay = overlayFeatureCollection(features, exportMetadata('uzgeodata-current-ontology-overlay', 'complete visible ontology trace with reach, basin, temporal-basin, and administrative geometries', features.length));
+    downloadPayload(`uzgeodata-${safeFocusId}-trace-overlay.geojson`, overlay, 'application/geo+json');
+  });
+  const downloadNationalOverlay = () => requestExport('national', () => {
+    const features = [
+      ...(data?.riversGeo?.features || EMPTY).map(enrichReach),
+      ...(data?.basinsGeo?.features || EMPTY).map(enrichBasin),
+      ...(data?.districtsGeo?.features || EMPTY).map(enrichDistrict),
+      ...(data?.level7?.features || EMPTY).map(enrichLevel7),
+    ];
+    const overlay = overlayFeatureCollection(features, exportMetadata('uzgeodata-national-ontology-overlay', 'entire published national overlay: all reaches, level-12 basins, districts, and level-7 temporal basins', features.length));
+    downloadPayload(`uzgeodata-national-${variable}-${activePeriod || 'no-period'}-overlay.geojson`, overlay, 'application/geo+json');
+  });
 
   if (error) return <main className="universe-state"><Zap/><h1>The graph could not wake up.</h1><p>{error}</p><a href="/">Return to portal</a></main>;
   if (!data) return <main className="universe-state loading"><div className="loading-neuron"><i/><i/><i/><b/></div><span>CONNECTING 1.17M RELATIONSHIPS</span><h1>Waking the ontology.</h1></main>;
@@ -350,6 +498,17 @@ export default function OntologyUniverse() {
         <div className="signal-summary"><div><span>CURRENT DEVIATION</span><strong style={{color: currentColor}}>{activePoint?.z > 0 ? '+' : ''}{number(activePoint?.z, 2)}σ</strong><small>{activePoint?.period || 'no matched period'}</small></div><p><span>RANGE</span><b>{number(summary.minimum, 2)}σ → +{number(summary.maximum, 2)}σ</b></p><p><span>MEAN ABS. DEVIATION</span><b>{number(summary.meanAbsolute, 2)}σ</b></p></div>
         <div className="static-et"><span>EVAPOTRANSPIRATION DISTINCTION</span><p><b>{number(parent7Feature?.properties?.aet_mm_syr, 0)} mm/year</b><small>Actual evapotranspiration climatology from BasinATLAS; a static long-term average, not an interannual time series. CFSv2 provides potential evaporation as a separate land-surface flux.</small></p></div>
         <div className="semantic-path"><span>MEASURED SEMANTIC PATH</span><ol>{focusType === 'reach' && <li><b>Reach {selectedReach?.id}</b><small>withinBasin</small></li>}<li><b>Basin {basin12?.id || 'unresolved'}</b><small>{focusType === 'basin' ? `PFAF · ${basin12?.pfafId}` : 'subBasinOf · level 7'}</small></li><li><b>{parent7 || 'No level-7 match'}</b><small>subBasinOf · level 7 · hasBasinAnomaly</small></li><li><b>NCEP CFSv2</b><small>observes · {variable.replaceAll('_', ' ')}</small></li></ol></div>
+        <section className="ontology-downloads" aria-label="Download ontology data">
+          <div className="download-heading"><span>EXPORT REAL LINKED DATA</span><small>GeoJSON keeps geometry + ontology context</small></div>
+          <div className="download-grid">
+            <button onClick={downloadUpstream} disabled={Boolean(exporting)}><Download/><span><b>{exporting === 'upstream' ? 'PREPARING...' : 'UPSTREAM REACHES'}</b><small>{compact(upstreamRivers.length)} lines · GeoJSON</small></span></button>
+            <button onClick={downloadSeries} disabled={Boolean(exporting) || !points.length}><Download/><span><b>{exporting === 'series' ? 'PREPARING...' : 'SELECTED PROPERTY'}</b><small>{points.length} periods · CSV</small></span></button>
+            <button onClick={downloadTraceOverlay} disabled={Boolean(exporting)}><Download/><span><b>{exporting === 'trace' ? 'PREPARING...' : 'VISIBLE OVERLAY'}</b><small>{compact(traceRivers.length + traceBasins.length + currentDistrictFeatures.length + (parent7Feature ? 1 : 0))} features · GeoJSON</small></span></button>
+            <button onClick={downloadNationalOverlay} disabled={Boolean(exporting)}><Download/><span><b>{exporting === 'national' ? 'PREPARING...' : 'FULL DATASET OVERLAY'}</b><small>{compact((data.riversGeo?.features?.length || 0) + (data.basinsGeo?.features?.length || 0) + (data.districtsGeo?.features?.length || 0) + (data.level7?.features?.length || 0))} features · GeoJSON</small></span></button>
+          </div>
+          <p className="download-scope"><Database/> Upstream excludes the downstream trunk. Full overlay contains all published reaches, L12/L7 basins and districts with the active {variable.replaceAll('_', ' ')} period attached.</p>
+          {exportError && <p className="download-error" role="alert">{exportError}</p>}
+        </section>
         <a className="open-observatory" href="/climate.html"><span>OPEN FULL CLIMATE OBSERVATORY<small>Map every basin and period</small></span><ArrowUpRight/></a>
       </aside>
     </section>
