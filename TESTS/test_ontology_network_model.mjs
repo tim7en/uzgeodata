@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   anomalyTimeline, buildReachNetwork, deviationSummary, levelBasinLookup,
-  reachNeighborhood, resolveLevelBasin,
+  reachNeighborhood, resolveLevelBasin, traceReachNetwork,
 } from '../INTERFACE/ontologyNetworkModel.js';
 
 test('reach neighborhood branches upstream and follows the downstream trunk', () => {
@@ -16,6 +16,23 @@ test('reach neighborhood branches upstream and follows the downstream trunk', ()
   assert.deepEqual(new Set(view.nodes.map(node => node.id)), new Set(['1', '2', '3', '4']));
   assert.equal(view.edges.filter(edge => edge.direction === 'upstream').length, 2);
   assert.equal(view.edges.filter(edge => edge.direction === 'downstream').length, 1);
+});
+
+test('an exact trace retains every upstream branch and the whole downstream trunk', () => {
+  const graph = buildReachNetwork([
+    {id: 1, nextDown: 3},
+    {id: 2, nextDown: 3},
+    {id: 3, nextDown: 4},
+    {id: 4, nextDown: 5},
+    {id: 5, nextDown: 0},
+    {id: 6, nextDown: 2},
+  ]);
+  const trace = traceReachNetwork(3, graph);
+  assert.deepEqual(new Set(trace.nodes.map(node => node.id)), new Set(['1', '2', '3', '4', '5', '6']));
+  assert.equal(trace.upstreamCount, 3);
+  assert.equal(trace.downstreamCount, 2);
+  assert.equal(trace.maxUpDepth, 2);
+  assert.equal(trace.edges.length, 5);
 });
 
 test('a level-12 basin resolves to its level-7 parent by Pfafstetter prefix', () => {
