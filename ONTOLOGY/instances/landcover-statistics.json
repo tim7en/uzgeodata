@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T10:49:36+00:00",
+  "generatedAt": "2026-09-07T11:32:58+00:00",
   "predicate": "uz:hasBasinStatistic",
   "subjectType": "Dataset",
   "objectType": "Basin",
@@ -14,13 +14,21 @@
   "method": "ee.Image.pixelArea() summed per class through a grouped reducer, so ground area is correct whatever projection the reduction lands in. Deriving area from the scale would be wrong here: the collection mosaics UTM tiles, and a nominal 10 m pixel covers 100·cos(latitude) m2 in the geographic fallback.",
   "scaleMetres": 30,
   "years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
     2025
   ],
   "counts": {
-    "units": 10,
-    "years": 1,
-    "unitYears": 10,
-    "rows": 26
+    "units": 3981,
+    "years": 9,
+    "unitYears": 35829,
+    "rows": 126151
   },
   "output": "PUBLISHED\\data\\ontology\\2_LAND\\2.3_LANDCOVER_BASIN_YEAR\\landcover-basin-year.csv"
 }
