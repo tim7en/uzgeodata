@@ -727,6 +727,33 @@ def test_relationship_table_row_counts_are_measured(relationship_tables, entitie
     assert len({e["containerTable"] for e in inside}) == len(inside)
 
 
+def test_currency_uses_current_geography_and_table_scopes():
+    """Folder/reference rotations must not leave frozen unit counts behind."""
+    import csv
+
+    currency = load(ROOT / "PUBLISHED" / "data" / "data-currency.json")
+    by_id = {row["id"]: row for row in currency["tables"]}
+    basins = load(
+        ROOT / "PUBLISHED" / "data" / "review" / "basinatlas"
+        / "basinatlas_uz_lev12.geojson"
+    )["features"]
+    districts = load(ROOT / "PUBLISHED" / "data" / "admin" / "adm2.geojson")["features"]
+
+    assert by_id["chirps-v3-basin-pentad"]["expectedUnits"] == len(basins)
+    assert by_id["chirts-basin-monthly"]["expectedUnits"] == len(basins)
+    assert by_id["landcover-admin-year"]["expectedUnits"] == len(districts)
+
+    ghm = (ROOT / "PUBLISHED" / "data" / "ontology" / "2_LAND"
+           / "2.1_GHM_UNIT_MODIFICATION" / "ghm-unit-modification.csv")
+    with ghm.open(encoding="utf8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    for frame, table_id in (("basin", "ghm-basin-modification"),
+                            ("district", "ghm-district-modification")):
+        selected = [row for row in rows if row["frame"] == frame]
+        assert by_id[table_id]["rows"] == len(selected)
+        assert by_id[table_id]["units"] == len({row["unit_id"] for row in selected})
+
+
 def test_relationship_table_schema_requires_the_typed_declaration():
     """The role is what binds the extra requirements; dropping a field must fail."""
     schema = load(ROOT / "ONTOLOGY" / "schema" / "entity.schema.json")

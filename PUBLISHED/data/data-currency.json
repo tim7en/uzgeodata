@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-03T09:33:30+00:00",
+  "generatedAt": "2026-09-07T10:41:25+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
@@ -33,9 +33,9 @@
     }
   },
   "counts": {
-    "INCOMPLETE": 2,
+    "INCOMPLETE": 3,
     "MISSING": 5,
-    "CURRENT": 3,
+    "CURRENT": 2,
     "STATIC": 13
   },
   "tables": [
@@ -58,7 +58,28 @@
       "status": "INCOMPLETE",
       "refresh": "npm run cfsv2:anomaly",
       "note": "Derived. Rebuilds in seconds once observations and climatology are current.",
-      "lastModified": "2026-09-01T07:23:57+00:00"
+      "lastModified": "2026-09-07T09:12:31+00:00"
+    },
+    {
+      "id": "chirps-v3-basin-pentad",
+      "label": "CHIRPS v3 basin pentadal precipitation",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+      "exists": true,
+      "rows": 167076,
+      "units": 3978,
+      "expectedUnits": 3981,
+      "coverage": {
+        "from": "2026-01",
+        "to": "2026-07"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": "3978/3981 units",
+      "status": "INCOMPLETE",
+      "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
+      "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
+      "lastModified": "2026-09-07T10:35:12+00:00"
     },
     {
       "id": "chirts-basin-monthly",
@@ -66,9 +87,9 @@
       "predicate": "uz:hasBasinStatistic",
       "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
       "exists": true,
-      "rows": 24588,
-      "units": 2732,
-      "expectedUnits": 2732,
+      "rows": 35802,
+      "units": 3978,
+      "expectedUnits": 3981,
       "coverage": {
         "from": "2016-07",
         "to": "2016-07"
@@ -79,7 +100,7 @@
       "status": "INCOMPLETE",
       "refresh": "npm run chirts:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "The upstream record ended at 2016-12. Complete once it reaches that, and never behind.",
-      "lastModified": "2026-09-01T08:02:09+00:00"
+      "lastModified": "2026-09-07T09:55:58+00:00"
     },
     {
       "id": "atlas-basin-coverage",
@@ -190,28 +211,7 @@
       "status": "CURRENT",
       "refresh": "npm run cfsv2:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "CFSv2 publishes six-hourly with a short lag; a month is complete once it ends.",
-      "lastModified": "2026-09-01T07:23:26+00:00"
-    },
-    {
-      "id": "chirps-v3-basin-pentad",
-      "label": "CHIRPS v3 basin pentadal precipitation",
-      "predicate": "uz:hasBasinStatistic",
-      "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
-      "exists": true,
-      "rows": 114744,
-      "units": 2732,
-      "expectedUnits": 2732,
-      "coverage": {
-        "from": "2026-01",
-        "to": "2026-07"
-      },
-      "cadence": "monthly",
-      "upstreamLatest": "2026-07",
-      "gap": null,
-      "status": "CURRENT",
-      "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
-      "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
-      "lastModified": "2026-09-01T08:35:06+00:00"
+      "lastModified": "2026-09-07T09:12:32+00:00"
     },
     {
       "id": "landcover-admin-year",
@@ -232,7 +232,7 @@
       "status": "CURRENT",
       "refresh": "npm run landcover:stats -- --level admin",
       "note": "The land cover product publishes one mosaic per calendar year.",
-      "lastModified": "2026-09-01T09:37:53+00:00"
+      "lastModified": "2026-09-07T09:12:32+00:00"
     },
     {
       "id": "admin-basin-district",
@@ -240,8 +240,8 @@
       "predicate": "uz:intersectsAdminArea",
       "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "exists": true,
-      "rows": 10383,
-      "units": 213,
+      "rows": 6009,
+      "units": 199,
       "expectedUnits": null,
       "coverage": null,
       "cadence": "static",
@@ -250,7 +250,7 @@
       "status": "STATIC",
       "refresh": "npm run hydrography:adminlinks",
       "note": "Boundaries and basins change only when a delivery is replaced.",
-      "lastModified": "2026-09-01T09:38:02+00:00"
+      "lastModified": "2026-09-07T09:12:32+00:00"
     },
     {
       "id": "admin-basin-province",
@@ -258,8 +258,8 @@
       "predicate": "uz:intersectsAdminArea",
       "container": "PUBLISHED/data/ontology/3_REFERENCE/3.1_ADMIN_BASIN_LINKS/admin-basin-links.csv",
       "exists": true,
-      "rows": 10383,
-      "units": 213,
+      "rows": 4374,
+      "units": 14,
       "expectedUnits": null,
       "coverage": null,
       "cadence": "static",
@@ -268,7 +268,7 @@
       "status": "STATIC",
       "refresh": "npm run hydrography:adminlinks",
       "note": "Boundaries and basins change only when a delivery is replaced.",
-      "lastModified": "2026-09-01T09:38:02+00:00"
+      "lastModified": "2026-09-07T09:12:32+00:00"
     },
     {
       "id": "basinatlas-uz-downstream",
@@ -286,7 +286,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-08-31T11:46:00+00:00"
+      "lastModified": "2026-09-07T09:12:30+00:00"
     },
     {
       "id": "basinatlas-uz-hierarchy",
@@ -304,7 +304,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-08-31T11:46:00+00:00"
+      "lastModified": "2026-09-07T09:12:30+00:00"
     },
     {
       "id": "basinatlas-uz-pfaf",
@@ -322,7 +322,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-08-31T11:46:00+00:00"
+      "lastModified": "2026-09-07T09:12:30+00:00"
     },
     {
       "id": "cams-basin-monthly",
@@ -343,7 +343,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-01T08:48:01+00:00"
+      "lastModified": "2026-09-07T09:12:31+00:00"
     },
     {
       "id": "cfsv2-basin-climatology",
@@ -361,7 +361,7 @@
       "status": "STATIC",
       "refresh": "npm run cfsv2:climatology",
       "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
-      "lastModified": "2026-09-01T08:06:25+00:00"
+      "lastModified": "2026-09-07T09:12:31+00:00"
     },
     {
       "id": "cpc-basin-monthly",
@@ -382,7 +382,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-01T09:28:06+00:00"
+      "lastModified": "2026-09-07T09:12:32+00:00"
     },
     {
       "id": "ghm-basin-modification",
@@ -390,8 +390,8 @@
       "predicate": "uz:hasBasinStatistic",
       "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
       "exists": true,
-      "rows": 14570,
-      "units": 2914,
+      "rows": 19315,
+      "units": 3863,
       "expectedUnits": null,
       "coverage": null,
       "cadence": "static",
@@ -400,7 +400,7 @@
       "status": "STATIC",
       "refresh": "npm run ghm:observe",
       "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
-      "lastModified": "2026-09-01T08:34:08+00:00"
+      "lastModified": "2026-09-07T10:00:29+00:00"
     },
     {
       "id": "ghm-district-modification",
@@ -408,8 +408,8 @@
       "predicate": "uz:hasAdminStatistic",
       "container": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
       "exists": true,
-      "rows": 14570,
-      "units": 2914,
+      "rows": 995,
+      "units": 199,
       "expectedUnits": null,
       "coverage": null,
       "cadence": "static",
@@ -418,7 +418,7 @@
       "status": "STATIC",
       "refresh": "npm run ghm:observe",
       "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
-      "lastModified": "2026-09-01T08:34:08+00:00"
+      "lastModified": "2026-09-07T10:00:29+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-downstream",
@@ -436,7 +436,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-03T09:15:44+00:00"
+      "lastModified": "2026-09-07T09:12:31+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-hierarchy",
@@ -454,7 +454,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-03T09:15:44+00:00"
+      "lastModified": "2026-09-07T09:12:31+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-pfaf",
@@ -472,7 +472,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-03T09:15:44+00:00"
+      "lastModified": "2026-09-07T09:12:31+00:00"
     }
   ]
 }

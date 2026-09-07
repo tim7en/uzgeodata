@@ -41,12 +41,12 @@ OUTPUT = ROOT / "PUBLISHED" / "data" / "data-currency.json"
 SOURCES = {
     "cfsv2-basin-monthly": {
         "cadence": "monthly", "latest": "cfsv2",
-        "units": 263,
+        "unitReference": "basin07",
         "command": "npm run cfsv2:observe -- --start <YYYY-MM> --end <YYYY-MM>",
         "note": "CFSv2 publishes six-hourly with a short lag; a month is complete once it ends.",
     },
     "cfsv2-basin-anomaly": {
-        "cadence": "monthly", "latest": "cfsv2", "units": 263,
+        "cadence": "monthly", "latest": "cfsv2", "unitReference": "basin07",
         "command": "npm run cfsv2:anomaly",
         "note": "Derived. Rebuilds in seconds once observations and climatology are current.",
     },
@@ -56,12 +56,12 @@ SOURCES = {
         "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
     },
     "chirps-v3-basin-pentad": {
-        "cadence": "monthly", "latest": "chirps", "units": 2732,
+        "cadence": "monthly", "latest": "chirps", "unitReference": "basin12",
         "command": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
         "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
     },
     "chirts-basin-monthly": {
-        "cadence": "closed", "latest": "chirts", "units": 2732,
+        "cadence": "closed", "latest": "chirts", "unitReference": "basin12",
         "command": "npm run chirts:observe -- --start <YYYY-MM> --end <YYYY-MM>",
         "note": "The upstream record ended at 2016-12. Complete once it reaches that, and never behind.",
     },
@@ -72,12 +72,12 @@ SOURCES = {
         "command": "npm run ghm:observe",
         "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published."},
     "landcover-admin-year": {
-        "cadence": "annual", "latest": "landcover", "units": 199,
+        "cadence": "annual", "latest": "landcover", "unitReference": "adm2",
         "command": "npm run landcover:stats -- --level admin",
         "note": "The land cover product publishes one mosaic per calendar year.",
     },
     "landcover-basin-year": {
-        "cadence": "annual", "latest": "landcover", "units": 2736,
+        "cadence": "annual", "latest": "landcover", "unitReference": "basin12",
         "command": "npm run landcover:stats -- --level basin",
         "note": "Not yet built; roughly ten hours for level 12.",
     },
@@ -87,6 +87,12 @@ SOURCES = {
     "admin-basin-district": {"cadence": "static", "latest": None,
                              "command": "npm run hydrography:adminlinks",
                              "note": "Boundaries and basins change only when a delivery is replaced."},
+}
+
+UNIT_REFERENCES = {
+    "basin07": ROOT / "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev07.geojson",
+    "basin12": ROOT / "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev12.geojson",
+    "adm2": ROOT / "PUBLISHED/data/admin/adm2.geojson",
 }
 
 # Where the upstream products currently stand. Kept here rather than queried, so
@@ -103,7 +109,16 @@ UPSTREAM = {
 }
 
 
-def survey(container: Path, dimensions: list[dict], object_column: str):
+def reference_units(name: str | None) -> int | None:
+    """Measure the current geography instead of freezing a pre-rotation count."""
+    path = UNIT_REFERENCES.get(name)
+    if not path or not path.exists():
+        return None
+    return len(json.loads(path.read_text(encoding="utf8"))["features"])
+
+
+def survey(container: Path, dimensions: list[dict], object_column: str,
+           scope_column: str | None = None, scope_value: str | None = None):
     """Period covered, row count and how many distinct units appear.
 
     The unit count is what separates a finished table from a running one. A job
@@ -117,6 +132,8 @@ def survey(container: Path, dimensions: list[dict], object_column: str):
     stamps, units, rows = set(), set(), 0
     with container.open(encoding="utf8", newline="") as handle:
         for row in csv.DictReader(handle):
+            if scope_value is not None and row.get(scope_column) != scope_value:
+                continue
             rows += 1
             if object_column in row:
                 units.add(row[object_column])
@@ -133,8 +150,11 @@ def main() -> None:
         container = ROOT / table["container"]
         source = SOURCES.get(table["id"], {})
         dimensions = table.get("dimensionColumns", [])
-        first, last, rows, units = survey(container, dimensions, table["objectColumn"])
-        expected_units = source.get("units")
+        first, last, rows, units = survey(
+            container, dimensions, table["objectColumn"],
+            table.get("scopeColumn"), table.get("scopeValue"),
+        )
+        expected_units = reference_units(source.get("unitReference"))
 
         if not container.exists():
             status, behind = "MISSING", None

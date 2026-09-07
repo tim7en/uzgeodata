@@ -66,10 +66,34 @@ def basin_areas() -> dict[int, float]:
     return areas
 
 
-def level_of(table: dict, sample_ids: set[str]) -> int | None:
-    """Infer the basin level a table is keyed at, from how many distinct ids it holds."""
+def standard_basin_ids() -> dict[int, set[str]]:
+    """Read the canonical identifier families used by in-repository basin tables."""
+    references = {}
+    folder = ROOT / "PUBLISHED/data/review/basinatlas"
+    for level in range(1, 13):
+        path = folder / f"basinatlas_uz_lev{level:02d}.geojson"
+        if not path.exists():
+            continue
+        document = json.loads(path.read_text(encoding="utf8"))
+        references[level] = {
+            str(feature["properties"]["HYBAS_ID"])
+            for feature in document["features"]
+        }
+    return references
+
+
+def level_of(table: dict, sample_ids: set[str], references: dict[int, set[str]]) -> int | None:
+    """Infer basin level from identifiers, falling back to population size."""
     if table["objectType"] != "Basin" or not sample_ids:
         return None
+    # Raster reductions target one declared basin level. Topology deliveries can
+    # contain identifiers from several levels in the same table, so membership
+    # matching would mislabel those mixed-level edge lists.
+    if table["id"] in GRIDS and table.get("identifierScheme") == "HYBAS_ID" and references:
+        matches = {level: len(sample_ids & ids) for level, ids in references.items()}
+        best = max(matches, key=matches.get)
+        if matches[best]:
+            return best
     # Two populations exist per level: the atlas extraction, and the subset
     # clipped to the national boundary that the portal publishes. Matching only
     # against the atlas counts made the clipped level-12 tables — 2,732 basins
@@ -88,6 +112,7 @@ def audit() -> list[dict]:
             for name in [entry["table"], *entry.get("alsoTables", [])]:
                 structure[name] = entry["name"]
     areas = basin_areas()
+    basin_ids = standard_basin_ids()
 
     findings = []
     for table in sorted(registry, key=lambda t: t["id"]):
@@ -136,7 +161,7 @@ def audit() -> list[dict]:
                 if not table.get("measureUnitColumn") and "km2" not in (table.get("measureColumn") or ""):
                     issues.append("no unit column and none implied by the measure name")
 
-            level = level_of(table, ids)
+            level = level_of(table, ids, basin_ids)
             grid = GRIDS.get(table["id"])
             if level and grid and areas.get(level):
                 pixels = areas[level] / ((grid / 1000) ** 2)
