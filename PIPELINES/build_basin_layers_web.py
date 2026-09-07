@@ -31,6 +31,17 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "PUBLISHED/data/basin-layers"
 INDEX = OUTPUT / "index.json"
 
+# Source pipelines use a small controlled vocabulary for row-level quality.
+# Preserve the counts for auditability, but also publish a weighted score the
+# portal can encode as node health. Unknown states stay conservative rather
+# than being treated as invalid.
+QUALITY_WEIGHTS = {
+    "ok": 1.0,
+    "ok-centroid": 0.92,
+    "ok-interpolated": 0.65,
+    "implausible": 0.0,
+}
+
 
 def geometry_for(level: int) -> str:
     return f"/data/review/basinatlas/basinatlas_uz_lev{level:02d}.geojson"
@@ -252,6 +263,11 @@ def build_layer(layer: dict) -> tuple[dict, dict]:
         if preview_totals[period][1]
     ])
     valid_percent = round(rows_read / rows_seen * 100, 1) if rows_seen else 0.0
+    quality_score = round(
+        sum(count * QUALITY_WEIGHTS.get(state, 0.75)
+            for state, count in quality_counts.items()) / rows_seen * 100,
+        1,
+    ) if rows_seen else 0.0
     series = {
         "version": "1.0",
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -270,6 +286,7 @@ def build_layer(layer: dict) -> tuple[dict, dict]:
         "coverage": {"rows": rows_read, "basins": len(values), "periods": len(sorted_periods)},
         "quality": {
             "validPercent": valid_percent,
+            "scorePercent": quality_score,
             "states": dict(sorted(quality_counts.items())),
         },
         "preview": {

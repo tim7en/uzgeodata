@@ -11,7 +11,7 @@
   "file": "basin-zonal-stats.csv",
   "storedInPlace": true,
   "path": "WORKSPACE/derived/basin-zonal-stats.csv",
-  "present": false,
+  "present": true,
   "crossDomain": {},
   "note": "The number is a position and is recomputed whenever a dataset is added. Quote the name, never the number."
 }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-03T09:35:48+00:00",
+  "generatedAt": "2026-09-07T18:03:15+00:00",
   "convention": {
     "naming": "Upper case, digits and underscores only.",
     "ordering": "Domains alphabetical, datasets alphabetical within a domain.",
@@ -148,9 +148,8 @@
       "domainNumber": "2",
       "name": "LANDCOVER_BASIN_YEAR",
       "folder": "2_LAND/2.3_LANDCOVER_BASIN_YEAR",
-      "table": null,
-      "tableNote": "Planned but never built, so the graph does not declare it. The entry stays so the gap is visible; it gains a table when the basin run produces rows.",
-      "what": "Area of each land cover class per level-12 basin per year. Not yet built."
+      "table": "landcover-basin-year",
+      "what": "Annual area of each Esri land-cover class per canonical BasinATLAS level-12 basin, retaining the spatial and temporal distribution used by the observatory."
     },
     {
       "number": "3.1",

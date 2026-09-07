@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T17:36:21+00:00",
+  "generatedAt": "2026-09-07T17:45:22+00:00",
   "title": "Basin climate & land observatory",
   "description": "Every already-measured basin time series the ontology declares, projected into one shared map contract: CFSv2 climate state and anomaly, CHIRPS precipitation, CHIRTS and CPC temperature, CAMS air quality, and GHM human modification.",
   "layers": [
@@ -125,6 +125,7 @@
       },
       "quality": {
         "validPercent": 100.0,
+        "scorePercent": 100.0,
         "states": {
           "ok": 90105
         }
@@ -390,6 +391,7 @@
       },
       "quality": {
         "validPercent": 100.0,
+        "scorePercent": 99.0,
         "states": {
           "implausible": 1021,
           "ok": 98100,
@@ -616,6 +618,7 @@
       },
       "quality": {
         "validPercent": 100.0,
+        "scorePercent": 100.0,
         "states": {
           "ok": 167076
         }
@@ -875,6 +878,7 @@
       },
       "quality": {
         "validPercent": 100.0,
+        "scorePercent": 100.0,
         "states": {
           "ok": 35802
         }
@@ -1119,6 +1123,7 @@
       },
       "quality": {
         "validPercent": 100.0,
+        "scorePercent": 88.5,
         "states": {
           "ok": 82348,
           "ok-interpolated": 40502
@@ -1362,6 +1367,7 @@
       },
       "quality": {
         "validPercent": 100.0,
+        "scorePercent": 100.0,
         "states": {
           "ok": 360
         }
@@ -1437,6 +1443,7 @@
       },
       "quality": {
         "validPercent": 100.0,
+        "scorePercent": 100.0,
         "states": {
           "ok": 19315
         }

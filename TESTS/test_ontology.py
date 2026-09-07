@@ -276,6 +276,34 @@ def test_portal_projection_publishes_only_asserted_facts():
             assert observed["confidence"] >= PROMOTE_THRESHOLD or observed["reviewed"]
 
 
+def test_portal_projection_keeps_spatial_frames_explicit():
+    graph = load(ROOT / "PUBLISHED" / "data" / "ontology-graph.json")
+    frames = {frame["id"]: frame for frame in graph["geography"]["frames"]}
+    assert set(frames) == {"basin", "administrative"}
+    assert "uz:coversBasin" in frames["basin"]["predicates"]
+    assert "uz:hasBasinStatistic" in frames["basin"]["predicates"]
+    assert "uz:coversPlace" in frames["administrative"]["predicates"]
+    assert "uz:hasAdminStatistic" in frames["administrative"]["predicates"]
+
+    bridge = graph["geography"]["bridge"]
+    assert bridge["predicate"] == "uz:intersectsAdminArea"
+    assert bridge["provinceLinks"] > 0
+    assert bridge["districtLinks"] > 0
+
+    flood = next(dataset for dataset in graph["datasets"]
+                 if dataset["id"] == "uz:ds/a207-flood-risk")
+    relations = {(item["frame"], item["predicate"]) for item in flood["geographies"]}
+    assert ("administrative", "uz:coversPlace") in relations
+    assert ("basin", "uz:coversBasin") in relations
+
+
+def test_missing_private_atlas_record_is_a_published_quality_gap():
+    graph = load(ROOT / "PUBLISHED" / "data" / "ontology-graph.json")
+    land_cover = next(dataset for dataset in graph["datasets"]
+                      if dataset["id"] == "uz:ds/a92-land-cover")
+    assert "missing-private-repository-record" in land_cover["flags"]
+
+
 def test_catalogue_excludes_proposed_and_rejected_facts(assertions):
     """The review backlog must never be presented as accepted catalogue data."""
     catalogue = load(ROOT / "PUBLISHED" / "data" / "data-catalogue.json")["datasets"]

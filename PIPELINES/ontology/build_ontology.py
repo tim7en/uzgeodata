@@ -462,6 +462,20 @@ class GraphBuilder:
                         self.dataset_by_package[stored] = (ds_id, dist_id)
             else:
                 self.warn(f"{ds_id}: no matching record in the private repository")
+                self.add(
+                    ds_id,
+                    "uz:qualityFlag",
+                    value="missing-private-repository-record",
+                    agent=AGENT_PIPELINE,
+                    confidence=1.0,
+                    status="asserted",
+                    method="registry-reconciliation",
+                    evidence={
+                        "source": "archive-catalog.json + WORKSPACE/datasets.json",
+                        "matchedTerms": [source_title],
+                        "note": "Public atlas record has no source-package record in the private repository",
+                    },
+                )
 
         # Repository records with no public catalogue entry still belong in the graph.
         for record in self.repository:
@@ -1283,13 +1297,14 @@ class GraphBuilder:
                 # is, so nothing downstream has to match paths by guesswork.
                 "container": container,
                 "scopeColumn": table.get("scopeColumn"),
-                "scopeValue": table.get("scopeValue"),
                 "measureColumn": table.get("measureColumn"),
                 "measureUnitColumn": table.get("measureUnitColumn"),
                 "containerTable": table.get("containerTable"),
                 "identifierScheme": table["identifierScheme"],
                 "rowCount": row_count,
             }
+            if table.get("scopeValue") is not None:
+                table_entity["scopeValue"] = table["scopeValue"]
             if table.get("subjectFixed"):
                 table_entity["subjectFixed"] = table["subjectFixed"]
             else:
@@ -1633,6 +1648,7 @@ class GraphBuilder:
         known = entity_ids | concept_ids
 
         generated_agents = {AGENT_SOURCE, AGENT_PIPELINE, AGENT_RULES}
+        generated_methods = {"curator-mapping", "external-source-mapping"}
         carried = 0
         dropped = 0
         for record in previous + proposals + curated:
@@ -1643,7 +1659,15 @@ class GraphBuilder:
                 dropped += 1
                 continue
             reviewed = bool(record.get("reviewedBy"))
-            from_other_agent = record.get("assertedBy") not in generated_agents
+            # Curator-authored registries are authoritative inputs, but their
+            # generated assertions are still rebuildable. Carrying a former
+            # registry value forward creates two values when attribution or
+            # licensing is corrected. Explicit reviews/manual statements remain
+            # preserved through the reviewed branch.
+            from_other_agent = (
+                record.get("assertedBy") not in generated_agents
+                and record.get("method") not in generated_methods
+            )
             if not reviewed and not from_other_agent:
                 continue  # regenerated this run
             existing = self.assertions.get(record["id"])

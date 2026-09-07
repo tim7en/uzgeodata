@@ -8,10 +8,14 @@ import os
 import re
 import shutil
 import warnings
+import zipfile
 from pathlib import Path
 
 import geopandas as gpd
-import libarchive
+try:
+    import libarchive
+except (ImportError, OSError, TypeError):  # libarchive-c also needs a native DLL
+    libarchive = None
 import matplotlib
 import numpy as np
 import pyogrio
@@ -54,6 +58,11 @@ def folder_size(folder: Path) -> int:
 
 
 def expanded_package_size(package: Path) -> int:
+    if zipfile.is_zipfile(package):
+        with zipfile.ZipFile(package) as archive:
+            return sum(max(0, entry.file_size) for entry in archive.infolist())
+    if libarchive is None:
+        raise RuntimeError("Reading this package needs libarchive's native library")
     with libarchive.file_reader(str(package)) as archive:
         return sum(max(0, int(entry.size or 0)) for entry in archive)
 
@@ -219,6 +228,30 @@ def archive_preview(package: Path, target: Path, max_bytes: int = 25 * 1024 * 10
     temporary = target.with_suffix(f"{target.suffix}.tmp")
     temporary.unlink(missing_ok=True)
     try:
+        if zipfile.is_zipfile(package):
+            with zipfile.ZipFile(package) as archive:
+                for entry in archive.infolist():
+                    if Path(entry.filename).name.casefold() != "thumbnail.png":
+                        continue
+                    if entry.file_size > max_bytes:
+                        raise RuntimeError("Embedded preview exceeds the 25 MiB safety limit")
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    with archive.open(entry) as source, temporary.open("wb") as output:
+                        written = 0
+                        while block := source.read(1024 * 1024):
+                            written += len(block)
+                            if written > max_bytes:
+                                raise RuntimeError("Embedded preview exceeds the 25 MiB safety limit")
+                            output.write(block)
+                    os.replace(temporary, target)
+                    return {
+                        "kind": "preview", "url": f"/data/layers/{target.name}",
+                        "features": 0, "sourceFeatures": 0, "bytes": target.stat().st_size,
+                        "note": "Preview only: expanded source package exceeds the working-storage limit.",
+                    }
+            raise RuntimeError("Expanded package exceeds the working-storage limit and has no embedded preview")
+        if libarchive is None:
+            raise RuntimeError("Reading this package needs libarchive's native library")
         with libarchive.file_reader(str(package)) as archive:
             for entry in archive:
                 if Path(entry.pathname).name.casefold() != "thumbnail.png":

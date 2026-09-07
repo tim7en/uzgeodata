@@ -154,8 +154,12 @@ def audit() -> list[dict]:
                 # A missing quality column is only a finding when the table has
                 # not said why. Derived and geometric tables have a standing
                 # reason recorded in their note; sensor readings do not.
-                exempt = ("derived" in (table.get("note") or "")
-                          or "measured geometric overlap" in (table.get("note") or ""))
+                note = table.get("note") or ""
+                exempt = (
+                    "derived" in note
+                    or "measured geometric overlap" in note
+                    or "measured geometric reduction" in note
+                )
                 if "quality" not in columns and not exempt:
                     issues.append("no quality column and no stated reason")
                 if not table.get("measureUnitColumn") and "km2" not in (table.get("measureColumn") or ""):

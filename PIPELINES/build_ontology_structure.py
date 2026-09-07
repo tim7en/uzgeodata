@@ -363,7 +363,7 @@ def main() -> None:
             "predicate": registry.get(row.get("table"), {}).get("predicate"),
             "file": Path(row["source"]).name,
             "storedInPlace": in_place,
-            "path": row["source"] if in_place else str((target).relative_to(ROOT)),
+            "path": row["source"] if in_place else target.relative_to(ROOT).as_posix(),
             "present": source.exists() if in_place else target.exists(),
             "crossDomain": row.get("crossDomain", {}),
             "note": ("The number is a position and is recomputed whenever a dataset is added. "
@@ -403,7 +403,7 @@ def main() -> None:
         row = by_table.get(table["id"])
         if not row or row.get("inPlace"):
             continue
-        want = str((TREE / row["folder"] / Path(row["source"]).name).relative_to(ROOT))
+        want = (TREE / row["folder"] / Path(row["source"]).name).relative_to(ROOT).as_posix()
         if table["container"] != want:
             table["container"] = want
             repointed += 1

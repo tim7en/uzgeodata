@@ -360,7 +360,7 @@ function LivingOntologyExplorer({ onRequest }) {
   const ontologyDomains=useMemo(()=>(model?.vocabularies.themes||[]).filter(theme=>domainLayout[theme.id]).map(theme=>({id:theme.id,name:theme.prefLabel,color:theme.color,...domainLayout[theme.id]})),[model]);
   const signalIndex=useMemo(()=>{
     const index={};
-    (signals?.basinLayers?.layers||[]).forEach(layer=>{if(layer.preview?.points?.length)(index[layer.dataset]||=[]).push({...layer.preview,layerId:layer.id,href:'/climate.html'})});
+    (signals?.basinLayers?.layers||[]).forEach(layer=>{if(layer.preview?.points?.length)(index[layer.dataset]||=[]).push({...layer.preview,quality:layer.quality,layerId:layer.id,href:'/climate.html'})});
     const land=signals?.landcover;
     if(land?.ontology?.subject&&land.totalsKm2){const built=(land.classes||[]).find(item=>item.code===7);const points=Object.entries(land.totalsKm2).map(([period,classes])=>({period,value:Number(classes['7']||classes[7]||0)}));(index[land.ontology.subject]||=[]).push({label:`${built?.name||'Built area'} · national total`,unit:'km²',aggregation:'sum across published basins',points,layerId:'landcover-basin-year',href:'/landcover.html'})}
     return index;
@@ -379,9 +379,12 @@ function LivingOntologyExplorer({ onRequest }) {
         const checks=[item.theme,item.analysis,item.observes?.length,item.places?.length,item.distributions],metadata=Math.round(checks.filter(Boolean).length/checks.length*100);
         let score=worst?qualityScale[worst.status]:55+metadata*.4;
         const completeness=currency.filter(row=>row.expectedUnits&&row.units).map(row=>row.units/row.expectedUnits);if(completeness.length)score=Math.min(score,60+Math.min(...completeness)*40);
-        score=Math.max(18,Math.min(99,Math.round(score-Math.min((item.flags||[]).length*6,24))));
         const previews=signalIndex[item.id]||[],preview=previews.slice().sort((a,b)=>b.points.length-a.points.length)[0]||null;
-        nodes.push({...item,title:item.label,category:domain.name,x:domain.x+Math.cos(angle)*radius,y:domain.y+Math.sin(angle)*radius,domain,concept:item.analysis,frameIds:new Set((item.geographies||[]).map(relation=>relation.frame)),qualityScore:score,qualityStatus:worst?.status||(item.flags?.length?'REVIEW':'CATALOGUED'),qualityDetail:worst?.gap||worst?.note||null,metadataScore:metadata,preview});
+        if(preview?.quality?.scorePercent!=null)score=Math.min(score,50+preview.quality.scorePercent*.5);
+        const privateGap=(item.flags||[]).includes('missing-private-repository-record');
+        if(privateGap)score=Math.min(score,44);
+        score=Math.max(18,Math.min(99,Math.round(score-Math.min((item.flags||[]).length*6,24))));
+        nodes.push({...item,title:item.label,category:domain.name,x:domain.x+Math.cos(angle)*radius,y:domain.y+Math.sin(angle)*radius,domain,concept:item.analysis,frameIds:new Set((item.geographies||[]).map(relation=>relation.frame)),qualityScore:score,qualityStatus:privateGap?'PRIVATE SOURCE GAP':worst?.status||(item.flags?.length?'REVIEW':'CATALOGUED'),qualityDetail:privateGap?'Atlas record 92 has no matching source-package record in the private repository.':worst?.gap||worst?.note||(preview?.quality?.scorePercent!=null?`${preview.quality.scorePercent}% weighted row quality`:null),metadataScore:metadata,preview});
       });
     });
     return nodes;

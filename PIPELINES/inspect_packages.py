@@ -3,9 +3,13 @@ from __future__ import annotations
 
 import argparse
 import os
+import zipfile
 from pathlib import Path, PurePosixPath
 
-import libarchive
+try:
+    import libarchive
+except (ImportError, OSError, TypeError):  # libarchive-c also needs a native DLL
+    libarchive = None
 
 
 def prepare_ntfs_file(output) -> None:
@@ -28,11 +32,40 @@ def prepare_ntfs_file(output) -> None:
         )
 
 
+def safe_member_parts(name: str) -> list[str]:
+    """Return a package member path only when it stays below the destination."""
+    member = PurePosixPath(name.replace("\\", "/"))
+    if member.is_absolute() or ".." in member.parts:
+        raise RuntimeError(f"Unsafe archive member path: {name}")
+    return [part for part in member.parts if part not in ("", ".")]
+
+
 def extract_package(package: Path, destination: Path) -> None:
     destination.mkdir(parents=True, exist_ok=True)
+    if zipfile.is_zipfile(package):
+        with zipfile.ZipFile(package) as archive:
+            for entry in archive.infolist():
+                parts = safe_member_parts(entry.filename)
+                if not parts:
+                    continue
+                target = destination.joinpath(*parts)
+                if entry.is_dir():
+                    target.mkdir(parents=True, exist_ok=True)
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                with archive.open(entry) as source, target.open("wb") as output:
+                    prepare_ntfs_file(output)
+                    while block := source.read(1024 * 1024):
+                        output.write(block)
+        return
+    if libarchive is None:
+        raise RuntimeError(
+            "This package is not ZIP-compatible and needs libarchive's native library. "
+            "Install libarchive and retry."
+        )
     with libarchive.file_reader(str(package)) as archive:
         for entry in archive:
-            parts = [part for part in PurePosixPath(entry.pathname).parts if part not in ("", ".", "..")]
+            parts = safe_member_parts(entry.pathname)
             if not parts:
                 continue
             target = destination.joinpath(*parts)
@@ -61,6 +94,8 @@ def main() -> None:
         extract_package(args.package, args.extract)
         print(args.extract)
         return
+    if libarchive is None:
+        raise RuntimeError("Listing non-ZIP packages needs libarchive's native library")
     with libarchive.file_reader(str(args.package)) as archive:
         for entry in archive:
             print(f"{entry.size:>12}  {entry.pathname}")

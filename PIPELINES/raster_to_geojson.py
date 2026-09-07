@@ -13,11 +13,15 @@ import math
 import os
 import re
 import tempfile
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from typing import Iterator
 
-import libarchive
+try:
+    import libarchive
+except (ImportError, OSError, TypeError):  # libarchive-c also needs a native DLL
+    libarchive = None
 import numpy as np
 import rasterio
 from affine import Affine
@@ -259,6 +263,34 @@ def supported_files_in_directory(folder: Path) -> Iterator[Path]:
 def extract_lpkx_tiffs(package: Path, destination: Path, max_temp_bytes: int) -> list[tuple[Path, str]]:
     extracted: list[tuple[Path, str]] = []
     total = 0
+    if zipfile.is_zipfile(package):
+        with zipfile.ZipFile(package) as archive:
+            for entry in archive.infolist():
+                member = PurePosixPath(entry.filename)
+                if entry.is_dir() or member.suffix.casefold() not in TIFF_SUFFIXES:
+                    continue
+                total += max(0, entry.file_size)
+                if total > max_temp_bytes:
+                    raise QuotaExceeded(
+                        f"TIFF members in {package.name} exceed the temporary extraction limit "
+                        f"of {max_temp_bytes / GIB:.2f} GiB"
+                    )
+                digest = hashlib.sha256(entry.filename.encode("utf-8")).hexdigest()[:10]
+                target = destination / f"{safe_slug(member.stem)}-{digest}{member.suffix.casefold()}"
+                with archive.open(entry) as source, target.open("wb") as output:
+                    actual = 0
+                    while block := source.read(1024 * 1024):
+                        actual += len(block)
+                        if total - entry.file_size + actual > max_temp_bytes:
+                            raise QuotaExceeded("Temporary TIFF extraction exceeded its configured limit")
+                        output.write(block)
+                extracted.append((target, entry.filename))
+        return extracted
+    if libarchive is None:
+        raise RuntimeError(
+            "This LPKX is not ZIP-compatible and needs libarchive's native library. "
+            "Install libarchive and retry."
+        )
     with libarchive.file_reader(str(package)) as archive:
         for entry in archive:
             member = PurePosixPath(entry.pathname)

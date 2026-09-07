@@ -434,6 +434,11 @@ def validate(root: Path, strict: bool = False) -> Report:
 
 
 def main(argv=None) -> int:
+    # Windows can inherit a legacy code page that cannot represent titles in
+    # the profiled Russian/Uzbek source paths. Validation must report a warning,
+    # not crash while printing it.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--root", default=".")
     parser.add_argument("--strict", action="store_true", help="treat curation warnings as failures")

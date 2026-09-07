@@ -43,6 +43,24 @@ Three further types name the hydrographic features themselves — `Basin`,
 `RiverReach` and `WaterBody` — and no instance of any of them is ever minted. See
 [Measured topology](#measured-topology).
 
+### Two spatial frames
+
+The ontology keeps hydrological and administrative geography as two explicit,
+parallel relationship frames. They answer different questions and must not be
+collapsed into a generic spatial link:
+
+| Frame | Boundary follows | Dataset predicates | Typical use |
+| --- | --- | --- | --- |
+| Hydrological basin | drainage and terrain | `uz:coversBasin`, `uz:hasBasinStatistic`, `uz:hasBasinAnomaly` | water balance, drought, upstream/downstream analysis |
+| Administrative | national, provincial and district jurisdiction | `uz:coversPlace`, `uz:hasAdminStatistic` | the Uzbekistan environmental atlas, governance and reporting |
+
+`uz:intersectsAdminArea` is the measured bridge between them. It translates a
+basin result into the provinces or districts it intersects; it does not imply
+that either boundary is the other. In particular, an atlas layer can correctly
+be limited to `uz:place/uzbekistan` even when the basins used to analyse it cross
+the national border. The portal graph publishes both frames and the bridge
+counts so clients can keep this choice visible.
+
 ### Measured topology
 
 The HydroSHEDS packages carry more than 126,000 links: which reach flows into

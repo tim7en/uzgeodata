@@ -64,3 +64,22 @@ def test_ghm_layer_keeps_only_the_basin_frame(tmp_path):
     entry, series = web.build_layer(layer)
     assert entry["coverage"]["rows"] == 1
     assert series["basins"]["1"]["2016"]["ghm_mean"] == {"v": 0.2}
+
+
+def test_layer_index_exposes_a_weighted_quality_signal(tmp_path):
+    source = tmp_path / "quality.csv"
+    write_csv(source, ["basin_id", "year", "month", "variable", "value", "unit", "quality"], [
+        [1, 2024, 1, "precipitation", 1.0, "mm/day", "ok"],
+        [2, 2024, 1, "precipitation", 2.0, "mm/day", "ok-interpolated"],
+        [3, 2024, 1, "precipitation", 9999, "mm/day", "implausible"],
+    ])
+    layer = {**web.LAYERS[1], "source": source}
+    entry, _ = web.build_layer(layer)
+
+    assert entry["quality"]["validPercent"] == 100.0
+    assert entry["quality"]["scorePercent"] == 55.0
+    assert entry["quality"]["states"] == {
+        "implausible": 1,
+        "ok": 1,
+        "ok-interpolated": 1,
+    }
