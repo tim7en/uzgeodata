@@ -19,6 +19,8 @@ import json
 import sys
 from pathlib import Path
 
+from external_locations import resolve_location
+
 from jsonschema import Draft202012Validator
 
 
@@ -365,12 +367,23 @@ def validate(root: Path, strict: bool = False) -> Report:
     if awaiting:
         report.note(f"{awaiting} dataset/predicate gaps have an unreviewed candidate waiting")
 
-    # Referenced-in-place assets: a path that no longer resolves is a dead
-    # reference, whether the delivery moved or the drive was detached.
+    # Referenced-in-place assets: try the profiled location and any curated
+    # relocation roots before treating a moved delivery as unavailable.
+    external_dir = root / "ONTOLOGY" / "instances" / "external"
+    inventories = {}
+    for path in sorted(external_dir.glob("*.json")):
+        payload = read_json(path)
+        if payload and payload.get("name") and "files" in payload:
+            inventories[payload["name"]] = payload
+    external_mapping = read_json(
+        root / "ONTOLOGY" / "vocab" / "external-sources.json", {"sources": []}
+    )
     unreachable = []
     for entity in entities.values():
         location = entity.get("externalPath")
-        if location and not Path(location).exists():
+        if location and "://" not in location and not resolve_location(
+            root, location, inventories, external_mapping.get("sources", [])
+        ):
             unreachable.append((entity["id"], location))
     for entity_id, location in unreachable[:20]:
         report.warn(f"{entity_id}: external location does not resolve: {location}")
@@ -401,7 +414,7 @@ def validate(root: Path, strict: bool = False) -> Report:
     unused = sorted(
         cid for cid, concept in concepts.items()
         if concept["scheme"] == "property"
-        and not any(a.get("object") == cid for a in assertions)
+        and not any(a.get("object") == cid for a in published)
     )
     if unused:
         report.note(f"{len(unused)} property concepts are not yet used by any dataset")

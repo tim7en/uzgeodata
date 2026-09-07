@@ -14,7 +14,8 @@ therefore decided by looking on disk, never by trusting the field, and every
 dataset lands in one of four states:
 
     published    the file is in PUBLISHED/ and the portal really serves it
-    repository   a source delivery under GEODATA/, present but not web-facing
+    repository   a local source/derivative, present but not web-facing
+    remote       a declared remote service; no local file is expected
     workspace    declared, but absent here — it lives in the untracked workspace
     offline      only ever seen on an external drive, and recorded from a profile
 
@@ -27,6 +28,7 @@ from __future__ import annotations
 
 import collections
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -35,6 +37,9 @@ INSTANCES = ROOT / "ONTOLOGY" / "instances"
 VOCAB = ROOT / "ONTOLOGY" / "vocab"
 PUBLISHED = ROOT / "PUBLISHED"
 OUTPUT = PUBLISHED / "data" / "data-catalogue.json"
+
+sys.path.insert(0, str(ROOT / "PIPELINES" / "ontology"))
+from external_locations import relocated_location, resolve_location  # noqa: E402
 
 # Roles that describe a file held somewhere other than this repository. They are
 # what the external inventories profiled, and they stay in the catalogue as
@@ -71,6 +76,10 @@ def main() -> None:
     # again for every dataset.
     facts: dict[str, dict[str, list]] = collections.defaultdict(lambda: collections.defaultdict(list))
     for assertion in assertions:
+        # The catalogue is a public projection. Proposals and rejected labels
+        # belong in the review table, never in the published inventory.
+        if assertion["status"] != "asserted":
+            continue
         target = assertion.get("object") if assertion.get("object") is not None else assertion.get("value")
         facts[assertion["subject"]][assertion["predicate"]].append(target)
 
@@ -83,11 +92,15 @@ def main() -> None:
 
     # Which external inventory a path came from, so a missing file can be traced
     # back to the drive it was profiled on.
-    inventories = []
+    inventory_rows = []
+    inventories_by_name = {}
     path_origin: dict[str, str] = {}
-    for name in ("maps-drop", "earth-engine"):
-        document = load(INSTANCES / "external" / f"{name}.json")
-        inventories.append({
+    for path in sorted((INSTANCES / "external").glob("*.json")):
+        document = load(path)
+        if not document.get("name") or "files" not in document:
+            continue
+        inventories_by_name[document["name"]] = document
+        inventory_rows.append({
             "id": document["name"],
             "source": document["source"],
             "profiledAt": document["profiledAt"],
@@ -98,6 +111,9 @@ def main() -> None:
         })
         root = document["source"].replace("\\", "/").rstrip("/")
         path_origin[root] = document["name"]
+
+    external_mapping = load(VOCAB / "external-sources.json")
+    source_declarations = external_mapping.get("sources", [])
 
     def origin_of(path: str | None) -> str | None:
         if not path:
@@ -113,16 +129,31 @@ def main() -> None:
         if entity is None:
             return None
         url = entity.get("url")
-        external = external_paths.get(dist_id)
+        recorded_external = external_paths.get(dist_id)
+        external = relocated_location(
+            ROOT, recorded_external, inventories_by_name, source_declarations
+        )
+        stored = entity.get("storedName")
         # Presence is a filesystem question. A URL under /data/ maps into
         # PUBLISHED/; anything else is only a claim until something is found.
-        present = False
+        published = False
         if url and url.startswith("/"):
-            present = (PUBLISHED / url.lstrip("/")).exists()
-        if entity.get("role") in EXTERNAL_ROLES:
-            state = "offline"
-        elif present:
+            published = (PUBLISHED / url.lstrip("/")).exists()
+        stored_path = (ROOT / stored) if stored else None
+        external_path = resolve_location(
+            ROOT, recorded_external, inventories_by_name, source_declarations
+        )
+        remote = bool(external and "://" in external)
+        if published:
             state = "published"
+        elif stored_path and stored_path.exists():
+            state = "repository"
+        elif external_path:
+            state = "repository"
+        elif remote:
+            state = "remote"
+        elif entity.get("role") in EXTERNAL_ROLES:
+            state = "offline"
         elif url:
             state = "workspace"
         elif external:
@@ -136,15 +167,16 @@ def main() -> None:
             "format": entity.get("format"),
             "bytes": entity.get("byteSize"),
             "url": url,
+            "storedName": stored,
             "accessPolicy": entity.get("accessPolicy"),
             "externalPath": external,
-            "inventory": origin_of(external),
+            "inventory": origin_of(recorded_external),
             "availability": state,
         }
 
     # A dataset is as available as its best distribution: if anything about it is
     # actually served, that is what a reader can reach today.
-    RANK = {"published": 0, "repository": 1, "workspace": 2, "offline": 3}
+    RANK = {"published": 0, "repository": 1, "remote": 2, "workspace": 3, "offline": 4}
 
     def label_of(vocabulary: dict, concept_id: str) -> dict:
         entry = vocabulary.get(concept_id)
@@ -247,7 +279,7 @@ def main() -> None:
         },
         "themes": [{"id": i, "label": e["prefLabel"], "definition": e.get("definition"),
                     "datasets": theme_counts.get(e["prefLabel"], 0)} for i, e in themes.items()],
-        "inventories": inventories,
+        "inventories": inventory_rows,
         "datasets": catalogue,
         "layers": layer_rows,
         "gaps": gaps,
@@ -259,7 +291,7 @@ def main() -> None:
           f"-> {OUTPUT.relative_to(ROOT)} ({OUTPUT.stat().st_size / 1024:,.0f} KB)")
     print("  availability: " + ", ".join(f"{k} {v}" for k, v in availability_counts.most_common()))
     print(f"  offline volume: {document['summary']['offlineBytes'] / 1e9:.2f} GB across "
-          f"{len(inventories)} profiled drives")
+          f"{len(inventory_rows)} profiled drives")
     print(f"  gaps: {len(gaps['propertiesWithoutData'])} properties and "
           f"{len(gaps['placesWithoutData'])} places with no dataset")
 

@@ -22,6 +22,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "unevaluatedProperties": false,
         "required": [
           "id",
           "type",
@@ -141,6 +142,19 @@
                     "null"
                   ],
                   "minimum": 0
+                },
+                "featureCount": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "crs": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "storedName": {
                   "type": [

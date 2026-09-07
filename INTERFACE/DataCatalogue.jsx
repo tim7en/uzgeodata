@@ -42,6 +42,14 @@ const AVAILABILITY = {
     label: 'Published', icon: CircleCheck,
     blurb: 'Served by the portal right now — the file is in PUBLISHED/ and the URL resolves.',
   },
+  repository: {
+    label: 'Local source', icon: Database,
+    blurb: 'Available on this machine as source or derived data, but not served by the portal.',
+  },
+  remote: {
+    label: 'Remote service', icon: Sparkles,
+    blurb: 'Declared in a remote data service such as Earth Engine; no local file is expected.',
+  },
   workspace: {
     label: 'In workspace', icon: FolderTree,
     blurb: 'Declared with a URL, but the file is not in this checkout. It is built into WORKSPACE/, '
@@ -135,6 +143,8 @@ function Row({ row, expanded, onToggle }) {
               <td className="cat-mono">{bytes(dist.bytes)}</td>
               <td className="cat-where">
                 {dist.availability === 'published' && <a href={dist.url} target="_blank" rel="noreferrer">{dist.url} <ArrowUpRight size={10}/></a>}
+                {dist.availability === 'repository' && <code title="available locally">{dist.storedName || dist.externalPath || 'local file'}</code>}
+                {dist.availability === 'remote' && <code title="remote service">{dist.externalPath}</code>}
                 {dist.availability === 'workspace' && <code title="declared, but absent from this checkout">{dist.url || 'WORKSPACE/'}</code>}
                 {dist.availability === 'offline' && <code title={dist.inventory || 'external drive'}>{dist.externalPath || dist.inventory || 'external drive'}</code>}
               </td>

@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT / "PIPELINES" / "ontology"))
 
 import validate_ontology  # noqa: E402
 from build_ontology import PROMOTE_THRESHOLD, GraphBuilder, slugify, term_matches  # noqa: E402
+from external_locations import location_for_profiled_file, resolve_location  # noqa: E402
 
 
 def load(path: Path):
@@ -68,6 +69,16 @@ def test_vocabulary_matches_schema(filename, schema_name):
     schema = load(ROOT / "ONTOLOGY" / "schema" / schema_name)
     errors = list(Draft202012Validator(schema).iter_errors(payload))
     assert not errors, [e.message for e in errors]
+
+
+def test_entity_schema_rejects_unknown_fields(entities):
+    """A misspelled intrinsic field must not silently enter the graph."""
+    schema = load(ROOT / "ONTOLOGY" / "schema" / "entity.schema.json")
+    document = load(ROOT / "ONTOLOGY" / "instances" / "entities.json")
+    document = copy.deepcopy(document)
+    document["entities"][0]["lable"] = "typo"
+    errors = list(Draft202012Validator(schema).iter_errors(document))
+    assert any("Unevaluated properties" in error.message for error in errors)
 
 
 def test_theme_vocabulary_covers_every_catalogue_category():
@@ -128,6 +139,40 @@ def test_hazard_beats_year_range(assertions, entities):
     concept = next(a["object"] for a in assertions
                    if a["subject"] == earthquake["id"] and a["predicate"] == "uz:hasAnalysisConcept")
     assert concept == "uz:analysis/risk-exposure"
+
+
+def test_analysis_classification_uses_titles_not_shared_table_fields(assertions):
+    """Generic flood columns must not turn access indicators into hazard datasets."""
+    accepted = {
+        (assertion["subject"], assertion["object"])
+        for assertion in assertions
+        if assertion["predicate"] == "uz:hasAnalysisConcept"
+        and assertion["status"] == "asserted"
+    }
+    assert (
+        "uz:ds/a75-access-to-sustainable-drinking-water",
+        "uz:analysis/resource-system",
+    ) in accepted
+    assert (
+        "uz:ds/a76-access-to-sustainable-sanitation",
+        "uz:analysis/resource-system",
+    ) in accepted
+
+
+def test_inferred_usecases_depend_on_published_properties(assertions):
+    """A rejected or pending property must not produce a published use case."""
+    asserted_properties = {
+        (assertion["subject"], assertion["object"])
+        for assertion in assertions
+        if assertion["predicate"] == "uz:observes" and assertion["status"] == "asserted"
+    }
+    for assertion in assertions:
+        if (assertion["predicate"] != "uz:supportsUseCase"
+                or assertion["status"] != "asserted"
+                or assertion.get("method") != "property-inference"):
+            continue
+        source_property = assertion["evidence"]["matchedTerms"][0]
+        assert (assertion["subject"], source_property) in asserted_properties
 
 
 def test_regional_extent_is_flagged(assertions):
@@ -229,6 +274,53 @@ def test_portal_projection_publishes_only_asserted_facts():
     for dataset in graph["datasets"]:
         for observed in dataset["observes"]:
             assert observed["confidence"] >= PROMOTE_THRESHOLD or observed["reviewed"]
+
+
+def test_catalogue_excludes_proposed_and_rejected_facts(assertions):
+    """The review backlog must never be presented as accepted catalogue data."""
+    catalogue = load(ROOT / "PUBLISHED" / "data" / "data-catalogue.json")["datasets"]
+    by_id = {dataset["id"]: dataset for dataset in catalogue}
+
+    def projected_values(dataset):
+        return {
+            dataset["theme"]["id"] if dataset.get("theme") else None,
+            dataset["analysis"]["id"] if dataset.get("analysis") else None,
+            *(entry["id"] for entry in dataset.get("observes", [])),
+            *(entry["id"] for entry in dataset.get("places", [])),
+            *(entry["id"] for entry in dataset.get("useCases", [])),
+            *dataset.get("quality", []),
+            dataset.get("license"),
+            dataset.get("attribution"),
+        }
+
+    leaked = []
+    for assertion in assertions:
+        if assertion["status"] == "asserted" or assertion["subject"] not in by_id:
+            continue
+        value = assertion.get("object", assertion.get("value"))
+        if value in projected_values(by_id[assertion["subject"]]):
+            leaked.append(assertion["id"])
+    assert leaked == []
+
+
+def test_external_location_survives_a_moved_delivery(tmp_path):
+    """Inventory-relative identity must outlive the drive path used to profile it."""
+    moved = tmp_path / "GEODATA" / "delivery" / "table.csv"
+    moved.parent.mkdir(parents=True)
+    moved.write_text("id,value\n1,2\n", encoding="utf8")
+    inventory = {
+        "name": "sample",
+        "source": "Z:/detached/delivery",
+        "files": [{"path": "delivery/table.csv"}],
+    }
+    source = {"inventory": "sample", "searchRoots": ["GEODATA"]}
+
+    location = location_for_profiled_file(tmp_path, inventory, source, "delivery/table.csv")
+    assert location == "GEODATA/delivery/table.csv"
+    resolved = resolve_location(
+        tmp_path, "Z:/detached/delivery/delivery/table.csv", {"sample": inventory}, [source]
+    )
+    assert resolved == moved.resolve()
 
 
 # --------------------------------------------------------------------- guard rails
@@ -648,8 +740,14 @@ def test_relationship_table_schema_requires_the_typed_declaration():
     # The same record without the role carries no such requirement.
     document = copy.deepcopy(entities)
     table = next(e for e in document["entities"] if e.get("role") == "relationship-table")
-    del table["subjectColumn"]
-    table["role"] = "external-table"
+    ordinary_fields = {
+        "id", "type", "label", "labels", "description", "role", "format",
+        "byteSize", "featureCount", "crs", "storedName", "url", "accessPolicy",
+        "externalPath",
+    }
+    table_copy = {key: value for key, value in table.items() if key in ordinary_fields}
+    table_copy["role"] = "external-table"
+    document["entities"][document["entities"].index(table)] = table_copy
     assert not list(Draft202012Validator(schema).iter_errors(document))
 
 

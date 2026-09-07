@@ -34,6 +34,7 @@ The data pipelines are Python and run independently of the web app:
 ```bash
 npm run ontology:build         # rebuild the graph from the registries
 npm run ontology:earth-engine  # refresh remote EE sources without the private registry
+npm run ontology:semantics     # refresh lexical facts without the private registry
 npm run ontology:validate      # schema, integrity and ML guard rails
 npm run test:ontology          # the guard-rail tests
 npm run hydrography:build      # river, lake and basin reference (needs GDAL)

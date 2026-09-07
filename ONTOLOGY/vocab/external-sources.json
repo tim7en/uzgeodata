@@ -256,6 +256,7 @@
       "id": "hydrosheds-uz-2026",
       "label": "HydroSHEDS global hydrography and its Uzbekistan extractions",
       "inventory": "earth-engine-hydro",
+      "searchRoots": ["GEODATA", ".", "earth_engine/earth_engine"],
       "agent": "uz:agent/hydrosheds",
       "license": "hydrosheds-license-agreement",
       "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",

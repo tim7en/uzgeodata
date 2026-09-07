@@ -30,6 +30,8 @@ import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
+from external_locations import location_for_profiled_file, relocated_location
+
 # Rule- or model-derived assertions at or above this confidence are published to
 # the portal, flagged with their agent. Below it they wait for review. Raising
 # this makes the published graph smaller and safer; lowering it makes it fuller
@@ -688,7 +690,6 @@ class GraphBuilder:
                 self.warn(f"external source {source['id']}: inventory "
                           f"'{source.get('inventory')}' has not been profiled")
                 continue
-            delivery_root = inventory["source"].replace("\\", "/").rstrip("/")
             files_by_path = {record["path"]: record for record in inventory["files"]}
 
             for dataset in source["datasets"]:
@@ -722,6 +723,9 @@ class GraphBuilder:
 
                 extent_asserted = attach_to is not None
                 for path, record in matches:
+                    external_location = location_for_profiled_file(
+                        self.root, inventory, source, path
+                    )
                     profile = record.get("profile") or {}
                     role = "source-package" if attach_to else self.ROLE_BY_KIND.get(
                         record["kind"], "external-archive")
@@ -737,14 +741,14 @@ class GraphBuilder:
                         "storedName": None,
                         "url": None,
                         "accessPolicy": source.get("accessPolicy", "internal"),
-                        "externalPath": f"{delivery_root}/{path}",
+                        "externalPath": external_location,
                         "featureCount": profile.get("features"),
                         "crs": profile.get("crs"),
                     })
                     self.add(ds_id, "uz:hasDistribution", dist_id, agent=AGENT_CURATOR,
                              confidence=1.0, status="asserted", method="external-source-mapping",
                              evidence={"source": f"{source['id']}:{path}"})
-                    self.add(dist_id, "uz:externalLocation", value=f"{delivery_root}/{path}",
+                    self.add(dist_id, "uz:externalLocation", value=external_location,
                              agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
                              method="measurement",
                              evidence={"source": inventory["name"],
@@ -889,6 +893,12 @@ class GraphBuilder:
                 "description": config["description"],
             })
 
+            source_location = relocated_location(
+                self.root,
+                config["source"],
+                self.inventories,
+                self.external_mapping.get("sources", []),
+            )
             source_dist = f"uz:dist/{config['slug']}-source"
             self.add_entity({
                 "id": source_dist,
@@ -900,7 +910,7 @@ class GraphBuilder:
                 "storedName": None,
                 "url": None,
                 "accessPolicy": "free",
-                "externalPath": config["source"],
+                "externalPath": source_location,
             })
             database_dist = f"uz:dist/{config['slug']}-relationship-database"
             database_file = Path(database_path) if database_path else None
@@ -947,8 +957,8 @@ class GraphBuilder:
                 self.add(ds_id, "uz:hasDistribution", distribution, agent=AGENT_PIPELINE,
                          confidence=1.0, status="asserted", method="hydrography-build",
                          evidence=evidence)
-            if config["source"]:
-                self.add(source_dist, "uz:externalLocation", value=config["source"],
+            if source_location:
+                self.add(source_dist, "uz:externalLocation", value=source_location,
                          agent=AGENT_PIPELINE, confidence=1.0, status="asserted",
                          method="measurement", evidence=evidence)
             self.add(database_dist, "uz:derivedFrom", source_dist, agent=AGENT_PIPELINE,
@@ -1492,7 +1502,11 @@ class GraphBuilder:
         datasets = [e for e in self.entities.values() if e["type"] == "Dataset"]
         for dataset in datasets:
             ds_id = dataset["id"]
-            text_parts = [dataset.get("label", ""), (dataset.get("labels") or {}).get("ru", "")]
+            title_parts = [dataset.get("label", ""), (dataset.get("labels") or {}).get("ru", "")]
+            title_haystack = " " + normalise_text(
+                " ".join(part for part in title_parts if part)
+            ) + " "
+            text_parts = list(title_parts)
             for dist_id, fields in self.fields_by_dataset(ds_id):
                 text_parts.extend(fields)
             haystack = " " + normalise_text(" ".join(p for p in text_parts if p)) + " "
@@ -1532,13 +1546,17 @@ class GraphBuilder:
                          evidence={"source": "title", "note": "years parsed from the source title"})
 
             if (ds_id, "uz:hasAnalysisConcept") not in settled:
-                concept_id, weight, terms = self.pick_analysis_concept(haystack, interval)
+                # Analysis classifies what the dataset is for. Shared or generic
+                # source-table columns can inform observed properties, but must
+                # not turn a drinking-water dataset into a flood-risk analysis.
+                concept_id, weight, terms = self.pick_analysis_concept(title_haystack, interval)
                 self.add(ds_id, "uz:hasAnalysisConcept", concept_id, agent=AGENT_RULES,
                          confidence=weight, method="lexical-rule",
                          evidence={"source": "title", "matchedTerms": terms})
 
             observed = {a["object"] for a in self.assertions.values()
-                        if a["subject"] == ds_id and a["predicate"] == "uz:observes"}
+                        if a["subject"] == ds_id and a["predicate"] == "uz:observes"
+                        and a["status"] == "asserted"}
             for rule in self.rules["useCaseFromProperty"]:
                 if rule["property"] in observed:
                     self.add(ds_id, "uz:supportsUseCase", rule["usecase"], agent=AGENT_RULES,
@@ -1547,11 +1565,14 @@ class GraphBuilder:
 
     def fields_by_dataset(self, ds_id: str):
         for assertion in self.assertions.values():
-            if assertion["subject"] != ds_id or assertion["predicate"] != "uz:hasDistribution":
+            if (assertion["subject"] != ds_id
+                    or assertion["predicate"] != "uz:hasDistribution"
+                    or assertion["status"] != "asserted"):
                 continue
             dist_id = assertion["object"]
             fields = [a["value"] for a in self.assertions.values()
-                      if a["subject"] == dist_id and a["predicate"] == "uz:hasField"]
+                      if a["subject"] == dist_id and a["predicate"] == "uz:hasField"
+                      and a["status"] == "asserted"]
             if fields:
                 yield dist_id, fields
 
@@ -1571,7 +1592,10 @@ class GraphBuilder:
         for rule in rules:
             if rule.get("default"):
                 continue
-            matched = [t for t in rule.get("terms", []) if normalise_text(t).strip() in haystack]
+            matched = [
+                term for term in rule.get("terms", [])
+                if term_matches(haystack, normalise_text(term))
+            ]
             if matched:
                 return rule["concept"], rule["weight"], matched[:5]
             if rule.get("requiresIntervalOrTerm") and spans_years:

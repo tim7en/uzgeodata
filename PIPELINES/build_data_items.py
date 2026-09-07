@@ -25,11 +25,15 @@ import argparse
 import json
 import re
 import sqlite3
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "PUBLISHED" / "data" / "data-items.json"
+
+sys.path.insert(0, str(ROOT / "PIPELINES" / "ontology"))
+from external_locations import location_for_profiled_file  # noqa: E402
 
 
 def read(relative: str, default=None):
@@ -119,18 +123,43 @@ def external_datasets() -> list[dict]:
         "atlas-missing-package": "ENVATLAS",
     }
     rows = []
+    inventories = {}
+    for path in sorted((ROOT / "ONTOLOGY" / "instances" / "external").glob("*.json")):
+        document = json.loads(path.read_text(encoding="utf8"))
+        if document.get("name") and "files" in document:
+            inventories[document["name"]] = document
     for source in read("ONTOLOGY/vocab/external-sources.json", {"sources": []})["sources"]:
         group = group_for.get(source["id"], "OFFLINE")
+        inventory = inventories.get(source.get("inventory"))
+        files_by_path = {
+            record["path"]: record for record in (inventory or {}).get("files", [])
+        }
         for dataset in source.get("datasets", []):
             match = dataset.get("match", [])
             derived = dataset.get("derived", [])
             # A derivative that survived into the repository outranks the source
             # delivery: it is what a reader can actually open.
             here = [p for p in derived if (ROOT / p).exists()]
+            matched = []
+            for pattern in match:
+                if pattern.endswith("/"):
+                    matched.extend(path for path in files_by_path if path.startswith(pattern))
+                elif pattern in files_by_path:
+                    matched.append(pattern)
+            relocated = []
+            if inventory:
+                for relative in dict.fromkeys(matched):
+                    location = location_for_profiled_file(ROOT, inventory, source, relative)
+                    candidate = Path(location)
+                    if not candidate.is_absolute():
+                        candidate = ROOT / candidate
+                    if candidate.exists():
+                        relocated.append(location)
+            available = here + relocated
             rows.append(item(
                 caps(dataset["slug"]), dataset["label"], group, "DATASET",
-                "HELD" if here else "OFFLINE",
-                here[0] if here else f"{source['inventory']} :: {match[0] if match else '—'}",
+                "HELD" if available else "OFFLINE",
+                available[0] if available else f"{source['inventory']} :: {match[0] if match else '—'}",
                 source["label"],
             ))
     return rows

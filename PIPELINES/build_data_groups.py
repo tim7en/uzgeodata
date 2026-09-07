@@ -27,11 +27,15 @@ from __future__ import annotations
 import argparse
 import json
 import sqlite3
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "PUBLISHED" / "data" / "data-groups.json"
+
+sys.path.insert(0, str(ROOT / "PIPELINES" / "ontology"))
+from external_locations import location_for_profiled_file  # noqa: E402
 
 
 def gpkg_count(relative: str, table: str) -> int | None:
@@ -137,6 +141,7 @@ GROUPS = [
         "source": "UZKAD state cadastre feature service (db.ngis.uz), and an August 2025 extraction on the maps drop",
         "held": [],
         "expected": ["WORKSPACE/downloads/uzkad_agriculture_regions"],
+        "externalSources": ["uzkad-cadastre-2025-08"],
         "rebuild": "python PIPELINES/download_uzkad_agriculture_regions.py",
         "note": "Never fetched on this machine. The download needs the UZKAD service and a local ogr2ogr; neither is available here.",
     },
@@ -146,7 +151,7 @@ GROUPS = [
         "what": "Uzhydromet gauges and meteorological stations with coordinates and network membership.",
         "source": "Uzhydromet delivery, 2022-05-26",
         "held": ["ONTOLOGY/instances/external/details.json"],
-        "expected": ["WORKSPACE/derived/osm-geojson"],
+        "externalSources": ["uzhydromet-stations-2022"],
         "rebuild": "npm run ontology:details",
         "note": "The 190 stations are in the graph with coordinates. The source shapefiles are on the maps drop.",
     },
@@ -193,6 +198,7 @@ GROUPS = [
         "source": "Geofabrik / mapcruzin extract, on the maps drop",
         "held": [],
         "expected": ["WORKSPACE/derived/osm-geojson"],
+        "externalSources": ["osm-geofabrik-2014"],
         "rebuild": "re-extract from Geofabrik, or re-attach the maps drop",
         "note": "ODbL-1.0, so this is the one offline group with no licence obstacle to replacing.",
     },
@@ -202,6 +208,7 @@ GROUPS = [
         "what": "Crop statistics for all and irrigated land 2012-2020, and fertiliser series, as spreadsheets.",
         "source": "Uzhydromet delivery, 2022-05-26; originating agency unconfirmed",
         "held": [],
+        "externalSources": ["agricultural-statistics"],
         "rebuild": "re-attach the maps drop",
     },
     {
@@ -210,13 +217,14 @@ GROUPS = [
         "what": "Survey responses transferred by Uzhydromet.",
         "source": "Uzhydromet transfer, 2022-05-27",
         "held": [],
+        "externalSources": ["socio-economic-surveys"],
         "rebuild": "re-attach the maps drop",
         "note": "Flagged may-contain-personal-data and out-of-scope-for-the-portal. Handle before any use.",
     },
     {
         "code": "ONTOLOGY",
         "title": "The knowledge graph",
-        "what": "872 entities and 3,692 typed assertions over datasets, distributions, layers, stations and agents, with the vocabularies and schemas that constrain them.",
+        "what": "Typed assertions over datasets, distributions, layers, stations and agents, with the vocabularies and schemas that constrain them.",
         "source": "Built by PIPELINES/ontology from the registries",
         "held": ["ONTOLOGY/instances/entities.json", "ONTOLOGY/instances/assertions.json",
                  "ONTOLOGY/vocab", "ONTOLOGY/schema"],
@@ -240,9 +248,52 @@ GROUPS = [
 ]
 
 
+def external_dataset_locations(source_ids: list[str]) -> tuple[list[str], list[str]]:
+    """Return one live location, or one missing marker, per declared dataset."""
+    inventories = {}
+    for path in sorted((ROOT / "ONTOLOGY" / "instances" / "external").glob("*.json")):
+        document = json.loads(path.read_text(encoding="utf8"))
+        if document.get("name") and "files" in document:
+            inventories[document["name"]] = document
+    mapping = json.loads(
+        (ROOT / "ONTOLOGY" / "vocab" / "external-sources.json").read_text(encoding="utf8")
+    )
+
+    present, absent = [], []
+    for source in mapping.get("sources", []):
+        if source["id"] not in source_ids:
+            continue
+        inventory = inventories.get(source.get("inventory"))
+        files_by_path = {
+            record["path"]: record for record in (inventory or {}).get("files", [])
+        }
+        for dataset in source.get("datasets", []):
+            matched = []
+            for pattern in dataset.get("match", []):
+                if pattern.endswith("/"):
+                    matched.extend(path for path in files_by_path if path.startswith(pattern))
+                elif pattern in files_by_path:
+                    matched.append(pattern)
+            live = []
+            if inventory:
+                for relative in dict.fromkeys(matched):
+                    location = location_for_profiled_file(ROOT, inventory, source, relative)
+                    candidate = Path(location)
+                    if not candidate.is_absolute():
+                        candidate = ROOT / candidate
+                    if candidate.exists():
+                        live.append(location)
+            if live:
+                present.append(live[0])
+            else:
+                absent.append(f"{source.get('inventory', 'unprofiled')} :: {dataset['label']}")
+    return present, absent
+
+
 def classify(group: dict) -> tuple[str, list[str], list[str]]:
-    held = [p for p in group.get("held", []) if (ROOT / p).exists()]
-    missing_held = [p for p in group.get("held", []) if not (ROOT / p).exists()]
+    external, missing_external = external_dataset_locations(group.get("externalSources", []))
+    held = [p for p in group.get("held", []) if (ROOT / p).exists()] + external
+    missing_held = [p for p in group.get("held", []) if not (ROOT / p).exists()] + missing_external
     web = [p for p in group.get("web", []) if (ROOT / p).exists()]
     missing_web = [p for p in group.get("web", []) if not (ROOT / p).exists()]
     expected = [p for p in group.get("expected", []) if not (ROOT / p).exists()]
@@ -250,7 +301,7 @@ def classify(group: dict) -> tuple[str, list[str], list[str]]:
     present = held + web
     absent = missing_held + missing_web
 
-    if not group.get("held") and not group.get("web"):
+    if not group.get("held") and not group.get("web") and not group.get("externalSources"):
         # Nothing of it is expected in the repository at all.
         status = "OFFLINE" if group.get("expected") or group["code"] in {"AGRISTATS", "SURVEYS", "OSM"} else "ABSENT"
         if group["code"] == "AGRICADASTRE":
@@ -269,14 +320,35 @@ def main() -> None:
     parser.add_argument("--json", action="store_true", help="Print the document instead of the table.")
     args = parser.parse_args()
 
-    # Measured facts a few groups can report, so the table carries scale.
+    # Measured facts a few groups can report, so the table never goes stale when
+    # the ontology or a relationship pipeline gains records.
+    entity_document = json.loads(
+        (ROOT / "ONTOLOGY" / "instances" / "entities.json").read_text(encoding="utf8")
+    )
+    assertion_document = json.loads(
+        (ROOT / "ONTOLOGY" / "instances" / "assertions.json").read_text(encoding="utf8")
+    )
+    relationship_tables = [
+        entity for entity in entity_document["entities"]
+        if entity.get("role") == "relationship-table"
+    ]
+    relationship_links = sum(table["rowCount"] for table in relationship_tables)
+    admin_links = sum(
+        table["rowCount"] for table in relationship_tables
+        if table["id"].startswith("uz:dist/admin-basin-")
+    )
+    basin_attributes = json.loads(
+        (ROOT / "PUBLISHED" / "data" / "hydrography" / "basin-attributes.json")
+        .read_text(encoding="utf8")
+    )
     scale = {
         "ADMIN": f"{geojson_count('PUBLISHED/data/admin/adm1.geojson') or 0} provinces, "
                  f"{geojson_count('PUBLISHED/data/admin/adm2.geojson') or 0} districts",
         "HYDROBASINS": f"levels 1-12, {gpkg_count('GEODATA/uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg', 'basinatlas_uz_lev12') or 0} basins at level 12",
         "HYDRORIVERS": f"{geojson_count('PUBLISHED/data/hydrography/rivers.geojson') or 0} reaches",
         "HYDROLAKES": f"{geojson_count('PUBLISHED/data/hydrography/lakes.geojson') or 0} lakes",
-        "BASINATLAS": "281 attributes x 2,604 basins",
+        "BASINATLAS": f"{basin_attributes['attributes']:,} attributes x "
+                      f"{len(basin_attributes['ids']):,} matched basins",
         "ENVATLAS": "134 packages catalogued",
         "AGRICADASTRE": "14 regions to fetch",
         "STATIONS": "190 stations",
@@ -287,8 +359,9 @@ def main() -> None:
         "OSM": "23 vector layers profiled",
         "AGRISTATS": "spreadsheets, 2012-2020",
         "SURVEYS": "survey workbooks",
-        "ONTOLOGY": "872 entities, 3,692 assertions",
-        "LINKS": "7,642 admin links, 494,698 declared in total",
+        "ONTOLOGY": f"{len(entity_document['entities']):,} entities, "
+                    f"{len(assertion_document['assertions']):,} assertions",
+        "LINKS": f"{admin_links:,} admin links, {relationship_links:,} declared in total",
         "LANDUSE": "shape model only",
     }
 
@@ -296,7 +369,8 @@ def main() -> None:
     for group in GROUPS:
         status, present, absent = classify(group)
         rows.append({
-            **{k: v for k, v in group.items() if k not in {"held", "web", "expected"}},
+            **{k: v for k, v in group.items()
+               if k not in {"held", "web", "expected", "externalSources"}},
             "status": status,
             "scale": scale.get(group["code"], ""),
             "presentPaths": present,

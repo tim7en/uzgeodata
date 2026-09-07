@@ -12,6 +12,7 @@
     "ontology:details": "python PIPELINES/ontology/extract_external_details.py",
     "ontology:build": "python PIPELINES/ontology/build_ontology.py",
     "ontology:earth-engine": "python PIPELINES/project_earth_engine_sources.py",
+    "ontology:semantics": "python PIPELINES/project_semantic_rules.py",
     "ontology:validate": "python PIPELINES/ontology/validate_ontology.py",
     "ontology:propose": "python PIPELINES/ontology/propose_assertions.py",
     "ontology:review": "python PIPELINES/ontology/review_assertions.py",
