@@ -39,6 +39,7 @@ MANIFEST = ROOT / "ONTOLOGY" / "instances" / "landcover-statistics.json"
 
 PROJECT = "ee-sabitovty"
 ASSET = "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+BATCH_SIZE = 250
 
 CLASSES = {
     1: "Water", 2: "Trees", 4: "Flooded vegetation", 5: "Crops",
@@ -131,8 +132,12 @@ def main() -> None:
     parser.add_argument("--years", nargs="*", type=int,
                         default=list(range(2017, 2026)), help="Years to measure.")
     parser.add_argument("--scale", type=int, help="Reduction scale in metres. Overrides the default.")
+    parser.add_argument("--batch-size", type=int, default=BATCH_SIZE,
+                        help="Polygons per Earth Engine request (default: %(default)s).")
     parser.add_argument("--limit", type=int, help="Stop after this many units, for a trial run.")
     args = parser.parse_args()
+    if args.batch_size < 1:
+        parser.error("--batch-size must be at least 1")
 
     config = SOURCES[args.level]
     scale = args.scale or config["scale"]
@@ -144,8 +149,8 @@ def main() -> None:
         rows = rows[:args.limit]
     already = done_already(target, unit_column)
     todo = [(unit, label, geometry, year)
-            for unit, label, geometry in rows
-            for year in args.years if (unit, year) not in already]
+            for year in args.years
+            for unit, label, geometry in rows if (unit, year) not in already]
 
     print(f"{args.level}: {len(rows):,} units x {len(args.years)} years at {scale} m")
     print(f"  {len(already):,} unit-years already in {target.relative_to(ROOT)}, {len(todo):,} to measure")
@@ -170,34 +175,46 @@ def main() -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     fresh = not target.exists()
     started = time.time()
-    written = 0
+    written = completed = 0
 
     with target.open("a", encoding="utf8", newline="") as handle:
         writer = csv.writer(handle)
         if fresh:
             writer.writerow(["dataset_id", unit_column, "unit_name", "year",
                              "class_code", "class_name", "km2"])
-        for position, (unit, label, geometry, year) in enumerate(todo, start=1):
-            region = ee.Geometry(geometry)
-            try:
-                grouped = ee.Image.pixelArea().addBands(mosaics[year]).reduceRegion(
-                    reducer=ee.Reducer.sum().group(groupField=1, groupName="class"),
-                    geometry=region, scale=scale, maxPixels=1e10, tileScale=4,
-                ).getInfo()
-            except Exception as error:
-                # One bad geometry should not lose the hours already banked.
-                print(f"  ! {unit} {year}: {str(error).strip()[:110]}", flush=True)
-                continue
-            for group in grouped.get("groups", []):
-                code = int(group["class"])
-                writer.writerow([config["sourceId"], unit, label, year, code,
-                                 CLASSES.get(code, str(code)), round(group["sum"] / 1e6, 4)])
-                written += 1
-            handle.flush()
-            if position % 25 == 0 or position == len(todo):
-                rate = (time.time() - started) / position
-                left = (len(todo) - position) * rate
-                print(f"  {position:,}/{len(todo):,} unit-years · {rate:.1f}s each · "
+        for year in args.years:
+            pending = [row for row in todo if row[3] == year]
+            for start in range(0, len(pending), args.batch_size):
+                batch = pending[start:start + args.batch_size]
+                features = ee.FeatureCollection([
+                    ee.Feature(ee.Geometry(geometry), {"unit": unit, "label": label})
+                    for unit, label, geometry, _ in batch
+                ])
+                try:
+                    result = ee.Image.pixelArea().addBands(mosaics[year]).reduceRegions(
+                        reducer=ee.Reducer.sum().group(groupField=1, groupName="class"),
+                        collection=features, scale=scale, tileScale=4,
+                    ).getInfo()
+                except Exception as error:
+                    # A failed batch remains absent, so the next run retries it.
+                    first, last = batch[0][0], batch[-1][0]
+                    print(f"  ! {year} batch {first}..{last}: {str(error).strip()[:110]}",
+                          flush=True)
+                    continue
+                for feature in result["features"]:
+                    properties = feature["properties"]
+                    for group in properties.get("groups", []):
+                        code = int(group["class"])
+                        writer.writerow([
+                            config["sourceId"], properties["unit"], properties["label"], year,
+                            code, CLASSES.get(code, str(code)), round(group["sum"] / 1e6, 4),
+                        ])
+                        written += 1
+                completed += len(batch)
+                handle.flush()
+                rate = (time.time() - started) / completed
+                left = (len(todo) - completed) * rate
+                print(f"  {completed:,}/{len(todo):,} unit-years · {rate:.2f}s each · "
                       f"{left / 60:.0f} min left", flush=True)
 
     write_manifest(config, target, rows, args.years, scale)

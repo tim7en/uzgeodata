@@ -284,6 +284,15 @@ function Explorers() {
   const water = graph?.hydrography || {};
   const tools = [
     {
+      href: '/landcover.html',
+      icon: Layers3,
+      kicker: 'Land-cover observatory',
+      title: 'Watch the surface change.',
+      copy: 'Nine annual 10 m land-cover mosaics become a living BasinATLAS view: animate time, compare class share and annual change, inspect spatial distributions, and open the exact ontology-shaped JSON behind any basin.',
+      stats: [['2017—25', 'Annual series'], ['3,981', 'Reference basins'],
+              ['10 m', 'Source resolution']],
+    },
+    {
       href: '/hydrography.html',
       icon: Droplets,
       kicker: 'Hydrography',
@@ -305,8 +314,8 @@ function Explorers() {
   ];
   return <section className="section explorers" id="explorers">
     <div className="section-head">
-      <div><div className="kicker">03 / Workbenches</div><h2>Two ways in,<br/>past the map.</h2></div>
-      <p>The catalogue answers what exists. These answer how it connects — one for the water network, one for the graph that records every claim the portal makes.</p>
+      <div><div className="kicker">03 / Workbenches</div><h2>Evidence you can<br/>move through.</h2></div>
+      <p>The catalogue answers what exists. These applications show what the knowledge can do: reveal change, trace water and inspect every claim in the graph.</p>
     </div>
     <div className="explorer-grid">
       {tools.map(tool => <a className="explorer-card" href={tool.href} key={tool.href}>

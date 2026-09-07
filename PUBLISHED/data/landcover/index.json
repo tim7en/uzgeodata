@@ -1,0 +1,153 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-07T11:03:30+00:00",
+  "title": "Basin land-cover observatory",
+  "description": "Annual Impact Observatory / Esri land-cover area reduced over the canonical BasinATLAS level-12 frame.",
+  "source": {
+    "platform": "Google Earth Engine",
+    "asset": "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
+    "nativeResolutionMetres": 10,
+    "reductionScaleMetres": 30,
+    "licence": "CC-BY-4.0"
+  },
+  "ontology": {
+    "subject": "uz:ds/esri-io-landcover-10m",
+    "predicate": "uz:hasBasinStatistic",
+    "objectType": "Basin",
+    "identifierScheme": "HYBAS_ID",
+    "distribution": "uz:dist/landcover-basin-year"
+  },
+  "reference": {
+    "dataset": "BasinATLAS v1.0 Uzbekistan extraction",
+    "layer": "basinatlas_uz_lev12",
+    "basins": 3981,
+    "geometry": "/data/hydrography/basins.geojson"
+  },
+  "years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "classes": [
+    {
+      "code": 1,
+      "name": "Water",
+      "color": "#3b82f6"
+    },
+    {
+      "code": 2,
+      "name": "Trees",
+      "color": "#22c55e"
+    },
+    {
+      "code": 4,
+      "name": "Flooded vegetation",
+      "color": "#2dd4bf"
+    },
+    {
+      "code": 5,
+      "name": "Crops",
+      "color": "#f4d35e"
+    },
+    {
+      "code": 7,
+      "name": "Built area",
+      "color": "#ff6b5d"
+    },
+    {
+      "code": 8,
+      "name": "Bare ground",
+      "color": "#d6a76c"
+    },
+    {
+      "code": 9,
+      "name": "Snow / ice",
+      "color": "#e6f5ff"
+    },
+    {
+      "code": 10,
+      "name": "Clouds",
+      "color": "#cbd5e1"
+    },
+    {
+      "code": 11,
+      "name": "Rangeland",
+      "color": "#a3c95b"
+    }
+  ],
+  "coverage": {
+    "sourceRows": 40625,
+    "measuredBasins": 3981,
+    "measuredBasinYears": 10972,
+    "expectedBasinYears": 35829,
+    "percent": 30.62,
+    "byYear": {
+      "2017": 3981,
+      "2018": 3981,
+      "2019": 3000,
+      "2020": 0,
+      "2021": 0,
+      "2022": 0,
+      "2023": 0,
+      "2024": 0,
+      "2025": 10
+    },
+    "complete": false
+  },
+  "totalsKm2": {
+    "2017": {
+      "1": 13730.1,
+      "2": 704.29,
+      "3": 0.0,
+      "4": 2715.72,
+      "5": 61171.17,
+      "6": 0.06,
+      "7": 16800.95,
+      "8": 78996.43,
+      "9": 555.68,
+      "10": 0.05,
+      "11": 332929.29
+    },
+    "2018": {
+      "1": 12663.76,
+      "2": 702.55,
+      "3": 0.01,
+      "4": 1577.33,
+      "5": 58538.55,
+      "6": 0.07,
+      "7": 17462.14,
+      "8": 70407.14,
+      "9": 290.68,
+      "10": 0.04,
+      "11": 345961.49
+    },
+    "2019": {
+      "1": 11997.06,
+      "2": 902.69,
+      "3": 0.01,
+      "4": 1635.2,
+      "5": 60842.05,
+      "6": 0.06,
+      "7": 17485.23,
+      "8": 44942.86,
+      "9": 878.06,
+      "10": 0.03,
+      "11": 242809.88
+    },
+    "2025": {
+      "1": 927.79,
+      "2": 0.0,
+      "4": 0.81,
+      "5": 0.06,
+      "8": 100.83,
+      "11": 377.3
+    }
+  },
+  "series": "/data/landcover/basin-series.json"
+}

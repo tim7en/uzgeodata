@@ -145,11 +145,10 @@ DATASETS = {
         "what": "Area of each land cover class per district per year.",
     },
     "LANDCOVER_BASIN_YEAR": {
-        "domain": "LAND", "table": None,
-        "tableNote": ("Planned but never built, so the graph does not declare it. The entry stays "
-                      "so the gap is visible; it gains a table when the basin run produces rows."),
-        "source": "PUBLISHED/data/analysis/landcover-basin-year.csv",
-        "what": "Area of each land cover class per level-12 basin per year. Not yet built.",
+        "domain": "LAND", "table": "landcover-basin-year",
+        "source": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
+        "what": ("Annual area of each Esri land-cover class per canonical BasinATLAS level-12 "
+                 "basin, retaining the spatial and temporal distribution used by the observatory."),
     },
     # These live inside the HydroSHEDS deliveries. A delivery is a signed unit with
     # its own manifest, so its files stay where they are and the tree records the

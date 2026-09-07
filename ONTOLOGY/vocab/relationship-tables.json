@@ -277,6 +277,34 @@
       ]
     },
     {
+      "id": "landcover-basin-year",
+      "dataset": "esri-io-landcover-10m",
+      "label": "Land cover area by basin and year",
+      "note": "Area of each land-cover class inside each canonical standard-format BasinATLAS level-12 catchment, once per year. The 10 m annual mosaics are reduced at 30 m with pixelArea summed per class; validation trials moved class area by less than 0.1% while making the national run practical. A row is keyed by basin, year and class. Carries no quality column because every stored row is a measured geometric reduction; source no-data produces no measurement row.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "format": "CSV",
+      "containerTable": null,
+      "subjectColumn": "dataset_id",
+      "measureColumn": "km2",
+      "measureUnitColumn": null,
+      "scopeColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "year",
+          "meaning": "the calendar year the mosaic covers"
+        },
+        {
+          "column": "class_code",
+          "meaning": "land cover class code in the product's 9-class scheme"
+        }
+      ]
+    },
+    {
       "dataset": "cfsv2-noaa",
       "subjectType": "Dataset",
       "objectType": "Basin",

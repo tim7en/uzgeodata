@@ -330,6 +330,7 @@ export default function HydrographyExplorer() {
         <a href="/relationships.html">Tables</a>
         <a href="/catalogue.html">Catalogue</a>
         <a href="/review.html">Review</a>
+        <a href="/landcover.html">Land cover</a>
         <a href="#workspace" className="active">Explorer</a>
         <a href="#attributes">Attributes</a>
         <a href="#database">Database</a>

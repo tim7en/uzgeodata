@@ -48,6 +48,7 @@ npm run data:groups            # group every data reference and check what is on
 npm run data:items             # name every reference inside those groups, present or not
 npm run review:build           # export every held layer to GeoJSON and index it for review
 npm run landcover:stats        # annual land cover area per district or basin, from Earth Engine
+npm run landcover:web          # compact the basin land-cover table into browser JSON
 npm run cfsv2:observe          # basin monthly state from CFSv2 (measurement)
 npm run cfsv2:climatology      # the reference baseline the anomalies are measured against
 npm run cfsv2:anomaly          # observations as z-scores, classified
@@ -88,6 +89,7 @@ the public graph projections without requiring that private registry.
 | --- | --- |
 | `/` | The portal SPA. |
 | `/hydrography.html` | Rivers, lakes and sub-basins on a map. Selecting anything traces the catchment upstream of it, reads the BasinATLAS attributes for the traced set, and names the provinces and districts that drain to it, weighted by the area each contributes. A reach traces through the river network first, so what is reported is what lies above that reach rather than above the whole basin it sits in. |
+| `/landcover.html` | An ontology-driven basin observatory: annual Esri land-cover area, share, dominant class and change rendered as a reactive BasinATLAS map with temporal and spatial charts, table rows and JSON evidence. |
 | `/relationships.html` | The stored facts themselves, as sortable and exportable tables. |
 | `/review.html` | Every layer the project holds, one at a time on a map, with its extent, geometry type and a sample of every attribute column. Stepping with the arrows walks the whole set; the fill percentage next to each field is what shows a column that carries nothing. |
 | `/catalogue.html` | Opens with the data groups — every kind of data the project references, under a short code, with its status checked against the working copy. Below that, every dataset the graph describes: what it measures, where it came from, and whether this checkout can actually open it. Availability is checked against the filesystem, not taken from the recorded URL. |
