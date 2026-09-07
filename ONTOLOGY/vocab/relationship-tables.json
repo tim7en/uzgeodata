@@ -498,11 +498,11 @@
       ],
       "id": "ghm-basin-modification",
       "label": "Human modification by level-12 basin",
-      "note": "Legacy compatibility: the currently stored basin rows use the lake-format HydroBASINS v1.c ID family; the next measurement run uses the canonical standard BasinATLAS frame. Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it.",
+      "note": "Cumulative human modification for 2016 — settlement, agriculture, transport, mining and energy, electrical infrastructure — as a 0 to 1 index at 1 km, from thirteen source datasets. The basin rows use the canonical standard BasinATLAS level-12 identifier frame. Stored with the area share in each modification band beside the mean, because a mean of 0.3 describes both a uniformly semi-modified landscape and a city beside a desert. Carries no quality column: every row is a measured geometric reduction of a single complete image. The layer is timeless in the strict sense — the collection holds one image with no system:time_start — so there is nothing to refresh and no period it can fall behind. Measured over both frames because human modification belongs to whoever governs a place as much as to whatever drains it, and the frame changes the answer: over basins Uzbekistan averages 0.33, over districts 0.61, because districts are drawn around settlement while basins include the empty desert between it.",
       "predicate": "uz:hasBasinStatistic",
       "subjectType": "Dataset",
       "objectType": "Basin",
-      "identifierScheme": "HYBAS_ID_LAKE_V1C"
+      "identifierScheme": "HYBAS_ID"
     },
     {
       "dataset": "csp-ghm",

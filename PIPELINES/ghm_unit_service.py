@@ -40,6 +40,7 @@ PROJECT = "ee-sabitovty"
 ASSET = "CSP/HM/GlobalHumanModification"
 SCALE = 1000
 EPOCH = 2016
+BATCH_SIZE = 400
 
 # The bands used in the gHM literature. The boundaries matter: 0.1 separates land
 # that is essentially wild from land that is measurably touched, and 0.4 is where
@@ -63,7 +64,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--frame", choices=sorted(FRAMES) + ["all"], default="all")
+    parser.add_argument("--batch-size", type=int, default=BATCH_SIZE,
+                        help="Polygons per Earth Engine request (default: %(default)s).")
     args = parser.parse_args()
+    if args.batch_size < 1:
+        parser.error("--batch-size must be at least 1")
 
     try:
         import ee
@@ -86,10 +91,7 @@ def main() -> None:
         for frame in frames:
             config = FRAMES[frame]
             document = json.loads((ROOT / config["path"]).read_text(encoding="utf8"))
-            collection = ee.FeatureCollection([
-                ee.Feature(ee.Geometry(f["geometry"]),
-                           {"unit": str(f["properties"][config["key"]])})
-                for f in document["features"]])
+            features = document["features"]
 
             # Mean and the spread around it, plus the area in each band. Area comes
             # from pixelArea rather than a pixel count, for the same reason as the
@@ -105,24 +107,36 @@ def main() -> None:
             # sum(area x mask) / sum(area), and both sums divide by the same pixel
             # count, so the ratio of their means is the same number — which avoids
             # combining two reducers and the renamed properties that come with it.
-            result = stack.reduceRegions(
-                collection=collection, reducer=ee.Reducer.mean(), scale=SCALE).getInfo()
+            measured = 0
+            for start in range(0, len(features), args.batch_size):
+                batch = features[start:start + args.batch_size]
+                collection = ee.FeatureCollection([
+                    ee.Feature(ee.Geometry(feature["geometry"]), {
+                        "unit": str(feature["properties"][config["key"]])
+                    }) for feature in batch
+                ])
+                result = stack.reduceRegions(
+                    collection=collection, reducer=ee.Reducer.mean(), scale=SCALE).getInfo()
 
-            for feature in result["features"]:
-                properties = feature["properties"]
-                total = properties.get("area_total") or 0
-                mean = properties.get("ghm_mean")
-                if mean is None or total <= 0:
-                    continue
-                writer.writerow([frame, properties["unit"], config["kind"], EPOCH,
-                                 "ghm_mean", round(mean, 5), "index_0_1", "ok"])
-                rows += 1
-                for name, *_ in CLASSES:
-                    share = (properties.get(f"area_{name}") or 0) / total
+                for feature in result["features"]:
+                    properties = feature["properties"]
+                    total = properties.get("area_total") or 0
+                    mean = properties.get("ghm_mean")
+                    if mean is None or total <= 0:
+                        continue
                     writer.writerow([frame, properties["unit"], config["kind"], EPOCH,
-                                     f"share_{name}", round(share, 5), "fraction", "ok"])
+                                     "ghm_mean", round(mean, 5), "index_0_1", "ok"])
                     rows += 1
-            print(f"  {frame}: {len(result['features'])} units", flush=True)
+                    for name, *_ in CLASSES:
+                        share = (properties.get(f"area_{name}") or 0) / total
+                        writer.writerow([frame, properties["unit"], config["kind"], EPOCH,
+                                         f"share_{name}", round(share, 5), "fraction", "ok"])
+                        rows += 1
+                    measured += 1
+                handle.flush()
+                print(f"  {frame}: {min(start + len(batch), len(features))}/"
+                      f"{len(features)} polygons submitted", flush=True)
+            print(f"  {frame}: {measured} units measured", flush=True)
 
     print(f"\n  {rows:,} observations -> {OUTPUT.relative_to(ROOT)}")
 
