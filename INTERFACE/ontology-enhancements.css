@@ -56,6 +56,21 @@
   fill-rule: evenodd;
 }
 
+.map-basin-selected {
+  fill: rgba(255, 255, 255, .08);
+  stroke-width: 2.1;
+  vector-effect: non-scaling-stroke;
+  filter: url(#map-glow);
+}
+
+.reach-results button.entity-basin > i {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  border: 1px solid #b16845;
+  background: rgba(255, 102, 42, .12);
+}
+
 .map-river {
   fill: none;
   stroke: #42c2da;

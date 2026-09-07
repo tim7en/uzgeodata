@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  anomalyTimeline, buildReachNetwork, deviationSummary, levelBasinLookup,
+  anomalyTimeline, buildReachNetwork, deviationSummary, findHydroEntities, levelBasinLookup,
   reachNeighborhood, resolveLevelBasin, traceReachNetwork,
 } from '../INTERFACE/ontologyNetworkModel.js';
 
@@ -33,6 +33,15 @@ test('an exact trace retains every upstream branch and the whole downstream trun
   assert.equal(trace.downstreamCount, 2);
   assert.equal(trace.maxUpDepth, 2);
   assert.equal(trace.edges.length, 5);
+});
+
+test('entity search resolves a Pfafstetter code as a basin before reach matches', () => {
+  const results = findHydroEntities('462172411000',
+    [{id: '40301481', basinId: '4120396550'}],
+    [{id: 4120396550, pfafId: 462172411000, order: 3}]);
+  assert.equal(results.length, 1);
+  assert.equal(results[0].type, 'basin');
+  assert.equal(results[0].record.id, 4120396550);
 });
 
 test('a level-12 basin resolves to its level-7 parent by Pfafstetter prefix', () => {

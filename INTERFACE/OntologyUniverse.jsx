@@ -4,7 +4,7 @@ import {
   Network, Pause, Play, Search, Waves, Waypoints, Zap,
 } from 'lucide-react';
 import {
-  anomalyTimeline, buildReachNetwork, deviationSummary, levelBasinLookup,
+  anomalyTimeline, buildReachNetwork, deviationSummary, findHydroEntities, levelBasinLookup,
   resolveLevelBasin, traceReachNetwork,
 } from './ontologyNetworkModel.js';
 
@@ -96,10 +96,10 @@ function coordinateLines(geometry) {
   return [];
 }
 
-function TraceMiniMap({rivers, basins, boundary, selectedId, currentColor}) {
+function TraceMiniMap({rivers, basins, boundary, selectedReachId, selectedBasinId, currentColor}) {
   const width = 304;
   const height = 174;
-  const coordinates = rivers.flatMap(feature => coordinateLines(feature.geometry).flat());
+  const coordinates = [...rivers, ...basins].flatMap(feature => coordinateLines(feature.geometry).flat());
   if (!coordinates.length) return null;
   let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
   for (const [lon, lat] of coordinates) {
@@ -128,8 +128,9 @@ function TraceMiniMap({rivers, basins, boundary, selectedId, currentColor}) {
       <g clipPath="url(#map-clip)">
         {(boundary?.features || EMPTY).map((feature, index) => <path className="map-boundary" d={path(feature.geometry)} key={`boundary-${index}`}/>)}
         {basins.map(feature => <path className="map-basin" d={path(feature.geometry)} key={feature.properties.HYBAS_ID}/>)}
+        {basins.filter(feature => String(feature.properties.HYBAS_ID) === selectedBasinId).map(feature => <path className="map-basin-selected" d={path(feature.geometry)} style={{stroke: currentColor}} key={`selected-basin-${selectedBasinId}`}/>)}
         {rivers.map(feature => <path className="map-river" d={path(feature.geometry)} key={feature.properties.HYRIV_ID}/>)}
-        {rivers.filter(feature => String(feature.properties.HYRIV_ID) === selectedId).map(feature => <path className="map-selected" d={path(feature.geometry)} style={{stroke: currentColor}} key={`selected-${selectedId}`}/>)}
+        {rivers.filter(feature => String(feature.properties.HYRIV_ID) === selectedReachId).map(feature => <path className="map-selected" d={path(feature.geometry)} style={{stroke: currentColor}} key={`selected-${selectedReachId}`}/>)}
       </g>
     </svg>
     <div className="minimap-legend"><span><i className="basin"/> related polygons</span><span><i className="river"/> exact branch geometry</span></div>
@@ -172,6 +173,7 @@ export default function OntologyUniverse() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [selectedId, setSelectedId] = useState(DEFAULT_REACH);
+  const [selectedBasinId, setSelectedBasinId] = useState(null);
   const [hoveredId, setHoveredId] = useState(null);
   const [query, setQuery] = useState('');
   const [variable, setVariable] = useState(DEFAULT_VARIABLE);
@@ -197,13 +199,17 @@ export default function OntologyUniverse() {
   }, []);
 
   const network = useMemo(() => buildReachNetwork(data?.hydro?.rivers), [data]);
+  const basinNetwork = useMemo(() => buildReachNetwork(data?.hydro?.basins), [data]);
   const basinById = useMemo(() => new Map((data?.hydro?.basins || []).map(basin => [String(basin.id), basin])), [data]);
   const level7 = useMemo(() => levelBasinLookup(data?.level7?.features), [data]);
   const riverGeometry = useMemo(() => new Map((data?.riversGeo?.features || []).map(feature => [String(feature.properties?.HYRIV_ID), feature])), [data]);
   const basinGeometry = useMemo(() => new Map((data?.basinsGeo?.features || []).map(feature => [String(feature.properties?.HYBAS_ID), feature])), [data]);
   const level7Geometry = useMemo(() => new Map((data?.level7?.features || []).map(feature => [String(feature.properties?.HYBAS_ID), feature])), [data]);
-  const selected = network.byId.get(String(selectedId));
-  const basin12 = selected ? basinById.get(selected.basinId) : null;
+  const focusType = selectedBasinId ? 'basin' : 'reach';
+  const focusId = selectedBasinId || selectedId;
+  const focusNetwork = focusType === 'basin' ? basinNetwork : network;
+  const selectedReach = network.byId.get(String(selectedId));
+  const basin12 = selectedBasinId ? basinById.get(selectedBasinId) : selectedReach ? basinById.get(selectedReach.basinId) : null;
   const parent7 = resolveLevelBasin(basin12, level7);
   const parent7Feature = level7Geometry.get(String(parent7));
   const variables = data?.anomalyLayer?.variables || EMPTY;
@@ -218,7 +224,7 @@ export default function OntologyUniverse() {
   const activePoint = points[Math.min(cursor, Math.max(points.length - 1, 0))];
   const variableMeta = variables.find(item => item.code === variable);
 
-  useEffect(() => { setCursor(0); }, [selectedId, variable, points.length]);
+  useEffect(() => { setCursor(0); }, [focusId, variable, points.length]);
   useEffect(() => {
     if (variableOptions.length && !variableOptions.some(item => item.code === variable && item.points > 0)) {
       setVariable(variableOptions.find(item => item.points > 0)?.code || variableOptions[0].code);
@@ -230,11 +236,15 @@ export default function OntologyUniverse() {
     return () => window.clearInterval(timer);
   }, [playing, points.length]);
 
-  const view = useMemo(() => traceReachNetwork(selectedId, network), [selectedId, network]);
-  const nodes = useMemo(() => layoutTraceTree(view, network), [view, network]);
+  const view = useMemo(() => traceReachNetwork(focusId, focusNetwork), [focusId, focusNetwork]);
+  const nodes = useMemo(() => layoutTraceTree(view, focusNetwork), [view, focusNetwork]);
   const positioned = useMemo(() => new Map(nodes.map(node => [node.id, node])), [nodes]);
-  const traceRivers = useMemo(() => nodes.map(node => riverGeometry.get(node.id)).filter(Boolean), [nodes, riverGeometry]);
-  const traceBasinIds = useMemo(() => new Set(nodes.map(node => node.record?.basinId).filter(Boolean)), [nodes]);
+  const traceBasinIds = useMemo(() => new Set(focusType === 'basin'
+    ? nodes.map(node => node.id)
+    : nodes.map(node => node.record?.basinId).filter(Boolean)), [focusType, nodes]);
+  const traceRivers = useMemo(() => focusType === 'basin'
+    ? [...network.byId.values()].filter(reach => traceBasinIds.has(reach.basinId)).map(reach => riverGeometry.get(reach.id)).filter(Boolean)
+    : nodes.map(node => riverGeometry.get(node.id)).filter(Boolean), [focusType, network, nodes, riverGeometry, traceBasinIds]);
   const traceBasins = useMemo(() => [...traceBasinIds].map(id => basinGeometry.get(id)).filter(Boolean), [traceBasinIds, basinGeometry]);
   const signalBasins = useMemo(() => new Set(Object.entries(data?.anomaly?.basins || {}).filter(([, periods]) => Object.values(periods).some(cells => cells[DEFAULT_VARIABLE])).map(([id]) => id)), [data]);
   const topReaches = useMemo(() => [...network.byId.values()].filter(reach => {
@@ -243,57 +253,62 @@ export default function OntologyUniverse() {
   }).sort((a, b) => (b.upstreamKm2 || 0) - (a.upstreamKm2 || 0)).slice(0, 6), [network, basinById, signalBasins, level7]);
   const results = useMemo(() => {
     const term = query.trim().toLowerCase();
-    if (!term) return topReaches;
-    return [...network.byId.values()].filter(reach => reach.id.includes(term) || String(reach.basinId).includes(term)).slice(0, 8);
-  }, [query, network, topReaches]);
-  const selectReach = id => { setSelectedId(String(id)); setPlaying(true); };
+    if (!term) return topReaches.map(record => ({type: 'reach', record}));
+    return findHydroEntities(term, [...network.byId.values()], [...basinById.values()]);
+  }, [query, network, basinById, topReaches]);
+  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); setPlaying(true); };
+  const selectBasin = id => { setSelectedBasinId(String(id)); setPlaying(true); };
+  const selectGraphEntity = id => focusType === 'basin' ? selectBasin(id) : selectReach(id);
 
   if (error) return <main className="universe-state"><Zap/><h1>The graph could not wake up.</h1><p>{error}</p><a href="/">Return to portal</a></main>;
   if (!data) return <main className="universe-state loading"><div className="loading-neuron"><i/><i/><i/><b/></div><span>CONNECTING 1.17M RELATIONSHIPS</span><h1>Waking the ontology.</h1></main>;
 
   const currentColor = anomalyColor(activePoint?.z);
+  const rootPosition = positioned.get(focusId);
   return <main className="ontology-universe" style={{'--current-signal': currentColor}}>
     <header className="universe-header"><Logo/><div className="universe-title"><span>LIVE ONTOLOGY / HYDROLOGICAL NERVOUS SYSTEM</span><b>Every line is a measured relationship</b></div><nav><a href="/landcover.html">Land cover</a><a href="/climate.html">Climate</a><a href="/hydrography.html">Hydrography</a><a href="/relationships.html">Tables</a></nav><a className="back" href="/"><ArrowLeft/> Portal</a></header>
 
     <section className="universe-shell">
       <aside className="universe-rail">
         <div className="rail-heading"><span>ENTITY FINDER</span><h1>Touch the<br/><em>network.</em></h1><p>Select any visible neuron. The chart rebuilds the complete stored upstream tree and downstream trunk, while the minimap traces their real geometry and basin polygons.</p></div>
-        <label className="reach-search"><Search/><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Reach or basin ID"/><small>{compact(data.hydro.counts.rivers)} reaches</small></label>
-        <div className="reach-results"><span>{query ? 'MATCHING ENTITIES' : 'HIGH-FLOW SIGNALS'}</span>{results.map(reach => <button key={reach.id} className={reach.id === selectedId ? 'active' : ''} onClick={() => selectReach(reach.id)}><i/><span><strong>REACH {reach.id}</strong><small>Order {reach.strahlerOrder} · {number(reach.dischargeCms)} m³/s</small></span><ArrowUpRight/></button>)}</div>
+        <label className="reach-search"><Search/><input value={query} onChange={event => setQuery(event.target.value)} onKeyDown={event => {if(event.key === 'Enter' && results[0]){event.preventDefault();results[0].type === 'basin' ? selectBasin(results[0].record.id) : selectReach(results[0].record.id)}}} placeholder="Reach, HYBAS or PFAF ID"/><small>{compact(data.hydro.counts.rivers)} + {compact(data.hydro.counts.basins)}</small></label>
+        <div className="reach-results"><span>{query ? 'MATCHING REACHES + BASINS' : 'HIGH-FLOW SIGNALS'}</span>{results.map(({type, record}) => {const active = focusType === type && focusId === String(record.id); return <button key={`${type}-${record.id}`} className={`${active ? 'active' : ''} entity-${type}`} onClick={() => type === 'basin' ? selectBasin(record.id) : selectReach(record.id)}><i/><span><strong>{type === 'basin' ? `BASIN ${record.pfafId}` : `REACH ${record.id}`}</strong><small>{type === 'basin' ? `HYBAS ${record.id} · order ${record.order}` : `Order ${record.strahlerOrder} · ${number(record.dischargeCms)} m³/s`}</small></span><ArrowUpRight/></button>})}</div>
         <div className="rail-legend"><span>FLOW DIRECTION</span><p><i className="up"/> upstream branches</p><p><i className="down"/> downstream trunk</p><p><i className="signal"/> temporal signal</p></div>
         <div className="rail-truth"><Database/><p><strong>Measurement boundary</strong><span>Temporal values are inherited from the containing level-7 basin. No reach-level sensor value is implied.</span></p></div>
       </aside>
 
       <section className="universe-stage">
-        <div className="stage-head"><div><i/><span>EXACT TRACE ACTIVE</span><b>{view.upstreamCount} UPSTREAM · {view.downstreamCount} DOWNSTREAM</b></div><div><span>{compact(view.edges.length)}</span> visible flow links <b>·</b> {traceBasins.length} related basins</div></div>
-        <svg className="neural-canvas" viewBox="0 0 1080 760" role="img" aria-label="Animated upstream and downstream relationship tree for the selected river reach">
+        <div className="stage-head"><div><i/><span>EXACT {focusType.toUpperCase()} TRACE</span><b>{view.upstreamCount} UPSTREAM · {view.downstreamCount} DOWNSTREAM</b></div><div><span>{compact(view.edges.length)}</span> visible flow links <b>·</b> {traceBasins.length} related basins</div></div>
+        <svg className="neural-canvas" viewBox="0 0 1080 760" role="img" aria-label={`Animated upstream and downstream relationship tree for the selected ${focusType}`}>
           <defs><filter id="neural-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="core-fill"><stop offset="0" stopColor="#fff"/><stop offset=".24" stopColor={currentColor}/><stop offset="1" stopColor="#161918"/></radialGradient></defs>
           <g className="ambient-neurons">{Array.from({length: 42}, (_, index) => <circle key={index} cx={(index * 193) % 1060 + 10} cy={(index * 127) % 620 + 30} r={index % 5 === 0 ? 1.4 : .7} style={{'--delay': `${(index % 11) * .21}s`}}/>)}</g>
           <g className="neural-edges">{view.edges.map((edge, index) => {const from = positioned.get(edge.from); const to = positioned.get(edge.to); if (!from || !to) return null; const path = edgePath(from, to); const particleStep = Math.max(1, Math.ceil(view.edges.length / 32)); const signalStep = Math.max(1, Math.floor(view.edges.length / 120)); const carriesSignal = edge.direction === 'downstream' || index % signalStep === 0; return <g key={`${edge.from}-${edge.to}`} className={edge.direction}><path className="edge-haze" d={path}/>{carriesSignal && <path className="edge-signal" d={path} style={{'--delay': `${index * -0.03}s`}}/>}{index % particleStep === 0 && <circle r="1.8"><animateMotion dur={`${2.5 + index % 5 * .35}s`} repeatCount="indefinite" path={path}/></circle>}</g>})}</g>
-          <g className="context-links"><path d="M552 360 C552 500 392 555 392 660"/><path d="M416 680 C480 680 487 680 542 680"/><path d="M590 680 C650 680 661 680 718 680"/><path d="M774 680 C833 680 844 680 900 680"/></g>
-          <g className="neural-nodes">{nodes.map((node, index) => {const focus = node.id === selectedId; const hover = node.id === hoveredId; const radius = focus ? 11 : Math.max(1.2, Math.min(5.2, (node.record?.strahlerOrder || 1) * .62)); return <g key={node.id} className={`${node.direction} ${focus ? 'selected' : ''}`} transform={`translate(${node.x} ${node.y})`} onClick={() => selectReach(node.id)} onMouseEnter={() => setHoveredId(node.id)} onMouseLeave={() => setHoveredId(null)} role="button" tabIndex="0" onKeyDown={event => {if(event.key === 'Enter' || event.key === ' '){event.preventDefault();selectReach(node.id)}}}><circle className="synapse-ring" r={radius + 5}/><circle className="synapse" r={radius} style={{fill: focus ? 'url(#core-fill)' : undefined}}/><circle className="synapse-core" r={Math.max(.7, radius * .28)}/>{(focus || hover || (node.record?.strahlerOrder >= 8 && index % 35 === 0)) && <text x={focus ? 18 : 11} y="3">{focus ? `SELECTED · ${node.id}` : node.id}</text>}<title>Reach {node.id} · order {node.record?.strahlerOrder} · {number(node.record?.dischargeCms)} m³/s</title></g>})}</g>
+          <g className="context-links"><path d={`M${rootPosition?.x || 650} ${rootPosition?.y || 360} C${rootPosition?.x || 650} 520 392 555 392 660`}/><path d="M416 680 C480 680 487 680 542 680"/><path d="M590 680 C650 680 661 680 718 680"/><path d="M774 680 C833 680 844 680 900 680"/></g>
+          <g className="neural-nodes">{nodes.map((node, index) => {const focus = node.id === focusId; const hover = node.id === hoveredId; const nodeOrder = node.record?.strahlerOrder || node.record?.order || 1; const radius = focus ? 11 : Math.max(1.2, Math.min(5.2, nodeOrder * .62)); return <g key={node.id} className={`${node.direction} ${focus ? 'selected' : ''}`} transform={`translate(${node.x} ${node.y})`} onClick={() => selectGraphEntity(node.id)} onMouseEnter={() => setHoveredId(node.id)} onMouseLeave={() => setHoveredId(null)} role="button" tabIndex="0" onKeyDown={event => {if(event.key === 'Enter' || event.key === ' '){event.preventDefault();selectGraphEntity(node.id)}}}><circle className="synapse-ring" r={radius + 5}/><circle className="synapse" r={radius} style={{fill: focus ? 'url(#core-fill)' : undefined}}/><circle className="synapse-core" r={Math.max(.7, radius * .28)}/>{(focus || hover || (nodeOrder >= 8 && index % 35 === 0)) && <text x={focus ? 18 : 11} y="3">{focus ? `SELECTED · ${node.id}` : node.id}</text>}<title>{focusType === 'basin' ? `Basin ${node.record?.pfafId} · HYBAS ${node.id} · order ${nodeOrder}` : `Reach ${node.id} · order ${nodeOrder} · ${number(node.record?.dischargeCms)} m³/s`}</title></g>})}</g>
           <g className="context-nodes">
-            <g transform="translate(392 680)"><circle r="25"/><Droplets x="-9" y="-9" size="18"/><text y="39">BASIN L12</text><text className="value" y="50">{selected?.basinId || 'UNRESOLVED'}</text></g>
+            <g transform="translate(392 680)"><circle r="25"/><Droplets x="-9" y="-9" size="18"/><text y="39">BASIN L12</text><text className="value" y="50">{basin12?.id || 'UNRESOLVED'}</text></g>
             <g transform="translate(566 680)"><circle r="25"/><GitBranch x="-9" y="-9" size="18"/><text y="39">PFAF PARENT L7</text><text className="value" y="50">{parent7 || 'UNRESOLVED'}</text></g>
             <g transform="translate(746 680)"><circle r="25"/><Activity x="-9" y="-9" size="18"/><text y="39">HAS BASIN ANOMALY</text><text className="value" y="50">{data.anomalyLayer?.id || 'NO TABLE'}</text></g>
             <g transform="translate(930 680)"><circle className="signal-context" r="25"/><Zap x="-9" y="-9" size="18"/><text y="39">OBSERVES</text><text className="value" y="50">{variable.replaceAll('_', ' ')}</text></g>
           </g>
-          <g className="direction-labels"><text x="38" y="28">HEADWATERS / UPSTREAM</text><text x="878" y="28">OUTLET / DOWNSTREAM</text><text x="450" y="625">ONTOLOGY RESOLUTION PATH</text></g>
+          <g className="direction-labels"><text x="38" y="28">{focusType === 'basin' ? 'UPSTREAM SUB-BASINS' : 'HEADWATERS / UPSTREAM'}</text><text x="878" y="28">OUTLET / DOWNSTREAM</text><text x="450" y="625">ONTOLOGY RESOLUTION PATH</text></g>
         </svg>
-        <TraceMiniMap rivers={traceRivers} basins={traceBasins} boundary={data.boundary} selectedId={selectedId} currentColor={currentColor}/>
-        <div className="stage-foot"><span><i/> CLICK A SYNAPSE TO RE-TRACE GRAPH + MAP</span><p><Waypoints/> {compact(nodes.length)} exact reach entities</p><p><Droplets/> {traceBasins.length} linked polygons</p></div>
+        <TraceMiniMap rivers={traceRivers} basins={traceBasins} boundary={data.boundary} selectedReachId={focusType === 'reach' ? selectedId : null} selectedBasinId={focusType === 'basin' ? selectedBasinId : null} currentColor={currentColor}/>
+        <div className="stage-foot"><span><i/> CLICK A SYNAPSE TO RE-TRACE GRAPH + MAP</span><p><Waypoints/> {compact(nodes.length)} exact {focusType} entities</p><p><Droplets/> {traceBasins.length} linked polygons · {compact(traceRivers.length)} reaches</p></div>
       </section>
 
       <aside className="signal-panel">
-        <div className="entity-kicker"><span>SELECTED ENTITY</span><b>RIVER REACH</b></div>
-        <div className="entity-heading"><div><Waves/></div><span><small>HYRIV_ID</small><h2>{selected?.id || '—'}</h2></span><i style={{background: currentColor}}/></div>
-        <div className="entity-measures"><p><span>STRAHLER ORDER</span><strong>{selected?.strahlerOrder ?? '—'}</strong></p><p><span>UPSTREAM AREA</span><strong>{compact(selected?.upstreamKm2)} <small>km²</small></strong></p><p><span>MEAN DISCHARGE</span><strong>{number(selected?.dischargeCms)} <small>m³/s</small></strong></p><p><span>REACH LENGTH</span><strong>{number(selected?.lengthKm, 2)} <small>km</small></strong></p></div>
+        <div className="entity-kicker"><span>SELECTED ENTITY</span><b>{focusType === 'basin' ? 'LEVEL-12 BASIN' : 'RIVER REACH'}</b></div>
+        <div className="entity-heading"><div>{focusType === 'basin' ? <GitBranch/> : <Waves/>}</div><span><small>{focusType === 'basin' ? 'PFAF_ID' : 'HYRIV_ID'}</small><h2>{focusType === 'basin' ? basin12?.pfafId : selectedReach?.id || '—'}</h2></span><i style={{background: currentColor}}/></div>
+        {focusType === 'basin'
+          ? <div className="entity-measures"><p><span>HYBAS ID</span><strong>{basin12?.id ?? '—'}</strong></p><p><span>UPSTREAM AREA</span><strong>{compact(basin12?.upstreamKm2)} <small>km²</small></strong></p><p><span>SUB-BASIN AREA</span><strong>{number(basin12?.areaKm2, 1)} <small>km²</small></strong></p><p><span>INSIDE UZBEKISTAN</span><strong>{number(basin12?.uzbekistanPercent, 1)} <small>%</small></strong></p></div>
+          : <div className="entity-measures"><p><span>STRAHLER ORDER</span><strong>{selectedReach?.strahlerOrder ?? '—'}</strong></p><p><span>UPSTREAM AREA</span><strong>{compact(selectedReach?.upstreamKm2)} <small>km²</small></strong></p><p><span>MEAN DISCHARGE</span><strong>{number(selectedReach?.dischargeCms)} <small>m³/s</small></strong></p><p><span>REACH LENGTH</span><strong>{number(selectedReach?.lengthKm, 2)} <small>km</small></strong></p></div>}
         <div className="signal-controls"><label><span>TEMPORAL PROPERTY · {availableVariables.length}/{variables.length} AVAILABLE HERE</span><select value={variable} onChange={event => setVariable(event.target.value)}>{variableOptions.map(item => <option value={item.code} key={item.code} disabled={!item.points}>{item.label}{item.points ? ` · ${item.points} periods` : ' · no basin values'}</option>)}</select></label><button onClick={() => setPlaying(value => !value)} aria-label={playing ? 'Pause temporal animation' : 'Play temporal animation'}>{playing ? <Pause/> : <Play/>}<span>{playing ? 'PAUSE SIGNAL' : 'PLAY SIGNAL'}</span></button></div>
         {unavailableVariables.length > 0 && <div className="coverage-warning"><Database/><p><strong>Source coverage gap</strong><span>{unavailableVariables.map(item => item.label).join(', ')} {unavailableVariables.length === 1 ? 'has' : 'have'} no stored CFSv2 land-cell values for this basin. The selector will not fabricate them.</span></p></div>}
         <TemporalDeviation points={points} cursor={cursor} onCursor={setCursor} variable={variable} unit={variableMeta?.unit}/>
         <div className="signal-summary"><div><span>CURRENT DEVIATION</span><strong style={{color: currentColor}}>{activePoint?.z > 0 ? '+' : ''}{number(activePoint?.z, 2)}σ</strong><small>{activePoint?.period || 'no matched period'}</small></div><p><span>RANGE</span><b>{number(summary.minimum, 2)}σ → +{number(summary.maximum, 2)}σ</b></p><p><span>MEAN ABS. DEVIATION</span><b>{number(summary.meanAbsolute, 2)}σ</b></p></div>
         <div className="static-et"><span>EVAPOTRANSPIRATION DISTINCTION</span><p><b>{number(parent7Feature?.properties?.aet_mm_syr, 0)} mm/year</b><small>Actual evapotranspiration climatology from BasinATLAS; a static long-term average, not an interannual time series. CFSv2 provides potential evaporation as a separate land-surface flux.</small></p></div>
-        <div className="semantic-path"><span>MEASURED SEMANTIC PATH</span><ol><li><b>Reach {selected?.id}</b><small>withinBasin</small></li><li><b>Basin {selected?.basinId || 'unresolved'}</b><small>subBasinOf · level 7</small></li><li><b>{parent7 || 'No level-7 match'}</b><small>hasBasinAnomaly</small></li><li><b>NCEP CFSv2</b><small>observes · {variable.replaceAll('_', ' ')}</small></li></ol></div>
+        <div className="semantic-path"><span>MEASURED SEMANTIC PATH</span><ol>{focusType === 'reach' && <li><b>Reach {selectedReach?.id}</b><small>withinBasin</small></li>}<li><b>Basin {basin12?.id || 'unresolved'}</b><small>{focusType === 'basin' ? `PFAF · ${basin12?.pfafId}` : 'subBasinOf · level 7'}</small></li><li><b>{parent7 || 'No level-7 match'}</b><small>subBasinOf · level 7 · hasBasinAnomaly</small></li><li><b>NCEP CFSv2</b><small>observes · {variable.replaceAll('_', ' ')}</small></li></ol></div>
         <a className="open-observatory" href="/climate.html"><span>OPEN FULL CLIMATE OBSERVATORY<small>Map every basin and period</small></span><ArrowUpRight/></a>
       </aside>
     </section>

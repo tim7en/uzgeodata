@@ -98,6 +98,20 @@ export function traceReachNetwork(rootId, network) {
   return {nodes: [...nodes.values()], edges, upstreamCount, downstreamCount, maxUpDepth};
 }
 
+export function findHydroEntities(query, reaches, basins, limit = 8) {
+  const term = key(query).trim().toLowerCase();
+  if (!term) return [];
+  const basinMatches = (basins || [])
+    .filter(basin => key(basin.id).includes(term) || key(basin.pfafId).includes(term))
+    .slice(0, Math.min(5, limit))
+    .map(record => ({type: 'basin', record}));
+  const reachMatches = (reaches || [])
+    .filter(reach => key(reach.id).includes(term) || key(reach.basinId).includes(term))
+    .slice(0, Math.max(0, limit - basinMatches.length))
+    .map(record => ({type: 'reach', record}));
+  return [...basinMatches, ...reachMatches].slice(0, limit);
+}
+
 export function levelBasinLookup(features) {
   return new Map((features || []).map(feature => [
     key(feature.properties?.PFAF_ID), key(feature.properties?.HYBAS_ID),
