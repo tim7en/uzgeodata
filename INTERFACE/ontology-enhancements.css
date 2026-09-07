@@ -48,6 +48,25 @@
   fill-rule: evenodd;
 }
 
+.map-district {
+  fill: rgba(244, 211, 94, .025);
+  stroke: #d7bd59;
+  stroke-width: .7;
+  stroke-dasharray: 3 2;
+  vector-effect: non-scaling-stroke;
+  fill-rule: evenodd;
+}
+
+.map-district-label {
+  fill: #f0d877;
+  font: 700 6px 'Manrope', sans-serif;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: #080b09;
+  stroke-width: 2px;
+  letter-spacing: .04em;
+}
+
 .map-basin {
   fill: rgba(255, 102, 42, .09);
   stroke: #b16845;
@@ -110,6 +129,12 @@
   height: 7px;
   border: 1px solid #b16845;
   background: rgba(255, 102, 42, .12);
+}
+
+.minimap-legend .district {
+  height: 7px;
+  border: 1px dashed #d7bd59;
+  background: rgba(244, 211, 94, .04);
 }
 
 .minimap-legend .river {
@@ -184,6 +209,59 @@
   color: #6d7771;
   font-size: 5.5px;
 }
+
+.graph-controls {
+  position: absolute;
+  z-index: 4;
+  left: 15px;
+  top: 58px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #303833;
+  background: rgba(5, 8, 6, .94);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, .32);
+}
+
+.graph-controls button {
+  width: 31px;
+  height: 31px;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid #2c332f;
+  background: transparent;
+  color: #8d9891;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.graph-controls button:last-child { border-right: 0; border-left: 1px solid #2c332f; }
+.graph-controls button:hover { color: var(--current-signal); background: #111612; }
+.graph-controls button svg { width: 13px; }
+.graph-controls span {
+  min-width: 42px;
+  text-align: center;
+  color: #aab3ad;
+  font: 600 8px 'Barlow Condensed', sans-serif;
+}
+
+.admin-context {
+  display: flex;
+  gap: 10px;
+  margin-top: 11px;
+  border: 1px solid #394137;
+  padding: 9px 10px;
+  background: rgba(45, 55, 45, .16);
+  color: #d7bd59;
+}
+
+.admin-context > svg { width: 16px; flex: 0 0 auto; }
+.admin-context p { margin: 0; min-width: 0; }
+.admin-context span, .admin-context strong, .admin-context small { display: block; }
+.admin-context span { color: #847b51; font-size: 5.5px; font-weight: 800; letter-spacing: .12em; }
+.admin-context strong { color: #d8ddd9; font: 600 13px 'Barlow Condensed', sans-serif; margin-top: 4px; }
+.admin-context small { color: #69726c; font-size: 5.7px; line-height: 1.45; margin-top: 2px; }
+.reach-results button small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* A complete trace can contain hundreds of reaches. Pulse a representative
    subset plus the selected node, keeping animation smooth without hiding data. */

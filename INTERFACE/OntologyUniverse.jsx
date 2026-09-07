@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
   Activity, ArrowLeft, ArrowUpRight, Database, Droplets, GitBranch,
-  Network, Pause, Play, Search, Waves, Waypoints, Zap,
+  MapPin, Minus, Network, Pause, Play, Plus, RotateCcw, Search, Waves, Waypoints, Zap,
 } from 'lucide-react';
 import {
   anomalyTimeline, buildReachNetwork, deviationSummary, findHydroEntities, levelBasinLookup,
@@ -96,7 +96,7 @@ function coordinateLines(geometry) {
   return [];
 }
 
-function TraceMiniMap({rivers, basins, boundary, selectedReachId, selectedBasinId, currentColor}) {
+function TraceMiniMap({rivers, basins, boundary, districts, selectedReachId, selectedBasinId, currentColor}) {
   const width = 304;
   const height = 174;
   const coordinates = [...rivers, ...basins].flatMap(feature => coordinateLines(feature.geometry).flat());
@@ -121,19 +121,30 @@ function TraceMiniMap({rivers, basins, boundary, selectedReachId, selectedBasinI
     const [x, y] = project(point);
     return `${index ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`;
   }).join(' ') + (geometry.type.includes('Polygon') ? ' Z' : '')).join(' ');
+  const labelPoint = feature => {
+    const points = coordinateLines(feature.geometry).flat();
+    if (!points.length) return null;
+    const bounds = points.reduce((box, [lon, lat]) => ({
+      minLon: Math.min(box.minLon, lon), maxLon: Math.max(box.maxLon, lon),
+      minLat: Math.min(box.minLat, lat), maxLat: Math.max(box.maxLat, lat),
+    }), {minLon: Infinity, maxLon: -Infinity, minLat: Infinity, maxLat: -Infinity});
+    return project([(bounds.minLon + bounds.maxLon) / 2, (bounds.minLat + bounds.maxLat) / 2]);
+  };
   return <aside className="trace-minimap">
     <div className="minimap-head"><span>LIVE SPATIAL TRACE</span><b>{rivers.length} REACHES · {basins.length} BASINS</b></div>
     <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Map of the exact traced reaches and their related basin polygons">
       <defs><filter id="map-glow"><feGaussianBlur stdDeviation="1.7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><clipPath id="map-clip"><rect width={width} height={height}/></clipPath></defs>
       <g clipPath="url(#map-clip)">
         {(boundary?.features || EMPTY).map((feature, index) => <path className="map-boundary" d={path(feature.geometry)} key={`boundary-${index}`}/>)}
+        {(districts || EMPTY).map(feature => <path className="map-district" d={path(feature.geometry)} key={`district-${feature.properties.pcode}`}/>)}
         {basins.map(feature => <path className="map-basin" d={path(feature.geometry)} key={feature.properties.HYBAS_ID}/>)}
         {basins.filter(feature => String(feature.properties.HYBAS_ID) === selectedBasinId).map(feature => <path className="map-basin-selected" d={path(feature.geometry)} style={{stroke: currentColor}} key={`selected-basin-${selectedBasinId}`}/>)}
         {rivers.map(feature => <path className="map-river" d={path(feature.geometry)} key={feature.properties.HYRIV_ID}/>)}
         {rivers.filter(feature => String(feature.properties.HYRIV_ID) === selectedReachId).map(feature => <path className="map-selected" d={path(feature.geometry)} style={{stroke: currentColor}} key={`selected-${selectedReachId}`}/>)}
+        {(districts || EMPTY).map(feature => {const point = labelPoint(feature); return point && point[0] >= 0 && point[0] <= width && point[1] >= 0 && point[1] <= height ? <text className="map-district-label" x={point[0]} y={point[1]} key={`label-${feature.properties.pcode}`}>{feature.district?.nameEn || feature.properties.nameEn}</text> : null})}
       </g>
     </svg>
-    <div className="minimap-legend"><span><i className="basin"/> related polygons</span><span><i className="river"/> exact branch geometry</span></div>
+    <div className="minimap-legend"><span><i className="district"/> district context</span><span><i className="basin"/> basins</span><span><i className="river"/> reaches</span></div>
   </aside>;
 }
 
@@ -179,6 +190,7 @@ export default function OntologyUniverse() {
   const [variable, setVariable] = useState(DEFAULT_VARIABLE);
   const [cursor, setCursor] = useState(0);
   const [playing, setPlaying] = useState(true);
+  const [graphZoom, setGraphZoom] = useState(1);
 
   useEffect(() => {
     let live = true;
@@ -188,12 +200,14 @@ export default function OntologyUniverse() {
       json('/data/hydrography/rivers.geojson'),
       json('/data/hydrography/basins.geojson'),
       json('/data/hydrography/boundary.geojson'),
+      json('/data/hydrography/admin-basin-links.json'),
+      json('/data/admin/adm2.geojson'),
       json('/data/basin-layers/index.json'),
       json('/data/review/basinatlas/basinatlas_uz_lev07.geojson'),
-    ]).then(async ([ontology, hydro, riversGeo, basinsGeo, boundary, layerIndex, level7]) => {
+    ]).then(async ([ontology, hydro, riversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7]) => {
       const anomalyLayer = layerIndex.layers.find(layer => layer.kind === 'anomaly');
       const anomaly = anomalyLayer ? await json(anomalyLayer.series) : null;
-      if (live) setData({ontology, hydro, riversGeo, basinsGeo, boundary, layerIndex, level7, anomalyLayer, anomaly});
+      if (live) setData({ontology, hydro, riversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7, anomalyLayer, anomaly});
     }).catch(cause => live && setError(cause.message));
     return () => { live = false; };
   }, []);
@@ -205,6 +219,14 @@ export default function OntologyUniverse() {
   const riverGeometry = useMemo(() => new Map((data?.riversGeo?.features || []).map(feature => [String(feature.properties?.HYRIV_ID), feature])), [data]);
   const basinGeometry = useMemo(() => new Map((data?.basinsGeo?.features || []).map(feature => [String(feature.properties?.HYBAS_ID), feature])), [data]);
   const level7Geometry = useMemo(() => new Map((data?.level7?.features || []).map(feature => [String(feature.properties?.HYBAS_ID), feature])), [data]);
+  const districtGeometry = useMemo(() => new Map((data?.districtsGeo?.features || []).map(feature => [feature.properties?.pcode, feature])), [data]);
+  const districtByCode = useMemo(() => new Map((data?.adminLinks?.districts || []).map(district => [district.pcode, district])), [data]);
+  const provinceByCode = useMemo(() => new Map((data?.adminLinks?.provinces || []).map(province => [province.pcode, province])), [data]);
+  const districtsByBasin = useMemo(() => new Map(Object.entries(data?.adminLinks?.byBasin || {}).map(([basinId, links]) => [basinId,
+    Object.entries(links.adm2 || {}).sort((left, right) => right[1] - left[1]).map(([pcode, overlapKm2]) => ({
+      ...districtByCode.get(pcode), pcode, overlapKm2,
+    })),
+  ])), [data, districtByCode]);
   const focusType = selectedBasinId ? 'basin' : 'reach';
   const focusId = selectedBasinId || selectedId;
   const focusNetwork = focusType === 'basin' ? basinNetwork : network;
@@ -212,6 +234,16 @@ export default function OntologyUniverse() {
   const basin12 = selectedBasinId ? basinById.get(selectedBasinId) : selectedReach ? basinById.get(selectedReach.basinId) : null;
   const parent7 = resolveLevelBasin(basin12, level7);
   const parent7Feature = level7Geometry.get(String(parent7));
+  const districtContext = districtsByBasin.get(String(basin12?.id)) || EMPTY;
+  const primaryProvince = provinceByCode.get(districtContext[0]?.parent);
+  const currentDistrictFeatures = districtContext.slice(0, 3).map(district => {
+    const feature = districtGeometry.get(district.pcode);
+    return feature ? {...feature, district} : null;
+  }).filter(Boolean);
+  const districtLabelForBasin = basinId => {
+    const matches = districtsByBasin.get(String(basinId)) || EMPTY;
+    return matches.length ? matches.slice(0, 2).map(district => district.nameEn || district.nameUz || district.pcode).join(' / ') : 'No district overlap';
+  };
   const variables = data?.anomalyLayer?.variables || EMPTY;
   const variableOptions = useMemo(() => variables.map(item => ({
     ...item,
@@ -256,15 +288,22 @@ export default function OntologyUniverse() {
     if (!term) return topReaches.map(record => ({type: 'reach', record}));
     return findHydroEntities(term, [...network.byId.values()], [...basinById.values()]);
   }, [query, network, basinById, topReaches]);
-  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); setPlaying(true); };
-  const selectBasin = id => { setSelectedBasinId(String(id)); setPlaying(true); };
+  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); setGraphZoom(1); setPlaying(true); };
+  const selectBasin = id => { setSelectedBasinId(String(id)); setGraphZoom(1); setPlaying(true); };
   const selectGraphEntity = id => focusType === 'basin' ? selectBasin(id) : selectReach(id);
+  const zoomGraph = change => setGraphZoom(current => Math.max(.65, Math.min(3.2, Number((current + change).toFixed(2)))));
 
   if (error) return <main className="universe-state"><Zap/><h1>The graph could not wake up.</h1><p>{error}</p><a href="/">Return to portal</a></main>;
   if (!data) return <main className="universe-state loading"><div className="loading-neuron"><i/><i/><i/><b/></div><span>CONNECTING 1.17M RELATIONSHIPS</span><h1>Waking the ontology.</h1></main>;
 
   const currentColor = anomalyColor(activePoint?.z);
   const rootPosition = positioned.get(focusId);
+  const graphViewWidth = 1080 / graphZoom;
+  const graphViewHeight = 760 / graphZoom;
+  const focusWeight = graphZoom > 1 ? 1 - 1 / graphZoom : 0;
+  const graphCenterX = 540 + ((rootPosition?.x || 540) - 540) * focusWeight;
+  const graphCenterY = 380 + ((rootPosition?.y || 380) - 380) * focusWeight;
+  const graphViewBox = `${graphCenterX - graphViewWidth / 2} ${graphCenterY - graphViewHeight / 2} ${graphViewWidth} ${graphViewHeight}`;
   return <main className="ontology-universe" style={{'--current-signal': currentColor}}>
     <header className="universe-header"><Logo/><div className="universe-title"><span>LIVE ONTOLOGY / HYDROLOGICAL NERVOUS SYSTEM</span><b>Every line is a measured relationship</b></div><nav><a href="/landcover.html">Land cover</a><a href="/climate.html">Climate</a><a href="/hydrography.html">Hydrography</a><a href="/relationships.html">Tables</a></nav><a className="back" href="/"><ArrowLeft/> Portal</a></header>
 
@@ -272,19 +311,20 @@ export default function OntologyUniverse() {
       <aside className="universe-rail">
         <div className="rail-heading"><span>ENTITY FINDER</span><h1>Touch the<br/><em>network.</em></h1><p>Select any visible neuron. The chart rebuilds the complete stored upstream tree and downstream trunk, while the minimap traces their real geometry and basin polygons.</p></div>
         <label className="reach-search"><Search/><input value={query} onChange={event => setQuery(event.target.value)} onKeyDown={event => {if(event.key === 'Enter' && results[0]){event.preventDefault();results[0].type === 'basin' ? selectBasin(results[0].record.id) : selectReach(results[0].record.id)}}} placeholder="Reach, HYBAS or PFAF ID"/><small>{compact(data.hydro.counts.rivers)} + {compact(data.hydro.counts.basins)}</small></label>
-        <div className="reach-results"><span>{query ? 'MATCHING REACHES + BASINS' : 'HIGH-FLOW SIGNALS'}</span>{results.map(({type, record}) => {const active = focusType === type && focusId === String(record.id); return <button key={`${type}-${record.id}`} className={`${active ? 'active' : ''} entity-${type}`} onClick={() => type === 'basin' ? selectBasin(record.id) : selectReach(record.id)}><i/><span><strong>{type === 'basin' ? `BASIN ${record.pfafId}` : `REACH ${record.id}`}</strong><small>{type === 'basin' ? `HYBAS ${record.id} · order ${record.order}` : `Order ${record.strahlerOrder} · ${number(record.dischargeCms)} m³/s`}</small></span><ArrowUpRight/></button>})}</div>
+        <div className="reach-results"><span>{query ? 'MATCHING REACHES + BASINS' : 'HIGH-FLOW SIGNALS'}</span>{results.map(({type, record}) => {const active = focusType === type && focusId === String(record.id); const district = districtLabelForBasin(type === 'basin' ? record.id : record.basinId); return <button key={`${type}-${record.id}`} className={`${active ? 'active' : ''} entity-${type}`} onClick={() => type === 'basin' ? selectBasin(record.id) : selectReach(record.id)}><i/><span><strong>{type === 'basin' ? `BASIN ${record.pfafId}` : `REACH ${record.id}`}</strong><small>{district} · {type === 'basin' ? `HYBAS ${record.id}` : `order ${record.strahlerOrder}`}</small></span><ArrowUpRight/></button>})}</div>
         <div className="rail-legend"><span>FLOW DIRECTION</span><p><i className="up"/> upstream branches</p><p><i className="down"/> downstream trunk</p><p><i className="signal"/> temporal signal</p></div>
         <div className="rail-truth"><Database/><p><strong>Measurement boundary</strong><span>Temporal values are inherited from the containing level-7 basin. No reach-level sensor value is implied.</span></p></div>
       </aside>
 
       <section className="universe-stage">
         <div className="stage-head"><div><i/><span>EXACT {focusType.toUpperCase()} TRACE</span><b>{view.upstreamCount} UPSTREAM · {view.downstreamCount} DOWNSTREAM</b></div><div><span>{compact(view.edges.length)}</span> visible flow links <b>·</b> {traceBasins.length} related basins</div></div>
-        <svg className="neural-canvas" viewBox="0 0 1080 760" role="img" aria-label={`Animated upstream and downstream relationship tree for the selected ${focusType}`}>
+        <div className="graph-controls" aria-label="Graph zoom controls"><button onClick={() => zoomGraph(.25)} aria-label="Zoom graph in"><Plus/></button><span>{Math.round(graphZoom * 100)}%</span><button onClick={() => zoomGraph(-.25)} aria-label="Zoom graph out"><Minus/></button><button onClick={() => setGraphZoom(1)} aria-label="Reset graph zoom"><RotateCcw/></button></div>
+        <svg className="neural-canvas" viewBox={graphViewBox} onWheel={event => zoomGraph(event.deltaY < 0 ? .15 : -.15)} role="img" aria-label={`Animated upstream and downstream relationship tree for the selected ${focusType}`}>
           <defs><filter id="neural-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="core-fill"><stop offset="0" stopColor="#fff"/><stop offset=".24" stopColor={currentColor}/><stop offset="1" stopColor="#161918"/></radialGradient></defs>
           <g className="ambient-neurons">{Array.from({length: 42}, (_, index) => <circle key={index} cx={(index * 193) % 1060 + 10} cy={(index * 127) % 620 + 30} r={index % 5 === 0 ? 1.4 : .7} style={{'--delay': `${(index % 11) * .21}s`}}/>)}</g>
           <g className="neural-edges">{view.edges.map((edge, index) => {const from = positioned.get(edge.from); const to = positioned.get(edge.to); if (!from || !to) return null; const path = edgePath(from, to); const particleStep = Math.max(1, Math.ceil(view.edges.length / 32)); const signalStep = Math.max(1, Math.floor(view.edges.length / 120)); const carriesSignal = edge.direction === 'downstream' || index % signalStep === 0; return <g key={`${edge.from}-${edge.to}`} className={edge.direction}><path className="edge-haze" d={path}/>{carriesSignal && <path className="edge-signal" d={path} style={{'--delay': `${index * -0.03}s`}}/>}{index % particleStep === 0 && <circle r="1.8"><animateMotion dur={`${2.5 + index % 5 * .35}s`} repeatCount="indefinite" path={path}/></circle>}</g>})}</g>
           <g className="context-links"><path d={`M${rootPosition?.x || 650} ${rootPosition?.y || 360} C${rootPosition?.x || 650} 520 392 555 392 660`}/><path d="M416 680 C480 680 487 680 542 680"/><path d="M590 680 C650 680 661 680 718 680"/><path d="M774 680 C833 680 844 680 900 680"/></g>
-          <g className="neural-nodes">{nodes.map((node, index) => {const focus = node.id === focusId; const hover = node.id === hoveredId; const nodeOrder = node.record?.strahlerOrder || node.record?.order || 1; const radius = focus ? 11 : Math.max(1.2, Math.min(5.2, nodeOrder * .62)); return <g key={node.id} className={`${node.direction} ${focus ? 'selected' : ''}`} transform={`translate(${node.x} ${node.y})`} onClick={() => selectGraphEntity(node.id)} onMouseEnter={() => setHoveredId(node.id)} onMouseLeave={() => setHoveredId(null)} role="button" tabIndex="0" onKeyDown={event => {if(event.key === 'Enter' || event.key === ' '){event.preventDefault();selectGraphEntity(node.id)}}}><circle className="synapse-ring" r={radius + 5}/><circle className="synapse" r={radius} style={{fill: focus ? 'url(#core-fill)' : undefined}}/><circle className="synapse-core" r={Math.max(.7, radius * .28)}/>{(focus || hover || (nodeOrder >= 8 && index % 35 === 0)) && <text x={focus ? 18 : 11} y="3">{focus ? `SELECTED · ${node.id}` : node.id}</text>}<title>{focusType === 'basin' ? `Basin ${node.record?.pfafId} · HYBAS ${node.id} · order ${nodeOrder}` : `Reach ${node.id} · order ${nodeOrder} · ${number(node.record?.dischargeCms)} m³/s`}</title></g>})}</g>
+          <g className="neural-nodes">{nodes.map((node, index) => {const focus = node.id === focusId; const hover = node.id === hoveredId; const nodeOrder = node.record?.strahlerOrder || node.record?.order || 1; const nodeBasin = focusType === 'basin' ? node.id : node.record?.basinId; const nodeDistrict = districtLabelForBasin(nodeBasin); const radius = focus ? 11 : Math.max(1.2, Math.min(5.2, nodeOrder * .62)); return <g key={node.id} className={`${node.direction} ${focus ? 'selected' : ''}`} transform={`translate(${node.x} ${node.y})`} onClick={() => selectGraphEntity(node.id)} onMouseEnter={() => setHoveredId(node.id)} onMouseLeave={() => setHoveredId(null)} role="button" tabIndex="0" onKeyDown={event => {if(event.key === 'Enter' || event.key === ' '){event.preventDefault();selectGraphEntity(node.id)}}}><circle className="synapse-ring" r={radius + 5}/><circle className="synapse" r={radius} style={{fill: focus ? 'url(#core-fill)' : undefined}}/><circle className="synapse-core" r={Math.max(.7, radius * .28)}/>{(focus || hover || (nodeOrder >= 8 && index % 35 === 0)) && <text x={focus ? 18 : 11} y="3">{focus ? `SELECTED · ${node.id} · ${nodeDistrict}` : `${node.id} · ${nodeDistrict}`}</text>}<title>{focusType === 'basin' ? `Basin ${node.record?.pfafId} · HYBAS ${node.id}` : `Reach ${node.id} · order ${nodeOrder} · ${number(node.record?.dischargeCms)} m³/s`} · approximately {nodeDistrict}</title></g>})}</g>
           <g className="context-nodes">
             <g transform="translate(392 680)"><circle r="25"/><Droplets x="-9" y="-9" size="18"/><text y="39">BASIN L12</text><text className="value" y="50">{basin12?.id || 'UNRESOLVED'}</text></g>
             <g transform="translate(566 680)"><circle r="25"/><GitBranch x="-9" y="-9" size="18"/><text y="39">PFAF PARENT L7</text><text className="value" y="50">{parent7 || 'UNRESOLVED'}</text></g>
@@ -293,7 +333,7 @@ export default function OntologyUniverse() {
           </g>
           <g className="direction-labels"><text x="38" y="28">{focusType === 'basin' ? 'UPSTREAM SUB-BASINS' : 'HEADWATERS / UPSTREAM'}</text><text x="878" y="28">OUTLET / DOWNSTREAM</text><text x="450" y="625">ONTOLOGY RESOLUTION PATH</text></g>
         </svg>
-        <TraceMiniMap rivers={traceRivers} basins={traceBasins} boundary={data.boundary} selectedReachId={focusType === 'reach' ? selectedId : null} selectedBasinId={focusType === 'basin' ? selectedBasinId : null} currentColor={currentColor}/>
+        <TraceMiniMap rivers={traceRivers} basins={traceBasins} boundary={data.boundary} districts={currentDistrictFeatures} selectedReachId={focusType === 'reach' ? selectedId : null} selectedBasinId={focusType === 'basin' ? selectedBasinId : null} currentColor={currentColor}/>
         <div className="stage-foot"><span><i/> CLICK A SYNAPSE TO RE-TRACE GRAPH + MAP</span><p><Waypoints/> {compact(nodes.length)} exact {focusType} entities</p><p><Droplets/> {traceBasins.length} linked polygons · {compact(traceRivers.length)} reaches</p></div>
       </section>
 
@@ -303,6 +343,7 @@ export default function OntologyUniverse() {
         {focusType === 'basin'
           ? <div className="entity-measures"><p><span>HYBAS ID</span><strong>{basin12?.id ?? '—'}</strong></p><p><span>UPSTREAM AREA</span><strong>{compact(basin12?.upstreamKm2)} <small>km²</small></strong></p><p><span>SUB-BASIN AREA</span><strong>{number(basin12?.areaKm2, 1)} <small>km²</small></strong></p><p><span>INSIDE UZBEKISTAN</span><strong>{number(basin12?.uzbekistanPercent, 1)} <small>%</small></strong></p></div>
           : <div className="entity-measures"><p><span>STRAHLER ORDER</span><strong>{selectedReach?.strahlerOrder ?? '—'}</strong></p><p><span>UPSTREAM AREA</span><strong>{compact(selectedReach?.upstreamKm2)} <small>km²</small></strong></p><p><span>MEAN DISCHARGE</span><strong>{number(selectedReach?.dischargeCms)} <small>m³/s</small></strong></p><p><span>REACH LENGTH</span><strong>{number(selectedReach?.lengthKm, 2)} <small>km</small></strong></p></div>}
+        <div className="admin-context"><MapPin/><p><span>APPROXIMATE ADMINISTRATIVE LOCATION</span><strong>{districtContext.length ? `${districtContext.slice(0, 3).map(district => district.nameEn || district.nameUz || district.pcode).join(' · ')}${districtContext.length > 3 ? ` +${districtContext.length - 3}` : ''}` : 'No measured district overlap'}</strong><small>{districtContext.length ? `${primaryProvince?.nameEn || 'Province unresolved'} · inherited from level-12 basin ${basin12?.id} polygon overlap${focusType === 'reach' ? '; not a direct reach assignment' : ''}` : 'This basin is one of the records without an administrative overlay.'}</small></p></div>
         <div className="signal-controls"><label><span>TEMPORAL PROPERTY · {availableVariables.length}/{variables.length} AVAILABLE HERE</span><select value={variable} onChange={event => setVariable(event.target.value)}>{variableOptions.map(item => <option value={item.code} key={item.code} disabled={!item.points}>{item.label}{item.points ? ` · ${item.points} periods` : ' · no basin values'}</option>)}</select></label><button onClick={() => setPlaying(value => !value)} aria-label={playing ? 'Pause temporal animation' : 'Play temporal animation'}>{playing ? <Pause/> : <Play/>}<span>{playing ? 'PAUSE SIGNAL' : 'PLAY SIGNAL'}</span></button></div>
         {unavailableVariables.length > 0 && <div className="coverage-warning"><Database/><p><strong>Source coverage gap</strong><span>{unavailableVariables.map(item => item.label).join(', ')} {unavailableVariables.length === 1 ? 'has' : 'have'} no stored CFSv2 land-cell values for this basin. The selector will not fabricate them.</span></p></div>}
         <TemporalDeviation points={points} cursor={cursor} onCursor={setCursor} variable={variable} unit={variableMeta?.unit}/>
