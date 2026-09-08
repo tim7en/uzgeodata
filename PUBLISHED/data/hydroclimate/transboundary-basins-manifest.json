@@ -1,0 +1,91 @@
+{
+  "version": "2.0",
+  "generatedAt": "2026-09-08T05:13:29+00:00",
+  "selection": {
+    "full_basin": "all HydroATLAS units sharing MAIN_BAS with the control-point unit",
+    "headwater_formation": "reverse NEXT_DOWN trace to the configured upper control-point unit",
+    "administrativeBoundaryFilter": false
+  },
+  "levels": [
+    {
+      "level": 7,
+      "asset": "WWF/HydroATLAS/v1/Basins/level07",
+      "systems": [
+        {
+          "systemId": "amu_darya",
+          "headwaterSystemId": "upper_amu_darya",
+          "level": 7,
+          "mainBasinId": 4070050220,
+          "headwaterOutletHybasId": 4070552070,
+          "controlPoint": {
+            "longitude": 68.25,
+            "latitude": 37.1
+          },
+          "fullUnitCount": 261,
+          "headwaterUnitCount": 86,
+          "fullSourceAreaKm2": 639852.8,
+          "headwaterSourceAreaKm2": 198548.9,
+          "headwaterOutletUpAreaKm2": 194092.0
+        },
+        {
+          "systemId": "syr_darya",
+          "headwaterSystemId": "upper_syr_darya",
+          "level": 7,
+          "mainBasinId": 4070050240,
+          "headwaterOutletHybasId": 4070425650,
+          "controlPoint": {
+            "longitude": 71.65,
+            "latitude": 40.9
+          },
+          "fullUnitCount": 177,
+          "headwaterUnitCount": 35,
+          "fullSourceAreaKm2": 325872.6,
+          "headwaterSourceAreaKm2": 95297.6,
+          "headwaterOutletUpAreaKm2": 95297.0
+        }
+      ],
+      "counts": {
+        "fullUnits": 438,
+        "headwaterUnits": 121,
+        "routingRows": 438
+      },
+      "outputs": {
+        "exactGeoJSON": "GEODATA/transboundary_basins_v2/hydroatlas-level07-full-basins.geojson",
+        "webGeoJSON": "PUBLISHED/data/hydroclimate/basins-level07.geojson",
+        "routingCSV": "PUBLISHED/data/hydroclimate/basin-routing-level07.csv",
+        "membershipCSV": "PUBLISHED/data/hydroclimate/basin-membership-level07.csv"
+      },
+      "sha256": "f3ca060aa04f2e565985faea4ea7bd0cc358e913fd713aef5837008bda56f37e"
+    }
+  ],
+  "hierarchy": {
+    "container": "PUBLISHED/data/hydroclimate/basin-hierarchy.csv",
+    "rows": 0,
+    "rule": "Pfafstetter prefix between implemented analysis levels",
+    "unresolved": 0
+  },
+  "compatibility": {
+    "nativeFields": [
+      "HYBAS_ID",
+      "NEXT_DOWN",
+      "NEXT_SINK",
+      "MAIN_BAS",
+      "DIST_SINK",
+      "DIST_MAIN",
+      "SUB_AREA",
+      "UP_AREA",
+      "PFAF_ID",
+      "ENDO",
+      "COAST",
+      "ORDER_",
+      "SORT"
+    ],
+    "existingDownstreamReference": "BasinATLAS level 12 / HYBAS_ID / NEXT_DOWN",
+    "note": "Level-12 outputs use the same identifier family and routing fields as the existing downstream frame; managed canals remain a separate graph."
+  },
+  "sources": {
+    "platform": "Google Earth Engine",
+    "catalog": "https://developers.google.com/earth-engine/datasets/catalog/WWF_HydroATLAS_v1_Basins_level12",
+    "retrievedAt": "2026-09-08T05:13:29+00:00"
+  }
+}

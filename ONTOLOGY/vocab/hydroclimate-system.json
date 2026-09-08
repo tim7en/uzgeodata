@@ -51,6 +51,33 @@
       "selectionRule": "operational infrastructure graph; never inferred from natural catchment containment"
     }
   ],
+  "analysisLevels": [
+    {
+      "level": 7,
+      "role": "coarse_climate_reduction",
+      "use": "ERA5-Land and other approximately 10-50 km grids"
+    },
+    {
+      "level": 10,
+      "role": "operational_hydrology",
+      "use": "river routing, gauges, reservoirs, MODIS snow and elevation-band intersections"
+    },
+    {
+      "level": 12,
+      "role": "detailed_reference",
+      "use": "maximum HydroATLAS detail and compatibility with the existing downstream BasinATLAS frame"
+    }
+  ],
+  "spatialScopes": [
+    {
+      "id": "full_basin",
+      "selectionRule": "all units sharing the outlet unit MAIN_BAS identifier"
+    },
+    {
+      "id": "headwater_formation",
+      "selectionRule": "units whose NEXT_DOWN chain reaches the declared upper control unit"
+    }
+  ],
   "pilotSystems": [
     {
       "id": "upper_amu_darya",

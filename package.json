@@ -35,6 +35,7 @@
     "hydrography:adminlinks": "python PIPELINES/build_admin_basin_links.py",
     "hydrography:align-basins": "python PIPELINES/align_hydrography_basins.py",
     "headwaters:basins": "python PIPELINES/build_headwater_pilot.py",
+    "basins:transboundary": "python PIPELINES/build_transboundary_basins.py",
     "headwaters:era5": "python PIPELINES/update_headwater_era5.py",
     "catalogue:build": "python PIPELINES/build_data_catalogue.py",
     "data:groups": "python PIPELINES/build_data_groups.py",
