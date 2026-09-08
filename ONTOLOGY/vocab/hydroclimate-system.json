@@ -1,0 +1,81 @@
+{
+  "version": "1.0",
+  "title": "Hydroclimate source-to-impact architecture",
+  "description": "Machine-readable implementation order for the natural and managed connectivity models. Administrative areas are reporting overlays, never basin selectors.",
+  "stages": [
+    {
+      "id": "source",
+      "order": 1,
+      "label": "Runoff formation",
+      "spatialUnits": ["Basin", "Subbasin", "ElevationBand", "Glacier", "SnowZone"],
+      "next": "runoff"
+    },
+    {
+      "id": "runoff",
+      "order": 2,
+      "label": "Runoff routing",
+      "spatialUnits": ["RiverReach", "Confluence", "Gauge", "ControlSection"],
+      "next": "availability"
+    },
+    {
+      "id": "availability",
+      "order": 3,
+      "label": "Water availability",
+      "spatialUnits": ["Reservoir", "Intake", "ReleasePoint"],
+      "next": "use"
+    },
+    {
+      "id": "use",
+      "order": 4,
+      "label": "Managed use",
+      "spatialUnits": ["Canal", "PumpingStation", "IrrigationSystem", "WaterUser"],
+      "next": "impact"
+    },
+    {
+      "id": "impact",
+      "order": 5,
+      "label": "Environmental and socioeconomic impact",
+      "spatialUnits": ["AgriculturalLand", "Ecosystem", "Settlement", "AdminArea"],
+      "next": null
+    }
+  ],
+  "connectivityModels": [
+    {
+      "id": "natural",
+      "edges": ["upstream_of", "flows_into", "measured_at"],
+      "selectionRule": "reverse routing from a declared control section"
+    },
+    {
+      "id": "managed",
+      "edges": ["withdraws_from", "stores_from", "transfers_to", "delivers_to", "returns_to"],
+      "selectionRule": "operational infrastructure graph; never inferred from natural catchment containment"
+    }
+  ],
+  "pilotSystems": [
+    {
+      "id": "upper_amu_darya",
+      "label": "Upper Amu Darya formation zone",
+      "place": "uz:place/upper-amu-darya",
+      "basinLevel": 7,
+      "outletHybasId": 4070552070,
+      "controlPoint": {"longitude": 68.25, "latitude": 37.1},
+      "definition": "All level-7 HydroATLAS units routing to the unit immediately below the Panj-Vakhsh confluence."
+    },
+    {
+      "id": "upper_syr_darya",
+      "label": "Upper Syr Darya formation zone",
+      "place": "uz:place/upper-syr-darya",
+      "basinLevel": 7,
+      "outletHybasId": 4070425650,
+      "controlPoint": {"longitude": 71.65, "latitude": 40.9},
+      "definition": "All level-7 HydroATLAS units routing to the unit immediately below the Naryn-Karadarya confluence."
+    }
+  ],
+  "elevationBandsMetres": [
+    {"id": "lt_1000", "minimum": null, "maximum": 1000},
+    {"id": "1000_2000", "minimum": 1000, "maximum": 2000},
+    {"id": "2000_3000", "minimum": 2000, "maximum": 3000},
+    {"id": "3000_4000", "minimum": 3000, "maximum": 4000},
+    {"id": "gte_4000", "minimum": 4000, "maximum": null}
+  ]
+}

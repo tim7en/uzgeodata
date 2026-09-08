@@ -1,0 +1,66 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T04:41:43+00:00",
+  "hydroclimateStage": "source",
+  "selection": "reverse NEXT_DOWN routing from a declared control unit; no national boundary filter",
+  "source": {
+    "platform": "Google Earth Engine",
+    "asset": "WWF/HydroATLAS/v1/Basins/level07",
+    "basinLevel": 7,
+    "nativeKey": "HYBAS_ID",
+    "routingField": "NEXT_DOWN",
+    "catalogUrl": "https://developers.google.com/earth-engine/datasets/catalog/WWF_HydroATLAS_v1_Basins_level07",
+    "technicalDocumentation": "https://data.hydrosheds.org/file/technical-documentation/HydroBASINS_TechDoc_v1c.pdf",
+    "retrievedAt": "2026-09-08T04:41:43+00:00"
+  },
+  "systems": [
+    {
+      "systemId": "upper_amu_darya",
+      "label": "Upper Amu Darya formation zone",
+      "definition": "All level-7 HydroATLAS units routing to the unit immediately below the Panj-Vakhsh confluence.",
+      "outletHybasId": 4070552070,
+      "mainBasinId": 4070050220,
+      "controlPoint": {
+        "longitude": 68.25,
+        "latitude": 37.1
+      },
+      "unitCount": 86,
+      "sourceAreaKm2": 198548.9,
+      "outletUpAreaKm2": 194092.0
+    },
+    {
+      "systemId": "upper_syr_darya",
+      "label": "Upper Syr Darya formation zone",
+      "definition": "All level-7 HydroATLAS units routing to the unit immediately below the Naryn-Karadarya confluence.",
+      "outletHybasId": 4070425650,
+      "mainBasinId": 4070050240,
+      "controlPoint": {
+        "longitude": 71.65,
+        "latitude": 40.9
+      },
+      "unitCount": 35,
+      "sourceAreaKm2": 95297.6,
+      "outletUpAreaKm2": 95297.0
+    }
+  ],
+  "counts": {
+    "systems": 2,
+    "units": 121,
+    "routingLinks": 121
+  },
+  "outputs": {
+    "sourceGeometry": "GEODATA/transboundary_headwaters_v1/hydroatlas-level07-headwaters.geojson",
+    "publishedUnits": "PUBLISHED/data/hydroclimate/headwater-units.geojson",
+    "publishedSystems": "PUBLISHED/data/hydroclimate/headwater-systems.geojson",
+    "routing": "PUBLISHED/data/hydroclimate/headwater-routing.csv",
+    "membership": "PUBLISHED/data/hydroclimate/headwater-membership.csv"
+  },
+  "sha256": {
+    "sourceGeometry": "2a722f0568823ccc39df40cd24e1452e3872f3166abbc636734d9cb5fadc1a21"
+  },
+  "qualityNotes": [
+    "HydroATLAS/HydroBASINS represents natural topographic routing, not canals or water allocation.",
+    "The outlet control units are a reproducible pilot definition and must later be aligned to official gauge/control-section coordinates.",
+    "SUB_AREA sums can differ from outlet UP_AREA because source attributes and polygon partitioning use different upstream accounting conventions."
+  ]
+}

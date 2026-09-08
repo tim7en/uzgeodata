@@ -1,0 +1,90 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T04:44:38+00:00",
+  "hydroclimateStage": "source",
+  "datasetKind": "reanalysis",
+  "source": {
+    "platform": "Google Earth Engine",
+    "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+    "catalogUrl": "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_MONTHLY_AGGR",
+    "latestAvailableMonth": "2026-07",
+    "nominalScaleMetres": 11132,
+    "retrievedAt": "2026-09-08T04:44:38+00:00"
+  },
+  "spatialFrame": {
+    "asset": "WWF/HydroATLAS/v1/Basins/level07",
+    "basinLevel": 7,
+    "selection": "transboundary units upstream of the declared pilot control sections",
+    "geometry": "PUBLISHED/data/hydroclimate/headwater-units.geojson"
+  },
+  "variables": [
+    {
+      "source": "temperature_2m",
+      "code": "air_temperature_mean",
+      "unit": "degC",
+      "statistic": "monthly_mean",
+      "factor": 1.0,
+      "offset": -273.15
+    },
+    {
+      "source": "total_precipitation_sum",
+      "code": "precipitation_total",
+      "unit": "mm",
+      "statistic": "monthly_sum",
+      "factor": 1000.0,
+      "offset": 0.0
+    },
+    {
+      "source": "snowfall_sum",
+      "code": "snowfall_water_equivalent_total",
+      "unit": "mm",
+      "statistic": "monthly_sum",
+      "factor": 1000.0,
+      "offset": 0.0
+    },
+    {
+      "source": "snow_depth_water_equivalent",
+      "code": "snow_water_equivalent_mean",
+      "unit": "mm",
+      "statistic": "monthly_mean",
+      "factor": 1000.0,
+      "offset": 0.0
+    },
+    {
+      "source": "volumetric_soil_water_layer_1",
+      "code": "soil_moisture_layer_1_mean",
+      "unit": "m3/m3",
+      "statistic": "monthly_mean",
+      "factor": 1.0,
+      "offset": 0.0
+    },
+    {
+      "source": "runoff_sum",
+      "code": "modelled_runoff_total",
+      "unit": "mm",
+      "statistic": "monthly_sum",
+      "factor": 1000.0,
+      "offset": 0.0
+    }
+  ],
+  "coverage": {
+    "rows": 5082,
+    "systems": 2,
+    "basins": 121,
+    "periods": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+    ]
+  },
+  "qualityNotes": [
+    "ERA5-Land is a model reanalysis constrained by observations; it is not a station or gauge record.",
+    "Monthly *_sum bands are accumulated flows; temperature, SWE and soil moisture are monthly states.",
+    "Modelled runoff is a formation indicator and must not be labelled observed river discharge.",
+    "ERA5-Land has an approximately three-month publication lag; latest availability is queried at runtime."
+  ]
+}
