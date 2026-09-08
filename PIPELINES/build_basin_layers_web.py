@@ -109,7 +109,7 @@ def variable_meta(code: str, position: int) -> dict:
 
 LAYERS = [
     {
-        "id": "era5-land-full-basin-anomaly", "label": "Full-basin climate anomaly",
+        "id": "era5-land-full-basin-anomaly", "label": "ERA5-Land anomalies — Amu + Syr",
         "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
         "predicate": "uz:hasBasinAnomaly", "kind": "anomaly",
         "previewVariable": "precipitation_total", "previewMetric": "z_score",
@@ -124,7 +124,7 @@ LAYERS = [
                  "Formation, transit and terminal reaches resolve through the same layer."),
     },
     {
-        "id": "era5-land-headwater-anomaly", "label": "Headwater climate anomaly",
+        "id": "era5-land-headwater-anomaly", "label": "ERA5-Land anomalies — headwaters",
         "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
         "predicate": "uz:hasBasinAnomaly", "kind": "anomaly",
         "previewVariable": "precipitation_total", "previewMetric": "z_score",
@@ -138,7 +138,7 @@ LAYERS = [
                  "level-7 subbasin upstream of the Panj-Vakhsh and Naryn-Karadarya controls."),
     },
     {
-        "id": "cfsv2-basin-anomaly", "label": "Climate anomaly (legacy national)", "domain": "ATMOSPHERE",
+        "id": "cfsv2-basin-anomaly", "label": "CFSv2 anomalies — Uzbekistan", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/cfsv2-noaa", "predicate": "uz:hasBasinAnomaly", "kind": "anomaly",
         "previewVariable": "precipitation", "previewMetric": "z_score",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
@@ -151,7 +151,7 @@ LAYERS = [
                  "what the number is in absolute terms."),
     },
     {
-        "id": "cfsv2-basin-monthly", "label": "Climate state (legacy national)", "domain": "ATMOSPHERE",
+        "id": "cfsv2-basin-monthly", "label": "CFSv2 monthly state — Uzbekistan", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/cfsv2-noaa", "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "precipitation",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
@@ -163,7 +163,7 @@ LAYERS = [
                 "soil-moisture depths, evaporative demand, radiation and humidity.",
     },
     {
-        "id": "chirps-v3-basin-pentad", "label": "Precipitation (CHIRPS)", "domain": "ATMOSPHERE",
+        "id": "chirps-v3-basin-pentad", "label": "CHIRPS pentad rainfall — Uzbekistan", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/chirps-v3", "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "precipitation_total",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
@@ -211,7 +211,7 @@ LAYERS = [
                 "assimilated estimate of what the atmosphere was, not a forecast.",
     },
     {
-        "id": "era5-land-full-basins-monthly", "label": "Full-basin state (ERA5-Land)",
+        "id": "era5-land-full-basins-monthly", "label": "ERA5-Land monthly state — Amu + Syr",
         "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
         "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "precipitation_total",
@@ -226,7 +226,7 @@ LAYERS = [
                  "systems. ERA5-Land runoff is modelled and is not gauge discharge."),
     },
     {
-        "id": "era5-land-headwaters-monthly", "label": "Headwater formation (ERA5-Land)",
+        "id": "era5-land-headwaters-monthly", "label": "ERA5-Land monthly state — headwaters",
         "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
         "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "precipitation_total",
@@ -241,7 +241,7 @@ LAYERS = [
                  "formation zones. ERA5-Land is reanalysis; runoff here is not gauge discharge."),
     },
     {
-        "id": "modis-snow-headwater-daily", "label": "Headwater snow cover (MODIS)",
+        "id": "modis-snow-headwater-daily", "label": "MODIS daily snow — headwaters",
         "domain": "ATMOSPHERE", "dataset": "uz:ds/modis-terra-snow",
         "predicate": "uz:hasFormationStatistic", "kind": "value",
         "previewVariable": "snow_cover_percent",

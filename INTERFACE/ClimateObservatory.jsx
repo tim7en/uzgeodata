@@ -16,6 +16,39 @@ const SELECTED = '#ffffff';
 const PREFERRED_VARIABLES = ['precipitation', 'precipitation_total', 'temperature_mean',
   'tmax_mean', 'ghm_mean', 'aod_550nm'];
 
+const SCOPE_LABELS = {
+  full_basin: 'Amu + Syr · full natural basins',
+  headwater_formation: 'Upper Amu + Upper Syr · runoff formation',
+  national_intersection: 'Uzbekistan · national intersection',
+  aral_hydrographic_domain: 'Aral hydrographic domain',
+};
+
+function scopeLabel(scope) {
+  return SCOPE_LABELS[scope] || String(scope || 'scope not declared').replaceAll('_', ' ');
+}
+
+function frameTitle(layer) {
+  if (layer.spatialScope === 'full_basin') return 'Amu Darya + Syr Darya basin frame';
+  if (layer.spatialScope === 'headwater_formation') return 'Upper Amu + Upper Syr formation zones';
+  if (layer.spatialScope === 'national_intersection') return 'Uzbekistan national intersection';
+  if (layer.spatialScope === 'aral_hydrographic_domain') return 'Aral hydrographic domain';
+  return scopeLabel(layer.spatialScope);
+}
+
+function unitLabel(layer) {
+  const unit = layer.spatialUnit?.toLowerCase() || '';
+  const noun = unit.includes('system') ? 'formation systems'
+    : unit.includes('subbasin') ? 'subbasins' : 'units';
+  return `${layer.coverage.basins.toLocaleString()} ${noun}`;
+}
+
+function periodLabel(layer) {
+  const noun = layer.periodGrain === 'day' ? 'daily dates'
+    : layer.periodGrain === 'pentad' ? 'pentads'
+      : layer.periodGrain === 'month' ? 'monthly periods' : 'periods';
+  return `${layer.coverage.periods.toLocaleString()} ${noun}`;
+}
+
 function number(value, digits = 1) {
   if (value === null || value === undefined || Number.isNaN(value)) return '\u2014';
   return Number(value).toLocaleString('en-US', {
@@ -205,7 +238,7 @@ export default function ClimateObservatory() {
     if (!index) return [];
     const groups = new Map();
     index.layers.forEach(item => {
-      const group = `${item.legacyScope ? 'LEGACY' : 'UPSTREAM'} / ${item.domain}`;
+      const group = `${item.legacyScope ? 'NATIONAL ARCHIVE' : 'TRANSBOUNDARY'} / ${item.domain}`;
       if (!groups.has(group)) groups.set(group, []);
       groups.get(group).push(item);
     });
@@ -270,7 +303,7 @@ export default function ClimateObservatory() {
         {domains.map(([domain, items]) => <div className="clim-domain-group" key={domain}>
           <span>{domain}</span>
           <div className="clim-layers">{items.map(item => <button key={item.id} className={item.id === layerId ? 'active' : ''}
-            onClick={() => setLayerId(item.id)}>{item.label}<small>{item.coverage.basins.toLocaleString()} units \u00b7 {item.coverage.periods.toLocaleString()} periods \u00b7 {item.spatialScope.replaceAll('_', ' ')}</small></button>)}</div>
+            onClick={() => setLayerId(item.id)}><strong>{item.label}</strong><small>{unitLabel(item)} · {periodLabel(item)}</small><em>{scopeLabel(item.spatialScope)}</em></button>)}</div>
         </div>)}
         <label>Variable</label>
         <div className="clim-vars">
@@ -293,7 +326,7 @@ export default function ClimateObservatory() {
         </div>
         {tab === 'insight' && <div className="clim-insight-body">
           <div className="clim-feature-id"><MapPin size={13}/><span>{visibleId ? `${layer.geometryIdColumn === 'HYBAS_ID' ? 'HYBAS ' : ''}${visibleId}` : 'ALL MEASURED UNITS'}</span></div>
-          <h2>{visibleId ? (visibleFeature?.properties.label || `Basin ${visibleFeature?.properties.PFAF_ID ?? visibleId}`) : (layer.spatialScope === 'headwater_formation' ? 'Transboundary headwater frame' : 'Uzbekistan basin frame')}</h2>
+          <h2>{visibleId ? (visibleFeature?.properties.label || `Basin ${visibleFeature?.properties.PFAF_ID ?? visibleId}`) : frameTitle(layer)}</h2>
           <div className="clim-big-number" style={{ color: activeVariable?.color }}>
             {visibleCell ? `${number(visibleCell.v, 2)} ${activeVariable?.unit || ''}` : (visibleId ? 'No observation' : number(stats.mean, 2))}
           </div>

@@ -1,12 +1,12 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T10:31:23+00:00",
+  "generatedAt": "2026-09-08T11:14:53+00:00",
   "title": "Basin climate & land observatory",
   "description": "Complete Amu Darya and Syr Darya observations are the primary scope; the headwater formation layer remains available as a nested view. Earlier Uzbekistan-intersection products remain marked as legacy comparisons.",
   "layers": [
     {
       "id": "era5-land-full-basin-anomaly",
-      "label": "Full-basin climate anomaly",
+      "label": "ERA5-Land anomalies — Amu + Syr",
       "domain": "ATMOSPHERE",
       "kind": "anomaly",
       "dataset": "uz:ds/era5-land",
@@ -136,7 +136,7 @@
     },
     {
       "id": "era5-land-headwater-anomaly",
-      "label": "Headwater climate anomaly",
+      "label": "ERA5-Land anomalies — headwaters",
       "domain": "ATMOSPHERE",
       "kind": "anomaly",
       "dataset": "uz:ds/era5-land",
@@ -265,7 +265,7 @@
     },
     {
       "id": "cfsv2-basin-anomaly",
-      "label": "Climate anomaly (legacy national)",
+      "label": "CFSv2 anomalies — Uzbekistan",
       "domain": "ATMOSPHERE",
       "kind": "anomaly",
       "dataset": "uz:ds/cfsv2-noaa",
@@ -533,7 +533,7 @@
     },
     {
       "id": "cfsv2-basin-monthly",
-      "label": "Climate state (legacy national)",
+      "label": "CFSv2 monthly state — Uzbekistan",
       "domain": "ATMOSPHERE",
       "kind": "value",
       "dataset": "uz:ds/cfsv2-noaa",
@@ -818,7 +818,7 @@
     },
     {
       "id": "chirps-v3-basin-pentad",
-      "label": "Precipitation (CHIRPS)",
+      "label": "CHIRPS pentad rainfall — Uzbekistan",
       "domain": "ATMOSPHERE",
       "kind": "value",
       "dataset": "uz:ds/chirps-v3",
@@ -1680,7 +1680,7 @@
     },
     {
       "id": "era5-land-full-basins-monthly",
-      "label": "Full-basin state (ERA5-Land)",
+      "label": "ERA5-Land monthly state — Amu + Syr",
       "domain": "ATMOSPHERE",
       "kind": "value",
       "dataset": "uz:ds/era5-land",
@@ -1809,7 +1809,7 @@
     },
     {
       "id": "era5-land-headwaters-monthly",
-      "label": "Headwater formation (ERA5-Land)",
+      "label": "ERA5-Land monthly state — headwaters",
       "domain": "ATMOSPHERE",
       "kind": "value",
       "dataset": "uz:ds/era5-land",
@@ -1937,7 +1937,7 @@
     },
     {
       "id": "modis-snow-headwater-daily",
-      "label": "Headwater snow cover (MODIS)",
+      "label": "MODIS daily snow — headwaters",
       "domain": "ATMOSPHERE",
       "kind": "value",
       "dataset": "uz:ds/modis-terra-snow",
