@@ -54,6 +54,11 @@ def geometry_for(level: int) -> str:
 VARIABLES = {
     "precipitation": {"label": "Precipitation", "color": "#4cc9f0"},
     "precipitation_total": {"label": "Precipitation", "color": "#4cc9f0"},
+    "air_temperature_mean": {"label": "Air temperature (mean)", "color": "#ff6b4a"},
+    "snowfall_water_equivalent_total": {"label": "Snowfall water equivalent", "color": "#a7d8ff"},
+    "snow_water_equivalent_mean": {"label": "Snow water equivalent", "color": "#e8f7ff"},
+    "soil_moisture_layer_1_mean": {"label": "Soil moisture (layer 1)", "color": "#2dd4bf"},
+    "modelled_runoff_total": {"label": "Modelled runoff", "color": "#1677ff"},
     "temperature_mean": {"label": "Temperature (mean)", "color": "#ff6b4a"},
     "temperature_max": {"label": "Temperature (max)", "color": "#ff3d3d"},
     "temperature_min": {"label": "Temperature (min)", "color": "#7fa8ff"},
@@ -160,6 +165,20 @@ LAYERS = [
         "periodGrain": "month",
         "what": "Monthly mean of the CAMS +0h analysis: aerosol optical depth and PM2.5, the "
                 "assimilated estimate of what the atmosphere was, not a forecast.",
+    },
+    {
+        "id": "era5-land-headwaters-monthly", "label": "Headwater formation (ERA5-Land)",
+        "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
+        "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "previewVariable": "precipitation_total",
+        "source": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+        "basinLevel": 7, "geometry": "/data/hydroclimate/headwater-units.geojson",
+        "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month",
+        "what": ("Monthly temperature, precipitation, snowfall, snow water equivalent, soil "
+                 "moisture and modelled runoff across the transboundary Upper Amu and Upper Syr "
+                 "formation zones. ERA5-Land is reanalysis; runoff here is not gauge discharge."),
     },
     {
         "id": "ghm-basin-modification", "label": "Human modification", "domain": "LAND",
@@ -278,7 +297,8 @@ def build_layer(layer: dict) -> tuple[dict, dict]:
     entry = {
         "id": layer["id"], "label": layer["label"], "domain": layer["domain"],
         "kind": layer["kind"], "dataset": layer["dataset"], "predicate": layer["predicate"],
-        "basinLevel": layer["basinLevel"], "geometry": geometry_for(layer["basinLevel"]),
+        "basinLevel": layer["basinLevel"],
+        "geometry": layer.get("geometry") or geometry_for(layer["basinLevel"]),
         "periodGrain": layer["periodGrain"], "periods": sorted_periods,
         "variables": sorted(variables.values(), key=lambda item: item["code"]),
         "what": layer["what"],

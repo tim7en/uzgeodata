@@ -83,3 +83,11 @@ def test_layer_index_exposes_a_weighted_quality_signal(tmp_path):
         "ok": 1,
         "ok-interpolated": 1,
     }
+
+
+def test_headwater_layer_uses_transboundary_geometry():
+    layer = next(item for item in web.LAYERS if item["id"] == "era5-land-headwaters-monthly")
+    entry, _ = web.build_layer(layer)
+    assert entry["geometry"] == "/data/hydroclimate/headwater-units.geojson"
+    assert entry["coverage"]["basins"] == 121
+    assert entry["coverage"]["rows"] == entry["coverage"]["basins"] * entry["coverage"]["periods"] * 6

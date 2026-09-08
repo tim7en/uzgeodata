@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T04:48:14+00:00",
+  "generatedAt": "2026-09-08T04:51:43+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -2329,20 +2329,7 @@
       "atlasNumber": null,
       "catalogId": null,
       "repositoryId": null,
-      "description": "Monthly land reanalysis used for the transboundary runoff-formation pilot. Temperature, precipitation, snowfall, snow water equivalent, top-layer soil moisture and modelled runoff are reduced onto level-7 headwater units. Modelled runoff is not river-gauge discharge."
-    },
-    {
-      "id": "uz:ds/era5-land-headwaters-monthly",
-      "type": "Dataset",
-      "label": "ERA5-Land monthly state in upper Amu and Syr headwaters",
-      "labels": {
-        "en": "ERA5-Land monthly state in upper Amu and Syr headwaters"
-      },
-      "sourceKey": "derived/PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
-      "atlasNumber": null,
-      "catalogId": null,
-      "repositoryId": null,
-      "description": "Monthly ERA5-Land state and accumulated flow variables by transboundary level-7 runoff-formation unit, selected upstream of declared Panj-Vakhsh and Naryn-Karadarya control sections."
+      "description": "Monthly land reanalysis used for the transboundary runoff-formation pilot. Temperature, precipitation, snowfall, snow water equivalent, top-layer soil moisture and modelled runoff are reduced onto level-7 headwater units. Modelled runoff is not river-gauge discharge. The local reduction is registered as a relationship-table distribution of this dataset."
     },
     {
       "id": "uz:ds/esri-io-landcover-10m",
@@ -7476,8 +7463,10 @@
       "objectType": "Basin",
       "objectColumn": "basin_id",
       "container": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+      "scopeColumn": null,
       "measureColumn": "value",
       "measureUnitColumn": "unit",
+      "containerTable": null,
       "identifierScheme": "HYBAS_ID",
       "rowCount": 5082,
       "subjectFixed": "uz:ds/era5-land"

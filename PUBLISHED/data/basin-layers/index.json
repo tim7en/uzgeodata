@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T17:45:22+00:00",
+  "generatedAt": "2026-09-08T04:53:08+00:00",
   "title": "Basin climate & land observatory",
   "description": "Every already-measured basin time series the ontology declares, projected into one shared map contract: CFSv2 climate state and anomaly, CHIRPS precipitation, CHIRTS and CPC temperature, CAMS air quality, and GHM human modification.",
   "layers": [
@@ -1385,6 +1385,114 @@
           {
             "period": "2026-08",
             "value": 11.1215
+          }
+        ]
+      }
+    },
+    {
+      "id": "era5-land-headwaters-monthly",
+      "label": "Headwater formation (ERA5-Land)",
+      "domain": "ATMOSPHERE",
+      "kind": "value",
+      "dataset": "uz:ds/era5-land",
+      "predicate": "uz:hasBasinStatistic",
+      "basinLevel": 7,
+      "geometry": "/data/hydroclimate/headwater-units.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07"
+      ],
+      "variables": [
+        {
+          "code": "air_temperature_mean",
+          "unit": "degC",
+          "label": "Air temperature (mean)",
+          "color": "#ff6b4a"
+        },
+        {
+          "code": "modelled_runoff_total",
+          "unit": "mm",
+          "label": "Modelled runoff",
+          "color": "#1677ff"
+        },
+        {
+          "code": "precipitation_total",
+          "unit": "mm",
+          "label": "Precipitation",
+          "color": "#4cc9f0"
+        },
+        {
+          "code": "snow_water_equivalent_mean",
+          "unit": "mm",
+          "label": "Snow water equivalent",
+          "color": "#e8f7ff"
+        },
+        {
+          "code": "snowfall_water_equivalent_total",
+          "unit": "mm",
+          "label": "Snowfall water equivalent",
+          "color": "#a7d8ff"
+        },
+        {
+          "code": "soil_moisture_layer_1_mean",
+          "unit": "m3/m3",
+          "label": "Soil moisture (layer 1)",
+          "color": "#2dd4bf"
+        }
+      ],
+      "what": "Monthly temperature, precipitation, snowfall, snow water equivalent, soil moisture and modelled runoff across the transboundary Upper Amu and Upper Syr formation zones. ERA5-Land is reanalysis; runoff here is not gauge discharge.",
+      "series": "/data/basin-layers/era5-land-headwaters-monthly.json",
+      "coverage": {
+        "rows": 5082,
+        "basins": 121,
+        "periods": 7
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "scorePercent": 75.0,
+        "states": {
+          "ok-reanalysis": 5082
+        }
+      },
+      "preview": {
+        "variable": "precipitation_total",
+        "label": "Precipitation",
+        "unit": "mm",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2026-01",
+            "value": 36.473
+          },
+          {
+            "period": "2026-02",
+            "value": 52.7432
+          },
+          {
+            "period": "2026-03",
+            "value": 92.1968
+          },
+          {
+            "period": "2026-04",
+            "value": 75.072
+          },
+          {
+            "period": "2026-05",
+            "value": 86.5813
+          },
+          {
+            "period": "2026-06",
+            "value": 59.0821
+          },
+          {
+            "period": "2026-07",
+            "value": 43.9044
           }
         ]
       }

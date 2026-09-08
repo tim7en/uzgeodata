@@ -135,25 +135,7 @@
       "gridMetres": 11132,
       "basinLevel": 7,
       "qualityFlags": ["reanalysis-not-direct-observation", "runoff-is-modelled", "publication-lag"],
-      "note": "Monthly land reanalysis used for the transboundary runoff-formation pilot. Temperature, precipitation, snowfall, snow water equivalent, top-layer soil moisture and modelled runoff are reduced onto level-7 headwater units. Modelled runoff is not river-gauge discharge.",
-      "derivedProducts": [
-        {
-          "slug": "era5-land-headwaters-monthly",
-          "label": "ERA5-Land monthly state in upper Amu and Syr headwaters",
-          "description": "Monthly ERA5-Land state and accumulated flow variables by transboundary level-7 runoff-formation unit, selected upstream of declared Panj-Vakhsh and Naryn-Karadarya control sections.",
-          "container": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
-          "observes": [
-            "uz:prop/air-temperature",
-            "uz:prop/precipitation",
-            "uz:prop/snowfall",
-            "uz:prop/snow-water-equivalent",
-            "uz:prop/soil-moisture",
-            "uz:prop/surface-runoff"
-          ],
-          "temporal": {"start": 2026, "end": 2026},
-          "qualityFlags": ["reanalysis-not-direct-observation", "runoff-is-modelled"]
-        }
-      ]
+      "note": "Monthly land reanalysis used for the transboundary runoff-formation pilot. Temperature, precipitation, snowfall, snow water equivalent, top-layer soil moisture and modelled runoff are reduced onto level-7 headwater units. Modelled runoff is not river-gauge discharge. The local reduction is registered as a relationship-table distribution of this dataset."
     },
     {
       "slug": "csp-ghm",
