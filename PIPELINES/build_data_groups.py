@@ -91,7 +91,9 @@ GROUPS = [
         "source": "HydroSHEDS HydroBASINS v1c, and the BasinATLAS extraction in standard format",
         "held": ["GEODATA/uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg",
                  "GEODATA/uzbekistan_hydrobasins_lake_v1c/uzbekistan_hydrobasins_lake_v1c.gpkg"],
-        "web": ["PUBLISHED/data/hydrography/basins.geojson"],
+        "web": ["PUBLISHED/data/hydrography/basins.geojson",
+                "PUBLISHED/data/hydroclimate/aral-hydrographic-context.geojson",
+                "PUBLISHED/data/hydroclimate/aral-hydrographic-context.csv"],
         "rebuild": "npm run hydrography:build",
     },
     {

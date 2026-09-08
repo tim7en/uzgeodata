@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T10:57:35+00:00",
+  "spatialScope": "aral_hydrographic_domain",
+  "purpose": "Explain non-river areas without assigning false Amu/Syr connectivity.",
+  "selection": {
+    "naturalFrame": "union of Amu and Syr level-7 MAIN_BAS selections",
+    "desertContext": "HydroATLAS level-7 units with more than half their geometry in the principal interior gap",
+    "terminalContext": "Large and Small Aral Sea records from the transboundary HydroLAKES extraction"
+  },
+  "counts": {
+    "internalDrainageUnits": 70,
+    "independentInternalDrainageSystems": 46,
+    "terminalSinkUnits": 46,
+    "terminalReceivingWaterBodies": 2
+  },
+  "areasKm2": {
+    "principalInteriorGap": 165397.4,
+    "selectedHydroAtlasUnits": 165135.4
+  },
+  "sources": {
+    "internalDrainage": "WWF/HydroATLAS/v1/Basins/level07 via Earth Engine",
+    "terminalWaterBodies": "HydroLAKES v1.0 local transboundary extraction"
+  },
+  "outputs": {
+    "geojson": "PUBLISHED/data/hydroclimate/aral-hydrographic-context.geojson",
+    "csv": "PUBLISHED/data/hydroclimate/aral-hydrographic-context.csv"
+  },
+  "qualityNotes": [
+    "Internal-drainage units are domain context and do not contribute natural flow to the Amu Darya or Syr Darya.",
+    "No synthetic river reaches or cross-basin links are created in desert areas.",
+    "HydroLAKES shorelines and areas are static reference inventory values, not current Aral water extent or storage.",
+    "Managed canals and transfers require a separate infrastructure graph and must not be inferred from natural catchments."
+  ],
+  "files": {
+    "geojson": {
+      "path": "PUBLISHED/data/hydroclimate/aral-hydrographic-context.geojson",
+      "sha256": "286e8aa4aa67482425af5752efedfc8f1cf44d003a575c4e6df8361ed8eff6fa"
+    },
+    "csv": {
+      "path": "PUBLISHED/data/hydroclimate/aral-hydrographic-context.csv",
+      "sha256": "0fad545155944e56046c6ddfed0ef55f55ad254f8491774a0a5fde021cbf0627"
+    }
+  }
+}

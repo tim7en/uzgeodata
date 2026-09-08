@@ -76,6 +76,28 @@
     {
       "id": "headwater_formation",
       "selectionRule": "units whose NEXT_DOWN chain reaches the declared upper control unit"
+    },
+    {
+      "id": "aral_hydrographic_domain",
+      "selectionRule": "the Amu and Syr natural basins plus explicitly non-contributing internal drainage and terminal Aral receiving-water context"
+    }
+  ],
+  "domainRoles": [
+    {
+      "id": "natural_contributing_basin",
+      "routingTreatment": "retain native NEXT_DOWN topology within the Amu or Syr system"
+    },
+    {
+      "id": "non_contributing_internal_drainage",
+      "routingTreatment": "retain local sink identity; never create an Amu or Syr downstream link"
+    },
+    {
+      "id": "terminal_receiving_waterbody",
+      "routingTreatment": "evaluate inflow, precipitation, evaporation and storage as a water balance; do not classify as a runoff-formation basin"
+    },
+    {
+      "id": "managed_service_area",
+      "routingTreatment": "connect only through observed intake, canal, pumping, reservoir, delivery and return-flow records"
     }
   ],
   "pilotSystems": [

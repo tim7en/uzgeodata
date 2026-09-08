@@ -19,6 +19,9 @@ const SELECTED_COLOR = '#ff5a1f';
 const TRACE_COLOR = '#f0c74c';
 const ADMIN_COLOR = '#c084fc';
 const ADMIN_URL = '/data/hydrography/admin-basin-links.json';
+const DOMAIN_CONTEXT_URL = '/data/hydroclimate/aral-hydrographic-context.geojson';
+const INTERNAL_DRAINAGE_COLOR = '#b89b72';
+const TERMINAL_WATER_COLOR = '#36b9c9';
 const ADMIN_LAYERS = { adm1: '/data/admin/adm1.geojson', adm2: '/data/admin/adm2.geojson' };
 const ADMIN_LEVELS = { adm1: 'Provinces', adm2: 'Districts' };
 
@@ -66,6 +69,21 @@ function MapFocus({ bounds }) {
   return null;
 }
 
+function domainContextStyle(feature) {
+  const terminalWater = feature.properties.domain_role === 'terminal_receiving_waterbody';
+  return terminalWater
+    ? { color: TERMINAL_WATER_COLOR, weight: 1.1, fillColor: TERMINAL_WATER_COLOR, fillOpacity: 0.28 }
+    : { color: INTERNAL_DRAINAGE_COLOR, weight: 0.65, dashArray: '4 4', fillColor: INTERNAL_DRAINAGE_COLOR, fillOpacity: 0.09 };
+}
+
+function domainContextTooltip(feature) {
+  const properties = feature.properties;
+  if (properties.domain_role === 'terminal_receiving_waterbody') {
+    return `<strong>${properties.label}</strong><br/>Terminal receiving water body; evaluate inflow, evaporation and storage, not runoff formation.`;
+  }
+  return `<strong>${properties.label}</strong><br/>Closed internal drainage; climate/exposure context only, with no natural Amu or Syr connection.`;
+}
+
 export default function HydrographyExplorer() {
   const [index, setIndex] = useState(null);
   const [error, setError] = useState(null);
@@ -82,6 +100,7 @@ export default function HydrographyExplorer() {
   const [atlas, setAtlas] = useState(null);
   const [atlasError, setAtlasError] = useState(null);
   const [admin, setAdmin] = useState(null);
+  const [domainContext, setDomainContext] = useState(null);
   const [adminLevel, setAdminLevel] = useState('adm1');
   const [showAdmin, setShowAdmin] = useState(false);
   const requested = useRef(new Set());
@@ -94,6 +113,15 @@ export default function HydrographyExplorer() {
       .then(response => (response.ok ? response.json() : Promise.reject(new Error(`${response.status} ${response.statusText}`))))
       .then(data => { if (live) setIndex(data); })
       .catch(cause => { if (live) setError(cause.message); });
+    return () => { live = false; };
+  }, []);
+
+  useEffect(() => {
+    let live = true;
+    fetch(DOMAIN_CONTEXT_URL)
+      .then(response => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+      .then(collection => { if (live) setDomainContext(collection); })
+      .catch(() => { if (live) setDomainContext(null); });
     return () => { live = false; };
   }, []);
 
@@ -347,7 +375,8 @@ export default function HydrographyExplorer() {
           <p>
             Every reach, lake and level-12 sub-basin in the complete Amu Darya and Syr Darya systems,
             without clipping at national borders. Pick a record to trace what it drains into, what feeds
-            it, and which basin holds it; national overlap remains an attribute rather than a selection rule.
+            it, and which basin holds it. Closed desert drainage and the terminal Aral water bodies remain
+            visible as context, but are never given false Amu or Syr river links.
           </p>
         </div>
         <div className="hydro-stat-grid">
@@ -421,6 +450,12 @@ export default function HydrographyExplorer() {
             />
             <ZoomControl position="bottomleft"/>
             <ScaleControl position="topright"/>
+            {domainContext && <GeoJSON
+              key="aral-hydrographic-context"
+              data={domainContext}
+              style={domainContextStyle}
+              onEachFeature={(feature, layer) => layer.bindTooltip(domainContextTooltip(feature), { sticky: true })}
+            />}
             {geo.boundary && <GeoJSON
               key="boundary"
               data={geo.boundary}
@@ -465,14 +500,19 @@ export default function HydrographyExplorer() {
             <MapFocus bounds={focus}/>
           </MapContainer>
           <div className="hydro-map-meta">
-            <span>AMU DARYA + SYR DARYA / WGS 84</span>
+            <span>ARAL HYDROGRAPHIC DOMAIN / WGS 84</span>
             <span><strong>{num(drawn)} DRAWN</strong></span>
+          </div>
+          <div className="hydro-domain-note">
+            Blank river space is not assumed missing: desert sinks and terminal water are typed separately.
           </div>
           <div className="hydro-map-legend">
             <span><i style={{ background: config.color }}/>{config.label}</span>
             <span><i className="selected"/>Selected</span>
             {traced && <span><i style={{ background: TRACE_COLOR }}/>Traced catchment</span>}
             {showAdmin && adminUnits && <span><i style={{ background: ADMIN_COLOR }}/>{ADMIN_LEVELS[adminLevel]}</span>}
+            <span><i className="internal-drainage"/>Closed internal drainage</span>
+            <span><i className="terminal-water"/>Terminal Aral receptor</span>
             <span><i className="boundary"/>Boundary</span>
           </div>
           {(loadingGeo && !activeGeo) && <div className="hydro-map-loading"><LoaderCircle size={15}/> Loading {config.label} geometry</div>}
