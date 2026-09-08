@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T03:35:44+00:00",
+  "generatedAt": "2026-09-08T03:38:10+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -7457,7 +7457,7 @@
       "flags": [
         "licence-terms-to-confirm-before-redistribution"
       ],
-      "distributions": 37,
+      "distributions": 35,
       "related": [],
       "geographies": [
         {
@@ -8441,7 +8441,7 @@
         45.60519
       ],
       "flags": [],
-      "distributions": 4,
+      "distributions": 3,
       "related": [
         "uz:ds/hydrobasins-level12-uzbekistan",
         "uz:ds/hydrorivers-uzbekistan"
@@ -8493,7 +8493,7 @@
         45.60519
       ],
       "flags": [],
-      "distributions": 5,
+      "distributions": 3,
       "related": [
         "uz:ds/hydrobasins-level12-uzbekistan",
         "uz:ds/hydrolakes-uzbekistan"
@@ -11545,10 +11545,10 @@
     "datasets": 186,
     "atlasPackages": 134,
     "stations": 190,
-    "publishedAssertions": 3210,
+    "publishedAssertions": 3202,
     "proposedAssertions": 576,
-    "relationshipTables": 24,
-    "relationshipLinks": 982617
+    "relationshipTables": 19,
+    "relationshipLinks": 779767
   },
   "geography": {
     "frames": [
@@ -11591,7 +11591,7 @@
       "subjectType": "RiverReach",
       "objectType": "RiverReach",
       "frame": "network",
-      "rowCount": 17447,
+      "rowCount": null,
       "measureColumn": null,
       "dimensions": []
     },
@@ -11603,7 +11603,7 @@
       "subjectType": "RiverReach",
       "objectType": "Basin",
       "frame": "basin",
-      "rowCount": 17447,
+      "rowCount": null,
       "measureColumn": null,
       "dimensions": []
     },
@@ -11615,7 +11615,7 @@
       "subjectType": "WaterBody",
       "objectType": "Basin",
       "frame": "basin",
-      "rowCount": 647,
+      "rowCount": null,
       "measureColumn": null,
       "dimensions": []
     },
@@ -11675,7 +11675,7 @@
       "subjectType": "Dataset",
       "objectType": "Basin",
       "frame": "basin",
-      "rowCount": 167309,
+      "rowCount": null,
       "measureColumn": "mean",
       "dimensions": []
     },

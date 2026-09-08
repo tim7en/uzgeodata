@@ -1244,11 +1244,25 @@ class GraphBuilder:
                 continue
 
             container = table["container"]
+            existing = None
+            if not table.get("containerTable"):
+                existing = match_by_path_tail(container, by_location)
+            dist_id = existing or f"uz:dist/{table['id']}"
             row_count = self.count_relationship_rows(table, counts)
-            if row_count is None:
+            if row_count is None or row_count <= 0:
+                # A compatibility refresh begins with the previous graph. Do
+                # not let a stale relationship-table entity survive when its
+                # current container disappeared or became a header-only stub.
+                if self.entities.get(dist_id, {}).get("role") == "relationship-table":
+                    del self.entities[dist_id]
+                    self.assertions = {
+                        key: assertion for key, assertion in self.assertions.items()
+                        if assertion.get("subject") != dist_id
+                        and assertion.get("object") != dist_id
+                    }
                 self.warn(
-                    f"relationship table {table['id']}: no row count available; "
-                    f"{container} has not been built"
+                    f"relationship table {table['id']}: no rows available; "
+                    f"{container} is missing or empty"
                 )
                 continue
 
@@ -1256,11 +1270,6 @@ class GraphBuilder:
             # tables share one GeoPackage, so matching those on the container
             # would collapse them onto each other and onto the database
             # distribution that holds them.
-            existing = None
-            if not table.get("containerTable"):
-                existing = match_by_path_tail(container, by_location)
-            dist_id = existing or f"uz:dist/{table['id']}"
-
             # A previous registry version incorrectly put the object column in
             # subjectColumn for fixed-dataset statistic tables.  Remove that
             # stale attribute before updating an existing Distribution.
@@ -1356,12 +1365,12 @@ class GraphBuilder:
                     return sum(1 for row in reader
                                if row.get(table["scopeColumn"]) == table["scopeValue"])
                 return max(sum(1 for _ in handle) - 1, 0)  # discount the header
+        if not path.exists():
+            return None
         source = table.get("rowCountFrom")
         if source:
             value = counts.get(source["manifest"], {}).get(source["key"])
             return int(value) if value is not None else None
-        if not path.exists():
-            return None
         with path.open(encoding="utf-8-sig", newline="") as handle:
             if table.get("scopeValue"):
                 reader = csv.DictReader(handle)

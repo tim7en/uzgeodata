@@ -124,6 +124,7 @@ export default function LandcoverExplorer() {
   const [query, setQuery] = useState('');
   const [tab, setTab] = useState('insight');
   const [playing, setPlaying] = useState(false);
+  const [mobilePanel, setMobilePanel] = useState(null);
 
   useEffect(() => {
     let live = true;
@@ -261,7 +262,18 @@ export default function LandcoverExplorer() {
         <nav><a href="/">Portal</a><a href="/ontology.html">Living ontology</a><a href="/hydrography.html">Hydrography</a><a href="/climate.html">Climate</a><a href="/relationships.html">Tables</a><a href="/catalogue.html">Catalogue</a></nav>
       </header>
 
-      <aside className="land-lens">
+      <div className="land-mobile-tools" aria-label="Map panels">
+        <button type="button" className={mobilePanel === 'lens' ? 'active' : ''}
+          aria-expanded={mobilePanel === 'lens'} onClick={() => setMobilePanel(current => current === 'lens' ? null : 'lens')}>
+          <Layers size={13}/> Layers
+        </button>
+        <button type="button" className={mobilePanel === 'insight' ? 'active' : ''}
+          aria-expanded={mobilePanel === 'insight'} onClick={() => setMobilePanel(current => current === 'insight' ? null : 'insight')}>
+          <BarChart3 size={13}/> Insight
+        </button>
+      </div>
+
+      <aside className={`land-lens ${mobilePanel === 'lens' ? 'mobile-open' : ''}`}>
         <div className="land-eyebrow"><Layers size={13}/> ANALYTICAL LENS <small>{year}</small></div>
         <h1>See the surface <em>change.</em></h1>
         <p>Every colour is a measured relationship between an Earth observation and a BasinATLAS catchment.</p>
@@ -281,7 +293,7 @@ export default function LandcoverExplorer() {
         <div className="land-ontology-path"><span>ONTOLOGY PATH</span><code>Esri LULC</code><b>hasBasinStatistic</b><code>Basin {selected?.pfaf || '—'}</code></div>
       </aside>
 
-      <aside className="land-insight">
+      <aside className={`land-insight ${mobilePanel === 'insight' ? 'mobile-open' : ''}`}>
         <div className="land-insight-tabs">
           {[['insight', BarChart3, 'Insight'], ['table', Table2, 'Table'], ['json', Braces, 'JSON']].map(([key, Icon, label]) => <button key={key} className={tab === key ? 'active' : ''} onClick={() => setTab(key)}><Icon size={12}/>{label}</button>)}
         </div>

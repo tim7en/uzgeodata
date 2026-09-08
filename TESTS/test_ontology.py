@@ -675,7 +675,6 @@ def test_topology_stays_out_of_the_assertion_graph(assertions):
 def test_every_declared_relationship_table_reaches_the_graph(relationship_tables, entities,
                                                              assertions):
     registered = {e["id"]: e for e in entities.values() if e.get("role") == "relationship-table"}
-    assert len(registered) == len(relationship_tables)
 
     owner = {a["object"]: a["subject"] for a in assertions
              if a["predicate"] == "uz:hasDistribution"}
@@ -686,7 +685,16 @@ def test_every_declared_relationship_table_reaches_the_graph(relationship_tables
             (e for e in registered.values()
              if e.get("container") == table["container"]
              and e.get("containerTable") == table.get("containerTable")), None)
-        assert match is not None, table["id"]
+        if match is None:
+            # Declarations may legitimately outlive a rotated delivery. An
+            # unavailable or header-only container stays visible as a registry
+            # warning, but must not be presented as measured graph topology.
+            container = ROOT / table["container"]
+            assert not container.exists() or (
+                table["format"] == "CSV"
+                and len(container.read_text(encoding="utf-8-sig").splitlines()) <= 1
+            ), table["id"]
+            continue
         assert match["predicate"] == table["predicate"]
         assert match["subjectType"] == table["subjectType"]
         assert match["objectType"] == table["objectType"]
@@ -728,12 +736,15 @@ def test_relationship_table_row_counts_are_measured(relationship_tables, entitie
         container = ROOT / table["container"]
         if not container.exists():
             continue
-        candidates = by_container[table["container"]]
-        entity = next((candidate for candidate in candidates
-                       if candidate["id"] == f"uz:dist/{table['id']}"), candidates[0])
         with container.open(encoding="utf-8-sig", newline="") as handle:
             header = next(csv.reader(handle))
             rows = sum(1 for _ in handle)
+        if rows == 0:
+            assert table["container"] not in by_container
+            continue
+        candidates = by_container[table["container"]]
+        entity = next((candidate for candidate in candidates
+                       if candidate["id"] == f"uz:dist/{table['id']}"), candidates[0])
         if len(candidates) == 1:
             assert entity["rowCount"] == rows, table["id"]
         else:
@@ -809,8 +820,8 @@ def test_relationship_table_schema_requires_the_typed_declaration():
 def test_validator_rejects_a_table_whose_subject_the_predicate_forbids(tmp_path):
     def mutate(records):
         table = next(e for e in records if e.get("role") == "relationship-table"
-                     and e["predicate"] == "uz:withinBasin")
-        table["subjectType"] = "Basin"  # uz:withinBasin applies to a WaterBody
+                     and e["predicate"] == "uz:hasBasinStatistic")
+        table["subjectType"] = "Basin"  # statistic relation applies to a Dataset
 
     report = _validate_with_entities(tmp_path, mutate)
     assert any("does not apply to a Basin" in error for error in report.errors)
@@ -819,8 +830,8 @@ def test_validator_rejects_a_table_whose_subject_the_predicate_forbids(tmp_path)
 def test_validator_rejects_a_table_whose_object_the_predicate_forbids(tmp_path):
     def mutate(records):
         table = next(e for e in records if e.get("role") == "relationship-table"
-                     and e["predicate"] == "uz:drainsToBasin")
-        table["objectType"] = "RiverReach"  # uz:drainsToBasin ranges over Basin
+                     and e["predicate"] == "uz:hasBasinStatistic")
+        table["objectType"] = "RiverReach"  # statistic relation ranges over Basin
 
     report = _validate_with_entities(tmp_path, mutate)
     assert any("table declares RiverReach" in error for error in report.errors)
