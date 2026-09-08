@@ -3,10 +3,11 @@ import { GeoJSON, MapContainer, ScaleControl, TileLayer, ZoomControl, useMap, us
 import { ArrowUpRight, ChevronDown, Layers, Search, X } from 'lucide-react';
 import {
   SYSTEMS, basinHeadline, basinStyle, carriesAttributes, formatNumber, groupAttributes,
-  groupSummary, indexStore, levelForZoom, systemMeta, systemTotals,
+  groupSummary, indexStore, levelForZoom, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
 const LADDER_URL = '/data/hydroclimate/reference-basin-levels.json';
+const RIVER_LADDER_URL = '/data/hydroclimate/reference-river-levels.json';
 const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
 const ATTRIBUTES_URL = '/data/hydroclimate/reference-basin-attributes.json';
 const CENTRE = [40.2, 70.5];
@@ -57,7 +58,9 @@ function AttributeGroup({ groups, store, hybasId, groupId, loading, onOpen }) {
 
 export default function LandingMap() {
   const [ladder, setLadder] = useState(null);
+  const [riverLadder, setRiverLadder] = useState(null);
   const [levels, setLevels] = useState({});
+  const [riverTiers, setRiverTiers] = useState({});
   const [zoom, setZoom] = useState(6);
   const [groups, setGroups] = useState(null);
   const [store, setStore] = useState(null);
@@ -72,10 +75,11 @@ export default function LandingMap() {
 
   useEffect(() => {
     let live = true;
-    Promise.all([json(LADDER_URL), json(GROUPS_URL)])
-      .then(([ladderDocument, groupDocument]) => {
+    Promise.all([json(LADDER_URL), json(RIVER_LADDER_URL), json(GROUPS_URL)])
+      .then(([ladderDocument, riverDocument, groupDocument]) => {
         if (!live) return;
         setLadder(ladderDocument);
+        setRiverLadder(riverDocument);
         setGroups(groupDocument);
       })
       .catch(cause => live && setError(cause.message));
@@ -106,6 +110,18 @@ export default function LandingMap() {
     return () => { live = false; };
   }, [active, levels]);
 
+  const tier = useMemo(() => tierForZoom(zoom, riverLadder), [zoom, riverLadder]);
+  const rivers = tier ? riverTiers[tier.id] : null;
+
+  useEffect(() => {
+    if (!tier || riverTiers[tier.id]) return undefined;
+    let live = true;
+    json(tier.url)
+      .then(document => live && setRiverTiers(current => ({ ...current, [tier.id]: document })))
+      .catch(cause => live && setError(cause.message));
+    return () => { live = false; };
+  }, [tier, riverTiers]);
+
   const features = basins?.features || [];
   const byId = useMemo(() => new Map(features.map(feature => [String(feature.properties.hybas_id), feature])), [features]);
   const totals = useMemo(() => systemTotals(features), [features]);
@@ -132,7 +148,7 @@ export default function LandingMap() {
       restyle(id, { hovered: id === hoveredId, selected: id === selectedId });
     }
     painted.current = [hoveredId, selectedId].filter(Boolean);
-  }, [selectedId, hoveredId, restyle]);
+  }, [selectedId, hoveredId, restyle, basins]);
 
   useEffect(() => { layersById.current = new Map(); painted.current = []; }, [active?.level]);
 
@@ -165,6 +181,8 @@ export default function LandingMap() {
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" opacity={0.42}/>
       {basins && <GeoJSON key={active.level} data={basins} smoothFactor={1.6}
         style={feature => basinStyle(feature.properties, {})} onEachFeature={onEachFeature}/>}
+      {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
+        interactive={false} smoothFactor={1.2}/>}
       <FitTo bounds={bounds}/>
       <WatchZoom onZoom={setZoom}/>
       <ZoomControl position="bottomright"/>
@@ -181,7 +199,12 @@ export default function LandingMap() {
 
     <aside className={`land-panel ${selected ? 'has-selection' : ''}`}>
       {!basins && <p className="land-loading">Loading the reference basins…</p>}
-      {basins && <p className="land-level">Level {active.level} · {formatNumber(features.length)} basins in view</p>}
+      {basins && <p className="land-level">
+        Level {active.level} · {formatNumber(features.length)} basins
+        {rivers ? ` · ${formatNumber(rivers.features.length)} reaches` : ''}
+        {selected && Number(selected.properties.basin_level) !== active.level
+          ? ` · selection held at level ${selected.properties.basin_level}` : ''}
+      </p>}
       {basins && !selected && <div className="land-intro">
         <label className="land-search">
           <Search size={13}/>
@@ -205,7 +228,7 @@ export default function LandingMap() {
 
       {selected && <div className="land-detail" style={{ '--system': systemMeta(selected.properties.system_id).color }}>
         <button type="button" className="land-close" onClick={() => setSelected(null)} aria-label="Clear selection"><X size={14}/></button>
-        <span className="land-kicker">{systemMeta(selected.properties.system_id).label} · level 12</span>
+        <span className="land-kicker">{systemMeta(selected.properties.system_id).label} · level {selected.properties.basin_level}</span>
         <h2>HYBAS {selected.properties.hybas_id}</h2>
         <dl className="land-headline">{basinHeadline(selected.properties).map(row => <div key={row.label}>
           <dt>{row.label}</dt>

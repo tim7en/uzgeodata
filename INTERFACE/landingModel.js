@@ -11,9 +11,10 @@ export const SYSTEMS = {
 
 const FALLBACK_SYSTEM = { label: 'Outside the two systems', color: '#7c8a92' };
 
-// Fill stays light enough to read the terrain underneath, and lifts on hover so
-// the unit under the pointer is obvious without an outline flashing everywhere.
-const FILL = { base: 0.3, hovered: 0.55, selected: 0.72 };
+// The basins are context, not the subject: the fill stays faint enough for the
+// river network and the terrain to read straight through it, and lifts only far
+// enough that the unit under the pointer is unmistakable.
+const FILL = { base: 0.14, hovered: 0.3, selected: 0.44 };
 
 export function systemMeta(systemId) {
   return SYSTEMS[systemId] || FALLBACK_SYSTEM;
@@ -149,14 +150,51 @@ export function systemTotals(features) {
  * reader zooms towards it. The ladder is published with the data rather than
  * hardcoded here, so re-cutting the levels does not need a code change.
  */
-export function levelForZoom(zoom, ladder) {
-  const levels = [...(ladder?.levels || [])].sort((left, right) => left.minZoom - right.minZoom);
-  if (!levels.length) return null;
-  let chosen = levels[0];
-  for (const entry of levels) {
+export function pickByZoom(zoom, entries) {
+  const ordered = [...(entries || [])].sort((left, right) => left.minZoom - right.minZoom);
+  if (!ordered.length) return null;
+  let chosen = ordered[0];
+  for (const entry of ordered) {
     if (zoom >= entry.minZoom) chosen = entry;
   }
   return chosen;
+}
+
+export function levelForZoom(zoom, ladder) {
+  return pickByZoom(zoom, ladder?.levels);
+}
+
+/** River tiers follow the same zoom ladder as the basins they sit on. */
+export function tierForZoom(zoom, ladder) {
+  return pickByZoom(zoom, ladder?.tiers);
+}
+
+const RIVER_WIDTHS = [
+  { from: 500, weight: 3.4 },
+  { from: 100, weight: 2.5 },
+  { from: 20, weight: 1.7 },
+  { from: 5, weight: 1.15 },
+  { from: 0, weight: 0.75 },
+];
+
+/**
+ * Rivers are the subject of this map, so they are drawn bright and sized by the
+ * water they carry. A reach whose long-term average is not perennial is drawn
+ * dashed and dimmed: it is a mapped channel, not a flowing river.
+ */
+export function riverStyle(properties) {
+  const discharge = Number(properties?.discharge_cms) || 0;
+  const perennial = properties?.channel_class === 'perennial';
+  const weight = RIVER_WIDTHS.find(entry => discharge >= entry.from)?.weight ?? 0.75;
+  return {
+    color: perennial ? '#9fefff' : '#7d9aa8',
+    weight,
+    opacity: perennial ? 0.92 : 0.5,
+    dashArray: perennial ? null : '2 4',
+    lineCap: 'round',
+    lineJoin: 'round',
+    interactive: false,
+  };
 }
 
 export function carriesAttributes(properties, ladder) {

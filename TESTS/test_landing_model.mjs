@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
   carriesAttributes, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
-  readAttribute, systemMeta, systemTotals,
+  readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from '../INTERFACE/landingModel.js';
 
 const read = name => JSON.parse(readFileSync(
@@ -21,7 +21,7 @@ test('a basin lifts out of the background on hover and again on selection', () =
   const base = basinStyle(properties, {});
   const hovered = basinStyle(properties, {hovered: true});
   const selected = basinStyle(properties, {selected: true, hovered: true});
-  assert.equal(base.fillOpacity, 0.3);
+  assert.ok(base.fillOpacity > 0);
   assert.ok(hovered.fillOpacity > base.fillOpacity);
   assert.ok(selected.fillOpacity > hovered.fillOpacity);
   assert.ok(selected.weight > hovered.weight);
@@ -117,4 +117,45 @@ test('atlas attributes are only claimed for the level that carries them', () => 
   const carriers = ladder.levels.filter(entry => entry.carriesAtlasAttributes);
   assert.equal(carriers.length, 1);
   assert.equal(carriers[0].level, ladder.attributeLevel);
+});
+
+test('basins are faint enough to read the rivers through them', () => {
+  const properties = {system_id: 'syr_darya'};
+  assert.ok(basinStyle(properties, {}).fillOpacity <= 0.15);
+  assert.ok(basinStyle(properties, {hovered: true}).fillOpacity <= 0.35);
+  assert.ok(basinStyle(properties, {selected: true}).fillOpacity < 0.5);
+  // Still a strict ladder, or hover would not read.
+  assert.ok(basinStyle(properties, {}).fillOpacity
+    < basinStyle(properties, {hovered: true}).fillOpacity);
+});
+
+test('a river is sized by the water it carries and dashed when it is not perennial', () => {
+  const big = riverStyle({discharge_cms: 900, channel_class: 'perennial'});
+  const small = riverStyle({discharge_cms: 2, channel_class: 'perennial'});
+  assert.ok(big.weight > small.weight);
+  assert.equal(big.dashArray, null);
+  assert.ok(big.opacity > 0.8);
+
+  const dry = riverStyle({discharge_cms: 30, channel_class: 'ephemeral_or_dry'});
+  assert.ok(dry.dashArray, 'a channel that carries no water must not read as a river');
+  assert.ok(dry.opacity < big.opacity);
+  assert.notEqual(dry.color, big.color);
+  // Rivers never intercept a click meant for the basin underneath.
+  assert.equal(big.interactive, false);
+});
+
+test('river tiers follow the same zoom ladder as the basins', () => {
+  const rivers = read('reference-river-levels.json');
+  const basins = read('reference-basin-levels.json');
+  assert.deepEqual(rivers.tiers.map(entry => entry.minZoom), basins.levels.map(entry => entry.minZoom));
+  assert.equal(tierForZoom(3, rivers).id, 'main');
+  assert.equal(tierForZoom(7, rivers).id, 'tributary');
+  assert.equal(tierForZoom(11, rivers).id, 'headwater');
+
+  const first = rivers.tiers[0];
+  const last = rivers.tiers[rivers.tiers.length - 1];
+  assert.ok(first.reaches < last.reaches);
+  assert.ok(first.minDischargeCms > last.minDischargeCms);
+  // The whole overlay must stay small beside the basins it sits on.
+  assert.ok(first.sizeBytes < basins.levels[0].sizeBytes * 2);
 });
