@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T10:37:00+00:00",
+  "generatedAt": "2026-09-08T11:52:02+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
@@ -46,7 +46,7 @@
     "INCOMPLETE": 3,
     "MISSING": 3,
     "CURRENT": 9,
-    "STATIC": 28
+    "STATIC": 29
   },
   "tables": [
     {
@@ -704,6 +704,24 @@
       "lastModified": "2026-09-07T17:06:55+00:00"
     },
     {
+      "id": "reference-basin-attributes",
+      "label": "BasinATLAS attributes on the level-12 reference basins",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/hydroclimate/reference-basin-attributes.csv",
+      "exists": true,
+      "rows": 7445,
+      "units": 7445,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": "npm run basins:reference",
+      "note": "BasinATLAS is a fixed reference epoch; it moves only when HydroSHEDS republishes the atlas.",
+      "lastModified": "2026-09-08T11:50:57+00:00"
+    },
+    {
       "id": "srtm-headwater-elevation-bands",
       "label": "SRTM elevation-band areas in headwater formation systems",
       "predicate": "uz:hasFormationStatistic",
@@ -815,7 +833,7 @@
       "id": "transboundary-river-basin",
       "label": "Unified river reach to level-12 basin",
       "predicate": "uz:drainsToBasin",
-      "container": "PUBLISHED/data/hydrography/rivers-unified.csv",
+      "container": "PUBLISHED/data/hydrography/river-basin-unified.csv",
       "exists": true,
       "rows": 46976,
       "units": 7419,
@@ -827,13 +845,13 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-08T10:31:42+00:00"
+      "lastModified": "2026-09-08T10:39:15+00:00"
     },
     {
       "id": "transboundary-river-downstream",
       "label": "Unified Amu and Syr river-reach routing",
       "predicate": "uz:flowsInto",
-      "container": "PUBLISHED/data/hydrography/rivers-unified.csv",
+      "container": "PUBLISHED/data/hydrography/river-downstream-unified.csv",
       "exists": true,
       "rows": 46976,
       "units": 23261,
@@ -845,7 +863,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-08T10:31:42+00:00"
+      "lastModified": "2026-09-08T10:39:15+00:00"
     },
     {
       "id": "transboundary-water-body-basin",

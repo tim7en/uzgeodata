@@ -1,0 +1,2612 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T11:50:55+00:00",
+  "basinLevel": 12,
+  "source": "BasinATLAS_Data_v10.gdb/BasinATLAS_Catalog_v10.pdf",
+  "groups": [
+    {
+      "id": "basin_accumulation",
+      "label": "Accumulated over the upstream catchment",
+      "attributeCount": 91,
+      "categories": [
+        {
+          "id": "Anthropogenic",
+          "attributes": [
+            {
+              "column": "gdp_ud_usu",
+              "label": "Gross Domestic Product - sum, the whole upstream catchment",
+              "units": "US dollars",
+              "property": null,
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "hft_ix_u09",
+              "label": "Human Footprint - 2009, the whole upstream catchment",
+              "units": "index value (x10)",
+              "property": null,
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "hft_ix_u93",
+              "label": "Human Footprint - 1993, the whole upstream catchment",
+              "units": "index value (x10)",
+              "property": null,
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "nli_ix_uav",
+              "label": "Nighttime Lights - average, the whole upstream catchment",
+              "units": "index value (x100)",
+              "property": null,
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pop_ct_usu",
+              "label": "Population Count - sum, the whole upstream catchment",
+              "units": "count (thousands)",
+              "property": "uz:prop/settlement-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "ppd_pk_uav",
+              "label": "Population Density - average, the whole upstream catchment",
+              "units": "people per km²",
+              "property": "uz:prop/settlement-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "rdd_mk_uav",
+              "label": "Road Density - average, the whole upstream catchment",
+              "units": "meters per km²",
+              "property": "uz:prop/road-density",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "urb_pc_use",
+              "label": "Urban Extent - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/settlement-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            }
+          ]
+        },
+        {
+          "id": "Climate",
+          "attributes": [
+            {
+              "column": "aet_mm_uyr",
+              "label": "Actual Evapotranspiration - annual average, the whole upstream catchment",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "ari_ix_uav",
+              "label": "Global Aridity Index - average, the whole upstream catchment",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "cmi_ix_uyr",
+              "label": "Climate Moisture Index - annual average, the whole upstream catchment",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pet_mm_uyr",
+              "label": "Potential Evapotranspiration - annual average, the whole upstream catchment",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pre_mm_uyr",
+              "label": "Precipitation - annual average, the whole upstream catchment",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "snw_pc_uyr",
+              "label": "Snow Cover Extent - annual average, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "tmp_dc_uyr",
+              "label": "Air Temperature - annual average, the whole upstream catchment",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            }
+          ]
+        },
+        {
+          "id": "Hydrology",
+          "attributes": [
+            {
+              "column": "dis_m3_pmn",
+              "label": "Natural Discharge - annual minimum, at the sub-basin pour point",
+              "units": "cubic meters/second",
+              "property": "uz:prop/surface-runoff",
+              "spatialExtent": "p",
+              "spatialExtentLabel": "at the sub-basin pour point",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "dis_m3_pmx",
+              "label": "Natural Discharge - annual maximum, at the sub-basin pour point",
+              "units": "cubic meters/second",
+              "property": "uz:prop/surface-runoff",
+              "spatialExtent": "p",
+              "spatialExtentLabel": "at the sub-basin pour point",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "dis_m3_pyr",
+              "label": "Natural Discharge - annual average, at the sub-basin pour point",
+              "units": "cubic meters/second",
+              "property": "uz:prop/surface-runoff",
+              "spatialExtent": "p",
+              "spatialExtentLabel": "at the sub-basin pour point",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "dor_pc_pva",
+              "label": "Degree of Regulation - va, at the sub-basin pour point",
+              "units": "percent (x10)",
+              "property": null,
+              "spatialExtent": "p",
+              "spatialExtentLabel": "at the sub-basin pour point",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "inu_pc_ult",
+              "label": "Inundation Extent - lt, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/surface-water-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "inu_pc_umn",
+              "label": "Inundation Extent - annual minimum, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/surface-water-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "inu_pc_umx",
+              "label": "Inundation Extent - annual maximum, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/surface-water-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "lka_pc_use",
+              "label": "Limnicity (Percent Lake Area) - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover (x10)",
+              "property": "uz:prop/surface-water-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "lkv_mc_usu",
+              "label": "Lake Volume - sum, the whole upstream catchment",
+              "units": "million cubic meters",
+              "property": "uz:prop/reservoir-volume",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "rev_mc_usu",
+              "label": "Reservoir Volume - sum, the whole upstream catchment",
+              "units": "million cubic meters",
+              "property": "uz:prop/reservoir-volume",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "ria_ha_usu",
+              "label": "River Area - sum, the whole upstream catchment",
+              "units": "hectares",
+              "property": "uz:prop/river-network",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "riv_tc_usu",
+              "label": "River Volume - sum, the whole upstream catchment",
+              "units": "thousand cubic meters",
+              "property": "uz:prop/river-network",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            }
+          ]
+        },
+        {
+          "id": "Landcover",
+          "attributes": [
+            {
+              "column": "crp_pc_use",
+              "label": "Cropland Extent - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/cropland-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "for_pc_use",
+              "label": "Forest Cover Extent - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/forest-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "gla_pc_use",
+              "label": "Glacier Extent - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/glacier-volume",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u01",
+              "label": "Land Cover Extent - class 1, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u02",
+              "label": "Land Cover Extent - class 2, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u03",
+              "label": "Land Cover Extent - class 3, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u04",
+              "label": "Land Cover Extent - class 4, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u05",
+              "label": "Land Cover Extent - class 5, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u06",
+              "label": "Land Cover Extent - class 6, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u07",
+              "label": "Land Cover Extent - class 7, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u08",
+              "label": "Land Cover Extent - class 8, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u09",
+              "label": "Land Cover Extent - class 9, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u10",
+              "label": "Land Cover Extent - class 10, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u11",
+              "label": "Land Cover Extent - class 11, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u12",
+              "label": "Land Cover Extent - class 12, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u13",
+              "label": "Land Cover Extent - class 13, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u14",
+              "label": "Land Cover Extent - class 14, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u15",
+              "label": "Land Cover Extent - class 15, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u16",
+              "label": "Land Cover Extent - class 16, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u17",
+              "label": "Land Cover Extent - class 17, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u18",
+              "label": "Land Cover Extent - class 18, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u19",
+              "label": "Land Cover Extent - class 19, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u20",
+              "label": "Land Cover Extent - class 20, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u21",
+              "label": "Land Cover Extent - class 21, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "glc_pc_u22",
+              "label": "Land Cover Extent - class 22, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "ire_pc_use",
+              "label": "Irrigated Area Extent (Equipped) - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/irrigated-area",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pac_pc_use",
+              "label": "Protected Area Extent - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/protected-area",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u01",
+              "label": "Potential Natural Vegetation Extent - class 1, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u02",
+              "label": "Potential Natural Vegetation Extent - class 2, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u03",
+              "label": "Potential Natural Vegetation Extent - class 3, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u04",
+              "label": "Potential Natural Vegetation Extent - class 4, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u05",
+              "label": "Potential Natural Vegetation Extent - class 5, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u06",
+              "label": "Potential Natural Vegetation Extent - class 6, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u07",
+              "label": "Potential Natural Vegetation Extent - class 7, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u08",
+              "label": "Potential Natural Vegetation Extent - class 8, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u09",
+              "label": "Potential Natural Vegetation Extent - class 9, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u10",
+              "label": "Potential Natural Vegetation Extent - class 10, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u11",
+              "label": "Potential Natural Vegetation Extent - class 11, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u12",
+              "label": "Potential Natural Vegetation Extent - class 12, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u13",
+              "label": "Potential Natural Vegetation Extent - class 13, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u14",
+              "label": "Potential Natural Vegetation Extent - class 14, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pnv_pc_u15",
+              "label": "Potential Natural Vegetation Extent - class 15, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "prm_pc_use",
+              "label": "Permafrost Extent - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": null,
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "pst_pc_use",
+              "label": "Pasture Extent - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/pasture-vegetation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u01",
+              "label": "Wetland Extent - class 1, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u02",
+              "label": "Wetland Extent - class 2, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u03",
+              "label": "Wetland Extent - class 3, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u04",
+              "label": "Wetland Extent - class 4, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u05",
+              "label": "Wetland Extent - class 5, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u06",
+              "label": "Wetland Extent - class 6, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u07",
+              "label": "Wetland Extent - class 7, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u08",
+              "label": "Wetland Extent - class 8, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_u09",
+              "label": "Wetland Extent - class 9, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_ug1",
+              "label": "Wetland Extent - g1, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "wet_pc_ug2",
+              "label": "Wetland Extent - g2, the whole upstream catchment",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            }
+          ]
+        },
+        {
+          "id": "Physiography",
+          "attributes": [
+            {
+              "column": "ele_mt_uav",
+              "label": "Elevation - average, the whole upstream catchment",
+              "units": "meters a.s.l.",
+              "property": "uz:prop/elevation",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "slp_dg_uav",
+              "label": "Terrain Slope - average, the whole upstream catchment",
+              "units": "degrees (x10)",
+              "property": null,
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            }
+          ]
+        },
+        {
+          "id": "Soils & Geology",
+          "attributes": [
+            {
+              "column": "cly_pc_uav",
+              "label": "Clay Fraction in Soil - average, the whole upstream catchment",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "ero_kh_uav",
+              "label": "Soil Erosion - average, the whole upstream catchment",
+              "units": "kg/hectare per year",
+              "property": "uz:prop/land-productivity",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "kar_pc_use",
+              "label": "Karst Area Extent - spatial extent (percent), the whole upstream catchment",
+              "units": "percent cover",
+              "property": null,
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "slt_pc_uav",
+              "label": "Silt Fraction in Soil - average, the whole upstream catchment",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "snd_pc_uav",
+              "label": "Sand Fraction in Soil - average, the whole upstream catchment",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "soc_th_uav",
+              "label": "Organic Carbon Content in Soil - average, the whole upstream catchment",
+              "units": "tonnes/hectare",
+              "property": "uz:prop/soil-organic-carbon",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            },
+            {
+              "column": "swc_pc_uyr",
+              "label": "Soil Water Content - annual average, the whole upstream catchment",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "u",
+              "spatialExtentLabel": "the whole upstream catchment",
+              "aggregation": "outlet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "basin_specific",
+      "label": "Measured in this sub-basin",
+      "attributeCount": 190,
+      "categories": [
+        {
+          "id": "Anthropogenic",
+          "attributes": [
+            {
+              "column": "gad_id_smj",
+              "label": "Global Administrative Areas - majority class, this sub-basin",
+              "units": "ID number",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "gdp_ud_sav",
+              "label": "Gross Domestic Product - average, this sub-basin",
+              "units": "US dollars",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "gdp_ud_ssu",
+              "label": "Gross Domestic Product - sum, this sub-basin",
+              "units": "US dollars",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "hdi_ix_sav",
+              "label": "Human Development Index - average, this sub-basin",
+              "units": "index value (x1000)",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "hft_ix_s09",
+              "label": "Human Footprint - 2009, this sub-basin",
+              "units": "index value (x10)",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "hft_ix_s93",
+              "label": "Human Footprint - 1993, this sub-basin",
+              "units": "index value (x10)",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "nli_ix_sav",
+              "label": "Nighttime Lights - average, this sub-basin",
+              "units": "index value (x100)",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pop_ct_ssu",
+              "label": "Population Count - sum, this sub-basin",
+              "units": "count (thousands)",
+              "property": "uz:prop/settlement-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "ppd_pk_sav",
+              "label": "Population Density - average, this sub-basin",
+              "units": "people per km²",
+              "property": "uz:prop/settlement-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "rdd_mk_sav",
+              "label": "Road Density - average, this sub-basin",
+              "units": "meters per km²",
+              "property": "uz:prop/road-density",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "urb_pc_sse",
+              "label": "Urban Extent - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/settlement-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            }
+          ]
+        },
+        {
+          "id": "Climate",
+          "attributes": [
+            {
+              "column": "aet_mm_s01",
+              "label": "Actual Evapotranspiration - January average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s02",
+              "label": "Actual Evapotranspiration - February average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s03",
+              "label": "Actual Evapotranspiration - March average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s04",
+              "label": "Actual Evapotranspiration - April average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s05",
+              "label": "Actual Evapotranspiration - May average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s06",
+              "label": "Actual Evapotranspiration - June average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s07",
+              "label": "Actual Evapotranspiration - July average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s08",
+              "label": "Actual Evapotranspiration - August average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s09",
+              "label": "Actual Evapotranspiration - September average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s10",
+              "label": "Actual Evapotranspiration - October average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s11",
+              "label": "Actual Evapotranspiration - November average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_s12",
+              "label": "Actual Evapotranspiration - December average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "aet_mm_syr",
+              "label": "Actual Evapotranspiration - annual average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "ari_ix_sav",
+              "label": "Global Aridity Index - average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cls_cl_smj",
+              "label": "Climate Strata - majority class, this sub-basin",
+              "units": "classes (125)",
+              "property": "uz:prop/climate-classification",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "clz_cl_smj",
+              "label": "Climate Zones - majority class, this sub-basin",
+              "units": "classes (18)",
+              "property": "uz:prop/climate-classification",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "cmi_ix_s01",
+              "label": "Climate Moisture Index - January average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s02",
+              "label": "Climate Moisture Index - February average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s03",
+              "label": "Climate Moisture Index - March average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s04",
+              "label": "Climate Moisture Index - April average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s05",
+              "label": "Climate Moisture Index - May average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s06",
+              "label": "Climate Moisture Index - June average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s07",
+              "label": "Climate Moisture Index - July average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s08",
+              "label": "Climate Moisture Index - August average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s09",
+              "label": "Climate Moisture Index - September average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s10",
+              "label": "Climate Moisture Index - October average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s11",
+              "label": "Climate Moisture Index - November average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_s12",
+              "label": "Climate Moisture Index - December average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "cmi_ix_syr",
+              "label": "Climate Moisture Index - annual average, this sub-basin",
+              "units": "index value (x100)",
+              "property": "uz:prop/climatic-water-deficit",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s01",
+              "label": "Potential Evapotranspiration - January average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s02",
+              "label": "Potential Evapotranspiration - February average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s03",
+              "label": "Potential Evapotranspiration - March average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s04",
+              "label": "Potential Evapotranspiration - April average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s05",
+              "label": "Potential Evapotranspiration - May average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s06",
+              "label": "Potential Evapotranspiration - June average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s07",
+              "label": "Potential Evapotranspiration - July average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s08",
+              "label": "Potential Evapotranspiration - August average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s09",
+              "label": "Potential Evapotranspiration - September average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s10",
+              "label": "Potential Evapotranspiration - October average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s11",
+              "label": "Potential Evapotranspiration - November average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_s12",
+              "label": "Potential Evapotranspiration - December average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pet_mm_syr",
+              "label": "Potential Evapotranspiration - annual average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/evapotranspiration",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s01",
+              "label": "Precipitation - January average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s02",
+              "label": "Precipitation - February average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s03",
+              "label": "Precipitation - March average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s04",
+              "label": "Precipitation - April average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s05",
+              "label": "Precipitation - May average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s06",
+              "label": "Precipitation - June average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s07",
+              "label": "Precipitation - July average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s08",
+              "label": "Precipitation - August average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s09",
+              "label": "Precipitation - September average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s10",
+              "label": "Precipitation - October average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s11",
+              "label": "Precipitation - November average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_s12",
+              "label": "Precipitation - December average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pre_mm_syr",
+              "label": "Precipitation - annual average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/precipitation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s01",
+              "label": "Snow Cover Extent - January average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s02",
+              "label": "Snow Cover Extent - February average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s03",
+              "label": "Snow Cover Extent - March average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s04",
+              "label": "Snow Cover Extent - April average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s05",
+              "label": "Snow Cover Extent - May average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s06",
+              "label": "Snow Cover Extent - June average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s07",
+              "label": "Snow Cover Extent - July average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s08",
+              "label": "Snow Cover Extent - August average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s09",
+              "label": "Snow Cover Extent - September average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s10",
+              "label": "Snow Cover Extent - October average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s11",
+              "label": "Snow Cover Extent - November average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_s12",
+              "label": "Snow Cover Extent - December average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_smx",
+              "label": "Snow Cover Extent - annual maximum, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snw_pc_syr",
+              "label": "Snow Cover Extent - annual average, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/snow-cover-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s01",
+              "label": "Air Temperature - January average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s02",
+              "label": "Air Temperature - February average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s03",
+              "label": "Air Temperature - March average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s04",
+              "label": "Air Temperature - April average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s05",
+              "label": "Air Temperature - May average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s06",
+              "label": "Air Temperature - June average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s07",
+              "label": "Air Temperature - July average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s08",
+              "label": "Air Temperature - August average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s09",
+              "label": "Air Temperature - September average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s10",
+              "label": "Air Temperature - October average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s11",
+              "label": "Air Temperature - November average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_s12",
+              "label": "Air Temperature - December average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_smn",
+              "label": "Air Temperature - annual minimum, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_smx",
+              "label": "Air Temperature - annual maximum, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tmp_dc_syr",
+              "label": "Air Temperature - annual average, this sub-basin",
+              "units": "degrees Celsius (x10)",
+              "property": "uz:prop/air-temperature",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            }
+          ]
+        },
+        {
+          "id": "Hydrology",
+          "attributes": [
+            {
+              "column": "gwt_cm_sav",
+              "label": "Groundwater Table Depth - average, this sub-basin",
+              "units": "centimeters",
+              "property": "uz:prop/groundwater-depth",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "inu_pc_slt",
+              "label": "Inundation Extent - lt, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/surface-water-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "inu_pc_smn",
+              "label": "Inundation Extent - annual minimum, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/surface-water-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "inu_pc_smx",
+              "label": "Inundation Extent - annual maximum, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/surface-water-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "lka_pc_sse",
+              "label": "Limnicity (Percent Lake Area) - spatial extent (percent), this sub-basin",
+              "units": "percent cover (x10)",
+              "property": "uz:prop/surface-water-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "ria_ha_ssu",
+              "label": "River Area - sum, this sub-basin",
+              "units": "hectares",
+              "property": "uz:prop/river-network",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "riv_tc_ssu",
+              "label": "River Volume - sum, this sub-basin",
+              "units": "thousand cubic meters",
+              "property": "uz:prop/river-network",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "run_mm_syr",
+              "label": "Land Surface Runoff - annual average, this sub-basin",
+              "units": "millimeters",
+              "property": "uz:prop/surface-runoff",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            }
+          ]
+        },
+        {
+          "id": "Landcover",
+          "attributes": [
+            {
+              "column": "crp_pc_sse",
+              "label": "Cropland Extent - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/cropland-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "fec_cl_smj",
+              "label": "Freshwater Ecoregions - majority class, this sub-basin",
+              "units": "classes (426)",
+              "property": "uz:prop/ecoregion",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "fmh_cl_smj",
+              "label": "Freshwater Major Habitat Types - majority class, this sub-basin",
+              "units": "classes (13)",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "for_pc_sse",
+              "label": "Forest Cover Extent - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/forest-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "gla_pc_sse",
+              "label": "Glacier Extent - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/glacier-volume",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_cl_smj",
+              "label": "Land Cover Classes - majority class, this sub-basin",
+              "units": "classes (22)",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "glc_pc_s01",
+              "label": "Land Cover Extent - class 1, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s02",
+              "label": "Land Cover Extent - class 2, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s03",
+              "label": "Land Cover Extent - class 3, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s04",
+              "label": "Land Cover Extent - class 4, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s05",
+              "label": "Land Cover Extent - class 5, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s06",
+              "label": "Land Cover Extent - class 6, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s07",
+              "label": "Land Cover Extent - class 7, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s08",
+              "label": "Land Cover Extent - class 8, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s09",
+              "label": "Land Cover Extent - class 9, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s10",
+              "label": "Land Cover Extent - class 10, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s11",
+              "label": "Land Cover Extent - class 11, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s12",
+              "label": "Land Cover Extent - class 12, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s13",
+              "label": "Land Cover Extent - class 13, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s14",
+              "label": "Land Cover Extent - class 14, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s15",
+              "label": "Land Cover Extent - class 15, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s16",
+              "label": "Land Cover Extent - class 16, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s17",
+              "label": "Land Cover Extent - class 17, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s18",
+              "label": "Land Cover Extent - class 18, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s19",
+              "label": "Land Cover Extent - class 19, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s20",
+              "label": "Land Cover Extent - class 20, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s21",
+              "label": "Land Cover Extent - class 21, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "glc_pc_s22",
+              "label": "Land Cover Extent - class 22, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/land-cover",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "ire_pc_sse",
+              "label": "Irrigated Area Extent (Equipped) - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/irrigated-area",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pac_pc_sse",
+              "label": "Protected Area Extent - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/protected-area",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_cl_smj",
+              "label": "Potential Natural Vegetation Classes - majority class, this sub-basin",
+              "units": "classes (15)",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "pnv_pc_s01",
+              "label": "Potential Natural Vegetation Extent - class 1, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s02",
+              "label": "Potential Natural Vegetation Extent - class 2, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s03",
+              "label": "Potential Natural Vegetation Extent - class 3, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s04",
+              "label": "Potential Natural Vegetation Extent - class 4, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s05",
+              "label": "Potential Natural Vegetation Extent - class 5, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s06",
+              "label": "Potential Natural Vegetation Extent - class 6, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s07",
+              "label": "Potential Natural Vegetation Extent - class 7, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s08",
+              "label": "Potential Natural Vegetation Extent - class 8, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s09",
+              "label": "Potential Natural Vegetation Extent - class 9, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s10",
+              "label": "Potential Natural Vegetation Extent - class 10, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s11",
+              "label": "Potential Natural Vegetation Extent - class 11, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s12",
+              "label": "Potential Natural Vegetation Extent - class 12, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s13",
+              "label": "Potential Natural Vegetation Extent - class 13, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s14",
+              "label": "Potential Natural Vegetation Extent - class 14, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pnv_pc_s15",
+              "label": "Potential Natural Vegetation Extent - class 15, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/vegetation-formation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "prm_pc_sse",
+              "label": "Permafrost Extent - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "pst_pc_sse",
+              "label": "Pasture Extent - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/pasture-vegetation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "tbi_cl_smj",
+              "label": "Terrestrial Biomes - majority class, this sub-basin",
+              "units": "classes (14)",
+              "property": "uz:prop/landscape-type",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "tec_cl_smj",
+              "label": "Terrestrial Ecoregions - majority class, this sub-basin",
+              "units": "classes (846)",
+              "property": "uz:prop/ecoregion",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "wet_cl_smj",
+              "label": "Wetland Classes - majority class, this sub-basin",
+              "units": "classes (12)",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "wet_pc_s01",
+              "label": "Wetland Extent - class 1, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_s02",
+              "label": "Wetland Extent - class 2, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_s03",
+              "label": "Wetland Extent - class 3, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_s04",
+              "label": "Wetland Extent - class 4, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_s05",
+              "label": "Wetland Extent - class 5, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_s06",
+              "label": "Wetland Extent - class 6, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_s07",
+              "label": "Wetland Extent - class 7, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_s08",
+              "label": "Wetland Extent - class 8, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_s09",
+              "label": "Wetland Extent - class 9, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_sg1",
+              "label": "Wetland Extent - g1, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "wet_pc_sg2",
+              "label": "Wetland Extent - g2, this sub-basin",
+              "units": "percent cover",
+              "property": "uz:prop/water-ecosystem-extent",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            }
+          ]
+        },
+        {
+          "id": "Physiography",
+          "attributes": [
+            {
+              "column": "ele_mt_sav",
+              "label": "Elevation - average, this sub-basin",
+              "units": "meters a.s.l.",
+              "property": "uz:prop/elevation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "ele_mt_smn",
+              "label": "Elevation - annual minimum, this sub-basin",
+              "units": "meters a.s.l.",
+              "property": "uz:prop/elevation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "ele_mt_smx",
+              "label": "Elevation - annual maximum, this sub-basin",
+              "units": "meters a.s.l.",
+              "property": "uz:prop/elevation",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "sgr_dk_sav",
+              "label": "Stream Gradient - average, this sub-basin",
+              "units": "decimeters per km",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "slp_dg_sav",
+              "label": "Terrain Slope - average, this sub-basin",
+              "units": "degrees (x10)",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            }
+          ]
+        },
+        {
+          "id": "Soils & Geology",
+          "attributes": [
+            {
+              "column": "cly_pc_sav",
+              "label": "Clay Fraction in Soil - average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "ero_kh_sav",
+              "label": "Soil Erosion - average, this sub-basin",
+              "units": "kg/hectare per year",
+              "property": "uz:prop/land-productivity",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "kar_pc_sse",
+              "label": "Karst Area Extent - spatial extent (percent), this sub-basin",
+              "units": "percent cover",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "lit_cl_smj",
+              "label": "Lithological Classes - majority class, this sub-basin",
+              "units": "classes (16)",
+              "property": null,
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "majority"
+            },
+            {
+              "column": "slt_pc_sav",
+              "label": "Silt Fraction in Soil - average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "snd_pc_sav",
+              "label": "Sand Fraction in Soil - average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "soc_th_sav",
+              "label": "Organic Carbon Content in Soil - average, this sub-basin",
+              "units": "tonnes/hectare",
+              "property": "uz:prop/soil-organic-carbon",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s01",
+              "label": "Soil Water Content - January average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s02",
+              "label": "Soil Water Content - February average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s03",
+              "label": "Soil Water Content - March average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s04",
+              "label": "Soil Water Content - April average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s05",
+              "label": "Soil Water Content - May average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s06",
+              "label": "Soil Water Content - June average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s07",
+              "label": "Soil Water Content - July average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s08",
+              "label": "Soil Water Content - August average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s09",
+              "label": "Soil Water Content - September average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s10",
+              "label": "Soil Water Content - October average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s11",
+              "label": "Soil Water Content - November average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_s12",
+              "label": "Soil Water Content - December average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            },
+            {
+              "column": "swc_pc_syr",
+              "label": "Soil Water Content - annual average, this sub-basin",
+              "units": "percent",
+              "property": "uz:prop/soil-chemistry",
+              "spatialExtent": "s",
+              "spatialExtentLabel": "this sub-basin",
+              "aggregation": "areaWeightedMean"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "basin_accumulation columns already describe everything upstream; summing them across basins counts the same water twice."
+}

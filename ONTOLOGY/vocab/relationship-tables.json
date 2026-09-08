@@ -646,11 +646,26 @@
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "dimensionColumns": [
-        {"column": "system_id", "meaning": "complete natural river system"},
-        {"column": "year", "meaning": "calendar year"},
-        {"column": "month", "meaning": "calendar month, 1-12"},
-        {"column": "variable", "meaning": "hydroclimate variable"},
-        {"column": "statistic", "meaning": "monthly sum or mean inherited from the source band semantics"}
+        {
+          "column": "system_id",
+          "meaning": "complete natural river system"
+        },
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "hydroclimate variable"
+        },
+        {
+          "column": "statistic",
+          "meaning": "monthly sum or mean inherited from the source band semantics"
+        }
       ]
     },
     {
@@ -672,13 +687,34 @@
       "measureColumn": "z_score",
       "measureUnitColumn": null,
       "dimensionColumns": [
-        {"column": "system_id", "meaning": "complete natural river system"},
-        {"column": "year", "meaning": "observation calendar year"},
-        {"column": "month", "meaning": "calendar month"},
-        {"column": "variable", "meaning": "hydroclimate variable"},
-        {"column": "classification", "meaning": "symmetric anomaly class"},
-        {"column": "baseline_start", "meaning": "first year of fixed climate normal"},
-        {"column": "baseline_end", "meaning": "last year of fixed climate normal"}
+        {
+          "column": "system_id",
+          "meaning": "complete natural river system"
+        },
+        {
+          "column": "year",
+          "meaning": "observation calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month"
+        },
+        {
+          "column": "variable",
+          "meaning": "hydroclimate variable"
+        },
+        {
+          "column": "classification",
+          "meaning": "symmetric anomaly class"
+        },
+        {
+          "column": "baseline_start",
+          "meaning": "first year of fixed climate normal"
+        },
+        {
+          "column": "baseline_end",
+          "meaning": "last year of fixed climate normal"
+        }
       ]
     },
     {
@@ -1185,6 +1221,25 @@
           "meaning": "lake, reservoir or lake_control"
         }
       ]
+    },
+    {
+      "id": "reference-basin-attributes",
+      "dataset": "hydrosheds-basinatlas-global",
+      "label": "BasinATLAS attributes on the level-12 reference basins",
+      "note": "The 281 thematic BasinATLAS columns for every level-12 unit of the Amu and Syr systems, read from the Earth Engine HydroATLAS asset because levels 10 to 12 are empty in the local geodatabase copy. Columns split into two groups that must never be added together: 190 describe the sub-basin alone and 91 describe the whole upstream catchment or the pour point, which already accounts for everything above.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/reference-basin-attributes.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/hydrosheds-basinatlas-global",
+      "objectColumn": "hybas_id",
+      "scopeColumn": null,
+      "identifierScheme": "HYBAS_ID",
+      "measureColumn": null,
+      "measureUnitColumn": null
     }
   ]
 }

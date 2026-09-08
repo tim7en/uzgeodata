@@ -97,6 +97,9 @@ SOURCES = {
     "transboundary-basin-hierarchy": {
         "cadence": "static", "latest": None, "command": "npm run basins:transboundary",
         "note": "Pfafstetter containment across levels 12, 10 and 7 of the transboundary frame."},
+    "reference-basin-attributes": {
+        "cadence": "static", "latest": None, "command": "npm run basins:reference",
+        "note": "BasinATLAS is a fixed reference epoch; it moves only when HydroSHEDS republishes the atlas."},
     "transboundary-basin-roles": {
         "cadence": "static", "latest": None, "command": "npm run basins:roles",
         "note": "Rebuild after the frame changes or a control section is declared; the channel class comes from static HydroRIVERS discharge."},

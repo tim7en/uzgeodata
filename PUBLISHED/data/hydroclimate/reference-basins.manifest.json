@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T11:50:55+00:00",
+  "observationClass": "reference",
+  "basinLevel": 12,
+  "role": "reference frame every observation and trace joins to",
+  "source": {
+    "attributes": "WWF/HydroATLAS/v1/Basins/level12",
+    "attributeCount": 281,
+    "catalogSource": "BasinATLAS_Data_v10.gdb/BasinATLAS_Catalog_v10.pdf",
+    "geometry": "PUBLISHED/data/hydroclimate/basins-level12.geojson",
+    "localGeodatabase": "GEODATA/BasinATLAS_Data_v10.gdb reads levels 1-9 only; levels 10, 11 and 12 are empty in this copy, so attributes come from Earth Engine"
+  },
+  "counts": {
+    "units": 7445,
+    "bySystem": {
+      "amu_darya": 4917,
+      "syr_darya": 2528
+    },
+    "basinSpecificAttributes": 190,
+    "accumulationAttributes": 91
+  },
+  "outputs": {
+    "geojson": "PUBLISHED/data/hydroclimate/reference-basins-level12.geojson",
+    "csv": "PUBLISHED/data/hydroclimate/reference-basin-attributes.csv",
+    "columnsJSON": "PUBLISHED/data/hydroclimate/reference-basin-attributes.json",
+    "groups": "PUBLISHED/data/hydroclimate/reference-attribute-groups.json"
+  },
+  "qualityNotes": [
+    "BasinATLAS attributes describe a fixed reference epoch, not the current year.",
+    "basin_specific and basin_accumulation must never be mixed in one total.",
+    "Geometry here is simplified for display; exact geometry stays in GEODATA."
+  ]
+}

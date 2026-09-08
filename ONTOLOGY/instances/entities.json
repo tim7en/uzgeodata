@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T10:39:26+00:00",
+  "generatedAt": "2026-09-08T11:51:49+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -66,7 +66,6 @@
       "type": "Agent",
       "label": "GLIMS and NSIDC",
       "agentKind": "organisation",
-      "agentVersion": "GLIMS database snapshot 2023-06-07",
       "trustTier": "authoritative",
       "description": "Producer of GLIMS glacier outlines."
     },
@@ -9049,6 +9048,29 @@
       "storedName": "protected-areas.geojson",
       "url": "/data/protected-areas.geojson",
       "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/reference-basin-attributes",
+      "type": "Distribution",
+      "label": "BasinATLAS attributes on the level-12 reference basins",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 6077956,
+      "storedName": "PUBLISHED/data/hydroclimate/reference-basin-attributes.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "hybas_id",
+      "container": "PUBLISHED/data/hydroclimate/reference-basin-attributes.csv",
+      "scopeColumn": null,
+      "measureColumn": null,
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 7445,
+      "subjectFixed": "uz:ds/hydrosheds-basinatlas-global"
     },
     {
       "id": "uz:dist/regional-evapotranspiration-2020-monthly-mean-et-04803e",
