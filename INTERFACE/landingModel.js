@@ -426,3 +426,115 @@ export function damTotals(features) {
     inFormationZone: rows.filter(row => Number(row.in_headwater_formation) === 1).length,
   };
 }
+
+// --------------------------------------------------- dam clustering
+
+// A hundred barriers on a basin map is not a hundred readable circles: the
+// Chirchik and Fergana groups overlap into one blob at national zoom, and a
+// reader cannot tell three dams from one. So dams are grouped into cells whose
+// size is fixed in *pixels* and therefore shrinks in degrees as the map zooms,
+// which is what makes a group split apart under zoom rather than merely growing.
+//
+// The cell is a plain grid rather than a distance-based clustering pass. With a
+// hundred points a grid is exact, runs on every zoom change without a frame
+// budget, and — unlike a greedy nearest-neighbour pass — gives the same answer
+// whatever order the dams arrive in, so a group never reshuffles between renders.
+const CLUSTER_CELL_PIXELS = 52;
+const WORLD_PIXELS_AT_ZOOM_0 = 256;
+
+/** Grid cell size in degrees of longitude for a zoom level. */
+export function damClusterCellSize(zoom) {
+  const scale = WORLD_PIXELS_AT_ZOOM_0 * 2 ** Number(zoom || 0);
+  return (CLUSTER_CELL_PIXELS * 360) / scale;
+}
+
+/**
+ * Group dams into cells for one zoom level.
+ *
+ * Returns one entry per occupied cell, each carrying its members and their
+ * totals. A cell holding a single dam is returned with `count` 1 and is drawn as
+ * that dam rather than as a group, so zooming in never leaves a "1" bubble
+ * sitting where the dam itself should be.
+ */
+export function clusterDams(features, zoom) {
+  const cell = damClusterCellSize(zoom);
+  const cells = new Map();
+  for (const feature of features || []) {
+    const coordinates = feature.geometry?.coordinates || [];
+    const longitude = Number(coordinates[0]);
+    const latitude = Number(coordinates[1]);
+    if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) continue;
+    const key = `${Math.floor(longitude / cell)}:${Math.floor(latitude / cell)}`;
+    const bucket = cells.get(key) || { key, members: [], longitude: 0, latitude: 0 };
+    bucket.members.push(feature);
+    bucket.longitude += longitude;
+    bucket.latitude += latitude;
+    cells.set(key, bucket);
+  }
+
+  return [...cells.values()].map(bucket => {
+    const properties = bucket.members.map(member => member.properties || {});
+    const capacities = properties
+      .map(row => Number(row.capacity_mcm))
+      .filter(value => Number.isFinite(value) && value > 0);
+    const largest = properties.reduce((best, row) => (
+      (Number(row.capacity_mcm) || 0) > (Number(best?.capacity_mcm) || 0) ? row : best
+    ), properties[0]);
+    return {
+      key: bucket.key,
+      count: bucket.members.length,
+      // A group sits at the mean of its members, so it lands among the dams it
+      // stands for rather than at a cell corner none of them occupies.
+      longitude: bucket.longitude / bucket.members.length,
+      latitude: bucket.latitude / bucket.members.length,
+      members: bucket.members,
+      storageMcm: capacities.reduce((total, value) => total + value, 0),
+      withCapacity: capacities.length,
+      inFormationZone: properties.filter(row => Number(row.in_headwater_formation) === 1).length,
+      largest,
+    };
+  }).sort((left, right) => left.key.localeCompare(right.key));
+}
+
+// A group is drawn from the storage it stands for, on the same logarithmic scale
+// as a single dam, then widened a little so it reads as a group and stays big
+// enough to carry its count.
+const CLUSTER_RADIUS = { min: 11, max: 22 };
+
+export function damClusterStyle(cluster, state = {}) {
+  const base = damRadius(cluster?.storageMcm) ?? CLUSTER_RADIUS.min;
+  const radius = Math.min(Math.max(base + 4, CLUSTER_RADIUS.min), CLUSTER_RADIUS.max);
+  const formation = cluster?.inFormationZone > (cluster?.count || 0) / 2;
+  const color = formation ? '#c77dff' : '#ff4d6d';
+  const hovered = Boolean(state.hovered);
+  return {
+    radius,
+    color: hovered ? '#ffffff' : '#1b0d12',
+    weight: hovered ? 2.2 : 1,
+    opacity: 1,
+    fillColor: color,
+    fillOpacity: hovered ? 0.95 : 0.85,
+  };
+}
+
+/** Bounds of a group's members, for zooming into it. */
+export function damClusterBounds(cluster) {
+  let minLat = Infinity, maxLat = -Infinity, minLon = Infinity, maxLon = -Infinity;
+  for (const member of cluster?.members || []) {
+    const [longitude, latitude] = member.geometry?.coordinates || [];
+    if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) continue;
+    if (latitude < minLat) minLat = latitude;
+    if (latitude > maxLat) maxLat = latitude;
+    if (longitude < minLon) minLon = longitude;
+    if (longitude > maxLon) maxLon = longitude;
+  }
+  return Number.isFinite(minLat) ? [[minLat, minLon], [maxLat, maxLon]] : null;
+}
+
+/** One line describing what a group holds, for its tooltip. */
+export function damClusterLabel(cluster) {
+  if (!cluster?.count) return '';
+  if (cluster.count === 1) return damLabel(cluster.members[0].properties);
+  const storage = cluster.storageMcm > 0 ? `, ${formatNumber(cluster.storageMcm)} MCM` : '';
+  return `${cluster.count} dams${storage}`;
+}

@@ -54,6 +54,7 @@ npm run basins:waterbodies      # lakes and reservoirs of the whole Amu/Syr syst
 npm run basins:dams             # Global Dam Watch barriers, with basin/reach/lake links
 npm run basins:wastewater       # HydroWASTE plants and the dilution factor below each
 npm run rivers:condition        # GloRiC reach types and free-flowing connectivity status
+npm run stations:pskem          # Pskem/Oygaing/Tashkent workbooks into station series
 npm run headwaters:elevation    # SRTM elevation-band areas inside headwaters
 npm run headwaters:era5         # append every newly available ERA5-Land month
 npm run headwaters:era5:elevation # the same monthly fields by elevation band

@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
-import { ArrowUpRight, Database, Droplets, Layers, Search, X } from 'lucide-react';
+import { ArrowUpRight, Droplets, Layers, Search, X } from 'lucide-react';
+import DamModal from './DamModal.jsx';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
-  damHeadline, damLabel, damLegendStops, damStyle, damTotals,
+  clusterDams, damClusterBounds, damClusterStyle,
+  damLabel, damLegendStops, damStyle, damTotals,
   formatAttribute, formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
   overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
@@ -191,6 +193,13 @@ export default function LandingMap() {
   }, [showDams, dams]);
 
   const damStats = useMemo(() => (dams ? damTotals(dams.features) : null), [dams]);
+  // Recomputed on every zoom change: this is what regroups the dams as the reader
+  // moves in. A hundred points is small enough that the whole grid is rebuilt
+  // rather than updated incrementally.
+  const damClusters = useMemo(
+    () => (showDams && dams ? clusterDams(dams.features, zoom) : []),
+    [showDams, dams, zoom],
+  );
 
   // Attributes are fetched per level, and only once a reader asks for them —
   // either by opening a group in the panel or by colouring the map.
@@ -345,23 +354,35 @@ export default function LandingMap() {
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
-      {showDams && dams?.features.map(feature => {
-        const [longitude, latitude] = feature.geometry.coordinates;
-        const state = { selected: dam?.dam_id === feature.properties.dam_id };
-        // The basins are a canvas layer in the overlay pane, and Leaflet gives a
-        // click to whichever layer was added to that renderer last. The basin
-        // GeoJSON remounts whenever the zoom ladder changes level, so it can
-        // land on top of the dams and swallow every click on them. Drawing the
-        // dams into the marker pane puts them in their own canvas above the
-        // overlay, which fixes both the stacking and the hit order for good.
-        return <CircleMarker key={feature.properties.dam_id} center={[latitude, longitude]}
-          pane="markerPane"
-          pathOptions={damStyle(feature.properties, state)}
-          radius={damStyle(feature.properties, state).radius}
-          eventHandlers={{ click: () => { setDam(feature.properties); setSelected(null); } }}>
-          <Tooltip direction="top" offset={[0, -4]} opacity={1} className="land-dam-tip">
-            {damLabel(feature.properties)}
-          </Tooltip>
+      {/* The dams go in the marker pane, not the overlay pane the basins use:
+          Leaflet hands a canvas click to whichever layer joined that renderer
+          last, and the basin GeoJSON remounts on every level change, so sharing
+          a renderer with it makes the dams stop responding at unpredictable
+          moments. Their own pane settles stacking and hit order together. */}
+      {damClusters.map(cluster => {
+        if (cluster.count === 1) {
+          const feature = cluster.members[0];
+          const state = { selected: dam?.dam_id === feature.properties.dam_id };
+          return <CircleMarker key={`dam-${feature.properties.dam_id}`} pane="markerPane"
+            center={[cluster.latitude, cluster.longitude]}
+            pathOptions={damStyle(feature.properties, state)}
+            radius={damStyle(feature.properties, state).radius}
+            eventHandlers={{ click: () => { setDam(feature.properties); setSelected(null); } }}>
+            <Tooltip direction="top" offset={[0, -4]} opacity={1} className="land-dam-tip">
+              {damLabel(feature.properties)}
+            </Tooltip>
+          </CircleMarker>;
+        }
+        return <CircleMarker key={`group-${cluster.key}`} pane="markerPane"
+          center={[cluster.latitude, cluster.longitude]}
+          pathOptions={damClusterStyle(cluster)}
+          radius={damClusterStyle(cluster).radius}
+          eventHandlers={{ click: () => setBounds(damClusterBounds(cluster)) }}>
+          {/* One tooltip per layer: Leaflet replaces a layer's tooltip when a
+              second is bound, so a group carries only its permanent count. The
+              hover feedback is the ring in damClusterStyle, and the detail is
+              one click away. */}
+          <Tooltip permanent direction="center" className="land-dam-count">{cluster.count}</Tooltip>
         </CircleMarker>;
       })}
       <FitTo bounds={bounds}/>
@@ -455,33 +476,7 @@ export default function LandingMap() {
         </button>)}</div>
       </div>}
 
-      {dam && <div className="land-detail land-dam-detail">
-        <button type="button" className="land-close" onClick={() => setDam(null)} aria-label="Clear dam"><X size={14}/></button>
-        <span className="land-kicker">{systemMeta(dam.system_id).label} · dam</span>
-        <h2>{damLabel(dam)}</h2>
-        <dl className="land-headline">{damHeadline(dam).map(row => <div key={row.label}>
-          <dt>{row.label}</dt>
-          <dd>{row.value}{row.unit ? <em> {row.unit}</em> : null}</dd>
-        </div>)}</dl>
-        <p className="land-note">
-          {Number(dam.in_headwater_formation) === 1
-            ? 'Stands in a runoff-formation zone: it regulates water where it is generated.'
-            : 'Stands downstream of the formation zones, on water generated above it.'}
-          {' '}Storage is nominal capacity, not an operating level.
-        </p>
-        <p className="land-note land-dam-ids">
-          <Database size={11}/>
-          <span>
-            <b>GDW <code>{dam.dam_id}</code></b>
-            {dam.grand_id ? <b>GRanD <code>{dam.grand_id}</code></b> : null}
-            {dam.hylak_id ? <b>HydroLAKES <code>{dam.hylak_id}</code></b> : null}
-            {dam.hyriv_id ? <b>reach <code>{dam.hyriv_id}</code></b> : null}
-            <b>basin <code>{dam.hybas_id_level12}</code></b>
-          </span>
-        </p>
-      </div>}
-
-      {selected && !dam && <div className="land-detail" style={{ '--system': systemMeta(selected.properties.system_id).color }}>
+      {selected && <div className="land-detail" style={{ '--system': systemMeta(selected.properties.system_id).color }}>
         <button type="button" className="land-close" onClick={() => setSelected(null)} aria-label="Clear selection"><X size={14}/></button>
         <span className="land-kicker">{systemMeta(selected.properties.system_id).label} · level {selected.properties.basin_level}</span>
         <h2>HYBAS {selected.properties.hybas_id}</h2>
@@ -510,6 +505,8 @@ export default function LandingMap() {
 
     {tableOpen && selected && <AttributeModal basin={selected.properties} groups={groups} store={detailStore}
       catalogue={catalogue} loading={loadingStore} onClose={() => setTableOpen(false)}/>}
+
+    {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
   </main>;
 }
 

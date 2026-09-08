@@ -172,6 +172,24 @@ GROUPS = [
         "note": "Both sources key on their own reach identifier rather than HYRIV_ID; the build verifies the correspondence against the published network and refuses to write a partial table.",
     },
     {
+        "code": "PSKEMOBS",
+        "title": "Pskem station observations",
+        "what": "Monthly meteorology for the Pskem, Oygaing and Tashkent stations, daily and monthly discharge for the Pskem gauge at Muallala, and the 2015 Pskem glacier catalogue.",
+        "source": "Uzhydromet workbooks delivered as spreadsheets, mapped onto stations already in the ontology",
+        "held": ["storage/Пскем 2020-2024.xlsx", "storage/Ойгаинг 2020-2022.xlsx",
+                 "storage/Пскем 2010-2019.xlsx", "storage/Discharge_Pskem_Muallala_Monthly.xlsx",
+                 "storage/Пскем_2023.xls"],
+        "web": ["PUBLISHED/data/hydroclimate/pskem-station-monthly.csv",
+                "PUBLISHED/data/hydroclimate/pskem-station-monthly.json",
+                "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv",
+                "PUBLISHED/data/hydroclimate/pskem-discharge-monthly.csv",
+                "PUBLISHED/data/hydroclimate/pskem-discharge-monthly.json",
+                "PUBLISHED/data/hydroclimate/pskem-glaciers.geojson",
+                "PUBLISHED/data/hydroclimate/pskem-station-basin-links.csv"],
+        "rebuild": "npm run stations:pskem",
+        "note": "The workbooks are printouts, not data: one block per variable, Roman month numerals, totals mixed in with observations. Every station already existed in the graph, so this maps rather than mints. A dash means zero in the precipitation blocks and missing everywhere else, which the build proves against the printed annual totals.",
+    },
+    {
         "code": "BASINATLAS",
         "title": "Basin environmental attributes",
         "what": "281 documented hydro-environmental attributes per level-12 basin: hydrology, climate, land cover, soils, anthropogenic pressure.",
@@ -411,6 +429,8 @@ def main() -> None:
         "DAMS": f"{csv_count('PUBLISHED/data/hydroclimate/dams-transboundary.csv') or 0} barriers",
         "WASTEWATER": f"{csv_count('PUBLISHED/data/hydroclimate/wastewater-plants-transboundary.csv') or 0} plants",
         "REACHCOND": f"{csv_count('PUBLISHED/data/hydroclimate/reach-connectivity.csv') or 0} reaches scored",
+        "PSKEMOBS": f"{csv_count('PUBLISHED/data/hydroclimate/pskem-station-monthly.csv') or 0} monthly values, "
+                    f"{csv_count('PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv') or 0} daily discharge",
         "BASINATLAS": f"{basin_attributes['attributes']:,} attributes x "
                       f"{len(basin_attributes['ids']):,} matched basins",
         "ENVATLAS": "134 packages catalogued",

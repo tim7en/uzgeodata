@@ -49,6 +49,7 @@
     "basins:dams": "python PIPELINES/build_basin_dams.py",
     "basins:wastewater": "python PIPELINES/build_basin_wastewater.py",
     "rivers:condition": "python PIPELINES/build_reach_condition.py",
+    "stations:pskem": "python PIPELINES/build_pskem_observations.py",
     "basins:domain": "python PIPELINES/build_aral_hydrographic_domain.py",
     "basins:network": "python PIPELINES/build_basin_network_web.py",
     "basins:reference": "python PIPELINES/build_reference_basins.py",

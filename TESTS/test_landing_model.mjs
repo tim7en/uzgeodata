@@ -7,6 +7,7 @@ import {
   legendStops, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
+  clusterDams, damClusterBounds, damClusterCellSize, damClusterLabel, damClusterStyle,
 } from '../INTERFACE/landingModel.js';
 
 const read = name => JSON.parse(readFileSync(
@@ -391,4 +392,61 @@ test('the size key spans the decades the data actually covers', () => {
   const capacities = dams.map(dam => Number(dam.properties.capacity_mcm)).filter(Boolean);
   assert.ok(Math.min(...capacities) < stops[0].capacity, 'key should start below the smallest dam');
   assert.ok(Math.max(...capacities) > stops.at(-1).capacity, 'and end below the largest');
+});
+
+test('dam groups split apart as the map zooms in', () => {
+  const dams = read('dams-transboundary.geojson').features;
+  const counts = [5, 6, 7, 8, 9, 10, 12].map(zoom => clusterDams(dams, zoom).length);
+  for (let index = 1; index < counts.length; index += 1) {
+    assert.ok(counts[index] >= counts[index - 1],
+      `zooming in must not merge groups: ${counts}`);
+  }
+  assert.ok(counts.at(-1) > counts[0] * 3, 'a national view should group far more than a local one');
+  // Every dam belongs to exactly one group at every zoom.
+  for (const zoom of [5, 8, 12]) {
+    const clusters = clusterDams(dams, zoom);
+    assert.equal(clusters.reduce((total, c) => total + c.count, 0), dams.length);
+    const seen = new Set(clusters.flatMap(c => c.members.map(m => m.properties.dam_id)));
+    assert.equal(seen.size, dams.length, `zoom ${zoom} lost or duplicated a dam`);
+  }
+  // Cells shrink with zoom, which is what makes the split happen.
+  assert.ok(damClusterCellSize(6) > damClusterCellSize(9));
+});
+
+test('grouping does not depend on the order the dams arrive in', () => {
+  const dams = read('dams-transboundary.geojson').features;
+  const shuffled = [...dams].reverse();
+  const one = clusterDams(dams, 7).map(c => `${c.key}:${c.count}`);
+  const two = clusterDams(shuffled, 7).map(c => `${c.key}:${c.count}`);
+  assert.deepEqual(one, two);
+});
+
+test('a group carries the totals it stands for and sits among its members', () => {
+  const dams = read('dams-transboundary.geojson').features;
+  const clusters = clusterDams(dams, 6);
+  const group = clusters.filter(c => c.count > 1).sort((a, b) => b.count - a.count)[0];
+  assert.ok(group, 'expected at least one multi-dam group at national zoom');
+  const expected = group.members
+    .map(m => Number(m.properties.capacity_mcm)).filter(Number.isFinite)
+    .reduce((total, value) => total + value, 0);
+  assert.ok(Math.abs(group.storageMcm - expected) < 0.01);
+  const bounds = damClusterBounds(group);
+  assert.ok(group.latitude >= bounds[0][0] && group.latitude <= bounds[1][0]);
+  assert.ok(group.longitude >= bounds[0][1] && group.longitude <= bounds[1][1]);
+  assert.match(damClusterLabel(group), /\d+ dams/);
+  // A lone dam is labelled as itself, never as a group of one.
+  const single = clusters.find(c => c.count === 1);
+  assert.doesNotMatch(damClusterLabel(single), /dams/);
+});
+
+test('a group is drawn larger than a single dam and stays inside its bounds', () => {
+  const small = damClusterStyle({ storageMcm: 1, count: 2, inFormationZone: 0 });
+  const large = damClusterStyle({ storageMcm: 40000, count: 9, inFormationZone: 0 });
+  assert.ok(small.radius >= 11 && large.radius <= 22);
+  assert.ok(large.radius > small.radius);
+  assert.ok(small.radius > damRadius(1), 'a group must read larger than one dam');
+  // Colour follows where the majority of the group stands.
+  const formation = damClusterStyle({ storageMcm: 100, count: 3, inFormationZone: 3 });
+  const transit = damClusterStyle({ storageMcm: 100, count: 3, inFormationZone: 0 });
+  assert.notEqual(formation.fillColor, transit.fillColor);
 });

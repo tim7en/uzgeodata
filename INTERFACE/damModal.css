@@ -1,0 +1,39 @@
+/* Styles for DamModal.jsx. Imported by the component rather than by a page,
+   because the modal is shared by the landing map and the atlas explorer and
+   neither of those pages loads styles.css - putting it there shipped a modal
+   with no styling at all. */
+/* ---- Dam modal -------------------------------------------------------
+   Shared by the landing map and the atlas explorer. Both pages set the same
+   dark palette, so the modal is styled once here rather than twice. */
+.dam-modal{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(2,5,7,.72);backdrop-filter:blur(3px)}
+.dam-modal-card{position:relative;width:min(560px,100%);max-height:min(86vh,760px);overflow-y:auto;scrollbar-width:thin;background:#060b0e;border:1px solid #1d2a31;border-top:2px solid #ff4d6d;padding:22px 24px 20px;box-shadow:0 24px 70px rgba(0,0,0,.6)}
+.dam-modal-close{position:absolute;right:10px;top:10px;border:0;background:none;color:#5d6d75;cursor:pointer;padding:4px;line-height:0}
+.dam-modal-close:hover{color:#fff}
+.dam-modal-kicker{display:block;font:800 7.5px var(--display,'Barlow Condensed',sans-serif);letter-spacing:.2em;text-transform:uppercase;color:var(--system,#ff4d6d)}
+.dam-modal-card h2{margin:6px 0 0;font:700 27px/1.05 var(--display,'Barlow Condensed',sans-serif);text-transform:uppercase;color:#e8eef2}
+.dam-modal-sub{margin:5px 0 0;font-size:10px;color:#8fa3ad}
+
+.dam-modal-figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:1px;margin:18px 0 0;background:#1d2a31;border:1px solid #1d2a31}
+.dam-modal-figures>div{background:#0a1216;padding:9px 11px}
+.dam-modal-figures dt{font-size:6.5px;letter-spacing:.14em;text-transform:uppercase;color:#5d6d75}
+.dam-modal-figures dd{margin:4px 0 0;font:700 17px var(--display,'Barlow Condensed',sans-serif);color:#e8eef2}
+.dam-modal-figures dd em{font:500 9px var(--mono,ui-monospace,monospace);font-style:normal;color:#8fa3ad}
+
+.dam-modal-block{margin-top:18px}
+.dam-modal-block h3{margin:0 0 7px;font:800 7.5px var(--display,'Barlow Condensed',sans-serif);letter-spacing:.18em;text-transform:uppercase;color:#5d6d75}
+.dam-modal-block p{margin:0 0 6px;font-size:10.5px;line-height:1.6;color:#a8b8c0}
+
+.dam-modal-ids{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;margin:0 0 9px;background:#1d2a31;border:1px solid #1d2a31}
+.dam-modal-ids>div{background:#0a1216;padding:7px 10px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.dam-modal-ids dt{font-size:6.5px;letter-spacing:.12em;text-transform:uppercase;color:#5d6d75}
+.dam-modal-ids dd{margin:0}
+.dam-modal-ids code{font:600 10px var(--mono,ui-monospace,monospace);color:#ff8fa3}
+
+.dam-modal-note{display:flex;gap:7px;align-items:flex-start;margin:10px 0 0;font-size:9px;line-height:1.6;color:#5d6d75}
+.dam-modal-note svg{flex:none;margin-top:2px}
+@media(max-width:600px){.dam-modal{padding:12px}.dam-modal-card{padding:18px 16px}.dam-modal-card h2{font-size:22px}}
+
+/* The count sitting inside a group bubble. It must not eat the click that opens
+   the group, so it is inert. */
+.land-dam-count,.atlas-dam-count{background:none !important;border:0 !important;box-shadow:none !important;color:#fff !important;font:700 10px var(--display,'Barlow Condensed',sans-serif) !important;padding:0 !important;pointer-events:none !important}
+.land-dam-count::before,.atlas-dam-count::before{display:none !important}

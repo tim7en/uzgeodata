@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMapEvent } from 'react-leaflet';
-import { ArrowLeft, BookOpen, Database, Droplets, Scale, Search, X } from 'lucide-react';
+import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
+import { ArrowLeft, BookOpen, Database, Droplets, Scale, Search } from 'lucide-react';
+import DamModal from './DamModal.jsx';
 import {
-  damHeadline, damLabel, damLegendStops, damStyle, damTotals,
+  clusterDams, damClusterBounds, damClusterStyle,
+  damLabel, damLegendStops, damStyle, damTotals,
   formatAttribute, formatNumber, indexStore, legendStops, levelForZoom, overlayStyle,
   quantileBreaks, readAttribute, riverStyle, systemMeta, tierForZoom,
 } from './landingModel.js';
@@ -22,6 +24,15 @@ const json = url => fetch(url).then(response => response.ok
 
 function WatchZoom({ onZoom }) {
   useMapEvent('zoomend', event => onZoom(event.target.getZoom()));
+  return null;
+}
+
+/** Fly to a group's members when a reader opens it. */
+function FitTo({ bounds }) {
+  const map = useMap();
+  useEffect(() => {
+    if (bounds) map.flyToBounds(bounds, { padding: [60, 60], duration: 0.7 });
+  }, [bounds, map]);
   return null;
 }
 
@@ -82,6 +93,12 @@ export default function AtlasExplorer() {
   }, [showDams, dams]);
 
   const damStats = useMemo(() => (dams ? damTotals(dams.features) : null), [dams]);
+  // Regrouped on every zoom change, exactly as on the landing map.
+  const damClusters = useMemo(
+    () => (showDams && dams ? clusterDams(dams.features, zoom) : []),
+    [showDams, dams, zoom],
+  );
+  const [damBounds, setDamBounds] = useState(null);
 
   const active = useMemo(() => levelForZoom(zoom, ladder), [zoom, ladder]);
   const basins = active ? levels[active.level] : null;
@@ -211,19 +228,33 @@ export default function AtlasExplorer() {
             GeoJSON remounts on every level or attribute change, so sharing a
             renderer with it makes the dams stop responding at unpredictable
             moments. Their own pane settles both stacking and hit order. */}
-        {showDams && dams?.features.map(feature => {
-          const [longitude, latitude] = feature.geometry.coordinates;
-          const selected = dam?.dam_id === feature.properties.dam_id;
-          return <CircleMarker key={feature.properties.dam_id} center={[latitude, longitude]}
-            pane="markerPane"
-            pathOptions={damStyle(feature.properties, { selected })}
-            radius={damStyle(feature.properties, { selected }).radius}
-            eventHandlers={{ click: () => { setDam(feature.properties); setHit(null); } }}>
-            <Tooltip direction="top" offset={[0, -4]} opacity={1} className="atlas-dam-tip">
-              {damLabel(feature.properties)}
-            </Tooltip>
+        {damClusters.map(cluster => {
+          if (cluster.count === 1) {
+            const feature = cluster.members[0];
+            const selected = dam?.dam_id === feature.properties.dam_id;
+            return <CircleMarker key={`dam-${feature.properties.dam_id}`} pane="markerPane"
+              center={[cluster.latitude, cluster.longitude]}
+              pathOptions={damStyle(feature.properties, { selected })}
+              radius={damStyle(feature.properties, { selected }).radius}
+              eventHandlers={{ click: () => { setDam(feature.properties); setHit(null); } }}>
+              <Tooltip direction="top" offset={[0, -4]} opacity={1} className="atlas-dam-tip">
+                {damLabel(feature.properties)}
+              </Tooltip>
+            </CircleMarker>;
+          }
+          return <CircleMarker key={`group-${cluster.key}`} pane="markerPane"
+            center={[cluster.latitude, cluster.longitude]}
+            pathOptions={damClusterStyle(cluster)}
+            radius={damClusterStyle(cluster).radius}
+            eventHandlers={{ click: () => setDamBounds(damClusterBounds(cluster)) }}>
+            {/* One tooltip per layer: Leaflet replaces a layer's tooltip when a
+                second is bound, so a group carries only its permanent count. The
+                hover feedback is the ring in damClusterStyle, and the detail is
+                one click away. */}
+            <Tooltip permanent direction="center" className="atlas-dam-count">{cluster.count}</Tooltip>
           </CircleMarker>;
         })}
+        <FitTo bounds={damBounds}/>
         <WatchZoom onZoom={setZoom}/>
         <ZoomControl position="bottomright"/>
         <ScaleControl position="bottomright" imperial={false}/>
@@ -242,38 +273,7 @@ export default function AtlasExplorer() {
         <p className="atlas-dim">Quantile classes over the basins in view. Basins without a measurement stay unfilled.</p>
       </div>
 
-      {dam && <div className="atlas-dam-card">
-        <button type="button" className="atlas-dam-close" onClick={() => setDam(null)} aria-label="Close">
-          <X size={13}/>
-        </button>
-        <span className="atlas-kicker">{systemMeta(dam.system_id).label}</span>
-        <h3>{damLabel(dam)}</h3>
-        <dl>{damHeadline(dam).map(row => <div key={row.label}>
-          <dt>{row.label}</dt><dd>{row.value} {row.unit && <em>{row.unit}</em>}</dd>
-        </div>)}</dl>
-        <p className="atlas-dim">
-          {Number(dam.in_headwater_formation) === 1
-            ? 'Stands in a runoff-formation zone: it regulates water where it is generated.'
-            : 'Stands downstream of the formation zones, on water generated above it.'}
-        </p>
-        <p className="atlas-cite"><Database size={11}/>
-          <span className="atlas-ids">
-            <b>GDW <code>{dam.dam_id}</code></b>
-            {dam.grand_id ? <b>GRanD <code>{dam.grand_id}</code></b> : null}
-            {dam.hylak_id ? <b>HydroLAKES <code>{dam.hylak_id}</code></b> : null}
-            {dam.hyriv_id ? <b>reach <code>{dam.hyriv_id}</code></b> : null}
-            <b>basin <code>{dam.hybas_id_level12}</code></b>
-          </span>
-        </p>
-        <p className="atlas-cite"><Scale size={11}/>
-          Global Dam Watch v1.0, CC BY 4.0. Storage is nominal capacity, not an operating
-          level{dam.position_source === 'snapped to the river network'
-            ? '; this dam has no reported coordinate and is placed on the river centreline'
-            : ''}.
-        </p>
-      </div>}
-
-      {hit && !dam && <div className="atlas-hit">
+      {hit && <div className="atlas-hit">
         <strong>HYBAS {hit.hybas_id}</strong>
         <span>{systemMeta(hit.system_id).label} · level {hit.basin_level}</span>
         <b>{reading?.value} <em>{reading?.unit}</em></b>
@@ -297,5 +297,7 @@ export default function AtlasExplorer() {
         <a className="atlas-more" href="/metadata.html">All {catalogue?.counts?.variables} variables in the catalogue</a>
       </> : <p className="atlas-dim">Loading the catalogue…</p>}
     </aside>
+
+    {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
   </main>;
 }
