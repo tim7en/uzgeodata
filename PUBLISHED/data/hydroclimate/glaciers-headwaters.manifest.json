@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T06:55:17+00:00",
+  "generatedAt": "2026-09-08T07:47:25+00:00",
   "spatialScope": "headwater_formation",
   "observationClass": "inventory",
   "source": {
@@ -20,10 +20,38 @@
   },
   "systems": [
     {
+      "systemId": "upper_amu_darya",
+      "riverSystemId": "amu_darya",
+      "glacierCount": 20733,
+      "intersectingGlacierCount": 20750,
+      "glacierAreaKm2": 11120.687,
+      "intersectingGlacierAreaKm2": 12412.461,
+      "outlineAreaKm2": 12727.91,
+      "internalRockAreaKm2": 315.449,
+      "internalRockPolygons": 3763,
+      "surveyDateRange": [
+        "1994-07-01",
+        "2009-10-02"
+      ],
+      "glacierAreaByBandKm2": {
+        "lt_1000": 0.0,
+        "1000_2000": 0.0,
+        "2000_3000": 3.704,
+        "3000_4000": 650.663,
+        "gte_4000": 10466.32
+      },
+      "linkedSubbasins": {
+        "10": 745,
+        "12": 784
+      }
+    },
+    {
       "systemId": "upper_syr_darya",
       "riverSystemId": "syr_darya",
-      "glacierCount": 4544,
-      "glacierAreaKm2": 1915.615,
+      "glacierCount": 4514,
+      "intersectingGlacierCount": 4544,
+      "glacierAreaKm2": 1489.162,
+      "intersectingGlacierAreaKm2": 1915.615,
       "outlineAreaKm2": 1930.247,
       "internalRockAreaKm2": 14.632,
       "internalRockPolygons": 559,
@@ -34,9 +62,9 @@
       "glacierAreaByBandKm2": {
         "lt_1000": 0.0,
         "1000_2000": 0.0,
-        "2000_3000": 0.302,
-        "3000_4000": 450.89,
-        "gte_4000": 1464.423
+        "2000_3000": 0.378,
+        "3000_4000": 469.339,
+        "gte_4000": 1019.445
       },
       "linkedSubbasins": {
         "10": 280,
@@ -45,11 +73,13 @@
     }
   ],
   "counts": {
-    "glaciers": 4544,
-    "glacierBandRows": 6216,
-    "basinLinks": 11707,
-    "basinBandRows": 3620,
-    "sourceSubmissions": 20
+    "glaciers": 25294,
+    "distinctGlaciers": 25251,
+    "glaciersSharedBetweenSystems": 43,
+    "glacierBandRows": 28623,
+    "basinLinks": 65854,
+    "basinBandRows": 11049,
+    "sourceSubmissions": 93
   },
   "levels": [
     10,
@@ -66,6 +96,16 @@
     "summaryJSON": "PUBLISHED/data/hydroclimate/glacier-headwater-systems.json",
     "exactGeoJSON": [
       {
+        "path": "GEODATA/glaciers_headwaters_v1/glims-upper_amu_darya-outlines.geojson",
+        "features": 20750,
+        "sha256": "4f7aa19705bdf99a49ced95c128c3b547ebbdfcf16c8f60dbc5a86b690ef2615"
+      },
+      {
+        "path": "GEODATA/glaciers_headwaters_v1/glims-upper_amu_darya-internal-rock.geojson",
+        "features": 3763,
+        "sha256": "74d1201cccbd10246836ccb2a92d1b0b8d40a42cc56e05e6571779caafea0937"
+      },
+      {
         "path": "GEODATA/glaciers_headwaters_v1/glims-upper_syr_darya-outlines.geojson",
         "features": 4544,
         "sha256": "1a91eae08892b3f5609e23006199bcbb4bdf80c12952ab4721a51adf7ec8ba02"
@@ -78,17 +118,20 @@
     ]
   },
   "semantics": {
-    "identity": "glacier_id is the GLIMS glac_id; it is not a basin identifier",
+    "identity": "glacier_id is the GLIMS glac_id; a row is keyed by system_id and glacier_id because a glacier on the Amu-Syr divide feeds both systems",
     "area": "geodesic vector area of the retained outline minus internal rock",
+    "areaInHeadwater": "part of the glacier inside level-10 subbasins of the formation zone; system and elevation-band totals use this clipped area",
     "elevationBands": "SRTM band masks at 30 m, rescaled so band areas sum to the vector area",
     "basinAttribution": "exact vector intersection; a glacier crossing a divide appears once per subbasin",
-    "basinBandAttribution": "glacier band area distributed to subbasins by intersection share",
+    "basinBandAttribution": "each glacier-subbasin intersection keeps its exact area and is split across bands by the glacier band split weighted by the band area the subbasin has",
     "temporalStatus": "survey epoch inventory, not a current-year state observation"
   },
   "qualityNotes": [
     "GLIMS is multi-temporal: only the latest src_date per glac_id is retained.",
     "Internal rock outcrops are removed so glacier area is ice area, not outline area.",
     "Survey dates differ between submissions; survey_date is published per glacier.",
-    "Subbasin band areas are 90 m SRTM sums while glacier band areas are 30 m sums."
+    "Subbasin band areas are 90 m SRTM sums while glacier band areas are 30 m sums, so a small subbasin can report a glacier share slightly above 100 percent of a band.",
+    "Glaciers on the outer divide are inventoried in full and attributed to the formation zone only by the intersecting part; area_in_headwater_km2 carries that share.",
+    "A glacier astride the Amu-Syr divide appears once per system with the same outline, so area_km2 must be summed over system_id and glacier_id together, never over glacier_id alone. area_in_headwater_km2 does not double count."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T07:10:54+00:00",
+  "generatedAt": "2026-09-08T07:48:49+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -11846,7 +11846,7 @@
     "publishedAssertions": 3279,
     "proposedAssertions": 576,
     "relationshipTables": 30,
-    "relationshipLinks": 1184153
+    "relationshipLinks": 1291800
   },
   "geography": {
     "frames": [
@@ -12288,7 +12288,7 @@
       "subjectType": "Dataset",
       "objectType": "RunoffFormationUnit",
       "frame": "formation",
-      "rowCount": 330,
+      "rowCount": 3244,
       "measureColumn": "value",
       "dimensions": [
         "date",
@@ -12305,7 +12305,7 @@
       "subjectType": "Dataset",
       "objectType": "RunoffFormationUnit",
       "frame": "formation",
-      "rowCount": 4544,
+      "rowCount": 25294,
       "measureColumn": "area_km2",
       "dimensions": [
         "system_id",
@@ -12322,7 +12322,7 @@
       "subjectType": "RunoffFormationUnit",
       "objectType": "Basin",
       "frame": "basin",
-      "rowCount": 11707,
+      "rowCount": 65854,
       "measureColumn": "area_km2",
       "dimensions": [
         "basin_level",
@@ -12338,7 +12338,7 @@
       "subjectType": "Dataset",
       "objectType": "RunoffFormationUnit",
       "frame": "formation",
-      "rowCount": 6216,
+      "rowCount": 28623,
       "measureColumn": "area_km2",
       "dimensions": [
         "elevation_band",
@@ -12353,7 +12353,7 @@
       "subjectType": "Dataset",
       "objectType": "RunoffFormationUnit",
       "frame": "formation",
-      "rowCount": 3620,
+      "rowCount": 11049,
       "measureColumn": "glacier_area_km2",
       "dimensions": [
         "basin_level",

@@ -22,8 +22,12 @@ def manifest() -> dict:
 def test_inventory_holds_one_row_per_glims_glacier():
     inventory = rows("glacier-inventory-headwaters.csv")
     assert inventory
-    identifiers = [row["glacier_id"] for row in inventory]
-    assert len(identifiers) == len(set(identifiers))
+    # A glacier astride the Amu-Syr divide feeds both systems, so the row key is
+    # the pair; glacier_id alone repeats for exactly those glaciers.
+    keys = [(row["system_id"], row["glacier_id"]) for row in inventory]
+    assert len(keys) == len(set(keys))
+    shared = len(inventory) - len({row["glacier_id"] for row in inventory})
+    assert shared == manifest()["counts"]["glaciersSharedBetweenSystems"]
     assert {row["system_id"] for row in inventory} == SYSTEMS
     assert all(float(row["area_km2"]) > 0 for row in inventory)
     assert all(row["survey_date"] and row["source_asset"].startswith("GLIMS/") for row in inventory)
@@ -47,9 +51,10 @@ def test_elevation_band_areas_sum_to_the_glacier_area():
     for row in rows("glacier-elevation-bands.csv"):
         assert row["elevation_band"] in configured
         assert float(row["area_km2"]) > 0
-        banded[row["glacier_id"]] += float(row["area_km2"])
+        banded[(row["system_id"], row["glacier_id"])] += float(row["area_km2"])
     for row in rows("glacier-inventory-headwaters.csv"):
-        assert abs(banded[row["glacier_id"]] - float(row["area_km2"])) < 1e-4
+        key = (row["system_id"], row["glacier_id"])
+        assert abs(banded[key] - float(row["area_km2"])) < 1e-4
 
 
 def test_subbasin_links_stay_inside_the_glacier_and_the_basin_frame():
@@ -57,6 +62,7 @@ def test_subbasin_links_stay_inside_the_glacier_and_the_basin_frame():
         level: {row["hybas_id"] for row in rows(f"basin-membership-level{level:02d}.csv")}
         for level in (10, 12)
     }
+    linked = defaultdict(float)
     shares = defaultdict(float)
     primary = defaultdict(int)
     for row in rows("glacier-basin-links.csv"):
@@ -64,11 +70,22 @@ def test_subbasin_links_stay_inside_the_glacier_and_the_basin_frame():
         assert row["hybas_id"] in membership[level]
         assert float(row["area_km2"]) > 0
         assert row["method"] == "vector_intersection"
-        shares[(row["glacier_id"], level)] += float(row["share_of_glacier_percent"])
-        primary[(row["glacier_id"], level)] += int(row["is_primary_subbasin"])
-    assert shares
-    assert all(0 < total <= 100.01 for total in shares.values())
+        key = (row["system_id"], row["glacier_id"], level)
+        linked[key] += float(row["area_km2"])
+        shares[key] += float(row["share_of_glacier_percent"])
+        primary[key] += int(row["is_primary_subbasin"])
+    assert linked
     assert set(primary.values()) == {1}
+    assert all(total <= 100.01 for total in shares.values())
+    inventory = {
+        (row["system_id"], row["glacier_id"]): float(row["area_km2"])
+        for row in rows("glacier-inventory-headwaters.csv")
+    }
+    # Cutting a polygon adds boundary segments, and each published area is rounded
+    # to six decimals, so the parts sum back to the whole only to within rounding.
+    for (system_id, glacier_id, _), total in linked.items():
+        area = inventory[(system_id, glacier_id)]
+        assert total - area <= max(area * 1e-5, 1e-5)
 
 
 def test_formation_zone_totals_use_the_clipped_glacier_area():
@@ -76,7 +93,8 @@ def test_formation_zone_totals_use_the_clipped_glacier_area():
     clipped = defaultdict(float)
     for row in inventory:
         inside = float(row["area_in_headwater_km2"])
-        assert 0 <= inside <= float(row["area_km2"]) + 1e-9
+        area = float(row["area_km2"])
+        assert 0 <= inside <= area + max(area * 1e-5, 1e-5)
         clipped[row["system_id"]] += inside
 
     published = defaultdict(float)
@@ -92,15 +110,21 @@ def test_formation_zone_totals_use_the_clipped_glacier_area():
     assert all(abs(cross_tab[system] - clipped[system]) < 0.5 for system in SYSTEMS)
 
 
-def test_glacier_area_is_reported_against_its_own_elevation_band():
+def test_glacier_area_never_exceeds_the_band_it_is_reported_in():
+    """Ice is placed in the bands the subbasin has, not spread by area share alone."""
+    per_basin = defaultdict(float)
+    stated = {}
     for row in rows("glacier-basin-elevation-bands.csv"):
         band_area = float(row["basin_band_area_km2"])
         glacier_area = float(row["glacier_area_km2"])
         assert glacier_area >= 0
-        # 30 m glacier masks against 90 m basin sums leave a small tolerance.
-        if band_area > 0:
-            assert glacier_area <= band_area * 1.25
+        assert glacier_area <= band_area
         assert row["observation_unit_id"] == f"{row['hybas_id']}::{row['elevation_band']}"
+        key = (row["basin_level"], row["hybas_id"])
+        per_basin[key] += glacier_area
+        stated[key] = float(row["basin_glacier_area_km2"])
+    # The band split redistributes a subbasin's ice, it never invents or loses any.
+    assert all(abs(per_basin[key] - stated[key]) < 1e-4 for key in stated)
 
 
 def test_source_attribution_is_published_for_every_submission():

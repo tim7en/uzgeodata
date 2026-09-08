@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T06:18:37+00:00",
+  "generatedAt": "2026-09-08T07:48:59+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
@@ -46,7 +46,7 @@
     "INCOMPLETE": 3,
     "MISSING": 3,
     "CURRENT": 7,
-    "STATIC": 16
+    "STATIC": 20
   },
   "tables": [
     {
@@ -193,11 +193,11 @@
       "predicate": "uz:hasBasinAnomaly",
       "container": "PUBLISHED/data/hydroclimate/era5-land-headwater-anomaly.csv",
       "exists": true,
-      "rows": 4965,
+      "rows": 7141,
       "units": 121,
       "expectedUnits": 121,
       "coverage": {
-        "from": "2026-01",
+        "from": "2025-10",
         "to": "2026-07"
       },
       "cadence": "monthly",
@@ -206,7 +206,7 @@
       "status": "CURRENT",
       "refresh": "npm run headwaters:anomaly",
       "note": "Derived against the fixed 1991-2020 ERA5-Land normal after current observations refresh.",
-      "lastModified": "2026-09-08T06:14:33+00:00"
+      "lastModified": "2026-09-08T07:05:50+00:00"
     },
     {
       "id": "era5-land-headwater-elevation-monthly",
@@ -214,11 +214,11 @@
       "predicate": "uz:hasFormationStatistic",
       "container": "PUBLISHED/data/hydroclimate/era5-land-headwater-elevation-monthly.csv",
       "exists": true,
-      "rows": 420,
+      "rows": 600,
       "units": 10,
       "expectedUnits": null,
       "coverage": {
-        "from": "2026-01",
+        "from": "2025-10",
         "to": "2026-07"
       },
       "cadence": "monthly",
@@ -227,7 +227,7 @@
       "status": "CURRENT",
       "refresh": "npm run headwaters:era5:elevation",
       "note": "Monthly ERA5-Land state over headwater-system and elevation-band intersections.",
-      "lastModified": "2026-09-08T05:34:02+00:00"
+      "lastModified": "2026-09-08T07:05:07+00:00"
     },
     {
       "id": "era5-land-headwaters-monthly",
@@ -235,11 +235,11 @@
       "predicate": "uz:hasBasinStatistic",
       "container": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
       "exists": true,
-      "rows": 5082,
+      "rows": 7260,
       "units": 121,
       "expectedUnits": 121,
       "coverage": {
-        "from": "2026-01",
+        "from": "2025-10",
         "to": "2026-07"
       },
       "cadence": "monthly",
@@ -248,7 +248,7 @@
       "status": "CURRENT",
       "refresh": "npm run headwaters:era5",
       "note": "Monthly ERA5-Land state over the transboundary headwater formation scope.",
-      "lastModified": "2026-09-08T04:45:03+00:00"
+      "lastModified": "2026-09-08T07:04:52+00:00"
     },
     {
       "id": "landcover-admin-year",
@@ -298,11 +298,11 @@
       "predicate": "uz:hasFormationStatistic",
       "container": "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.csv",
       "exists": true,
-      "rows": 330,
+      "rows": 3244,
       "units": 10,
       "expectedUnits": null,
       "coverage": {
-        "from": "2026-08-02",
+        "from": "2025-10-01",
         "to": "2026-09-03"
       },
       "cadence": "daily",
@@ -311,7 +311,7 @@
       "status": "CURRENT",
       "refresh": "npm run headwaters:snow",
       "note": "Daily MODIS snow cover; cloud and invalid-pixel coverage is retained explicitly.",
-      "lastModified": "2026-09-08T06:00:12+00:00"
+      "lastModified": "2026-09-08T07:23:07+00:00"
     },
     {
       "id": "admin-basin-district",
@@ -534,6 +534,78 @@
       "refresh": "npm run ghm:observe",
       "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
       "lastModified": "2026-09-07T17:06:59+00:00"
+    },
+    {
+      "id": "glims-glacier-basin-elevation-bands",
+      "label": "Glacier and basin area by subbasin and elevation band",
+      "predicate": "uz:hasFormationStatistic",
+      "container": "PUBLISHED/data/hydroclimate/glacier-basin-elevation-bands.csv",
+      "exists": true,
+      "rows": 11049,
+      "units": 11049,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": "npm run headwaters:glaciers",
+      "note": "Derived cross tabulation; carries no period because neither input is a time series.",
+      "lastModified": "2026-09-08T07:48:14+00:00"
+    },
+    {
+      "id": "glims-glacier-elevation-bands",
+      "label": "Glacier area by elevation band",
+      "predicate": "uz:hasFormationStatistic",
+      "container": "PUBLISHED/data/hydroclimate/glacier-elevation-bands.csv",
+      "exists": true,
+      "rows": 28623,
+      "units": 25251,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": "npm run headwaters:glaciers",
+      "note": "Elevation split of the same snapshot against the static SRTM masks.",
+      "lastModified": "2026-09-08T07:48:13+00:00"
+    },
+    {
+      "id": "glims-glacier-inventory",
+      "label": "GLIMS glacier inventory in the headwater formation zones",
+      "predicate": "uz:hasFormationStatistic",
+      "container": "PUBLISHED/data/hydroclimate/glacier-inventory-headwaters.csv",
+      "exists": true,
+      "rows": 25294,
+      "units": 25251,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": "npm run headwaters:glaciers",
+      "note": "One GLIMS snapshot with survey dates from 1994 to 2009. It moves when GLIMS releases, not with the water year.",
+      "lastModified": "2026-09-08T07:48:12+00:00"
+    },
+    {
+      "id": "glims-glacier-subbasin-links",
+      "label": "Glacier to subbasin links, levels 10 and 12",
+      "predicate": "uz:formationUnitInBasin",
+      "container": "PUBLISHED/data/hydroclimate/glacier-basin-links.csv",
+      "exists": true,
+      "rows": 65854,
+      "units": 2112,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": "npm run headwaters:glaciers",
+      "note": "Geometric intersection of the same snapshot with HydroATLAS; rebuilt when either side is replaced.",
+      "lastModified": "2026-09-08T07:48:13+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-downstream",

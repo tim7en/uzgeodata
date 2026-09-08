@@ -52,6 +52,7 @@ GLACIER_CHUNK = 750
 UPLOAD_CHUNK = 200
 BASIN_CHUNK = 150
 SYSTEM_LEVEL = 10  # operational level that decides formation-zone membership
+MINIMUM_PIECE_KM2 = 1e-6
 DOWNLOAD_TIMEOUT = 1800
 GEOD = Geod(ellps="WGS84")
 
@@ -489,6 +490,8 @@ def main() -> None:
         glacier_count_by_band: dict[str, int] = defaultdict(int)
         basin_glacier_bands: dict[tuple[int, int, str], float] = defaultdict(float)
         basin_glacier_total: dict[tuple[int, int], float] = defaultdict(float)
+        glacier_band_areas: dict[str, dict[str, float]] = {}
+        pending_pieces: dict[int, list[tuple]] = {level: [] for level in levels}
         linked_ids: dict[int, set[int]] = {level: set() for level in levels}
         submission_totals: dict[tuple, dict] = {}
         system_area = 0.0
@@ -552,6 +555,7 @@ def main() -> None:
             dominant = max(band_ids, key=lambda band_id: areas[band_id]) if areas else ""
             if areas.get(dominant, 0.0) <= 0:
                 dominant = ""
+            glacier_band_areas[glacier_id] = areas
             for band_id in band_ids:
                 if areas[band_id] <= 0:
                     continue
@@ -581,7 +585,9 @@ def main() -> None:
                 for index in candidates:
                     piece = net_geometry.intersection(entry["geometries"][int(index)])
                     piece_area = geodesic_area_km2(piece)
-                    if piece_area <= 0:
+                    if piece_area < MINIMUM_PIECE_KM2:
+                        # A square-metre sliver is disagreement between two datasets
+                        # along a shared divide, not a glacier in that subbasin.
                         continue
                     pieces.append((piece_area, entry["records"][int(index)]))
                 if not pieces:
@@ -594,17 +600,17 @@ def main() -> None:
                     hybas_id = record["hybas_id"]
                     linked_ids[level].add(hybas_id)
                     basin_glacier_total[(level, hybas_id)] += piece_area
-                    for band_id in band_ids:
-                        if areas[band_id] > 0:
-                            basin_glacier_bands[(level, hybas_id, band_id)] += areas[band_id] * share
+                    # The band split of a single intersection is only resolved once the
+                    # subbasin's own elevation is measured, so the pieces are kept and
+                    # split after the subbasin reduction below.
+                    pending_pieces[level].append(
+                        (glacier_id, hybas_id, piece_area, bool(record["in_headwater_formation"]))
+                    )
                     # A glacier on the outer divide belongs to the formation zone only
                     # by the part that drains into it, so system totals use the clipped
                     # area of the operational level rather than the whole outline.
                     if level == SYSTEM_LEVEL and record["in_headwater_formation"]:
                         headwater_area += piece_area
-                        for band_id in band_ids:
-                            if areas[band_id] > 0:
-                                glacier_area_by_band[band_id] += areas[band_id] * share
                     link_rows.append({
                         "glacier_id": glacier_id,
                         "system_id": system_id,
@@ -698,7 +704,7 @@ def main() -> None:
             if position % 2500 == 0:
                 print(f"      linked {position:,}/{outline_count:,}", flush=True)
 
-        for record in stats["attribution"]:
+        for record in attribution:
             source = record["properties"]
             key = (source.get("subm_id"), source.get("rc_id"))
             totals = submission_totals.get(key, {"count": 0, "area": 0.0, "dates": []})
@@ -738,6 +744,38 @@ def main() -> None:
                 record["hybas_id"]: record
                 for record in basins_by_level[level].get(river_system_id, {"records": []})["records"]
             }
+            capacity = {
+                int(row["HYBAS_ID"]): {
+                    band["id"]: number(row.get(f"area__{band['id']}")) / 1e6 for band in bands
+                }
+                for row in measured
+            }
+            # Split every glacier-subbasin intersection across the elevation bands the
+            # subbasin actually has. Distributing a glacier's own band split by area
+            # share alone can place ice above 4000 m in a subbasin that has almost no
+            # ground there; weighting by the subbasin's band area keeps the exact
+            # intersection area while putting it where that elevation exists.
+            for glacier_id, hybas_id, piece_area, inside in pending_pieces[level]:
+                split = glacier_band_areas.get(glacier_id, {})
+                available = capacity.get(hybas_id, {})
+                weights = {
+                    band_id: split.get(band_id, 0.0) * available.get(band_id, 0.0)
+                    for band_id in band_ids
+                }
+                total_weight = sum(weights.values())
+                if total_weight <= 0:
+                    weights = {band_id: split.get(band_id, 0.0) for band_id in band_ids}
+                    total_weight = sum(weights.values())
+                if total_weight <= 0:
+                    continue
+                for band_id in band_ids:
+                    if weights[band_id] <= 0:
+                        continue
+                    allocated = piece_area * weights[band_id] / total_weight
+                    basin_glacier_bands[(level, hybas_id, band_id)] += allocated
+                    if level == SYSTEM_LEVEL and inside:
+                        glacier_area_by_band[band_id] += allocated
+
             for row in measured:
                 hybas_id = int(row["HYBAS_ID"])
                 record = records.get(hybas_id, {"in_headwater_formation": False})
@@ -765,7 +803,7 @@ def main() -> None:
                         ),
                         "basin_area_km2": f"{basin_area:.4f}",
                         "basin_glacier_area_km2": f"{basin_glacier:.6f}",
-                        "method": "vector_glacier_basin_share_x_raster_elevation_band",
+                        "method": "vector_intersection_split_by_subbasin_elevation_band",
                         "basin_scale_m": BASIN_SCALE,
                         "glacier_scale_m": GLACIER_SCALE,
                         "retrieved_at": retrieved,
@@ -900,6 +938,10 @@ def main() -> None:
         "systems": system_summaries,
         "counts": {
             "glaciers": len(inventory_rows),
+            "distinctGlaciers": len({row["glacier_id"] for row in inventory_rows}),
+            "glaciersSharedBetweenSystems": (
+                len(inventory_rows) - len({row["glacier_id"] for row in inventory_rows})
+            ),
             "glacierBandRows": len(glacier_band_rows),
             "basinLinks": len(link_rows),
             "basinBandRows": len(basin_band_rows),
@@ -918,7 +960,10 @@ def main() -> None:
             "exactGeoJSON": exact_outputs,
         },
         "semantics": {
-            "identity": "glacier_id is the GLIMS glac_id; it is not a basin identifier",
+            "identity": (
+                "glacier_id is the GLIMS glac_id; a row is keyed by system_id and "
+                "glacier_id because a glacier on the Amu-Syr divide feeds both systems"
+            ),
             "area": "geodesic vector area of the retained outline minus internal rock",
             "areaInHeadwater": (
                 f"part of the glacier inside level-{SYSTEM_LEVEL} subbasins of the formation zone; "
@@ -926,7 +971,7 @@ def main() -> None:
             ),
             "elevationBands": "SRTM band masks at 30 m, rescaled so band areas sum to the vector area",
             "basinAttribution": "exact vector intersection; a glacier crossing a divide appears once per subbasin",
-            "basinBandAttribution": "glacier band area distributed to subbasins by intersection share",
+            "basinBandAttribution": "each glacier-subbasin intersection keeps its exact area and is split across bands by the glacier band split weighted by the band area the subbasin has",
             "temporalStatus": "survey epoch inventory, not a current-year state observation",
         },
         "qualityNotes": [
@@ -937,6 +982,9 @@ def main() -> None:
             "small subbasin can report a glacier share slightly above 100 percent of a band.",
             "Glaciers on the outer divide are inventoried in full and attributed to the formation "
             "zone only by the intersecting part; area_in_headwater_km2 carries that share.",
+            "A glacier astride the Amu-Syr divide appears once per system with the same outline, "
+            "so area_km2 must be summed over system_id and glacier_id together, never over "
+            "glacier_id alone. area_in_headwater_km2 does not double count.",
         ],
     }
     write_json(manifest_path, manifest, compact=False)

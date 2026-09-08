@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T07:10:54+00:00",
+  "generatedAt": "2026-09-08T07:48:49+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -8101,7 +8101,7 @@
       "label": "Glacier and basin area by subbasin and elevation band",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 754570,
+      "byteSize": 2321357,
       "storedName": "PUBLISHED/data/hydroclimate/glacier-basin-elevation-bands.csv",
       "url": null,
       "accessPolicy": "free",
@@ -8115,7 +8115,7 @@
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "HYBAS_ID::ELEVATION_BAND_ID",
-      "rowCount": 3620,
+      "rowCount": 11049,
       "subjectFixed": "uz:ds/glims-glaciers"
     },
     {
@@ -8124,7 +8124,7 @@
       "label": "Glacier area by elevation band",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 898570,
+      "byteSize": 4110326,
       "storedName": "PUBLISHED/data/hydroclimate/glacier-elevation-bands.csv",
       "url": null,
       "accessPolicy": "free",
@@ -8138,7 +8138,7 @@
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "GLIMS_GLAC_ID",
-      "rowCount": 6216,
+      "rowCount": 28623,
       "subjectFixed": "uz:ds/glims-glaciers"
     },
     {
@@ -8147,7 +8147,7 @@
       "label": "GLIMS glacier inventory in the headwater formation zones",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 1275133,
+      "byteSize": 7442263,
       "storedName": "PUBLISHED/data/hydroclimate/glacier-inventory-headwaters.csv",
       "url": null,
       "accessPolicy": "free",
@@ -8161,7 +8161,7 @@
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "GLIMS_GLAC_ID",
-      "rowCount": 4544,
+      "rowCount": 25294,
       "subjectFixed": "uz:ds/glims-glaciers"
     },
     {
@@ -8170,7 +8170,7 @@
       "label": "Glacier to subbasin links, levels 10 and 12",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 1444068,
+      "byteSize": 8125937,
       "storedName": "PUBLISHED/data/hydroclimate/glacier-basin-links.csv",
       "url": null,
       "accessPolicy": "free",
@@ -8184,7 +8184,7 @@
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "GLIMS_GLAC_ID::HYBAS_ID",
-      "rowCount": 11707,
+      "rowCount": 65854,
       "subjectColumn": "glacier_id"
     },
     {
@@ -8866,7 +8866,7 @@
       "label": "MODIS daily snow cover by headwater elevation band",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 67958,
+      "byteSize": 677730,
       "storedName": "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.csv",
       "url": null,
       "accessPolicy": "free",
@@ -8880,7 +8880,7 @@
       "measureUnitColumn": "unit",
       "containerTable": null,
       "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
-      "rowCount": 330,
+      "rowCount": 3244,
       "subjectFixed": "uz:ds/modis-terra-snow"
     },
     {
