@@ -186,6 +186,8 @@
     "earth-engine/UCSB-CHG/CHIRTS/DAILY": "uz:ds/chirts",
     "earth-engine/NOAA/CPC/Temperature": "uz:ds/cpc-temperature",
     "earth-engine/CSP/HM/GlobalHumanModification": "uz:ds/csp-ghm",
-    "earth-engine/projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS": "uz:ds/esri-io-landcover-10m"
+    "earth-engine/projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS": "uz:ds/esri-io-landcover-10m",
+    "earth-engine/ECMWF/ERA5_LAND/MONTHLY_AGGR": "uz:ds/era5-land",
+    "derived/PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv": "uz:ds/era5-land-headwaters-monthly"
   }
 }

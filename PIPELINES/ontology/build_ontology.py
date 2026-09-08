@@ -1763,7 +1763,8 @@ class GraphBuilder:
         # measured coverage is added from the two spatial build manifests below.
         basin_places = {
             "uz:place/amu-darya-basin", "uz:place/syr-darya-basin",
-            "uz:place/aral-sea-basin",
+            "uz:place/aral-sea-basin", "uz:place/upper-amu-darya",
+            "uz:place/upper-syr-darya",
         }
         for dataset, facts in by_subject.items():
             for fact in facts:

@@ -594,6 +594,47 @@
           "meaning": "which atmospheric variable"
         }
       ]
+    },
+    {
+      "id": "era5-land-headwaters-monthly",
+      "dataset": "era5-land",
+      "label": "ERA5-Land monthly hydroclimate state by transboundary headwater basin",
+      "note": "Temperature, precipitation, snowfall, snow water equivalent, top-layer soil moisture and modelled runoff reduced to the level-7 units upstream of the pilot Panj-Vakhsh and Naryn-Karadarya control sections. The system_id dimension keeps the two formation systems explicit. ERA5-Land is reanalysis and modelled runoff is not observed river discharge.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/era5-land",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "dimensionColumns": [
+        {
+          "column": "system_id",
+          "meaning": "transboundary runoff-formation pilot"
+        },
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month, 1-12"
+        },
+        {
+          "column": "variable",
+          "meaning": "hydroclimate variable"
+        },
+        {
+          "column": "statistic",
+          "meaning": "monthly sum or monthly mean inherited from the source band semantics"
+        }
+      ]
     }
   ]
 }

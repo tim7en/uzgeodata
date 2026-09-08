@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T03:38:10+00:00",
+  "generatedAt": "2026-09-08T04:48:14+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -91,6 +91,18 @@
         "id": "uz:prop/snow-cover-depth",
         "prefLabel": "Snow cover depth",
         "definition": "Depth of accumulated snow, a control on spring runoff.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/snow-water-equivalent",
+        "prefLabel": "Snow water equivalent",
+        "definition": "Depth of liquid water stored in the snowpack. Distinct from geometric snow depth and directly relevant to potential meltwater supply.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/snowfall",
+        "prefLabel": "Snowfall water equivalent",
+        "definition": "Accumulated solid precipitation expressed as water equivalent over a period.",
         "broader": "uz:theme/climate"
       },
       {
@@ -784,10 +796,22 @@
         "broader": "uz:place/central-asia"
       },
       {
+        "id": "uz:place/upper-amu-darya",
+        "prefLabel": "Upper Amu Darya formation zone",
+        "definition": "Transboundary runoff-formation area upstream of the declared control section below the Panj-Vakhsh confluence; its operational geometry and outlet version are recorded in the hydroclimate pilot manifest.",
+        "broader": "uz:place/amu-darya-basin"
+      },
+      {
         "id": "uz:place/syr-darya-basin",
         "prefLabel": "Syr Darya basin",
         "definition": "Catchment of the Syr Darya.",
         "broader": "uz:place/central-asia"
+      },
+      {
+        "id": "uz:place/upper-syr-darya",
+        "prefLabel": "Upper Syr Darya formation zone",
+        "definition": "Transboundary runoff-formation area upstream of the declared control section below the Naryn-Karadarya confluence; its operational geometry and outlet version are recorded in the hydroclimate pilot manifest.",
+        "broader": "uz:place/syr-darya-basin"
       },
       {
         "id": "uz:place/aral-sea-basin",
@@ -7457,7 +7481,7 @@
       "flags": [
         "licence-terms-to-confirm-before-redistribution"
       ],
-      "distributions": 35,
+      "distributions": 37,
       "related": [],
       "geographies": [
         {
@@ -9897,6 +9921,174 @@
       ]
     },
     {
+      "id": "uz:ds/era5-land",
+      "label": "ERA5-Land monthly aggregated reanalysis",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/state-observation",
+      "observes": [
+        {
+          "concept": "uz:prop/air-temperature",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/precipitation",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/snowfall",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/snow-water-equivalent",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/soil-moisture",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/surface-runoff",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/upper-amu-darya",
+        "uz:place/upper-syr-darya"
+      ],
+      "temporal": {
+        "start": 1950,
+        "end": 2026
+      },
+      "license": "Copernicus C3S/CAMS License",
+      "attribution": "Copernicus Climate Change Service information / ECMWF ERA5-Land",
+      "extent": null,
+      "flags": [
+        "publication-lag",
+        "reanalysis-not-direct-observation",
+        "runoff-is-modelled"
+      ],
+      "distributions": 2,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "basin",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/upper-amu-darya"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/upper-syr-darya"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "ERA5-Land monthly hydroclimate state by transboundary headwater basin",
+          "links": 5082
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/era5-land-headwaters-monthly",
+      "label": "ERA5-Land monthly state in upper Amu and Syr headwaters",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/state-observation",
+      "observes": [
+        {
+          "concept": "uz:prop/air-temperature",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/precipitation",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/snowfall",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/snow-water-equivalent",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/soil-moisture",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        },
+        {
+          "concept": "uz:prop/surface-runoff",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/upper-amu-darya",
+        "uz:place/upper-syr-darya"
+      ],
+      "temporal": {
+        "start": 2026,
+        "end": 2026
+      },
+      "license": "Copernicus C3S/CAMS License",
+      "attribution": "Copernicus Climate Change Service information / ECMWF ERA5-Land",
+      "extent": null,
+      "flags": [
+        "reanalysis-not-direct-observation",
+        "runoff-is-modelled"
+      ],
+      "distributions": 0,
+      "related": [
+        "uz:ds/era5-land"
+      ],
+      "geographies": [
+        {
+          "frame": "basin",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/upper-amu-darya"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/upper-syr-darya"
+        }
+      ]
+    },
+    {
       "id": "uz:ds/csp-ghm",
       "label": "Global Human Modification",
       "sourceTitle": null,
@@ -11542,13 +11734,13 @@
     }
   ],
   "counts": {
-    "datasets": 186,
+    "datasets": 188,
     "atlasPackages": 134,
     "stations": 190,
-    "publishedAssertions": 3202,
+    "publishedAssertions": 3240,
     "proposedAssertions": 576,
-    "relationshipTables": 19,
-    "relationshipLinks": 779767
+    "relationshipTables": 22,
+    "relationshipLinks": 1147807
   },
   "geography": {
     "frames": [
@@ -11663,7 +11855,7 @@
       "subjectType": "Dataset",
       "objectType": "Basin",
       "frame": "basin",
-      "rowCount": 0,
+      "rowCount": 195649,
       "measureColumn": "measure",
       "dimensions": []
     },
@@ -11675,7 +11867,7 @@
       "subjectType": "Dataset",
       "objectType": "Basin",
       "frame": "basin",
-      "rowCount": null,
+      "rowCount": 167309,
       "measureColumn": "mean",
       "dimensions": []
     },
@@ -11909,6 +12101,24 @@
         "year",
         "month",
         "variable"
+      ]
+    },
+    {
+      "id": "era5-land-headwaters-monthly",
+      "dataset": "uz:ds/era5-land",
+      "label": "ERA5-Land monthly hydroclimate state by transboundary headwater basin",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 5082,
+      "measureColumn": "value",
+      "dimensions": [
+        "system_id",
+        "year",
+        "month",
+        "variable",
+        "statistic"
       ]
     }
   ],

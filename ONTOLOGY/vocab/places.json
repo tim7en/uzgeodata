@@ -54,11 +54,25 @@
       "broader": "uz:place/central-asia"
     },
     {
+      "id": "uz:place/upper-amu-darya",
+      "prefLabel": "Upper Amu Darya formation zone",
+      "altLabels": ["Upper Amu Darya", "Panj-Vakhsh headwaters"],
+      "definition": "Transboundary runoff-formation area upstream of the declared control section below the Panj-Vakhsh confluence; its operational geometry and outlet version are recorded in the hydroclimate pilot manifest.",
+      "broader": "uz:place/amu-darya-basin"
+    },
+    {
       "id": "uz:place/syr-darya-basin",
       "prefLabel": "Syr Darya basin",
       "altLabels": ["Сырдарья"],
       "definition": "Catchment of the Syr Darya.",
       "broader": "uz:place/central-asia"
+    },
+    {
+      "id": "uz:place/upper-syr-darya",
+      "prefLabel": "Upper Syr Darya formation zone",
+      "altLabels": ["Upper Syr Darya", "Naryn-Karadarya headwaters"],
+      "definition": "Transboundary runoff-formation area upstream of the declared control section below the Naryn-Karadarya confluence; its operational geometry and outlet version are recorded in the hydroclimate pilot manifest.",
+      "broader": "uz:place/syr-darya-basin"
     },
     {
       "id": "uz:place/aral-sea-basin",

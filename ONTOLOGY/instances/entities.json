@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T03:38:10+00:00",
+  "generatedAt": "2026-09-08T04:48:14+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -50,7 +50,7 @@
       "label": "European Centre for Medium-Range Weather Forecasts",
       "agentKind": "organisation",
       "trustTier": "authoritative",
-      "description": "Producer of CAMS global near-real-time atmospheric composition."
+      "description": "Producer of ERA5-Land monthly aggregated reanalysis."
     },
     {
       "id": "uz:agent/extraction-pipeline",
@@ -2317,6 +2317,32 @@
       "catalogId": null,
       "repositoryId": null,
       "description": "A single image with no timestamp — timeless rather than archival. Measured over both basins and districts because the frame changes the answer: 0.33 by basin against 0.61 by district."
+    },
+    {
+      "id": "uz:ds/era5-land",
+      "type": "Dataset",
+      "label": "ERA5-Land monthly aggregated reanalysis",
+      "labels": {
+        "en": "ERA5-Land monthly aggregated reanalysis"
+      },
+      "sourceKey": "earth-engine/ECMWF/ERA5_LAND/MONTHLY_AGGR",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Monthly land reanalysis used for the transboundary runoff-formation pilot. Temperature, precipitation, snowfall, snow water equivalent, top-layer soil moisture and modelled runoff are reduced onto level-7 headwater units. Modelled runoff is not river-gauge discharge."
+    },
+    {
+      "id": "uz:ds/era5-land-headwaters-monthly",
+      "type": "Dataset",
+      "label": "ERA5-Land monthly state in upper Amu and Syr headwaters",
+      "labels": {
+        "en": "ERA5-Land monthly state in upper Amu and Syr headwaters"
+      },
+      "sourceKey": "derived/PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Monthly ERA5-Land state and accumulated flow variables by transboundary level-7 runoff-formation unit, selected upstream of declared Panj-Vakhsh and Naryn-Karadarya control sections."
     },
     {
       "id": "uz:ds/esri-io-landcover-10m",
@@ -5749,6 +5775,52 @@
       "subjectColumn": "basin_id"
     },
     {
+      "id": "uz:dist/atlas-basin-coverage",
+      "type": "Distribution",
+      "label": "Environmental atlas layers by level-12 basin",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 23588189,
+      "storedName": "WORKSPACE/derived/atlas-basin-links.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:coversBasin",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "WORKSPACE/derived/atlas-basin-links.csv",
+      "scopeColumn": null,
+      "measureColumn": "measure",
+      "measureUnitColumn": "measure_unit",
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 195649,
+      "subjectColumn": "dataset_id"
+    },
+    {
+      "id": "uz:dist/atlas-basin-statistics",
+      "type": "Distribution",
+      "label": "Atlas raster surfaces read per level-12 basin",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 26460814,
+      "storedName": "WORKSPACE/derived/basin-zonal-stats.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "WORKSPACE/derived/basin-zonal-stats.csv",
+      "scopeColumn": null,
+      "measureColumn": "mean",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 167309,
+      "subjectColumn": "dataset_id"
+    },
+    {
       "id": "uz:dist/basinatlas-uz-v10-basinatlas-uz-lev01-003e44",
       "type": "Distribution",
       "label": "basinatlas_uz_lev01.csv",
@@ -7377,6 +7449,38 @@
       "storedName": "earthquakes.geojson",
       "url": "/data/earthquakes.geojson",
       "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/era5-land-earth-engine-source",
+      "type": "Distribution",
+      "label": "ERA5-Land monthly aggregated reanalysis Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/era5-land-headwaters-monthly",
+      "type": "Distribution",
+      "label": "ERA5-Land monthly hydroclimate state by transboundary headwater basin",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 904108,
+      "storedName": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 5082,
+      "subjectFixed": "uz:ds/era5-land"
     },
     {
       "id": "uz:dist/esri-io-landcover-10m-earth-engine-source",

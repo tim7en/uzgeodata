@@ -113,6 +113,49 @@
       "note": "Gauge-based and long, but the GTS feed over Uzbekistan is thin: 0.13 stations per cell per day, with 51% of basin-months seeing none. Mostly interpolation from distant reports here, and weighted accordingly against CHIRTS."
     },
     {
+      "slug": "era5-land",
+      "label": "ERA5-Land monthly aggregated reanalysis",
+      "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+      "agent": "uz:agent/ecmwf",
+      "agentLabel": "European Centre for Medium-Range Weather Forecasts",
+      "licence": "Copernicus C3S/CAMS License",
+      "attribution": "Copernicus Climate Change Service information / ECMWF ERA5-Land",
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/state-observation",
+      "observes": [
+        "uz:prop/air-temperature",
+        "uz:prop/precipitation",
+        "uz:prop/snowfall",
+        "uz:prop/snow-water-equivalent",
+        "uz:prop/soil-moisture",
+        "uz:prop/surface-runoff"
+      ],
+      "places": ["uz:place/upper-amu-darya", "uz:place/upper-syr-darya"],
+      "temporal": {"start": 1950, "end": 2026},
+      "gridMetres": 11132,
+      "basinLevel": 7,
+      "qualityFlags": ["reanalysis-not-direct-observation", "runoff-is-modelled", "publication-lag"],
+      "note": "Monthly land reanalysis used for the transboundary runoff-formation pilot. Temperature, precipitation, snowfall, snow water equivalent, top-layer soil moisture and modelled runoff are reduced onto level-7 headwater units. Modelled runoff is not river-gauge discharge.",
+      "derivedProducts": [
+        {
+          "slug": "era5-land-headwaters-monthly",
+          "label": "ERA5-Land monthly state in upper Amu and Syr headwaters",
+          "description": "Monthly ERA5-Land state and accumulated flow variables by transboundary level-7 runoff-formation unit, selected upstream of declared Panj-Vakhsh and Naryn-Karadarya control sections.",
+          "container": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+          "observes": [
+            "uz:prop/air-temperature",
+            "uz:prop/precipitation",
+            "uz:prop/snowfall",
+            "uz:prop/snow-water-equivalent",
+            "uz:prop/soil-moisture",
+            "uz:prop/surface-runoff"
+          ],
+          "temporal": {"start": 2026, "end": 2026},
+          "qualityFlags": ["reanalysis-not-direct-observation", "runoff-is-modelled"]
+        }
+      ]
+    },
+    {
       "slug": "csp-ghm",
       "label": "Global Human Modification",
       "asset": "CSP/HM/GlobalHumanModification",

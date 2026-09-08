@@ -38,6 +38,28 @@
       "broader": "uz:theme/climate"
     },
     {
+      "id": "uz:prop/snow-water-equivalent",
+      "prefLabel": "Snow water equivalent",
+      "altLabels": [
+        "SWE",
+        "snow water storage"
+      ],
+      "definition": "Depth of liquid water stored in the snowpack. Distinct from geometric snow depth and directly relevant to potential meltwater supply.",
+      "unit": "mm",
+      "broader": "uz:theme/climate"
+    },
+    {
+      "id": "uz:prop/snowfall",
+      "prefLabel": "Snowfall water equivalent",
+      "altLabels": [
+        "snowfall",
+        "solid precipitation"
+      ],
+      "definition": "Accumulated solid precipitation expressed as water equivalent over a period.",
+      "unit": "mm",
+      "broader": "uz:theme/climate"
+    },
+    {
       "id": "uz:prop/climatic-water-deficit",
       "prefLabel": "Climatic water deficit",
       "altLabels": [
