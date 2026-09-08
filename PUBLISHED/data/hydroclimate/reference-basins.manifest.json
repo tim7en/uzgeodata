@@ -1,6 +1,35 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T11:50:55+00:00",
+  "displayLevels": [
+    {
+      "level": 7,
+      "minZoom": 0,
+      "simplifyDegrees": 0.02,
+      "units": 438,
+      "url": "/data/hydroclimate/reference-basins-level07.geojson",
+      "sizeBytes": 564345,
+      "carriesAtlasAttributes": false
+    },
+    {
+      "level": 10,
+      "minZoom": 7,
+      "simplifyDegrees": 0.01,
+      "units": 6787,
+      "url": "/data/hydroclimate/reference-basins-level10.geojson",
+      "sizeBytes": 5493123,
+      "carriesAtlasAttributes": false
+    },
+    {
+      "level": 12,
+      "minZoom": 9,
+      "simplifyDegrees": 0.006,
+      "units": 7445,
+      "url": "/data/hydroclimate/reference-basins-level12.geojson",
+      "sizeBytes": 7640672,
+      "carriesAtlasAttributes": true
+    }
+  ],
+  "generatedAt": "2026-09-08T12:06:07+00:00",
   "observationClass": "reference",
   "basinLevel": 12,
   "role": "reference frame every observation and trace joins to",
@@ -21,7 +50,7 @@
     "accumulationAttributes": 91
   },
   "outputs": {
-    "geojson": "PUBLISHED/data/hydroclimate/reference-basins-level12.geojson",
+    "levelLadder": "PUBLISHED/data/hydroclimate/reference-basin-levels.json",
     "csv": "PUBLISHED/data/hydroclimate/reference-basin-attributes.csv",
     "columnsJSON": "PUBLISHED/data/hydroclimate/reference-basin-attributes.json",
     "groups": "PUBLISHED/data/hydroclimate/reference-attribute-groups.json"

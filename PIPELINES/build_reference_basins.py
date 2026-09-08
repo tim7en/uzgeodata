@@ -40,12 +40,20 @@ FRAME = PUBLISHED_DIR / "basins-level12.geojson"
 ROLES = PUBLISHED_DIR / "basin-hydrological-roles.csv"
 DICTIONARY = ROOT / "PUBLISHED/data/hydrography/attribute-dictionary.json"
 CACHE = ROOT / "WORKSPACE/reference_basin_cache/level12-attributes.csv"
-GEOJSON = PUBLISHED_DIR / "reference-basins-level12.geojson"
+LADDER = PUBLISHED_DIR / "reference-basin-levels.json"
 TABLE = PUBLISHED_DIR / "reference-basin-attributes.csv"
 COLUMNS_JSON = PUBLISHED_DIR / "reference-basin-attributes.json"
 GROUPS = PUBLISHED_DIR / "reference-attribute-groups.json"
 MANIFEST = PUBLISHED_DIR / "reference-basins.manifest.json"
 ASSET = "WWF/HydroATLAS/v1/Basins/level12"
+# Zoom ladder. A whole-region view does not need 7,445 polygons, and level 7 at
+# 2 km simplification is a twentieth of the weight; the finer levels load only
+# once the reader has zoomed into them.
+DISPLAY_LEVELS = [
+    {"level": 7, "minZoom": 0, "simplify": 0.02},
+    {"level": 10, "minZoom": 7, "simplify": 0.01},
+    {"level": 12, "minZoom": 9, "simplify": 0.006},
+]
 PROJECT = "ee-sabitovty"
 LEVEL = 12
 DOWNLOAD_TIMEOUT = 1800
@@ -71,14 +79,14 @@ def write_json(path: Path, payload: object, *, compact: bool = True) -> None:
     os.replace(temporary, path)
 
 
-def read_roles() -> dict[int, dict]:
+def read_roles(level: int = LEVEL) -> dict[int, dict]:
     if not ROLES.exists():
         return {}
     with ROLES.open(encoding="utf-8", newline="") as handle:
         return {
             int(row["hybas_id"]): row
             for row in csv.DictReader(handle)
-            if int(row["basin_level"]) == LEVEL
+            if int(row["basin_level"]) == level
         }
 
 
@@ -112,13 +120,11 @@ def number(value):
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--refresh-attributes", action="store_true")
-    parser.add_argument("--simplify", type=float, default=0.006, help="map geometry tolerance, degrees")
     args = parser.parse_args()
 
     dictionary = json.loads(DICTIONARY.read_text(encoding="utf-8"))
     columns = dictionary["columns"]
     frame = json.loads(FRAME.read_text(encoding="utf-8"))["features"]
-    roles = read_roles()
     retrieved = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     wanted = {int(feature["properties"]["HYBAS_ID"]) for feature in frame}
     main_basins = sorted({int(feature["properties"]["MAIN_BAS"]) for feature in frame})
@@ -201,40 +207,72 @@ def main() -> None:
                  "across basins counts the same water twice."),
     }, compact=False)
 
-    features = []
-    for feature in frame:
-        props = feature["properties"]
-        hybas_id = int(props["HYBAS_ID"])
-        role = roles.get(hybas_id, {})
-        geometry = shape(feature["geometry"])
-        features.append({
-            "type": "Feature",
-            "properties": {
-                "hybas_id": hybas_id,
-                "pfaf_id": int(props["PFAF_ID"]),
-                "system_id": props["system_id"],
-                "headwater_system_id": props["headwater_system_id"],
-                "next_down": int(props.get("NEXT_DOWN") or 0),
-                "area_km2": round(float(props["SUB_AREA"]), 2),
-                "upstream_km2": round(float(props["UP_AREA"]), 2),
-                "in_headwater_formation": int(bool(props["in_headwater_formation"])),
-                "flow_position": role.get("flow_position", ""),
-                "channel_class": role.get("channel_class", ""),
-            },
-            "geometry": mapping(geometry.simplify(args.simplify, preserve_topology=True)),
+    published_levels = []
+    systems = defaultdict(int)
+    for entry in DISPLAY_LEVELS:
+        level = entry["level"]
+        source = PUBLISHED_DIR / f"basins-level{level:02d}.geojson"
+        units = json.loads(source.read_text(encoding="utf-8"))["features"]
+        level_roles = read_roles(level)
+        features = []
+        for feature in units:
+            props = feature["properties"]
+            hybas_id = int(props["HYBAS_ID"])
+            role = level_roles.get(hybas_id, {})
+            geometry = shape(feature["geometry"])
+            features.append({
+                "type": "Feature",
+                "properties": {
+                    "hybas_id": hybas_id,
+                    "pfaf_id": int(props["PFAF_ID"]),
+                    "basin_level": level,
+                    "system_id": props["system_id"],
+                    "headwater_system_id": props["headwater_system_id"],
+                    "next_down": int(props.get("NEXT_DOWN") or 0),
+                    "area_km2": round(float(props["SUB_AREA"]), 2),
+                    "upstream_km2": round(float(props["UP_AREA"]), 2),
+                    "in_headwater_formation": int(bool(props["in_headwater_formation"])),
+                    "flow_position": role.get("flow_position", ""),
+                    "channel_class": role.get("channel_class", ""),
+                },
+                "geometry": mapping(geometry.simplify(entry["simplify"], preserve_topology=True)),
+            })
+        features.sort(key=lambda item: item["properties"]["hybas_id"])
+        path = PUBLISHED_DIR / f"reference-basins-level{level:02d}.geojson"
+        write_json(path, {
+            "type": "FeatureCollection",
+            "name": f"amu_syr_reference_basins_level{level:02d}",
+            "features": features,
         })
-    features.sort(key=lambda item: item["properties"]["hybas_id"])
-    write_json(GEOJSON, {
-        "type": "FeatureCollection",
-        "name": f"amu_syr_reference_basins_level{LEVEL}",
-        "features": features,
-    })
+        published_levels.append({
+            "level": level,
+            "minZoom": entry["minZoom"],
+            "simplifyDegrees": entry["simplify"],
+            "units": len(features),
+            "url": f"/data/hydroclimate/reference-basins-level{level:02d}.geojson",
+            "sizeBytes": path.stat().st_size,
+            "carriesAtlasAttributes": level == LEVEL,
+        })
+        if level == LEVEL:
+            for feature in features:
+                systems[feature["properties"]["system_id"]] += 1
+        print(f"    level {level:>2}: {len(features):>5,} units  {path.stat().st_size / 1e6:>5.1f} MB  from zoom {entry['minZoom']}")
+
+    write_json(LADDER, {
+        "version": "1.0",
+        "generatedAt": retrieved,
+        "attributeLevel": LEVEL,
+        "levels": published_levels,
+        "note": ("Coarser basins carry the same identity and routing fields; only level 12 carries "
+                 "the BasinATLAS attributes, so a reader drilling into detail is drilling towards them."),
+    }, compact=False)
 
     systems = defaultdict(int)
     for feature in features:
         systems[feature["properties"]["system_id"]] += 1
     manifest = {
         "version": "1.0",
+        "displayLevels": published_levels,
         "generatedAt": retrieved,
         "observationClass": "reference",
         "basinLevel": LEVEL,
@@ -258,7 +296,7 @@ def main() -> None:
             ),
         },
         "outputs": {
-            "geojson": str(GEOJSON.relative_to(ROOT)).replace("\\", "/"),
+            "levelLadder": str(LADDER.relative_to(ROOT)).replace("\\", "/"),
             "csv": str(TABLE.relative_to(ROOT)).replace("\\", "/"),
             "columnsJSON": str(COLUMNS_JSON.relative_to(ROOT)).replace("\\", "/"),
             "groups": str(GROUPS.relative_to(ROOT)).replace("\\", "/"),
@@ -270,11 +308,11 @@ def main() -> None:
         ],
     }
     write_json(MANIFEST, manifest, compact=False)
-    print(f"  {len(features):,} reference basins ({dict(sorted(systems.items()))})")
+    print(f"  {sum(systems.values()):,} level-{LEVEL} reference basins ({dict(sorted(systems.items()))})")
     print(f"  {manifest['counts']['basinSpecificAttributes']} basin-specific + "
           f"{manifest['counts']['accumulationAttributes']} accumulation attributes")
-    print(f"  -> {GEOJSON.relative_to(ROOT)} ({GEOJSON.stat().st_size / 1e6:.1f} MB), "
-          f"{COLUMNS_JSON.relative_to(ROOT)} ({COLUMNS_JSON.stat().st_size / 1e6:.1f} MB)")
+    print(f"  -> {LADDER.relative_to(ROOT)}, {COLUMNS_JSON.relative_to(ROOT)} "
+          f"({COLUMNS_JSON.stat().st_size / 1e6:.1f} MB)")
 
 
 if __name__ == "__main__":
