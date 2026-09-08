@@ -324,17 +324,67 @@ html, body, #root { width: 100%; max-width: 100%; height: 100%; overflow: hidden
 .universe-shell {
   position: relative;
   width: 100%;
+  min-height: 0;
+  overflow: hidden;
   grid-template-columns: clamp(210px, 18.75vw, 256px) minmax(0, 1fr) clamp(300px, 28.55vw, 390px);
+  grid-template-rows: minmax(0, 1fr);
 }
 .universe-mobile-tools { display: none; }
-.universe-rail { overflow: auto; scrollbar-width: thin; scrollbar-color: #343b37 transparent; }
+.universe-rail, .universe-stage, .signal-panel { min-height: 0; }
+.universe-rail, .signal-panel {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #59635d #0a0d0b;
+}
+.universe-rail::-webkit-scrollbar, .signal-panel::-webkit-scrollbar { width: 10px; }
+.universe-rail::-webkit-scrollbar-track, .signal-panel::-webkit-scrollbar-track { background: #0a0d0b; }
+.universe-rail::-webkit-scrollbar-thumb, .signal-panel::-webkit-scrollbar-thumb {
+  border: 2px solid #0a0d0b;
+  border-radius: 8px;
+  background: #59635d;
+}
+.signal-panel { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 .graph-controls output {
   min-width: 42px;
   text-align: center;
   color: #aab3ad;
   font: 600 8px 'Barlow Condensed', sans-serif;
 }
+.neural-canvas { cursor: grab; touch-action: none; user-select: none; }
+.neural-canvas.is-dragging { cursor: grabbing; }
 .neural-canvas:focus-visible { outline: 1px solid var(--current-signal); outline-offset: -1px; }
+.graph-pan-controls {
+  position: absolute;
+  z-index: 4;
+  left: 15px;
+  top: 103px;
+  width: 82px;
+  height: 82px;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  border: 1px solid #303833;
+  background: rgba(5, 8, 6, .94);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, .32);
+}
+.graph-pan-controls button {
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #8d9891;
+  cursor: pointer;
+}
+.graph-pan-controls button:hover { color: var(--current-signal); background: #111612; }
+.graph-pan-controls button svg { width: 13px; }
+.graph-pan-controls .north { grid-area: 1 / 2; }
+.graph-pan-controls .west { grid-area: 2 / 1; }
+.graph-pan-controls .home { grid-area: 2 / 2; color: var(--current-signal); border: 1px solid #2c332f; }
+.graph-pan-controls .east { grid-area: 2 / 3; }
+.graph-pan-controls .south { grid-area: 3 / 2; }
 
 @media (max-width: 1280px) {
   .universe-shell {
@@ -408,6 +458,7 @@ html, body, #root { width: 100%; max-width: 100%; height: 100%; overflow: hidden
   .reach-results { display: grid; grid-template-columns: 1fr; }
   .rail-legend, .rail-truth { display: none; }
   .graph-controls, .trace-minimap { top: 98px; }
+  .graph-pan-controls { top: 143px; }
 }
 
 @media (max-width: 600px) {

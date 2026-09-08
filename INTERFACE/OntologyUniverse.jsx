@@ -1,7 +1,8 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
-  Activity, ArrowLeft, ArrowUpRight, Database, Download, Droplets, GitBranch,
-  MapPin, Minus, Network, Pause, Play, Plus, RotateCcw, Search, Waves, Waypoints, Zap,
+  Activity, ArrowLeft, ArrowUpRight, ChevronDown, ChevronLeft, ChevronRight, ChevronUp,
+  Crosshair, Database, Download, Droplets, GitBranch, MapPin, Minus, Network, Pause,
+  Play, Plus, RotateCcw, Search, Waves, Waypoints, Zap,
 } from 'lucide-react';
 import {
   anomalyTimeline, buildReachNetwork, deviationSummary, findHydroEntities, levelBasinLookup,
@@ -192,9 +193,12 @@ export default function OntologyUniverse() {
   const [cursor, setCursor] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [graphZoom, setGraphZoom] = useState(1);
+  const [graphPan, setGraphPan] = useState({x: 0, y: 0});
+  const [graphDragging, setGraphDragging] = useState(false);
   const [mobilePanel, setMobilePanel] = useState(null);
   const [exporting, setExporting] = useState(null);
   const [exportError, setExportError] = useState(null);
+  const graphDrag = useRef(null);
 
   useEffect(() => {
     let live = true;
@@ -306,14 +310,51 @@ export default function OntologyUniverse() {
     if (!term) return topReaches.map(record => ({type: 'reach', record}));
     return findHydroEntities(term, [...network.byId.values()], [...basinById.values()]);
   }, [query, network, basinById, topReaches]);
-  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); setGraphZoom(1); setMobilePanel(null); setPlaying(true); };
-  const selectBasin = id => { setSelectedBasinId(String(id)); setGraphZoom(1); setMobilePanel(null); setPlaying(true); };
+  const resetGraphView = () => { setGraphZoom(1); setGraphPan({x: 0, y: 0}); };
+  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); resetGraphView(); setMobilePanel(null); setPlaying(true); };
+  const selectBasin = id => { setSelectedBasinId(String(id)); resetGraphView(); setMobilePanel(null); setPlaying(true); };
   const selectGraphEntity = id => focusType === 'basin' ? selectBasin(id) : selectReach(id);
   const zoomGraph = change => setGraphZoom(current => Math.max(.65, Math.min(3.2, Number((current + change).toFixed(2)))));
+  const panGraph = (x, y) => setGraphPan(current => ({x: current.x + x, y: current.y + y}));
   const graphKeyDown = event => {
     if (event.key === '+' || event.key === '=') { event.preventDefault(); zoomGraph(.25); }
     if (event.key === '-' || event.key === '_') { event.preventDefault(); zoomGraph(-.25); }
-    if (event.key === '0') { event.preventDefault(); setGraphZoom(1); }
+    if (event.key === '0') { event.preventDefault(); resetGraphView(); }
+    const step = event.shiftKey ? 120 : 55;
+    if (event.key === 'ArrowLeft') { event.preventDefault(); panGraph(-step, 0); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); panGraph(step, 0); }
+    if (event.key === 'ArrowUp') { event.preventDefault(); panGraph(0, -step); }
+    if (event.key === 'ArrowDown') { event.preventDefault(); panGraph(0, step); }
+  };
+  const startGraphDrag = event => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    if (event.target.closest?.('.neural-nodes g[role="button"]')) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const viewBox = event.currentTarget.viewBox.baseVal;
+    graphDrag.current = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      pan: graphPan,
+      scaleX: viewBox.width / Math.max(bounds.width, 1),
+      scaleY: viewBox.height / Math.max(bounds.height, 1),
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setGraphDragging(true);
+  };
+  const moveGraphDrag = event => {
+    const drag = graphDrag.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    setGraphPan({
+      x: drag.pan.x - (event.clientX - drag.x) * drag.scaleX,
+      y: drag.pan.y - (event.clientY - drag.y) * drag.scaleY,
+    });
+  };
+  const endGraphDrag = event => {
+    if (!graphDrag.current || graphDrag.current.pointerId !== event.pointerId) return;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+    graphDrag.current = null;
+    setGraphDragging(false);
   };
   const activePeriod = activePoint?.period || data?.anomalyLayer?.periods?.[Math.min(cursor, Math.max((data?.anomalyLayer?.periods?.length || 1) - 1, 0))] || null;
   const safeFocusId = String(focusType === 'basin' ? basin12?.pfafId || focusId : focusId).replace(/[^a-zA-Z0-9_-]+/g, '-');
@@ -455,8 +496,8 @@ export default function OntologyUniverse() {
   const graphViewWidth = 1080 / graphZoom;
   const graphViewHeight = 760 / graphZoom;
   const focusWeight = graphZoom > 1 ? 1 - 1 / graphZoom : 0;
-  const graphCenterX = 540 + ((rootPosition?.x || 540) - 540) * focusWeight;
-  const graphCenterY = 380 + ((rootPosition?.y || 380) - 380) * focusWeight;
+  const graphCenterX = 540 + ((rootPosition?.x || 540) - 540) * focusWeight + graphPan.x;
+  const graphCenterY = 380 + ((rootPosition?.y || 380) - 380) * focusWeight + graphPan.y;
   const graphViewBox = `${graphCenterX - graphViewWidth / 2} ${graphCenterY - graphViewHeight / 2} ${graphViewWidth} ${graphViewHeight}`;
   return <main className="ontology-universe" style={{'--current-signal': currentColor}}>
     <header className="universe-header"><Logo/><div className="universe-title"><span>LIVE ONTOLOGY / HYDROLOGICAL NERVOUS SYSTEM</span><b>Every line is a measured relationship</b></div><nav><a href="/landcover.html">Land cover</a><a href="/climate.html">Climate</a><a href="/hydrography.html">Hydrography</a><a href="/relationships.html">Tables</a></nav><a className="back" href="/"><ArrowLeft/> Portal</a></header>
@@ -482,11 +523,20 @@ export default function OntologyUniverse() {
 
       <section className="universe-stage">
         <div className="stage-head"><div><i/><span>EXACT {focusType.toUpperCase()} TRACE</span><b>{view.upstreamCount} UPSTREAM · {view.downstreamCount} DOWNSTREAM</b></div><div><span>{compact(view.edges.length)}</span> visible flow links <b>·</b> {traceBasins.length} related basins</div></div>
-        <div className="graph-controls" aria-label="Graph zoom controls"><button type="button" onClick={() => zoomGraph(.25)} aria-label="Zoom graph in"><Plus/></button><output aria-live="polite">{Math.round(graphZoom * 100)}%</output><button type="button" onClick={() => zoomGraph(-.25)} aria-label="Zoom graph out"><Minus/></button><button type="button" onClick={() => setGraphZoom(1)} aria-label="Reset graph zoom"><RotateCcw/></button></div>
-        <svg className="neural-canvas" viewBox={graphViewBox}
+        <div className="graph-controls" aria-label="Graph zoom controls"><button type="button" onClick={() => zoomGraph(.25)} aria-label="Zoom graph in"><Plus/></button><output aria-live="polite">{Math.round(graphZoom * 100)}%</output><button type="button" onClick={() => zoomGraph(-.25)} aria-label="Zoom graph out"><Minus/></button><button type="button" onClick={resetGraphView} aria-label="Reset graph zoom and position"><RotateCcw/></button></div>
+        <div className="graph-pan-controls" aria-label="Graph movement controls">
+          <button type="button" className="north" onClick={() => panGraph(0, -70)} aria-label="Pan graph north"><ChevronUp/></button>
+          <button type="button" className="west" onClick={() => panGraph(-70, 0)} aria-label="Pan graph west"><ChevronLeft/></button>
+          <button type="button" className="home" onClick={resetGraphView} aria-label="Center and reset graph"><Crosshair/></button>
+          <button type="button" className="east" onClick={() => panGraph(70, 0)} aria-label="Pan graph east"><ChevronRight/></button>
+          <button type="button" className="south" onClick={() => panGraph(0, 70)} aria-label="Pan graph south"><ChevronDown/></button>
+        </div>
+        <svg className={`neural-canvas ${graphDragging ? 'is-dragging' : ''}`} viewBox={graphViewBox}
           onWheel={event => { event.preventDefault(); zoomGraph(event.deltaY < 0 ? .15 : -.15); }}
+          onPointerDown={startGraphDrag} onPointerMove={moveGraphDrag}
+          onPointerUp={endGraphDrag} onPointerCancel={endGraphDrag}
           onDoubleClick={() => zoomGraph(.25)} onKeyDown={graphKeyDown} tabIndex="0"
-          role="img" aria-label={`Animated upstream and downstream relationship tree for the selected ${focusType}. Use mouse wheel, plus and minus keys, or the visible controls to zoom.`}>
+          role="img" aria-label={`Animated upstream and downstream relationship tree for the selected ${focusType}. Drag or use arrow keys to pan; use mouse wheel, plus and minus keys, or the visible controls to zoom.`}>
           <defs><filter id="neural-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="core-fill"><stop offset="0" stopColor="#fff"/><stop offset=".24" stopColor={currentColor}/><stop offset="1" stopColor="#161918"/></radialGradient></defs>
           <g className="ambient-neurons">{Array.from({length: 42}, (_, index) => <circle key={index} cx={(index * 193) % 1060 + 10} cy={(index * 127) % 620 + 30} r={index % 5 === 0 ? 1.4 : .7} style={{'--delay': `${(index % 11) * .21}s`}}/>)}</g>
           <g className="neural-edges">{view.edges.map((edge, index) => {const from = positioned.get(edge.from); const to = positioned.get(edge.to); if (!from || !to) return null; const path = edgePath(from, to); const particleStep = Math.max(1, Math.ceil(view.edges.length / 32)); const signalStep = Math.max(1, Math.floor(view.edges.length / 120)); const carriesSignal = edge.direction === 'downstream' || index % signalStep === 0; return <g key={`${edge.from}-${edge.to}`} className={edge.direction}><path className="edge-haze" d={path}/>{carriesSignal && <path className="edge-signal" d={path} style={{'--delay': `${index * -0.03}s`}}/>}{index % particleStep === 0 && <circle r="1.8"><animateMotion dur={`${2.5 + index % 5 * .35}s`} repeatCount="indefinite" path={path}/></circle>}</g>})}</g>
