@@ -70,7 +70,7 @@
       "type": "Agent",
       "label": "HydroSHEDS",
       "agentKind": "organisation",
-      "agentVersion": "HydroRIVERS v1.0 / HydroLAKES v1.0 / HydroBASINS v1.c",
+      "agentVersion": "HydroRIVERS v1.0 / HydroLAKES v1.0 / HydroBASINS v1.c / HydroWASTE v1.0 / GloRiC v1.0 / FFR v1.0",
       "trustTier": "authoritative",
       "description": "Global hydrographic reference data developed by WWF and partners. Stable river, lake and basin identifiers are preserved in the Uzbekistan relationship database together with native downstream routing and Pfafstetter hierarchy."
     },
@@ -90,6 +90,15 @@
       "agentKind": "person",
       "trustTier": "curated",
       "description": "A human reviewer who promotes, corrects or rejects proposals. Curator decisions are the training labels for the next model."
+    },
+    {
+      "id": "uz:agent/globaldamwatch",
+      "type": "Agent",
+      "label": "Global Dam Watch",
+      "agentKind": "organisation",
+      "agentVersion": "GDW v1.0",
+      "trustTier": "authoritative",
+      "description": "Consortium coordinated at McGill University that consolidated GRanD, GOODD, GDAT and the other open dam registries into one consensus database of 41,145 barriers. It is the successor to GRanD v1.3, which it fully embodies, and it publishes under CC BY 4.0 rather than the HydroSHEDS licence agreement, so its attributes may be redistributed with attribution."
     }
   ]
 }

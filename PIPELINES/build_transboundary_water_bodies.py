@@ -21,16 +21,23 @@ import csv
 import json
 import os
 from datetime import datetime, timezone
+import sys
 from pathlib import Path
 
 import pyogrio
 from shapely.geometry import Point, mapping, shape
 from shapely.strtree import STRtree
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import hydrosheds_sources  # noqa: E402  (path set above)
+
 ROOT = Path(__file__).resolve().parent.parent
 PUBLISHED_DIR = ROOT / "PUBLISHED/data/hydroclimate"
 BASIN_SOURCE = ROOT / "GEODATA/transboundary_basins_v2"
-LAKES = ROOT / "GEODATA/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb"
+LAKES = hydrosheds_sources.require(
+    "HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb",
+    hint="HydroLAKES v1.0 is the source of every lake and reservoir in this build.",
+)
 ROLES = PUBLISHED_DIR / "basin-hydrological-roles.csv"
 GEOJSON = PUBLISHED_DIR / "water-bodies-transboundary.geojson"
 TABLE = PUBLISHED_DIR / "water-bodies-transboundary.csv"

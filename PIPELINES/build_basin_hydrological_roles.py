@@ -25,15 +25,22 @@ import json
 import os
 from collections import defaultdict
 from datetime import datetime, timezone
+import sys
 from pathlib import Path
 
 import pyogrio
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import hydrosheds_sources  # noqa: E402  (path set above)
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG = ROOT / "ONTOLOGY/vocab/hydroclimate-system.json"
 PUBLISHED_DIR = ROOT / "PUBLISHED/data/hydroclimate"
 BASIN_SOURCE = ROOT / "GEODATA/transboundary_basins_v2"
-RIVERS = ROOT / "GEODATA/HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb"
+RIVERS = hydrosheds_sources.require(
+    "HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb",
+    hint="HydroRIVERS v1.0 (Asia) carries the reach network and its routing.",
+)
 HIERARCHY = PUBLISHED_DIR / "basin-hierarchy.csv"
 OUTPUT = PUBLISHED_DIR / "basin-hydrological-roles.csv"
 MANIFEST = PUBLISHED_DIR / "basin-hydrological-roles.manifest.json"

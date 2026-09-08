@@ -28,3 +28,14 @@ earth_engine.zip
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Reference hydrography downloaded from HydroSHEDS and Global Dam Watch. These
+# are source data, not project source: catalogue them through the ontology,
+# which references them in place via uz:externalLocation. The *.gdb/ rule above
+# already covers the geodatabases; GloRiC ships as a 1.2 GB shapefile and the
+# delivery archives are another 1.7 GB, and GitHub rejects any file over 100 MB.
+earth_engine/earth_engine/GloRiC_v10/
+earth_engine/earth_engine/FFR_v1/
+earth_engine/earth_engine/GDW_v1_0/
+earth_engine/earth_engine/HydroWASTE_v10/
+earth_engine/_source_archives/

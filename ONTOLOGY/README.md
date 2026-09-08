@@ -91,10 +91,42 @@ the predicate must be registered, must be marked `viaRelationshipTable`, must no
 be `mlProposable`, and its domain and range must admit the declared feature types.
 Which tables exist is data, not code — `vocab/relationship-tables.json`.
 
-Six predicates are declared this way, all pipeline-only: `uz:flowsInto`,
+Six predicates were declared this way at first, all pipeline-only: `uz:flowsInto`,
 `uz:drainsToBasin`, `uz:withinBasin`, `uz:subBasinOf`, `uz:coversBasin` and
 `uz:hasBasinStatistic`. A model may propose what a dataset *observes*; it may not
 propose where water goes.
+
+### What acts on the network
+
+The hydrography above says where water goes. Four more predicates say what is done
+to it, and they arrived with two new feature types — `Dam` and `TreatmentPlant` —
+declared under the same rule as the hydrographic three: typed so tables can point
+at them, never minted one feature at a time.
+
+| Predicate | Relates | Read from |
+| --- | --- | --- |
+| `uz:impounds` | Dam → WaterBody | GDW's native `HYLAK_ID` |
+| `uz:barrierOnReach` | Dam → RiverReach | GDW's native `HYRIV_ID` |
+| `uz:dischargesToReach` | TreatmentPlant → RiverReach | HydroWASTE's native `HYRIV_ID` |
+| `uz:hasReachStatistic` | Dataset → RiverReach | GloRiC and FFR, joined on the reach id |
+
+`uz:withinBasin` was widened rather than duplicated: a dam and a treatment plant
+sit in a basin the same way a lake does, so the predicate took two more domain
+types instead of the project growing two near-identical ones.
+
+`uz:hasReachStatistic` is the reach analogue of `uz:hasBasinStatistic`, and one
+predicate carries three sources: GloRiC's classification, the Free-Flowing Rivers
+connectivity index, and HydroWASTE's per-reach effluent load. Nothing about it is
+proposable. A model may say what a dataset measures; it may not say what a river
+*is*, or how far it is still connected.
+
+Two of those sources do not use the column name `HYRIV_ID` — GloRiC calls it
+`Reach_ID`, FFR calls it `REACH_ID` — and neither technical document states that
+these are the same identifier. GloRiC v1.0 was in fact built on an unpublished
+beta of RiverATLAS, so the correspondence was plausible and unproven. It is
+therefore verified at build time rather than assumed: `build_reach_condition.py`
+counts how many published reaches each source resolves and refuses to write a
+table below 99%. Both currently resolve all 46,976.
 
 ### Reaching the atlas from a basin
 

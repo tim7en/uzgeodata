@@ -1,0 +1,49 @@
+{
+ "version": "1.0",
+ "generatedAt": "2026-09-08T19:07:34+00:00",
+ "observationClass": "classification",
+ "spatialScope": "full_basin",
+ "sources": [
+  {
+   "asset": "GloRiC v1.0",
+   "container": "earth_engine/earth_engine/GloRiC_v10/GloRiC_v10_shapefile/GloRiC_v10.shp",
+   "identifierColumn": "Reach_ID",
+   "matchedShare": 1.0,
+   "license": "hydrosheds-license-agreement"
+  },
+  {
+   "asset": "Free-Flowing Rivers v1.0",
+   "container": "earth_engine/earth_engine/FFR_v1/Mapping the worlds free-flowing rivers_Data_Geodatabase/FFR_river_network.gdb",
+   "identifierColumn": "REACH_ID",
+   "matchedShare": 1.0,
+   "license": "hydrosheds-license-agreement"
+  }
+ ],
+ "counts": {
+  "publishedReaches": 46976,
+  "classifiedReaches": 46976,
+  "connectivityReaches": 46976,
+  "nationalReaches": 12188
+ },
+ "connectivityStatusIndex": {
+  "meanAllReaches": 97.85,
+  "meanNationalReaches": 96.64,
+  "min": 11.07
+ },
+ "freeFlowing": {
+  "free-flowing": 42550,
+  "impacted": 2393,
+  "good connectivity": 2033
+ },
+ "reachTypes": 19,
+ "outputs": {
+  "classificationCSV": "PUBLISHED/data/hydroclimate/reach-classification.csv",
+  "connectivityCSV": "PUBLISHED/data/hydroclimate/reach-connectivity.csv"
+ },
+ "qualityNotes": [
+  "GloRiC's Reach_ID and FFR's REACH_ID are not documented as equal to HydroRIVERS HYRIV_ID, and GloRiC v1.0 was built on an unpublished beta of RiverATLAS. The correspondence is therefore verified at build time rather than assumed: this build refuses to write a table when a source resolves less than 99% of the published reaches.",
+  "The Connectivity Status Index is a modelled multi-criteria score, not a measurement. Its threshold of 95 per cent for 'free-flowing' is the convention of Grill et al. 2019 and is carried through unchanged.",
+  "FFR was published in 2019 and GloRiC in 2018. Neither reflects a barrier built since. Rogun in particular has continued to rise, so the regulation pressure on the Vakhsh is understated here.",
+  "GloRiC class numbers are legend codes, not magnitudes: class 7 is not greater than class 3. Their names live in GloRiC_ClassNames_v10.xlsx beside the shapefile."
+ ]
+}

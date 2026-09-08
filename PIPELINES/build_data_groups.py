@@ -49,6 +49,15 @@ def gpkg_count(relative: str, table: str) -> int | None:
         return None
 
 
+def csv_count(relative: str) -> int | None:
+    """Data rows in a CSV, excluding the header."""
+    path = ROOT / relative
+    if not path.exists():
+        return None
+    with path.open(encoding="utf-8", newline="") as handle:
+        return max(sum(1 for _ in handle) - 1, 0)
+
+
 def geojson_count(relative: str) -> int | None:
     path = ROOT / relative
     if not path.exists():
@@ -113,11 +122,54 @@ GROUPS = [
     {
         "code": "HYDROLAKES",
         "title": "Lakes and reservoirs",
-        "what": "Water bodies with area, volume, depth and the basin each sits in.",
-        "source": "HydroSHEDS HydroLAKES v1.0, clipped to Uzbekistan",
-        "held": [],
-        "web": ["PUBLISHED/data/hydrography/lakes.geojson"],
-        "rebuild": "npm run hydrography:build",
+        "what": "Water bodies with area, volume, depth and the basin each sits in, at two scopes: clipped to Uzbekistan, and over the whole Amu and Syr systems.",
+        "source": "HydroSHEDS HydroLAKES v1.0",
+        "held": ["earth_engine/earth_engine/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb"],
+        "web": ["PUBLISHED/data/hydrography/lakes.geojson",
+                "PUBLISHED/data/hydroclimate/water-bodies-transboundary.geojson",
+                "PUBLISHED/data/hydroclimate/water-bodies-transboundary.csv",
+                "PUBLISHED/data/hydroclimate/water-body-basin-links.csv"],
+        "rebuild": "npm run basins:waterbodies",
+        "note": "The national layer holds 647 bodies and 10 reservoirs; the whole-basin layer holds 1,393 and 23, and it is the one that contains Toktogul, Nurek and Kayrakkum.",
+    },
+    {
+        "code": "DAMS",
+        "title": "Dams and reservoir regulation",
+        "what": "Barriers with name, year of completion, height, nominal capacity and operating purpose, linked to the basin, the reach and the water body each one acts on.",
+        "source": "Global Dam Watch v1.0, selected by the full Amu and Syr basin frame",
+        "held": ["earth_engine/earth_engine/GDW_v1_0/GDW_v1_0.gdb"],
+        "web": ["PUBLISHED/data/hydroclimate/dams-transboundary.geojson",
+                "PUBLISHED/data/hydroclimate/dams-transboundary.csv",
+                "PUBLISHED/data/hydroclimate/dam-basin-links.csv",
+                "PUBLISHED/data/hydroclimate/dam-reach-links.csv",
+                "PUBLISHED/data/hydroclimate/dam-water-body-links.csv"],
+        "rebuild": "npm run basins:dams",
+        "note": "GDW carries GRAND_ID, HYRIV_ID, HYLAK_ID and HYBAS_L12 natively, so every link is read from the source rather than computed. CC BY 4.0.",
+    },
+    {
+        "code": "WASTEWATER",
+        "title": "Wastewater treatment plants",
+        "what": "Treatment plants with population served, treated discharge, level of treatment and the dilution factor of the reach receiving the outfall.",
+        "source": "HydroWASTE v1.0, selected by the published Amu and Syr reach network",
+        "held": ["earth_engine/earth_engine/HydroWASTE_v10/HydroWASTE_v10.csv"],
+        "web": ["PUBLISHED/data/hydroclimate/wastewater-plants-transboundary.geojson",
+                "PUBLISHED/data/hydroclimate/wastewater-plants-transboundary.csv",
+                "PUBLISHED/data/hydroclimate/wastewater-reach-links.csv",
+                "PUBLISHED/data/hydroclimate/wastewater-basin-links.csv"],
+        "rebuild": "npm run basins:wastewater",
+        "note": "The project's first water-quality layer. Every Central Asian record is modelled from urban population rather than reported by a register, and the per-plant quality codes say so. CC BY 4.0.",
+    },
+    {
+        "code": "REACHCOND",
+        "title": "River reach classification and connectivity",
+        "what": "What each reach is, from GloRiC's hydrologic, physio-climatic and geomorphic types, and how far it is still connected, from the Free-Flowing Rivers Connectivity Status Index and its six pressure indicators.",
+        "source": "GloRiC v1.0 and Free-Flowing Rivers v1.0, over the published Amu and Syr reaches",
+        "held": ["earth_engine/earth_engine/GloRiC_v10/GloRiC_v10_shapefile/GloRiC_v10.shp",
+                 "earth_engine/earth_engine/FFR_v1/Mapping the worlds free-flowing rivers_Data_Geodatabase/FFR_river_network.gdb"],
+        "web": ["PUBLISHED/data/hydroclimate/reach-classification.csv",
+                "PUBLISHED/data/hydroclimate/reach-connectivity.csv"],
+        "rebuild": "npm run rivers:condition",
+        "note": "Both sources key on their own reach identifier rather than HYRIV_ID; the build verifies the correspondence against the published network and refuses to write a partial table.",
     },
     {
         "code": "BASINATLAS",
@@ -354,7 +406,11 @@ def main() -> None:
                  f"{geojson_count('PUBLISHED/data/admin/adm2.geojson') or 0} districts",
         "HYDROBASINS": f"levels 1-12, {gpkg_count('GEODATA/uzbekistan_basinatlas_v10/uzbekistan_basinatlas_v10.gpkg', 'basinatlas_uz_lev12') or 0} basins at level 12",
         "HYDRORIVERS": f"{geojson_count('PUBLISHED/data/hydrography/rivers-unified.geojson') or 0} reaches",
-        "HYDROLAKES": f"{geojson_count('PUBLISHED/data/hydrography/lakes.geojson') or 0} lakes",
+        "HYDROLAKES": f"{geojson_count('PUBLISHED/data/hydrography/lakes.geojson') or 0} in Uzbekistan, "
+                      f"{csv_count('PUBLISHED/data/hydroclimate/water-bodies-transboundary.csv') or 0} basin-wide",
+        "DAMS": f"{csv_count('PUBLISHED/data/hydroclimate/dams-transboundary.csv') or 0} barriers",
+        "WASTEWATER": f"{csv_count('PUBLISHED/data/hydroclimate/wastewater-plants-transboundary.csv') or 0} plants",
+        "REACHCOND": f"{csv_count('PUBLISHED/data/hydroclimate/reach-connectivity.csv') or 0} reaches scored",
         "BASINATLAS": f"{basin_attributes['attributes']:,} attributes x "
                       f"{len(basin_attributes['ids']):,} matched basins",
         "ENVATLAS": "134 packages catalogued",

@@ -332,9 +332,11 @@
     {
       "id": "uz:withinBasin",
       "label": "within basin",
-      "definition": "The level-12 catchment a water body sits in, resolved from its pour point and, failing that, its centroid. Spatial containment measured against the published basin polygons.",
+      "definition": "A point feature sits inside a basin. WaterBody is resolved from the lake's pour point; Dam and TreatmentPlant carry the level-12 basin natively in their source, so the link is read rather than computed.",
       "domain": [
-        "WaterBody"
+        "WaterBody",
+        "Dam",
+        "TreatmentPlant"
       ],
       "range": {
         "kind": "entity",
@@ -476,6 +478,74 @@
         "kind": "entity",
         "entityTypes": [
           "Basin"
+        ]
+      },
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:hasReachStatistic",
+      "label": "has reach statistic",
+      "definition": "A dataset states a measured value or class for a river reach. The reach analogue of uz:hasBasinStatistic, and the one predicate that carries GloRiC's classification, the Free-Flowing Rivers connectivity indicators and HydroWASTE's per-reach effluent load. Pipeline-only: a model may propose what a dataset observes, never what a river is.",
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "RiverReach"
+        ]
+      },
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:impounds",
+      "label": "impounds",
+      "definition": "A dam holds back a water body. Read from the source's native lake identifier, not from geometry, so the pairing is the data producer's and not this project's.",
+      "domain": [
+        "Dam"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "WaterBody"
+        ]
+      },
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:barrierOnReach",
+      "label": "barrier on reach",
+      "definition": "A dam sits on a river reach and interrupts it. Distinct from uz:impounds, which names the stored water: a run-of-river barrier has a reach but may have no reservoir worth mapping.",
+      "domain": [
+        "Dam"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "RiverReach"
+        ]
+      },
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:dischargesToReach",
+      "label": "discharges to reach",
+      "definition": "A wastewater treatment plant releases treated effluent into a river reach at its outfall. The link that turns a water-quantity network into a water-quality one, because the dilution factor is only meaningful against the discharge of the receiving reach.",
+      "domain": [
+        "TreatmentPlant"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "RiverReach"
         ]
       },
       "cardinality": "many",

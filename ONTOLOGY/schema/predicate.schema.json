@@ -54,7 +54,9 @@
                 "RiverReach",
                 "WaterBody",
                 "AdminArea",
-                "RunoffFormationUnit"
+                "RunoffFormationUnit",
+                "Dam",
+                "TreatmentPlant"
               ]
             }
           },
@@ -85,7 +87,9 @@
                     "RiverReach",
                     "WaterBody",
                     "AdminArea",
-                    "RunoffFormationUnit"
+                    "RunoffFormationUnit",
+                    "Dam",
+                    "TreatmentPlant"
                   ]
                 }
               },

@@ -635,6 +635,16 @@ def test_builder_promotes_only_above_the_threshold(tmp_path):
 
 TOPOLOGY_PREDICATES = {
     "uz:flowsInto", "uz:drainsToBasin", "uz:withinBasin", "uz:subBasinOf",
+    "uz:impounds", "uz:barrierOnReach", "uz:dischargesToReach",
+}
+
+# The feature types topology may relate. Dam and TreatmentPlant joined the
+# hydrographic three when the dam and wastewater layers landed: a dam impounds a
+# water body and sits on a reach, a plant discharges to one. They belong here for
+# the same reason as the others - where a structure sits and what it acts on is
+# measured from a source, never proposed by a model.
+TOPOLOGY_FEATURE_TYPES = {
+    "Basin", "RiverReach", "WaterBody", "Dam", "TreatmentPlant",
 }
 
 
@@ -655,8 +665,8 @@ def test_topology_predicates_are_measured_not_proposed(predicates):
         assert predicate["viaRelationshipTable"] is True, name
         assert predicate["mlProposable"] is False, name
         assert predicate["range"]["kind"] == "entity", name
-        assert set(predicate["domain"]) <= {"Basin", "RiverReach", "WaterBody"}, name
-        assert set(predicate["range"]["entityTypes"]) <= {"Basin", "RiverReach", "WaterBody"}, name
+        assert set(predicate["domain"]) <= TOPOLOGY_FEATURE_TYPES, name
+        assert set(predicate["range"]["entityTypes"]) <= TOPOLOGY_FEATURE_TYPES, name
 
 
 def test_topology_stays_out_of_the_assertion_graph(assertions):
@@ -668,7 +678,7 @@ def test_topology_stays_out_of_the_assertion_graph(assertions):
     expanded = [a for a in assertions if a["predicate"] in TOPOLOGY_PREDICATES]
     assert not expanded, f"{len(expanded)} topology links leaked into assertions.json"
     features = [e for e in load(ROOT / "ONTOLOGY" / "instances" / "entities.json")["entities"]
-                if e["type"] in {"Basin", "RiverReach", "WaterBody", "RunoffFormationUnit"}]
+                if e["type"] in TOPOLOGY_FEATURE_TYPES | {"RunoffFormationUnit"}]
     assert not features, f"{len(features)} feature entities were minted"
 
 

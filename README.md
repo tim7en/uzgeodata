@@ -50,6 +50,10 @@ npm run hydrography:adminlinks # overlay provinces and districts onto the basins
 npm run hydrography:align-basins # publish the canonical BasinATLAS level-12 frame
 npm run headwaters:basins       # download/trace upper Amu and Syr headwater basins
 npm run basins:transboundary    # full Amu/Syr natural systems at levels 7, 10 and 12
+npm run basins:waterbodies      # lakes and reservoirs of the whole Amu/Syr systems
+npm run basins:dams             # Global Dam Watch barriers, with basin/reach/lake links
+npm run basins:wastewater       # HydroWASTE plants and the dilution factor below each
+npm run rivers:condition        # GloRiC reach types and free-flowing connectivity status
 npm run headwaters:elevation    # SRTM elevation-band areas inside headwaters
 npm run headwaters:era5         # append every newly available ERA5-Land month
 npm run headwaters:era5:elevation # the same monthly fields by elevation band

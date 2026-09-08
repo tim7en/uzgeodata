@@ -1,11 +1,11 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T08:47:12+00:00",
+  "generatedAt": "2026-09-08T19:03:38+00:00",
   "observationClass": "inventory",
   "spatialScope": "full_basin",
   "source": {
     "asset": "HydroLAKES v1.0",
-    "container": "GEODATA/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb",
+    "container": "earth_engine/earth_engine/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb",
     "selection": "pour point inside a level-10 unit of the Amu or Syr natural system"
   },
   "counts": {

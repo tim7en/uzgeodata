@@ -31,7 +31,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water|formation)/[a-z0-9-]+$"
+            "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water|formation|dam|plant)/[a-z0-9-]+$"
           },
           "type": {
             "enum": [
@@ -44,9 +44,11 @@
               "RiverReach",
               "WaterBody",
               "AdminArea",
-              "RunoffFormationUnit"
+              "RunoffFormationUnit",
+              "Dam",
+              "TreatmentPlant"
             ],
-            "description": "Basin, RiverReach and WaterBody are the hydrographic feature types. They are declared so predicates and relationship tables can be typed against them; individual features are deliberately not minted as entities, because the topology runs to more than 126,000 links and belongs in the GeoPackage that measures it. A relationship-table Distribution says which features a table relates, under which predicate, and where to read it. AdminArea is the administrative geography: provinces and districts from the OCHA Common Operational Dataset. Like the hydrographic types, individual units are not minted as entities — the basin overlay runs to thousands of rows and belongs in a relationship table. First-level units correspond to concepts in the place scheme; second-level units deliberately do not, because 199 districts would swamp a vocabulary meant to be read by a person."
+            "description": "Basin, RiverReach and WaterBody are the hydrographic feature types. They are declared so predicates and relationship tables can be typed against them; individual features are deliberately not minted as entities, because the topology runs to more than 126,000 links and belongs in the GeoPackage that measures it. A relationship-table Distribution says which features a table relates, under which predicate, and where to read it. AdminArea is the administrative geography: provinces and districts from the OCHA Common Operational Dataset. Like the hydrographic types, individual units are not minted as entities — the basin overlay runs to thousands of rows and belongs in a relationship table. First-level units correspond to concepts in the place scheme; second-level units deliberately do not, because 199 districts would swamp a vocabulary meant to be read by a person. Dam and TreatmentPlant are the engineered point features that act on the network: a dam impounds a water body and sits on a reach, a treatment plant discharges to one. They follow the same rule as the hydrographic types - declared so predicates and relationship tables can be typed against them, never minted one feature at a time."
           },
           "label": {
             "type": "string",
@@ -336,7 +338,9 @@
                     "RiverReach",
                     "WaterBody",
                     "AdminArea",
-                    "RunoffFormationUnit"
+                    "RunoffFormationUnit",
+                    "Dam",
+                    "TreatmentPlant"
                   ]
                 },
                 "objectType": {
@@ -349,7 +353,9 @@
                     "RiverReach",
                     "WaterBody",
                     "AdminArea",
-                    "RunoffFormationUnit"
+                    "RunoffFormationUnit",
+                    "Dam",
+                    "TreatmentPlant"
                   ]
                 },
                 "subjectColumn": {

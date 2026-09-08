@@ -23,12 +23,19 @@ import hashlib
 import json
 import os
 from datetime import datetime, timezone
+import sys
 from pathlib import Path
 
 import pyogrio
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import hydrosheds_sources  # noqa: E402  (path set above)
+
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "GEODATA/HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb"
+SOURCE = hydrosheds_sources.require(
+    "HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb",
+    hint="HydroRIVERS v1.0 (Asia) carries the reach network and its routing.",
+)
 BASINS = ROOT / "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
 ROLES = ROOT / "PUBLISHED/data/hydroclimate/basin-hydrological-roles.csv"
 NATIONAL = ROOT / "PUBLISHED/data/hydrography/relationships.json"

@@ -1,0 +1,213 @@
+{
+ "version": "1.0",
+ "generatedAt": "2026-09-08T19:05:18+00:00",
+ "observationClass": "inventory",
+ "spatialScope": "full_basin",
+ "source": {
+  "asset": "Global Dam Watch v1.0",
+  "container": "earth_engine/earth_engine/GDW_v1_0/GDW_v1_0.gdb",
+  "selection": "native HYBAS_L12 inside a level-12 unit of the Amu or Syr system",
+  "license": "CC-BY-4.0"
+ },
+ "counts": {
+  "dams": 100,
+  "named": 24,
+  "withGrandId": 24,
+  "basinLinks": 200,
+  "reachLinks": 99,
+  "reachLinksInSelection": 99,
+  "waterBodyLinks": 60,
+  "waterBodyLinksInSelection": 54,
+  "inHeadwaterFormation": 23
+ },
+ "storageCapacityMcm": 70055.8,
+ "installedPowerMw": null,
+ "damsReportingPower": 0,
+ "byCountry": {
+  "Afghanistan": 2,
+  "Kazakhstan": 14,
+  "Kyrgyzstan": 15,
+  "Tajikistan": 14,
+  "Uzbekistan": 55
+ },
+ "largestDams": [
+  {
+   "id": 287,
+   "name": "Toktogul",
+   "country": "Kyrgyzstan",
+   "year": 1978,
+   "capacityMcm": 19500.0,
+   "heightM": 215.0,
+   "mainUse": "Hydroelectricity",
+   "system": "syr_darya",
+   "inFormationZone": true
+  },
+  {
+   "id": 6073,
+   "name": "Rogun",
+   "country": "Tajikistan",
+   "year": 1989,
+   "capacityMcm": 13300.0,
+   "heightM": 335.0,
+   "mainUse": "Irrigation",
+   "system": "amu_darya",
+   "inFormationZone": true
+  },
+  {
+   "id": 1537,
+   "name": "Nurek",
+   "country": "Tajikistan",
+   "year": 1980,
+   "capacityMcm": 10500.0,
+   "heightM": 300.0,
+   "mainUse": "Irrigation",
+   "system": "amu_darya",
+   "inFormationZone": true
+  },
+  {
+   "id": 288,
+   "name": "Chardara",
+   "country": "Kazakhstan",
+   "year": 1965,
+   "capacityMcm": 6700.0,
+   "heightM": 27.0,
+   "mainUse": null,
+   "system": "syr_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 292,
+   "name": "Kayrakkum",
+   "country": "Tajikistan",
+   "year": 1957,
+   "capacityMcm": 4200.0,
+   "heightM": 32.0,
+   "mainUse": "Hydroelectricity",
+   "system": "syr_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 7426,
+   "name": null,
+   "country": "Kazakhstan",
+   "year": null,
+   "capacityMcm": 3508.0,
+   "heightM": null,
+   "mainUse": null,
+   "system": "syr_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 1449,
+   "name": "Charvak",
+   "country": "Uzbekistan",
+   "year": 1977,
+   "capacityMcm": 2000.0,
+   "heightM": 168.0,
+   "mainUse": "Hydroelectricity",
+   "system": "syr_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 1475,
+   "name": "Andizhan",
+   "country": "Kyrgyzstan",
+   "year": 1980,
+   "capacityMcm": 1800.0,
+   "heightM": 115.0,
+   "mainUse": "Hydroelectricity",
+   "system": "syr_darya",
+   "inFormationZone": true
+  },
+  {
+   "id": 1539,
+   "name": "Talimarjan",
+   "country": "Uzbekistan",
+   "year": 1985,
+   "capacityMcm": 1525.0,
+   "heightM": 35.0,
+   "mainUse": null,
+   "system": "amu_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 1501,
+   "name": "Kattakurgan",
+   "country": "Uzbekistan",
+   "year": 1968,
+   "capacityMcm": 900.0,
+   "heightM": 31.0,
+   "mainUse": "Irrigation",
+   "system": "amu_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 1559,
+   "name": "Yuzhnosurkhansk",
+   "country": "Uzbekistan",
+   "year": 1967,
+   "capacityMcm": 800.0,
+   "heightM": 30.0,
+   "mainUse": "Irrigation",
+   "system": "amu_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 34769,
+   "name": null,
+   "country": "Uzbekistan",
+   "year": null,
+   "capacityMcm": 722.9,
+   "heightM": null,
+   "mainUse": null,
+   "system": "syr_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 1525,
+   "name": "Chimkurgan",
+   "country": "Uzbekistan",
+   "year": 1963,
+   "capacityMcm": 500.0,
+   "heightM": 33.0,
+   "mainUse": null,
+   "system": "amu_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 27871,
+   "name": null,
+   "country": "Tajikistan",
+   "year": null,
+   "capacityMcm": 446.1,
+   "heightM": null,
+   "mainUse": null,
+   "system": "syr_darya",
+   "inFormationZone": false
+  },
+  {
+   "id": 34775,
+   "name": null,
+   "country": "Uzbekistan",
+   "year": null,
+   "capacityMcm": 417.7,
+   "heightM": null,
+   "mainUse": null,
+   "system": "amu_darya",
+   "inFormationZone": false
+  }
+ ],
+ "outputs": {
+  "csv": "PUBLISHED/data/hydroclimate/dams-transboundary.csv",
+  "geojson": "PUBLISHED/data/hydroclimate/dams-transboundary.geojson",
+  "basinLinkCSV": "PUBLISHED/data/hydroclimate/dam-basin-links.csv",
+  "reachLinkCSV": "PUBLISHED/data/hydroclimate/dam-reach-links.csv",
+  "waterBodyLinkCSV": "PUBLISHED/data/hydroclimate/dam-water-body-links.csv"
+ },
+ "qualityNotes": [
+  "GDW records -99 for an unreported number. Those become empty cells here, never zero, because zero height and zero capacity are both legitimate values. Installed power is unreported for every barrier in this region, so installedPowerMw is null rather than the 0 MW a naive sum would publish for a basin that runs on hydropower.",
+  "capacity_mcm is nominal storage as designed or reported, not an operating level. This layer says a structure exists and how much it can hold; it never says how full it is on a given day.",
+  "A dam is placed by the level-12 basin GDW itself assigns, so the placement is read from the source rather than recomputed. Where GDW's HYRIV_ID or HYLAK_ID falls outside this project's published selection the row is kept and the scope column records it, rather than dropping the link.",
+  "GDW v1.0 supersedes GRanD v1.3 and GRanD is being discontinued. grand_id is kept as the cross-reference to HydroLAKES, whose Grand_id column still carries the older identifier."
+ ]
+}

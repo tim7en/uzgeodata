@@ -294,10 +294,16 @@ def validate(root: Path, strict: bool = False) -> Report:
     for tid, table in declared.items():
         container = table["container"]
         if container not in registered:
-            report.warn(
-                f"relationship table {tid} is declared but not registered; "
-                f"{container} has not been built"
-            )
+            # Two very different situations produced the same sentence before:
+            # the rows genuinely do not exist yet, and the rows exist but the
+            # graph has not been regenerated since they were declared. Only the
+            # first is a missing measurement; the second is a stale build, and
+            # telling a curator their file "has not been built" while it sits on
+            # disk sends them looking for the wrong problem.
+            reason = ("its rows exist but the graph has not been rebuilt since it was declared"
+                      if (root / container).exists()
+                      else f"{container} has not been built")
+            report.warn(f"relationship table {tid} is declared but not registered; {reason}")
 
     # A feature type exists to be pointed at. If one is used by no table and no
     # entity, it is dead vocabulary.

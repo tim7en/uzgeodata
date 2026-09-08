@@ -1,0 +1,251 @@
+{
+ "version": "1.0",
+ "generatedAt": "2026-09-08T19:06:29+00:00",
+ "observationClass": "inventory",
+ "spatialScope": "full_basin",
+ "source": {
+  "asset": "HydroWASTE v1.0",
+  "container": "earth_engine/earth_engine/HydroWASTE_v10/HydroWASTE_v10.csv",
+  "selection": "outfall reach present in the published Amu and Syr river network",
+  "license": "CC-BY-4.0"
+ },
+ "counts": {
+  "plants": 53,
+  "named": 0,
+  "reportedByRegister": 0,
+  "withDilutionFactor": 50,
+  "reachLinks": 53,
+  "basinLinks": 53,
+  "distinctBasins": 43,
+  "inHeadwaterFormation": 12
+ },
+ "populationServed": 6945775,
+ "effluentM3PerDay": 428530.8,
+ "dilutionFactor": {
+  "min": 5.0,
+  "median": 410.484,
+  "max": 167926.624,
+  "below10": 6
+ },
+ "byCountry": {
+  "Uzbekistan": 34,
+  "Kyrgyzstan": 8,
+  "Tajikistan": 5,
+  "Kazakhstan": 3,
+  "Turkmenistan": 2,
+  "Afghanistan": 1
+ },
+ "byTreatmentLevel": {
+  "Secondary": 47,
+  "Primary": 6
+ },
+ "largestPlants": [
+  {
+   "id": 56079,
+   "name": null,
+   "country": "Tajikistan",
+   "populationServed": 886060,
+   "effluentM3PerDay": 16722.777,
+   "dilutionFactor": 410.484,
+   "outfall": [
+    68.731,
+    38.456
+   ],
+   "system": "amu_darya"
+  },
+  {
+   "id": 56258,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 837451,
+   "effluentM3PerDay": 62458.197,
+   "dilutionFactor": 328.645,
+   "outfall": [
+    69.169,
+    41.119
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56288,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 783351,
+   "effluentM3PerDay": 58423.328,
+   "dilutionFactor": 350.384,
+   "outfall": [
+    69.265,
+    41.202
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56252,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 543951,
+   "effluentM3PerDay": 40568.602,
+   "dilutionFactor": 505.679,
+   "outfall": [
+    69.148,
+    41.094
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56171,
+   "name": null,
+   "country": "Kyrgyzstan",
+   "populationServed": 409158,
+   "effluentM3PerDay": 8310.069,
+   "dilutionFactor": 122.316,
+   "outfall": [
+    72.831,
+    40.485
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56197,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 397368,
+   "effluentM3PerDay": 29636.243,
+   "dilutionFactor": 215.771,
+   "outfall": [
+    72.315,
+    40.856
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56213,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 322288,
+   "effluentM3PerDay": 24036.674,
+   "dilutionFactor": 1634.47,
+   "outfall": [
+    71.756,
+    40.902
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56244,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 208496,
+   "effluentM3PerDay": 15549.925,
+   "dilutionFactor": 1328.633,
+   "outfall": [
+    69.11,
+    41.081
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56307,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 192673,
+   "effluentM3PerDay": 14369.766,
+   "dilutionFactor": 11.396,
+   "outfall": [
+    69.165,
+    41.173
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56208,
+   "name": null,
+   "country": "Kyrgyzstan",
+   "populationServed": 189107,
+   "effluentM3PerDay": 3840.804,
+   "dilutionFactor": 197.857,
+   "outfall": [
+    73.023,
+    41.027
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56080,
+   "name": null,
+   "country": "Tajikistan",
+   "populationServed": 158948,
+   "effluentM3PerDay": 2999.849,
+   "dilutionFactor": 148.923,
+   "outfall": [
+    68.177,
+    38.44
+   ],
+   "system": "amu_darya"
+  },
+  {
+   "id": 56227,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 144909,
+   "effluentM3PerDay": 10807.498,
+   "dilutionFactor": 156.852,
+   "outfall": [
+    69.235,
+    41.035
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56046,
+   "name": null,
+   "country": "Tajikistan",
+   "populationServed": 136445,
+   "effluentM3PerDay": 2575.143,
+   "dilutionFactor": 17457.061,
+   "outfall": [
+    68.865,
+    37.885
+   ],
+   "system": "amu_darya"
+  },
+  {
+   "id": 56346,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 126696,
+   "effluentM3PerDay": 9449.168,
+   "dilutionFactor": 2140.233,
+   "outfall": [
+    69.498,
+    41.356
+   ],
+   "system": "syr_darya"
+  },
+  {
+   "id": 56311,
+   "name": null,
+   "country": "Uzbekistan",
+   "populationServed": 126224,
+   "effluentM3PerDay": 9413.926,
+   "dilutionFactor": 21.834,
+   "outfall": [
+    69.065,
+    41.185
+   ],
+   "system": "syr_darya"
+  }
+ ],
+ "outputs": {
+  "csv": "PUBLISHED/data/hydroclimate/wastewater-plants-transboundary.csv",
+  "geojson": "PUBLISHED/data/hydroclimate/wastewater-plants-transboundary.geojson",
+  "reachLinkCSV": "PUBLISHED/data/hydroclimate/wastewater-reach-links.csv",
+  "basinLinkCSV": "PUBLISHED/data/hydroclimate/wastewater-basin-links.csv"
+ },
+ "qualityNotes": [
+  "Every plant in this selection comes from HydroWASTE source 12, 'remaining countries'. None was supplied by a national register: the plant is inferred from urban population, its discharge and treatment level are modelled, and no record carries a name. reported_by_register is 0 on every row for that reason. Treat this as a modelled pressure surface, not an inventory of real plants.",
+  "The outfall is an estimated location, not a surveyed one. It is what carries the reach association, so a misplaced outfall moves the plant to the wrong reach and with it the dilution factor.",
+  "The dilution factor uses long-term average natural discharge. In a basin this heavily abstracted the water actually present in an irrigation season is far less than the natural average, so these values are optimistic - the real dilution downstream of a city in August is worse than the number here.",
+  "A plant with no dilution factor discharges to an endorheic sink or a large lake, where the ratio is undefined rather than missing."
+ ]
+}

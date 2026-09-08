@@ -11,41 +11,132 @@
       "license": "ODbL-1.0",
       "attribution": "© OpenStreetMap contributors, extract via Geofabrik / mapcruzin.com",
       "accessPolicy": "free",
-      "temporal": {"start": 2014, "end": 2014},
+      "temporal": {
+        "start": 2014,
+        "end": 2014
+      },
       "note": "Already converted to GeoJSON in WORKSPACE/derived/osm-geojson; catalogued here so the licence, the 2014 vintage and the provenance travel with the derivatives.",
       "datasets": [
-        {"slug": "osm-buildings", "label": "OSM building footprints", "match": ["buildings/buildings.shp"],
-         "derived": ["WORKSPACE/derived/osm-geojson/buildings.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/building-footprint", "uz:prop/settlement-extent"],
-         "useCases": ["uz:usecase/urban-and-settlement-planning"]},
-        {"slug": "osm-landuse", "label": "OSM land use", "match": ["landuse/landuse.shp"],
-         "derived": ["WORKSPACE/derived/osm-geojson/landuse.geojson"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/land-use-type"],
-         "useCases": ["uz:usecase/urban-and-settlement-planning"]},
-        {"slug": "osm-natural", "label": "OSM natural features", "match": ["natural/natural.shp"],
-         "derived": ["WORKSPACE/derived/osm-geojson/natural.geojson"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/land-cover"]},
-        {"slug": "osm-places", "label": "OSM populated places", "match": ["places/places.shp"],
-         "derived": ["WORKSPACE/derived/osm-geojson/places.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/settlement-extent"],
-         "useCases": ["uz:usecase/urban-and-settlement-planning"]},
-        {"slug": "osm-points", "label": "OSM points of interest", "match": ["points/points.shp"],
-         "derived": ["WORKSPACE/derived/osm-geojson/points.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/point-of-interest"]},
-        {"slug": "osm-railways", "label": "OSM railways", "match": ["railways/railways.shp"],
-         "derived": ["WORKSPACE/derived/osm-geojson/railways.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/railway-network"]},
-        {"slug": "osm-waterways", "label": "OSM waterways", "match": ["waterways/waterways.shp"],
-         "derived": ["WORKSPACE/derived/osm-geojson/waterways.geojson", "WORKSPACE/derived/osm-geojson/water-bodies.geojson"],
-         "theme": "uz:theme/water", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/surface-water-extent", "uz:prop/irrigation-canal-network"],
-         "useCases": ["uz:usecase/water-resource-allocation"]}
+        {
+          "slug": "osm-buildings",
+          "label": "OSM building footprints",
+          "match": [
+            "buildings/buildings.shp"
+          ],
+          "derived": [
+            "WORKSPACE/derived/osm-geojson/buildings.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/building-footprint",
+            "uz:prop/settlement-extent"
+          ],
+          "useCases": [
+            "uz:usecase/urban-and-settlement-planning"
+          ]
+        },
+        {
+          "slug": "osm-landuse",
+          "label": "OSM land use",
+          "match": [
+            "landuse/landuse.shp"
+          ],
+          "derived": [
+            "WORKSPACE/derived/osm-geojson/landuse.geojson"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/land-use-type"
+          ],
+          "useCases": [
+            "uz:usecase/urban-and-settlement-planning"
+          ]
+        },
+        {
+          "slug": "osm-natural",
+          "label": "OSM natural features",
+          "match": [
+            "natural/natural.shp"
+          ],
+          "derived": [
+            "WORKSPACE/derived/osm-geojson/natural.geojson"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/land-cover"
+          ]
+        },
+        {
+          "slug": "osm-places",
+          "label": "OSM populated places",
+          "match": [
+            "places/places.shp"
+          ],
+          "derived": [
+            "WORKSPACE/derived/osm-geojson/places.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/settlement-extent"
+          ],
+          "useCases": [
+            "uz:usecase/urban-and-settlement-planning"
+          ]
+        },
+        {
+          "slug": "osm-points",
+          "label": "OSM points of interest",
+          "match": [
+            "points/points.shp"
+          ],
+          "derived": [
+            "WORKSPACE/derived/osm-geojson/points.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/point-of-interest"
+          ]
+        },
+        {
+          "slug": "osm-railways",
+          "label": "OSM railways",
+          "match": [
+            "railways/railways.shp"
+          ],
+          "derived": [
+            "WORKSPACE/derived/osm-geojson/railways.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/railway-network"
+          ]
+        },
+        {
+          "slug": "osm-waterways",
+          "label": "OSM waterways",
+          "match": [
+            "waterways/waterways.shp"
+          ],
+          "derived": [
+            "WORKSPACE/derived/osm-geojson/waterways.geojson",
+            "WORKSPACE/derived/osm-geojson/water-bodies.geojson"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/surface-water-extent",
+            "uz:prop/irrigation-canal-network"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation"
+          ]
+        }
       ]
     },
     {
@@ -56,78 +147,223 @@
       "license": "restricted-internal",
       "attribution": "State cadastre (UZKAD) extraction, August 2025",
       "accessPolicy": "internal",
-      "temporal": {"start": 2025, "end": 2025},
-      "qualityFlags": ["licence-not-cleared-for-publication"],
+      "temporal": {
+        "start": 2025,
+        "end": 2025
+      },
+      "qualityFlags": [
+        "licence-not-cleared-for-publication"
+      ],
       "note": "Parcel-level legal geometry. Authoritative for tenure, not for physical land cover. Layer names in the data record the UZKAD export batches they came from.",
       "datasets": [
-        {"slug": "cadastre-agriculture-fields", "label": "Cadastre: agricultural fields",
-         "match": ["Shape_files/AgricultureFields_production_ready.geojson"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/cadastral-parcel", "uz:prop/cropland-extent"],
-         "useCases": ["uz:usecase/irrigation-planning", "uz:usecase/land-degradation-monitoring"]},
-        {"slug": "cadastre-apartment-housing", "label": "Cadastre: apartment housing parcels",
-         "match": ["Shape_files/APPHOUSE_production_ready.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/building-footprint", "uz:prop/land-tenure"],
-         "useCases": ["uz:usecase/urban-and-settlement-planning"]},
-        {"slug": "cadastre-buildings", "label": "Cadastre: buildings",
-         "match": ["Shape_files/Buildings_production_ready.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/building-footprint"],
-         "useCases": ["uz:usecase/urban-and-settlement-planning"]},
-        {"slug": "cadastre-forest-agency-lands", "label": "Cadastre: forestry agency lands",
-         "match": ["Shape_files/ForestAgencyLands_production_ready.geojson"],
-         "theme": "uz:theme/forests-carbon", "analysis": "uz:analysis/resource-system",
-         "observes": ["uz:prop/land-tenure", "uz:prop/forest-cover"],
-         "useCases": ["uz:usecase/carbon-accounting", "uz:usecase/conservation-planning"]},
-        {"slug": "cadastre-private-plots", "label": "Cadastre: private plots",
-         "match": ["Shape_files/HighResPrivate_production_ready.geojson"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/land-tenure", "uz:prop/cadastral-parcel"]},
-        {"slug": "cadastre-highways", "label": "Cadastre: highways",
-         "match": ["Shape_files/Highways_production_ready.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/road-network"],
-         "useCases": ["uz:usecase/urban-and-settlement-planning"]},
-        {"slug": "cadastre-land-stock", "label": "Cadastre: land stock",
-         "match": ["Shape_files/LandStock_production_ready.geojson"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/resource-system",
-         "observes": ["uz:prop/land-tenure", "uz:prop/cadastral-parcel"]},
-        {"slug": "cadastre-non-residential", "label": "Cadastre: non-residential parcels",
-         "match": ["Shape_files/NotResidential_production_ready.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/land-tenure", "uz:prop/building-footprint"]},
-        {"slug": "cadastre-protected-areas", "label": "Cadastre: protected areas",
-         "match": ["Shape_files/ProtectedAreas_production_ready.geojson"],
-         "theme": "uz:theme/biodiversity", "analysis": "uz:analysis/resource-system",
-         "observes": ["uz:prop/protected-area"],
-         "useCases": ["uz:usecase/conservation-planning"],
-         "note": "71 polygons against the atlas layer's 62; the two delineations need reconciling before either is cited as the national figure."},
-        {"slug": "cadastre-railways", "label": "Cadastre: railway corridors",
-         "match": ["Shape_files/Railways_production_ready.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/railway-network"]},
-        {"slug": "cadastre-shared-lands", "label": "Cadastre: shared lands",
-         "match": ["Shape_files/SharedLands_production_ready.geojson"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/resource-system",
-         "observes": ["uz:prop/land-tenure"]},
-        {"slug": "cadastre-water", "label": "Cadastre: water objects",
-         "match": ["Shape_files/Water_production_ready.geojson"],
-         "theme": "uz:theme/water", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/surface-water-extent"],
-         "useCases": ["uz:usecase/water-resource-allocation"]},
-        {"slug": "tashkent-city-boundary", "label": "Tashkent city boundary",
-         "match": ["Shape_files/Tashkent_borders.geojson"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/administrative-boundary"],
-         "places": ["uz:place/tashkent-city"]},
-        {"slug": "landcover-training-samples", "label": "Land-cover training samples",
-         "match": ["Shape_files/landcover_training.shp", "Shape_files/landcover_training.geojson"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/state-observation",
-         "observes": ["uz:prop/annotation-labels", "uz:prop/land-cover"],
-         "useCases": ["uz:usecase/land-degradation-monitoring"],
-         "classLabelField": "class",
-         "note": "198,615 labelled polygons across 11 classes, assembled from the per-class cadastre exports. The training asset for a supervised land-cover model; class balance is extreme, so it must be sampled rather than used as-is."}
+        {
+          "slug": "cadastre-agriculture-fields",
+          "label": "Cadastre: agricultural fields",
+          "match": [
+            "Shape_files/AgricultureFields_production_ready.geojson"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/cadastral-parcel",
+            "uz:prop/cropland-extent"
+          ],
+          "useCases": [
+            "uz:usecase/irrigation-planning",
+            "uz:usecase/land-degradation-monitoring"
+          ]
+        },
+        {
+          "slug": "cadastre-apartment-housing",
+          "label": "Cadastre: apartment housing parcels",
+          "match": [
+            "Shape_files/APPHOUSE_production_ready.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/building-footprint",
+            "uz:prop/land-tenure"
+          ],
+          "useCases": [
+            "uz:usecase/urban-and-settlement-planning"
+          ]
+        },
+        {
+          "slug": "cadastre-buildings",
+          "label": "Cadastre: buildings",
+          "match": [
+            "Shape_files/Buildings_production_ready.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/building-footprint"
+          ],
+          "useCases": [
+            "uz:usecase/urban-and-settlement-planning"
+          ]
+        },
+        {
+          "slug": "cadastre-forest-agency-lands",
+          "label": "Cadastre: forestry agency lands",
+          "match": [
+            "Shape_files/ForestAgencyLands_production_ready.geojson"
+          ],
+          "theme": "uz:theme/forests-carbon",
+          "analysis": "uz:analysis/resource-system",
+          "observes": [
+            "uz:prop/land-tenure",
+            "uz:prop/forest-cover"
+          ],
+          "useCases": [
+            "uz:usecase/carbon-accounting",
+            "uz:usecase/conservation-planning"
+          ]
+        },
+        {
+          "slug": "cadastre-private-plots",
+          "label": "Cadastre: private plots",
+          "match": [
+            "Shape_files/HighResPrivate_production_ready.geojson"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/land-tenure",
+            "uz:prop/cadastral-parcel"
+          ]
+        },
+        {
+          "slug": "cadastre-highways",
+          "label": "Cadastre: highways",
+          "match": [
+            "Shape_files/Highways_production_ready.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/road-network"
+          ],
+          "useCases": [
+            "uz:usecase/urban-and-settlement-planning"
+          ]
+        },
+        {
+          "slug": "cadastre-land-stock",
+          "label": "Cadastre: land stock",
+          "match": [
+            "Shape_files/LandStock_production_ready.geojson"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/resource-system",
+          "observes": [
+            "uz:prop/land-tenure",
+            "uz:prop/cadastral-parcel"
+          ]
+        },
+        {
+          "slug": "cadastre-non-residential",
+          "label": "Cadastre: non-residential parcels",
+          "match": [
+            "Shape_files/NotResidential_production_ready.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/land-tenure",
+            "uz:prop/building-footprint"
+          ]
+        },
+        {
+          "slug": "cadastre-protected-areas",
+          "label": "Cadastre: protected areas",
+          "match": [
+            "Shape_files/ProtectedAreas_production_ready.geojson"
+          ],
+          "theme": "uz:theme/biodiversity",
+          "analysis": "uz:analysis/resource-system",
+          "observes": [
+            "uz:prop/protected-area"
+          ],
+          "useCases": [
+            "uz:usecase/conservation-planning"
+          ],
+          "note": "71 polygons against the atlas layer's 62; the two delineations need reconciling before either is cited as the national figure."
+        },
+        {
+          "slug": "cadastre-railways",
+          "label": "Cadastre: railway corridors",
+          "match": [
+            "Shape_files/Railways_production_ready.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/railway-network"
+          ]
+        },
+        {
+          "slug": "cadastre-shared-lands",
+          "label": "Cadastre: shared lands",
+          "match": [
+            "Shape_files/SharedLands_production_ready.geojson"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/resource-system",
+          "observes": [
+            "uz:prop/land-tenure"
+          ]
+        },
+        {
+          "slug": "cadastre-water",
+          "label": "Cadastre: water objects",
+          "match": [
+            "Shape_files/Water_production_ready.geojson"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/surface-water-extent"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation"
+          ]
+        },
+        {
+          "slug": "tashkent-city-boundary",
+          "label": "Tashkent city boundary",
+          "match": [
+            "Shape_files/Tashkent_borders.geojson"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/administrative-boundary"
+          ],
+          "places": [
+            "uz:place/tashkent-city"
+          ]
+        },
+        {
+          "slug": "landcover-training-samples",
+          "label": "Land-cover training samples",
+          "match": [
+            "Shape_files/landcover_training.shp",
+            "Shape_files/landcover_training.geojson"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/state-observation",
+          "observes": [
+            "uz:prop/annotation-labels",
+            "uz:prop/land-cover"
+          ],
+          "useCases": [
+            "uz:usecase/land-degradation-monitoring"
+          ],
+          "classLabelField": "class",
+          "note": "198,615 labelled polygons across 11 classes, assembled from the per-class cadastre exports. The training asset for a supervised land-cover model; class balance is extreme, so it must be sampled rather than used as-is."
+        }
       ]
     },
     {
@@ -139,41 +375,110 @@
       "attribution": "Uzhydromet, delivery of 2022-05-26",
       "accessPolicy": "internal",
       "datasets": [
-        {"slug": "meteorological-station-network", "label": "Meteorological station network",
-         "match": ["Meteostan sheip original/МетеоСтанции.shp"],
-         "theme": "uz:theme/climate", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/monitoring-station"],
-         "stations": {"network": "uzhydromet-meteo", "encoding": "cp1251", "keyField": "NomerS",
-                      "nameField": "NameSt", "xField": "POINT_X", "yField": "POINT_Y",
-                      "classField": "nameCat"},
-         "qualityFlags": ["attribute-encoding-cp1251", "station-key-not-wmo-index"],
-         "note": "86 stations. The .dbf carries no encoding declaration and must be read as cp1251 or the names arrive as mojibake. Station numbers are six-digit operator codes, not the five-digit WMO indices used by the climate workbooks, so the two cannot be joined until a crosswalk is supplied."},
-        {"slug": "station-air-temperature-series", "label": "Station air-temperature series",
-         "match": ["Excel files/Andijan+Namangan+Fergana.xlsx", "Excel files/Bukhara+Samarkand.xlsx",
-                   "Excel files/Jizzak+Syrdarya.xlsx", "Excel files/Karakalpakstan.xlsx",
-                   "Excel files/Kashkadarya+Surkhandarya.xlsx", "Excel files/Khorezm+Navoi.xlsx",
-                   "Excel files/Tashkent.xlsx"],
-         "theme": "uz:theme/climate", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/air-temperature", "uz:prop/monitoring-station"],
-         "useCases": ["uz:usecase/drought-early-warning"],
-         "note": "One sheet per station, named '<WMO index> <station>', each a Years x months matrix running October to September. Roughly 70 stations across seven workbooks: the ground truth the atlas temperature trend rasters were interpolated from."},
-        {"slug": "station-soil-temperature-series", "label": "Station soil-temperature series",
-         "match": ["Excel files/Температура почвы.xlsx"],
-         "theme": "uz:theme/climate", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/soil-temperature", "uz:prop/monitoring-station"]},
-        {"slug": "kamchik-pass-climate-series", "label": "Kamchik pass temperature and precipitation",
-         "match": ["Excel files/Камчик_температура_воздуха_и_осадки.xlsx"],
-         "theme": "uz:theme/climate", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/air-temperature", "uz:prop/precipitation"]},
-        {"slug": "river-gauge-inventory", "label": "River gauge inventory",
-         "match": ["Excel files/gages_data_rus.xlsx", "Excel files/Water discharges.xlsx"],
-         "theme": "uz:theme/water", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/river-discharge", "uz:prop/monitoring-station"],
-         "useCases": ["uz:usecase/water-resource-allocation", "uz:usecase/disaster-risk-reduction"],
-         "stations": {"network": "uzhydromet-gauge", "sheet": "Лист1", "keyField": "INDEX",
-                      "nameField": "RIVERS", "xField": "X", "yField": "Y", "classField": "LOCATION",
-                      "labelIncludesClass": true},
-         "note": "Gauge list with coordinates, so the discharge series can be mapped. This is the missing link between the hydrological tables and the river network."}
+        {
+          "slug": "meteorological-station-network",
+          "label": "Meteorological station network",
+          "match": [
+            "Meteostan sheip original/МетеоСтанции.shp"
+          ],
+          "theme": "uz:theme/climate",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/monitoring-station"
+          ],
+          "stations": {
+            "network": "uzhydromet-meteo",
+            "encoding": "cp1251",
+            "keyField": "NomerS",
+            "nameField": "NameSt",
+            "xField": "POINT_X",
+            "yField": "POINT_Y",
+            "classField": "nameCat"
+          },
+          "qualityFlags": [
+            "attribute-encoding-cp1251",
+            "station-key-not-wmo-index"
+          ],
+          "note": "86 stations. The .dbf carries no encoding declaration and must be read as cp1251 or the names arrive as mojibake. Station numbers are six-digit operator codes, not the five-digit WMO indices used by the climate workbooks, so the two cannot be joined until a crosswalk is supplied."
+        },
+        {
+          "slug": "station-air-temperature-series",
+          "label": "Station air-temperature series",
+          "match": [
+            "Excel files/Andijan+Namangan+Fergana.xlsx",
+            "Excel files/Bukhara+Samarkand.xlsx",
+            "Excel files/Jizzak+Syrdarya.xlsx",
+            "Excel files/Karakalpakstan.xlsx",
+            "Excel files/Kashkadarya+Surkhandarya.xlsx",
+            "Excel files/Khorezm+Navoi.xlsx",
+            "Excel files/Tashkent.xlsx"
+          ],
+          "theme": "uz:theme/climate",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/air-temperature",
+            "uz:prop/monitoring-station"
+          ],
+          "useCases": [
+            "uz:usecase/drought-early-warning"
+          ],
+          "note": "One sheet per station, named '<WMO index> <station>', each a Years x months matrix running October to September. Roughly 70 stations across seven workbooks: the ground truth the atlas temperature trend rasters were interpolated from."
+        },
+        {
+          "slug": "station-soil-temperature-series",
+          "label": "Station soil-temperature series",
+          "match": [
+            "Excel files/Температура почвы.xlsx"
+          ],
+          "theme": "uz:theme/climate",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/soil-temperature",
+            "uz:prop/monitoring-station"
+          ]
+        },
+        {
+          "slug": "kamchik-pass-climate-series",
+          "label": "Kamchik pass temperature and precipitation",
+          "match": [
+            "Excel files/Камчик_температура_воздуха_и_осадки.xlsx"
+          ],
+          "theme": "uz:theme/climate",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/air-temperature",
+            "uz:prop/precipitation"
+          ]
+        },
+        {
+          "slug": "river-gauge-inventory",
+          "label": "River gauge inventory",
+          "match": [
+            "Excel files/gages_data_rus.xlsx",
+            "Excel files/Water discharges.xlsx"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/river-discharge",
+            "uz:prop/monitoring-station"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation",
+            "uz:usecase/disaster-risk-reduction"
+          ],
+          "stations": {
+            "network": "uzhydromet-gauge",
+            "sheet": "Лист1",
+            "keyField": "INDEX",
+            "nameField": "RIVERS",
+            "xField": "X",
+            "yField": "Y",
+            "classField": "LOCATION",
+            "labelIncludesClass": true
+          },
+          "note": "Gauge list with coordinates, so the discharge series can be mapped. This is the missing link between the hydrological tables and the river network."
+        }
       ]
     },
     {
@@ -184,55 +489,167 @@
       "license": "restricted-internal",
       "attribution": "Delivered by Uzhydromet, 2022-05-26; underlying compiler not stated in the files",
       "accessPolicy": "internal",
-      "qualityFlags": ["originating-agency-unconfirmed"],
+      "qualityFlags": [
+        "originating-agency-unconfirmed"
+      ],
       "datasets": [
-        {"slug": "crop-statistics-2012-2020", "label": "Crop statistics, all and irrigated land, 2012-2020",
-         "match": ["Агро/converted_excel_2012-2020/"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/sown-area", "uz:prop/gross-harvest", "uz:prop/crop-yield", "uz:prop/irrigated-area"],
-         "useCases": ["uz:usecase/irrigation-planning", "uz:usecase/land-degradation-monitoring"],
-         "temporal": {"start": 2012, "end": 2020},
-         "note": "'Барча ерлар' (all land) and 'Суғориладиган ерлар' (irrigated land), hundreds of sheets per workbook. The per-district, per-year yield labels a crop model would need."},
-        {"slug": "crop-statistics-2005-2011", "label": "Crop statistics, all land, 2005-2011",
-         "match": ["Агро/ДИН На всех земель 2005-2011/"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/sown-area", "uz:prop/gross-harvest", "uz:prop/crop-yield"],
-         "temporal": {"start": 2005, "end": 2011}},
-        {"slug": "crop-statistics-irrigated-2005-2011", "label": "Crop statistics, irrigated land, 2005-2011",
-         "match": ["Агро/ДИН на ОРОШАЕМЫХ ЗЕМЕЛ 2005-2011/"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/sown-area", "uz:prop/gross-harvest", "uz:prop/crop-yield", "uz:prop/irrigated-area"],
-         "useCases": ["uz:usecase/irrigation-planning"],
-         "temporal": {"start": 2005, "end": 2011}},
-        {"slug": "crop-production-2005-2021", "label": "Crop production bulletins, 2005-2021",
-         "match": ["Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/gross-harvest", "uz:prop/crop-yield", "uz:prop/sown-area"],
-         "temporal": {"start": 2005, "end": 2021}},
-        {"slug": "fertiliser-application-2007-2020", "label": "Fertiliser application, 2007-2020",
-         "match": ["УДОБРЕНИЕ 2007-2020/", "Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/УДОБРЕНИЕ 2007-2020 +/"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/fertiliser-application"],
-         "useCases": ["uz:usecase/land-degradation-monitoring"],
-         "temporal": {"start": 2007, "end": 2020},
-         "note": "Delivered twice, once standalone and once inside the Uzhydromet transfer; both copies are recorded as distributions of one dataset."},
-        {"slug": "land-use-statistics-2005-2020", "label": "Land-use statistics, 2005-2020",
-         "match": ["Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/землепользование 2005-2020.xlsx",
-                   "Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Ёпик майдон маъл.+.xlsx"],
-         "theme": "uz:theme/land-agriculture", "analysis": "uz:analysis/change-over-time",
-         "observes": ["uz:prop/land-use-type", "uz:prop/cropland-extent"],
-         "temporal": {"start": 2005, "end": 2020}},
-        {"slug": "regional-evapotranspiration-2020", "label": "Monthly mean evapotranspiration by region, 2020",
-         "match": ["monthly_mean_et.csv"],
-         "theme": "uz:theme/climate", "analysis": "uz:analysis/state-observation",
-         "observes": ["uz:prop/evapotranspiration"],
-         "useCases": ["uz:usecase/irrigation-planning", "uz:usecase/drought-early-warning"],
-         "temporal": {"start": 2020, "end": 2020},
-         "places": ["uz:place/karakalpakstan", "uz:place/andijan", "uz:place/bukhara", "uz:place/fergana",
-                    "uz:place/jizzakh", "uz:place/kashkadarya", "uz:place/khorezm", "uz:place/namangan",
-                    "uz:place/navoi", "uz:place/samarkand", "uz:place/surkhandarya", "uz:place/syrdarya",
-                    "uz:place/tashkent-region"],
-         "note": "Thirteen regions by twelve months plus an annual column. Units are not stated in the file and must be confirmed with Uzhydromet before the figures are published."}
+        {
+          "slug": "crop-statistics-2012-2020",
+          "label": "Crop statistics, all and irrigated land, 2012-2020",
+          "match": [
+            "Агро/converted_excel_2012-2020/"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/sown-area",
+            "uz:prop/gross-harvest",
+            "uz:prop/crop-yield",
+            "uz:prop/irrigated-area"
+          ],
+          "useCases": [
+            "uz:usecase/irrigation-planning",
+            "uz:usecase/land-degradation-monitoring"
+          ],
+          "temporal": {
+            "start": 2012,
+            "end": 2020
+          },
+          "note": "'Барча ерлар' (all land) and 'Суғориладиган ерлар' (irrigated land), hundreds of sheets per workbook. The per-district, per-year yield labels a crop model would need."
+        },
+        {
+          "slug": "crop-statistics-2005-2011",
+          "label": "Crop statistics, all land, 2005-2011",
+          "match": [
+            "Агро/ДИН На всех земель 2005-2011/"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/sown-area",
+            "uz:prop/gross-harvest",
+            "uz:prop/crop-yield"
+          ],
+          "temporal": {
+            "start": 2005,
+            "end": 2011
+          }
+        },
+        {
+          "slug": "crop-statistics-irrigated-2005-2011",
+          "label": "Crop statistics, irrigated land, 2005-2011",
+          "match": [
+            "Агро/ДИН на ОРОШАЕМЫХ ЗЕМЕЛ 2005-2011/"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/sown-area",
+            "uz:prop/gross-harvest",
+            "uz:prop/crop-yield",
+            "uz:prop/irrigated-area"
+          ],
+          "useCases": [
+            "uz:usecase/irrigation-planning"
+          ],
+          "temporal": {
+            "start": 2005,
+            "end": 2011
+          }
+        },
+        {
+          "slug": "crop-production-2005-2021",
+          "label": "Crop production bulletins, 2005-2021",
+          "match": [
+            "Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Растениеводство 2005-2021/"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/gross-harvest",
+            "uz:prop/crop-yield",
+            "uz:prop/sown-area"
+          ],
+          "temporal": {
+            "start": 2005,
+            "end": 2021
+          }
+        },
+        {
+          "slug": "fertiliser-application-2007-2020",
+          "label": "Fertiliser application, 2007-2020",
+          "match": [
+            "УДОБРЕНИЕ 2007-2020/",
+            "Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/УДОБРЕНИЕ 2007-2020 +/"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/fertiliser-application"
+          ],
+          "useCases": [
+            "uz:usecase/land-degradation-monitoring"
+          ],
+          "temporal": {
+            "start": 2007,
+            "end": 2020
+          },
+          "note": "Delivered twice, once standalone and once inside the Uzhydromet transfer; both copies are recorded as distributions of one dataset."
+        },
+        {
+          "slug": "land-use-statistics-2005-2020",
+          "label": "Land-use statistics, 2005-2020",
+          "match": [
+            "Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/землепользование 2005-2020.xlsx",
+            "Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Ёпик майдон маъл.+.xlsx"
+          ],
+          "theme": "uz:theme/land-agriculture",
+          "analysis": "uz:analysis/change-over-time",
+          "observes": [
+            "uz:prop/land-use-type",
+            "uz:prop/cropland-extent"
+          ],
+          "temporal": {
+            "start": 2005,
+            "end": 2020
+          }
+        },
+        {
+          "slug": "regional-evapotranspiration-2020",
+          "label": "Monthly mean evapotranspiration by region, 2020",
+          "match": [
+            "monthly_mean_et.csv"
+          ],
+          "theme": "uz:theme/climate",
+          "analysis": "uz:analysis/state-observation",
+          "observes": [
+            "uz:prop/evapotranspiration"
+          ],
+          "useCases": [
+            "uz:usecase/irrigation-planning",
+            "uz:usecase/drought-early-warning"
+          ],
+          "temporal": {
+            "start": 2020,
+            "end": 2020
+          },
+          "places": [
+            "uz:place/karakalpakstan",
+            "uz:place/andijan",
+            "uz:place/bukhara",
+            "uz:place/fergana",
+            "uz:place/jizzakh",
+            "uz:place/kashkadarya",
+            "uz:place/khorezm",
+            "uz:place/namangan",
+            "uz:place/navoi",
+            "uz:place/samarkand",
+            "uz:place/surkhandarya",
+            "uz:place/syrdarya",
+            "uz:place/tashkent-region"
+          ],
+          "note": "Thirteen regions by twelve months plus an annual column. Units are not stated in the file and must be confirmed with Uzhydromet before the figures are published."
+        }
       ]
     },
     {
@@ -243,58 +660,133 @@
       "license": "restricted-internal",
       "attribution": "Uzhydromet transfer, 2022-05-27",
       "accessPolicy": "internal",
-      "qualityFlags": ["may-contain-personal-data", "out-of-scope-for-the-portal"],
+      "qualityFlags": [
+        "may-contain-personal-data",
+        "out-of-scope-for-the-portal"
+      ],
       "datasets": [
-        {"slug": "uzhydromet-survey-responses", "label": "Survey responses (Uzhydromet transfer)",
-         "match": ["Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Узгидро 27.05.22/"],
-         "theme": "uz:theme/infrastructure", "analysis": "uz:analysis/state-observation",
-         "observes": [],
-         "note": "Questionnaire returns on services, income and demographics. Catalogued so the delivery is fully accounted for, and marked internal: it is neither environmental data nor safe to publish without a disclosure review."}
+        {
+          "slug": "uzhydromet-survey-responses",
+          "label": "Survey responses (Uzhydromet transfer)",
+          "match": [
+            "Узгидромет 26.05.22 (АСМ)/Узгидромет 26.05.22 (АСМ)/Узгидро 27.05.22/"
+          ],
+          "theme": "uz:theme/infrastructure",
+          "analysis": "uz:analysis/state-observation",
+          "observes": [],
+          "note": "Questionnaire returns on services, income and demographics. Catalogued so the delivery is fully accounted for, and marked internal: it is neither environmental data nor safe to publish without a disclosure review."
+        }
       ]
     },
     {
       "id": "hydrosheds-uz-2026",
       "label": "HydroSHEDS global hydrography and its Uzbekistan extractions",
       "inventory": "earth-engine-hydro",
-      "searchRoots": ["GEODATA", ".", "earth_engine/earth_engine"],
+      "searchRoots": [
+        "GEODATA",
+        ".",
+        "earth_engine/earth_engine"
+      ],
       "agent": "uz:agent/hydrosheds",
       "license": "hydrosheds-license-agreement",
       "attribution": "HydroSHEDS (Lehner & Grill), WWF and partners",
       "accessPolicy": "internal",
-      "qualityFlags": ["licence-terms-to-confirm-before-redistribution"],
+      "qualityFlags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
       "note": "Global reference hydrography, plus the two national subsets extracted from it. Both extractions select every basin with a positive-area intersection with Uzbekistan and keep whole polygons, so basin statistics computed from them describe the basin, not the part inside the border.",
       "datasets": [
-        {"slug": "hydrosheds-basinatlas-global", "label": "BasinATLAS v1.0 (global source)",
-         "match": ["BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb"],
-         "theme": "uz:theme/water", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/drainage-basin"],
-         "useCases": ["uz:usecase/water-resource-allocation"],
-         "note": "Twelve nested levels of HydroBASINS polygons carrying 296 hydro-environmental attributes each. Referenced in place at 6.0 GB."},
-        {"slug": "hydrosheds-hydrolakes-global", "label": "HydroLAKES v1.0 (global source)",
-         "match": ["HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb"],
-         "theme": "uz:theme/water", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/surface-water-extent", "uz:prop/reservoir-volume"],
-         "useCases": ["uz:usecase/water-resource-allocation"]},
-        {"slug": "hydrosheds-hydrorivers-asia", "label": "HydroRIVERS v1.0 (Asia source)",
-         "match": ["HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb"],
-         "theme": "uz:theme/water", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/river-network", "uz:prop/surface-runoff"],
-         "useCases": ["uz:usecase/water-resource-allocation"]},
-        {"slug": "hydrobasins-uz-lake-v1c", "label": "Uzbekistan HydroBASINS extraction (lake format)",
-         "match": ["uzbekistan_hydrobasins_lake_v1c/"],
-         "theme": "uz:theme/water", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/drainage-basin", "uz:prop/surface-water-extent"],
-         "useCases": ["uz:usecase/water-resource-allocation", "uz:usecase/irrigation-planning"],
-         "places": ["uz:place/uzbekistan"],
-         "note": "15,195 basins across levels 01-12 in lake format, which splits basins at lakes. Ships PFAF hierarchy, cross-level feature links and native downstream routing as tables. The boundary was recovered from the uzb_admbnda_adm0_2018b ArcGIS Feature Service after the local copy failed to read."},
-        {"slug": "basinatlas-uz-v10", "label": "Uzbekistan BasinATLAS extraction",
-         "match": ["uzbekistan_basinatlas_v10/"],
-         "theme": "uz:theme/water", "analysis": "uz:analysis/environmental-feature",
-         "observes": ["uz:prop/drainage-basin", "uz:prop/surface-runoff"],
-         "useCases": ["uz:usecase/water-resource-allocation", "uz:usecase/irrigation-planning",
-                      "uz:usecase/drought-early-warning"],
-         "places": ["uz:place/uzbekistan"],
-         "note": "14,749 basins across levels 01-12, each carrying the full 296 BasinATLAS attributes. Extracted from the global source with PIPELINES/extract_uz_basinatlas.py under the same rules as the lake package, and validated: identifiers unique per level, every child basin resolving to a selected parent, no routing target missing from the source, and overlap sums matching the national area at every level."}
+        {
+          "slug": "hydrosheds-basinatlas-global",
+          "label": "BasinATLAS v1.0 (global source)",
+          "match": [
+            "BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/drainage-basin"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation"
+          ],
+          "note": "Twelve nested levels of HydroBASINS polygons carrying 296 hydro-environmental attributes each. Referenced in place at 6.0 GB."
+        },
+        {
+          "slug": "hydrosheds-hydrolakes-global",
+          "label": "HydroLAKES v1.0 (global source)",
+          "match": [
+            "HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/surface-water-extent",
+            "uz:prop/reservoir-volume"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation"
+          ]
+        },
+        {
+          "slug": "hydrosheds-hydrorivers-asia",
+          "label": "HydroRIVERS v1.0 (Asia source)",
+          "match": [
+            "HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/river-network",
+            "uz:prop/surface-runoff"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation"
+          ]
+        },
+        {
+          "slug": "hydrobasins-uz-lake-v1c",
+          "label": "Uzbekistan HydroBASINS extraction (lake format)",
+          "match": [
+            "uzbekistan_hydrobasins_lake_v1c/"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/drainage-basin",
+            "uz:prop/surface-water-extent"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation",
+            "uz:usecase/irrigation-planning"
+          ],
+          "places": [
+            "uz:place/uzbekistan"
+          ],
+          "note": "15,195 basins across levels 01-12 in lake format, which splits basins at lakes. Ships PFAF hierarchy, cross-level feature links and native downstream routing as tables. The boundary was recovered from the uzb_admbnda_adm0_2018b ArcGIS Feature Service after the local copy failed to read."
+        },
+        {
+          "slug": "basinatlas-uz-v10",
+          "label": "Uzbekistan BasinATLAS extraction",
+          "match": [
+            "uzbekistan_basinatlas_v10/"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/drainage-basin",
+            "uz:prop/surface-runoff"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation",
+            "uz:usecase/irrigation-planning",
+            "uz:usecase/drought-early-warning"
+          ],
+          "places": [
+            "uz:place/uzbekistan"
+          ],
+          "note": "14,749 basins across levels 01-12, each carrying the full 296 BasinATLAS attributes. Extracted from the global source with PIPELINES/extract_uz_basinatlas.py under the same rules as the lake package, and validated: identifiers unique per level, every child basin resolving to a selected parent, no routing target missing from the source, and overlap sums matching the national area at every level."
+        }
       ]
     },
     {
@@ -305,10 +797,162 @@
       "license": "restricted-internal",
       "accessPolicy": "request",
       "datasets": [
-        {"slug": null, "attachTo": "uz:ds/a92-land-cover",
-         "label": "Land cover source package",
-         "match": ["Uzbekistan-20260828T081638Z-1-001/Uzbekistan/92_Земельный_покров.tif.lpkx"],
-         "note": "The 1.02 GB package behind atlas number 92. It was never imported into the private repository, which is why the ontology reported that dataset as having no distribution. Recorded here in place rather than copied."}
+        {
+          "slug": null,
+          "attachTo": "uz:ds/a92-land-cover",
+          "label": "Land cover source package",
+          "match": [
+            "Uzbekistan-20260828T081638Z-1-001/Uzbekistan/92_Земельный_покров.tif.lpkx"
+          ],
+          "note": "The 1.02 GB package behind atlas number 92. It was never imported into the private repository, which is why the ontology reported that dataset as having no distribution. Recorded here in place rather than copied."
+        }
+      ]
+    },
+    {
+      "id": "globaldamwatch-2026",
+      "label": "Global Dam Watch v1.0, the dams and reservoirs of the world",
+      "inventory": "earth-engine-hydro",
+      "searchRoots": [
+        "GEODATA",
+        ".",
+        "earth_engine/earth_engine"
+      ],
+      "agent": "uz:agent/globaldamwatch",
+      "license": "CC-BY-4.0",
+      "attribution": "Global Dam Watch database v1.0 (Lehner et al. 2024), CC BY 4.0",
+      "accessPolicy": "free",
+      "note": "41,145 barriers and 35,295 reservoir polygons, consolidating GRanD v1.3, which it fully embodies and which is being discontinued. It carries GRAND_ID, HYRIV_ID, HYLAK_ID and HYBAS_L12 as native columns, so every link this project records from it is read from the source rather than computed from geometry. 100 barriers fall inside the Amu and Syr systems.",
+      "datasets": [
+        {
+          "slug": "globaldamwatch-barriers",
+          "label": "Global Dam Watch barriers v1.0",
+          "match": [
+            "GDW_v1_0/GDW_v1_0.gdb"
+          ],
+          "derived": [
+            "PUBLISHED/data/hydroclimate/dams-transboundary.csv",
+            "PUBLISHED/data/hydroclimate/dams-transboundary.geojson"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/dam-infrastructure",
+            "uz:prop/reservoir-volume",
+            "uz:prop/flow-regulation"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation",
+            "uz:usecase/irrigation-planning",
+            "uz:usecase/disaster-risk-reduction"
+          ],
+          "note": "Dam point with name, year of completion, height, length, nominal capacity, installed power and operating purpose. Nurek, Rogun, Toktogul, Charvak, Andizhan and Kayrakkum are all in scope: the selection follows the whole basin, not the national border, because those are the structures that decide how much water reaches Uzbekistan."
+        }
+      ]
+    },
+    {
+      "id": "hydrowaste-2026",
+      "label": "HydroWASTE v1.0, wastewater treatment plants in the global river network",
+      "inventory": "earth-engine-hydro",
+      "searchRoots": [
+        "GEODATA",
+        ".",
+        "earth_engine/earth_engine"
+      ],
+      "agent": "uz:agent/hydrosheds",
+      "license": "CC-BY-4.0",
+      "attribution": "HydroWASTE v1.0 (Ehalt Macedo et al. 2022, ESSD), CC BY 4.0",
+      "accessPolicy": "free",
+      "qualityFlags": [
+        "central-asian-plants-are-modelled-not-reported"
+      ],
+      "note": "58,502 plants worldwide, each co-registered to the HydroRIVERS reach receiving its outfall, with the dilution factor of that reach. This is the bridge from water quantity to water quality: 53 plants discharge into the Amu and Syr systems, including three serving Tashkent and one serving Dushanbe. Every Central Asian record comes from SOURCE 12, 'remaining countries', which means the plant is inferred from urban population rather than reported by a national register.",
+      "datasets": [
+        {
+          "slug": "hydrowaste-plants",
+          "label": "HydroWASTE treatment plants v1.0",
+          "match": [
+            "HydroWASTE_v10/HydroWASTE_v10.csv"
+          ],
+          "derived": [
+            "PUBLISHED/data/hydroclimate/wastewater-plants-transboundary.csv",
+            "PUBLISHED/data/hydroclimate/wastewater-plants-transboundary.geojson"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/wastewater-discharge",
+            "uz:prop/effluent-dilution",
+            "uz:prop/surface-water-quality",
+            "uz:prop/sanitation-access"
+          ],
+          "useCases": [
+            "uz:usecase/water-resource-allocation",
+            "uz:usecase/urban-and-settlement-planning"
+          ],
+          "note": "Outfall location, population served, treated discharge, treatment level and dilution factor. Each attribute carries the source's own quality code, and for this region every one of them reads 'estimated'."
+        }
+      ]
+    },
+    {
+      "id": "hydrosheds-associated-2026",
+      "label": "GloRiC and Free-Flowing Rivers, the reach condition layers of HydroSHEDS",
+      "inventory": "earth-engine-hydro",
+      "searchRoots": [
+        "GEODATA",
+        ".",
+        "earth_engine/earth_engine"
+      ],
+      "agent": "uz:agent/hydrosheds",
+      "license": "hydrosheds-license-agreement",
+      "attribution": "GloRiC v1.0 (Ouellet Dallaire et al. 2018); Free-Flowing Rivers v1.0 (Grill et al. 2019, Nature)",
+      "accessPolicy": "free",
+      "qualityFlags": [
+        "licence-terms-to-confirm-before-redistribution"
+      ],
+      "note": "Two global reach-level companions to HydroRIVERS, both keyed on the same 8,477,883 reaches. Their identifier columns are named Reach_ID and REACH_ID rather than HYRIV_ID, and neither technical document states the correspondence outright, so it was tested rather than assumed: both match all 46,976 reaches of the published Amu and Syr network exactly.",
+      "datasets": [
+        {
+          "slug": "gloric-v10",
+          "label": "GloRiC v1.0 global river classification",
+          "match": [
+            "GloRiC_v10/GloRiC_v10_shapefile/GloRiC_v10.shp"
+          ],
+          "derived": [
+            "PUBLISHED/data/hydroclimate/reach-classification.csv"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/river-classification",
+            "uz:prop/river-network"
+          ],
+          "useCases": [
+            "uz:usecase/conservation-planning",
+            "uz:usecase/water-resource-allocation"
+          ],
+          "note": "Hydrologic, physio-climatic and geomorphic sub-classifications, the 127 combined reach types and a 30-group k-means clustering. Built on an unpublished beta of RiverATLAS, which is why the identifier match was verified against the published network rather than trusted."
+        },
+        {
+          "slug": "ffr-v10",
+          "label": "Free-Flowing Rivers v1.0 connectivity status",
+          "match": [
+            "FFR_v1/Mapping the worlds free-flowing rivers_Data_Geodatabase/FFR_river_network.gdb"
+          ],
+          "derived": [
+            "PUBLISHED/data/hydroclimate/reach-connectivity.csv"
+          ],
+          "theme": "uz:theme/water",
+          "analysis": "uz:analysis/environmental-feature",
+          "observes": [
+            "uz:prop/river-connectivity",
+            "uz:prop/flow-regulation"
+          ],
+          "useCases": [
+            "uz:usecase/conservation-planning",
+            "uz:usecase/water-resource-allocation"
+          ],
+          "note": "Connectivity Status Index per reach with the six pressure indicators behind it: fragmentation, flow regulation, sediment trapping, water consumption, urbanisation and roads. CSI at or above 95 per cent is the paper's threshold for a free-flowing reach."
+        }
       ]
     }
   ]

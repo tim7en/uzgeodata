@@ -1109,6 +1109,93 @@
       "definition": "Cumulative human alteration of the land surface, combining settlement, agriculture, transport, mining and energy into one index. Deliberately cross-cutting: it is a summary of several themes rather than a member of one.",
       "unit": "index",
       "broader": "uz:theme/infrastructure"
+    },
+    {
+      "id": "uz:prop/dam-infrastructure",
+      "prefLabel": "Dams and river barriers",
+      "altLabels": [
+        "dam",
+        "reservoir dam",
+        "barrier",
+        "плотина",
+        "водохранилище плотина"
+      ],
+      "definition": "Engineered structures that impound or divert a river, with their height, year of completion, installed power and operating purpose. Distinct from reservoir-volume, which is the water a structure holds rather than the structure itself.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/flow-regulation",
+      "prefLabel": "Degree of flow regulation",
+      "altLabels": [
+        "regulation",
+        "flow alteration",
+        "зарегулированность стока"
+      ],
+      "definition": "How much of a river's annual flow can be held back by upstream storage, expressed as a percentage of mean annual discharge.",
+      "unit": "%",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/wastewater-discharge",
+      "prefLabel": "Treated wastewater discharge",
+      "altLabels": [
+        "wastewater",
+        "effluent",
+        "WWTP",
+        "сточные воды",
+        "очистные сооружения"
+      ],
+      "definition": "Volume of treated effluent released to a river by a wastewater treatment plant, with the population served and the level of treatment.",
+      "unit": "m3/d",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/effluent-dilution",
+      "prefLabel": "Effluent dilution factor",
+      "altLabels": [
+        "dilution factor",
+        "DF",
+        "разбавление"
+      ],
+      "definition": "Ratio of the receiving river's natural discharge to the effluent discharge at an outfall. A low value means the river carries little water to dilute what is put into it; it is the standard first-order indicator of contamination pressure downstream of a plant.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/surface-water-quality",
+      "prefLabel": "Surface water quality",
+      "altLabels": [
+        "water quality",
+        "river pollution",
+        "качество воды",
+        "загрязнение воды"
+      ],
+      "definition": "Chemical and biological condition of river and lake water, and the pressures that determine it. Complements groundwater-quality, which covers the subsurface.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/river-classification",
+      "prefLabel": "River reach classification",
+      "altLabels": [
+        "river type",
+        "river classification",
+        "GloRiC",
+        "типология рек"
+      ],
+      "definition": "Hydrologic, physio-climatic and geomorphic type assigned to a river reach, and the combined reach type built from them.",
+      "broader": "uz:theme/water"
+    },
+    {
+      "id": "uz:prop/river-connectivity",
+      "prefLabel": "River connectivity status",
+      "altLabels": [
+        "free-flowing rivers",
+        "connectivity status index",
+        "CSI",
+        "фрагментация рек"
+      ],
+      "definition": "How far a river reach remains connected longitudinally, laterally and vertically, and the fragmentation, regulation, sediment-trapping, water-use, urbanisation and road pressures that reduce it.",
+      "unit": "%",
+      "broader": "uz:theme/water"
     }
   ]
 }

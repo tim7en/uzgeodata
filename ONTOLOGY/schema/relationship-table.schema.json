@@ -65,7 +65,9 @@
               "WaterBody",
               "Dataset",
               "AdminArea",
-              "RunoffFormationUnit"
+              "RunoffFormationUnit",
+              "Dam",
+              "TreatmentPlant"
             ],
             "description": "Dataset is admitted because a measured overlay puts a catalogue record on one end and a feature on the other: an atlas layer covers a basin."
           },
@@ -76,7 +78,9 @@
               "WaterBody",
               "Dataset",
               "AdminArea",
-              "RunoffFormationUnit"
+              "RunoffFormationUnit",
+              "Dam",
+              "TreatmentPlant"
             ]
           },
           "measureColumn": {
@@ -121,7 +125,7 @@
           },
           "subjectFixed": {
             "type": "string",
-            "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water|formation)/[a-z0-9-]+$",
+            "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water|formation|dam|plant)/[a-z0-9-]+$",
             "description": "Fixed subject entity for every row. Use this for a dataset statistic table that does not repeat dataset_id in every row."
           },
           "objectColumn": {
