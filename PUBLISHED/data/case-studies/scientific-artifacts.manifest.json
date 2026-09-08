@@ -1,0 +1,28 @@
+{
+  "inputs": [
+    {
+      "file": "environment-modelling.json",
+      "sha256": "290433d7ad50d816dab0edd51533b5471041ed81bce8ee136c02564e7f9d20e8"
+    },
+    {
+      "file": "advanced-validation.json",
+      "sha256": "0f0a7ac848c84d797545f3b02e1862cbbfe2a517c4c9c9ae7aad91a5889d657a"
+    }
+  ],
+  "script_sha256": "3ee1de92845facef4b36453e5fdfad1dec804bc40c296ead08b416e7b26e4586",
+  "outputs": [
+    "pskem-study-map.png",
+    "pskem-elevation-profiles.png",
+    "pskem-landcover-elevation.png",
+    "pskem-snow-calendar.png",
+    "pskem-model-comparison.png",
+    "pskem-model-skill.png",
+    "pskem-surface-energy.png",
+    "pskem-evapotranspiration.png",
+    "pskem-climate-validation.png",
+    "charvak-water-verification.png",
+    "chirchik-scientific-atlas.pdf",
+    "chirchik-environment-study.md",
+    "chirchik-analysis.xlsx"
+  ]
+}

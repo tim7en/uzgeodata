@@ -19,6 +19,14 @@ from build_chirchik_case_studies import DATA,OUT,read_csv,write_csv,write_json,s
 FEATURES=['precipitation_mm','temperature_c','potential_et_mm','antecedent_p3_mm','season_sin','season_cos']
 
 
+def readiness_summary(steps):
+    statuses={s['status'] for s in steps}
+    if not statuses <= {'green','amber','red'}:raise ValueError('Unknown readiness status')
+    return {'steps':steps,'overall':'red' if 'red' in statuses else 'amber' if 'amber' in statuses else 'green',
+        'operational_ready':bool(steps) and statuses=={'green'},
+        'meaning':'Green marks a completed stated check. Release readiness requires every listed check to be green; a red gate cannot be averaged away. Refreshing inputs does not replace validation.'}
+
+
 def bucket(forcing,parameters,area_km2):
     melt_factor,p_factor,capacity,release,quick_fraction=parameters
     snow=soil=0.;rows=[]
@@ -161,16 +169,15 @@ def main():
             '2018 onward is an unverified continuation driven by reanalysis; no contemporaneous discharge validation exists in this delivery.']}
     statuses=[('Observations','green','Historical P/T/Q and snow-day records imported; source dates retained.'),
         ('Quality control','amber','Three suspect discharge values screened; one impossible date quarantined; source confirmation pending.'),
-        ('Station validation','green','Historical product comparisons and chronological correction tests computed; independence audit remains documented.'),
+        ('Station validation','amber','Historical comparisons and chronological correction tests computed; station metadata and product independence still need verification.'),
         ('Snow coverage','amber','Clouds and short eligible March samples restrict the snow–flow experiment.'),
         ('Gauge & terrain','red','Gauge-to-main-channel assignment unresolved; do not use nearest-reach snapping automatically.'),
         ('Land cover','amber','10 m class areas computed; local change accuracy has no independent labelled sample yet.'),
         ('Model verification','amber','Held-out scores and Bayesian interval coverage available; catchment and structural uncertainty remain.'),
         ('Current inputs','green' if forcing[-1]['period']==latest['era5_latest_available'] else 'amber',f"ERA5 processed through {forcing[-1]['period']}; latest available {latest['era5_latest_available']}. Individual satellite dates differ.")]
-    result['readiness']={'steps':[{'label':a,'status':b,'reason':c} for a,b,c in statuses],
-        'operational_ready':False,'meaning':'Green marks a completed stated check, not universal scientific validity. Modelling release requires every mandatory gate and independent review; no averaging away red gates.',
-        'overall':'red','blocker':'Resolve gauge location and approve the catchment; then repeat calibration and verification. Latest inputs alone do not make a model operational.'}
-    inputs=[OUT/'pskem-energy-monthly.csv',OUT/'elevation-profiles.csv',OUT/'landcover-elevation.csv',DATA/'pskem-discharge-daily.csv']+[OUT/f'pskem-{p}-composites.csv' for p in ['lst','et','albedo']]
+    result['readiness']=readiness_summary([{'label':a,'status':b,'reason':c} for a,b,c in statuses])
+    result['readiness']['blocker']='Resolve gauge location and verify the catchment; then repeat calibration and verification. Latest inputs alone do not make a model operational.'
+    inputs=[OUT/'pskem-energy-monthly.csv',OUT/'elevation-profiles.csv',OUT/'landcover-elevation.csv',DATA/'pskem-discharge-daily.csv',DATA/'pskem-observations.manifest.json',OUT/'chirchik.json',OUT/'environment-profile.manifest.json',OUT/'environment-energy.manifest.json',__import__('pathlib').Path(__file__)]+[OUT/f'pskem-{p}-composites.csv' for p in ['lst','et','albedo']]
     result['provenance']=[{'file':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in inputs]
     write_json(OUT/'environment-modelling.json',result);write_csv(OUT/'monthly-model-predictions.csv',output,list(output[0]));write_csv(OUT/'surface-monthly.csv',surface,list(surface[0]))
     print(json.dumps({'models':models,'bayesian_intervals':intervals,'physical_parameters':result['physical_parameters'],'latest':forcing[-1]['period']},indent=2))

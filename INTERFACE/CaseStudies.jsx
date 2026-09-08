@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { CircleMarker, GeoJSON, MapContainer, TileLayer, Tooltip } from 'react-leaflet';
+import AdvancedCaseStudy, { Readiness } from './AdvancedCaseStudy';
+import CaseStudyMap from './CaseStudyMap';
 import { ArrowUpRight, Download, Droplets, ArrowRight } from 'lucide-react';
 
 const BASE = '/data/case-studies/';
@@ -16,7 +17,7 @@ function Chart({ rows, fields, unit, title }) {
   const width = 760, height = 260, left = 58, right = 22, top = 22, bottom = 42;
   const values = rows.flatMap(r => fields.map(f => r[f.key])).filter(v => v != null && Number.isFinite(v));
   if (!values.length) return <p>No eligible values for this selection.</p>;
-  const min = Math.min(0, ...values), max = Math.max(...values, min + 1) * 1.08;
+  const min = Math.min(0, ...values), max = Math.max(...values, min + 0.01) * 1.08;
   const x = i => left + i / Math.max(1, rows.length - 1) * (width - left - right);
   const y = v => top + (max - v) / (max - min) * (height - top - bottom);
   const segments = key => {
@@ -41,7 +42,7 @@ function Chart({ rows, fields, unit, title }) {
       {[0, 1, 2, 3, 4].map(i => {
         const value = min + (max - min) * i / 4;
         return <g key={i}><line x1={left} x2={width - right} y1={y(value)} y2={y(value)} className="cs-grid" />
-          <text x={left - 10} y={y(value) + 4} textAnchor="end">{fmt(value, 0)}</text></g>;
+          <text x={left - 10} y={y(value) + 4} textAnchor="end">{fmt(value, max - min < 3 ? 2 : 0)}</text></g>;
       })}
       {ticks.map(i => <text key={i} x={x(i)} y={height - 13} textAnchor="middle">{rows[i].label || rows[i].period}</text>)}
       {fields.map(field => <path key={field.key} d={segments(field.key)} fill="none" stroke={field.color} strokeWidth="2.4" strokeDasharray={field.dashed ? '6 4' : undefined} />)}
@@ -92,10 +93,10 @@ function DischargeEvidence({ data }) {
     <div className="cs-section-head"><div><span className="cs-eyebrow">02 / THE HYDROLOGICAL TEST</span><h2>A benchmark before a model.</h2></div>
       <div className="cs-switch" aria-label="Discharge chart view">{[['series', 'Time series'], ['season', 'Seasonal cycle']].map(([value, label]) => <button key={value} aria-pressed={mode === value} onClick={() => setMode(value)}>{label}</button>)}</div>
     </div>
-    <p>Pskem–Mullala discharge provides an independent target for future runoff modelling. The first test is a monthly climatology trained on <strong>{b.training}</strong> and evaluated on <strong>{b.evaluation}</strong>.</p>
+    <p>Pskem–Mullala discharge provides the observed target for runoff modelling. The first test is a monthly climatology trained on <strong>{b.training}</strong> and evaluated on <strong>{b.evaluation}</strong>.</p>
     <Chart rows={rows} fields={fields} unit="m³/s" title="Pskem–Mullala discharge" />
     <div className="cs-score-grid">{[['n', 'Held-out months'], ['rmse', 'RMSE · m³/s'], ['nse', 'NSE'], ['kge', 'KGE (2009)']].map(([key, label]) => <div key={key}><strong>{fmt(b.scores[key], key === 'n' ? 0 : 3)}</strong><span>{label}</span></div>)}</div>
-    <p className="cs-note">These scores evaluate the seasonal benchmark. A future snow/runoff model must improve on it. Bias = prediction − observation. <a href="https://hess.copernicus.org/articles/23/4323/2019/">NSE and KGE interpretation <ArrowUpRight size={12} /></a></p>
+    <p className="cs-note">These scores evaluate the seasonal benchmark. The models below are compared with this same baseline. Bias = prediction − observation. <a href="https://hess.copernicus.org/articles/23/4323/2019/">NSE and KGE interpretation <ArrowUpRight size={12} /></a></p>
     <details><summary>Quality control, uncertainty and source sensitivity</summary>
       <p>{s.daily_discharge_rows.toLocaleString()} daily rows; {s.suspect_daily_rows} source-flagged values excluded from screened means. {s.invalid_calendar_rows} impossible calendar record quarantined (2015-02-29). Monthly means require 90% valid daily coverage. Volumes require every day; incomplete months are not extrapolated.</p>
       <div className="cs-table-wrap"><table><thead><tr><th>Score</th><th>Screened</th><th>95% year-block interval</th><th>Raw sensitivity</th></tr></thead><tbody>
@@ -127,10 +128,11 @@ function StudyPortfolio({ data }) {
 
 export default function CaseStudies() {
   const [data, setData] = useState(null), [geometry, setGeometry] = useState(null), [error, setError] = useState('');
+  const [advanced, setAdvanced] = useState(null), [environment, setEnvironment] = useState(null);
   useEffect(() => {
     let active = true;
-    Promise.all([fetchJSON(`${BASE}chirchik.json`), fetchJSON(`${BASE}pskem-candidate-catchment.geojson`)])
-      .then(([d, g]) => { if (active) { setData(d); setGeometry(g); } })
+    Promise.all([fetchJSON(`${BASE}chirchik.json`), fetchJSON(`${BASE}pskem-candidate-catchment.geojson`), fetchJSON(`${BASE}advanced-validation.json`), fetchJSON(`${BASE}environment-modelling.json`)])
+      .then(([d, g, a, e]) => { if (active) { setData(d); setGeometry(g); setAdvanced(a); setEnvironment(e); } })
       .catch(e => { if (active) setError(e.message); });
     return () => { active = false; };
   }, []);
@@ -139,20 +141,15 @@ export default function CaseStudies() {
   const { summary: s, catchment: c } = data;
   const stations = [...new Map(data.inventory.map(r => [r.station_id, r])).values()];
   return <div className="cs-app">
-    <header className="cs-header"><a className="cs-logo" href="/"><Droplets size={22} /> UZGEODATA <span>/ FIELD STUDIES</span></a><nav><a href="/climate.html">Climate</a><a href="/hydrography.html">Hydrography</a><a href={`${BASE}chirchik-report.md`} download><Download size={14} /> Study report</a></nav></header>
+    <header className="cs-header"><a className="cs-logo" href="/"><Droplets size={22} /> UZGEODATA <span>/ FIELD STUDIES</span></a><nav><a href="/climate.html">Climate</a><a href="/hydrography.html">Hydrography</a><a href={`${BASE}chirchik-deep-study.md`} download><Download size={14} /> Study report</a></nav></header>
     <main>
       <section className="cs-hero"><div><span className="cs-eyebrow">CHIRCHIK–CHARVAK / WESTERN TIAN SHAN</span><h1>Follow the water.<br /><em>Test the evidence.</em></h1><p>A basin observatory grounded in precipitation, temperature and river discharge. Six case studies connect mountain water formation to Charvak and downstream supply.</p>
         <div className="cs-hero-actions"><a className="cs-primary" href="#portfolio">Explore the case studies <ArrowRight size={16} /></a><a href="#station-evidence">Inspect the observations ↓</a></div></div>
-        <aside className="cs-scope"><span className="cs-eyebrow">THE STARTING POINT</span><h2>Pskem first.</h2><p>{data.scope}</p><div><strong>{s.joint_months}</strong><span>joint climate–flow months<br />{s.joint_start} to {s.joint_end}</span></div><p className="cs-note">Observed-data analysis is available. Historical product validation and process attribution have separate evidence requirements.</p></aside>
+        <aside className="cs-scope"><span className="cs-eyebrow">THE STARTING POINT</span><h2>Pskem first.</h2><p>{data.scope}</p><div><strong>{s.joint_months}</strong><span>joint climate–flow months<br />{s.joint_start} to {s.joint_end}</span></div><p className="cs-note">Historical validation, satellite checks and three modelling approaches are available. Operational readiness remains limited by gauge location and the age of discharge observations.</p></aside>
       </section>
       <div className="cs-top-stats"><div><strong>3</strong><span>Meteorological stations</span></div><div><strong>2001–2017</strong><span>Pskem discharge record</span></div><div><strong>2010–2024</strong><span>Pskem climate record</span></div><div><strong>6</strong><span>Documented study protocols</span></div></div>
-      <section className="cs-spatial cs-panel"><div><span className="cs-eyebrow">SPATIAL SCOPE</span><h2>The upstream network matters.</h2><p>The candidate gauge trace contains <strong>{c.basin_count} level-12 units</strong>, totalling <strong>{fmt(c.area_km2)} km²</strong>. All upstream units are retained across national boundaries.</p><p className="cs-note">{c.limitation}</p><p className="cs-note">All four stations are outside the existing headwater-pilot selection. This study requires a separately reviewed Pskem domain.</p><a href={`${BASE}pskem-candidate-catchment.geojson`} download>Download candidate catchment <Download size={13} /></a></div>
-        <div className="cs-map"><MapContainer center={[41.95, 70.55]} zoom={8} scrollWheelZoom={false} aria-label="Candidate Pskem catchment and observation stations"><TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution='&copy; OpenStreetMap contributors &copy; CARTO' /><GeoJSON data={geometry} style={{ color: '#167d97', weight: 1, fillColor: '#48adc5', fillOpacity: 0.23 }} />
-          {stations.map(r => <CircleMarker key={r.station_id} center={[r.latitude, r.longitude]} radius={6} pathOptions={{ color: '#754617', fillColor: '#edb06c', fillOpacity: 1 }}><Tooltip>{r.station} meteorological station</Tooltip></CircleMarker>)}
-          <CircleMarker center={[c.gauge_latitude, c.gauge_longitude]} radius={7} pathOptions={{ color: '#084e68', fillColor: '#49cfe9', fillOpacity: 1 }}><Tooltip>Pskem–Mullala gauge · coordinate requires reach review</Tooltip></CircleMarker>
-        </MapContainer><span className="cs-map-label">Candidate trace · not a reviewed gauge boundary</span></div>
-      </section>
-      <StationEvidence data={data} /><DischargeEvidence data={data} /><StudyPortfolio data={data} />
+      <Readiness environment={environment}/><CaseStudyMap data={data} geometry={geometry} environment={environment}/>
+      <StationEvidence data={data} /><DischargeEvidence data={data} /><AdvancedCaseStudy advanced={advanced} environment={environment} Chart={Chart}/><StudyPortfolio data={data} />
       <section className="cs-downloads cs-panel"><div><span className="cs-eyebrow">04 / REPRODUCIBLE EVIDENCE</span><h2>Take the analysis with you.</h2><p>Existing station URIs, basin identifiers, source hashes and processing rules travel with the results.</p></div><div>{[['chirchik-report.md', 'Full case-study report'], ['pskem-observation-evidence.pdf', 'Observation figure · vector PDF'], ['pskem-observation-evidence.png', 'Observation figure · PNG'], ['chirchik.json', 'All results & protocols · JSON'], ['chirchik.manifest.json', 'Source hashes & QC policy'], ['discharge-audit.csv', 'Discharge quality audit · CSV'], ['station-annual.csv', 'Complete-year climate summaries · CSV'], ['joint-climate-discharge.csv', 'Matched climate–flow months · CSV']].map(([file, label]) => <a key={file} href={BASE + file} download>{label}<Download size={15} /></a>)}</div></section>
     </main><footer>UZGEODATA / CHIRCHIK CASE STUDIES <span>Analysis v{data.version} · Built {data.generated_at.slice(0, 10)} · Observations retain their original dates</span></footer>
   </div>;

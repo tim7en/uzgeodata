@@ -1,0 +1,10 @@
+{
+  "status": "complete",
+  "start_year": 2000,
+  "end_year": 2026,
+  "retrieved_at": "2026-09-08T21:19:21.324668+00:00",
+  "script_sha256": "95867d27128681f3ca23f503c8238717521ebeabc0eadce5c5265d90e7fdbafe",
+  "spatial_scope": "Provisional Pskem gauge catchment; Charvak reference polygon plus 1000m buffer for reservoir task",
+  "snow_method": "NDSI snow >0; >=40 sensitivity; best/good QA; exclude inland-water and high-solar-zenith flags; no cloud filling. Daily valid area denominator retained.",
+  "reservoir_method": "JRC Landsat-derived water class 2; no-data class 0 excluded; area only, not storage."
+}

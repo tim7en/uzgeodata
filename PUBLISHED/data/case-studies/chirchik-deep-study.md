@@ -74,7 +74,7 @@ A strong raw correlation can coexist with a large mean error. Use held-out RMSE,
 
 ## 3. MODIS snow: quality first
 
-Terra and Aqua are analysed separately. Valid pixels have NDSI in 0–100, best/good basic QA, and neither inland-water nor high-solar-zenith flag. The main snow mask is positive provider-screened NDSI; NDSI ≥40 is a conservative sensitivity test. Snow area is summed and divided by valid observed area. NDSI is never interpreted as fractional cover. Daily valid area must be at least 70%; monthly means require at least ten qualifying days. No cloud filling is used. [MODIS Terra band and QA definitions](https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD10A1), [MODIS Aqua](https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MYD10A1).
+Terra and Aqua are analysed separately and as a same-day combination: valid Terra pixels take priority, with valid Aqua observations filling Terra gaps. No adjacent dates are used. Valid pixels have NDSI in 0–100, best/good basic QA, and neither inland-water nor high-solar-zenith flag. The main snow mask is positive provider-screened NDSI; NDSI ≥40 is a conservative sensitivity test. Snow area is summed and divided by valid observed area. NDSI is never interpreted as fractional cover. Daily valid area must be at least 70%; monthly means require at least ten qualifying days. No cloud filling is used. [MODIS Terra band and QA definitions](https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD10A1), [MODIS Aqua](https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MYD10A1).
 
 ### Cross-sensor verification
 
@@ -95,24 +95,45 @@ The ground record provides monthly snow-day counts, not daily snow/no-snow label
 | Station | Sensor | Paired months | Months ≥70% observed | Mean daily coverage (%) | Mean unknown days | Compatible (%) in ≥70% months |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | Oygaing | aqua | 36 | 6 | 53.09 | 14.28 | 83.33 |
+| Oygaing | combined | 36 | 16 | 66.30 | 10.25 | 75.00 |
 | Oygaing | terra | 36 | 13 | 57.58 | 12.89 | 84.62 |
 | Pskem | aqua | 60 | 9 | 46.27 | 16.33 | 77.78 |
+| Pskem | combined | 60 | 22 | 59.52 | 12.30 | 81.82 |
 | Pskem | terra | 60 | 11 | 48.53 | 15.65 | 100.00 |
 
 ## 4. Does pre-April snow information improve summer-flow estimates?
 
-Retrospective April 1 issue date. October–March precipitation, March temperature/SWE and March Terra snow only. Fixed ridge alpha=1; same complete years for every model; no held-out tuning.
+Retrospective April 1 issue date. October–March precipitation and March temperature/SWE and March combined snow only. Fixed ridge alpha=1; same complete years for every model; no held-out tuning.
 
 The target is observed April–September discharge volume in million m³. Every day must be present after screening; 2017 is excluded because flagged daily observations leave incomplete seasonal volume. Three source flags and the impossible 2015-02-29 date are retained in the separate audit. All candidate models use identical eligible training and test years. Predictors and response are centred/scaled from training data only; negative predicted volumes are clipped at zero.
 
-Training years: 2001, 2005, 2007, 2009. Test years: 2011, 2015.
+Training years: 2001, 2004, 2005, 2007, 2008, 2009. Test years: 2011, 2012, 2014, 2015.
 
 | Model | Test years | RMSE (million m³) | Bias (million m³) | NSE | RMSE skill vs climatology | RMSE skill vs climate |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| seasonal_climatology | 4 | 365.50 | 336.83 | -5.636 | 0.000 | -0.378 |
+| climate | 4 | 265.27 | 255.41 | -2.496 | 0.274 | 0.000 |
+| climate_plus_snow | 4 | 376.03 | 361.91 | -6.024 | -0.029 | -0.418 |
+| climate_plus_snow40 | 4 | 389.80 | 373.30 | -6.548 | -0.066 | -0.469 |
+| climate_plus_swe | 4 | 427.66 | 373.79 | -8.085 | -0.170 | -0.612 |
+
+Terra-only coverage check: 4 eligible training years and 2 test years; status `insufficient_eligible_years`. The analysis requires at least six training and three test years before fitting these specifications. This threshold is a minimum feasibility gate, not a guarantee of strong statistical evidence.
+
+### Climate-only cohort, without a satellite-coverage gate
+
+Retrospective April 1 issue date. October–March precipitation and March temperature/SWE only; no satellite snow coverage requirement. Fixed ridge alpha=1; same complete years for every model; no held-out tuning.
+
+Training years: 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010. Test years: 2011, 2012, 2013, 2014, 2015, 2016. This larger cohort is a separate experiment; its scores cannot be used to claim snow improvement on a different set of years.
+
+| Model | Test years | RMSE (million m³) | Bias (million m³) | NSE | RMSE skill vs climatology |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| seasonal_climatology | 6 | 509.30 | 491.81 | -13.807 | 0.000 |
+| climate | 6 | 358.37 | 335.77 | -6.331 | 0.296 |
+| climate_plus_swe | 6 | 382.89 | 333.81 | -7.369 | 0.248 |
 
 Positive RMSE skill means lower error than the named baseline; negative skill means worse error. All tested specifications are retained, including failures. The snow40 model tests snow-threshold sensitivity; the SWE model uses reanalysis snow mass rather than observed snow extent. These tests measure retrospective association and predictive utility, not causal snowmelt attribution. Retrospective product latency and the provisional boundary prevent operational forecast claims. Small test samples produce broad uncertainty. [NSE/KGE benchmark interpretation](https://hess.copernicus.org/articles/23/4323/2019/).
 
-Excluded years: 2002: March Terra snow coverage fails minimum; 2003: March Terra snow coverage fails minimum; 2004: March Terra snow coverage fails minimum; 2006: March Terra snow coverage fails minimum; 2008: March Terra snow coverage fails minimum; 2010: March Terra snow coverage fails minimum; 2012: March Terra snow coverage fails minimum; 2013: March Terra snow coverage fails minimum; 2014: March Terra snow coverage fails minimum; 2016: March Terra snow coverage fails minimum; 2017: incomplete screened April–September observed volume.
+Excluded years: 2002: March combined snow coverage fails minimum; 2003: March combined snow coverage fails minimum; 2006: March combined snow coverage fails minimum; 2010: March combined snow coverage fails minimum; 2013: March combined snow coverage fails minimum; 2016: March combined snow coverage fails minimum; 2017: incomplete screened April–September observed volume.
 
 ## 5. Charvak extent, not assumed storage
 
@@ -122,7 +143,35 @@ Among eligible months, detected water area ranges from 15.96 km² (2020-03) to 3
 
 Landsat-derived JRC water detections within HydroLAKES 14452 plus 1 km buffer; may include adjoining channels. Not independently validated shoreline area, bathymetry or storage. Cloud/no-data months remain gaps.
 
-JRC is generated from Landsat, so a Landsat-derived comparison would not be fully independent. Independent Sentinel-2/SAR masks or reviewed shoreline samples are still needed. Pskem discharge covers only one tributary; without other inflows, releases, diversions and independent levels/bathymetry, no absolute storage or operational rule is validated.
+JRC is generated from Landsat, so a Landsat-derived comparison would not be fully independent. Pskem discharge covers only one tributary; without other inflows, releases, diversions and independent levels/bathymetry, no absolute storage or operational rule is validated.
+
+### Sentinel-2 verification
+
+Same-month independent-sensor comparison: JRC monthly Landsat water against highest-coverage Sentinel-2 scene; ≥95% coverage in both. MNDWI>0 and NDVI<0.3; MNDWI>0.1 sensitivity.
+
+There are 26 qualified month pairs. Sentinel-2 minus JRC bias is -0.16 km²; RMSE is 1.07 km². The CSV retains the Sentinel-2 acquisition date and both water thresholds.
+
+Sentinel-2 SCL removes no-data, defective, shadow, cloud/cirrus and snow/ice classes. Within each month the highest valid-area scene is selected, with earliest date breaking ties; selection does not optimise agreement. The 20 m SWIR grid defines the reduction. [Sentinel-2 harmonised surface reflectance and SCL](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED). JRC is not ground truth and its monthly dates differ from the selected Sentinel-2 acquisition. Optical errors can be correlated. No manually labelled shorelines yet.
+
+## Spatial verification and representativeness
+
+The stored gauge coordinate is effectively on a small tributary. Two larger Pskem reaches lie roughly 700 m away. An automatic nearest-reach snap would select the wrong hydrological scale; no coordinate was changed. The full-unit basin trace is retained only as a provisional experimental domain.
+
+| Candidate reach | Distance (m) | Upstream area (km²) | Reference discharge (m³/s) |
+| --- | ---: | ---: | ---: |
+| 40297414 | 0.1 | 11.7 | 0.21 |
+| 40296998 | 694.3 | 2496.6 | 54.47 |
+| 40297155 | 715.5 | 2509.6 | 54.81 |
+
+SRTM gives terrain context, not surveyed station elevation or the actual ERA5 model orography. These differences should not be used as a verified lapse-rate correction.
+
+| Station | SRTM at coordinate (m) | Mean SRTM within ERA5 cell (m) | Difference (m) |
+| --- | ---: | ---: | ---: |
+| Tashkent | 472 | 451 | -21 |
+| Pskem | 1445 | 1689 | 244 |
+| Oygaing | 2222 | 2974 | 752 |
+
+At Pskem, the terrain difference is much smaller than would by itself explain a 7°C offset under a conventional lapse-rate assumption. Station representativeness, observing definitions and model orography therefore remain open questions; the successful empirical correction is not a causal explanation. [SRTM data specification](https://developers.google.com/earth-engine/datasets/catalog/USGS_SRTMGL1_003).
 
 ## Conclusions and next discriminating tests
 
@@ -140,6 +189,8 @@ npm run cases:forcing
 python PIPELINES/extract_chirchik_remote.py --task climate
 python PIPELINES/extract_chirchik_remote.py --task snow
 python PIPELINES/extract_chirchik_remote.py --task reservoir
+python PIPELINES/extract_chirchik_remote.py --task reservoir-check
+python PIPELINES/audit_chirchik_spatial.py --terrain
 npm run cases:analyse
 npm run cases:build
 npm run cases:figures

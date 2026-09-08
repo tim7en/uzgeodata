@@ -41,7 +41,7 @@ def main():
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
         ax.margins(x=.01)
     fig.suptitle("Chirchik case studies · the Pskem observation base", fontsize=15, fontweight="bold")
-    fig.supxlabel("Source: delivered station workbooks. Screening: 3 flagged values and 1 impossible date excluded; monthly daily coverage ≥90%.\nProduct validation is pending historical station-cell extraction. Shading marks held-out discharge years.", fontsize=8)
+    fig.supxlabel("Source: delivered station workbooks. Screening: 3 flagged values and 1 impossible date excluded; monthly daily coverage ≥90%.\nHistorical product comparisons are in the companion validation report. Shading marks held-out discharge years.", fontsize=8)
     for extension in ["png", "pdf"]:
         destination = OUT / f"pskem-observation-evidence.{extension}"
         temporary = destination.with_name(f"pskem-observation-evidence.tmp.{extension}")

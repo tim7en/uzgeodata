@@ -61,6 +61,7 @@ def profiles(ee):
     rectangle=ee.Geometry.Rectangle([west,south,east,north])
     # These are data-derived rendered rasters, not AI illustrations.
     for name,image in [('terrain',ee.Terrain.hillshade(dem.reproject('EPSG:32642',None,60)).visualize(min=60,max=240)),
+        ('elevation',dem.visualize(min=800,max=4500,palette=['416a53','a0aa72','d3b285','a28778','f2f3f2'])),
         ('landcover',land.filterDate(f'{latest}-01-01',f'{latest+1}-01-01').mosaic().select('b1').remap(list(CLASSES),list(range(len(CLASSES)))).visualize(min=0,max=len(CLASSES)-1,palette=list(COLORS.values())))]:
         path=OUT/f'pskem-{name}-overview.png'
         if not path.exists():

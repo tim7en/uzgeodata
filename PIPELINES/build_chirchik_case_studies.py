@@ -297,7 +297,7 @@ def build(data=DATA, output=OUT, forcing=None):
     validation = product_validation(forcing, station)
     for study, variable in [(portfolio["studies"][0], "precipitation_total"), (portfolio["studies"][1], "air_temperature_mean")]:
         if any(r["variable"] == variable and r["scores"]["n"] for r in validation["comparisons"]):
-            study["status"] = "Raw product comparisons computed; correction experiments pending"
+            study["status"] = "Historical raw comparisons computed; see advanced correction results"
     if forcing.exists():
         inputs.append(forcing)
     inputs.extend([portfolio_path, Path(__file__).resolve()])
@@ -391,8 +391,8 @@ def write_report(path, data):
               "# For historical gridded precipitation and temperature, after local EE authentication:",
               "npm run cases:forcing", "npm run cases:build", "npm run build", "```", "",
               "1. Review source discharge flags and gauge/reach placement; confirm station elevations and product independence.",
-              "2. Run historical station-cell extraction; compare raw products before fitting corrections.",
-              "3. Delineate the approved gauge catchment, backfill snow and catchment forcing, then test seasonal forecasts on disjoint years.",
+              "2. Inspect historical product and correction results in chirchik-deep-study.md; audit representativeness before transfer.",
+              "3. Verify the gauge catchment and repeat the completed snow, physical, machine-learning and Bayesian experiments for that boundary.",
               "4. Expand to Chatkal/Ugam and reservoir storage when their control sections and independent validation data are available.", "",
               "Every output is associated with source hashes, processing version, time support and existing station/basin identifiers. "
               "Study statuses describe the analyses actually run; the remaining protocols are research work, not claimed completed validation."]

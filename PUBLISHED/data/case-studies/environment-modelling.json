@@ -1,6 +1,6 @@
 {
   "version": "3.0.0",
-  "generated_at": "2026-09-08T21:04:40.758838+00:00",
+  "generated_at": "2026-09-08T21:25:55.288704+00:00",
   "monthly_models": [
     {
       "model": "seasonal_climatology",
@@ -9284,6 +9284,166 @@
       "mean_valid_area_percent": 37.13485597473986
     },
     {
+      "period": "2025-01",
+      "product": "lst",
+      "value": -15.878653262045866,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 31.216273218318268
+    },
+    {
+      "period": "2025-02",
+      "product": "lst",
+      "value": -14.025686842574078,
+      "covered_days": 28,
+      "expected_days": 28,
+      "mean_valid_area_percent": 40.275635508689014
+    },
+    {
+      "period": "2025-03",
+      "product": "lst",
+      "value": -8.597429879715728,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 34.116706504551495
+    },
+    {
+      "period": "2025-04",
+      "product": "lst",
+      "value": 5.3649407263664965,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 49.644357887485526
+    },
+    {
+      "period": "2025-05",
+      "product": "lst",
+      "value": 17.1878816879158,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 91.07127392840755
+    },
+    {
+      "period": "2025-06",
+      "product": "lst",
+      "value": 20.03930778735328,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 97.49797941131477
+    },
+    {
+      "period": "2025-07",
+      "product": "lst",
+      "value": 26.468265528851763,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 99.74581963624561
+    },
+    {
+      "period": "2025-08",
+      "product": "lst",
+      "value": 23.996048544368747,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 99.90104766231396
+    },
+    {
+      "period": "2025-09",
+      "product": "lst",
+      "value": 16.829338530304998,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 95.7338446013654
+    },
+    {
+      "period": "2025-10",
+      "product": "lst",
+      "value": 5.97678211887238,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 30.902948407317936
+    },
+    {
+      "period": "2025-11",
+      "product": "lst",
+      "value": -6.99904979282868,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 12.943853769101233
+    },
+    {
+      "period": "2025-12",
+      "product": "lst",
+      "value": -14.296443081736006,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 14.797701599078255
+    },
+    {
+      "period": "2026-01",
+      "product": "lst",
+      "value": -16.609665110557092,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 41.01743120457907
+    },
+    {
+      "period": "2026-02",
+      "product": "lst",
+      "value": -9.800038002782665,
+      "covered_days": 28,
+      "expected_days": 28,
+      "mean_valid_area_percent": 54.23244079892144
+    },
+    {
+      "period": "2026-03",
+      "product": "lst",
+      "value": -8.420599877838024,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 46.8967010167399
+    },
+    {
+      "period": "2026-04",
+      "product": "lst",
+      "value": 1.0938470596280996,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 45.76686471386484
+    },
+    {
+      "period": "2026-05",
+      "product": "lst",
+      "value": 9.166877549003786,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 67.83097296109075
+    },
+    {
+      "period": "2026-06",
+      "product": "lst",
+      "value": 15.364227723859386,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 74.58737381941758
+    },
+    {
+      "period": "2026-07",
+      "product": "lst",
+      "value": 20.862449836824762,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 93.64799474565613
+    },
+    {
+      "period": "2026-08",
+      "product": "lst",
+      "value": 20.96965550550758,
+      "covered_days": 28,
+      "expected_days": 31,
+      "mean_valid_area_percent": 99.7960313300327
+    },
+    {
       "period": "2000-02",
       "product": "et",
       "value": null,
@@ -11676,6 +11836,102 @@
       "mean_valid_area_percent": 4.693591839946857
     },
     {
+      "period": "2025-01",
+      "product": "et",
+      "value": 20.24637498576574,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 1.1617752387508562
+    },
+    {
+      "period": "2025-02",
+      "product": "et",
+      "value": 31.330793151956406,
+      "covered_days": 28,
+      "expected_days": 28,
+      "mean_valid_area_percent": 2.231931203161992
+    },
+    {
+      "period": "2025-03",
+      "product": "et",
+      "value": 36.57312529112953,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 9.42466400610603
+    },
+    {
+      "period": "2025-04",
+      "product": "et",
+      "value": 43.77260638527434,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 40.644270518494785
+    },
+    {
+      "period": "2025-05",
+      "product": "et",
+      "value": 47.847012011759766,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 73.48395490003021
+    },
+    {
+      "period": "2025-06",
+      "product": "et",
+      "value": 41.34516043982201,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 92.23189083425545
+    },
+    {
+      "period": "2025-07",
+      "product": "et",
+      "value": 18.709156211349978,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 98.37544803364521
+    },
+    {
+      "period": "2025-08",
+      "product": "et",
+      "value": 11.527079873143835,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 98.74177543452086
+    },
+    {
+      "period": "2025-09",
+      "product": "et",
+      "value": 13.03630663893497,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 96.5534753184569
+    },
+    {
+      "period": "2025-10",
+      "product": "et",
+      "value": 19.031865153236595,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 70.91749967923873
+    },
+    {
+      "period": "2025-11",
+      "product": "et",
+      "value": 18.524575183045645,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 38.657726283916254
+    },
+    {
+      "period": "2025-12",
+      "product": "et",
+      "value": null,
+      "covered_days": 23,
+      "expected_days": 31,
+      "mean_valid_area_percent": 9.090612479411162
+    },
+    {
       "period": "2000-03",
       "product": "albedo",
       "value": 0.6161428310034112,
@@ -14058,6 +14314,166 @@
       "covered_days": 31,
       "expected_days": 31,
       "mean_valid_area_percent": 1.2829282216967934
+    },
+    {
+      "period": "2025-01",
+      "product": "albedo",
+      "value": 0.34888679050503923,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 0.9828541010587323
+    },
+    {
+      "period": "2025-02",
+      "product": "albedo",
+      "value": 0.41097943529920833,
+      "covered_days": 28,
+      "expected_days": 28,
+      "mean_valid_area_percent": 0.7669001304993354
+    },
+    {
+      "period": "2025-03",
+      "product": "albedo",
+      "value": 0.5186193959150959,
+      "covered_days": 30,
+      "expected_days": 31,
+      "mean_valid_area_percent": 4.0055878464832215
+    },
+    {
+      "period": "2025-04",
+      "product": "albedo",
+      "value": 0.2831108451458198,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 5.951835339781204
+    },
+    {
+      "period": "2025-05",
+      "product": "albedo",
+      "value": 0.15926893874339537,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 46.762798556677296
+    },
+    {
+      "period": "2025-06",
+      "product": "albedo",
+      "value": 0.1494799059750177,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 64.53311771709978
+    },
+    {
+      "period": "2025-07",
+      "product": "albedo",
+      "value": 0.14164080012600969,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 88.37015202108226
+    },
+    {
+      "period": "2025-08",
+      "product": "albedo",
+      "value": 0.14062143894834445,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 93.85557781999147
+    },
+    {
+      "period": "2025-09",
+      "product": "albedo",
+      "value": 0.14779438116158433,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 67.84020034148425
+    },
+    {
+      "period": "2025-10",
+      "product": "albedo",
+      "value": 0.15547189782164064,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 19.683811841258763
+    },
+    {
+      "period": "2025-11",
+      "product": "albedo",
+      "value": 0.1892137790722437,
+      "covered_days": 30,
+      "expected_days": 30,
+      "mean_valid_area_percent": 2.1528047079621584
+    },
+    {
+      "period": "2025-12",
+      "product": "albedo",
+      "value": 0.28379347797304494,
+      "covered_days": 13,
+      "expected_days": 31,
+      "mean_valid_area_percent": 0.39817437381602044
+    },
+    {
+      "period": "2026-01",
+      "product": "albedo",
+      "value": 0.3144776645195133,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 0.7044948325589445
+    },
+    {
+      "period": "2026-02",
+      "product": "albedo",
+      "value": 0.35495988681730334,
+      "covered_days": 19,
+      "expected_days": 28,
+      "mean_valid_area_percent": 1.1801377075058495
+    },
+    {
+      "period": "2026-03",
+      "product": "albedo",
+      "value": 0.47191575225125654,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 1.4306571859688906
+    },
+    {
+      "period": "2026-04",
+      "product": "albedo",
+      "value": 0.39525147545590217,
+      "covered_days": 29,
+      "expected_days": 30,
+      "mean_valid_area_percent": 2.6184794175731634
+    },
+    {
+      "period": "2026-05",
+      "product": "albedo",
+      "value": 0.1784327357551029,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 10.568130102284288
+    },
+    {
+      "period": "2026-06",
+      "product": "albedo",
+      "value": 0.14388971050396399,
+      "covered_days": 29,
+      "expected_days": 30,
+      "mean_valid_area_percent": 20.436723878905774
+    },
+    {
+      "period": "2026-07",
+      "product": "albedo",
+      "value": 0.14009905880451043,
+      "covered_days": 31,
+      "expected_days": 31,
+      "mean_valid_area_percent": 71.48015254379203
+    },
+    {
+      "period": "2026-08",
+      "product": "albedo",
+      "value": 0.13669340731571433,
+      "covered_days": 27,
+      "expected_days": 31,
+      "mean_valid_area_percent": 63.49379401518017
     }
   ],
   "energy_monthly": [
@@ -24751,7 +25167,7 @@
       "10": "Clouds",
       "11": "Rangeland"
     },
-    "retrieved_at": "2026-09-08T21:03:58.193903+00:00"
+    "retrieved_at": "2026-09-08T21:18:57.062234+00:00"
   },
   "freshness": {
     "era5_latest_available": "2026-07",
@@ -24762,13 +25178,13 @@
     },
     "modis_extracted_years": [
       2000,
-      2024
+      2026
     ],
     "era5_support": "Basin mean at native grid; monthly accumulations converted to mm and time-mean W/mВІ",
     "et_note": "MOD16 is modelled terrestrial evapotranspiration; masked non-vegetated/water/snow areas restrict its footprint. It is not basin-wide measured ET.",
     "lst_note": "Clear-sky daytime land-surface skin temperature, not 2 m air temperature. Eight-day composites.",
     "albedo_note": "Black-sky shortwave albedo; daily estimates use a moving 16-day window, so adjacent days are not independent.",
-    "retrieved_at": "2026-09-08T21:03:43.308932+00:00"
+    "retrieved_at": "2026-09-08T21:05:01.142791+00:00"
   },
   "scenarios": [
     {
@@ -24808,8 +25224,8 @@
       },
       {
         "label": "Station validation",
-        "status": "green",
-        "reason": "Historical product comparisons and chronological correction tests computed; independence audit remains documented."
+        "status": "amber",
+        "reason": "Historical comparisons and chronological correction tests computed; station metadata and product independence still need verification."
       },
       {
         "label": "Snow coverage",
@@ -24837,10 +25253,10 @@
         "reason": "ERA5 processed through 2026-07; latest available 2026-07. Individual satellite dates differ."
       }
     ],
-    "operational_ready": false,
-    "meaning": "Green marks a completed stated check, not universal scientific validity. Modelling release requires every mandatory gate and independent review; no averaging away red gates.",
     "overall": "red",
-    "blocker": "Resolve gauge location and approve the catchment; then repeat calibration and verification. Latest inputs alone do not make a model operational."
+    "operational_ready": false,
+    "meaning": "Green marks a completed stated check. Release readiness requires every listed check to be green; a red gate cannot be averaged away. Refreshing inputs does not replace validation.",
+    "blocker": "Resolve gauge location and verify the catchment; then repeat calibration and verification. Latest inputs alone do not make a model operational."
   },
   "provenance": [
     {
@@ -24860,16 +25276,36 @@
       "sha256": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e"
     },
     {
+      "file": "pskem-observations.manifest.json",
+      "sha256": "8e11671829700937cd5f3002b1bbea96bb73f864596cc603f0d6d0e9f6e85972"
+    },
+    {
+      "file": "chirchik.json",
+      "sha256": "4d7db8d4c1ceac777f086d441c65a1354257b3fee4a793382f07e6b4aec120ca"
+    },
+    {
+      "file": "environment-profile.manifest.json",
+      "sha256": "8cf059102ef19870ec39c805487659e30dac3e86dfa897330b3f5b325f7bd406"
+    },
+    {
+      "file": "environment-energy.manifest.json",
+      "sha256": "3f6be755dca9d270679846f36820fdf6aff8ebdc4dfd03e8f25c68002c9c0b0e"
+    },
+    {
+      "file": "model_chirchik_water.py",
+      "sha256": "0aa2f04bc07c269f0ccd037a27bf58b9180384b0e2bd16bf505964de1442a7ec"
+    },
+    {
       "file": "pskem-lst-composites.csv",
-      "sha256": "539b568af4762373e05a3727edac9ec431f2ac335604aa439351a096a522a3b6"
+      "sha256": "f27ad38df0f54b208a7cdb4ebd24ae73e96b27ed45395fbbdd34bbdedc4287bb"
     },
     {
       "file": "pskem-et-composites.csv",
-      "sha256": "17bf57205e97e341ee42fc3005f512c77e53f49738806d28d22684e5851d4b00"
+      "sha256": "6871b5d2a2b906ef7642ab1b4509278a70ede2b577259087a51b2d36a179f73a"
     },
     {
       "file": "pskem-albedo-composites.csv",
-      "sha256": "7a07fbbcbfac9ae7f42cc8f3f7f7d2ae17802bda6efe60d484f3d9f774a4a4bb"
+      "sha256": "a7d30c40b7a4af15c07012454c611a5a47b8b3aaa06b39e1a3cac17bace7511c"
     }
   ]
 }

@@ -83,12 +83,15 @@ def extract_snow(ee, start, end, sensors):
         asset = f"MODIS/061/{'MOD' if sensor in ['terra','combined'] else 'MYD'}10A1"
         source = ee.ImageCollection(asset)
         projection = source.first().select(0).projection()
+        latest = source.sort('system:time_start',False).first().date().format('YYYY-MM-dd').getInfo()
         masks = {name: dem.gte(lo).And(dem.lt(hi)) for name, lo, hi in BANDS}
         areas = cached(f"snow-areas-{digest}-v2", lambda: ee.Image.cat([
             ee.Image.pixelArea().updateMask(masks[name]).rename(name) for name, _, _ in BANDS
         ]).reduceRegion(ee.Reducer.sum(), region, scale=500, crs=projection, maxPixels=10000000).getInfo())
         basin_rows, station_rows = [], []
         for year in range(start, end + 1):
+            if year > int(latest[:4]):continue
+            stamp = f'-through-{latest}' if year == int(latest[:4]) else ''
             if sensor == "aqua" and year < 2002:
                 continue
             annual = source.filterDate(f"{year}-01-01", f"{year+1}-01-01")
@@ -128,7 +131,7 @@ def extract_snow(ee, start, end, sensors):
                     crs=projection, maxPixels=10000000, tileScale=2)
                 return ee.Feature(None, reduced).set({"date": image.date().format("YYYY-MM-dd"), "source_image": image.get("system:index")})
 
-            info = cached(f"snow-{sensor}-{digest}-{year}-v2", lambda: annual.map(basin_day).getInfo())
+            info = cached(f"snow-{sensor}-{digest}-{year}{stamp}-v2", lambda: annual.map(basin_day).getInfo())
             for feature in info['features']:
                 props = feature['properties']
                 for name, lo, hi in BANDS:
@@ -140,7 +143,7 @@ def extract_snow(ee, start, end, sensors):
                         "snow_cover_percent":100*snow/valid if valid else None,"snow40_cover_percent":100*snow40/valid if valid else None,
                         "source_asset":asset if sensor!='combined' else 'MODIS/061/MOD10A1 + MODIS/061/MYD10A1',"source_image":props['source_image']})
             # Point observations exist for 2020 onward; retain every date including masked retrievals.
-            if year >= 2020:
+            if 2020 <= year <= 2024 and sensor != 'combined':
                 def station_day(image):
                     ndsi = classify(image)
                     return ndsi.reduceRegions(points, ee.Reducer.first(), crs=projection).map(lambda f: f.setGeometry(None).set({
@@ -160,6 +163,18 @@ def extract_snow(ee, start, end, sensors):
                       ['date','sensor','elevation_band','minimum_m','maximum_m','area_km2','valid_area_percent','snow_cover_percent','snow40_cover_percent','source_asset','source_image'])
             if station_rows:
                 write_csv(OUT / f"station-modis-{sensor}-daily.csv",station_rows,['date','station_id','sensor','ndsi','source_asset','source_image'])
+        if sensor == 'combined':
+            # Terra and Aqua share the MODIS sinusoidal grid. At a point the
+            # pixel-level primary/fallback rule equals combining screened cells.
+            primary={(r['station_id'],r['date']):r for r in read_csv(OUT/'station-modis-terra-daily.csv')}
+            secondary={(r['station_id'],r['date']):r for r in read_csv(OUT/'station-modis-aqua-daily.csv')}
+            station_rows=[]
+            for key in sorted(primary.keys() | secondary.keys()):
+                t,a=primary.get(key),secondary.get(key)
+                chosen=t if t and t['ndsi']!='' else a or t
+                station_rows.append({**chosen,'sensor':'combined','source_asset':'MODIS/061/MOD10A1 + MODIS/061/MYD10A1',
+                    'source_image':chosen['source_image']})
+            write_csv(OUT/'station-modis-combined-daily.csv',station_rows,['date','station_id','sensor','ndsi','source_asset','source_image'])
 
 
 def extract_reservoir(ee,start,end):

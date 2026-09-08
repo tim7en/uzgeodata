@@ -53,7 +53,7 @@
     "cases:build": "python PIPELINES/build_chirchik_case_studies.py",
     "cases:forcing": "python PIPELINES/extract_case_study_forcing.py",
     "cases:figures": "python PIPELINES/plot_chirchik_case_studies.py",
-    "test:cases": "python -m pytest tests/test_chirchik_case_studies.py -q",
+    "test:cases": "python -m pytest tests/test_chirchik_case_studies.py tests/test_chirchik_advanced.py -q",
     "basins:domain": "python PIPELINES/build_aral_hydrographic_domain.py",
     "basins:network": "python PIPELINES/build_basin_network_web.py",
     "basins:reference": "python PIPELINES/build_reference_basins.py",
@@ -83,7 +83,13 @@
     "cams:events": "python PIPELINES/cams_event_verification.py",
     "data:currency": "python PIPELINES/build_data_currency.py",
     "ontology:structure": "python PIPELINES/build_ontology_structure.py",
-    "ontology:audit": "python PIPELINES/audit_ontology_tables.py"
+    "ontology:audit": "python PIPELINES/audit_ontology_tables.py",
+    "cases:analyse": "python PIPELINES/analyse_chirchik_validation.py",
+    "cases:profiles": "python PIPELINES/extract_chirchik_environment.py --task profiles",
+    "cases:energy": "python PIPELINES/extract_chirchik_environment.py --task energy --end 2026",
+    "cases:models": "python PIPELINES/model_chirchik_water.py",
+    "cases:figures:validation": "python PIPELINES/report_chirchik_environment.py",
+    "cases:update": "python PIPELINES/update_chirchik_studies.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.1",

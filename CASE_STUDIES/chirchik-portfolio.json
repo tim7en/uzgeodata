@@ -6,7 +6,7 @@
       "id": "precipitation",
       "title": "Which precipitation product captures the mountain water input?",
       "theme": "Precipitation",
-      "status": "Historical product extraction required",
+      "status": "Historical comparisons and held-out corrections computed",
       "question": "How well do ERA5-Land and CHIRPS v3 reproduce monthly precipitation at Pskem, Oygaing and Tashkent, and does the error change with season and location?",
       "hypothesis": "Product bias varies between the mountain stations and the lowland control; annual agreement can conceal winter underestimation and summer false rainfall.",
       "observations": "Pskem 2010–2024; Oygaing 2020–2022; Tashkent 2010–2019. Monthly station totals in mm. The three-year Oygaing record supports a short-period check, not a climate trend.",
@@ -17,17 +17,33 @@
         "For any bias correction, fit only to Pskem 2010–2017 and evaluate 2018–2024; Tashkent uses 2010–2016 / 2017–2019. Keep Oygaing as a separate short external check. Never pool station-months before reporting each station.",
         "Use whole-year block bootstrap intervals when enough paired years exist. Audit gauge undercatch, station relocation and whether a station contributed to the gridded product; label comparison independence unverified until that audit is complete."
       ],
-      "metrics": ["MAE and RMSE (mm/month)", "Mean and percent bias", "Seasonal and anomaly correlation", "Paired-month and complete-year coverage", "Held-out correction versus raw-product skill"],
-      "deliverables": ["Station-by-product scorecard and seasonal error plots", "Monthly observed/product pairs with QC and provenance", "A justified forcing choice for Pskem with a transferability statement"],
-      "gates": ["Historical station-cell extraction is absent from this checkout; the existing 2025–2026 basin means cannot validate 2010–2024 station observations.", "Station precipitation is a point measurement. Basin-mean precipitation requires separate spatial evaluation; a good station score alone does not validate catchment totals."],
+      "metrics": [
+        "MAE and RMSE (mm/month)",
+        "Mean and percent bias",
+        "Seasonal and anomaly correlation",
+        "Paired-month and complete-year coverage",
+        "Held-out correction versus raw-product skill"
+      ],
+      "deliverables": [
+        "Station-by-product scorecard and seasonal error plots",
+        "Monthly observed/product pairs with QC and provenance",
+        "A justified forcing choice for Pskem with a transferability statement"
+      ],
+      "gates": [
+        "Historical station-cell extraction is absent from this checkout; the existing 2025–2026 basin means cannot validate 2010–2024 station observations.",
+        "Station precipitation is a point measurement. Basin-mean precipitation requires separate spatial evaluation; a good station score alone does not validate catchment totals."
+      ],
       "decision": "Select and, if justified on held-out years, correct precipitation inputs before fitting a runoff model.",
-      "sources": ["era5", "chirps"]
+      "sources": [
+        "era5",
+        "chirps"
+      ]
     },
     {
       "id": "temperature",
       "title": "Temperature, elevation and the timing of melt",
       "theme": "Temperature",
-      "status": "Historical product extraction required",
+      "status": "Historical comparisons and held-out corrections computed",
       "question": "Does gridded air temperature reproduce the observed seasonal cycle and cold-season anomalies well enough to drive a snowmelt model?",
       "hypothesis": "Elevation mismatch produces systematic station-cell temperature errors, with a seasonally varying correction outperforming a single annual offset.",
       "observations": "Pskem has 177 of 180 monthly means, including three missing months in 2014. Oygaing has 36 monthly means and Tashkent 120. These are air-temperature observations, not land-surface temperature.",
@@ -38,17 +54,31 @@
         "Evaluate monthly warm/cold anomalies against a clearly named observational reference window. A 2010–2024 record is not a 1991–2020 climate normal.",
         "Obtain daily temperature before estimating positive degree days, rain/snow partition or freeze–thaw events. Monthly means cannot reconstruct daily threshold crossings."
       ],
-      "metrics": ["Bias, MAE and RMSE (°C)", "Seasonal and anomaly correlation", "Held-out error reduction", "Missing-month and elevation-mismatch audit"],
-      "deliverables": ["Station temperature validation panels", "Documented elevation correction, if supported", "Uncertainty ranges for subsequent snowmelt sensitivity experiments"],
-      "gates": ["Station elevations and daily temperature are not verified by the monthly delivery.", "Do not infer melt timing or daily extremes directly from monthly temperature means."],
+      "metrics": [
+        "Bias, MAE and RMSE (°C)",
+        "Seasonal and anomaly correlation",
+        "Held-out error reduction",
+        "Missing-month and elevation-mismatch audit"
+      ],
+      "deliverables": [
+        "Station temperature validation panels",
+        "Documented elevation correction, if supported",
+        "Uncertainty ranges for subsequent snowmelt sensitivity experiments"
+      ],
+      "gates": [
+        "Station elevations and daily temperature are not verified by the monthly delivery.",
+        "Do not infer melt timing or daily extremes directly from monthly temperature means."
+      ],
       "decision": "Determine whether observed warming and melt-model inputs are robust to gridded-temperature bias.",
-      "sources": ["era5"]
+      "sources": [
+        "era5"
+      ]
     },
     {
       "id": "snow-runoff",
       "title": "From winter accumulation to Pskem summer flow",
       "theme": "Snow & discharge",
-      "status": "Observed regime and benchmark computed",
+      "status": "MODIS checks and physical / ML / Bayesian models computed",
       "question": "Can antecedent precipitation and snow conditions improve seasonal Pskem discharge estimates beyond the expected seasonal hydrograph?",
       "hypothesis": "Winter accumulation and spring thermal conditions explain interannual flow variability beyond calendar-month climatology.",
       "observations": "Pskem–Mullala daily discharge, 2001–2017, with climate overlap in 2010–2017. This gauge represents the Pskem tributary, not all Charvak inflow.",
@@ -57,14 +87,33 @@
         "Trace NEXT_DOWN upstream of the gauge's containing level-12 unit. Review the gauge position against the river reach and delineate the partial outlet unit before calling this an exact gauge catchment. Keep transboundary contributing units.",
         "Build the first honest benchmark now: a calendar-month discharge climatology fitted on 2001–2010 and evaluated on 2011–2017. Report NSE, KGE (2009), bias, RMSE and MAE on eligible held-out months.",
         "Backfill MODIS snow for 2000–2017 and basin forcing for at least 2000–2017, including model warm-up. Use cloud/QA masks and valid-area fractions; derive snow-covered area from an explicit classification, never interpret the NDSI value as fractional cover.",
-        "For an April 1 seasonal forecast, use only observations available by March 31. Compare an antecedent-precipitation model, then an added-snow model, using expanding-year validation within 2010–2017; report the very small number of independent years.",
+        "For the April 1 experiment, fit fixed ridge specifications on qualifying 2001–2010 years and test qualifying 2011–2017 years. Use only pre-April climate and snow predictors. Report the strict coverage exclusions and compare all specifications on identical years.",
         "For process modelling, calibrate a parsimonious snow–soil–routing model and test on disjoint years. Convert area-weighted runoff depth to volume before routing. Compare against both monthly climatology and the same forcing model without snow predictors."
       ],
-      "metrics": ["Held-out NSE and KGE with their components", "MAE, RMSE and percent volume bias", "April–September volume error and peak-month error", "Skill against training-only seasonal climatology", "Sensitivity to suspect discharge and missing days"],
-      "deliverables": ["Observed seasonal hydrograph and complete-year volumes", "Quality-controlled daily-to-monthly discharge audit", "Candidate upstream catchment and review status", "Seasonal forecast experiment with no future predictors"],
-      "gates": ["The stored MODIS/ERA5 observations have no overlap with the historical discharge record. Their broad existing headwater selection excludes these stations.", "ERA5-Land runoff is local modelled runoff depth, not routed gauge discharge.", "Eight overlapping climate–flow years are insufficient for strong attribution claims; reserve conclusions until independent validation is available."],
+      "metrics": [
+        "Held-out NSE and KGE with their components",
+        "MAE, RMSE and percent volume bias",
+        "April–September volume error and peak-month error",
+        "Skill against training-only seasonal climatology",
+        "Sensitivity to suspect discharge and missing days"
+      ],
+      "deliverables": [
+        "Observed seasonal hydrograph and complete-year volumes",
+        "Quality-controlled daily-to-monthly discharge audit",
+        "Candidate upstream catchment and review status",
+        "Seasonal forecast experiment with no future predictors"
+      ],
+      "gates": [
+        "Historical snow and climate overlap are now extracted. Gauge-to-main-stem assignment remains unresolved; the provisional boundary must be verified.",
+        "ERA5-Land runoff is local modelled runoff depth, not routed gauge discharge.",
+        "Eight overlapping climate–flow years are insufficient for strong attribution claims; reserve conclusions until independent validation is available."
+      ],
       "decision": "Test whether snow monitoring adds usable information for seasonal water planning.",
-      "sources": ["era5", "modis", "kge"]
+      "sources": [
+        "era5",
+        "modis",
+        "kge"
+      ]
     },
     {
       "id": "glaciers",
@@ -81,17 +130,31 @@
         "Report August–September ice-melt contribution as a model ensemble range under accepted parameter sets, and distinguish gross ice melt generated from routed water reaching the gauge.",
         "Run glacier-area sensitivity scenarios with explicit climate assumptions; report them as scenarios rather than forecasts or causal historical attribution."
       ],
-      "metrics": ["Glacier area change with outline uncertainty", "Independent mass-balance agreement", "Held-out August–September flow error", "Ensemble spread in routed ice-melt fraction"],
-      "deliverables": ["Dated, basin-linked glacier change inventory", "Late-summer dependence figure with uncertainty", "Assumption and identifiability register"],
-      "gates": ["Perimeter cannot substitute for area; the 254 catalogue points do not establish a glacier-area trend.", "A good discharge fit does not independently validate ice-melt fraction. Groundwater, snow and ice contributions may compensate for one another."],
+      "metrics": [
+        "Glacier area change with outline uncertainty",
+        "Independent mass-balance agreement",
+        "Held-out August–September flow error",
+        "Ensemble spread in routed ice-melt fraction"
+      ],
+      "deliverables": [
+        "Dated, basin-linked glacier change inventory",
+        "Late-summer dependence figure with uncertainty",
+        "Assumption and identifiability register"
+      ],
+      "gates": [
+        "Perimeter cannot substitute for area; the 254 catalogue points do not establish a glacier-area trend.",
+        "A good discharge fit does not independently validate ice-melt fraction. Groundwater, snow and ice contributions may compensate for one another."
+      ],
       "decision": "Identify where late-summer supply may be sensitive to glacier change without claiming an unmeasured melt fraction.",
-      "sources": ["rgi"]
+      "sources": [
+        "rgi"
+      ]
     },
     {
       "id": "charvak",
       "title": "Charvak water extent and storage uncertainty",
       "theme": "Reservoir storage",
-      "status": "Historical image and level extraction required",
+      "status": "JRC extent and Sentinel-2 cross-check computed; storage unconstrained",
       "question": "What can public observations establish about Charvak filling, drawdown and storage change?",
       "hypothesis": "Consistent reservoir extent and level observations reveal seasonal drawdown and anomalous years even when absolute storage remains weakly constrained.",
       "observations": "The project has reservoir and dam reference layers. No observed Charvak storage, level, release or full tributary inflow time series has been established for these case studies.",
@@ -103,17 +166,33 @@
         "Treat below-waterline extrapolation anchored by reported capacity as a model scenario. Propagate shoreline, level, curve and capacity uncertainties; report missing months instead of guaranteeing a continuous record from 1984.",
         "Interpret operations only after obtaining releases, diversions and the other tributary inflows. The Pskem gauge alone cannot close the Charvak water balance."
       ],
-      "metrics": ["Water-mask precision/recall on held-out labelled scenes", "Cross-sensor extent disagreement", "Matched-date level RMSE", "Relative storage-change uncertainty", "Monthly observation completeness"],
-      "deliverables": ["Auditable reservoir area series and scene QC", "Relative storage change where independently constrained", "Drought-year comparisons and an absolute-storage evidence gate"],
-      "gates": ["Copernicus GLO-30 does not observe submerged bathymetry; one reported capacity does not uniquely identify an elevation–volume curve.", "Station precipitation, temperature and upstream discharge are useful context, but do not validate reservoir volume or operational rules."],
+      "metrics": [
+        "Water-mask precision/recall on held-out labelled scenes",
+        "Cross-sensor extent disagreement",
+        "Matched-date level RMSE",
+        "Relative storage-change uncertainty",
+        "Monthly observation completeness"
+      ],
+      "deliverables": [
+        "Auditable reservoir area series and scene QC",
+        "Relative storage change where independently constrained",
+        "Drought-year comparisons and an absolute-storage evidence gate"
+      ],
+      "gates": [
+        "Copernicus GLO-30 does not observe submerged bathymetry; one reported capacity does not uniquely identify an elevation–volume curve.",
+        "Station precipitation, temperature and upstream discharge are useful context, but do not validate reservoir volume or operational rules."
+      ],
       "decision": "Publish the strongest supported storage indicator and its uncertainty, then upgrade it when independent level/volume information arrives.",
-      "sources": ["atl13", "dem"]
+      "sources": [
+        "atl13",
+        "dem"
+      ]
     },
     {
       "id": "land-use",
       "title": "Development pressure upstream of water supply",
       "theme": "Land use & exposure",
-      "status": "Boundary and change validation required",
+      "status": "Esri 10 m elevation profiles computed; local accuracy unverified",
       "question": "Where has built-up land expanded around Charvak and within verified upstream conservation boundaries?",
       "hypothesis": "Development is spatially concentrated near accessible shoreline areas, with exposure depending on hydrological connectivity rather than distance alone.",
       "observations": "Existing basin and land-cover infrastructure can support the overlay. Verified protected-property boundaries, change labels and intake locations are still needed.",
@@ -124,22 +203,73 @@
         "Aggregate local built-up area by level-12 basin, then sum extensive quantities through the reviewed upstream network. Report local and cumulative measures separately without double counting.",
         "Intersect population and intake locations for exposure. Do not infer contamination, regulatory violations or health impacts from land-cover change alone."
       ],
-      "metrics": ["Built-up area and change with confidence intervals", "Change-class precision and recall", "Upstream area and exposed population with explicit dates", "Boundary and source-version completeness"],
-      "deliverables": ["Validated development-change map", "Basin-level exposure table with provenance", "A conservation/water-supply evidence brief"],
-      "gates": ["Meteorological and discharge validation does not validate a land-cover classifier.", "A claim of development inside a World Heritage property requires the official component boundary and dated evidence."],
+      "metrics": [
+        "Built-up area and change with confidence intervals",
+        "Change-class precision and recall",
+        "Upstream area and exposed population with explicit dates",
+        "Boundary and source-version completeness"
+      ],
+      "deliverables": [
+        "Validated development-change map",
+        "Basin-level exposure table with provenance",
+        "A conservation/water-supply evidence brief"
+      ],
+      "gates": [
+        "Meteorological and discharge validation does not validate a land-cover classifier.",
+        "A claim of development inside a World Heritage property requires the official component boundary and dated evidence."
+      ],
       "decision": "Prioritise monitoring and field inspection where verified development drains toward water-supply infrastructure.",
-      "sources": ["dynamicworld", "worldcover"]
+      "sources": [
+        "dynamicworld",
+        "worldcover"
+      ]
     }
   ],
   "sources": [
-    {"id": "era5", "title": "ERA5-Land monthly aggregates: bands, units and limitations", "url": "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_MONTHLY_AGGR"},
-    {"id": "chirps", "title": "CHIRPS v3 pentadal precipitation", "url": "https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_PENTAD"},
-    {"id": "modis", "title": "MODIS/Terra daily snow cover, Version 61", "url": "https://nsidc.org/data/mod10a1/versions/61"},
-    {"id": "kge", "title": "Knoben et al. (2019): interpreting NSE and KGE benchmarks", "url": "https://hess.copernicus.org/articles/23/4323/2019/"},
-    {"id": "rgi", "title": "Randolph Glacier Inventory, Version 7", "url": "https://nsidc.org/data/nsidc-0770/versions/7"},
-    {"id": "atl13", "title": "ICESat-2 ATL13 inland water user guide", "url": "https://nsidc.org/sites/default/files/documents/user-guide/atl13-v007-userguide.pdf"},
-    {"id": "dem", "title": "Copernicus DEM GLO-30 and replacement notice", "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30"},
-    {"id": "dynamicworld", "title": "Dynamic World V1", "url": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1"},
-    {"id": "worldcover", "title": "ESA WorldCover 2021", "url": "https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200"}
+    {
+      "id": "era5",
+      "title": "ERA5-Land monthly aggregates: bands, units and limitations",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_MONTHLY_AGGR"
+    },
+    {
+      "id": "chirps",
+      "title": "CHIRPS v3 pentadal precipitation",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_PENTAD"
+    },
+    {
+      "id": "modis",
+      "title": "MODIS/Terra daily snow cover, Version 61",
+      "url": "https://nsidc.org/data/mod10a1/versions/61"
+    },
+    {
+      "id": "kge",
+      "title": "Knoben et al. (2019): interpreting NSE and KGE benchmarks",
+      "url": "https://hess.copernicus.org/articles/23/4323/2019/"
+    },
+    {
+      "id": "rgi",
+      "title": "Randolph Glacier Inventory, Version 7",
+      "url": "https://nsidc.org/data/nsidc-0770/versions/7"
+    },
+    {
+      "id": "atl13",
+      "title": "ICESat-2 ATL13 inland water user guide",
+      "url": "https://nsidc.org/sites/default/files/documents/user-guide/atl13-v007-userguide.pdf"
+    },
+    {
+      "id": "dem",
+      "title": "Copernicus DEM GLO-30 and replacement notice",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30"
+    },
+    {
+      "id": "dynamicworld",
+      "title": "Dynamic World V1",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1"
+    },
+    {
+      "id": "worldcover",
+      "title": "ESA WorldCover 2021",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200"
+    }
   ]
 }
