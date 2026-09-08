@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
 import { ArrowUpRight, Droplets, Layers, Search, X } from 'lucide-react';
 import DamModal from './DamModal.jsx';
+import { svg } from 'leaflet';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
   clusterDams, damClusterBounds, damClusterStyle,
@@ -152,6 +153,9 @@ export default function LandingMap() {
   const [dams, setDams] = useState(null);
   const [showDams, setShowDams] = useState(true);
   const [dam, setDam] = useState(null);
+  // SVG only intercepts events on its interactive paths. A marker-pane canvas
+  // covers the entire map and prevents the basin canvas underneath receiving clicks.
+  const damRenderer = useMemo(() => svg({ pane: 'markerPane' }), []);
   const layersById = useRef(new Map());
   const painted = useRef([]);
   const drawnLevel = useRef(null);
@@ -329,7 +333,7 @@ export default function LandingMap() {
     layer.on({
       mouseover: () => setHoveredId(id),
       mouseout: () => setHoveredId(current => (current === id ? null : current)),
-      click: () => { setSelected(feature); setDam(null); setQuery(''); },
+      click: () => { setSelected(feature); setDam(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
     });
   }, []);
 
@@ -355,26 +359,23 @@ export default function LandingMap() {
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
-      {/* The dams go in the marker pane, not the overlay pane the basins use:
-          Leaflet hands a canvas click to whichever layer joined that renderer
-          last, and the basin GeoJSON remounts on every level change, so sharing
-          a renderer with it makes the dams stop responding at unpredictable
-          moments. Their own pane settles stacking and hit order together. */}
+      {/* SVG markers remain above basins while allowing clicks between symbols
+          to reach the basin canvas, including after a basin-level remount. */}
       {damClusters.map(cluster => {
         if (cluster.count === 1) {
           const feature = cluster.members[0];
           const state = { selected: dam?.dam_id === feature.properties.dam_id };
-          return <CircleMarker key={`dam-${feature.properties.dam_id}`} pane="markerPane"
+          return <CircleMarker key={`dam-${feature.properties.dam_id}`} pane="markerPane" renderer={damRenderer}
             center={[cluster.latitude, cluster.longitude]}
             pathOptions={damStyle(feature.properties, state)}
             radius={damStyle(feature.properties, state).radius}
-            eventHandlers={{ click: () => { setDam(feature.properties); setSelected(null); } }}>
+            eventHandlers={{ click: () => { setDam(feature.properties); setSelected(null); setTableOpen(false); } }}>
             <Tooltip direction="top" offset={[0, -4]} opacity={1} className="land-dam-tip">
               {damLabel(feature.properties)}
             </Tooltip>
           </CircleMarker>;
         }
-        return <CircleMarker key={`group-${cluster.key}`} pane="markerPane"
+        return <CircleMarker key={`group-${cluster.key}`} pane="markerPane" renderer={damRenderer}
           center={[cluster.latitude, cluster.longitude]}
           pathOptions={damClusterStyle(cluster)}
           radius={damClusterStyle(cluster).radius}
