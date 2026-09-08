@@ -55,6 +55,26 @@ SOURCES = {
         "command": "npm run cfsv2:climatology",
         "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
     },
+    "era5-land-headwaters-monthly": {
+        "cadence": "monthly", "latest": "era5-land", "unitReference": "headwater07",
+        "command": "npm run headwaters:era5",
+        "note": "Monthly ERA5-Land state over the transboundary headwater formation scope.",
+    },
+    "era5-land-headwater-anomaly": {
+        "cadence": "monthly", "latest": "era5-land", "unitReference": "headwater07",
+        "command": "npm run headwaters:anomaly",
+        "note": "Derived against the fixed 1991-2020 ERA5-Land normal after current observations refresh.",
+    },
+    "era5-land-headwater-elevation-monthly": {
+        "cadence": "monthly", "latest": "era5-land",
+        "command": "npm run headwaters:era5:elevation",
+        "note": "Monthly ERA5-Land state over headwater-system and elevation-band intersections.",
+    },
+    "modis-snow-headwaters-daily": {
+        "cadence": "daily", "latest": "modis-snow",
+        "command": "npm run headwaters:snow",
+        "note": "Daily MODIS snow cover; cloud and invalid-pixel coverage is retained explicitly.",
+    },
     "chirps-v3-basin-pentad": {
         "cadence": "monthly", "latest": "chirps", "unitReference": "basin12",
         "command": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
@@ -93,11 +113,16 @@ UNIT_REFERENCES = {
     "basin07": ROOT / "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev07.geojson",
     "basin12": ROOT / "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev12.geojson",
     "adm2": ROOT / "PUBLISHED/data/admin/adm2.geojson",
+    "headwater07": ROOT / "PUBLISHED/data/hydroclimate/headwater-units.geojson",
 }
 
 # Where the upstream products currently stand. Kept here rather than queried, so
 # this runs without Earth Engine; the note says how to confirm it.
 UPSTREAM = {
+    "era5-land": {"latest": "2026-07", "checked": "2026-09-08",
+                  "how": "queried ECMWF/ERA5_LAND/MONTHLY_AGGR latest system:time_start"},
+    "modis-snow": {"latest": "2026-09-03", "checked": "2026-09-08",
+                   "how": "queried MODIS/061/MOD10A1 latest system:time_start"},
     "cfsv2": {"latest": "2026-08", "checked": "2026-09-01",
               "how": "ee.ImageCollection('NOAA/CFSV2/FOR6H_HARMONIZED') reduceColumns on system:time_start"},
     "chirts": {"latest": "2016-12", "checked": "2026-09-01", "closed": True,
@@ -128,7 +153,7 @@ def survey(container: Path, dimensions: list[dict], object_column: str,
     names = [d["column"] for d in dimensions]
     if not container.exists():
         return None, None, 0, 0
-    has_year, has_month = "year" in names, "month" in names
+    has_year, has_month, has_date = "year" in names, "month" in names, "date" in names
     stamps, units, rows = set(), set(), 0
     with container.open(encoding="utf8", newline="") as handle:
         for row in csv.DictReader(handle):
@@ -137,7 +162,9 @@ def survey(container: Path, dimensions: list[dict], object_column: str,
             rows += 1
             if object_column in row:
                 units.add(row[object_column])
-            if has_year and row.get("year"):
+            if has_date and row.get("date"):
+                stamps.add(row["date"])
+            elif has_year and row.get("year"):
                 stamps.add(f"{int(row['year']):04d}-{int(row['month']):02d}"
                            if has_month else f"{int(row['year']):04d}")
     return (min(stamps) if stamps else None, max(stamps) if stamps else None, rows, len(units))

@@ -637,6 +637,34 @@
       ]
     },
     {
+      "id": "era5-land-headwater-anomaly",
+      "dataset": "era5-land",
+      "label": "ERA5-Land monthly anomaly by transboundary headwater basin",
+      "note": "Level-7 headwater observations expressed as z-scores against a fixed 1991-2020 ERA5-Land baseline calculated with the same geometry, variables and scale.",
+      "predicate": "uz:hasBasinAnomaly",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwater-anomaly.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/era5-land",
+      "objectColumn": "basin_id",
+      "identifierScheme": "HYBAS_ID",
+      "scopeColumn": null,
+      "measureColumn": "z_score",
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {"column": "system_id", "meaning": "transboundary runoff-formation system"},
+        {"column": "year", "meaning": "observation calendar year"},
+        {"column": "month", "meaning": "calendar month"},
+        {"column": "variable", "meaning": "hydroclimate variable"},
+        {"column": "classification", "meaning": "symmetric anomaly class"},
+        {"column": "baseline_start", "meaning": "first year of fixed climate normal"},
+        {"column": "baseline_end", "meaning": "last year of fixed climate normal"}
+      ]
+    },
+    {
       "id": "srtm-headwater-elevation-bands",
       "dataset": "srtm-elevation",
       "label": "SRTM elevation-band areas in headwater formation systems",

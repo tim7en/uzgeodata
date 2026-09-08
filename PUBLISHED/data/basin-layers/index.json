@@ -1,17 +1,136 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T04:53:08+00:00",
+  "generatedAt": "2026-09-08T06:17:13+00:00",
   "title": "Basin climate & land observatory",
-  "description": "Every already-measured basin time series the ontology declares, projected into one shared map contract: CFSv2 climate state and anomaly, CHIRPS precipitation, CHIRTS and CPC temperature, CAMS air quality, and GHM human modification.",
+  "description": "Transboundary headwater observations and anomalies are the primary scope. Earlier Uzbekistan-intersection CFSv2, CHIRPS, CHIRTS, CPC, CAMS and GHM layers remain explicitly marked as legacy comparisons.",
   "layers": [
     {
+      "id": "era5-land-headwater-anomaly",
+      "label": "Headwater climate anomaly",
+      "domain": "ATMOSPHERE",
+      "kind": "anomaly",
+      "dataset": "uz:ds/era5-land",
+      "predicate": "uz:hasBasinAnomaly",
+      "basinLevel": 7,
+      "spatialScope": "headwater_formation",
+      "spatialUnit": "HydroATLAS level-7 subbasin",
+      "legacyScope": false,
+      "baseline": "1991-2020",
+      "geometryIdColumn": "HYBAS_ID",
+      "geometry": "/data/hydroclimate/headwater-units.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07"
+      ],
+      "variables": [
+        {
+          "code": "air_temperature_mean",
+          "unit": "degC",
+          "label": "Air temperature (mean)",
+          "color": "#ff6b4a"
+        },
+        {
+          "code": "modelled_runoff_total",
+          "unit": "mm",
+          "label": "Modelled runoff",
+          "color": "#1677ff"
+        },
+        {
+          "code": "precipitation_total",
+          "unit": "mm",
+          "label": "Precipitation",
+          "color": "#4cc9f0"
+        },
+        {
+          "code": "snow_water_equivalent_mean",
+          "unit": "mm",
+          "label": "Snow water equivalent",
+          "color": "#e8f7ff"
+        },
+        {
+          "code": "snowfall_water_equivalent_total",
+          "unit": "mm",
+          "label": "Snowfall water equivalent",
+          "color": "#a7d8ff"
+        },
+        {
+          "code": "soil_moisture_layer_1_mean",
+          "unit": "m3/m3",
+          "label": "Soil moisture (layer 1)",
+          "color": "#2dd4bf"
+        }
+      ],
+      "what": "Monthly ERA5-Land departures from a fixed 1991-2020 normal across every level-7 subbasin upstream of the Panj-Vakhsh and Naryn-Karadarya controls.",
+      "series": "/data/basin-layers/era5-land-headwater-anomaly.json",
+      "coverage": {
+        "rows": 4965,
+        "basins": 121,
+        "periods": 7
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "scorePercent": 90.0,
+        "states": {
+          "ok-reanalysis-anomaly": 4962,
+          "review-extreme-reanalysis-anomaly": 3
+        }
+      },
+      "preview": {
+        "variable": "precipitation_total",
+        "label": "Precipitation",
+        "unit": "z-score",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2026-01",
+            "value": -0.48
+          },
+          {
+            "period": "2026-02",
+            "value": -0.4687
+          },
+          {
+            "period": "2026-03",
+            "value": 0.4062
+          },
+          {
+            "period": "2026-04",
+            "value": -0.2193
+          },
+          {
+            "period": "2026-05",
+            "value": 0.0347
+          },
+          {
+            "period": "2026-06",
+            "value": 0.0427
+          },
+          {
+            "period": "2026-07",
+            "value": -0.1288
+          }
+        ]
+      }
+    },
+    {
       "id": "cfsv2-basin-anomaly",
-      "label": "Climate anomaly",
+      "label": "Climate anomaly (legacy national)",
       "domain": "ATMOSPHERE",
       "kind": "anomaly",
       "dataset": "uz:ds/cfsv2-noaa",
       "predicate": "uz:hasBasinAnomaly",
       "basinLevel": 7,
+      "spatialScope": "national_intersection",
+      "spatialUnit": "HydroATLAS level-7 basin",
+      "legacyScope": true,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
       "geometry": "/data/review/basinatlas/basinatlas_uz_lev07.geojson",
       "periodGrain": "month",
       "periods": [
@@ -269,12 +388,17 @@
     },
     {
       "id": "cfsv2-basin-monthly",
-      "label": "Climate state",
+      "label": "Climate state (legacy national)",
       "domain": "ATMOSPHERE",
       "kind": "value",
       "dataset": "uz:ds/cfsv2-noaa",
       "predicate": "uz:hasBasinStatistic",
       "basinLevel": 7,
+      "spatialScope": "national_intersection",
+      "spatialUnit": "HydroATLAS level-7 basin",
+      "legacyScope": true,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
       "geometry": "/data/review/basinatlas/basinatlas_uz_lev07.geojson",
       "periodGrain": "month",
       "periods": [
@@ -555,6 +679,11 @@
       "dataset": "uz:ds/chirps-v3",
       "predicate": "uz:hasBasinStatistic",
       "basinLevel": 12,
+      "spatialScope": "national_intersection",
+      "spatialUnit": "HydroATLAS level-12 basin",
+      "legacyScope": true,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
       "geometry": "/data/review/basinatlas/basinatlas_uz_lev12.geojson",
       "periodGrain": "pentad",
       "periods": [
@@ -808,6 +937,11 @@
       "dataset": "uz:ds/chirts",
       "predicate": "uz:hasBasinStatistic",
       "basinLevel": 12,
+      "spatialScope": "national_intersection",
+      "spatialUnit": "HydroATLAS level-12 basin",
+      "legacyScope": true,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
       "geometry": "/data/review/basinatlas/basinatlas_uz_lev12.geojson",
       "periodGrain": "month",
       "periods": [
@@ -904,6 +1038,11 @@
       "dataset": "uz:ds/cpc-temperature",
       "predicate": "uz:hasBasinStatistic",
       "basinLevel": 6,
+      "spatialScope": "national_intersection",
+      "spatialUnit": "HydroATLAS level-6 basin",
+      "legacyScope": true,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
       "geometry": "/data/review/basinatlas/basinatlas_uz_lev06.geojson",
       "periodGrain": "month",
       "periods": [
@@ -1338,6 +1477,11 @@
       "dataset": "uz:ds/cams-nrt",
       "predicate": "uz:hasBasinStatistic",
       "basinLevel": 6,
+      "spatialScope": "national_intersection",
+      "spatialUnit": "HydroATLAS level-6 basin",
+      "legacyScope": true,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
       "geometry": "/data/review/basinatlas/basinatlas_uz_lev06.geojson",
       "periodGrain": "month",
       "periods": [
@@ -1397,6 +1541,11 @@
       "dataset": "uz:ds/era5-land",
       "predicate": "uz:hasBasinStatistic",
       "basinLevel": 7,
+      "spatialScope": "headwater_formation",
+      "spatialUnit": "HydroATLAS level-7 subbasin",
+      "legacyScope": false,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
       "geometry": "/data/hydroclimate/headwater-units.geojson",
       "periodGrain": "month",
       "periods": [
@@ -1455,7 +1604,7 @@
       },
       "quality": {
         "validPercent": 100.0,
-        "scorePercent": 75.0,
+        "scorePercent": 90.0,
         "states": {
           "ok-reanalysis": 5082
         }
@@ -1498,6 +1647,221 @@
       }
     },
     {
+      "id": "modis-snow-headwater-daily",
+      "label": "Headwater snow cover (MODIS)",
+      "domain": "ATMOSPHERE",
+      "kind": "value",
+      "dataset": "uz:ds/modis-terra-snow",
+      "predicate": "uz:hasFormationStatistic",
+      "basinLevel": 10,
+      "spatialScope": "headwater_formation",
+      "spatialUnit": "headwater formation system",
+      "legacyScope": false,
+      "baseline": null,
+      "geometryIdColumn": "system_id",
+      "geometry": "/data/hydroclimate/headwater-systems.geojson",
+      "periodGrain": "day",
+      "periods": [
+        "2026-08-02",
+        "2026-08-03",
+        "2026-08-04",
+        "2026-08-05",
+        "2026-08-06",
+        "2026-08-07",
+        "2026-08-08",
+        "2026-08-09",
+        "2026-08-10",
+        "2026-08-11",
+        "2026-08-12",
+        "2026-08-13",
+        "2026-08-14",
+        "2026-08-15",
+        "2026-08-16",
+        "2026-08-17",
+        "2026-08-18",
+        "2026-08-19",
+        "2026-08-20",
+        "2026-08-21",
+        "2026-08-22",
+        "2026-08-23",
+        "2026-08-24",
+        "2026-08-25",
+        "2026-08-26",
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-08-31",
+        "2026-09-01",
+        "2026-09-02",
+        "2026-09-03"
+      ],
+      "variables": [
+        {
+          "code": "snow_cover_percent",
+          "unit": "percent",
+          "label": "Snow cover",
+          "color": "#e8f7ff"
+        }
+      ],
+      "what": "Daily MODIS Terra snow cover for the Upper Amu and Upper Syr formation zones, aggregated from elevation bands using valid-observation area.",
+      "series": "/data/basin-layers/modis-snow-headwater-daily.json",
+      "coverage": {
+        "rows": 66,
+        "basins": 2,
+        "periods": 33
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "scorePercent": 79.1,
+        "states": {
+          "insufficient-clear-sky": 2,
+          "limited-clear-sky": 14,
+          "ok-satellite": 50
+        }
+      },
+      "preview": {
+        "variable": "snow_cover_percent",
+        "label": "Snow cover",
+        "unit": "percent",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2026-08-02",
+            "value": 2.4457
+          },
+          {
+            "period": "2026-08-03",
+            "value": 1.4034
+          },
+          {
+            "period": "2026-08-04",
+            "value": 21.1484
+          },
+          {
+            "period": "2026-08-05",
+            "value": 2.734
+          },
+          {
+            "period": "2026-08-06",
+            "value": 1.7302
+          },
+          {
+            "period": "2026-08-07",
+            "value": 2.281
+          },
+          {
+            "period": "2026-08-08",
+            "value": 2.7778
+          },
+          {
+            "period": "2026-08-09",
+            "value": 1.3953
+          },
+          {
+            "period": "2026-08-10",
+            "value": 0.8959
+          },
+          {
+            "period": "2026-08-11",
+            "value": 0.9343
+          },
+          {
+            "period": "2026-08-12",
+            "value": 0.6807
+          },
+          {
+            "period": "2026-08-13",
+            "value": 2.0377
+          },
+          {
+            "period": "2026-08-14",
+            "value": 1.7438
+          },
+          {
+            "period": "2026-08-15",
+            "value": 2.3827
+          },
+          {
+            "period": "2026-08-16",
+            "value": 1.3249
+          },
+          {
+            "period": "2026-08-17",
+            "value": 1.8257
+          },
+          {
+            "period": "2026-08-18",
+            "value": 2.036
+          },
+          {
+            "period": "2026-08-19",
+            "value": 1.6774
+          },
+          {
+            "period": "2026-08-20",
+            "value": 2.0505
+          },
+          {
+            "period": "2026-08-21",
+            "value": 1.3841
+          },
+          {
+            "period": "2026-08-22",
+            "value": 3.4879
+          },
+          {
+            "period": "2026-08-23",
+            "value": 1.6963
+          },
+          {
+            "period": "2026-08-24",
+            "value": 3.1342
+          },
+          {
+            "period": "2026-08-25",
+            "value": 2.3331
+          },
+          {
+            "period": "2026-08-26",
+            "value": 1.6509
+          },
+          {
+            "period": "2026-08-27",
+            "value": 2.2699
+          },
+          {
+            "period": "2026-08-28",
+            "value": 2.6178
+          },
+          {
+            "period": "2026-08-29",
+            "value": 1.7873
+          },
+          {
+            "period": "2026-08-30",
+            "value": 1.8624
+          },
+          {
+            "period": "2026-08-31",
+            "value": 1.0894
+          },
+          {
+            "period": "2026-09-01",
+            "value": 1.6435
+          },
+          {
+            "period": "2026-09-02",
+            "value": 1.6956
+          },
+          {
+            "period": "2026-09-03",
+            "value": 2.5595
+          }
+        ]
+      }
+    },
+    {
       "id": "ghm-basin-modification",
       "label": "Human modification",
       "domain": "LAND",
@@ -1505,6 +1869,11 @@
       "dataset": "uz:ds/csp-ghm",
       "predicate": "uz:hasBasinStatistic",
       "basinLevel": 12,
+      "spatialScope": "national_intersection",
+      "spatialUnit": "HydroATLAS level-12 basin",
+      "legacyScope": true,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
       "geometry": "/data/review/basinatlas/basinatlas_uz_lev12.geojson",
       "periodGrain": "year",
       "periods": [

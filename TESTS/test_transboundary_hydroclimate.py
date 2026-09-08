@@ -54,6 +54,15 @@ def test_temporal_grain_is_preserved_in_download_tables():
     era5 = rows("era5-land-headwater-elevation-monthly.csv")
     snow = rows("modis-snow-headwaters-daily.csv")
     assert len({row["period_start"] for row in era5}) == 7
-    assert len({row["date"] for row in snow}) == 31
+    assert len({row["date"] for row in snow}) >= 31
     assert all(row["valid_area_percent"] for row in snow)
     assert all(row["source_image"] for row in era5 + snow)
+
+
+def test_headwater_anomalies_use_a_fixed_climate_normal():
+    anomalies = rows("era5-land-headwater-anomaly.csv")
+    assert anomalies
+    assert {row["baseline_start"] for row in anomalies} == {"1991"}
+    assert {row["baseline_end"] for row in anomalies} == {"2020"}
+    assert {row["system_id"] for row in anomalies} == {"upper_amu_darya", "upper_syr_darya"}
+    assert all(row["z_score"] and row["classification"] for row in anomalies)

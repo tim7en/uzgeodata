@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T05:34:13+00:00",
+  "generatedAt": "2026-09-08T06:14:47+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -7491,6 +7491,29 @@
       "accessPolicy": "free"
     },
     {
+      "id": "uz:dist/era5-land-headwater-anomaly",
+      "type": "Distribution",
+      "label": "ERA5-Land monthly anomaly by transboundary headwater basin",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 1071854,
+      "storedName": "PUBLISHED/data/hydroclimate/era5-land-headwater-anomaly.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasBasinAnomaly",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "objectColumn": "basin_id",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwater-anomaly.csv",
+      "scopeColumn": null,
+      "measureColumn": "z_score",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID",
+      "rowCount": 4965,
+      "subjectFixed": "uz:ds/era5-land"
+    },
+    {
       "id": "uz:dist/era5-land-headwater-elevation-monthly",
       "type": "Distribution",
       "label": "ERA5-Land monthly state by headwater elevation band",
@@ -8719,7 +8742,7 @@
       "label": "MODIS daily snow cover by headwater elevation band",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 63852,
+      "byteSize": 67958,
       "storedName": "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.csv",
       "url": null,
       "accessPolicy": "free",
@@ -8733,7 +8756,7 @@
       "measureUnitColumn": "unit",
       "containerTable": null,
       "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
-      "rowCount": 310,
+      "rowCount": 330,
       "subjectFixed": "uz:ds/modis-terra-snow"
     },
     {

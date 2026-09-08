@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T05:34:13+00:00",
+  "generatedAt": "2026-09-08T06:14:47+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -10001,7 +10001,7 @@
         "reanalysis-not-direct-observation",
         "runoff-is-modelled"
       ],
-      "distributions": 3,
+      "distributions": 4,
       "related": [],
       "geographies": [
         {
@@ -10015,6 +10015,13 @@
           "predicate": "uz:coversPlace",
           "mode": "declared",
           "detail": "uz:place/upper-syr-darya"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinAnomaly",
+          "mode": "measured",
+          "detail": "ERA5-Land monthly anomaly by transboundary headwater basin",
+          "links": 4965
         },
         {
           "frame": "basin",
@@ -11777,10 +11784,10 @@
     "datasets": 189,
     "atlasPackages": 134,
     "stations": 190,
-    "publishedAssertions": 3257,
+    "publishedAssertions": 3259,
     "proposedAssertions": 579,
-    "relationshipTables": 25,
-    "relationshipLinks": 1148547
+    "relationshipTables": 26,
+    "relationshipLinks": 1153532
   },
   "geography": {
     "frames": [
@@ -12162,6 +12169,26 @@
       ]
     },
     {
+      "id": "era5-land-headwater-anomaly",
+      "dataset": "uz:ds/era5-land",
+      "label": "ERA5-Land monthly anomaly by transboundary headwater basin",
+      "predicate": "uz:hasBasinAnomaly",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 4965,
+      "measureColumn": "z_score",
+      "dimensions": [
+        "system_id",
+        "year",
+        "month",
+        "variable",
+        "classification",
+        "baseline_start",
+        "baseline_end"
+      ]
+    },
+    {
       "id": "srtm-headwater-elevation-bands",
       "dataset": "uz:ds/srtm-elevation",
       "label": "SRTM elevation-band areas in headwater formation systems",
@@ -12202,7 +12229,7 @@
       "subjectType": "Dataset",
       "objectType": "RunoffFormationUnit",
       "frame": "formation",
-      "rowCount": 310,
+      "rowCount": 330,
       "measureColumn": "value",
       "dimensions": [
         "date",

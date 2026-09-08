@@ -68,9 +68,10 @@ export function divergingColor(z, maxAbsZ, base = '#263134', low = '#39a7ff', hi
 
 export function formatPeriod(grain, period) {
   if (grain === 'year') return period;
-  const [year, month, pentad] = period.split('-');
+  const [year, month, suffix] = period.split('-');
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const label = `${year} \u00b7 ${MONTHS[Number(month) - 1]}`;
-  if (grain === 'pentad' && pentad) return `${label} \u00b7 P${pentad.slice(1)}`;
+  if (grain === 'pentad' && suffix) return `${label} \u00b7 P${suffix.slice(1)}`;
+  if (grain === 'day' && suffix) return `${label} \u00b7 ${Number(suffix)}`;
   return label;
 }

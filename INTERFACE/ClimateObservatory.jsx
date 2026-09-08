@@ -23,6 +23,10 @@ function number(value, digits = 1) {
   });
 }
 
+function featureId(feature, layer) {
+  return String(feature?.properties?.[layer?.geometryIdColumn || 'HYBAS_ID'] ?? '');
+}
+
 function Logo() {
   return <a className="clim-logo" href="/" aria-label="UzGeoData home">
     <svg viewBox="0 0 38 38" aria-hidden="true"><path d="M5 7h8v15c0 5 2 8 6 8s6-3 6-8V7h8v16c0 9-5 14-14 14S5 32 5 23V7Z"/><path className="clim-logo-bar" d="M13 2h21v5H13z"/></svg>
@@ -178,11 +182,11 @@ export default function ClimateObservatory() {
   const visibleId = hoverId || selectedId;
   const visibleCell = visibleId && series && period && variable ? cellAt(series, visibleId, period, variable) : null;
   const visibleFeature = useMemo(() => geometry?.features.find(
-    feature => String(feature.properties.HYBAS_ID) === visibleId,
-  ), [geometry, visibleId]);
+    feature => featureId(feature, layer) === visibleId,
+  ), [geometry, visibleId, layer]);
   const selectedFeature = useMemo(() => geometry?.features.find(
-    feature => String(feature.properties.HYBAS_ID) === selectedId,
-  ), [geometry, selectedId]);
+    feature => featureId(feature, layer) === selectedId,
+  ), [geometry, selectedId, layer]);
   const timeline = useMemo(
     () => series && visibleId && layer ? timelineFor(series, visibleId, layer.periods, variable) : [],
     [series, visibleId, layer, variable],
@@ -192,17 +196,18 @@ export default function ClimateObservatory() {
     const term = query.trim();
     if (!term || !geometry) return [];
     return geometry.features.filter(feature =>
-      String(feature.properties.HYBAS_ID).includes(term)
+      featureId(feature, layer).includes(term)
       || String(feature.properties.PFAF_ID || '').includes(term)
     ).slice(0, 7);
-  }, [query, geometry]);
+  }, [query, geometry, layer]);
 
   const domains = useMemo(() => {
     if (!index) return [];
     const groups = new Map();
     index.layers.forEach(item => {
-      if (!groups.has(item.domain)) groups.set(item.domain, []);
-      groups.get(item.domain).push(item);
+      const group = `${item.legacyScope ? 'LEGACY' : 'UPSTREAM'} / ${item.domain}`;
+      if (!groups.has(group)) groups.set(group, []);
+      groups.get(group).push(item);
     });
     return [...groups.entries()];
   }, [index]);
@@ -222,7 +227,7 @@ export default function ClimateObservatory() {
           key={`${layer.id}-${period}-${variable}-${expression}-${selectedId}`}
           data={geometry}
           style={feature => {
-            const id = String(feature.properties.HYBAS_ID);
+            const id = featureId(feature, layer);
             const selectedNow = id === selectedId;
             const color = featureColor(id);
             return {
@@ -234,7 +239,7 @@ export default function ClimateObservatory() {
             };
           }}
           onEachFeature={(feature, leafletLayer) => {
-            const id = String(feature.properties.HYBAS_ID);
+            const id = featureId(feature, layer);
             leafletLayer.on({
               mouseover: () => setHoverId(id), mouseout: () => setHoverId(null),
               click: () => setSelectedId(id),
@@ -255,17 +260,17 @@ export default function ClimateObservatory() {
         <h1>See what's <em>changing.</em></h1>
         <p>{layer.what}</p>
         <div className="clim-search">
-          <Search size={14}/><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Find HYBAS or Pfafstetter ID"/>
+          <Search size={14}/><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Find basin or formation-system ID"/>
           {!!searchMatches.length && <div>{searchMatches.map(feature => {
-            const id = String(feature.properties.HYBAS_ID);
-            return <button key={id} onClick={() => { setSelectedId(id); setQuery(''); }}><span>Basin {feature.properties.PFAF_ID}</span><small>{id}</small></button>;
+            const id = featureId(feature, layer);
+            return <button key={id} onClick={() => { setSelectedId(id); setQuery(''); }}><span>{feature.properties.label || `Basin ${feature.properties.PFAF_ID || id}`}</span><small>{id}</small></button>;
           })}</div>}
         </div>
         <label>Signal source</label>
         {domains.map(([domain, items]) => <div className="clim-domain-group" key={domain}>
           <span>{domain}</span>
           <div className="clim-layers">{items.map(item => <button key={item.id} className={item.id === layerId ? 'active' : ''}
-            onClick={() => setLayerId(item.id)}>{item.label}<small>{item.coverage.basins.toLocaleString()} basins \u00b7 {item.coverage.periods.toLocaleString()} periods</small></button>)}</div>
+            onClick={() => setLayerId(item.id)}>{item.label}<small>{item.coverage.basins.toLocaleString()} units \u00b7 {item.coverage.periods.toLocaleString()} periods \u00b7 {item.spatialScope.replaceAll('_', ' ')}</small></button>)}</div>
         </div>)}
         <label>Variable</label>
         <div className="clim-vars">
@@ -279,7 +284,7 @@ export default function ClimateObservatory() {
             <button className={expression === 'value' ? 'active' : ''} onClick={() => setExpression('value')}>Raw value</button>
           </div>
         </>}
-        <div className="clim-ontology-path"><span>ONTOLOGY PATH</span><code>{layer.dataset}</code><b>{layer.predicate}</b><code>Basin level {layer.basinLevel}</code></div>
+        <div className="clim-ontology-path"><span>ONTOLOGY PATH</span><code>{layer.dataset}</code><b>{layer.predicate}</b><code>{layer.spatialScope} / {layer.spatialUnit}</code></div>
       </aside>
 
       <aside className="clim-insight">
@@ -287,15 +292,15 @@ export default function ClimateObservatory() {
           {[['insight', BarChart3, 'Insight'], ['table', Table2, 'Table'], ['json', Braces, 'JSON']].map(([key, Icon, label]) => <button key={key} className={tab === key ? 'active' : ''} onClick={() => setTab(key)}><Icon size={12}/>{label}</button>)}
         </div>
         {tab === 'insight' && <div className="clim-insight-body">
-          <div className="clim-feature-id"><MapPin size={13}/><span>{visibleId ? `HYBAS ${visibleId}` : 'ALL MEASURED BASINS'}</span></div>
-          <h2>{visibleId ? `Basin ${visibleFeature?.properties.PFAF_ID ?? '\u2014'}` : 'Uzbekistan basin frame'}</h2>
+          <div className="clim-feature-id"><MapPin size={13}/><span>{visibleId ? `${layer.geometryIdColumn === 'HYBAS_ID' ? 'HYBAS ' : ''}${visibleId}` : 'ALL MEASURED UNITS'}</span></div>
+          <h2>{visibleId ? (visibleFeature?.properties.label || `Basin ${visibleFeature?.properties.PFAF_ID ?? visibleId}`) : (layer.spatialScope === 'headwater_formation' ? 'Transboundary headwater frame' : 'Uzbekistan basin frame')}</h2>
           <div className="clim-big-number" style={{ color: activeVariable?.color }}>
             {visibleCell ? `${number(visibleCell.v, 2)} ${activeVariable?.unit || ''}` : (visibleId ? 'No observation' : number(stats.mean, 2))}
           </div>
           <span className="clim-big-caption">{activeVariable?.label} \u00b7 {formatPeriod(layer.periodGrain, period)}</span>
           {visibleCell?.c && <div className="clim-classification" style={{ color: divergingColor(visibleCell.z, maxAbsZ) || activeVariable?.color, borderColor: divergingColor(visibleCell.z, maxAbsZ) || 'var(--clim-line)' }}>{visibleCell.c}{visibleCell.z !== null && ` \u00b7 z ${visibleCell.z > 0 ? '+' : ''}${number(visibleCell.z, 2)}`}</div>}
           <div className="clim-mini-stats">
-            <div><span>Observed basins</span><strong>{number(observed.length, 0)}</strong></div>
+            <div><span>Observed units</span><strong>{number(observed.length, 0)}</strong></div>
             <div><span>Selection median</span><strong>{number(stats.median, 2)} {activeVariable?.unit || ''}</strong></div>
             <div><span>Selection min</span><strong>{number(stats.min, 2)}</strong></div>
             <div><span>Selection max</span><strong>{number(stats.max, 2)}</strong></div>
@@ -316,7 +321,7 @@ export default function ClimateObservatory() {
       </aside>
 
       <div className="clim-map-readout">
-        <div><span>MEASURED BASINS</span><strong>{number(observed.length, 0)}</strong></div>
+        <div><span>MEASURED UNITS</span><strong>{number(observed.length, 0)}</strong></div>
         <div><span>SIGNAL</span><strong>{activeVariable?.label}</strong></div>
         <div><span>SPATIAL MEDIAN</span><strong>{number(stats.median, 2)} {activeVariable?.unit || ''}</strong></div>
       </div>
@@ -335,8 +340,8 @@ export default function ClimateObservatory() {
     </section>
 
     <section className="clim-evidence">
-      <div className="clim-evidence-intro"><span>THE PRACTICAL ANSWER</span><h2>Where is the signal moving \u2014 and by how much?</h2><p>Every layer here was already measured for another purpose; nothing here is a new download. Pick a variable, scrub through time, then open the exact basin-period JSON behind the visual.</p></div>
-      <div className="clim-distribution"><div className="clim-section-title"><BarChart3 size={14}/><span>SPATIAL DISTRIBUTION</span><small>{number(observed.length, 0)} observed basins</small></div><Histogram values={observed.map(item => item.v)} min={stats.min ?? 0} max={stats.max ?? 1} color={activeVariable?.color}/><p>Distribution of {activeVariable?.label.toLowerCase()} across every measured basin in {formatPeriod(layer.periodGrain, period)}.</p></div>
+      <div className="clim-evidence-intro"><span>THE PRACTICAL ANSWER</span><h2>Where is the signal moving \u2014 and by how much?</h2><p>Upstream layers are refreshed from Earth Engine and retain their native monthly or daily grain. Legacy national-intersection layers remain labelled for comparison. Pick a variable, scrub through time, then open the exact unit-period JSON behind the visual.</p></div>
+      <div className="clim-distribution"><div className="clim-section-title"><BarChart3 size={14}/><span>SPATIAL DISTRIBUTION</span><small>{number(observed.length, 0)} observed units</small></div><Histogram values={observed.map(item => item.v)} min={stats.min ?? 0} max={stats.max ?? 1} color={activeVariable?.color}/><p>Distribution of {activeVariable?.label.toLowerCase()} across every measured unit in {formatPeriod(layer.periodGrain, period)}.</p></div>
       <div className="clim-national"><div className="clim-section-title"><Database size={14}/><span>SIGNAL LEGEND</span><small>{signalMode ? 'anomaly' : 'raw value'}</small></div>
         {signalMode ? <div className="clim-legend"><div className="clim-legend-bar" style={{ background: 'linear-gradient(90deg,#39a7ff,#263134,#ff695d)' }}/><div className="clim-legend-labels"><span>Below normal</span><span>Normal</span><span>Above normal</span></div></div>
           : <div className="clim-legend"><div className="clim-legend-bar" style={{ background: `linear-gradient(90deg,#172121,${activeVariable?.color})` }}/><div className="clim-legend-labels"><span>{number(stats.min, 1)}</span><span>{number(stats.max, 1)} {activeVariable?.unit}</span></div></div>}

@@ -51,8 +51,9 @@ test('divergingColor picks a side by the sign of z', () => {
   assert.equal(divergingColor(null, 2), null);
 });
 
-test('formatPeriod renders month and pentad grains', () => {
+test('formatPeriod renders month, pentad and day grains', () => {
   assert.equal(formatPeriod('year', '2016'), '2016');
   assert.equal(formatPeriod('month', '2024-06'), '2024 \u00b7 Jun');
   assert.equal(formatPeriod('pentad', '2024-06-p3'), '2024 \u00b7 Jun \u00b7 P3');
+  assert.equal(formatPeriod('day', '2024-06-03'), '2024 \u00b7 Jun \u00b7 3');
 });

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T03:38:17+00:00",
+  "generatedAt": "2026-09-08T06:18:37+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
@@ -10,6 +10,16 @@
     "MISSING": "The container the graph names is not on this machine."
   },
   "upstream": {
+    "era5-land": {
+      "latest": "2026-07",
+      "checked": "2026-09-08",
+      "how": "queried ECMWF/ERA5_LAND/MONTHLY_AGGR latest system:time_start"
+    },
+    "modis-snow": {
+      "latest": "2026-09-03",
+      "checked": "2026-09-08",
+      "how": "queried MODIS/061/MOD10A1 latest system:time_start"
+    },
     "cfsv2": {
       "latest": "2026-08",
       "checked": "2026-09-01",
@@ -34,9 +44,9 @@
   },
   "counts": {
     "INCOMPLETE": 3,
-    "MISSING": 4,
-    "CURRENT": 3,
-    "STATIC": 14
+    "MISSING": 3,
+    "CURRENT": 7,
+    "STATIC": 16
   },
   "tables": [
     {
@@ -58,7 +68,7 @@
       "status": "INCOMPLETE",
       "refresh": "npm run cfsv2:anomaly",
       "note": "Derived. Rebuilds in seconds once observations and climatology are current.",
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:58+00:00"
     },
     {
       "id": "chirps-v3-basin-pentad",
@@ -79,7 +89,7 @@
       "status": "INCOMPLETE",
       "refresh": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "CHIRPS v3 publishes pentads with a few weeks' lag; six complete a month.",
-      "lastModified": "2026-09-07T10:35:12+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "chirts-basin-monthly",
@@ -100,25 +110,7 @@
       "status": "INCOMPLETE",
       "refresh": "npm run chirts:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "The upstream record ended at 2016-12. Complete once it reaches that, and never behind.",
-      "lastModified": "2026-09-07T09:55:58+00:00"
-    },
-    {
-      "id": "atlas-basin-statistics",
-      "label": "Atlas raster surfaces read per level-12 basin",
-      "predicate": "uz:hasBasinStatistic",
-      "container": "WORKSPACE/derived/basin-zonal-stats.csv",
-      "exists": false,
-      "rows": null,
-      "units": null,
-      "expectedUnits": null,
-      "coverage": null,
-      "cadence": "static",
-      "upstreamLatest": null,
-      "gap": null,
-      "status": "MISSING",
-      "refresh": null,
-      "note": null,
-      "lastModified": null
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "hydrography-lake-basin",
@@ -193,7 +185,70 @@
       "status": "CURRENT",
       "refresh": "npm run cfsv2:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "CFSv2 publishes six-hourly with a short lag; a month is complete once it ends.",
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:06:58+00:00"
+    },
+    {
+      "id": "era5-land-headwater-anomaly",
+      "label": "ERA5-Land monthly anomaly by transboundary headwater basin",
+      "predicate": "uz:hasBasinAnomaly",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwater-anomaly.csv",
+      "exists": true,
+      "rows": 4965,
+      "units": 121,
+      "expectedUnits": 121,
+      "coverage": {
+        "from": "2026-01",
+        "to": "2026-07"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run headwaters:anomaly",
+      "note": "Derived against the fixed 1991-2020 ERA5-Land normal after current observations refresh.",
+      "lastModified": "2026-09-08T06:14:33+00:00"
+    },
+    {
+      "id": "era5-land-headwater-elevation-monthly",
+      "label": "ERA5-Land monthly state by headwater elevation band",
+      "predicate": "uz:hasFormationStatistic",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwater-elevation-monthly.csv",
+      "exists": true,
+      "rows": 420,
+      "units": 10,
+      "expectedUnits": null,
+      "coverage": {
+        "from": "2026-01",
+        "to": "2026-07"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run headwaters:era5:elevation",
+      "note": "Monthly ERA5-Land state over headwater-system and elevation-band intersections.",
+      "lastModified": "2026-09-08T05:34:02+00:00"
+    },
+    {
+      "id": "era5-land-headwaters-monthly",
+      "label": "ERA5-Land monthly hydroclimate state by transboundary headwater basin",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+      "exists": true,
+      "rows": 5082,
+      "units": 121,
+      "expectedUnits": 121,
+      "coverage": {
+        "from": "2026-01",
+        "to": "2026-07"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run headwaters:era5",
+      "note": "Monthly ERA5-Land state over the transboundary headwater formation scope.",
+      "lastModified": "2026-09-08T04:45:03+00:00"
     },
     {
       "id": "landcover-admin-year",
@@ -214,7 +269,7 @@
       "status": "CURRENT",
       "refresh": "npm run landcover:stats -- --level admin",
       "note": "The land cover product publishes one mosaic per calendar year.",
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "landcover-basin-year",
@@ -235,7 +290,28 @@
       "status": "CURRENT",
       "refresh": "npm run landcover:stats -- --level basin",
       "note": "Not yet built; roughly ten hours for level 12.",
-      "lastModified": "2026-09-08T03:32:20+00:00"
+      "lastModified": "2026-09-08T04:15:42+00:00"
+    },
+    {
+      "id": "modis-snow-headwaters-daily",
+      "label": "MODIS daily snow cover by headwater elevation band",
+      "predicate": "uz:hasFormationStatistic",
+      "container": "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.csv",
+      "exists": true,
+      "rows": 330,
+      "units": 10,
+      "expectedUnits": null,
+      "coverage": {
+        "from": "2026-08-02",
+        "to": "2026-09-03"
+      },
+      "cadence": "daily",
+      "upstreamLatest": "2026-09-03",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run headwaters:snow",
+      "note": "Daily MODIS snow cover; cloud and invalid-pixel coverage is retained explicitly.",
+      "lastModified": "2026-09-08T06:00:12+00:00"
     },
     {
       "id": "admin-basin-district",
@@ -253,7 +329,7 @@
       "status": "STATIC",
       "refresh": "npm run hydrography:adminlinks",
       "note": "Boundaries and basins change only when a delivery is replaced.",
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:07:00+00:00"
     },
     {
       "id": "admin-basin-province",
@@ -271,7 +347,7 @@
       "status": "STATIC",
       "refresh": "npm run hydrography:adminlinks",
       "note": "Boundaries and basins change only when a delivery is replaced.",
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:07:00+00:00"
     },
     {
       "id": "atlas-basin-coverage",
@@ -279,8 +355,8 @@
       "predicate": "uz:coversBasin",
       "container": "WORKSPACE/derived/atlas-basin-links.csv",
       "exists": true,
-      "rows": null,
-      "units": null,
+      "rows": 195649,
+      "units": 3981,
       "expectedUnits": null,
       "coverage": null,
       "cadence": "static",
@@ -289,7 +365,25 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T12:51:10+00:00"
+      "lastModified": "2026-08-29T16:01:58+00:00"
+    },
+    {
+      "id": "atlas-basin-statistics",
+      "label": "Atlas raster surfaces read per level-12 basin",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "WORKSPACE/derived/basin-zonal-stats.csv",
+      "exists": true,
+      "rows": 167309,
+      "units": 3981,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": null,
+      "note": null,
+      "lastModified": "2026-08-29T17:21:08+00:00"
     },
     {
       "id": "basinatlas-uz-downstream",
@@ -307,7 +401,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:30+00:00"
+      "lastModified": "2026-08-29T06:19:56+00:00"
     },
     {
       "id": "basinatlas-uz-hierarchy",
@@ -325,7 +419,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:30+00:00"
+      "lastModified": "2026-08-29T06:19:55+00:00"
     },
     {
       "id": "basinatlas-uz-pfaf",
@@ -343,7 +437,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:30+00:00"
+      "lastModified": "2026-08-29T06:19:26+00:00"
     },
     {
       "id": "cams-basin-monthly",
@@ -364,7 +458,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:57+00:00"
     },
     {
       "id": "cfsv2-basin-climatology",
@@ -382,7 +476,7 @@
       "status": "STATIC",
       "refresh": "npm run cfsv2:climatology",
       "note": "A baseline should move rarely and deliberately; every stored anomaly shifts when it does.",
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:58+00:00"
     },
     {
       "id": "cpc-basin-monthly",
@@ -403,7 +497,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:32+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "ghm-basin-modification",
@@ -421,7 +515,7 @@
       "status": "STATIC",
       "refresh": "npm run ghm:observe",
       "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
-      "lastModified": "2026-09-07T10:00:29+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "ghm-district-modification",
@@ -439,7 +533,7 @@
       "status": "STATIC",
       "refresh": "npm run ghm:observe",
       "note": "One image, no timestamp. Nothing to refresh until a new gHM epoch is published.",
-      "lastModified": "2026-09-07T10:00:29+00:00"
+      "lastModified": "2026-09-07T17:06:59+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-downstream",
@@ -457,7 +551,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:55+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-hierarchy",
@@ -475,7 +569,7 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:55+00:00"
     },
     {
       "id": "hydrobasins-lake-uz-pfaf",
@@ -493,7 +587,25 @@
       "status": "STATIC",
       "refresh": null,
       "note": null,
-      "lastModified": "2026-09-07T09:12:31+00:00"
+      "lastModified": "2026-09-07T17:06:55+00:00"
+    },
+    {
+      "id": "srtm-headwater-elevation-bands",
+      "label": "SRTM elevation-band areas in headwater formation systems",
+      "predicate": "uz:hasFormationStatistic",
+      "container": "PUBLISHED/data/hydroclimate/headwater-elevation-bands.csv",
+      "exists": true,
+      "rows": 10,
+      "units": 10,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": null,
+      "note": null,
+      "lastModified": "2026-09-08T05:33:48+00:00"
     }
   ]
 }

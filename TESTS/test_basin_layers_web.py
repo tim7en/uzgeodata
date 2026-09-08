@@ -22,7 +22,7 @@ def test_monthly_layer_pivots_by_basin_period_variable(tmp_path):
         [1, 2024, 2, "precipitation", 1.5, "mm/day"],
         [2, 2024, 1, "precipitation", 2.0, "mm/day"],
     ])
-    layer = {**web.LAYERS[1], "source": source}  # cfsv2-basin-monthly: plain value kind
+    layer = {**next(item for item in web.LAYERS if item["id"] == "cfsv2-basin-monthly"), "source": source}
     entry, series = web.build_layer(layer)
 
     assert series["basins"]["1"]["2024-01"]["precipitation"] == {"v": 0.5}
@@ -38,7 +38,7 @@ def test_anomaly_layer_carries_z_score_and_classification(tmp_path):
                        "z_score", "classification"], [
         [1, 2024, 1, "precipitation", 0.0, "mm/day", -1.5, "dry"],
     ])
-    layer = {**web.LAYERS[0], "source": source}  # cfsv2-basin-anomaly: anomaly kind
+    layer = {**next(item for item in web.LAYERS if item["id"] == "cfsv2-basin-anomaly"), "source": source}
     entry, series = web.build_layer(layer)
     assert series["basins"]["1"]["2024-01"]["precipitation"] == {"v": 0.0, "z": -1.5, "c": "dry"}
     assert entry["kind"] == "anomaly"
@@ -49,7 +49,7 @@ def test_pentad_layer_keys_periods_with_a_pentad_suffix(tmp_path):
     write_csv(source, ["basin_id", "year", "month", "pentad", "variable", "value", "unit"], [
         [1, 2024, 6, 3, "precipitation_total", 4.2, "mm"],
     ])
-    layer = {**web.LAYERS[2], "source": source}  # chirps-v3-basin-pentad
+    layer = {**next(item for item in web.LAYERS if item["id"] == "chirps-v3-basin-pentad"), "source": source}
     entry, _ = web.build_layer(layer)
     assert entry["periods"] == ["2024-06-p3"]
 
@@ -73,7 +73,7 @@ def test_layer_index_exposes_a_weighted_quality_signal(tmp_path):
         [2, 2024, 1, "precipitation", 2.0, "mm/day", "ok-interpolated"],
         [3, 2024, 1, "precipitation", 9999, "mm/day", "implausible"],
     ])
-    layer = {**web.LAYERS[1], "source": source}
+    layer = {**next(item for item in web.LAYERS if item["id"] == "cfsv2-basin-monthly"), "source": source}
     entry, _ = web.build_layer(layer)
 
     assert entry["quality"]["validPercent"] == 100.0
@@ -91,3 +91,21 @@ def test_headwater_layer_uses_transboundary_geometry():
     assert entry["geometry"] == "/data/hydroclimate/headwater-units.geojson"
     assert entry["coverage"]["basins"] == 121
     assert entry["coverage"]["rows"] == entry["coverage"]["basins"] * entry["coverage"]["periods"] * 6
+
+
+def test_upstream_anomaly_is_the_default_layer_and_declares_fixed_baseline():
+    layer = web.LAYERS[0]
+    entry, _ = web.build_layer(layer)
+    assert entry["id"] == "era5-land-headwater-anomaly"
+    assert entry["spatialScope"] == "headwater_formation"
+    assert entry["baseline"] == "1991-2020"
+    assert entry["geometry"] == "/data/hydroclimate/headwater-units.geojson"
+    assert entry["coverage"]["basins"] == 121
+
+
+def test_daily_system_layer_uses_system_identifier():
+    layer = next(item for item in web.LAYERS if item["id"] == "modis-snow-headwater-daily")
+    entry, _ = web.build_layer(layer)
+    assert entry["periodGrain"] == "day"
+    assert entry["geometryIdColumn"] == "system_id"
+    assert entry["coverage"]["basins"] == 2

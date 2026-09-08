@@ -23,7 +23,9 @@ CONFIG = ROOT / "ONTOLOGY/vocab/hydroclimate-system.json"
 SYSTEMS = ROOT / "PUBLISHED/data/hydroclimate/headwater-systems.geojson"
 OUTPUT = ROOT / "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.csv"
 JSON_OUTPUT = ROOT / "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.json"
+SYSTEM_OUTPUT = ROOT / "PUBLISHED/data/hydroclimate/modis-snow-headwater-systems-daily.csv"
 MANIFEST = ROOT / "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.manifest.json"
+AREAS = ROOT / "PUBLISHED/data/hydroclimate/headwater-elevation-bands.csv"
 PROJECT = "ee-sabitovty"
 ASSET = "MODIS/061/MOD10A1"
 DEM_ASSET = "USGS/SRTMGL1_003"
@@ -33,6 +35,11 @@ FIELDS = [
     "minimum_m_inclusive", "maximum_m_exclusive", "date", "year", "month", "day",
     "variable", "value", "unit", "valid_area_percent", "source_asset", "source_image",
     "scale_m", "quality", "retrieved_at",
+]
+SYSTEM_FIELDS = [
+    "system_id", "river_system_id", "date", "year", "month", "day", "variable",
+    "value", "unit", "valid_area_percent", "source_asset", "source_image", "scale_m",
+    "quality", "retrieved_at",
 ]
 
 
@@ -76,6 +83,48 @@ def quality(valid_percent: float) -> str:
     return "insufficient-clear-sky"
 
 
+def write_system_csv(rows: list[dict]) -> list[dict]:
+    areas = {}
+    with AREAS.open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            areas[(row["system_id"], row["elevation_band"])] = float(row["area_km2"])
+
+    grouped: dict[tuple, list[dict]] = {}
+    for row in rows:
+        grouped.setdefault((row["system_id"], row["date"], row["variable"]), []).append(row)
+
+    system_rows = []
+    for key in sorted(grouped):
+        members = grouped[key]
+        total_area = sum(areas[(row["system_id"], row["elevation_band"])] for row in members)
+        valid_areas = [
+            areas[(row["system_id"], row["elevation_band"])] * float(row["valid_area_percent"]) / 100
+            for row in members
+        ]
+        valid_area = sum(valid_areas)
+        if valid_area <= 0:
+            continue
+        value = sum(float(row["value"]) * area for row, area in zip(members, valid_areas)) / valid_area
+        valid_percent = valid_area / total_area * 100
+        first = members[0]
+        system_rows.append({
+            "system_id": first["system_id"], "river_system_id": first["river_system_id"],
+            "date": first["date"], "year": first["year"], "month": first["month"], "day": first["day"],
+            "variable": first["variable"], "value": f"{value:.4f}", "unit": first["unit"],
+            "valid_area_percent": f"{valid_percent:.2f}", "source_asset": first["source_asset"],
+            "source_image": first["source_image"], "scale_m": first["scale_m"],
+            "quality": quality(valid_percent), "retrieved_at": first["retrieved_at"],
+        })
+
+    temporary = SYSTEM_OUTPUT.with_suffix(SYSTEM_OUTPUT.suffix + ".tmp")
+    with temporary.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=SYSTEM_FIELDS)
+        writer.writeheader()
+        writer.writerows(system_rows)
+    os.replace(temporary, SYSTEM_OUTPUT)
+    return system_rows
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--start", type=parse_date)
@@ -115,7 +164,8 @@ def main() -> None:
     else:
         start = end - timedelta(days=30)
     if start > end:
-        print(f"MODIS snow already current through {end}")
+        system_rows = write_system_csv(previous)
+        print(f"MODIS snow already current through {end}; rebuilt {len(system_rows)} system rows")
         return
 
     collection = source.filterDate(start.isoformat(), (end + timedelta(days=1)).isoformat()).sort("system:time_start")
@@ -190,6 +240,7 @@ def main() -> None:
 
     merged = merge_rows(previous, fresh)
     write_csv(merged)
+    system_rows = write_system_csv(merged)
     JSON_OUTPUT.write_text(
         json.dumps({"version": "1.0", "temporalResolution": "day", "observations": merged}, ensure_ascii=False, separators=(",", ":")) + "\n",
         encoding="utf-8",
@@ -216,6 +267,7 @@ def main() -> None:
         "outputs": {
             "csv": str(OUTPUT.relative_to(ROOT)).replace("\\", "/"),
             "json": str(JSON_OUTPUT.relative_to(ROOT)).replace("\\", "/"),
+            "systemCSV": str(SYSTEM_OUTPUT.relative_to(ROOT)).replace("\\", "/"),
         },
         "qualityNotes": [
             "The source daily temporal resolution is preserved.",
@@ -225,7 +277,7 @@ def main() -> None:
         ],
     }
     MANIFEST.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"  {len(fresh):,} refreshed; {len(merged):,} total rows -> {OUTPUT.relative_to(ROOT)}")
+    print(f"  {len(fresh):,} refreshed; {len(merged):,} band rows; {len(system_rows):,} system rows")
 
 
 if __name__ == "__main__":

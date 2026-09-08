@@ -39,6 +39,12 @@ QUALITY_WEIGHTS = {
     "ok": 1.0,
     "ok-centroid": 0.92,
     "ok-interpolated": 0.65,
+    "ok-reanalysis": 0.9,
+    "ok-reanalysis-anomaly": 0.9,
+    "review-extreme-reanalysis-anomaly": 0.5,
+    "ok-satellite": 0.9,
+    "limited-clear-sky": 0.5,
+    "insufficient-clear-sky": 0.1,
     "implausible": 0.0,
 }
 
@@ -73,6 +79,7 @@ VARIABLES = {
     "potential_evaporation": {"label": "Potential evaporation", "color": "#f4a340"},
     "shortwave_down": {"label": "Shortwave radiation", "color": "#f4d35e"},
     "specific_humidity": {"label": "Specific humidity", "color": "#a78bfa"},
+    "snow_cover_percent": {"label": "Snow cover", "color": "#e8f7ff"},
     "rh_mean": {"label": "Relative humidity", "color": "#a78bfa"},
     "vpd_mean": {"label": "Vapour pressure deficit", "color": "#c084fc"},
     "heat_index_max": {"label": "Heat index (max)", "color": "#ff5d5d"},
@@ -100,10 +107,25 @@ def variable_meta(code: str, position: int) -> dict:
 
 LAYERS = [
     {
-        "id": "cfsv2-basin-anomaly", "label": "Climate anomaly", "domain": "ATMOSPHERE",
+        "id": "era5-land-headwater-anomaly", "label": "Headwater climate anomaly",
+        "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
+        "predicate": "uz:hasBasinAnomaly", "kind": "anomaly",
+        "previewVariable": "precipitation_total", "previewMetric": "z_score",
+        "source": "PUBLISHED/data/hydroclimate/era5-land-headwater-anomaly.csv",
+        "basinLevel": 7, "geometry": "/data/hydroclimate/headwater-units.geojson",
+        "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month", "spatialScope": "headwater_formation",
+        "spatialUnit": "HydroATLAS level-7 subbasin", "baseline": "1991-2020",
+        "what": ("Monthly ERA5-Land departures from a fixed 1991-2020 normal across every "
+                 "level-7 subbasin upstream of the Panj-Vakhsh and Naryn-Karadarya controls."),
+    },
+    {
+        "id": "cfsv2-basin-anomaly", "label": "Climate anomaly (legacy national)", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/cfsv2-noaa", "predicate": "uz:hasBasinAnomaly", "kind": "anomaly",
         "previewVariable": "precipitation", "previewMetric": "z_score",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.4_CFSV2_BASIN_ANOMALY/cfsv2-basin-anomaly.csv",
+        "spatialScope": "national_intersection", "legacyScope": True,
         "basinLevel": 7, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
         "periodGrain": "month",
@@ -112,10 +134,11 @@ LAYERS = [
                  "what the number is in absolute terms."),
     },
     {
-        "id": "cfsv2-basin-monthly", "label": "Climate state", "domain": "ATMOSPHERE",
+        "id": "cfsv2-basin-monthly", "label": "Climate state (legacy national)", "domain": "ATMOSPHERE",
         "dataset": "uz:ds/cfsv2-noaa", "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "precipitation",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.6_CFSV2_BASIN_MONTHLY/cfsv2-basin-monthly.csv",
+        "spatialScope": "national_intersection", "legacyScope": True,
         "basinLevel": 7, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
         "periodGrain": "month",
@@ -127,6 +150,7 @@ LAYERS = [
         "dataset": "uz:ds/chirps-v3", "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "precipitation_total",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.7_CHIRPS_V3_BASIN_PENTAD/chirps-v3-basin-pentad.csv",
+        "spatialScope": "national_intersection", "legacyScope": True,
         "basinLevel": 12, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month", "pentad"],
         "periodGrain": "pentad",
@@ -138,6 +162,7 @@ LAYERS = [
         "dataset": "uz:ds/chirts", "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "tmax_mean",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.8_CHIRTS_BASIN_MONTHLY/chirts-basin-monthly.csv",
+        "spatialScope": "national_intersection", "legacyScope": True,
         "basinLevel": 12, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
         "periodGrain": "month",
@@ -149,6 +174,7 @@ LAYERS = [
         "dataset": "uz:ds/cpc-temperature", "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "tmax_mean",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.9_CPC_BASIN_MONTHLY/cpc-basin-monthly.csv",
+        "spatialScope": "national_intersection", "legacyScope": True,
         "basinLevel": 6, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
         "periodGrain": "month",
@@ -160,6 +186,7 @@ LAYERS = [
         "dataset": "uz:ds/cams-nrt", "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "pm2p5",
         "source": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.1_CAMS_BASIN_MONTHLY/cams-basin-monthly.csv",
+        "spatialScope": "national_intersection", "legacyScope": True,
         "basinLevel": 6, "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
         "periodGrain": "month",
@@ -172,6 +199,7 @@ LAYERS = [
         "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "precipitation_total",
         "source": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
+        "spatialScope": "headwater_formation", "spatialUnit": "HydroATLAS level-7 subbasin",
         "basinLevel": 7, "geometry": "/data/hydroclimate/headwater-units.geojson",
         "idColumn": "basin_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
@@ -181,10 +209,26 @@ LAYERS = [
                  "formation zones. ERA5-Land is reanalysis; runoff here is not gauge discharge."),
     },
     {
+        "id": "modis-snow-headwater-daily", "label": "Headwater snow cover (MODIS)",
+        "domain": "ATMOSPHERE", "dataset": "uz:ds/modis-terra-snow",
+        "predicate": "uz:hasFormationStatistic", "kind": "value",
+        "previewVariable": "snow_cover_percent",
+        "source": "PUBLISHED/data/hydroclimate/modis-snow-headwater-systems-daily.csv",
+        "basinLevel": 10, "geometry": "/data/hydroclimate/headwater-systems.geojson",
+        "geometryIdColumn": "system_id",
+        "idColumn": "system_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month", "day"],
+        "periodGrain": "day", "spatialScope": "headwater_formation",
+        "spatialUnit": "headwater formation system",
+        "what": ("Daily MODIS Terra snow cover for the Upper Amu and Upper Syr formation zones, "
+                 "aggregated from elevation bands using valid-observation area."),
+    },
+    {
         "id": "ghm-basin-modification", "label": "Human modification", "domain": "LAND",
         "dataset": "uz:ds/csp-ghm", "predicate": "uz:hasBasinStatistic", "kind": "value",
         "previewVariable": "ghm_mean",
         "source": "PUBLISHED/data/ontology/2_LAND/2.1_GHM_UNIT_MODIFICATION/ghm-unit-modification.csv",
+        "spatialScope": "national_intersection", "legacyScope": True,
         "basinLevel": 12, "idColumn": "unit_id", "variableColumn": "variable",
         "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["epoch"],
         "periodGrain": "year", "filterColumn": "frame", "filterValue": "basin",
@@ -203,6 +247,9 @@ def period_key(row: dict, layer: dict) -> str:
     if layer["periodGrain"] == "month":
         year, month = parts
         return f"{year:04d}-{month:02d}"
+    if layer["periodGrain"] == "day":
+        year, month, day = parts
+        return f"{year:04d}-{month:02d}-{day:02d}"
     return str(parts[0])
 
 
@@ -291,6 +338,8 @@ def build_layer(layer: dict) -> tuple[dict, dict]:
         "version": "1.0",
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "dataset": layer["dataset"], "predicate": layer["predicate"],
+        "spatialScope": layer.get("spatialScope", "national_intersection"),
+        "spatialUnit": layer.get("spatialUnit", f"HydroATLAS level-{layer['basinLevel']} basin"),
         "basins": {basin: {period: cells for period, cells in sorted(annual.items())}
                   for basin, annual in sorted(values.items())},
     }
@@ -298,6 +347,11 @@ def build_layer(layer: dict) -> tuple[dict, dict]:
         "id": layer["id"], "label": layer["label"], "domain": layer["domain"],
         "kind": layer["kind"], "dataset": layer["dataset"], "predicate": layer["predicate"],
         "basinLevel": layer["basinLevel"],
+        "spatialScope": layer.get("spatialScope", "national_intersection"),
+        "spatialUnit": layer.get("spatialUnit", f"HydroATLAS level-{layer['basinLevel']} basin"),
+        "legacyScope": layer.get("legacyScope", False),
+        "baseline": layer.get("baseline"),
+        "geometryIdColumn": layer.get("geometryIdColumn", "HYBAS_ID"),
         "geometry": layer.get("geometry") or geometry_for(layer["basinLevel"]),
         "periodGrain": layer["periodGrain"], "periods": sorted_periods,
         "variables": sorted(variables.values(), key=lambda item: item["code"]),
@@ -337,10 +391,9 @@ def main() -> None:
         "version": "1.0",
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "title": "Basin climate & land observatory",
-        "description": ("Every already-measured basin time series the ontology declares, "
-                        "projected into one shared map contract: CFSv2 climate state and "
-                        "anomaly, CHIRPS precipitation, CHIRTS and CPC temperature, CAMS air "
-                        "quality, and GHM human modification."),
+        "description": ("Transboundary headwater observations and anomalies are the primary "
+                        "scope. Earlier Uzbekistan-intersection CFSv2, CHIRPS, CHIRTS, CPC, "
+                        "CAMS and GHM layers remain explicitly marked as legacy comparisons."),
         "layers": entries,
     })
     print(f"\n  {len(entries)} layers -> {INDEX.relative_to(ROOT)}")
