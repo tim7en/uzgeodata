@@ -30,7 +30,10 @@ ROLES = PUBLISHED_DIR / "basin-hydrological-roles.csv"
 MANIFEST_SOURCE = PUBLISHED_DIR / "transboundary-basins-manifest.json"
 OUTPUT = PUBLISHED_DIR / "basin-network.json"
 LEVELS = (7, 10, 12)
-DEFAULT_LEVEL = 10
+# The trace view opens on level 7: it is the grain the ERA5 anomaly series is
+# published at, and its geometry is a tenth the weight of level 10. Finer levels
+# load on demand when a unit of that level is selected.
+DEFAULT_LEVEL = 7
 
 
 def write_json(path: Path, payload: object) -> None:

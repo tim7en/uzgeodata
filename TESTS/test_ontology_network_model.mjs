@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {
   anomalyTimeline, buildReachNetwork, deviationSummary, findHydroEntities, levelBasinLookup,
   reachNeighborhood, resolveLevelBasin, traceReachNetwork,
@@ -57,4 +58,38 @@ test('anomaly timeline keeps measured z scores in time order', () => {
   const points = anomalyTimeline(series, 407, 'precipitation');
   assert.deepEqual(points.map(point => point.period), ['2026-07', '2026-08']);
   assert.deepEqual(deviationSummary(points), {minimum: -1.1, maximum: 0.5, latest: -1.1, meanAbsolute: 0.8});
+});
+
+test('a level-7 unit outside Uzbekistan is searchable in the natural frame', () => {
+  // The trace view searches every level of the natural frame at once: an id in a
+  // reader's hand does not say whether it names a level-7, 10 or 12 unit.
+  const network = JSON.parse(readFileSync(
+    new URL('../PUBLISHED/data/hydroclimate/basin-network.json', import.meta.url), 'utf8'));
+  const basins = Object.values(network.levels).flatMap(entry => entry.basins);
+  const byId = new Map(basins.map(basin => [String(basin.id), basin]));
+  assert.equal(basins.length, network.counts.units);
+
+  const matches = findHydroEntities('4070529600', [], basins);
+  assert.equal(matches[0].type, 'basin');
+  assert.equal(String(matches[0].record.id), '4070529600');
+  assert.equal(matches[0].record.pfafId, 4619503);
+
+  // Searching the Pfafstetter code finds the same unit.
+  assert.ok(findHydroEntities('4619503', [], basins).some(hit => String(hit.record.id) === '4070529600'));
+  // A level-10 and a level-12 id resolve in the same search.
+  assert.ok(byId.has(String(network.controlSections.find(section => section.level === 10).id)));
+  assert.ok(byId.has(String(network.controlSections.find(section => section.level === 12).id)));
+});
+
+test('the natural frame traces upstream past the national border', () => {
+  const network = JSON.parse(readFileSync(
+    new URL('../PUBLISHED/data/hydroclimate/basin-network.json', import.meta.url), 'utf8'));
+  const level7 = network.levels['7'].basins;
+  const graph = buildReachNetwork(level7);
+  const focus = String(network.defaultFocus.id);
+  const view = traceReachNetwork(focus, graph);
+  // The Amu control section drains 86 level-7 units; the clipped national
+  // network could reach none of them.
+  assert.ok(view.upstreamCount >= 80, `expected a deep upstream trace, got ${view.upstreamCount}`);
+  assert.ok(view.nodes.some(node => node.id === '4070529600'));
 });

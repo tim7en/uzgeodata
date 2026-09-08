@@ -191,6 +191,8 @@ export default function OntologyUniverse() {
   // border, so a basin in Tajikistan cannot be found in it and every trace ends
   // at the Aral rather than at the section that governs the water.
   const [frame, setFrame] = useState('headwaters');
+  const [level, setLevel] = useState(null);
+  const [geometryByLevel, setGeometryByLevel] = useState({});
   const [hoveredId, setHoveredId] = useState(null);
   const [query, setQuery] = useState('');
   const [variable, setVariable] = useState(DEFAULT_VARIABLE);
@@ -217,25 +219,49 @@ export default function OntologyUniverse() {
       json('/data/basin-layers/index.json'),
       json('/data/review/basinatlas/basinatlas_uz_lev07.geojson'),
       json('/data/hydroclimate/basin-network.json'),
-      json('/data/hydroclimate/basins-level10.geojson'),
       json('/data/hydroclimate/basins-level07.geojson'),
     ]).then(async ([ontology, hydro, riversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7,
-      natural, naturalGeo, naturalLevel7]) => {
+      natural, naturalLevel7]) => {
       const anomalyLayer = layerIndex.layers.find(layer => layer.kind === 'anomaly');
       const anomaly = anomalyLayer ? await json(anomalyLayer.series) : null;
-      if (live) setData({ontology, hydro, riversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7,
-        natural, naturalGeo, naturalLevel7, anomalyLayer, anomaly});
+      if (!live) return;
+      setGeometryByLevel({'7': naturalLevel7.features});
+      setData({ontology, hydro, riversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7,
+        natural, naturalLevel7, anomalyLayer, anomaly});
     }).catch(cause => live && setError(cause.message));
     return () => { live = false; };
   }, []);
 
   const natural = frame === 'headwaters';
-  const naturalLevel = data?.natural?.defaultLevel ?? 10;
+  const naturalLevel = level || data?.natural?.defaultLevel || 7;
   const frameBasins = useMemo(() => natural
     ? (data?.natural?.levels?.[String(naturalLevel)]?.basins || EMPTY)
     : (data?.hydro?.basins || EMPTY), [data, natural, naturalLevel]);
-  const frameBasinFeatures = natural ? data?.naturalGeo?.features : data?.basinsGeo?.features;
+  // A search has to reach every level: the id a reader has in hand names one
+  // unit, and nothing tells them whether it is a level-7, 10 or 12 unit.
+  const searchBasins = useMemo(() => natural
+    ? Object.values(data?.natural?.levels || {}).flatMap(entry => entry.basins)
+    : frameBasins, [data, natural, frameBasins]);
+  const levelOfBasin = useMemo(() => {
+    if (!natural) return new Map();
+    return new Map(Object.entries(data?.natural?.levels || {})
+      .flatMap(([key, entry]) => entry.basins.map(basin => [String(basin.id), Number(key)])));
+  }, [data, natural]);
+  const frameBasinFeatures = natural ? geometryByLevel[String(naturalLevel)] : data?.basinsGeo?.features;
   const frameLevel7Features = natural ? data?.naturalLevel7?.features : data?.level7?.features;
+
+  // Level geometry is fetched only when a unit of that level comes into focus:
+  // level 12 alone is 20 MB, and most sessions never leave level 7.
+  useEffect(() => {
+    if (!natural || !data) return undefined;
+    const key = String(naturalLevel);
+    if (geometryByLevel[key]) return undefined;
+    let live = true;
+    json(`/data/hydroclimate/basins-level${key.padStart(2, '0')}.geojson`)
+      .then(document => live && setGeometryByLevel(current => ({...current, [key]: document.features})))
+      .catch(() => undefined);
+    return () => { live = false; };
+  }, [natural, data, naturalLevel, geometryByLevel]);
 
   const network = useMemo(() => buildReachNetwork(data?.hydro?.rivers), [data]);
   const basinNetwork = useMemo(() => buildReachNetwork(frameBasins), [frameBasins]);
@@ -275,9 +301,10 @@ export default function OntologyUniverse() {
     if (natural) {
       // Administrative overlap is a national-frame product; upstream of the
       // border the honest label is the unit's own place in the flow chain.
-      const record = basinById.get(String(basinId));
+      const record = searchRecordById.get(String(basinId));
       if (!record) return 'Outside the natural frame';
-      return `${record.systemId} · ${(record.flowPosition || 'unclassified').replace(/_/g, ' ')}`;
+      const unitLevel = levelOfBasin.get(String(basinId));
+      return `L${unitLevel} · ${record.systemId} · ${(record.flowPosition || 'unclassified').replace(/_/g, ' ')}`;
     }
     const matches = districtsByBasin.get(String(basinId)) || EMPTY;
     return matches.length ? matches.slice(0, 2).map(district => district.nameEn || district.nameUz || district.pcode).join(' / ') : 'No district overlap';
@@ -335,20 +362,30 @@ export default function OntologyUniverse() {
     const basin = basinById.get(reach.basinId);
     return signalBasins.has(resolveLevelBasin(basin, level7));
   }).sort((a, b) => (b.upstreamKm2 || 0) - (a.upstreamKm2 || 0)).slice(0, 6), [network, basinById, signalBasins, level7]);
+  const searchRecordById = useMemo(() => new Map(searchBasins.map(basin => [String(basin.id), basin])), [searchBasins]);
   const controlSections = useMemo(() => (data?.natural?.controlSections || EMPTY)
     .filter(section => section.level === naturalLevel)
-    .map(section => basinById.get(String(section.id)))
+    .map(section => searchRecordById.get(String(section.id)))
     .filter(Boolean)
-    .map(record => ({type: 'basin', record})), [data, naturalLevel, basinById]);
+    .map(record => ({type: 'basin', record})), [data, naturalLevel, searchRecordById]);
   const results = useMemo(() => {
     const term = query.trim().toLowerCase();
     if (!term) return natural ? controlSections : topReaches.map(record => ({type: 'reach', record}));
-    return findHydroEntities(term, natural ? EMPTY : [...network.byId.values()], [...basinById.values()]);
-  }, [query, natural, network, basinById, topReaches, controlSections]);
+    return findHydroEntities(term, natural ? EMPTY : [...network.byId.values()], searchBasins);
+  }, [query, natural, network, searchBasins, topReaches, controlSections]);
   const resetGraphView = () => { setGraphZoom(1); setGraphPan({x: 0, y: 0}); };
-  const switchFrame = next => { setFrame(next); setSelectedBasinId(null); setQuery(''); resetGraphView(); setPlaying(true); };
+  const switchFrame = next => { setFrame(next); setSelectedBasinId(null); setLevel(null); setQuery(''); resetGraphView(); setPlaying(true); };
   const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); resetGraphView(); setMobilePanel(null); setPlaying(true); };
-  const selectBasin = id => { setSelectedBasinId(String(id)); resetGraphView(); setMobilePanel(null); setPlaying(true); };
+  const selectBasin = id => {
+    // Selecting a unit found at another level moves the whole view to that level,
+    // because a trace only means something inside one Pfafstetter level.
+    const found = levelOfBasin.get(String(id));
+    if (found && found !== naturalLevel) setLevel(found);
+    setSelectedBasinId(String(id));
+    resetGraphView();
+    setMobilePanel(null);
+    setPlaying(true);
+  };
   const selectGraphEntity = id => focusType === 'basin' ? selectBasin(id) : selectReach(id);
   const zoomGraph = change => setGraphZoom(current => Math.max(.65, Math.min(3.2, Number((current + change).toFixed(2)))));
   const panGraph = (x, y) => setGraphPan(current => ({x: current.x + x, y: current.y + y}));
@@ -556,9 +593,9 @@ export default function OntologyUniverse() {
           <button type="button" className={natural ? '' : 'active'} onClick={() => switchFrame('national_intersection')}>National extraction</button>
         </div>
         <p className="frame-note">{natural
-          ? `Amu Darya and Syr Darya as they drain, across every border. Level ${naturalLevel}, ${compact(frameBasins.length)} units, no administrative clipping.`
+          ? `Amu Darya and Syr Darya as they drain, across every border. Level ${naturalLevel} in focus, ${compact(searchBasins.length)} units searchable across levels 7, 10 and 12, no administrative clipping.`
           : 'BasinATLAS clipped to Uzbekistan. Upstream units in Tajikistan, Kyrgyzstan and Afghanistan are absent, so a trace stops at the border.'}</p>
-        <label className="reach-search"><Search/><input value={query} onChange={event => setQuery(event.target.value)} onKeyDown={event => {if(event.key === 'Enter' && results[0]){event.preventDefault();results[0].type === 'basin' ? selectBasin(results[0].record.id) : selectReach(results[0].record.id)}}} placeholder={natural ? 'HYBAS or PFAF ID' : 'Reach, HYBAS or PFAF ID'}/><small>{natural ? compact(frameBasins.length) : `${compact(data.hydro.counts.rivers)} + ${compact(data.hydro.counts.basins)}`}</small></label>
+        <label className="reach-search"><Search/><input value={query} onChange={event => setQuery(event.target.value)} onKeyDown={event => {if(event.key === 'Enter' && results[0]){event.preventDefault();results[0].type === 'basin' ? selectBasin(results[0].record.id) : selectReach(results[0].record.id)}}} placeholder={natural ? 'HYBAS or PFAF ID' : 'Reach, HYBAS or PFAF ID'}/><small>{natural ? compact(searchBasins.length) : `${compact(data.hydro.counts.rivers)} + ${compact(data.hydro.counts.basins)}`}</small></label>
         <div className="reach-results"><span>{query ? (natural ? 'MATCHING BASINS' : 'MATCHING REACHES + BASINS') : (natural ? 'CONTROL SECTIONS' : 'HIGH-FLOW SIGNALS')}</span>{results.map(({type, record}) => {const active = focusType === type && focusId === String(record.id); const district = districtLabelForBasin(type === 'basin' ? record.id : record.basinId); return <button key={`${type}-${record.id}`} className={`${active ? 'active' : ''} entity-${type}`} onClick={() => type === 'basin' ? selectBasin(record.id) : selectReach(record.id)}><i/><span><strong>{type === 'basin' ? `BASIN ${record.pfafId}` : `REACH ${record.id}`}</strong><small>{district} · {type === 'basin' ? `HYBAS ${record.id}` : `order ${record.strahlerOrder}`}</small></span><ArrowUpRight/></button>})}</div>
         <div className="rail-legend"><span>FLOW DIRECTION</span><p><i className="up"/> upstream branches</p><p><i className="down"/> downstream trunk</p><p><i className="signal"/> temporal signal</p></div>
         <div className="rail-truth"><Database/><p><strong>Measurement boundary</strong><span>Temporal values are inherited from the containing level-7 basin. No reach-level sensor value is implied.</span></p></div>
