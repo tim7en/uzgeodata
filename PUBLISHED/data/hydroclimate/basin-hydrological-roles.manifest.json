@@ -1,0 +1,84 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T08:45:37+00:00",
+  "observationClass": "derived_indicator",
+  "source": {
+    "riverNetwork": "HydroRIVERS v1.0, Asia",
+    "container": "GEODATA/HydroRIVERS_v10_as.gdb/HydroRIVERS_v10_as.gdb",
+    "basins": "GEODATA/transboundary_basins_v2",
+    "discharge": "DIS_AV_CMS, long-term average natural discharge, modelled"
+  },
+  "vocabulary": {
+    "flow_position": {
+      "runoff_formation": "inside a declared formation zone, upstream of its control section",
+      "transit": "inside the natural basin but below every declared control section",
+      "endorheic_sink": "terminal unit of the endorheic system (HydroBASINS ENDO = 2)"
+    },
+    "channel_class": {
+      "perennial": "peak reach discharge >= 1.0 m3/s",
+      "intermittent": "peak reach discharge >= 0.1 m3/s",
+      "ephemeral_or_dry": "a channel is mapped but its long-term average flow is below that",
+      "no_mapped_channel": "no HydroRIVERS reach falls inside the unit"
+    }
+  },
+  "levels": [
+    7,
+    10,
+    12
+  ],
+  "rows": 14670,
+  "level10Summary": {
+    "endorheic_sink/no_mapped_channel": {
+      "units": 11,
+      "areaKm2": 102.7
+    },
+    "endorheic_sink/intermittent": {
+      "units": 2,
+      "areaKm2": 412.6
+    },
+    "runoff_formation/intermittent": {
+      "units": 501,
+      "areaKm2": 75516.4
+    },
+    "endorheic_sink/ephemeral_or_dry": {
+      "units": 28,
+      "areaKm2": 3767.9
+    },
+    "transit/ephemeral_or_dry": {
+      "units": 2058,
+      "areaKm2": 301889.1
+    },
+    "transit/intermittent": {
+      "units": 1126,
+      "areaKm2": 171858.9
+    },
+    "transit/perennial": {
+      "units": 1497,
+      "areaKm2": 198686.2
+    },
+    "runoff_formation/perennial": {
+      "units": 1524,
+      "areaKm2": 207715.4
+    },
+    "runoff_formation/ephemeral_or_dry": {
+      "units": 28,
+      "areaKm2": 4190.4
+    },
+    "transit/no_mapped_channel": {
+      "units": 10,
+      "areaKm2": 1389.6
+    },
+    "runoff_formation/no_mapped_channel": {
+      "units": 2,
+      "areaKm2": 194.1
+    }
+  },
+  "outputs": {
+    "csv": "PUBLISHED/data/hydroclimate/basin-hydrological-roles.csv"
+  },
+  "qualityNotes": [
+    "DIS_AV_CMS is a modelled long-term average, not a gauge record; it classifies a channel, it does not measure this year's flow.",
+    "A mapped channel is not a flowing river: most of the Kyzylkum and Karakum units carry a HydroRIVERS line whose long-term average is below 0.1 m3/s.",
+    "Position and channel class are independent: a formation unit can be seasonally dry and a transit unit can be perennial."
+  ]
+}

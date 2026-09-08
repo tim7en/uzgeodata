@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T07:48:49+00:00",
+  "generatedAt": "2026-09-08T08:48:37+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -8588,7 +8588,7 @@
       "flags": [
         "licence-terms-to-confirm-before-redistribution"
       ],
-      "distributions": 1,
+      "distributions": 5,
       "related": [],
       "geographies": []
     },
@@ -8625,7 +8625,7 @@
       "flags": [
         "licence-terms-to-confirm-before-redistribution"
       ],
-      "distributions": 1,
+      "distributions": 2,
       "related": [],
       "geographies": []
     },
@@ -8662,9 +8662,17 @@
       "flags": [
         "licence-terms-to-confirm-before-redistribution"
       ],
-      "distributions": 1,
+      "distributions": 2,
       "related": [],
-      "geographies": []
+      "geographies": [
+        {
+          "frame": "basin",
+          "predicate": "uz:hasBasinStatistic",
+          "mode": "measured",
+          "detail": "Hydrological role of each transboundary basin unit",
+          "links": 14670
+        }
+      ]
     },
     {
       "id": "uz:ds/kamchik-pass-climate-series",
@@ -11843,10 +11851,10 @@
     "datasets": 190,
     "atlasPackages": 134,
     "stations": 190,
-    "publishedAssertions": 3279,
+    "publishedAssertions": 3285,
     "proposedAssertions": 576,
-    "relationshipTables": 30,
-    "relationshipLinks": 1291800
+    "relationshipTables": 36,
+    "relationshipLinks": 1338158
   },
   "geography": {
     "frames": [
@@ -12359,6 +12367,98 @@
         "basin_level",
         "elevation_band",
         "basin_band_area_km2"
+      ]
+    },
+    {
+      "id": "transboundary-basin-downstream-level07",
+      "dataset": "uz:ds/hydrosheds-basinatlas-global",
+      "label": "Transboundary basin routing, level 7",
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 438,
+      "measureColumn": null,
+      "dimensions": [
+        "system_id",
+        "in_headwater_formation"
+      ]
+    },
+    {
+      "id": "transboundary-basin-downstream-level10",
+      "dataset": "uz:ds/hydrosheds-basinatlas-global",
+      "label": "Transboundary basin routing, level 10",
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 6787,
+      "measureColumn": null,
+      "dimensions": [
+        "system_id",
+        "in_headwater_formation"
+      ]
+    },
+    {
+      "id": "transboundary-basin-downstream-level12",
+      "dataset": "uz:ds/hydrosheds-basinatlas-global",
+      "label": "Transboundary basin routing, level 12",
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 7445,
+      "measureColumn": null,
+      "dimensions": [
+        "system_id",
+        "in_headwater_formation"
+      ]
+    },
+    {
+      "id": "transboundary-basin-hierarchy",
+      "dataset": "uz:ds/hydrosheds-basinatlas-global",
+      "label": "Transboundary basin hierarchy, levels 12 to 10 to 7",
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 14232,
+      "measureColumn": null,
+      "dimensions": [
+        "child_level",
+        "parent_level"
+      ]
+    },
+    {
+      "id": "transboundary-basin-roles",
+      "dataset": "uz:ds/hydrosheds-hydrorivers-asia",
+      "label": "Hydrological role of each transboundary basin unit",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 14670,
+      "measureColumn": "peak_discharge_cms",
+      "dimensions": [
+        "basin_level",
+        "flow_position",
+        "channel_class",
+        "river_length_km"
+      ]
+    },
+    {
+      "id": "transboundary-water-body-basin",
+      "dataset": "uz:ds/hydrosheds-hydrolakes-global",
+      "label": "Lakes and reservoirs by transboundary subbasin",
+      "predicate": "uz:withinBasin",
+      "subjectType": "WaterBody",
+      "objectType": "Basin",
+      "frame": "basin",
+      "rowCount": 2786,
+      "measureColumn": null,
+      "dimensions": [
+        "basin_level",
+        "water_body_type"
       ]
     }
   ],

@@ -922,6 +922,183 @@
           "meaning": "area of the subbasin inside the interval"
         }
       ]
+    },
+    {
+      "id": "transboundary-basin-downstream-level07",
+      "dataset": "hydrosheds-basinatlas-global",
+      "label": "Transboundary basin routing, level 7",
+      "note": "Native HydroATLAS routing for the whole Amu Darya and Syr Darya natural systems, selected by MAIN_BAS rather than by the country boundary. next_down_scope records whether the downstream unit is inside the selection or terminal, so a chain that leaves the frame is visible instead of silently ending.",
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/basin-routing-level07.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "hybas_id",
+      "objectColumn": "next_down",
+      "scopeColumn": "next_down_scope",
+      "identifierScheme": "HYBAS_ID",
+      "measureColumn": null,
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "system_id",
+          "meaning": "river system the unit belongs to"
+        },
+        {
+          "column": "in_headwater_formation",
+          "meaning": "unit lies above the declared control section"
+        }
+      ]
+    },
+    {
+      "id": "transboundary-basin-downstream-level10",
+      "dataset": "hydrosheds-basinatlas-global",
+      "label": "Transboundary basin routing, level 10",
+      "note": "Native HydroATLAS routing for the whole Amu Darya and Syr Darya natural systems, selected by MAIN_BAS rather than by the country boundary. next_down_scope records whether the downstream unit is inside the selection or terminal, so a chain that leaves the frame is visible instead of silently ending.",
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/basin-routing-level10.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "hybas_id",
+      "objectColumn": "next_down",
+      "scopeColumn": "next_down_scope",
+      "identifierScheme": "HYBAS_ID",
+      "measureColumn": null,
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "system_id",
+          "meaning": "river system the unit belongs to"
+        },
+        {
+          "column": "in_headwater_formation",
+          "meaning": "unit lies above the declared control section"
+        }
+      ]
+    },
+    {
+      "id": "transboundary-basin-downstream-level12",
+      "dataset": "hydrosheds-basinatlas-global",
+      "label": "Transboundary basin routing, level 12",
+      "note": "Native HydroATLAS routing for the whole Amu Darya and Syr Darya natural systems, selected by MAIN_BAS rather than by the country boundary. next_down_scope records whether the downstream unit is inside the selection or terminal, so a chain that leaves the frame is visible instead of silently ending.",
+      "predicate": "uz:flowsInto",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/basin-routing-level12.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "hybas_id",
+      "objectColumn": "next_down",
+      "scopeColumn": "next_down_scope",
+      "identifierScheme": "HYBAS_ID",
+      "measureColumn": null,
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "system_id",
+          "meaning": "river system the unit belongs to"
+        },
+        {
+          "column": "in_headwater_formation",
+          "meaning": "unit lies above the declared control section"
+        }
+      ]
+    },
+    {
+      "id": "transboundary-basin-hierarchy",
+      "dataset": "hydrosheds-basinatlas-global",
+      "label": "Transboundary basin hierarchy, levels 12 to 10 to 7",
+      "note": "Pfafstetter containment across the three analysis levels of the transboundary frame. One row states that a finer unit nests inside exactly one coarser unit, which is what lets a level-12 measurement roll up to the level-10 operational unit without a spatial join.",
+      "predicate": "uz:subBasinOf",
+      "subjectType": "Basin",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/basin-hierarchy.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "child_hybas_id",
+      "objectColumn": "parent_hybas_id",
+      "scopeColumn": null,
+      "identifierScheme": "HYBAS_ID",
+      "measureColumn": null,
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "child_level",
+          "meaning": "HydroATLAS level of the nested unit"
+        },
+        {
+          "column": "parent_level",
+          "meaning": "HydroATLAS level of the containing unit"
+        }
+      ]
+    },
+    {
+      "id": "transboundary-basin-roles",
+      "dataset": "hydrosheds-hydrorivers-asia",
+      "label": "Hydrological role of each transboundary basin unit",
+      "note": "Two independent attributes per unit. flow_position says where the unit sits in the natural chain: inside a declared runoff-formation zone, in transit below it, or an endorheic sink. channel_class says whether a natural channel actually carries water, from the long-term average discharge of the HydroRIVERS reaches inside it. Most of the Kyzylkum and Karakum units carry a mapped channel whose average flow is below 0.1 m3/s: a drawn line, not a river. Without this a desert unit reads like a headwater catchment.",
+      "predicate": "uz:hasBasinStatistic",
+      "subjectType": "Dataset",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/basin-hydrological-roles.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/hydrosheds-hydrorivers-asia",
+      "objectColumn": "hybas_id",
+      "scopeColumn": "in_headwater_formation",
+      "identifierScheme": "HYBAS_ID",
+      "measureColumn": "peak_discharge_cms",
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "basin_level",
+          "meaning": "HydroATLAS level of the unit"
+        },
+        {
+          "column": "flow_position",
+          "meaning": "runoff_formation, transit or endorheic_sink"
+        },
+        {
+          "column": "channel_class",
+          "meaning": "perennial, intermittent, ephemeral_or_dry or no_mapped_channel"
+        },
+        {
+          "column": "river_length_km",
+          "meaning": "mapped channel length inside the unit"
+        }
+      ]
+    },
+    {
+      "id": "transboundary-water-body-basin",
+      "dataset": "hydrosheds-hydrolakes-global",
+      "label": "Lakes and reservoirs by transboundary subbasin",
+      "note": "Every HydroLAKES body whose pour point falls inside the Amu or Syr natural system, placed in its level-10 and level-12 unit. The national hydrography layer holds ten reservoirs; this holds twenty-three, including Toktogul, Nurek, Kayrakkum, Andijan and Charvak, which decide how much water reaches Uzbekistan. Presence only: storage levels and releases belong to the managed graph.",
+      "predicate": "uz:withinBasin",
+      "subjectType": "WaterBody",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/water-body-basin-links.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "water_body_id",
+      "objectColumn": "hybas_id",
+      "scopeColumn": "in_headwater_formation",
+      "identifierScheme": "Hylak_id::HYBAS_ID",
+      "measureColumn": null,
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "basin_level",
+          "meaning": "HydroATLAS level of the containing unit"
+        },
+        {
+          "column": "water_body_type",
+          "meaning": "lake, reservoir or lake_control"
+        }
+      ]
     }
   ]
 }

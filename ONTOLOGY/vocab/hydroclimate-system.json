@@ -114,5 +114,10 @@
     {"id": "2000_3000", "minimum": 2000, "maximum": 3000},
     {"id": "3000_4000", "minimum": 3000, "maximum": 4000},
     {"id": "gte_4000", "minimum": 4000, "maximum": null}
-  ]
+  ],
+  "channelClassThresholdsCms": {
+    "perennial": 1.0,
+    "intermittent": 0.1,
+    "note": "Long-term average discharge of the strongest HydroRIVERS reach in a unit. Below the intermittent threshold a mapped channel is a drawn line, not a river that carries water."
+  }
 }

@@ -1,0 +1,163 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T08:47:12+00:00",
+  "observationClass": "inventory",
+  "spatialScope": "full_basin",
+  "source": {
+    "asset": "HydroLAKES v1.0",
+    "container": "GEODATA/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb",
+    "selection": "pour point inside a level-10 unit of the Amu or Syr natural system"
+  },
+  "counts": {
+    "waterBodies": 1393,
+    "reservoirs": 23,
+    "reservoirsInFormationZones": 9,
+    "lakes": 1370,
+    "basinLinks": 2786
+  },
+  "reservoirStorageMcm": 50241.3,
+  "largestReservoirs": [
+    {
+      "id": 1306,
+      "name": "Toktogul'skoye",
+      "volumeMcm": 19500.0,
+      "system": "syr_darya",
+      "pour": [
+        72.6531,
+        41.68193
+      ],
+      "inFormationZone": true
+    },
+    {
+      "id": 14690,
+      "name": null,
+      "volumeMcm": 10500.0,
+      "system": "amu_darya",
+      "pour": [
+        69.34404,
+        38.36803
+      ],
+      "inFormationZone": true
+    },
+    {
+      "id": 1307,
+      "name": "Chardarinskoye",
+      "volumeMcm": 6700.0,
+      "system": "syr_darya",
+      "pour": [
+        67.96044,
+        41.2434
+      ],
+      "inFormationZone": false
+    },
+    {
+      "id": 1320,
+      "name": "Kayrakkumskoye",
+      "volumeMcm": 4160.0,
+      "system": "syr_darya",
+      "pour": [
+        69.81885,
+        40.27703
+      ],
+      "inFormationZone": false
+    },
+    {
+      "id": 14452,
+      "name": null,
+      "volumeMcm": 2000.0,
+      "system": "syr_darya",
+      "pour": [
+        69.97071,
+        41.62537
+      ],
+      "inFormationZone": false
+    },
+    {
+      "id": 14508,
+      "name": null,
+      "volumeMcm": 1800.0,
+      "system": "syr_darya",
+      "pour": [
+        73.06485,
+        40.7686
+      ],
+      "inFormationZone": true
+    },
+    {
+      "id": 14696,
+      "name": null,
+      "volumeMcm": 1525.0,
+      "system": "amu_darya",
+      "pour": [
+        65.54896,
+        38.32826
+      ],
+      "inFormationZone": false
+    },
+    {
+      "id": 14570,
+      "name": null,
+      "volumeMcm": 900.0,
+      "system": "amu_darya",
+      "pour": [
+        66.25208,
+        39.84375
+      ],
+      "inFormationZone": false
+    },
+    {
+      "id": 14730,
+      "name": null,
+      "volumeMcm": 800.0,
+      "system": "amu_darya",
+      "pour": [
+        67.63229,
+        37.82876
+      ],
+      "inFormationZone": false
+    },
+    {
+      "id": 14648,
+      "name": null,
+      "volumeMcm": 500.0,
+      "system": "amu_darya",
+      "pour": [
+        66.36169,
+        38.93982
+      ],
+      "inFormationZone": false
+    },
+    {
+      "id": 173377,
+      "name": null,
+      "volumeMcm": 260.0,
+      "system": "amu_darya",
+      "pour": [
+        66.39479,
+        38.53537
+      ],
+      "inFormationZone": false
+    },
+    {
+      "id": 172484,
+      "name": null,
+      "volumeMcm": 260.0,
+      "system": "syr_darya",
+      "pour": [
+        70.21042,
+        41.05208
+      ],
+      "inFormationZone": false
+    }
+  ],
+  "outputs": {
+    "csv": "PUBLISHED/data/hydroclimate/water-bodies-transboundary.csv",
+    "linkCSV": "PUBLISHED/data/hydroclimate/water-body-basin-links.csv",
+    "geojson": "PUBLISHED/data/hydroclimate/water-bodies-transboundary.geojson"
+  },
+  "qualityNotes": [
+    "HydroLAKES stores a static shoreline and a nominal volume, not an operating level; it says a reservoir exists, never how full it is.",
+    "A water body is placed by its pour point, so a lake straddling a divide belongs to the subbasin its outlet drains into.",
+    "Reservoirs appear here as natural-frame objects. Releases, intakes and transfers belong to the managed graph of step 3 and are not implied by this layer."
+  ]
+}
