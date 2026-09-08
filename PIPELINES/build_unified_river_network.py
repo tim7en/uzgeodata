@@ -132,6 +132,7 @@ def main() -> None:
     bounds = coordinate_bounds(basin_document)
     national_document = json.loads(NATIONAL.read_text(encoding="utf-8"))
     national_ids = {int(row["id"]) for row in national_document["rivers"]}
+    national_basins = {int(row["id"]): row for row in national_document["basins"]}
 
     print(f"Unified HydroRIVERS | bbox {[round(value, 3) for value in bounds]}")
     frame = pyogrio.read_dataframe(str(SOURCE), bbox=bounds, columns=SOURCE_COLUMNS)
@@ -226,6 +227,8 @@ def main() -> None:
         "mainBasin": int(props["MAIN_BAS"]),
         "areaKm2": round(float(props["SUB_AREA"]), 2),
         "upstreamKm2": round(float(props["UP_AREA"]), 2),
+        "uzbekistanKm2": national_basins.get(basin_id, {}).get("uzbekistanKm2", 0),
+        "uzbekistanPercent": national_basins.get(basin_id, {}).get("uzbekistanPercent", 0),
         "endorheic": int(props.get("ENDO") or 0) > 0,
         "order": int(props.get("ORDER_") or 0),
         "systemId": props["system_id"],
@@ -290,6 +293,7 @@ def main() -> None:
             "rivers": "/data/hydrography/rivers-unified.geojson",
             "basins": "/data/hydroclimate/basins-level12.geojson",
             "lakes": "/data/hydroclimate/water-bodies-transboundary.geojson",
+            "boundary": "/data/hydrography/boundary.geojson",
             "riverTable": "/data/hydrography/rivers-unified.csv",
         },
         "rivers": rivers,

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-09-08T09:59:19+00:00",
+  "generatedAt": "2026-09-08T10:31:52+00:00",
   "spatialScope": "full_basin",
   "nestedScope": "headwater_formation",
   "sources": {
@@ -39,6 +39,7 @@
     "rivers": "/data/hydrography/rivers-unified.geojson",
     "basins": "/data/hydroclimate/basins-level12.geojson",
     "lakes": "/data/hydroclimate/water-bodies-transboundary.geojson",
+    "boundary": "/data/hydrography/boundary.geojson",
     "riverTable": "/data/hydrography/rivers-unified.csv"
   },
   "integrity": {
@@ -54,7 +55,7 @@
   "files": {
     "relationships": {
       "path": "PUBLISHED/data/hydrography/relationships-unified.json",
-      "sha256": "a2d6ada7ab1977d1f65f941107c9b4582f2287cd137bac4eddbba3805d57db2a"
+      "sha256": "bc4d4c84e79e64b3b0a6cb3d3b389a968dfb0c4f818f0d5cf677d065bdd2d99f"
     },
     "geometry": {
       "path": "PUBLISHED/data/hydrography/rivers-unified.geojson",

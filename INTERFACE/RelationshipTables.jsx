@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 
 const TRIPLES_URL = '/data/ontology-triples.json';
-const FEATURES_URL = '/data/hydrography/relationships.json';
+const FEATURES_URL = '/data/hydrography/relationships-unified.json';
 const PAGE = 200;
 
 function num(value, digits = 0) {

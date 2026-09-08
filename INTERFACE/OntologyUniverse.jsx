@@ -396,7 +396,7 @@ export default function OntologyUniverse() {
   }, [query, natural, network, searchBasins, topReaches, controlSections]);
   const resetGraphView = () => { setGraphZoom(1); setGraphPan({x: 0, y: 0}); };
   const switchFrame = next => { setFrame(next); setSelectedBasinId(next === 'headwaters' ? '__natural_default__' : null); setLevel(null); setQuery(''); resetGraphView(); setPlaying(true); };
-  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); resetGraphView(); setMobilePanel(null); setPlaying(true); };
+  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); if (natural) setLevel(12); resetGraphView(); setMobilePanel(null); setPlaying(true); };
   const selectBasin = id => {
     // Selecting a unit found at another level moves the whole view to that level,
     // because a trace only means something inside one Pfafstetter level.
@@ -656,12 +656,12 @@ export default function OntologyUniverse() {
           </g>
           <g className="direction-labels"><text x="38" y="28">{focusType === 'basin' ? 'UPSTREAM SUB-BASINS' : 'HEADWATERS / UPSTREAM'}</text><text x="878" y="28">OUTLET / DOWNSTREAM</text><text x="450" y="625">ONTOLOGY RESOLUTION PATH</text></g>
         </svg>
-        <TraceMiniMap rivers={traceRivers} basins={traceBasins} boundary={data.boundary} districts={currentDistrictFeatures} selectedReachId={focusType === 'reach' ? selectedId : null} selectedBasinId={focusType === 'basin' ? selectedBasinId : null} currentColor={currentColor}/>
+        <TraceMiniMap rivers={traceRivers} basins={traceBasins} boundary={data.boundary} districts={currentDistrictFeatures} selectedReachId={focusType === 'reach' ? selectedId : null} selectedBasinId={focusType === 'basin' ? focusId : null} currentColor={currentColor}/>
         <div className="stage-foot"><span><i/> CLICK A SYNAPSE TO RE-TRACE GRAPH + MAP</span><p><Waypoints/> {compact(nodes.length)} exact {focusType} entities</p><p><Droplets/> {traceBasins.length} linked polygons · {compact(traceRivers.length)} reaches</p></div>
       </section>
 
       <aside className={`signal-panel ${mobilePanel === 'details' ? 'mobile-open' : ''}`}>
-        <div className="entity-kicker"><span>SELECTED ENTITY</span><b>{focusType === 'basin' ? 'LEVEL-12 BASIN' : 'RIVER REACH'}</b></div>
+        <div className="entity-kicker"><span>SELECTED ENTITY</span><b>{focusType === 'basin' ? `LEVEL-${naturalLevel} BASIN` : 'RIVER REACH'}</b></div>
         <div className="entity-heading"><div>{focusType === 'basin' ? <GitBranch/> : <Waves/>}</div><span><small>{focusType === 'basin' ? 'PFAF_ID' : 'HYRIV_ID'}</small><h2>{focusType === 'basin' ? basin12?.pfafId : selectedReach?.id || '—'}</h2></span><i style={{background: currentColor}}/></div>
         {focusType === 'basin'
           ? <div className="entity-measures"><p><span>HYBAS ID</span><strong>{basin12?.id ?? '—'}</strong></p><p><span>UPSTREAM AREA</span><strong>{compact(basin12?.upstreamKm2)} <small>km²</small></strong></p><p><span>SUB-BASIN AREA</span><strong>{number(basin12?.areaKm2, 1)} <small>km²</small></strong></p><p><span>INSIDE UZBEKISTAN</span><strong>{number(basin12?.uzbekistanPercent, 1)} <small>%</small></strong></p></div>

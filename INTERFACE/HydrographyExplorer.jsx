@@ -10,7 +10,7 @@ import {
 } from './basinTrace.js';
 import BasinAttributes from './BasinAttributes.jsx';
 
-const INDEX_URL = '/data/hydrography/relationships.json';
+const INDEX_URL = '/data/hydrography/relationships-unified.json';
 const ATTRIBUTES_URL = '/data/hydrography/basin-attributes.json';
 const DICTIONARY_URL = '/data/hydrography/attribute-dictionary.json';
 const LIST_LIMIT = 220;
@@ -37,17 +37,17 @@ const TYPES = {
   },
   lakes: {
     label: 'Lakes', singular: 'lake', plural: 'lakes', icon: Droplets, color: '#3ddc97',
-    idField: 'Hylak_id', rank: r => r.areaKm2 ?? 0,
+    idField: 'water_body_id', rank: r => r.areaKm2 ?? 0,
     filter: { key: 'areaKm2', label: 'Min surface area', min: 0, max: 50, step: 1, initial: 0, format: v => `≥ ${v} km²` },
     name: r => r.name || `Lake ${r.id}`,
     detail: r => `${num(r.areaKm2, 2)} km² · ${r.elevationM ?? '—'} m`,
   },
   basins: {
     label: 'Basins', singular: 'basin', plural: 'basins', icon: Layers, color: '#a78bfa',
-    idField: 'HYBAS_ID', rank: r => r.uzbekistanKm2 ?? 0,
-    filter: { key: 'uzbekistanKm2', label: 'Min area in Uzbekistan', min: 0, max: 1000, step: 25, initial: 0, format: v => `≥ ${v} km²` },
+    idField: 'HYBAS_ID', rank: r => r.upstreamKm2 ?? 0,
+    filter: { key: 'areaKm2', label: 'Min sub-basin area', min: 0, max: 1000, step: 25, initial: 0, format: v => `≥ ${v} km²` },
     name: r => `Basin ${r.pfafId}`,
-    detail: r => `${num(r.uzbekistanKm2, 1)} km² · ${num(r.uzbekistanPercent, 0)}% in UZ`,
+    detail: r => `${num(r.areaKm2, 1)} km² · ${String(r.flowPosition || 'unclassified').replaceAll('_', ' ')}`,
   },
 };
 
@@ -343,11 +343,11 @@ export default function HydrographyExplorer() {
       <section className="hydro-overview">
         <div>
           <span className="hydro-kicker">RIVERS &middot; LAKES &middot; SUB-BASINS</span>
-          <h1>Uzbekistan <span>water network</span></h1>
+          <h1>Amu–Syr <span>water network</span></h1>
           <p>
-            Every reach, lake and level-12 sub-basin clipped to the national boundary, together with the
-            upstream and downstream links that connect them. Pick a record to trace what it drains into,
-            what feeds it, and which basin holds it.
+            Every reach, lake and level-12 sub-basin in the complete Amu Darya and Syr Darya systems,
+            without clipping at national borders. Pick a record to trace what it drains into, what feeds
+            it, and which basin holds it; national overlap remains an attribute rather than a selection rule.
           </p>
         </div>
         <div className="hydro-stat-grid">
@@ -465,7 +465,7 @@ export default function HydrographyExplorer() {
             <MapFocus bounds={focus}/>
           </MapContainer>
           <div className="hydro-map-meta">
-            <span>UZBEKISTAN / WGS 84</span>
+            <span>AMU DARYA + SYR DARYA / WGS 84</span>
             <span><strong>{num(drawn)} DRAWN</strong></span>
           </div>
           <div className="hydro-map-legend">
@@ -488,7 +488,7 @@ export default function HydrographyExplorer() {
               <small>ID {detailRecord.id}</small>
             </div>
             <h2>{detailType.name(detailRecord)}</h2>
-            <p>{detailType.detail(detailRecord)} &middot; clipped to the Uzbekistan ADM0 boundary.</p>
+            <p>{detailType.detail(detailRecord)} &middot; complete natural-system geometry.</p>
             <div className="hydro-metrics">
               {metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
             </div>
@@ -511,9 +511,8 @@ export default function HydrographyExplorer() {
                 <span>{(coverage.coverage * 100).toFixed(1)}% of the real catchment is inside this network</span>
               </div>}
               {coverage.coverage !== null && coverage.coverage < 0.95 && <p className="hydro-trace-caveat">
-                The rest drains from beyond the border, where the reference stops. Sub-basin averages below
-                describe the traced part only; the whole-catchment table carries figures HydroSHEDS computed
-                across the full area.
+                The small difference is source rounding between reach-reported upstream area and the sum of
+                routed sub-basins; the network itself is not clipped at a national border.
               </p>}
               <div className="hydro-trace-actions">
                 <button
@@ -586,7 +585,7 @@ export default function HydrographyExplorer() {
                 </button>;
               })}
             </div> : <div className="hydro-no-links">
-              This record is a terminal node in the clipped network &mdash; nothing it connects to stays inside Uzbekistan.
+              This record is a terminal node in the complete natural system.
             </div>}
           </div> : <div className="hydro-empty-detail">
             <MapPin size={30}/>
@@ -629,14 +628,13 @@ export default function HydrographyExplorer() {
           <h2>Built from HydroSHEDS</h2>
           <p>
             Rivers come from HydroRIVERS v1.0, lakes from HydroLAKES v1.0 and sub-basins from HydroBASINS
-            level 12, each intersected with the Uzbekistan ADM0 boundary. Rebuild with
-            {' '}<code>npm run hydrography:build</code>, which writes both the GeoPackage under
-            {' '}<code>WORKSPACE/derived/hydrography</code> and the web layers this page reads.
+            level 12 across the complete Amu Darya and Syr Darya systems. Rebuild with
+            {' '}<code>npm run rivers:unified</code>; the national boundary remains an analytical overlay.
           </p>
-          <p>Generated {new Date(index.generatedAt).toLocaleString('en-GB')} &middot; {index.selection}.</p>
+          <p>Generated {new Date(index.generatedAt).toLocaleString('en-GB')} &middot; {index.selection?.rule || index.selection}.</p>
         </div>
         <div className="hydro-schema">
-          {['rivers_uzbekistan', 'lakes_uzbekistan', 'basins_level12', 'river_downstream_links', 'river_basin_links', 'lake_basin_links']
+          {['rivers_full_system', 'lakes_full_system', 'basins_level12', 'river_downstream_links', 'river_basin_links', 'lake_basin_links']
             .map(table => <span key={table}>{table}</span>)}
         </div>
       </section>
@@ -644,7 +642,7 @@ export default function HydrographyExplorer() {
 
     <footer className="hydro-footer">
       <Logo/>
-      <span>HYDROSHEDS &middot; HYDROLAKES &middot; CLIPPED TO UZBEKISTAN</span>
+      <span>HYDRORIVERS &middot; HYDROLAKES &middot; COMPLETE AMU + SYR SYSTEMS</span>
       <a href="/">Back to the portal <ArrowUpRight size={13}/></a>
     </footer>
   </div>;
