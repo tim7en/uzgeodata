@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CONFIG = ROOT / "ONTOLOGY/vocab/hydroclimate-system.json"
 SYSTEMS = ROOT / "PUBLISHED/data/hydroclimate/headwater-systems.geojson"
 OUTPUT = ROOT / "PUBLISHED/data/hydroclimate/headwater-elevation-bands.csv"
+JSON_OUTPUT = ROOT / "PUBLISHED/data/hydroclimate/headwater-elevation-bands.json"
 MANIFEST = ROOT / "PUBLISHED/data/hydroclimate/headwater-elevation-bands.manifest.json"
 PROJECT = "ee-sabitovty"
 ASSET = "USGS/SRTMGL1_003"
@@ -27,7 +28,7 @@ SCALE = 90
 
 def write_csv(path: Path, rows: list[dict]) -> None:
     fields = [
-        "system_id", "river_system_id", "elevation_band", "minimum_m_inclusive",
+        "observation_unit_id", "system_id", "river_system_id", "elevation_band", "minimum_m_inclusive",
         "maximum_m_exclusive", "area_km2", "share_percent", "mean_elevation_m",
         "source_asset", "scale_m", "retrieved_at",
     ]
@@ -88,6 +89,7 @@ def main() -> None:
             area = areas[band["id"]]
             weighted = float(totals.get(f"weighted__{band['id']}") or 0)
             rows.append({
+                "observation_unit_id": f"{props['system_id']}::{band['id']}",
                 "system_id": props["system_id"],
                 "river_system_id": props["river_system_id"],
                 "elevation_band": band["id"],
@@ -103,6 +105,10 @@ def main() -> None:
         print(f"  {props['system_id']}: {total_area:,.1f} km2 across {len(bands)} bands")
 
     write_csv(OUTPUT, rows)
+    JSON_OUTPUT.write_text(
+        json.dumps({"version": "1.0", "spatialScope": "headwater_formation", "bands": rows}, ensure_ascii=False, separators=(",", ":")) + "\n",
+        encoding="utf-8",
+    )
     manifest = {
         "version": "1.0",
         "generatedAt": retrieved,
@@ -115,7 +121,10 @@ def main() -> None:
             "catalogUrl": "https://developers.google.com/earth-engine/datasets/catalog/USGS_SRTMGL1_003",
         },
         "bands": bands,
-        "output": str(OUTPUT.relative_to(ROOT)).replace("\\", "/"),
+        "outputs": {
+            "csv": str(OUTPUT.relative_to(ROOT)).replace("\\", "/"),
+            "json": str(JSON_OUTPUT.relative_to(ROOT)).replace("\\", "/"),
+        },
         "rows": len(rows),
         "semantics": {
             "minimum": "inclusive",

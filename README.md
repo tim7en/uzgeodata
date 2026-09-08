@@ -49,7 +49,11 @@ npm run hydrography:attributes # publish the 281 BasinATLAS attributes per basin
 npm run hydrography:adminlinks # overlay provinces and districts onto the basins
 npm run hydrography:align-basins # publish the canonical BasinATLAS level-12 frame
 npm run headwaters:basins       # download/trace upper Amu and Syr headwater basins
+npm run basins:transboundary    # full Amu/Syr natural systems at levels 7, 10 and 12
+npm run headwaters:elevation    # SRTM elevation-band areas inside headwaters
 npm run headwaters:era5         # append every newly available ERA5-Land month
+npm run headwaters:era5:elevation # the same monthly fields by elevation band
+npm run headwaters:snow         # append native-daily MODIS snow by elevation band
 npm run catalogue:build        # pivot the graph into the dataset catalogue
 npm run data:groups            # group every data reference and check what is on this machine
 npm run data:items             # name every reference inside those groups, present or not

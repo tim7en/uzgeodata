@@ -188,6 +188,8 @@
     "earth-engine/CSP/HM/GlobalHumanModification": "uz:ds/csp-ghm",
     "earth-engine/projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS": "uz:ds/esri-io-landcover-10m",
     "earth-engine/ECMWF/ERA5_LAND/MONTHLY_AGGR": "uz:ds/era5-land",
-    "derived/PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv": "uz:ds/era5-land-headwaters-monthly"
+    "derived/PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv": "uz:ds/era5-land-headwaters-monthly",
+    "earth-engine/MODIS/061/MOD10A1": "uz:ds/modis-terra-snow",
+    "earth-engine/USGS/SRTMGL1_003": "uz:ds/srtm-elevation"
   }
 }

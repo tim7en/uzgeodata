@@ -447,6 +447,23 @@
       "cardinality": "many",
       "mlProposable": false,
       "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:hasFormationStatistic",
+      "label": "has runoff-formation statistic",
+      "definition": "A measured or modelled value attached to a composite runoff-formation unit such as a headwater system crossed with an elevation band. The composite unit keeps basin membership and elevation explicit without pretending the elevation band is a new natural basin.",
+      "domain": [
+        "Dataset"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "RunoffFormationUnit"
+        ]
+      },
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
     }
   ]
 }

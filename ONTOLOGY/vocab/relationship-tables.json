@@ -635,6 +635,80 @@
           "meaning": "monthly sum or monthly mean inherited from the source band semantics"
         }
       ]
+    },
+    {
+      "id": "srtm-headwater-elevation-bands",
+      "dataset": "srtm-elevation",
+      "label": "SRTM elevation-band areas in headwater formation systems",
+      "note": "Static area and mean elevation for each composite headwater-system and elevation-band unit. Bands are analytical masks and do not replace HydroATLAS basin identities.",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "container": "PUBLISHED/data/hydroclimate/headwater-elevation-bands.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/srtm-elevation",
+      "objectColumn": "observation_unit_id",
+      "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
+      "scopeColumn": null,
+      "measureColumn": "area_km2",
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {"column": "system_id", "meaning": "headwater runoff-formation system"},
+        {"column": "elevation_band", "meaning": "configured SRTM elevation interval"},
+        {"column": "mean_elevation_m", "meaning": "area-weighted mean elevation within the interval"}
+      ]
+    },
+    {
+      "id": "era5-land-headwater-elevation-monthly",
+      "dataset": "era5-land",
+      "label": "ERA5-Land monthly state by headwater elevation band",
+      "note": "ERA5-Land monthly variables crossed with headwater formation system and SRTM elevation band. Native monthly resolution is retained and modelled runoff is not gauge discharge.",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwater-elevation-monthly.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/era5-land",
+      "objectColumn": "observation_unit_id",
+      "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "dimensionColumns": [
+        {"column": "year", "meaning": "calendar year"},
+        {"column": "month", "meaning": "calendar month"},
+        {"column": "variable", "meaning": "hydroclimate variable"},
+        {"column": "elevation_band", "meaning": "configured SRTM elevation interval"}
+      ]
+    },
+    {
+      "id": "modis-snow-headwaters-daily",
+      "dataset": "modis-terra-snow",
+      "label": "MODIS daily snow cover by headwater elevation band",
+      "note": "Daily NDSI snow-cover percentage by composite headwater-system and elevation-band unit. valid_area_percent retains the effect of clouds and invalid retrievals instead of treating them as snow-free pixels.",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "container": "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/modis-terra-snow",
+      "objectColumn": "observation_unit_id",
+      "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "dimensionColumns": [
+        {"column": "date", "meaning": "native daily observation date"},
+        {"column": "variable", "meaning": "snow cover percentage"},
+        {"column": "elevation_band", "meaning": "configured SRTM elevation interval"},
+        {"column": "valid_area_percent", "meaning": "share of the elevation unit carrying a valid retrieval"}
+      ]
     }
   ]
 }

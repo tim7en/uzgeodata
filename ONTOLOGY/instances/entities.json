@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T04:51:43+00:00",
+  "generatedAt": "2026-09-08T05:34:13+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -86,6 +86,22 @@
       "agentVersion": "1.0",
       "trustTier": "predicted",
       "description": "TF-IDF character n-gram model over bilingual titles and field names. Proposes observed properties, analysis concepts and related datasets with calibrated confidence. Replaceable by a satellite-embedding or language-model backend without changing the graph contract."
+    },
+    {
+      "id": "uz:agent/nasa-nsidc",
+      "type": "Agent",
+      "label": "NASA NSIDC DAAC at CIRES",
+      "agentKind": "organisation",
+      "trustTier": "authoritative",
+      "description": "Producer of MODIS Terra daily snow cover."
+    },
+    {
+      "id": "uz:agent/nasa-usgs-jpl",
+      "type": "Agent",
+      "label": "NASA, USGS and JPL-Caltech",
+      "agentKind": "organisation",
+      "trustTier": "authoritative",
+      "description": "Producer of NASA SRTM Digital Elevation 30 m."
     },
     {
       "id": "uz:agent/noaa",
@@ -2501,6 +2517,19 @@
       "description": "86 stations. The .dbf carries no encoding declaration and must be read as cp1251 or the names arrive as mojibake. Station numbers are six-digit operator codes, not the five-digit WMO indices used by the climate workbooks, so the two cannot be joined until a crosswalk is supplied."
     },
     {
+      "id": "uz:ds/modis-terra-snow",
+      "type": "Dataset",
+      "label": "MODIS Terra daily snow cover",
+      "labels": {
+        "en": "MODIS Terra daily snow cover"
+      },
+      "sourceKey": "earth-engine/MODIS/061/MOD10A1",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Daily Terra snow cover retained at native daily grain and reduced by headwater formation system and SRTM elevation band. Provider codes above 100 are masked; valid-area percentage is stored so cloud is not interpreted as snow-free land."
+    },
+    {
       "id": "uz:ds/osm-buildings",
       "type": "Dataset",
       "label": "OSM building footprints",
@@ -2616,6 +2645,19 @@
       "catalogId": null,
       "repositoryId": null,
       "description": "Gauge list with coordinates, so the discharge series can be mapped. This is the missing link between the hydrological tables and the river network."
+    },
+    {
+      "id": "uz:ds/srtm-elevation",
+      "type": "Dataset",
+      "label": "NASA SRTM Digital Elevation 30 m",
+      "labels": {
+        "en": "NASA SRTM Digital Elevation 30 m"
+      },
+      "sourceKey": "earth-engine/USGS/SRTMGL1_003",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Thirty-metre SRTM elevation used to define five analytical elevation masks inside each runoff-formation system. Area statistics are evaluated at 90 m; elevation bands supplement rather than replace basin identity."
     },
     {
       "id": "uz:ds/station-air-temperature-series",
@@ -7449,6 +7491,29 @@
       "accessPolicy": "free"
     },
     {
+      "id": "uz:dist/era5-land-headwater-elevation-monthly",
+      "type": "Distribution",
+      "label": "ERA5-Land monthly state by headwater elevation band",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 97242,
+      "storedName": "PUBLISHED/data/hydroclimate/era5-land-headwater-elevation-monthly.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "objectColumn": "observation_unit_id",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-headwater-elevation-monthly.csv",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
+      "rowCount": 420,
+      "subjectFixed": "uz:ds/era5-land"
+    },
+    {
       "id": "uz:dist/era5-land-headwaters-monthly",
       "type": "Distribution",
       "label": "ERA5-Land monthly hydroclimate state by transboundary headwater basin",
@@ -8649,6 +8714,40 @@
       "crs": "EPSG:4284"
     },
     {
+      "id": "uz:dist/modis-snow-headwaters-daily",
+      "type": "Distribution",
+      "label": "MODIS daily snow cover by headwater elevation band",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 63852,
+      "storedName": "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "objectColumn": "observation_unit_id",
+      "container": "PUBLISHED/data/hydroclimate/modis-snow-headwaters-daily.csv",
+      "scopeColumn": null,
+      "measureColumn": "value",
+      "measureUnitColumn": "unit",
+      "containerTable": null,
+      "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
+      "rowCount": 310,
+      "subjectFixed": "uz:ds/modis-terra-snow"
+    },
+    {
+      "id": "uz:dist/modis-terra-snow-earth-engine-source",
+      "type": "Distribution",
+      "label": "MODIS Terra daily snow cover Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine ImageCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
       "id": "uz:dist/osm-buildings-buildings-c7d8cc",
       "type": "Distribution",
       "label": "buildings.shp",
@@ -8798,6 +8897,40 @@
       "externalPath": "C:/Users/User/Desktop/MAPS/Excel files/Water discharges.xlsx",
       "featureCount": null,
       "crs": null
+    },
+    {
+      "id": "uz:dist/srtm-elevation-earth-engine-source",
+      "type": "Distribution",
+      "label": "NASA SRTM Digital Elevation 30 m Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine Image",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/srtm-headwater-elevation-bands",
+      "type": "Distribution",
+      "label": "SRTM elevation-band areas in headwater formation systems",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 1594,
+      "storedName": "PUBLISHED/data/hydroclimate/headwater-elevation-bands.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "objectColumn": "observation_unit_id",
+      "container": "PUBLISHED/data/hydroclimate/headwater-elevation-bands.csv",
+      "scopeColumn": null,
+      "measureColumn": "area_km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
+      "rowCount": 10,
+      "subjectFixed": "uz:ds/srtm-elevation"
     },
     {
       "id": "uz:dist/station-air-temperature-series-andijan-namangan-fergana-2c9d",

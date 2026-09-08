@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T05:33:55+00:00",
+  "temporalResolution": "month",
+  "spatialDimensions": [
+    "headwater_formation",
+    "elevation_band"
+  ],
+  "source": {
+    "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+    "demAsset": "USGS/SRTMGL1_003",
+    "nominalScaleMetres": 11132,
+    "latestAvailableMonth": "2026-07"
+  },
+  "coverage": {
+    "rows": 420,
+    "systems": 2,
+    "elevationBands": 5,
+    "periods": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+    ],
+    "variables": [
+      "air_temperature_mean",
+      "modelled_runoff_total",
+      "precipitation_total",
+      "snow_water_equivalent_mean",
+      "snowfall_water_equivalent_total",
+      "soil_moisture_layer_1_mean"
+    ]
+  },
+  "outputs": {
+    "csv": "PUBLISHED/data/hydroclimate/era5-land-headwater-elevation-monthly.csv",
+    "json": "PUBLISHED/data/hydroclimate/era5-land-headwater-elevation-monthly.json"
+  },
+  "qualityNotes": [
+    "The source monthly temporal resolution is preserved.",
+    "ERA5-Land is reanalysis and modelled runoff is not gauge discharge.",
+    "SRTM masks add an elevation dimension without changing basin identity."
+  ]
+}

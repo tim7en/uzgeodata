@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T04:51:43+00:00",
+  "generatedAt": "2026-09-08T05:34:13+00:00",
   "promoteThreshold": 0.75,
   "vocabularies": {
     "themes": [
@@ -103,6 +103,12 @@
         "id": "uz:prop/snowfall",
         "prefLabel": "Snowfall water equivalent",
         "definition": "Accumulated solid precipitation expressed as water equivalent over a period.",
+        "broader": "uz:theme/climate"
+      },
+      {
+        "id": "uz:prop/snow-cover-fraction",
+        "prefLabel": "Snow cover fraction",
+        "definition": "Share of an area covered by snow for a stated observation date, with valid-observation coverage retained separately.",
         "broader": "uz:theme/climate"
       },
       {
@@ -965,6 +971,18 @@
       "label": "Character n-gram similarity model v1",
       "kind": "model",
       "trustTier": "predicted"
+    },
+    {
+      "id": "uz:agent/nasa-nsidc",
+      "label": "NASA NSIDC DAAC at CIRES",
+      "kind": "organisation",
+      "trustTier": "authoritative"
+    },
+    {
+      "id": "uz:agent/nasa-usgs-jpl",
+      "label": "NASA, USGS and JPL-Caltech",
+      "kind": "organisation",
+      "trustTier": "authoritative"
     },
     {
       "id": "uz:agent/noaa",
@@ -9983,7 +10001,7 @@
         "reanalysis-not-direct-observation",
         "runoff-is-modelled"
       ],
-      "distributions": 2,
+      "distributions": 3,
       "related": [],
       "geographies": [
         {
@@ -10004,6 +10022,105 @@
           "mode": "measured",
           "detail": "ERA5-Land monthly hydroclimate state by transboundary headwater basin",
           "links": 5082
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/modis-terra-snow",
+      "label": "MODIS Terra daily snow cover",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/climate",
+      "analysis": "uz:analysis/state-observation",
+      "observes": [
+        {
+          "concept": "uz:prop/snow-cover-fraction",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/upper-amu-darya",
+        "uz:place/upper-syr-darya"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2026
+      },
+      "license": "NASA Earth Science Data and Information Policy",
+      "attribution": "NASA NSIDC DAAC at CIRES, MOD10A1 Collection 6.1",
+      "extent": null,
+      "flags": [
+        "cloud-affected",
+        "daily-native-grain",
+        "valid-area-retained"
+      ],
+      "distributions": 2,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "basin",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/upper-amu-darya"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/upper-syr-darya"
+        }
+      ]
+    },
+    {
+      "id": "uz:ds/srtm-elevation",
+      "label": "NASA SRTM Digital Elevation 30 m",
+      "sourceTitle": null,
+      "atlasNumber": null,
+      "catalogId": null,
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        {
+          "concept": "uz:prop/elevation",
+          "confidence": 1.0,
+          "by": "uz:agent/earth-engine-registry",
+          "reviewed": false
+        }
+      ],
+      "useCases": [],
+      "places": [
+        "uz:place/upper-amu-darya",
+        "uz:place/upper-syr-darya"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2000
+      },
+      "license": "NASA/JPL public data terms",
+      "attribution": "NASA / USGS / JPL-Caltech SRTMGL1 v3",
+      "extent": null,
+      "flags": [
+        "analysis-reduced-at-90m",
+        "static-dem"
+      ],
+      "distributions": 2,
+      "related": [],
+      "geographies": [
+        {
+          "frame": "basin",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/upper-amu-darya"
+        },
+        {
+          "frame": "basin",
+          "predicate": "uz:coversPlace",
+          "mode": "declared",
+          "detail": "uz:place/upper-syr-darya"
         }
       ]
     },
@@ -11657,13 +11774,13 @@
     }
   ],
   "counts": {
-    "datasets": 187,
+    "datasets": 189,
     "atlasPackages": 134,
     "stations": 190,
-    "publishedAssertions": 3226,
-    "proposedAssertions": 578,
-    "relationshipTables": 22,
-    "relationshipLinks": 1147807
+    "publishedAssertions": 3257,
+    "proposedAssertions": 579,
+    "relationshipTables": 25,
+    "relationshipLinks": 1148547
   },
   "geography": {
     "frames": [
@@ -12042,6 +12159,56 @@
         "month",
         "variable",
         "statistic"
+      ]
+    },
+    {
+      "id": "srtm-headwater-elevation-bands",
+      "dataset": "uz:ds/srtm-elevation",
+      "label": "SRTM elevation-band areas in headwater formation systems",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "frame": "formation",
+      "rowCount": 10,
+      "measureColumn": "area_km2",
+      "dimensions": [
+        "system_id",
+        "elevation_band",
+        "mean_elevation_m"
+      ]
+    },
+    {
+      "id": "era5-land-headwater-elevation-monthly",
+      "dataset": "uz:ds/era5-land",
+      "label": "ERA5-Land monthly state by headwater elevation band",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "frame": "formation",
+      "rowCount": 420,
+      "measureColumn": "value",
+      "dimensions": [
+        "year",
+        "month",
+        "variable",
+        "elevation_band"
+      ]
+    },
+    {
+      "id": "modis-snow-headwaters-daily",
+      "dataset": "uz:ds/modis-terra-snow",
+      "label": "MODIS daily snow cover by headwater elevation band",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "frame": "formation",
+      "rowCount": 310,
+      "measureColumn": "value",
+      "dimensions": [
+        "date",
+        "variable",
+        "elevation_band",
+        "valid_area_percent"
       ]
     }
   ],

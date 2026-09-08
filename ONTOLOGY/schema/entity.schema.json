@@ -31,7 +31,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water)/[a-z0-9-]+$"
+            "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water|formation)/[a-z0-9-]+$"
           },
           "type": {
             "enum": [
@@ -43,7 +43,8 @@
               "Basin",
               "RiverReach",
               "WaterBody",
-              "AdminArea"
+              "AdminArea",
+              "RunoffFormationUnit"
             ],
             "description": "Basin, RiverReach and WaterBody are the hydrographic feature types. They are declared so predicates and relationship tables can be typed against them; individual features are deliberately not minted as entities, because the topology runs to more than 126,000 links and belongs in the GeoPackage that measures it. A relationship-table Distribution says which features a table relates, under which predicate, and where to read it. AdminArea is the administrative geography: provinces and districts from the OCHA Common Operational Dataset. Like the hydrographic types, individual units are not minted as entities — the basin overlay runs to thousands of rows and belongs in a relationship table. First-level units correspond to concepts in the place scheme; second-level units deliberately do not, because 199 districts would swamp a vocabulary meant to be read by a person."
           },
@@ -334,7 +335,8 @@
                     "Basin",
                     "RiverReach",
                     "WaterBody",
-                    "AdminArea"
+                    "AdminArea",
+                    "RunoffFormationUnit"
                   ]
                 },
                 "objectType": {
@@ -346,7 +348,8 @@
                     "Basin",
                     "RiverReach",
                     "WaterBody",
-                    "AdminArea"
+                    "AdminArea",
+                    "RunoffFormationUnit"
                   ]
                 },
                 "subjectColumn": {
@@ -359,7 +362,7 @@
                 },
                 "subjectFixed": {
                   "type": "string",
-                  "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water)/[a-z0-9-]+$",
+                  "pattern": "^uz:(ds|dist|layer|station|agent|basin|reach|water|formation)/[a-z0-9-]+$",
                   "description": "Fixed subject entity for every row when the file does not repeat it."
                 },
                 "objectColumn": {

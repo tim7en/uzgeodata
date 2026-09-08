@@ -38,6 +38,8 @@
     "basins:transboundary": "python PIPELINES/build_transboundary_basins.py",
     "headwaters:elevation": "python PIPELINES/build_headwater_elevation_bands.py",
     "headwaters:era5": "python PIPELINES/update_headwater_era5.py",
+    "headwaters:era5:elevation": "python PIPELINES/update_headwater_era5_elevation.py",
+    "headwaters:snow": "python PIPELINES/modis_snow_headwater_service.py",
     "catalogue:build": "python PIPELINES/build_data_catalogue.py",
     "data:groups": "python PIPELINES/build_data_groups.py",
     "data:items": "python PIPELINES/build_data_items.py",

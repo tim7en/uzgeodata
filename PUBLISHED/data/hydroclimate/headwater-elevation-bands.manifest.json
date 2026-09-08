@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T05:20:05+00:00",
+  "generatedAt": "2026-09-08T05:33:45+00:00",
   "spatialScope": "headwater_formation",
   "source": {
     "platform": "Google Earth Engine",
@@ -36,7 +36,10 @@
       "maximum": null
     }
   ],
-  "output": "PUBLISHED/data/hydroclimate/headwater-elevation-bands.csv",
+  "outputs": {
+    "csv": "PUBLISHED/data/hydroclimate/headwater-elevation-bands.csv",
+    "json": "PUBLISHED/data/hydroclimate/headwater-elevation-bands.json"
+  },
   "rows": 10,
   "semantics": {
     "minimum": "inclusive",

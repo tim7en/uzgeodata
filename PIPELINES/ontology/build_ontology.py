@@ -1097,7 +1097,7 @@ class GraphBuilder:
                 "type": "Distribution",
                 "label": f"{source['label']} Earth Engine collection",
                 "role": "source-package",
-                "format": "Earth Engine ImageCollection",
+                "format": f"Earth Engine {source.get('assetType', 'ImageCollection')}",
                 "byteSize": None,
                 "storedName": None,
                 "url": None,
@@ -1722,6 +1722,8 @@ class GraphBuilder:
                 return "bridge"
             if table["objectType"] == "AdminArea":
                 return "administrative"
+            if table["objectType"] == "RunoffFormationUnit":
+                return "formation"
             if table["objectType"] == "Basin" or table["subjectType"] == "Basin":
                 return "basin"
             return "network"

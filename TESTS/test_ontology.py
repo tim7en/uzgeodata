@@ -668,7 +668,7 @@ def test_topology_stays_out_of_the_assertion_graph(assertions):
     expanded = [a for a in assertions if a["predicate"] in TOPOLOGY_PREDICATES]
     assert not expanded, f"{len(expanded)} topology links leaked into assertions.json"
     features = [e for e in load(ROOT / "ONTOLOGY" / "instances" / "entities.json")["entities"]
-                if e["type"] in {"Basin", "RiverReach", "WaterBody"}]
+                if e["type"] in {"Basin", "RiverReach", "WaterBody", "RunoffFormationUnit"}]
     assert not features, f"{len(features)} feature entities were minted"
 
 

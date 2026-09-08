@@ -60,6 +60,17 @@
       "broader": "uz:theme/climate"
     },
     {
+      "id": "uz:prop/snow-cover-fraction",
+      "prefLabel": "Snow cover fraction",
+      "altLabels": [
+        "fractional snow cover",
+        "NDSI snow cover"
+      ],
+      "definition": "Share of an area covered by snow for a stated observation date, with valid-observation coverage retained separately.",
+      "unit": "percent",
+      "broader": "uz:theme/climate"
+    },
+    {
       "id": "uz:prop/climatic-water-deficit",
       "prefLabel": "Climatic water deficit",
       "altLabels": [

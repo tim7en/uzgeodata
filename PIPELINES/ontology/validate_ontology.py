@@ -246,7 +246,7 @@ def validate(root: Path, strict: bool = False) -> Report:
     # declaration is checked as strictly as an assertion would have been.
     declared = {t["id"]: t for t in
                 (read_json(vocab_dir / "relationship-tables.json") or {}).get("tables", [])}
-    feature_types = {"Basin", "RiverReach", "WaterBody"}
+    feature_types = {"Basin", "RiverReach", "WaterBody", "RunoffFormationUnit"}
     tables = [e for e in entities.values()
               if e.get("type") == "Distribution" and e.get("role") == "relationship-table"]
 
