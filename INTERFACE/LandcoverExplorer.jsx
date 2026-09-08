@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { GeoJSON, MapContainer, ScaleControl, TileLayer, ZoomControl, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import {
-  ArrowUpRight, BarChart3, Braces, Database, Layers, MapPin, Pause, Play,
-  Search, Sparkles, Table2,
+  ArrowUpRight, BarChart3, Braces, ChevronDown, ChevronLeft, ChevronRight,
+  ChevronUp, Crosshair, Database, Layers, MapPin, Pause, Play, Search, Sparkles, Table2,
 } from 'lucide-react';
 import {
   annual, classArea, classShare, distribution, dominantClass, metricValue,
@@ -48,6 +48,24 @@ function MapFocus({ feature }) {
     });
   }, [feature, map]);
   return null;
+}
+
+function MapPanControls() {
+  const map = useMap();
+  const control = useRef(null);
+  useEffect(() => {
+    if (!control.current) return;
+    L.DomEvent.disableClickPropagation(control.current);
+    L.DomEvent.disableScrollPropagation(control.current);
+  }, []);
+  const pan = (x, y) => map.panBy([x, y], { animate: true, duration: .35 });
+  return <div ref={control} className="land-pan-controls" aria-label="Map movement controls">
+    <button type="button" className="north" onClick={() => pan(0, -190)} aria-label="Pan north"><ChevronUp size={15}/></button>
+    <button type="button" className="west" onClick={() => pan(-190, 0)} aria-label="Pan west"><ChevronLeft size={15}/></button>
+    <button type="button" className="home" onClick={() => map.flyTo([41.25, 64.4], 5, { duration: .65 })} aria-label="Return to Uzbekistan"><Crosshair size={13}/></button>
+    <button type="button" className="east" onClick={() => pan(190, 0)} aria-label="Pan east"><ChevronRight size={15}/></button>
+    <button type="button" className="south" onClick={() => pan(0, 190)} aria-label="Pan south"><ChevronDown size={15}/></button>
+  </div>;
 }
 
 function MiniLine({ points, color }) {
@@ -96,6 +114,7 @@ export default function LandcoverExplorer() {
   const [meta, setMeta] = useState(null);
   const [series, setSeries] = useState(null);
   const [geometry, setGeometry] = useState(null);
+  const [boundary, setBoundary] = useState(null);
   const [error, setError] = useState(null);
   const [year, setYear] = useState(null);
   const [classCode, setClassCode] = useState(5);
@@ -112,12 +131,13 @@ export default function LandcoverExplorer() {
       if (!response.ok) throw new Error(`${response.status} loading ${INDEX_URL}`);
       return response.json();
     }).then(async index => {
-      const [observations, basins] = await Promise.all([
+      const [observations, basins, outline] = await Promise.all([
         fetch(index.series).then(response => response.json()),
         fetch(index.reference.geometry).then(response => response.json()),
+        fetch(index.reference.boundary).then(response => response.json()),
       ]);
       if (!live) return;
-      setMeta(index); setSeries(observations); setGeometry(basins);
+      setMeta(index); setSeries(observations); setGeometry(basins); setBoundary(outline);
       const bestYear = [...index.years].sort((a, b) =>
         (index.coverage.byYear[a] || 0) - (index.coverage.byYear[b] || 0) || a - b
       ).at(-1);
@@ -202,9 +222,11 @@ export default function LandcoverExplorer() {
 
   return <div className="land-app">
     <section className="land-stage">
-      <MapContainer center={[41.25, 64.4]} zoom={5} minZoom={4} maxZoom={12} zoomControl={false} preferCanvas>
+      <MapContainer center={[41.25, 64.4]} zoom={5} minZoom={4} maxZoom={12}
+        zoomControl={false} preferCanvas dragging touchZoom scrollWheelZoom doubleClickZoom keyboard>
         <TileLayer attribution="&copy; OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
         <ZoomControl position="bottomleft"/><ScaleControl position="bottomright"/>
+        <MapPanControls/>
         <GeoJSON
           key={`${year}-${classCode}-${mode}-${selectedId}`}
           data={geometry}
@@ -227,6 +249,9 @@ export default function LandcoverExplorer() {
             });
           }}
         />
+        {boundary && <GeoJSON data={boundary} interactive={false} style={{
+          color: '#f2f5ed', weight: 1.6, opacity: .72, fillOpacity: 0,
+        }}/>} 
         <MapFocus feature={selectedFeature}/>
       </MapContainer>
 
@@ -268,7 +293,7 @@ export default function LandcoverExplorer() {
           {visible && <Composition values={annual(visible, year)} classes={classes}/>} 
           <div className="land-mini-stats">
             <div><span>Observed area</span><strong>{number(totalArea(visible, year), 1)} km²</strong></div>
-            <div><span>National signal</span><strong>{number(nationalShare, 1)}%</strong></div>
+            <div><span>Basin-frame signal</span><strong>{number(nationalShare, 1)}%</strong></div>
             <div><span>Annual change</span><strong>{number(shareChange(visible, year, classCode, meta.years), 2)} pp</strong></div>
             <div><span>Dominant cover</span><strong>{classByCode[dominantClass(visible, year)]?.name || '—'}</strong></div>
           </div>
@@ -309,7 +334,7 @@ export default function LandcoverExplorer() {
 
     <section className="land-provenance">
       <div><Sparkles size={22}/><span>MEASUREMENT, NOT INFERENCE</span></div>
-      <p>Impact Observatory / Esri annual land cover is reduced with pixel area over canonical BasinATLAS level-12 polygons. The ontology binds every row to <code>{meta.ontology.predicate}</code>, preserves the HYBAS identifier scheme, and exposes the result as both a relationship table and browser JSON.</p>
+      <p>Impact Observatory / Esri annual land cover is reduced with pixel area over whole canonical BasinATLAS level-12 catchments that intersect Uzbekistan. The national outline is shown for context; basin totals can extend across it. The ontology binds every row to <code>{meta.ontology.predicate}</code>, preserves the HYBAS identifier scheme, and exposes the result as both a relationship table and browser JSON.</p>
       <div className="land-provenance-grid"><span><small>DATASET</small>{meta.ontology.subject}</span><span><small>PREDICATE</small>{meta.ontology.predicate}</span><span><small>REFERENCE</small>{meta.reference.layer}</span><span><small>COVERAGE</small>{number(meta.coverage.percent, 2)}% basin-years</span></div>
     </section>
   </div>;

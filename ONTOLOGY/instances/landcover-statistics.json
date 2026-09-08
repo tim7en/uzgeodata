@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T11:32:58+00:00",
+  "generatedAt": "2026-09-08T03:32:21+00:00",
   "predicate": "uz:hasBasinStatistic",
   "subjectType": "Dataset",
   "objectType": "Basin",
@@ -28,7 +28,7 @@
     "units": 3981,
     "years": 9,
     "unitYears": 35829,
-    "rows": 126151
+    "rows": 125770
   },
   "output": "PUBLISHED\\data\\ontology\\2_LAND\\2.3_LANDCOVER_BASIN_YEAR\\landcover-basin-year.csv"
 }

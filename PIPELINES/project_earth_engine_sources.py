@@ -39,17 +39,23 @@ def main() -> None:
         ROOT / "ONTOLOGY" / "vocab" / "relationship-tables.json", {"tables": []}
     )
     builder.hydrography = read_json(ROOT / "ONTOLOGY" / "instances" / "hydrography.json", {})
+    # The portal projection uses the complete spatial manifests, not only their
+    # counts.  The compatibility refresh bypasses GraphBuilder.load_sources(),
+    # so initialize the same fields explicitly before calling save().
+    builder.atlas_basin_links = read_json(
+        ROOT / "ONTOLOGY" / "instances" / "atlas-basin-links.json", {}
+    ) or {}
+    builder.basin_zonal_stats = read_json(
+        ROOT / "ONTOLOGY" / "instances" / "basin-zonal-stats.json", {}
+    ) or {}
+    builder.admin_basin_links = read_json(
+        ROOT / "ONTOLOGY" / "instances" / "admin-basin-links.json", {}
+    ) or {}
     builder.relationship_counts = {
         "hydrography": (builder.hydrography or {}).get("counts", {}),
-        "atlasBasinLinks": (read_json(
-            ROOT / "ONTOLOGY" / "instances" / "atlas-basin-links.json", {}
-        ) or {}).get("counts", {}),
-        "basinZonalStats": (read_json(
-            ROOT / "ONTOLOGY" / "instances" / "basin-zonal-stats.json", {}
-        ) or {}).get("counts", {}),
-        "adminBasinLinks": (read_json(
-            ROOT / "ONTOLOGY" / "instances" / "admin-basin-links.json", {}
-        ) or {}).get("counts", {}),
+        "atlasBasinLinks": builder.atlas_basin_links.get("counts", {}),
+        "basinZonalStats": builder.basin_zonal_stats.get("counts", {}),
+        "adminBasinLinks": builder.admin_basin_links.get("counts", {}),
     }
 
     registry = builder.earth_engine_sources["sources"]

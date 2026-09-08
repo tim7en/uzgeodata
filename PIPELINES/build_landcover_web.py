@@ -36,6 +36,7 @@ CLASSES = [
     {"code": 10, "name": "Clouds", "color": "#cbd5e1"},
     {"code": 11, "name": "Rangeland", "color": "#a3c95b"},
 ]
+CLASS_CODES = {item["code"] for item in CLASSES}
 YEARS = list(range(2017, 2026))
 
 
@@ -84,7 +85,7 @@ def build() -> tuple[dict, dict]:
                 area = float(row["km2"])
             except (KeyError, TypeError, ValueError):
                 continue
-            if basin not in reference:
+            if basin not in reference or code not in CLASS_CODES or year not in YEARS:
                 continue
             values[basin][year][code] = area
             totals[year][code] += area
@@ -121,7 +122,8 @@ def build() -> tuple[dict, dict]:
         "generatedAt": generated_at,
         "title": "Basin land-cover observatory",
         "description": ("Annual Impact Observatory / Esri land-cover area reduced over the "
-                        "canonical BasinATLAS level-12 frame."),
+                        "whole canonical BasinATLAS level-12 catchments that intersect "
+                        "Uzbekistan."),
         "source": {
             "platform": "Google Earth Engine",
             "asset": "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
@@ -141,6 +143,8 @@ def build() -> tuple[dict, dict]:
             "layer": "basinatlas_uz_lev12",
             "basins": reference_count,
             "geometry": "/data/hydrography/basins.geojson",
+            "boundary": "/data/hydrography/boundary.geojson",
+            "scope": "Whole level-12 catchments intersecting Uzbekistan",
         },
         "years": years,
         "classes": CLASSES,
@@ -149,10 +153,8 @@ def build() -> tuple[dict, dict]:
             "measuredBasins": len(values),
             "measuredBasinYears": measured_basin_years,
             "expectedBasinYears": expected_basin_years,
-            "percent": round(
-                measured_basin_years / expected_basin_years * 100, 2
-                if expected_basin_years else 0
-            ) if expected_basin_years else 0,
+            "percent": (round(measured_basin_years / expected_basin_years * 100, 2)
+                        if expected_basin_years else 0),
             "byYear": by_year,
             "complete": bool(expected_basin_years and measured_basin_years == expected_basin_years),
         },

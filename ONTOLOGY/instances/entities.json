@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T17:55:36+00:00",
+  "generatedAt": "2026-09-08T03:35:44+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -5754,7 +5754,7 @@
       "label": "Environmental atlas layers by level-12 basin",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 23588189,
+      "byteSize": 95,
       "storedName": "WORKSPACE/derived/atlas-basin-links.csv",
       "url": null,
       "accessPolicy": "free",
@@ -5768,7 +5768,7 @@
       "measureUnitColumn": "measure_unit",
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 195649,
+      "rowCount": 0,
       "subjectColumn": "dataset_id"
     },
     {
@@ -8611,7 +8611,7 @@
       "label": "Land cover area by basin and year",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 8764553,
+      "byteSize": 8741341,
       "storedName": "PUBLISHED/data/ontology/2_LAND/2.3_LANDCOVER_BASIN_YEAR/landcover-basin-year.csv",
       "url": null,
       "accessPolicy": "free",
@@ -8625,7 +8625,7 @@
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 126151,
+      "rowCount": 125770,
       "subjectColumn": "dataset_id"
     },
     {

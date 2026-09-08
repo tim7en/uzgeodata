@@ -1344,11 +1344,22 @@ class GraphBuilder:
 
     def count_relationship_rows(self, table: dict, counts: dict):
         """Measure the table, or read the count the producing build already measured."""
+        path = self.root / table["container"]
+        # A present CSV is the system of record. Manifests can survive a data-
+        # folder rotation while their large generated table is replaced by a
+        # header-only placeholder, so trusting the old manifest here advertises
+        # links that are not actually available in this checkout.
+        if table.get("format") == "CSV" and path.exists():
+            with path.open(encoding="utf-8-sig", newline="") as handle:
+                if table.get("scopeValue"):
+                    reader = csv.DictReader(handle)
+                    return sum(1 for row in reader
+                               if row.get(table["scopeColumn"]) == table["scopeValue"])
+                return max(sum(1 for _ in handle) - 1, 0)  # discount the header
         source = table.get("rowCountFrom")
         if source:
             value = counts.get(source["manifest"], {}).get(source["key"])
             return int(value) if value is not None else None
-        path = self.root / table["container"]
         if not path.exists():
             return None
         with path.open(encoding="utf-8-sig", newline="") as handle:

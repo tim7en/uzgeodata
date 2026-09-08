@@ -27,6 +27,7 @@ def test_projection_keeps_ontology_identity_and_ignores_foreign_basins(tmp_path,
                          "class_code", "class_name", "km2"])
         writer.writerow(["esri-io-landcover-10m", 1, 1, 2017, 5, "Crops", 4.5])
         writer.writerow(["esri-io-landcover-10m", 1, 1, 2018, 5, "Crops", 5.5])
+        writer.writerow(["esri-io-landcover-10m", 1, 1, 2018, 6, "Unknown", 0.1])
         writer.writerow(["esri-io-landcover-10m", 999, 999, 2018, 5, "Crops", 99])
 
     monkeypatch.setattr(web, "REFERENCE", reference)
@@ -46,3 +47,4 @@ def test_projection_keeps_ontology_identity_and_ignores_foreign_basins(tmp_path,
     assert index["coverage"]["expectedBasinYears"] == 18
     assert set(series["basins"]) == {"1"}
     assert series["basins"]["1"]["years"]["2018"]["5"] == 5.5
+    assert "6" not in series["basins"]["1"]["years"]["2018"]

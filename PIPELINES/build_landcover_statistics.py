@@ -102,6 +102,49 @@ def table_counts(target: Path, unit_column: str) -> tuple[int, int]:
     return len(rows), len({(row[unit_column], int(row["year"])) for row in rows})
 
 
+def normalize_existing_table(target: Path) -> tuple[int, int]:
+    """Keep the stored relationship table inside the product's 9-class domain.
+
+    The upstream tiled collection contains a minute number of pixels with legacy
+    values 3 and 6, although neither value belongs to the published 9-class time
+    series.  They are excluded instead of being silently presented as new land-
+    cover classes.  Known class labels are normalized at the same time.
+    """
+    if not target.exists():
+        return 0, 0
+    with target.open(encoding="utf8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        fieldnames = reader.fieldnames
+        rows = list(reader)
+    if not fieldnames:
+        return 0, 0
+
+    kept = []
+    removed = changed = 0
+    for row in rows:
+        try:
+            code = int(row["class_code"])
+        except (KeyError, TypeError, ValueError):
+            removed += 1
+            continue
+        if code not in CLASSES:
+            removed += 1
+            continue
+        if row.get("class_name") != CLASSES[code]:
+            row["class_name"] = CLASSES[code]
+            changed += 1
+        kept.append(row)
+
+    if removed or changed:
+        temporary = target.with_suffix(target.suffix + ".tmp")
+        with temporary.open("w", encoding="utf8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(kept)
+        temporary.replace(target)
+    return removed, changed
+
+
 def write_manifest(config: dict, target: Path, rows: list, years: list[int], scale: int) -> None:
     stored_rows, stored_unit_years = table_counts(target, config["unitColumn"])
     MANIFEST.write_text(json.dumps({
@@ -147,6 +190,10 @@ def main() -> None:
     rows = units(config)
     if args.limit:
         rows = rows[:args.limit]
+    removed, normalized = normalize_existing_table(target)
+    if removed or normalized:
+        print(f"  normalized existing table: {removed:,} out-of-domain rows removed, "
+              f"{normalized:,} labels corrected")
     already = done_already(target, unit_column)
     todo = [(unit, label, geometry, year)
             for year in args.years
@@ -205,6 +252,8 @@ def main() -> None:
                     properties = feature["properties"]
                     for group in properties.get("groups", []):
                         code = int(group["class"])
+                        if code not in CLASSES:
+                            continue
                         writer.writerow([
                             config["sourceId"], properties["unit"], properties["label"], year,
                             code, CLASSES.get(code, str(code)), round(group["sum"] / 1e6, 4),

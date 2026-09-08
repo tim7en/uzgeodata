@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-07T12:42:35+00:00",
+  "generatedAt": "2026-09-08T03:32:22+00:00",
   "title": "Basin land-cover observatory",
-  "description": "Annual Impact Observatory / Esri land-cover area reduced over the canonical BasinATLAS level-12 frame.",
+  "description": "Annual Impact Observatory / Esri land-cover area reduced over the whole canonical BasinATLAS level-12 catchments that intersect Uzbekistan.",
   "source": {
     "platform": "Google Earth Engine",
     "asset": "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
@@ -21,7 +21,9 @@
     "dataset": "BasinATLAS v1.0 Uzbekistan extraction",
     "layer": "basinatlas_uz_lev12",
     "basins": 3981,
-    "geometry": "/data/hydrography/basins.geojson"
+    "geometry": "/data/hydrography/basins.geojson",
+    "boundary": "/data/hydrography/boundary.geojson",
+    "scope": "Whole level-12 catchments intersecting Uzbekistan"
   },
   "years": [
     2017,
@@ -82,7 +84,7 @@
     }
   ],
   "coverage": {
-    "sourceRows": 126151,
+    "sourceRows": 125770,
     "measuredBasins": 3981,
     "measuredBasinYears": 35829,
     "expectedBasinYears": 35829,
@@ -104,10 +106,8 @@
     "2017": {
       "1": 13730.1,
       "2": 704.29,
-      "3": 0.0,
       "4": 2715.72,
       "5": 61171.17,
-      "6": 0.06,
       "7": 16800.95,
       "8": 78996.43,
       "9": 555.68,
@@ -117,10 +117,8 @@
     "2018": {
       "1": 12663.76,
       "2": 702.55,
-      "3": 0.01,
       "4": 1577.33,
       "5": 58538.55,
-      "6": 0.07,
       "7": 17462.14,
       "8": 70407.14,
       "9": 290.68,
@@ -130,10 +128,8 @@
     "2019": {
       "1": 12268.55,
       "2": 904.8,
-      "3": 0.01,
       "4": 1867.75,
       "5": 62251.82,
-      "6": 0.07,
       "7": 17973.75,
       "8": 59534.32,
       "9": 880.17,
@@ -143,10 +139,8 @@
     "2020": {
       "1": 11846.7,
       "2": 926.22,
-      "3": 0.01,
       "4": 1538.05,
       "5": 63418.63,
-      "6": 0.07,
       "7": 18434.25,
       "8": 55975.9,
       "9": 519.06,
@@ -156,10 +150,8 @@
     "2021": {
       "1": 11320.75,
       "2": 504.69,
-      "3": 0.01,
       "4": 857.28,
       "5": 60570.05,
-      "6": 0.08,
       "7": 18473.01,
       "8": 55804.51,
       "9": 262.54,
@@ -169,10 +161,8 @@
     "2022": {
       "1": 10508.23,
       "2": 678.81,
-      "3": 0.0,
       "4": 580.07,
       "5": 59589.53,
-      "6": 0.07,
       "7": 19160.48,
       "8": 55063.31,
       "9": 199.14,
@@ -182,10 +172,8 @@
     "2023": {
       "1": 10531.59,
       "2": 553.34,
-      "3": 0.0,
       "4": 557.6,
       "5": 60498.54,
-      "6": 0.05,
       "7": 18983.64,
       "8": 54142.69,
       "9": 419.92,
@@ -195,10 +183,8 @@
     "2024": {
       "1": 10493.96,
       "2": 900.68,
-      "3": 0.01,
       "4": 681.23,
       "5": 59953.04,
-      "6": 0.06,
       "7": 19529.17,
       "8": 53848.95,
       "9": 725.65,
@@ -208,10 +194,8 @@
     "2025": {
       "1": 10035.04,
       "2": 536.83,
-      "3": 0.0,
       "4": 698.94,
       "5": 61082.98,
-      "6": 0.06,
       "7": 19439.66,
       "8": 53834.27,
       "9": 165.44,
