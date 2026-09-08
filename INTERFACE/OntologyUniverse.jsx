@@ -192,6 +192,7 @@ export default function OntologyUniverse() {
   const [cursor, setCursor] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [graphZoom, setGraphZoom] = useState(1);
+  const [mobilePanel, setMobilePanel] = useState(null);
   const [exporting, setExporting] = useState(null);
   const [exportError, setExportError] = useState(null);
 
@@ -305,10 +306,15 @@ export default function OntologyUniverse() {
     if (!term) return topReaches.map(record => ({type: 'reach', record}));
     return findHydroEntities(term, [...network.byId.values()], [...basinById.values()]);
   }, [query, network, basinById, topReaches]);
-  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); setGraphZoom(1); setPlaying(true); };
-  const selectBasin = id => { setSelectedBasinId(String(id)); setGraphZoom(1); setPlaying(true); };
+  const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); setGraphZoom(1); setMobilePanel(null); setPlaying(true); };
+  const selectBasin = id => { setSelectedBasinId(String(id)); setGraphZoom(1); setMobilePanel(null); setPlaying(true); };
   const selectGraphEntity = id => focusType === 'basin' ? selectBasin(id) : selectReach(id);
   const zoomGraph = change => setGraphZoom(current => Math.max(.65, Math.min(3.2, Number((current + change).toFixed(2)))));
+  const graphKeyDown = event => {
+    if (event.key === '+' || event.key === '=') { event.preventDefault(); zoomGraph(.25); }
+    if (event.key === '-' || event.key === '_') { event.preventDefault(); zoomGraph(-.25); }
+    if (event.key === '0') { event.preventDefault(); setGraphZoom(1); }
+  };
   const activePeriod = activePoint?.period || data?.anomalyLayer?.periods?.[Math.min(cursor, Math.max((data?.anomalyLayer?.periods?.length || 1) - 1, 0))] || null;
   const safeFocusId = String(focusType === 'basin' ? basin12?.pfafId || focusId : focusId).replace(/[^a-zA-Z0-9_-]+/g, '-');
   const administrativeContext = basinId => {
@@ -456,7 +462,17 @@ export default function OntologyUniverse() {
     <header className="universe-header"><Logo/><div className="universe-title"><span>LIVE ONTOLOGY / HYDROLOGICAL NERVOUS SYSTEM</span><b>Every line is a measured relationship</b></div><nav><a href="/landcover.html">Land cover</a><a href="/climate.html">Climate</a><a href="/hydrography.html">Hydrography</a><a href="/relationships.html">Tables</a></nav><a className="back" href="/"><ArrowLeft/> Portal</a></header>
 
     <section className="universe-shell">
-      <aside className="universe-rail">
+      <div className="universe-mobile-tools" aria-label="Ontology panels">
+        <button type="button" className={mobilePanel === 'entities' ? 'active' : ''}
+          aria-expanded={mobilePanel === 'entities'} onClick={() => setMobilePanel(current => current === 'entities' ? null : 'entities')}>
+          <Search/> Entities
+        </button>
+        <button type="button" className={mobilePanel === 'details' ? 'active' : ''}
+          aria-expanded={mobilePanel === 'details'} onClick={() => setMobilePanel(current => current === 'details' ? null : 'details')}>
+          <Activity/> Details
+        </button>
+      </div>
+      <aside className={`universe-rail ${mobilePanel === 'entities' ? 'mobile-open' : ''}`}>
         <div className="rail-heading"><span>ENTITY FINDER</span><h1>Touch the<br/><em>network.</em></h1><p>Select any visible neuron. The chart rebuilds the complete stored upstream tree and downstream trunk, while the minimap traces their real geometry and basin polygons.</p></div>
         <label className="reach-search"><Search/><input value={query} onChange={event => setQuery(event.target.value)} onKeyDown={event => {if(event.key === 'Enter' && results[0]){event.preventDefault();results[0].type === 'basin' ? selectBasin(results[0].record.id) : selectReach(results[0].record.id)}}} placeholder="Reach, HYBAS or PFAF ID"/><small>{compact(data.hydro.counts.rivers)} + {compact(data.hydro.counts.basins)}</small></label>
         <div className="reach-results"><span>{query ? 'MATCHING REACHES + BASINS' : 'HIGH-FLOW SIGNALS'}</span>{results.map(({type, record}) => {const active = focusType === type && focusId === String(record.id); const district = districtLabelForBasin(type === 'basin' ? record.id : record.basinId); return <button key={`${type}-${record.id}`} className={`${active ? 'active' : ''} entity-${type}`} onClick={() => type === 'basin' ? selectBasin(record.id) : selectReach(record.id)}><i/><span><strong>{type === 'basin' ? `BASIN ${record.pfafId}` : `REACH ${record.id}`}</strong><small>{district} · {type === 'basin' ? `HYBAS ${record.id}` : `order ${record.strahlerOrder}`}</small></span><ArrowUpRight/></button>})}</div>
@@ -466,8 +482,11 @@ export default function OntologyUniverse() {
 
       <section className="universe-stage">
         <div className="stage-head"><div><i/><span>EXACT {focusType.toUpperCase()} TRACE</span><b>{view.upstreamCount} UPSTREAM · {view.downstreamCount} DOWNSTREAM</b></div><div><span>{compact(view.edges.length)}</span> visible flow links <b>·</b> {traceBasins.length} related basins</div></div>
-        <div className="graph-controls" aria-label="Graph zoom controls"><button onClick={() => zoomGraph(.25)} aria-label="Zoom graph in"><Plus/></button><span>{Math.round(graphZoom * 100)}%</span><button onClick={() => zoomGraph(-.25)} aria-label="Zoom graph out"><Minus/></button><button onClick={() => setGraphZoom(1)} aria-label="Reset graph zoom"><RotateCcw/></button></div>
-        <svg className="neural-canvas" viewBox={graphViewBox} onWheel={event => zoomGraph(event.deltaY < 0 ? .15 : -.15)} role="img" aria-label={`Animated upstream and downstream relationship tree for the selected ${focusType}`}>
+        <div className="graph-controls" aria-label="Graph zoom controls"><button type="button" onClick={() => zoomGraph(.25)} aria-label="Zoom graph in"><Plus/></button><output aria-live="polite">{Math.round(graphZoom * 100)}%</output><button type="button" onClick={() => zoomGraph(-.25)} aria-label="Zoom graph out"><Minus/></button><button type="button" onClick={() => setGraphZoom(1)} aria-label="Reset graph zoom"><RotateCcw/></button></div>
+        <svg className="neural-canvas" viewBox={graphViewBox}
+          onWheel={event => { event.preventDefault(); zoomGraph(event.deltaY < 0 ? .15 : -.15); }}
+          onDoubleClick={() => zoomGraph(.25)} onKeyDown={graphKeyDown} tabIndex="0"
+          role="img" aria-label={`Animated upstream and downstream relationship tree for the selected ${focusType}. Use mouse wheel, plus and minus keys, or the visible controls to zoom.`}>
           <defs><filter id="neural-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="core-fill"><stop offset="0" stopColor="#fff"/><stop offset=".24" stopColor={currentColor}/><stop offset="1" stopColor="#161918"/></radialGradient></defs>
           <g className="ambient-neurons">{Array.from({length: 42}, (_, index) => <circle key={index} cx={(index * 193) % 1060 + 10} cy={(index * 127) % 620 + 30} r={index % 5 === 0 ? 1.4 : .7} style={{'--delay': `${(index % 11) * .21}s`}}/>)}</g>
           <g className="neural-edges">{view.edges.map((edge, index) => {const from = positioned.get(edge.from); const to = positioned.get(edge.to); if (!from || !to) return null; const path = edgePath(from, to); const particleStep = Math.max(1, Math.ceil(view.edges.length / 32)); const signalStep = Math.max(1, Math.floor(view.edges.length / 120)); const carriesSignal = edge.direction === 'downstream' || index % signalStep === 0; return <g key={`${edge.from}-${edge.to}`} className={edge.direction}><path className="edge-haze" d={path}/>{carriesSignal && <path className="edge-signal" d={path} style={{'--delay': `${index * -0.03}s`}}/>}{index % particleStep === 0 && <circle r="1.8"><animateMotion dur={`${2.5 + index % 5 * .35}s`} repeatCount="indefinite" path={path}/></circle>}</g>})}</g>
@@ -485,7 +504,7 @@ export default function OntologyUniverse() {
         <div className="stage-foot"><span><i/> CLICK A SYNAPSE TO RE-TRACE GRAPH + MAP</span><p><Waypoints/> {compact(nodes.length)} exact {focusType} entities</p><p><Droplets/> {traceBasins.length} linked polygons · {compact(traceRivers.length)} reaches</p></div>
       </section>
 
-      <aside className="signal-panel">
+      <aside className={`signal-panel ${mobilePanel === 'details' ? 'mobile-open' : ''}`}>
         <div className="entity-kicker"><span>SELECTED ENTITY</span><b>{focusType === 'basin' ? 'LEVEL-12 BASIN' : 'RIVER REACH'}</b></div>
         <div className="entity-heading"><div>{focusType === 'basin' ? <GitBranch/> : <Waves/>}</div><span><small>{focusType === 'basin' ? 'PFAF_ID' : 'HYRIV_ID'}</small><h2>{focusType === 'basin' ? basin12?.pfafId : selectedReach?.id || '—'}</h2></span><i style={{background: currentColor}}/></div>
         {focusType === 'basin'
