@@ -1,0 +1,41 @@
+{
+  "rows": [
+    {
+      "station_id": "uz:station/meteo-413694",
+      "era5_cell_dem_mean_m": 450.91366941127643,
+      "station_dem_m": 472,
+      "cell_bounds": [
+        69.25,
+        41.24999999999999,
+        69.35,
+        41.349999999999994
+      ],
+      "source_asset": "USGS/SRTMGL1_003"
+    },
+    {
+      "station_id": "uz:station/meteo-419704",
+      "era5_cell_dem_mean_m": 1688.9895504610045,
+      "station_dem_m": 1445,
+      "cell_bounds": [
+        70.35,
+        41.849999999999994,
+        70.44999999999999,
+        41.949999999999996
+      ],
+      "source_asset": "USGS/SRTMGL1_003"
+    },
+    {
+      "station_id": "uz:station/meteo-422709",
+      "era5_cell_dem_mean_m": 2974.490803098662,
+      "station_dem_m": 2222,
+      "cell_bounds": [
+        70.85,
+        42.14999999999999,
+        70.94999999999999,
+        42.24999999999999
+      ],
+      "source_asset": "USGS/SRTMGL1_003"
+    }
+  ],
+  "interpretation": "SRTM terrain estimates, not surveyed station elevations or ERA5 model orography. Cell elevation difference can indicate representativeness mismatch but does not prove the cause of bias."
+}

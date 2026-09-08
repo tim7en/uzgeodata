@@ -1,0 +1,17 @@
+{
+  "era5_latest_available": "2026-07",
+  "modis_latest_available": {
+    "lst": "2026-08-21",
+    "et": "2025-12-27",
+    "albedo": "2026-08-27"
+  },
+  "modis_extracted_years": [
+    2000,
+    2026
+  ],
+  "era5_support": "Basin mean at native grid; monthly accumulations converted to mm and time-mean W/m²",
+  "et_note": "MOD16 is modelled terrestrial evapotranspiration; masked non-vegetated/water/snow areas restrict its footprint. It is not basin-wide measured ET.",
+  "lst_note": "Clear-sky daytime land-surface skin temperature, not 2 m air temperature. Eight-day composites.",
+  "albedo_note": "Black-sky shortwave albedo; daily estimates use a moving 16-day window, so adjacent days are not independent.",
+  "retrieved_at": "2026-09-08T21:05:01.142791+00:00"
+}
