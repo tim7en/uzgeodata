@@ -1,0 +1,86 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-08T20:30:29.487779+00:00",
+  "provenance": [
+    {
+      "path": "PUBLISHED/data/hydroclimate/pskem-station-monthly.csv",
+      "sha256": "76f603898a6df08d754a06b7451d4538e5f94cfc118b5ce4aff10934cedd50f4",
+      "bytes": 338563
+    },
+    {
+      "path": "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv",
+      "sha256": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e",
+      "bytes": 735817
+    },
+    {
+      "path": "PUBLISHED/data/hydroclimate/pskem-station-basin-links.csv",
+      "sha256": "c1634c6ed61bd8bd7bba130e6aa15f500acfb8e72833357d65428f5bde38eb4a",
+      "bytes": 896
+    },
+    {
+      "path": "PUBLISHED/data/hydroclimate/pskem-observations.manifest.json",
+      "sha256": "8e11671829700937cd5f3002b1bbea96bb73f864596cc603f0d6d0e9f6e85972",
+      "bytes": 5046
+    },
+    {
+      "path": "PUBLISHED/data/hydroclimate/basin-routing-level12.csv",
+      "sha256": "5ac04a7f060bc6c2d059c8446891933e3ebf82a2a3fe6d3205e5fb35f96f9f73",
+      "bytes": 677577
+    },
+    {
+      "path": "PUBLISHED/data/hydroclimate/basins-level12.geojson",
+      "sha256": "361a3ce3918342ae8b14f3bfcbcc120e5647e6b210fb0fbdf5c8c809fdc4808f",
+      "bytes": 20844899
+    },
+    {
+      "path": "CASE_STUDIES/chirchik-portfolio.json",
+      "sha256": "9c878620043cff7aa999f5552d20c8efeab51972cabf67035b8773d66f4264c1",
+      "bytes": 18381
+    },
+    {
+      "path": "PIPELINES/build_chirchik_case_studies.py",
+      "sha256": "05e7f5cc4747845ad9fdb9a8952a1871c750c9fe1d654fc85bb6cf3695cb326e",
+      "bytes": 26589
+    }
+  ],
+  "quality_policy": {
+    "monthly_min_daily_coverage": 0.9,
+    "volume_requires_complete_days": true,
+    "rejected_daily_rows": [
+      {
+        "station_id": "uz:station/gauge-16290",
+        "station_key": "16290",
+        "year": "2015",
+        "month": "2",
+        "day": "29",
+        "discharge_cms": "29.1536",
+        "source_file": "Discharge_Pskem_Muallala_Monthly.xlsx",
+        "source_sheet": "2011-2017",
+        "retrieved_at": "2026-09-08T19:57:12+00:00",
+        "reason": "invalid_calendar_date"
+      }
+    ],
+    "suspect_daily_values": [
+      {
+        "year": 2017,
+        "month": 4,
+        "day": 7,
+        "value": 0.49
+      },
+      {
+        "year": 2017,
+        "month": 7,
+        "day": 17,
+        "value": 1.47
+      },
+      {
+        "year": 2017,
+        "month": 9,
+        "day": 30,
+        "value": 4.5
+      }
+    ],
+    "missing_values": "Never filled or treated as zero by this analysis",
+    "source_note": "Station importer reconciles precipitation dashes against annual totals; source rows remain unchanged."
+  }
+}

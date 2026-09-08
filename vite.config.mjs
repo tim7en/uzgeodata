@@ -27,6 +27,7 @@ export default defineConfig({
         hydrography: here('./INTERFACE/hydrography.html'),
         landcover: here('./INTERFACE/landcover.html'),
         climate: here('./INTERFACE/climate.html'),
+        caseStudies: here('./INTERFACE/case-studies.html'),
         ontology: here('./INTERFACE/ontology.html'),
         relationships: here('./INTERFACE/relationships.html'),
         catalogue: here('./INTERFACE/catalogue.html'),

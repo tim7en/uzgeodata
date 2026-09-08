@@ -1,0 +1,9 @@
+{
+  "input": "chirchik.json",
+  "sha256": "5c81b21d5dcf5731d7375e425ae5ac989cc91873bcac994748ff2eef1b6581ca",
+  "script": "PIPELINES/plot_chirchik_case_studies.py",
+  "outputs": [
+    "pskem-observation-evidence.png",
+    "pskem-observation-evidence.pdf"
+  ]
+}

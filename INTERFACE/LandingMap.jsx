@@ -17,6 +17,7 @@ const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const CENTRE = [40.2, 70.5];
 const DEEPER = [
+  { href: '/case-studies.html', label: 'Chirchik case studies', note: 'Precipitation, temperature and discharge validation' },
   { href: '/climate.html', label: 'Hydroclimate observatory', note: 'Snow, precipitation and anomalies by basin' },
   { href: '/ontology.html', label: 'Living ontology', note: 'Trace a basin upstream and downstream' },
   { href: '/hydrography.html', label: 'Hydrography explorer', note: 'Rivers, lakes and basin attributes' },

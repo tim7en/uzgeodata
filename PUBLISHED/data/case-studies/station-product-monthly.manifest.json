@@ -1,0 +1,21 @@
+{
+  "retrieved_at": "2026-09-08T20:35:24.300935+00:00",
+  "rows": 1170,
+  "products": {
+    "era5-land": [
+      "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+      11132
+    ],
+    "chirps-v3": [
+      "UCSB-CHC/CHIRPS/V3/PENTAD",
+      5566
+    ],
+    "chirts-midrange": [
+      "UCSB-CHG/CHIRTS/DAILY",
+      5566
+    ]
+  },
+  "method": "Native projection and transform; station cell; monthly ERA5 states/sums and six CHIRPS pentads.",
+  "chirts_note": "CHIRTS is the monthly average of daily (Tmin+Tmax)/2, a midrange proxy that can differ from station mean-temperature observing conventions. Record ends 2016.",
+  "independence": "Station assimilation/contribution not yet audited; no fitted bias correction."
+}
