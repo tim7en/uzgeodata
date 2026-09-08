@@ -186,7 +186,10 @@ export default function OntologyUniverse() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [selectedId, setSelectedId] = useState(DEFAULT_REACH);
-  const [selectedBasinId, setSelectedBasinId] = useState(null);
+  // Start on the declared natural-system control section.  A sentinel keeps
+  // that default distinct from an explicitly selected basin and lets a reach
+  // selection switch the same unified frame into reach mode.
+  const [selectedBasinId, setSelectedBasinId] = useState('__natural_default__');
   // The natural frame is the default: the national extraction stops at the
   // border, so a basin in Tajikistan cannot be found in it and every trace ends
   // at the Aral rather than at the section that governs the water.
@@ -212,6 +215,8 @@ export default function OntologyUniverse() {
       json('/data/ontology-graph.json'),
       json('/data/hydrography/relationships.json'),
       json('/data/hydrography/rivers.geojson'),
+      json('/data/hydrography/relationships-unified.json'),
+      json('/data/hydrography/rivers-unified.geojson'),
       json('/data/hydrography/basins.geojson'),
       json('/data/hydrography/boundary.geojson'),
       json('/data/hydrography/admin-basin-links.json'),
@@ -220,13 +225,13 @@ export default function OntologyUniverse() {
       json('/data/review/basinatlas/basinatlas_uz_lev07.geojson'),
       json('/data/hydroclimate/basin-network.json'),
       json('/data/hydroclimate/basins-level07.geojson'),
-    ]).then(async ([ontology, hydro, riversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7,
+    ]).then(async ([ontology, hydro, riversGeo, unifiedHydro, unifiedRiversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7,
       natural, naturalLevel7]) => {
       const anomalyLayer = layerIndex.layers.find(layer => layer.kind === 'anomaly');
       const anomaly = anomalyLayer ? await json(anomalyLayer.series) : null;
       if (!live) return;
       setGeometryByLevel({'7': naturalLevel7.features});
-      setData({ontology, hydro, riversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7,
+      setData({ontology, hydro, riversGeo, unifiedHydro, unifiedRiversGeo, basinsGeo, boundary, adminLinks, districtsGeo, layerIndex, level7,
         natural, naturalLevel7, anomalyLayer, anomaly});
     }).catch(cause => live && setError(cause.message));
     return () => { live = false; };
@@ -263,11 +268,15 @@ export default function OntologyUniverse() {
     return () => { live = false; };
   }, [natural, data, naturalLevel, geometryByLevel]);
 
-  const network = useMemo(() => buildReachNetwork(data?.hydro?.rivers), [data]);
+  const frameHydro = natural ? data?.unifiedHydro : data?.hydro;
+  const frameRiverFeatures = natural ? data?.unifiedRiversGeo?.features : data?.riversGeo?.features;
+  const network = useMemo(() => buildReachNetwork(frameHydro?.rivers), [frameHydro]);
   const basinNetwork = useMemo(() => buildReachNetwork(frameBasins), [frameBasins]);
+  const reachBasins = natural ? (data?.natural?.levels?.['12']?.basins || EMPTY) : frameBasins;
+  const reachBasinById = useMemo(() => new Map(reachBasins.map(basin => [String(basin.id), basin])), [reachBasins]);
   const basinById = useMemo(() => new Map(frameBasins.map(basin => [String(basin.id), basin])), [frameBasins]);
   const level7 = useMemo(() => levelBasinLookup(frameLevel7Features), [frameLevel7Features]);
-  const riverGeometry = useMemo(() => new Map((data?.riversGeo?.features || []).map(feature => [String(feature.properties?.HYRIV_ID), feature])), [data]);
+  const riverGeometry = useMemo(() => new Map((frameRiverFeatures || []).map(feature => [String(feature.properties?.HYRIV_ID), feature])), [frameRiverFeatures]);
   const basinGeometry = useMemo(() => new Map((frameBasinFeatures || []).map(feature => [String(feature.properties?.HYBAS_ID), feature])), [frameBasinFeatures]);
   const level7Geometry = useMemo(() => new Map((frameLevel7Features || []).map(feature => [String(feature.properties?.HYBAS_ID), feature])), [frameLevel7Features]);
   const districtGeometry = useMemo(() => new Map((data?.districtsGeo?.features || []).map(feature => [feature.properties?.pcode, feature])), [data]);
@@ -278,17 +287,15 @@ export default function OntologyUniverse() {
       ...districtByCode.get(pcode), pcode, overlapKm2,
     })),
   ])), [data, districtByCode]);
-  // River reaches are published for the national frame only; the natural frame
-  // traces basins until step 2 extends HydroRIVERS across it.
-  const focusType = natural || selectedBasinId ? 'basin' : 'reach';
-  const focusId = natural
-    ? String(selectedBasinId || data?.natural?.defaultFocus?.id || '')
+  const focusType = selectedBasinId ? 'basin' : 'reach';
+  const focusId = selectedBasinId === '__natural_default__'
+    ? String(data?.natural?.defaultFocus?.id || '')
     : selectedBasinId || selectedId;
   const focusNetwork = focusType === 'basin' ? basinNetwork : network;
   const selectedReach = network.byId.get(String(selectedId));
   const basin12 = focusType === 'basin'
     ? basinById.get(String(focusId))
-    : selectedReach ? basinById.get(selectedReach.basinId) : null;
+    : selectedReach ? reachBasinById.get(selectedReach.basinId) : null;
   const parent7 = resolveLevelBasin(basin12, level7);
   const parent7Feature = level7Geometry.get(String(parent7));
   const districtContext = districtsByBasin.get(String(basin12?.id)) || EMPTY;
@@ -339,29 +346,43 @@ export default function OntologyUniverse() {
   const traceBasinIds = useMemo(() => new Set(focusType === 'basin'
     ? nodes.map(node => node.id)
     : nodes.map(node => node.record?.basinId).filter(Boolean)), [focusType, nodes]);
+  const traceBasinPrefixes = useMemo(() => focusType === 'basin'
+    ? nodes.map(node => String(node.record?.pfafId || '')).filter(Boolean)
+    : EMPTY, [focusType, nodes]);
+  const reachFallsInPrefixes = reach => {
+    const pfaf = String(reachBasinById.get(reach.basinId)?.pfafId || '');
+    return pfaf && traceBasinPrefixes.some(prefix => pfaf.startsWith(prefix));
+  };
   const traceRivers = useMemo(() => focusType === 'basin'
-    ? [...network.byId.values()].filter(reach => traceBasinIds.has(reach.basinId)).map(reach => riverGeometry.get(reach.id)).filter(Boolean)
-    : nodes.map(node => riverGeometry.get(node.id)).filter(Boolean), [focusType, network, nodes, riverGeometry, traceBasinIds]);
+    ? [...network.byId.values()].filter(reachFallsInPrefixes).map(reach => riverGeometry.get(reach.id)).filter(Boolean)
+    : nodes.map(node => riverGeometry.get(node.id)).filter(Boolean), [focusType, network, nodes, riverGeometry, traceBasinPrefixes, reachBasinById]);
   const traceBasins = useMemo(() => [...traceBasinIds].map(id => basinGeometry.get(id)).filter(Boolean), [traceBasinIds, basinGeometry]);
   const traceDirectionById = useMemo(() => new Map(nodes.map(node => [node.id, node.direction])), [nodes]);
   const upstreamBasinIds = useMemo(() => new Set(nodes
     .filter(node => node.direction !== 'downstream')
     .map(node => focusType === 'basin' ? node.id : node.record?.basinId)
     .filter(Boolean)), [focusType, nodes]);
+  const upstreamBasinPrefixes = useMemo(() => focusType === 'basin'
+    ? nodes.filter(node => node.direction !== 'downstream')
+      .map(node => String(node.record?.pfafId || '')).filter(Boolean)
+    : EMPTY, [focusType, nodes]);
   const upstreamRivers = useMemo(() => focusType === 'basin'
     ? [...network.byId.values()]
-      .filter(reach => upstreamBasinIds.has(reach.basinId))
+      .filter(reach => {
+        const pfaf = String(reachBasinById.get(reach.basinId)?.pfafId || '');
+        return pfaf && upstreamBasinPrefixes.some(prefix => pfaf.startsWith(prefix));
+      })
       .map(reach => riverGeometry.get(reach.id))
       .filter(Boolean)
     : nodes
       .filter(node => node.direction !== 'downstream')
       .map(node => riverGeometry.get(node.id))
-      .filter(Boolean), [focusType, network, nodes, riverGeometry, upstreamBasinIds]);
+      .filter(Boolean), [focusType, network, nodes, riverGeometry, upstreamBasinPrefixes, reachBasinById]);
   const signalBasins = useMemo(() => new Set(Object.entries(data?.anomaly?.basins || {}).filter(([, periods]) => Object.values(periods).some(cells => cells[DEFAULT_VARIABLE])).map(([id]) => id)), [data]);
   const topReaches = useMemo(() => [...network.byId.values()].filter(reach => {
-    const basin = basinById.get(reach.basinId);
+    const basin = reachBasinById.get(reach.basinId);
     return signalBasins.has(resolveLevelBasin(basin, level7));
-  }).sort((a, b) => (b.upstreamKm2 || 0) - (a.upstreamKm2 || 0)).slice(0, 6), [network, basinById, signalBasins, level7]);
+  }).sort((a, b) => (b.upstreamKm2 || 0) - (a.upstreamKm2 || 0)).slice(0, 6), [network, reachBasinById, signalBasins, level7]);
   const searchRecordById = useMemo(() => new Map(searchBasins.map(basin => [String(basin.id), basin])), [searchBasins]);
   const controlSections = useMemo(() => (data?.natural?.controlSections || EMPTY)
     .filter(section => section.level === naturalLevel)
@@ -371,10 +392,10 @@ export default function OntologyUniverse() {
   const results = useMemo(() => {
     const term = query.trim().toLowerCase();
     if (!term) return natural ? controlSections : topReaches.map(record => ({type: 'reach', record}));
-    return findHydroEntities(term, natural ? EMPTY : [...network.byId.values()], searchBasins);
+    return findHydroEntities(term, [...network.byId.values()], searchBasins);
   }, [query, natural, network, searchBasins, topReaches, controlSections]);
   const resetGraphView = () => { setGraphZoom(1); setGraphPan({x: 0, y: 0}); };
-  const switchFrame = next => { setFrame(next); setSelectedBasinId(null); setLevel(null); setQuery(''); resetGraphView(); setPlaying(true); };
+  const switchFrame = next => { setFrame(next); setSelectedBasinId(next === 'headwaters' ? '__natural_default__' : null); setLevel(null); setQuery(''); resetGraphView(); setPlaying(true); };
   const selectReach = id => { setSelectedBasinId(null); setSelectedId(String(id)); resetGraphView(); setMobilePanel(null); setPlaying(true); };
   const selectBasin = id => {
     // Selecting a unit found at another level moves the whole view to that level,
@@ -444,7 +465,7 @@ export default function OntologyUniverse() {
     };
   };
   const temporalContext = basinId => {
-    const basin = basinById.get(String(basinId));
+    const basin = reachBasinById.get(String(basinId)) || basinById.get(String(basinId));
     const basin7Id = resolveLevelBasin(basin, level7);
     const cell = activePeriod ? data?.anomaly?.basins?.[String(basin7Id)]?.[activePeriod]?.[variable] : null;
     return {basin, basin7Id, cell};
@@ -550,15 +571,20 @@ export default function OntologyUniverse() {
     const overlay = overlayFeatureCollection(features, exportMetadata('uzgeodata-current-ontology-overlay', 'complete visible ontology trace with reach, basin, temporal-basin, and administrative geometries', features.length));
     downloadPayload(`uzgeodata-${safeFocusId}-trace-overlay.geojson`, overlay, 'application/geo+json');
   });
-  const downloadNationalOverlay = () => requestExport('national', () => {
+  const downloadFullOverlay = () => requestExport('full', () => {
+    const fullRivers = frameRiverFeatures || EMPTY;
+    const fullBasins = frameBasinFeatures || EMPTY;
+    const fullLevel7 = frameLevel7Features || EMPTY;
+    const fullDistricts = natural ? EMPTY : (data?.districtsGeo?.features || EMPTY);
     const features = [
-      ...(data?.riversGeo?.features || EMPTY).map(enrichReach),
-      ...(data?.basinsGeo?.features || EMPTY).map(enrichBasin),
-      ...(data?.districtsGeo?.features || EMPTY).map(enrichDistrict),
-      ...(data?.level7?.features || EMPTY).map(enrichLevel7),
+      ...fullRivers.map(enrichReach),
+      ...fullBasins.map(enrichBasin),
+      ...fullDistricts.map(enrichDistrict),
+      ...fullLevel7.map(enrichLevel7),
     ];
-    const overlay = overlayFeatureCollection(features, exportMetadata('uzgeodata-national-ontology-overlay', 'entire published national overlay: all reaches, level-12 basins, districts, and level-7 temporal basins', features.length));
-    downloadPayload(`uzgeodata-national-${variable}-${activePeriod || 'no-period'}-overlay.geojson`, overlay, 'application/geo+json');
+    const scope = natural ? 'full Amu Darya and Syr Darya systems without administrative clipping' : 'national intersection';
+    const overlay = overlayFeatureCollection(features, exportMetadata('uzgeodata-full-ontology-overlay', `${scope}: every published reach, active-level basin and level-7 temporal basin`, features.length));
+    downloadPayload(`uzgeodata-${natural ? 'amu-syr-full-basin' : 'national'}-${variable}-${activePeriod || 'no-period'}-overlay.geojson`, overlay, 'application/geo+json');
   });
 
   if (error) return <main className="universe-state"><Zap/><h1>The graph could not wake up.</h1><p>{error}</p><a href="/">Return to portal</a></main>;
@@ -593,10 +619,10 @@ export default function OntologyUniverse() {
           <button type="button" className={natural ? '' : 'active'} onClick={() => switchFrame('national_intersection')}>National extraction</button>
         </div>
         <p className="frame-note">{natural
-          ? `Amu Darya and Syr Darya as they drain, across every border. Level ${naturalLevel} in focus, ${compact(searchBasins.length)} units searchable across levels 7, 10 and 12, no administrative clipping.`
+          ? `One Amu Darya + Syr Darya graph across every border: ${compact(data?.unifiedHydro?.counts?.rivers)} reaches and ${compact(searchBasins.length)} basin units searchable together. Level ${naturalLevel} basin geometry is in focus.`
           : 'BasinATLAS clipped to Uzbekistan. Upstream units in Tajikistan, Kyrgyzstan and Afghanistan are absent, so a trace stops at the border.'}</p>
-        <label className="reach-search"><Search/><input value={query} onChange={event => setQuery(event.target.value)} onKeyDown={event => {if(event.key === 'Enter' && results[0]){event.preventDefault();results[0].type === 'basin' ? selectBasin(results[0].record.id) : selectReach(results[0].record.id)}}} placeholder={natural ? 'HYBAS or PFAF ID' : 'Reach, HYBAS or PFAF ID'}/><small>{natural ? compact(searchBasins.length) : `${compact(data.hydro.counts.rivers)} + ${compact(data.hydro.counts.basins)}`}</small></label>
-        <div className="reach-results"><span>{query ? (natural ? 'MATCHING BASINS' : 'MATCHING REACHES + BASINS') : (natural ? 'CONTROL SECTIONS' : 'HIGH-FLOW SIGNALS')}</span>{results.map(({type, record}) => {const active = focusType === type && focusId === String(record.id); const district = districtLabelForBasin(type === 'basin' ? record.id : record.basinId); return <button key={`${type}-${record.id}`} className={`${active ? 'active' : ''} entity-${type}`} onClick={() => type === 'basin' ? selectBasin(record.id) : selectReach(record.id)}><i/><span><strong>{type === 'basin' ? `BASIN ${record.pfafId}` : `REACH ${record.id}`}</strong><small>{district} · {type === 'basin' ? `HYBAS ${record.id}` : `order ${record.strahlerOrder}`}</small></span><ArrowUpRight/></button>})}</div>
+        <label className="reach-search"><Search/><input value={query} onChange={event => setQuery(event.target.value)} onKeyDown={event => {if(event.key === 'Enter' && results[0]){event.preventDefault();results[0].type === 'basin' ? selectBasin(results[0].record.id) : selectReach(results[0].record.id)}}} placeholder="Reach, HYBAS or PFAF ID"/><small>{`${compact(frameHydro?.counts?.rivers)} + ${compact(searchBasins.length)}`}</small></label>
+        <div className="reach-results"><span>{query ? 'MATCHING REACHES + BASINS' : (natural ? 'CONTROL SECTIONS' : 'HIGH-FLOW SIGNALS')}</span>{results.map(({type, record}) => {const active = focusType === type && focusId === String(record.id); const district = districtLabelForBasin(type === 'basin' ? record.id : record.basinId); return <button key={`${type}-${record.id}`} className={`${active ? 'active' : ''} entity-${type}`} onClick={() => type === 'basin' ? selectBasin(record.id) : selectReach(record.id)}><i/><span><strong>{type === 'basin' ? `BASIN ${record.pfafId}` : `REACH ${record.id}`}</strong><small>{district} · {type === 'basin' ? `HYBAS ${record.id}` : `order ${record.strahlerOrder}`}</small></span><ArrowUpRight/></button>})}</div>
         <div className="rail-legend"><span>FLOW DIRECTION</span><p><i className="up"/> upstream branches</p><p><i className="down"/> downstream trunk</p><p><i className="signal"/> temporal signal</p></div>
         <div className="rail-truth"><Database/><p><strong>Measurement boundary</strong><span>Temporal values are inherited from the containing level-7 basin. No reach-level sensor value is implied.</span></p></div>
       </aside>
@@ -653,9 +679,9 @@ export default function OntologyUniverse() {
             <button onClick={downloadUpstream} disabled={Boolean(exporting)}><Download/><span><b>{exporting === 'upstream' ? 'PREPARING...' : 'UPSTREAM REACHES'}</b><small>{compact(upstreamRivers.length)} lines · GeoJSON</small></span></button>
             <button onClick={downloadSeries} disabled={Boolean(exporting) || !points.length}><Download/><span><b>{exporting === 'series' ? 'PREPARING...' : 'SELECTED PROPERTY'}</b><small>{points.length} periods · CSV</small></span></button>
             <button onClick={downloadTraceOverlay} disabled={Boolean(exporting)}><Download/><span><b>{exporting === 'trace' ? 'PREPARING...' : 'VISIBLE OVERLAY'}</b><small>{compact(traceRivers.length + traceBasins.length + currentDistrictFeatures.length + (parent7Feature ? 1 : 0))} features · GeoJSON</small></span></button>
-            <button onClick={downloadNationalOverlay} disabled={Boolean(exporting)}><Download/><span><b>{exporting === 'national' ? 'PREPARING...' : 'FULL DATASET OVERLAY'}</b><small>{compact((data.riversGeo?.features?.length || 0) + (data.basinsGeo?.features?.length || 0) + (data.districtsGeo?.features?.length || 0) + (data.level7?.features?.length || 0))} features · GeoJSON</small></span></button>
+            <button onClick={downloadFullOverlay} disabled={Boolean(exporting)}><Download/><span><b>{exporting === 'full' ? 'PREPARING...' : 'FULL DATASET OVERLAY'}</b><small>{compact((frameRiverFeatures?.length || 0) + (frameBasinFeatures?.length || 0) + (natural ? 0 : (data.districtsGeo?.features?.length || 0)) + (frameLevel7Features?.length || 0))} features · GeoJSON</small></span></button>
           </div>
-          <p className="download-scope"><Database/> Upstream excludes the downstream trunk. Full overlay contains all published reaches, L12/L7 basins and districts with the active {variable.replaceAll('_', ' ')} period attached.</p>
+          <p className="download-scope"><Database/> Upstream excludes the downstream trunk. In the natural frame, the full overlay contains every published Amu/Syr reach without border clipping plus the active basin level and temporal context.</p>
           {exportError && <p className="download-error" role="alert">{exportError}</p>}
         </section>
         <a className="open-observatory" href="/climate.html"><span>OPEN FULL CLIMATE OBSERVATORY<small>Map every basin and period</small></span><ArrowUpRight/></a>

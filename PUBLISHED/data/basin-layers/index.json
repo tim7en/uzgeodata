@@ -1,9 +1,139 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T07:33:35+00:00",
+  "generatedAt": "2026-09-08T10:29:17+00:00",
   "title": "Basin climate & land observatory",
-  "description": "Transboundary headwater observations and anomalies are the primary scope. Earlier Uzbekistan-intersection CFSv2, CHIRPS, CHIRTS, CPC, CAMS and GHM layers remain explicitly marked as legacy comparisons.",
+  "description": "Complete Amu Darya and Syr Darya observations are the primary scope; the headwater formation layer remains available as a nested view. Earlier Uzbekistan-intersection products remain marked as legacy comparisons.",
   "layers": [
+    {
+      "id": "era5-land-full-basin-anomaly",
+      "label": "Full-basin climate anomaly",
+      "domain": "ATMOSPHERE",
+      "kind": "anomaly",
+      "dataset": "uz:ds/era5-land",
+      "predicate": "uz:hasBasinAnomaly",
+      "basinLevel": 7,
+      "spatialScope": "full_basin",
+      "spatialUnit": "HydroATLAS level-7 subbasin",
+      "legacyScope": false,
+      "baseline": "1991-2020",
+      "geometryIdColumn": "HYBAS_ID",
+      "geometry": "/data/hydroclimate/basins-level07.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07"
+      ],
+      "variables": [
+        {
+          "code": "air_temperature_mean",
+          "unit": "degC",
+          "label": "Air temperature (mean)",
+          "color": "#ff6b4a"
+        },
+        {
+          "code": "modelled_runoff_total",
+          "unit": "mm",
+          "label": "Modelled runoff",
+          "color": "#1677ff"
+        },
+        {
+          "code": "precipitation_total",
+          "unit": "mm",
+          "label": "Precipitation",
+          "color": "#4cc9f0"
+        },
+        {
+          "code": "snow_water_equivalent_mean",
+          "unit": "mm",
+          "label": "Snow water equivalent",
+          "color": "#e8f7ff"
+        },
+        {
+          "code": "snowfall_water_equivalent_total",
+          "unit": "mm",
+          "label": "Snowfall water equivalent",
+          "color": "#a7d8ff"
+        },
+        {
+          "code": "soil_moisture_layer_1_mean",
+          "unit": "m3/m3",
+          "label": "Soil moisture (layer 1)",
+          "color": "#2dd4bf"
+        }
+      ],
+      "what": "Monthly ERA5-Land departures from a fixed 1991-2020 normal across every level-7 unit in the complete Amu Darya and Syr Darya natural systems. Formation, transit and terminal reaches resolve through the same layer.",
+      "series": "/data/basin-layers/era5-land-full-basin-anomaly.json",
+      "coverage": {
+        "rows": 24638,
+        "basins": 438,
+        "periods": 10
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "scorePercent": 90.0,
+        "states": {
+          "ok-reanalysis-anomaly": 24592,
+          "ok-reanalysis-anomaly-centroid": 27,
+          "review-extreme-reanalysis-anomaly": 19
+        }
+      },
+      "preview": {
+        "variable": "precipitation_total",
+        "label": "Precipitation",
+        "unit": "z-score",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2025-10",
+            "value": -0.9631
+          },
+          {
+            "period": "2025-11",
+            "value": -1.2976
+          },
+          {
+            "period": "2025-12",
+            "value": 0.8931
+          },
+          {
+            "period": "2026-01",
+            "value": 0.038
+          },
+          {
+            "period": "2026-02",
+            "value": 0.636
+          },
+          {
+            "period": "2026-03",
+            "value": 0.0027
+          },
+          {
+            "period": "2026-04",
+            "value": 0.4389
+          },
+          {
+            "period": "2026-05",
+            "value": 0.146
+          },
+          {
+            "period": "2026-06",
+            "value": -0.0915
+          },
+          {
+            "period": "2026-07",
+            "value": -0.1022
+          }
+        ]
+      }
+    },
     {
       "id": "era5-land-headwater-anomaly",
       "label": "Headwater climate anomaly",
@@ -1544,6 +1674,135 @@
           {
             "period": "2026-08",
             "value": 11.1215
+          }
+        ]
+      }
+    },
+    {
+      "id": "era5-land-full-basins-monthly",
+      "label": "Full-basin state (ERA5-Land)",
+      "domain": "ATMOSPHERE",
+      "kind": "value",
+      "dataset": "uz:ds/era5-land",
+      "predicate": "uz:hasBasinStatistic",
+      "basinLevel": 7,
+      "spatialScope": "full_basin",
+      "spatialUnit": "HydroATLAS level-7 subbasin",
+      "legacyScope": false,
+      "baseline": null,
+      "geometryIdColumn": "HYBAS_ID",
+      "geometry": "/data/hydroclimate/basins-level07.geojson",
+      "periodGrain": "month",
+      "periods": [
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07"
+      ],
+      "variables": [
+        {
+          "code": "air_temperature_mean",
+          "unit": "degC",
+          "label": "Air temperature (mean)",
+          "color": "#ff6b4a"
+        },
+        {
+          "code": "modelled_runoff_total",
+          "unit": "mm",
+          "label": "Modelled runoff",
+          "color": "#1677ff"
+        },
+        {
+          "code": "precipitation_total",
+          "unit": "mm",
+          "label": "Precipitation",
+          "color": "#4cc9f0"
+        },
+        {
+          "code": "snow_water_equivalent_mean",
+          "unit": "mm",
+          "label": "Snow water equivalent",
+          "color": "#e8f7ff"
+        },
+        {
+          "code": "snowfall_water_equivalent_total",
+          "unit": "mm",
+          "label": "Snowfall water equivalent",
+          "color": "#a7d8ff"
+        },
+        {
+          "code": "soil_moisture_layer_1_mean",
+          "unit": "m3/m3",
+          "label": "Soil moisture (layer 1)",
+          "color": "#2dd4bf"
+        }
+      ],
+      "what": "Monthly temperature, precipitation, snowfall, snow water equivalent, soil moisture and modelled runoff for every level-7 unit in both complete river systems. ERA5-Land runoff is modelled and is not gauge discharge.",
+      "series": "/data/basin-layers/era5-land-full-basins-monthly.json",
+      "coverage": {
+        "rows": 26280,
+        "basins": 438,
+        "periods": 10
+      },
+      "quality": {
+        "validPercent": 100.0,
+        "scorePercent": 90.0,
+        "states": {
+          "ok-reanalysis": 26220,
+          "ok-reanalysis-centroid": 60
+        }
+      },
+      "preview": {
+        "variable": "precipitation_total",
+        "label": "Precipitation",
+        "unit": "mm",
+        "aggregation": "mean across published basins",
+        "points": [
+          {
+            "period": "2025-10",
+            "value": 10.5336
+          },
+          {
+            "period": "2025-11",
+            "value": 8.6983
+          },
+          {
+            "period": "2025-12",
+            "value": 60.8643
+          },
+          {
+            "period": "2026-01",
+            "value": 38.5029
+          },
+          {
+            "period": "2026-02",
+            "value": 57.5126
+          },
+          {
+            "period": "2026-03",
+            "value": 63.7448
+          },
+          {
+            "period": "2026-04",
+            "value": 63.3783
+          },
+          {
+            "period": "2026-05",
+            "value": 56.4519
+          },
+          {
+            "period": "2026-06",
+            "value": 30.8041
+          },
+          {
+            "period": "2026-07",
+            "value": 20.2743
           }
         ]
       }

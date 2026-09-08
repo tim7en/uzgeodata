@@ -40,7 +40,9 @@ QUALITY_WEIGHTS = {
     "ok-centroid": 0.92,
     "ok-interpolated": 0.65,
     "ok-reanalysis": 0.9,
+    "ok-reanalysis-centroid": 0.85,
     "ok-reanalysis-anomaly": 0.9,
+    "ok-reanalysis-anomaly-centroid": 0.85,
     "review-extreme-reanalysis-anomaly": 0.5,
     "ok-satellite": 0.9,
     "limited-clear-sky": 0.5,
@@ -106,6 +108,21 @@ def variable_meta(code: str, position: int) -> dict:
 
 
 LAYERS = [
+    {
+        "id": "era5-land-full-basin-anomaly", "label": "Full-basin climate anomaly",
+        "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
+        "predicate": "uz:hasBasinAnomaly", "kind": "anomaly",
+        "previewVariable": "precipitation_total", "previewMetric": "z_score",
+        "source": "PUBLISHED/data/hydroclimate/era5-land-full-basin-anomaly.csv",
+        "basinLevel": 7, "geometry": "/data/hydroclimate/basins-level07.geojson",
+        "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month", "spatialScope": "full_basin",
+        "spatialUnit": "HydroATLAS level-7 subbasin", "baseline": "1991-2020",
+        "what": ("Monthly ERA5-Land departures from a fixed 1991-2020 normal across every "
+                 "level-7 unit in the complete Amu Darya and Syr Darya natural systems. "
+                 "Formation, transit and terminal reaches resolve through the same layer."),
+    },
     {
         "id": "era5-land-headwater-anomaly", "label": "Headwater climate anomaly",
         "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
@@ -192,6 +209,21 @@ LAYERS = [
         "periodGrain": "month",
         "what": "Monthly mean of the CAMS +0h analysis: aerosol optical depth and PM2.5, the "
                 "assimilated estimate of what the atmosphere was, not a forecast.",
+    },
+    {
+        "id": "era5-land-full-basins-monthly", "label": "Full-basin state (ERA5-Land)",
+        "domain": "ATMOSPHERE", "dataset": "uz:ds/era5-land",
+        "predicate": "uz:hasBasinStatistic", "kind": "value",
+        "previewVariable": "precipitation_total",
+        "source": "PUBLISHED/data/hydroclimate/era5-land-full-basins-monthly.csv",
+        "spatialScope": "full_basin", "spatialUnit": "HydroATLAS level-7 subbasin",
+        "basinLevel": 7, "geometry": "/data/hydroclimate/basins-level07.geojson",
+        "idColumn": "basin_id", "variableColumn": "variable",
+        "valueColumn": "value", "unitColumn": "unit", "periodColumns": ["year", "month"],
+        "periodGrain": "month",
+        "what": ("Monthly temperature, precipitation, snowfall, snow water equivalent, soil "
+                 "moisture and modelled runoff for every level-7 unit in both complete river "
+                 "systems. ERA5-Land runoff is modelled and is not gauge discharge."),
     },
     {
         "id": "era5-land-headwaters-monthly", "label": "Headwater formation (ERA5-Land)",
@@ -391,9 +423,9 @@ def main() -> None:
         "version": "1.0",
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "title": "Basin climate & land observatory",
-        "description": ("Transboundary headwater observations and anomalies are the primary "
-                        "scope. Earlier Uzbekistan-intersection CFSv2, CHIRPS, CHIRTS, CPC, "
-                        "CAMS and GHM layers remain explicitly marked as legacy comparisons."),
+        "description": ("Complete Amu Darya and Syr Darya observations are the primary scope; "
+                        "the headwater formation layer remains available as a nested view. "
+                        "Earlier Uzbekistan-intersection products remain marked as legacy comparisons."),
         "layers": entries,
     })
     print(f"\n  {len(entries)} layers -> {INDEX.relative_to(ROOT)}")

@@ -152,7 +152,11 @@ def aggregate_systems(rows: list[dict], basin_areas: dict[int, float]) -> list[d
     return result
 
 
-def write_manifest(rows: list[dict], latest: tuple[int, int], retrieved: str) -> None:
+def write_manifest(
+    rows: list[dict], latest: tuple[int, int], retrieved: str, *,
+    manifest_path: Path = MANIFEST, geometry_path: Path = PILOT,
+    spatial_scope: str = "headwater_formation",
+) -> None:
     periods = sorted({f"{int(r['year']):04d}-{int(r['month']):02d}" for r in rows})
     payload = {
         "version": "1.0",
@@ -170,8 +174,13 @@ def write_manifest(rows: list[dict], latest: tuple[int, int], retrieved: str) ->
         "spatialFrame": {
             "asset": BASIN_ASSET,
             "basinLevel": 7,
-            "selection": "transboundary units upstream of the declared pilot control sections",
-            "geometry": "PUBLISHED/data/hydroclimate/headwater-units.geojson",
+            "scope": spatial_scope,
+            "selection": (
+                "all units in the complete Amu Darya and Syr Darya natural systems"
+                if spatial_scope == "full_basin"
+                else "transboundary units upstream of the declared pilot control sections"
+            ),
+            "geometry": str(geometry_path.relative_to(ROOT)).replace("\\", "/"),
         },
         "variables": [variable.__dict__ for variable in VARIABLES],
         "coverage": {
@@ -185,23 +194,35 @@ def write_manifest(rows: list[dict], latest: tuple[int, int], retrieved: str) ->
             "Monthly *_sum bands are accumulated flows; temperature, SWE and soil moisture are monthly states.",
             "Modelled runoff is a formation indicator and must not be labelled observed river discharge.",
             "ERA5-Land has an approximately three-month publication lag; latest availability is queried at runtime.",
+            "A polygon smaller than one ERA5-Land pixel is sampled at its representative centroid and explicitly flagged ok-reanalysis-centroid.",
         ],
     }
-    temporary = MANIFEST.with_suffix(MANIFEST.suffix + ".tmp")
+    temporary = manifest_path.with_suffix(manifest_path.suffix + ".tmp")
     with temporary.open("w", encoding="utf-8", newline="\n") as handle:
         json.dump(payload, handle, ensure_ascii=False, indent=2)
         handle.write("\n")
-    os.replace(temporary, MANIFEST)
+    os.replace(temporary, manifest_path)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--start", type=month_tuple, help="First month, YYYY-MM.")
     parser.add_argument("--end", type=month_tuple, help="Last month, YYYY-MM; defaults to latest available.")
+    parser.add_argument(
+        "--scope", choices=("headwaters", "full-basin"), default="headwaters",
+        help="Use the pilot formation units or every level-7 unit in both complete river systems.",
+    )
     args = parser.parse_args()
 
-    if not PILOT.exists():
-        raise SystemExit("Headwater geometry is absent. Run: npm run headwaters:basins")
+    full_basin = args.scope == "full-basin"
+    geometry = ROOT / "PUBLISHED/data/hydroclimate/basins-level07.geojson" if full_basin else PILOT
+    output = ROOT / "PUBLISHED/data/hydroclimate/era5-land-full-basins-monthly.csv" if full_basin else OUTPUT
+    system_output = ROOT / "PUBLISHED/data/hydroclimate/era5-land-river-systems-monthly.csv" if full_basin else SYSTEM_OUTPUT
+    manifest_path = ROOT / "PUBLISHED/data/hydroclimate/era5-land-full-basins-monthly.manifest.json" if full_basin else MANIFEST
+    spatial_scope = "full_basin" if full_basin else "headwater_formation"
+
+    if not geometry.exists():
+        raise SystemExit(f"Basin geometry is absent: {geometry.relative_to(ROOT)}")
 
     try:
         import ee
@@ -214,7 +235,7 @@ def main() -> None:
             f"  Run: earthengine authenticate --project {PROJECT}"
         ) from error
 
-    pilot = json.loads(PILOT.read_text(encoding="utf-8"))
+    pilot = json.loads(geometry.read_text(encoding="utf-8"))
     feature_rows = [feature["properties"] for feature in pilot["features"]]
     systems: dict[str, list[int]] = {}
     basin_areas: dict[int, float] = {}
@@ -231,7 +252,7 @@ def main() -> None:
     if end > latest:
         raise SystemExit(f"Requested end {end[0]:04d}-{end[1]:02d} exceeds latest available {latest_text}")
 
-    previous = read_rows(OUTPUT)
+    previous = read_rows(output)
     if args.start:
         start = args.start
     elif previous:
@@ -273,6 +294,7 @@ def main() -> None:
             collection=basin_collection,
             reducer=ee.Reducer.mean(),
             scale=SCALE,
+            tileScale=4,
         ).select(["system_id", "HYBAS_ID", *transformed_names], retainGeometry=False)
         info = reduced.getInfo()
         returned_ids = {int(feature["properties"]["HYBAS_ID"]) for feature in info["features"]}
@@ -280,7 +302,38 @@ def main() -> None:
             missing = sorted(set(basin_areas) - returned_ids)
             raise RuntimeError(f"{year}-{month:02d}: missing basin reductions: {missing[:10]}")
 
-        for feature in info["features"]:
+        # A very small polygon may contain no ERA5 pixel centre.  Keep it by
+        # sampling a representative point and declare that fallback in quality.
+        features_by_id = {
+            int(feature["properties"]["HYBAS_ID"]): feature
+            for feature in info["features"]
+        }
+        fallback_ids = [
+            basin_id for basin_id, feature in features_by_id.items()
+            if any(feature["properties"].get(name) is None for name in transformed_names)
+        ]
+        if fallback_ids:
+            points = basin_collection.filter(ee.Filter.inList("HYBAS_ID", fallback_ids)).map(
+                lambda feature: feature.setGeometry(feature.geometry().centroid(100))
+            )
+            sampled = transformed.sampleRegions(
+                collection=points,
+                properties=["system_id", "HYBAS_ID"],
+                scale=SCALE,
+                geometries=False,
+            ).getInfo()
+            for feature in sampled["features"]:
+                features_by_id[int(feature["properties"]["HYBAS_ID"])] = feature
+            unresolved = [
+                basin_id for basin_id in fallback_ids
+                if basin_id not in features_by_id
+                or any(features_by_id[basin_id]["properties"].get(name) is None for name in transformed_names)
+            ]
+            if unresolved:
+                raise RuntimeError(f"{year}-{month:02d}: sub-pixel fallback failed: {unresolved[:10]}")
+
+        for basin_id in sorted(features_by_id):
+            feature = features_by_id[basin_id]
             props = feature["properties"]
             for variable in VARIABLES:
                 value = props.get(variable.code)
@@ -299,21 +352,24 @@ def main() -> None:
                     "source_asset": ASSET,
                     "source_image": source_index,
                     "scale_m": SCALE,
-                    "quality": "ok-reanalysis",
+                    "quality": "ok-reanalysis-centroid" if basin_id in fallback_ids else "ok-reanalysis",
                     "retrieved_at": retrieved,
                 })
         print(f"  {year:04d}-{month:02d} ({position}/{len(periods)})", flush=True)
 
     merged = merge_rows(previous, fresh)
-    write_csv(OUTPUT, FIELDS, merged)
+    write_csv(output, FIELDS, merged)
     system_rows = aggregate_systems(merged, basin_areas)
     system_fields = [
         "system_id", "year", "month", "period_start", "variable", "value", "unit",
         "statistic", "basin_count", "area_km2", "source_asset", "quality", "retrieved_at",
     ]
-    write_csv(SYSTEM_OUTPUT, system_fields, system_rows)
-    write_manifest(merged, latest, retrieved)
-    print(f"  {len(fresh):,} refreshed rows; {len(merged):,} total -> {OUTPUT.relative_to(ROOT)}")
+    write_csv(system_output, system_fields, system_rows)
+    write_manifest(
+        merged, latest, retrieved, manifest_path=manifest_path,
+        geometry_path=geometry, spatial_scope=spatial_scope,
+    )
+    print(f"  {len(fresh):,} refreshed rows; {len(merged):,} total -> {output.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

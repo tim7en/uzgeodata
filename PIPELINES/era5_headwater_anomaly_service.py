@@ -81,7 +81,7 @@ def transformed_image(ee, image, suffix: str):
     ])
 
 
-def fetch_climatology(months: list[int]) -> list[dict]:
+def fetch_climatology(months: list[int], geometry_path: Path = GEOMETRY) -> list[dict]:
     try:
         import ee
 
@@ -93,7 +93,7 @@ def fetch_climatology(months: list[int]) -> list[dict]:
             f"  Run: earthengine authenticate --project {PROJECT}"
         ) from error
 
-    document = json.loads(GEOMETRY.read_text(encoding="utf-8"))
+    document = json.loads(geometry_path.read_text(encoding="utf-8"))
     features = [
         ee.Feature(ee.Geometry(feature["geometry"]), {
             "basin_id": int(feature["properties"]["HYBAS_ID"]),
@@ -102,6 +102,7 @@ def fetch_climatology(months: list[int]) -> list[dict]:
         for feature in document["features"]
     ]
     basins = ee.FeatureCollection(features)
+    expected_ids = {int(feature["properties"]["HYBAS_ID"]) for feature in document["features"]}
     source = ee.ImageCollection(ASSET)
     rows: list[dict] = []
 
@@ -113,14 +114,45 @@ def fetch_climatology(months: list[int]) -> list[dict]:
             image = source.filterDate(begin, begin.advance(1, "month")).first()
             images.append(transformed_image(ee, image, str(year)))
             names.extend(f"{variable.code}__{year}" for variable in VARIABLES)
-        reduced = ee.Image.cat(images).reduceRegions(
+        climate_image = ee.Image.cat(images)
+        reduced = climate_image.reduceRegions(
             collection=basins,
             reducer=ee.Reducer.mean(),
             scale=SCALE,
             tileScale=4,
         ).select(["basin_id", "system_id", *names], retainGeometry=False).getInfo()
 
-        for feature in reduced["features"]:
+        features_by_id = {
+            int(feature["properties"]["basin_id"]): feature
+            for feature in reduced["features"]
+        }
+        fallback_ids = [
+            basin_id for basin_id in expected_ids
+            if basin_id not in features_by_id
+            or any(features_by_id[basin_id]["properties"].get(name) is None for name in names)
+        ]
+        if fallback_ids:
+            points = basins.filter(ee.Filter.inList("basin_id", fallback_ids)).map(
+                lambda feature: feature.setGeometry(feature.geometry().centroid(100))
+            )
+            sampled = climate_image.sampleRegions(
+                collection=points,
+                properties=["basin_id", "system_id"],
+                scale=SCALE,
+                geometries=False,
+            ).getInfo()
+            for feature in sampled["features"]:
+                features_by_id[int(feature["properties"]["basin_id"])] = feature
+            unresolved = [
+                basin_id for basin_id in fallback_ids
+                if basin_id not in features_by_id
+                or any(features_by_id[basin_id]["properties"].get(name) is None for name in names)
+            ]
+            if unresolved:
+                raise RuntimeError(f"Baseline month {month:02d} sub-pixel fallback failed: {unresolved[:10]}")
+
+        for basin_id in sorted(features_by_id):
+            feature = features_by_id[basin_id]
             props = feature["properties"]
             for variable in VARIABLES:
                 values = [
@@ -151,21 +183,33 @@ def fetch_climatology(months: list[int]) -> list[dict]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--refresh-baseline", action="store_true", help="Refetch the fixed 1991-2020 normal.")
+    parser.add_argument(
+        "--scope", choices=("headwaters", "full-basin"), default="headwaters",
+        help="Build anomalies for the formation pilot or all level-7 units in both river systems.",
+    )
     args = parser.parse_args()
-    if not OBSERVATIONS.exists() or not GEOMETRY.exists():
-        raise SystemExit("Headwater observations or geometry are absent; run headwaters:basins and headwaters:era5.")
+    full_basin = args.scope == "full-basin"
+    geometry = ROOT / "PUBLISHED/data/hydroclimate/basins-level07.geojson" if full_basin else GEOMETRY
+    observations_path = ROOT / "PUBLISHED/data/hydroclimate/era5-land-full-basins-monthly.csv" if full_basin else OBSERVATIONS
+    climatology_path = ROOT / "PUBLISHED/data/hydroclimate/era5-land-full-basin-climatology.csv" if full_basin else CLIMATOLOGY
+    anomalies_path = ROOT / "PUBLISHED/data/hydroclimate/era5-land-full-basin-anomaly.csv" if full_basin else ANOMALIES
+    json_output = ROOT / "PUBLISHED/data/hydroclimate/era5-land-full-basin-anomaly.json" if full_basin else JSON_OUTPUT
+    manifest_path = ROOT / "PUBLISHED/data/hydroclimate/era5-land-full-basin-anomaly.manifest.json" if full_basin else MANIFEST
+    spatial_scope = "full_basin" if full_basin else "headwater_formation"
+    if not observations_path.exists() or not geometry.exists():
+        raise SystemExit("ERA5 observations or their basin geometry are absent; run the matching ERA5 state build first.")
 
-    with OBSERVATIONS.open(encoding="utf-8", newline="") as handle:
+    with observations_path.open(encoding="utf-8", newline="") as handle:
         observations = list(csv.DictReader(handle))
     months = sorted({int(row["month"]) for row in observations})
     print(f"ERA5-Land headwater anomaly | baseline {BASELINE_START}-{BASELINE_END} | months {months}")
     previous = []
-    if CLIMATOLOGY.exists() and not args.refresh_baseline:
-        with CLIMATOLOGY.open(encoding="utf-8", newline="") as handle:
+    if climatology_path.exists() and not args.refresh_baseline:
+        with climatology_path.open(encoding="utf-8", newline="") as handle:
             previous = list(csv.DictReader(handle))
     covered_months = {int(row["month"]) for row in previous}
     missing_months = months if args.refresh_baseline else [month for month in months if month not in covered_months]
-    refreshed = fetch_climatology(missing_months) if missing_months else []
+    refreshed = fetch_climatology(missing_months, geometry) if missing_months else []
     climatology_by_key = {
         (row["system_id"], str(row["basin_id"]), int(row["month"]), row["variable"]): row
         for row in previous
@@ -175,7 +219,7 @@ def main() -> None:
         for row in refreshed
     })
     climatology = [climatology_by_key[key] for key in sorted(climatology_by_key)]
-    write_csv(CLIMATOLOGY, CLIMATOLOGY_FIELDS, climatology)
+    write_csv(climatology_path, CLIMATOLOGY_FIELDS, climatology)
 
     baseline = {
         (row["system_id"], str(row["basin_id"]), int(row["month"]), row["variable"]): row
@@ -209,21 +253,25 @@ def main() -> None:
             "source_asset": row["source_asset"],
             "source_image": row["source_image"],
             "scale_m": row["scale_m"],
-            "quality": "review-extreme-reanalysis-anomaly" if abs(z_score) > 5 else "ok-reanalysis-anomaly",
+            "quality": (
+                "review-extreme-reanalysis-anomaly" if abs(z_score) > 5
+                else "ok-reanalysis-anomaly-centroid" if row.get("quality") == "ok-reanalysis-centroid"
+                else "ok-reanalysis-anomaly"
+            ),
             "retrieved_at": generated,
         })
 
-    write_csv(ANOMALIES, ANOMALY_FIELDS, anomalies)
-    JSON_OUTPUT.write_text(json.dumps({
+    write_csv(anomalies_path, ANOMALY_FIELDS, anomalies)
+    json_output.write_text(json.dumps({
         "version": "1.0",
         "temporalResolution": "month",
         "baseline": {"start": BASELINE_START, "end": BASELINE_END},
         "observations": anomalies,
     }, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
-    MANIFEST.write_text(json.dumps({
+    manifest_path.write_text(json.dumps({
         "version": "1.0",
         "generatedAt": generated,
-        "spatialScope": "headwater_formation",
+        "spatialScope": spatial_scope,
         "spatialUnit": "HydroATLAS level-7 subbasin",
         "temporalResolution": "month",
         "baseline": {"start": BASELINE_START, "end": BASELINE_END, "kind": "fixed climate normal"},
@@ -237,15 +285,16 @@ def main() -> None:
             "skipped": skipped,
         },
         "outputs": {
-            "climatologyCSV": str(CLIMATOLOGY.relative_to(ROOT)).replace("\\", "/"),
-            "anomalyCSV": str(ANOMALIES.relative_to(ROOT)).replace("\\", "/"),
-            "anomalyJSON": str(JSON_OUTPUT.relative_to(ROOT)).replace("\\", "/"),
+            "climatologyCSV": str(climatology_path.relative_to(ROOT)).replace("\\", "/"),
+            "anomalyCSV": str(anomalies_path.relative_to(ROOT)).replace("\\", "/"),
+            "anomalyJSON": str(json_output.relative_to(ROOT)).replace("\\", "/"),
         },
         "qualityNotes": [
             "Current values and the baseline use the same ERA5-Land asset, basin geometry and scale.",
             "The 1991-2020 baseline is fixed and does not move when new observations are appended.",
             "These are reanalysis anomalies, not station or gauge anomalies.",
             "Absolute z-scores above 5 are retained but flagged for review rather than silently removed.",
+            "Sub-pixel basin observations and baselines use an explicitly flagged representative-point sample.",
         ],
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"  {len(climatology):,} climatology cells; {len(anomalies):,} anomalies; {skipped:,} skipped")

@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T10:28:59+00:00",
+  "spatialScope": "full_basin",
+  "spatialUnit": "HydroATLAS level-7 subbasin",
+  "temporalResolution": "month",
+  "baseline": {
+    "start": 1991,
+    "end": 2020,
+    "kind": "fixed climate normal"
+  },
+  "source": {
+    "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+    "nominalScaleMetres": 11132
+  },
+  "coverage": {
+    "rows": 24638,
+    "basins": 438,
+    "systems": 2,
+    "periods": [
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+    ],
+    "variables": [
+      "air_temperature_mean",
+      "modelled_runoff_total",
+      "precipitation_total",
+      "snow_water_equivalent_mean",
+      "snowfall_water_equivalent_total",
+      "soil_moisture_layer_1_mean"
+    ],
+    "skipped": 1642
+  },
+  "outputs": {
+    "climatologyCSV": "PUBLISHED/data/hydroclimate/era5-land-full-basin-climatology.csv",
+    "anomalyCSV": "PUBLISHED/data/hydroclimate/era5-land-full-basin-anomaly.csv",
+    "anomalyJSON": "PUBLISHED/data/hydroclimate/era5-land-full-basin-anomaly.json"
+  },
+  "qualityNotes": [
+    "Current values and the baseline use the same ERA5-Land asset, basin geometry and scale.",
+    "The 1991-2020 baseline is fixed and does not move when new observations are appended.",
+    "These are reanalysis anomalies, not station or gauge anomalies.",
+    "Absolute z-scores above 5 are retained but flagged for review rather than silently removed.",
+    "Sub-pixel basin observations and baselines use an explicitly flagged representative-point sample."
+  ]
+}
