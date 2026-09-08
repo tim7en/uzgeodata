@@ -17,6 +17,7 @@ body{margin:0;background:#060b0e;color:var(--ink);font-family:var(--body)}
 .land-panel>*{pointer-events:auto}
 .land-panel.has-selection{background:linear-gradient(90deg,var(--panel) 88%,transparent)}
 .land-loading{color:var(--dim);font-size:10px}
+.land-level{margin:0;font:600 8px var(--mono);letter-spacing:.06em;color:#5d6d75;text-transform:uppercase}
 
 .land-search{display:flex;align-items:center;gap:8px;padding:9px 10px;border:1px solid var(--line);background:rgba(3,8,10,.75);color:var(--dim)}
 .land-search input{min-width:0;flex:1;border:0;outline:0;background:none;color:var(--ink);font-size:10px}

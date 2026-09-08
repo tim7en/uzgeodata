@@ -3,8 +3,8 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
-  groupAttributes, groupSummary, indexStore, positionLabel, readAttribute, systemMeta,
-  systemTotals,
+  carriesAttributes, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
+  readAttribute, systemMeta, systemTotals,
 } from '../INTERFACE/landingModel.js';
 
 const read = name => JSON.parse(readFileSync(
@@ -85,4 +85,36 @@ test('system totals come from the published reference layer', () => {
     assert.ok(entry.areaKm2 > 0);
     assert.ok(entry.formationUnits <= entry.units);
   }
+});
+
+test('the drawn basin level follows the zoom, coarse first', () => {
+  const ladder = read('reference-basin-levels.json');
+  assert.equal(ladder.attributeLevel, 12);
+  assert.deepEqual(ladder.levels.map(entry => entry.level), [7, 10, 12]);
+
+  // A whole-region view must not pull the finest layer.
+  assert.equal(levelForZoom(4, ladder).level, 7);
+  assert.equal(levelForZoom(6, ladder).level, 7);
+  assert.equal(levelForZoom(7, ladder).level, 10);
+  assert.equal(levelForZoom(8, ladder).level, 10);
+  assert.equal(levelForZoom(9, ladder).level, 12);
+  assert.equal(levelForZoom(14, ladder).level, 12);
+  assert.equal(levelForZoom(6, null), null);
+
+  // The point of the ladder: the first paint is far lighter than the last.
+  const first = ladder.levels.find(entry => entry.level === 7);
+  const last = ladder.levels.find(entry => entry.level === 12);
+  assert.ok(first.units < last.units);
+  assert.ok(first.sizeBytes * 4 < last.sizeBytes, 'the coarse level should be far smaller');
+  for (const entry of ladder.levels) assert.match(entry.url, /^\/data\/hydroclimate\/reference-basins-level\d\d\.geojson$/);
+});
+
+test('atlas attributes are only claimed for the level that carries them', () => {
+  const ladder = read('reference-basin-levels.json');
+  assert.equal(carriesAttributes({basin_level: 12}, ladder), true);
+  assert.equal(carriesAttributes({basin_level: 7}, ladder), false);
+  assert.equal(carriesAttributes({}, ladder), false);
+  const carriers = ladder.levels.filter(entry => entry.carriesAtlasAttributes);
+  assert.equal(carriers.length, 1);
+  assert.equal(carriers[0].level, ladder.attributeLevel);
 });

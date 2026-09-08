@@ -1,7 +1,8 @@
-// The landing map shows one thing: the level-12 reference basins of the two
-// natural systems. Everything a reader can ask afterwards hangs off the basin
-// they pick, so the rules for colouring, summarising and reading an attribute
-// live here where they can be tested rather than inside the map component.
+// The landing map shows one thing: the reference basins of the two natural
+// systems, coarse at first and finer as the reader zooms in. Everything a reader
+// can ask afterwards hangs off the basin they pick, so the rules for choosing a
+// level, colouring, summarising and reading an attribute live here where they can
+// be tested rather than inside the map component.
 
 export const SYSTEMS = {
   amu_darya: { label: 'Amu Darya', color: '#4cc9f0' },
