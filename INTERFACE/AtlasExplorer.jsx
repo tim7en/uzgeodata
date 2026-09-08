@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { GeoJSON, MapContainer, ScaleControl, TileLayer, ZoomControl, useMapEvent } from 'react-leaflet';
-import { ArrowLeft, BookOpen, Database, Scale, Search } from 'lucide-react';
+import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMapEvent } from 'react-leaflet';
+import { ArrowLeft, BookOpen, Database, Droplets, Scale, Search, X } from 'lucide-react';
 import {
-  formatAttribute, indexStore, legendStops, levelForZoom, overlayStyle, quantileBreaks,
-  readAttribute, riverStyle, systemMeta, tierForZoom,
+  damHeadline, damLabel, damLegendStops, damStyle, damTotals,
+  formatAttribute, formatNumber, indexStore, legendStops, levelForZoom, overlayStyle,
+  quantileBreaks, readAttribute, riverStyle, systemMeta, tierForZoom,
 } from './landingModel.js';
 
 const LADDER_URL = '/data/hydroclimate/reference-basin-levels.json';
 const RIVER_LADDER_URL = '/data/hydroclimate/reference-river-levels.json';
 const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
 const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
+const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const CENTRE = [40.2, 70.5];
 const DEFAULT_ATTRIBUTE = 'dis_m3_pyr';
 const GROUP_LABELS = { basin_specific: 'This sub-basin', basin_accumulation: 'Upstream catchment' };
@@ -51,6 +53,9 @@ export default function AtlasExplorer() {
     return requested || DEFAULT_ATTRIBUTE;
   });
   const [hit, setHit] = useState(null);
+  const [dams, setDams] = useState(null);
+  const [showDams, setShowDams] = useState(true);
+  const [dam, setDam] = useState(null);
 
   useEffect(() => {
     let live = true;
@@ -65,6 +70,18 @@ export default function AtlasExplorer() {
       .catch(cause => live && setError(cause.message));
     return () => { live = false; };
   }, []);
+
+  useEffect(() => {
+    if (!showDams || dams) return undefined;
+    let live = true;
+    // The dam layer is an overlay, not the subject of this page: if it is missing
+    // the atlas still has to draw, so its failure turns the toggle off rather
+    // than replacing the map with an error.
+    json(DAMS_URL).then(document => live && setDams(document)).catch(() => live && setShowDams(false));
+    return () => { live = false; };
+  }, [showDams, dams]);
+
+  const damStats = useMemo(() => (dams ? damTotals(dams.features) : null), [dams]);
 
   const active = useMemo(() => levelForZoom(zoom, ladder), [zoom, ladder]);
   const basins = active ? levels[active.level] : null;
@@ -150,6 +167,35 @@ export default function AtlasExplorer() {
         </button>)}
         {!results.length && <p className="atlas-dim">Nothing matches that.</p>}
       </div>
+
+      <div className="atlas-dams">
+        <label className="atlas-toggle">
+          <input type="checkbox" checked={showDams} onChange={event => {
+            setShowDams(event.target.checked);
+            if (!event.target.checked) setDam(null);
+          }}/>
+          <Droplets size={12}/>
+          <span>Dams and reservoirs</span>
+        </label>
+        {showDams && damStats && <>
+          <p className="atlas-dim">
+            {damStats.dams} barriers holding {formatNumber(damStats.storageMcm)} MCM,
+            {' '}{damStats.inFormationZone} of them where the runoff forms.
+          </p>
+          <ul className="atlas-sizekey">
+            {damLegendStops().map(stop => <li key={stop.capacity}>
+              <i style={{ width: stop.radius * 2, height: stop.radius * 2 }}/>
+              <em>{formatNumber(stop.capacity)}</em>
+            </li>)}
+          </ul>
+          <p className="atlas-dim atlas-sizenote">
+            Circle width follows storage on a logarithmic scale, in MCM — the range runs
+            from 1 to 19,500, so equal areas would hide every dam but the largest.
+            A hollow ring is a barrier whose capacity the source never reported.
+          </p>
+        </>}
+        {showDams && !damStats && <p className="atlas-dim">Loading dams…</p>}
+      </div>
     </aside>
 
     <section className="atlas-stage">
@@ -160,6 +206,18 @@ export default function AtlasExplorer() {
           style={styleFor} onEachFeature={onEachFeature}/>}
         {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} interactive={false}
           style={feature => riverStyle(feature.properties)} smoothFactor={1.2}/>}
+        {showDams && dams?.features.map(feature => {
+          const [longitude, latitude] = feature.geometry.coordinates;
+          const selected = dam?.dam_id === feature.properties.dam_id;
+          return <CircleMarker key={feature.properties.dam_id} center={[latitude, longitude]}
+            pathOptions={damStyle(feature.properties, { selected })}
+            radius={damStyle(feature.properties, { selected }).radius}
+            eventHandlers={{ click: () => { setDam(feature.properties); setHit(null); } }}>
+            <Tooltip direction="top" offset={[0, -4]} opacity={1} className="atlas-dam-tip">
+              {damLabel(feature.properties)}
+            </Tooltip>
+          </CircleMarker>;
+        })}
         <WatchZoom onZoom={setZoom}/>
         <ZoomControl position="bottomright"/>
         <ScaleControl position="bottomright" imperial={false}/>
@@ -178,7 +236,38 @@ export default function AtlasExplorer() {
         <p className="atlas-dim">Quantile classes over the basins in view. Basins without a measurement stay unfilled.</p>
       </div>
 
-      {hit && <div className="atlas-hit">
+      {dam && <div className="atlas-dam-card">
+        <button type="button" className="atlas-dam-close" onClick={() => setDam(null)} aria-label="Close">
+          <X size={13}/>
+        </button>
+        <span className="atlas-kicker">{systemMeta(dam.system_id).label}</span>
+        <h3>{damLabel(dam)}</h3>
+        <dl>{damHeadline(dam).map(row => <div key={row.label}>
+          <dt>{row.label}</dt><dd>{row.value} {row.unit && <em>{row.unit}</em>}</dd>
+        </div>)}</dl>
+        <p className="atlas-dim">
+          {Number(dam.in_headwater_formation) === 1
+            ? 'Stands in a runoff-formation zone: it regulates water where it is generated.'
+            : 'Stands downstream of the formation zones, on water generated above it.'}
+        </p>
+        <p className="atlas-cite"><Database size={11}/>
+          <span className="atlas-ids">
+            <b>GDW <code>{dam.dam_id}</code></b>
+            {dam.grand_id ? <b>GRanD <code>{dam.grand_id}</code></b> : null}
+            {dam.hylak_id ? <b>HydroLAKES <code>{dam.hylak_id}</code></b> : null}
+            {dam.hyriv_id ? <b>reach <code>{dam.hyriv_id}</code></b> : null}
+            <b>basin <code>{dam.hybas_id_level12}</code></b>
+          </span>
+        </p>
+        <p className="atlas-cite"><Scale size={11}/>
+          Global Dam Watch v1.0, CC BY 4.0. Storage is nominal capacity, not an operating
+          level{dam.position_source === 'snapped to the river network'
+            ? '; this dam has no reported coordinate and is placed on the river centreline'
+            : ''}.
+        </p>
+      </div>}
+
+      {hit && !dam && <div className="atlas-hit">
         <strong>HYBAS {hit.hybas_id}</strong>
         <span>{systemMeta(hit.system_id).label} · level {hit.basin_level}</span>
         <b>{reading?.value} <em>{reading?.unit}</em></b>

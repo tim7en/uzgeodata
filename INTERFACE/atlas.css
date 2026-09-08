@@ -52,3 +52,41 @@ a{color:var(--accent)}
 .atlas-more{display:inline-block;margin-top:8px;font:700 8px var(--display);letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
 @media(max-width:1100px){.atlas{grid-template-columns:250px 1fr}.atlas-meta{display:none}}
 @media(max-width:760px){body{overflow:auto}.atlas{grid-template-columns:1fr;height:auto}.atlas-stage{height:60vh}}
+
+/* Dams: an overlay on top of the attribute choropleth, so the controls sit under
+   the attribute list rather than competing with it for the top of the rail. */
+.atlas-dams{border-top:1px solid var(--line);margin-top:10px;padding-top:10px}
+.atlas-toggle{display:flex;gap:7px;align-items:center;cursor:pointer;font:700 8.5px var(--display);letter-spacing:.12em;text-transform:uppercase}
+.atlas-toggle input{accent-color:var(--accent);width:12px;height:12px;cursor:pointer}
+.atlas-toggle svg{color:#ff4d6d}
+.atlas-dams>p{margin:7px 0 0;font-size:9px;line-height:1.55}
+
+/* The size key. Each swatch is drawn at the radius the map actually uses, so the
+   key is the scale rather than a picture of it: change damRadius and these move. */
+.atlas-sizekey{display:flex;gap:11px;align-items:flex-end;justify-content:flex-start;margin:11px 0 0;padding:0 0 0 2px;list-style:none}
+.atlas-sizekey li{display:flex;flex-direction:column;gap:4px;align-items:center}
+.atlas-sizekey i{display:block;border-radius:50%;border:1px solid #1b0d12;background:rgba(255,77,109,.82)}
+.atlas-sizekey em{font:600 7px var(--mono);font-style:normal;color:var(--faint)}
+.atlas-sizenote{margin-top:9px !important}
+
+.atlas-dam-tip{background:rgba(4,9,12,.92) !important;border:1px solid var(--line) !important;color:#fff !important;font:600 9px var(--mono) !important;padding:3px 6px !important;box-shadow:none !important}
+.atlas-dam-tip::before{display:none !important}
+
+.atlas-dam-card{position:absolute;right:16px;top:16px;z-index:500;width:250px;border:1px solid var(--line);border-left:2px solid #ff4d6d;background:rgba(4,9,12,.94);padding:12px 13px 11px}
+.atlas-dam-card h3{margin:5px 0 10px;font:700 15px/1.15 var(--display);text-transform:uppercase}
+.atlas-dam-card dl{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:0 0 10px;background:var(--line);border:1px solid var(--line)}
+.atlas-dam-card dl>div{background:#060b0e;padding:6px 8px}
+.atlas-dam-card dt{font-size:6.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.atlas-dam-card dd{margin:3px 0 0;font:600 11px var(--mono);overflow-wrap:anywhere}
+.atlas-dam-card dd em{font:500 8px var(--mono);font-style:normal;color:var(--dim)}
+.atlas-dam-card>p{margin:0 0 7px;font-size:9px;line-height:1.5;color:var(--dim)}
+.atlas-dam-close{position:absolute;right:7px;top:7px;border:0;background:none;color:var(--faint);cursor:pointer;padding:2px;line-height:0}
+.atlas-dam-close:hover{color:#fff}
+@media(max-width:760px){.atlas-dam-card{width:auto;left:16px}}
+/* The identifier line carries up to five id pairs. As bare flex items each pair
+   became its own column and the last one ran off the card, so the ids are one
+   wrapping item and a label never separates from the number it belongs to. */
+.atlas-dam-card .atlas-cite{flex-wrap:wrap}
+.atlas-ids{display:flex;flex-wrap:wrap;gap:3px 9px;min-width:0}
+.atlas-ids b{display:inline-flex;gap:4px;align-items:baseline;font:500 8.5px var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.atlas-dam-card>p{overflow-wrap:anywhere}

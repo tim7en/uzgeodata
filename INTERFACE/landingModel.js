@@ -274,3 +274,155 @@ export function overlayStyle(properties, state, value, breaks, palette = CHOROPL
     color: state?.selected || state?.hovered ? '#ffffff' : fill,
   };
 }
+
+// ----------------------------------------------------------------- dams
+
+// Nominal storage in the two systems runs from 1.3 MCM to Toktogul's 19,500 —
+// a 15,000-fold range spread almost evenly over five decades. That range is what
+// decides the scale.
+//
+// The textbook encoding is area-proportional: circle area rises with the value,
+// because area is what the eye reads as quantity. Here it cannot be used. A
+// radius ratio of sqrt(15000) is 122, so a 2-pixel dot for the smallest dam puts
+// Toktogul at 244 pixels — and clamping the top flattens exactly the reservoirs
+// that matter. Sizing by area instead makes three quarters of the dams
+// indistinguishable specks beside it.
+//
+// So the radius is logarithmic, and the legend says so and draws its reference
+// circles at decade steps. A reader decodes magnitude from the key rather than
+// by comparing areas, which is the honest trade for keeping every dam visible.
+const DAM_RADIUS = { min: 3.4, max: 17, floorMcm: 1, ceilingMcm: 20000 };
+
+// A dam whose capacity GDW never reported is not a dam holding nothing. It is
+// drawn at its own fixed small size and hollow, so it is present on the map and
+// cannot be misread as the smallest reservoir.
+const DAM_UNKNOWN_RADIUS = 2.8;
+
+// The choropleth underneath runs dark blue through teal and green to yellow, so
+// a dam drawn in any of those hues disappears into whichever attribute happens to
+// be on. These two sit outside that ramp entirely, and every circle carries a dark
+// stroke so it separates from a bright basin as well as a dark one.
+const DAM_COLORS = {
+  reservoir: '#ff4d6d',
+  formation: '#c77dff',
+  unknown: '#e8eef2',
+};
+const DAM_EDGE = '#1b0d12';
+
+/**
+ * Circle radius in pixels for a reservoir's nominal storage, or null when the
+ * source never reported one.
+ */
+export function damRadius(capacityMcm) {
+  const capacity = Number(capacityMcm);
+  if (capacityMcm === null || capacityMcm === undefined || capacityMcm === ''
+    || !Number.isFinite(capacity) || capacity <= 0) return null;
+  const { min, max, floorMcm, ceilingMcm } = DAM_RADIUS;
+  const span = Math.log10(ceilingMcm / floorMcm);
+  const position = Math.log10(Math.max(capacity, floorMcm) / floorMcm) / span;
+  return min + (max - min) * Math.min(position, 1);
+}
+
+/**
+ * Leaflet path options for one dam. Size carries storage; colour separates a dam
+ * standing in a runoff-formation zone from one downstream of it, because a dam
+ * that sits where the water is generated regulates a different thing from one
+ * that sits where the water merely passes.
+ */
+export function damStyle(properties, state = {}) {
+  const radius = damRadius(properties?.capacity_mcm);
+  const known = radius !== null;
+  const formation = Number(properties?.in_headwater_formation) === 1;
+  const color = !known ? DAM_COLORS.unknown : formation ? DAM_COLORS.formation : DAM_COLORS.reservoir;
+  const selected = Boolean(state.selected);
+  const hovered = Boolean(state.hovered) && !selected;
+  return {
+    radius: known ? radius : DAM_UNKNOWN_RADIUS,
+    color: selected || hovered ? '#ffffff' : known ? DAM_EDGE : color,
+    weight: selected ? 2.4 : hovered ? 1.8 : 1,
+    opacity: selected || hovered ? 1 : 0.85,
+    fillColor: color,
+    fillOpacity: !known ? 0 : selected ? 1 : hovered ? 0.95 : 0.82,
+  };
+}
+
+/** Reference circles for the size key, smallest first. */
+export function damLegendStops(steps = [10, 100, 1000, 10000]) {
+  return steps.map(capacity => ({ capacity, radius: damRadius(capacity) }));
+}
+
+export function damLabel(properties) {
+  const name = (properties?.dam_name || '').trim() || (properties?.reservoir_name || '').trim();
+  if (name) return name;
+  // GDW leaves three quarters of these unnamed. The river it dams is the next
+  // most useful handle, and the identifier is the last resort.
+  const river = (properties?.river || '').trim();
+  return river ? `Unnamed dam on the ${river}` : `Dam ${properties?.dam_id ?? '—'}`;
+}
+
+const DAM_USE_LABEL = {
+  Irrigation: 'Irrigation',
+  Hydroelectricity: 'Hydroelectricity',
+  'Water supply': 'Water supply',
+  'Flood control': 'Flood control',
+};
+
+export function damUseLabel(properties) {
+  const main = (properties?.main_use || '').trim();
+  if (main) return DAM_USE_LABEL[main] || main;
+  const listed = (properties?.uses || '').split(';').map(entry => entry.trim()).filter(Boolean);
+  return listed.length ? listed.join(', ') : 'Purpose not reported';
+}
+
+/**
+ * The facts worth showing beside a dam, in the order a reader asks for them.
+ * A row whose source value is missing is kept and shown as "not reported" rather
+ * than dropped, so the gap in GDW's coverage stays visible instead of looking
+ * like a fact nobody wanted to display.
+ */
+export function damHeadline(properties) {
+  const capacity = damRadius(properties?.capacity_mcm) === null
+    ? null : Number(properties.capacity_mcm);
+  const height = Number(properties?.dam_height_m);
+  const power = Number(properties?.power_capacity_mw);
+  const year = Number(properties?.year_completed);
+  return [
+    {
+      label: 'Nominal storage',
+      value: capacity === null ? 'Not reported' : formatNumber(capacity),
+      unit: capacity === null ? '' : 'MCM',
+    },
+    {
+      label: 'Dam height',
+      value: Number.isFinite(height) && height > 0 ? formatNumber(height) : 'Not reported',
+      unit: Number.isFinite(height) && height > 0 ? 'm' : '',
+    },
+    {
+      label: 'Completed',
+      value: Number.isFinite(year) && year > 0 ? String(year) : 'Not reported',
+      unit: '',
+    },
+    {
+      label: 'Installed power',
+      value: Number.isFinite(power) && power > 0 ? formatNumber(power) : 'Not reported',
+      unit: Number.isFinite(power) && power > 0 ? 'MW' : '',
+    },
+    { label: 'Primary use', value: damUseLabel(properties), unit: '' },
+    { label: 'River', value: (properties?.river || '').trim() || 'Not reported', unit: '' },
+    { label: 'Country', value: (properties?.country || '').trim() || 'Not reported', unit: '' },
+  ];
+}
+
+/** Totals for the dams currently drawn, for the layer's own summary line. */
+export function damTotals(features) {
+  const rows = (features || []).map(feature => feature.properties || feature);
+  const capacities = rows
+    .map(row => Number(row.capacity_mcm))
+    .filter(value => Number.isFinite(value) && value > 0);
+  return {
+    dams: rows.length,
+    withCapacity: capacities.length,
+    storageMcm: capacities.reduce((total, value) => total + value, 0),
+    inFormationZone: rows.filter(row => Number(row.in_headwater_formation) === 1).length,
+  };
+}

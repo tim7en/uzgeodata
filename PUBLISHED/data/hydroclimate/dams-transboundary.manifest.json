@@ -1,6 +1,6 @@
 {
  "version": "1.0",
- "generatedAt": "2026-09-08T19:05:18+00:00",
+ "generatedAt": "2026-09-08T19:23:21+00:00",
  "observationClass": "inventory",
  "spatialScope": "full_basin",
  "source": {
@@ -18,7 +18,9 @@
   "reachLinksInSelection": 99,
   "waterBodyLinks": 60,
   "waterBodyLinksInSelection": 54,
-  "inHeadwaterFormation": 23
+  "inHeadwaterFormation": 23,
+  "mapped": 100,
+  "positionSnappedToRiver": 59
  },
  "storageCapacityMcm": 70055.8,
  "installedPowerMw": null,
@@ -208,6 +210,7 @@
   "GDW records -99 for an unreported number. Those become empty cells here, never zero, because zero height and zero capacity are both legitimate values. Installed power is unreported for every barrier in this region, so installedPowerMw is null rather than the 0 MW a naive sum would publish for a basin that runs on hydropower.",
   "capacity_mcm is nominal storage as designed or reported, not an operating level. This layer says a structure exists and how much it can hold; it never says how full it is on a given day.",
   "A dam is placed by the level-12 basin GDW itself assigns, so the placement is read from the source rather than recomputed. Where GDW's HYRIV_ID or HYLAK_ID falls outside this project's published selection the row is kept and the scope column records it, rather than dropping the link.",
-  "GDW v1.0 supersedes GRanD v1.3 and GRanD is being discontinued. grand_id is kept as the cross-reference to HydroLAKES, whose Grand_id column still carries the older identifier."
+  "GDW v1.0 supersedes GRanD v1.3 and GRanD is being discontinued. grand_id is kept as the cross-reference to HydroLAKES, whose Grand_id column still carries the older identifier.",
+  "Most of the large dams here, Toktogul and Nurek among them, have no reported dam coordinate in GDW and are placed by its river-snapped position instead. position_source says which of the two was used for every row, because a snapped point sits on the river centreline rather than on the structure."
  ]
 }

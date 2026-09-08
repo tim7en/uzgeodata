@@ -66,7 +66,8 @@ COLUMNS = [
     "DIS_AVG_LS", "DOR_PC", "ELEV_MASL", "CATCH_SKM", "POWER_MW", "MAIN_USE",
     "USE_IRRI", "USE_ELEC", "USE_SUPP", "USE_FCON", "USE_RECR", "USE_NAVI",
     "USE_FISH", "USE_PCON", "USE_LIVE", "USE_OTHR", "QUALITY", "LONG_DAM",
-    "LAT_DAM", "GRAND_ID", "HYRIV_ID", "HYLAK_ID", "HYBAS_L12",
+    "LAT_DAM", "LONG_RIV", "LAT_RIV", "GRAND_ID", "HYRIV_ID", "HYLAK_ID",
+    "HYBAS_L12",
 ]
 
 TABLE_FIELDS = [
@@ -75,7 +76,7 @@ TABLE_FIELDS = [
     "dam_height_m", "dam_length_m", "reservoir_area_km2", "capacity_mcm",
     "mean_depth_m", "average_discharge_cms", "degree_of_regulation_pc",
     "elevation_masl", "catchment_km2", "power_capacity_mw", "main_use", "uses",
-    "record_quality", "longitude", "latitude", "system_id",
+    "record_quality", "longitude", "latitude", "position_source", "system_id",
     "hybas_id_level12", "hybas_id_level10", "in_headwater_formation",
     "hyriv_id", "hylak_id", "reach_scope", "water_body_scope",
     "source_asset", "retrieved_at",
@@ -228,7 +229,16 @@ def main() -> None:
         body_scope = ("outside_selection" if body_id and body_id not in bodies
                       else "in_selection" if body_id else "not_reported")
 
+        # GDW carries two positions: the reported dam location and the one snapped
+        # onto the river network. For the large Central Asian dams - Toktogul,
+        # Nurek, Rogun, Charvak - the reported pair is empty and only the snapped
+        # pair is populated, so preferring one and giving up loses exactly the
+        # reservoirs that matter. Which of the two was used is recorded per row.
         longitude, latitude = number(record.LONG_DAM), number(record.LAT_DAM)
+        position_source = "reported dam location"
+        if longitude is None or latitude is None:
+            longitude, latitude = number(record.LONG_RIV), number(record.LAT_RIV)
+            position_source = "snapped to the river network" if longitude is not None else ""
         rows.append({
             "dam_id": dam_id,
             "grand_id": integer(record.GRAND_ID) or "",
@@ -257,6 +267,7 @@ def main() -> None:
             "record_quality": text(record.QUALITY),
             "longitude": "" if longitude is None else f"{longitude:.5f}",
             "latitude": "" if latitude is None else f"{latitude:.5f}",
+            "position_source": position_source,
             "system_id": placed["system_id"],
             "hybas_id_level12": basin_id,
             "hybas_id_level10": parent10 or "",
@@ -302,7 +313,8 @@ def main() -> None:
                     "dam_id", "grand_id", "dam_name", "reservoir_name", "river",
                     "country", "year_completed", "dam_height_m", "capacity_mcm",
                     "power_capacity_mw", "main_use", "uses", "system_id",
-                    "hybas_id_level12", "in_headwater_formation", "hyriv_id", "hylak_id")},
+                    "hybas_id_level12", "in_headwater_formation", "hyriv_id",
+                    "hylak_id", "position_source")},
             })
 
     rows.sort(key=lambda row: -(float(row["capacity_mcm"] or 0)))
@@ -340,6 +352,9 @@ def main() -> None:
             "waterBodyLinks": len(body_links),
             "waterBodyLinksInSelection": sum(1 for row in body_links if row["water_body_scope"] == "in_selection"),
             "inHeadwaterFormation": sum(1 for row in rows if row["in_headwater_formation"] == 1),
+            "mapped": len(features),
+            "positionSnappedToRiver": sum(1 for row in rows
+                                          if row["position_source"] == "snapped to the river network"),
         },
         "storageCapacityMcm": round(storage, 1),
         "installedPowerMw": powered,
@@ -385,6 +400,10 @@ def main() -> None:
             "GDW v1.0 supersedes GRanD v1.3 and GRanD is being discontinued. grand_id is "
             "kept as the cross-reference to HydroLAKES, whose Grand_id column still carries "
             "the older identifier.",
+            "Most of the large dams here, Toktogul and Nurek among them, have no reported "
+            "dam coordinate in GDW and are placed by its river-snapped position instead. "
+            "position_source says which of the two was used for every row, because a "
+            "snapped point sits on the river centreline rather than on the structure.",
         ],
     }
     write_json(MANIFEST, manifest, indent=1)
@@ -392,6 +411,8 @@ def main() -> None:
     power = f"{powered:,.0f} MW" if powered is not None else "power not reported"
     print(f"  {len(rows):,} dams | {named:,} named | {storage:,.0f} MCM storage | {power}")
     print(f"  links: {len(basin_links):,} basin, {len(reach_links):,} reach, {len(body_links):,} water body")
+    print(f"  mapped: {len(features):,} of {len(rows):,} placed "
+          f"({manifest['counts']['positionSnappedToRiver']:,} snapped to the river network)")
     for entry in manifest["largestDams"][:6]:
         print(f"    {str(entry['name'] or '(unnamed)')[:22]:22} {str(entry['country'])[:12]:12} "
               f"{entry['year'] or '----'} {entry['capacityMcm'] or 0:>9,.0f} MCM  {entry['mainUse'] or ''}")

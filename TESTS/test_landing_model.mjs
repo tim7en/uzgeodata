@@ -6,6 +6,7 @@ import {
   CHOROPLETH, HEADLINE_ATTRIBUTES, carriesAttributes, choroplethColor, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
   legendStops, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
+  damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
 } from '../INTERFACE/landingModel.js';
 
 const read = name => JSON.parse(readFileSync(
@@ -293,4 +294,101 @@ test('each level carries its own aggregate, not a copy of a finer unit', () => {
   assert.ok(parentValue >= Math.min(...childValues) && parentValue <= Math.max(...childValues),
     `level-7 ${column} ${parentValue} outside child range`);
   assert.notEqual(parentValue, childValues[0]);
+});
+
+test('a dam is sized by its storage, and the scale keeps every dam visible', () => {
+  const smallest = damRadius(1.3);
+  const median = damRadius(55);
+  const toktogul = damRadius(19500);
+  assert.ok(smallest < median && median < toktogul, 'radius has to rise with storage');
+  // The point of the log scale: a 15,000-fold range still fits in a usable
+  // spread of pixels, and the smallest dam stays big enough to click.
+  assert.ok(smallest >= 3, `smallest dam ${smallest}px is too small to hit`);
+  assert.ok(toktogul <= 18, `largest dam ${toktogul}px would swallow the map`);
+  // Decade steps are evenly spaced, which is what makes the key readable.
+  const decades = [10, 100, 1000, 10000].map(damRadius);
+  const gaps = decades.slice(1).map((radius, index) => radius - decades[index]);
+  for (const gap of gaps) assert.ok(Math.abs(gap - gaps[0]) < 0.01, 'decades must be evenly spaced');
+});
+
+test('a dam with no reported capacity is not drawn as a dam holding nothing', () => {
+  for (const missing of [null, undefined, '', 0, -99]) {
+    assert.equal(damRadius(missing), null, `${missing} should have no size`);
+  }
+  const unknown = damStyle({capacity_mcm: ''});
+  const smallest = damStyle({capacity_mcm: 1.3});
+  assert.equal(unknown.fillOpacity, 0, 'an unreported capacity is drawn hollow');
+  assert.ok(smallest.fillOpacity > 0);
+  assert.ok(unknown.radius < smallest.radius, 'and smaller than the smallest known dam');
+});
+
+test('a dam in a runoff-formation zone is coloured apart from one downstream', () => {
+  const formation = damStyle({capacity_mcm: 500, in_headwater_formation: 1});
+  const transit = damStyle({capacity_mcm: 500, in_headwater_formation: 0});
+  assert.notEqual(formation.fillColor, transit.fillColor);
+  assert.equal(formation.radius, transit.radius, 'colour carries role, size carries storage');
+  const hovered = damStyle({capacity_mcm: 500}, {hovered: true});
+  const selected = damStyle({capacity_mcm: 500}, {selected: true});
+  assert.ok(selected.weight > hovered.weight);
+});
+
+test('an unnamed dam still gets a usable label', () => {
+  assert.equal(damLabel({dam_name: 'Nurek'}), 'Nurek');
+  assert.equal(damLabel({dam_name: '', reservoir_name: "Toktogul'skoye"}), "Toktogul'skoye");
+  assert.equal(damLabel({river: 'Zeravshan'}), 'Unnamed dam on the Zeravshan');
+  assert.equal(damLabel({dam_id: 4692}), 'Dam 4692');
+});
+
+test('a missing attribute is reported as missing rather than dropped', () => {
+  const rows = damHeadline({capacity_mcm: '2000', dam_height_m: '168', year_completed: '1977',
+    power_capacity_mw: '', main_use: 'Hydroelectricity', river: 'Chirchik', country: 'Uzbekistan'});
+  const byLabel = Object.fromEntries(rows.map(row => [row.label, row]));
+  assert.equal(byLabel['Nominal storage'].value, '2,000');
+  assert.equal(byLabel['Nominal storage'].unit, 'MCM');
+  assert.equal(byLabel['Dam height'].value, '168');
+  assert.equal(byLabel['Completed'].value, '1977');
+  // GDW reports no installed power anywhere in these basins; the row stays.
+  assert.equal(byLabel['Installed power'].value, 'Not reported');
+  assert.equal(byLabel['Installed power'].unit, '');
+  assert.equal(damUseLabel({main_use: '', uses: 'irrigation;water supply'}), 'irrigation, water supply');
+  assert.equal(damUseLabel({}), 'Purpose not reported');
+});
+
+test('the published dams carry what the map draws', () => {
+  const dams = read('dams-transboundary.geojson').features;
+  const totals = damTotals(dams);
+  assert.ok(totals.dams > 50, 'the two systems should hold a hundred barriers');
+  assert.ok(totals.withCapacity < totals.dams, 'GDW leaves some capacities unreported');
+  assert.ok(totals.storageMcm > 60000, 'Toktogul, Rogun and Nurek alone exceed 40,000 MCM');
+
+  // Every dam has to be drawable: a point, and either a size or the hollow marker.
+  for (const dam of dams) {
+    assert.equal(dam.geometry.type, 'Point');
+    const [longitude, latitude] = dam.geometry.coordinates;
+    assert.ok(longitude > 55 && longitude < 80, `${longitude} outside the two systems`);
+    assert.ok(latitude > 33 && latitude < 48, `${latitude} outside the two systems`);
+    const style = damStyle(dam.properties);
+    assert.ok(style.radius > 0);
+    assert.ok(damLabel(dam.properties).length > 0);
+    assert.equal(damHeadline(dam.properties).length, 7);
+  }
+
+  const named = Object.fromEntries(dams.map(dam => [dam.properties.dam_name, dam.properties]));
+  // The reservoirs that decide how much water reaches Uzbekistan.
+  for (const name of ['Nurek', 'Toktogul', 'Charvak', 'Andizhan', 'Kayrakkum', 'Rogun']) {
+    assert.ok(named[name], `${name} is missing from the dam layer`);
+    assert.ok(damRadius(named[name].capacity_mcm) > 0, `${name} has no drawable storage`);
+  }
+  assert.ok(damRadius(named.Toktogul.capacity_mcm) > damRadius(named.Charvak.capacity_mcm),
+    'Toktogul holds ten times Charvak and must draw larger');
+});
+
+test('the size key spans the decades the data actually covers', () => {
+  const stops = damLegendStops();
+  assert.equal(stops.length, 4);
+  for (const stop of stops) assert.ok(stop.radius > 0);
+  const dams = read('dams-transboundary.geojson').features;
+  const capacities = dams.map(dam => Number(dam.properties.capacity_mcm)).filter(Boolean);
+  assert.ok(Math.min(...capacities) < stops[0].capacity, 'key should start below the smallest dam');
+  assert.ok(Math.max(...capacities) > stops.at(-1).capacity, 'and end below the largest');
 });
