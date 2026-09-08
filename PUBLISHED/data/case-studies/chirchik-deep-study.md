@@ -11,7 +11,7 @@ The Pskem candidate contains 20 level-12 units, approximately 2,627 km². It inc
 | ERA5-Land monthly | Native station cells for observed months; area-weighted Pskem basin 2000–2024 | Temperature/precipitation validation; antecedent precipitation, March temperature and SWE |
 | CHIRPS v3 pentads | Six pentads per observed station month | Precipitation comparison |
 | CHIRTS daily | Daily Tmin/Tmax midrange aggregated monthly, 2010–2016 overlap | Temperature proxy cross-check |
-| MODIS Terra/Aqua v6.1 | Daily basin/elevation-band snow, available dates in 2000–2024; station cells from 2020 | Snow-day checks, sensor agreement and pre-April predictors |
+| MODIS Terra/Aqua v6.1 | Daily Terra/Aqua basin snow 2000–2024; combined series extended to latest extraction; station cells 2020–2024 | Snow-day checks, sensor agreement and pre-April predictors |
 | SRTM | Elevation bands below 1500, 1500–2500, 2500–3500 and above 3500 m | Snow stratification |
 | JRC Global Surface Water v1.4 | Monthly water detections, 2000–2021, Charvak polygon plus 1 km | Reservoir extent evidence, with missing-data screening |
 

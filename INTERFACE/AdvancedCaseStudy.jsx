@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ROOT = '/data/case-studies/';
 const fmt = (v, n = 2) => v == null ? '—' : Number(v).toLocaleString('en', { maximumFractionDigits: n });
@@ -7,6 +7,13 @@ const MODEL_NAMES = { seasonal_climatology: 'Seasonal baseline', physical_bucket
 
 export function Readiness({ environment }) {
   const [selected, setSelected] = useState(4);
+  const [build, setBuild] = useState(null);
+  useEffect(()=>{
+    let active=true;
+    const refresh=()=>fetch(`${ROOT}pipeline-status.json`,{cache:'no-store'}).then(r=>r.ok?r.json():null).then(r=>{if(active)setBuild(r);}).catch(()=>{});
+    refresh();const timer=setInterval(refresh,15000);
+    return()=>{active=false;clearInterval(timer);};
+  },[]);
   if (!environment) return null;
   const { readiness, freshness } = environment;
   return <section className="cs-readiness" aria-label="Data and modelling readiness">
@@ -14,6 +21,11 @@ export function Readiness({ environment }) {
     <div className="cs-process" role="group" aria-label="Readiness checks">{readiness.steps.map((step, i) => <button key={step.label} className={step.status} aria-pressed={selected === i} onClick={() => setSelected(i)}><span>{i + 1}</span><strong>{step.label}</strong><small>{step.status === 'green' ? 'Check complete' : step.status === 'amber' ? 'Limitations remain' : 'Action needed'}</small></button>)}</div>
     <p className="cs-readiness-detail"><strong>{readiness.steps[selected].label}:</strong> {readiness.steps[selected].reason}</p>
     <p className="cs-note">{readiness.meaning} Latest ERA5 month: <strong>{freshness.era5_latest_available}</strong>. Observed discharge still ends in 2017.</p>
+    <details><summary>Data dates and refresh progress</summary><div className="cs-table-wrap"><table><thead><tr><th>Dataset</th><th>Latest available input</th><th>Meaning</th></tr></thead><tbody>
+      <tr><td>ERA5-Land</td><td>{freshness.era5_latest_available}</td><td>Monthly forcing and unverified model continuation</td></tr>
+      {Object.entries(freshness.modis_latest_available).map(([key,value])=><tr key={key}><td>MODIS {key.toUpperCase()}</td><td>{value}</td><td>Composite start date; product coverage differs</td></tr>)}
+      <tr><td>Esri / Impact Observatory land cover</td><td>{environment.profile_metadata.landcover_years[1]}</td><td>Annual classification</td></tr><tr><td>Observed discharge</td><td>2017-12</td><td>No recent gauge verification supplied</td></tr>
+    </tbody></table></div>{build&&<p>Last pipeline run: <strong>{build.status}</strong> · {build.completed}/{build.total} processing stages complete{build.current_step?` · ${build.current_step}`:''}. {build.finished_at?`Finished ${build.finished_at.slice(0,10)}.`:''} This is processing progress; scientific readiness is shown above. Reload the page after a completed refresh to load its new results.</p>}<p>Refresh command: <code>npm run cases:update</code>. The downloaded reports retain their input hashes and original observation dates.</p></details>
   </section>;
 }
 

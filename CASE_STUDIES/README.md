@@ -1,69 +1,95 @@
-# Chirchik–Charvak case studies
+﻿# Chirchik–Charvak case studies
 
-Open `/case-studies.html` in the running application. The six study protocols are
-authored in [chirchik-portfolio.json](chirchik-portfolio.json); their methods and
-evidence gates are rendered in both the browser and the generated report.
+Open `/case-studies.html` in the running application. It contains historical
+station validation, MODSNOW-style snow monitoring, elevation and land-cover
+profiles, surface-energy comparisons, physical / random-forest / Bayesian
+models, Charvak water extent and an evidence-readiness bar.
+
+Earth Engine authentication was completed and read access verified with project
+`ee-sabitovty`. Credentials remain in the local Earth Engine credential store.
+For another machine/account, run `python -m ee.cli.eecli authenticate --auth_mode=localhost`
+and use an Earth Engine-enabled project. Never commit credentials.
+
+## Reproduce or refresh
 
 ```bash
-npm run cases:build
-npm run cases:figures
+# Recompute downloaded evidence, figures and reports without network requests
+python PIPELINES/update_chirchik_studies.py --offline
+
+# Refresh available remote inputs, then rebuild all analyses
+npm run cases:update
+
+# Scientific guards and application build
 npm run test:cases
 npm run build
 ```
 
-The offline build reads the existing monthly meteorological and daily discharge
-deliveries, station/basin links and level-12 routing. It writes to
-`PUBLISHED/data/case-studies/`:
+The refresh command uses the current year for combined snow and energy retrieval,
+keeps yearly request caches, and refreshes the latest partial source year. It
+writes `pipeline-status.json` with completed stages and any failure. Cache files
+live under ignored `WORKSPACE/derived/chirchik-cache/`. This implementation targets
+Pskem. Expansion needs a verified catchment, its own observations and adapted
+identifiers/configuration. Large domains should use Earth Engine batch exports.
 
-- `chirchik-report.md`: comprehensive methods, initial results, limitations and sources.
-- `chirchik.json`: browser evidence, scores, uncertainty, protocols and provenance.
-- `discharge-audit.csv`: calendar-valid raw and screened monthly flow, coverage,
-  complete-month volume and held-out predictions.
-- `discharge-rejected-dates.csv`: impossible calendar dates retained for review.
-- `station-annual.csv`: complete-year precipitation totals and day-weighted temperature.
-- `joint-climate-discharge.csv`: eligible, contemporaneous Pskem P/T/Q months.
-- `pskem-candidate-catchment.geojson`: full-unit reverse network trace; exact gauge
-  position and the partial outlet unit still require review.
-- `chirchik.manifest.json`: input hashes, processing version and quality policy.
-- `pskem-observation-evidence.png` and `.pdf`: standalone scientific figure, built separately.
+Individual commands include `cases:forcing`, `cases:profiles`, `cases:energy`,
+`cases:analyse`, `cases:models`, `cases:build`, `cases:figures` and
+`cases:figures:validation`. Python dependencies: Earth Engine API, requests,
+NumPy, SciPy, scikit-learn, Shapely, pyproj, matplotlib and openpyxl. Tests use
+pytest. The web build needs Node >=20.19.
 
-The existing daily import contains 2015-02-29, an impossible date. The case-study
-build quarantines it without altering the source CSV. Three additional source
-flags are screened; raw-versus-screened sensitivity uses the same eligible months.
-Monthly means require at least 90% daily coverage. Observed volumes require all
-days, avoiding unlabelled missing-day extrapolation.
+## Delivered artifacts
 
-The initial runoff benchmark learns monthly climatology from 2001–2010 and tests
-2011–2017. Its confidence intervals resample held-out calendar years with a fixed
-seed. It is a baseline to beat, not a calibrated rainfall–runoff model. KGE uses
-the 2009 definition; undefined scores are null. Bias is prediction minus observation.
+Generated evidence is under `PUBLISHED/data/case-studies/`:
 
-## Historical product validation
+- `chirchik-deep-study.md`: historical climate, snow, seasonal-flow and reservoir
+  verification with primary-source citations and all tested specifications.
+- `chirchik-environment-study.md`: terrain, energy, physical/ML/Bayesian methods,
+  actual results, readiness and prioritised professional extensions.
+- `chirchik-scientific-atlas.pdf`: ten scientific figures, including the study map;
+  corresponding PNGs are adjacent.
+- `chirchik-analysis.xlsx`: supporting chart data, model scores and sources.
+- `advanced-validation.json`: corrections, uncertainty, paired records, strict
+  seasonal-flow experiments and reservoir sensor checks.
+- `environment-modelling.json`: profiles, model results, predictive intervals,
+  importance, surface summaries, freshness, readiness and input hashes.
+- `chirchik.json` and `chirchik-report.md`: observation audit and six study
+  protocols authored in `CASE_STUDIES/chirchik-portfolio.json`.
+- CSVs preserve station products, daily satellite snow, monthly surface energy,
+  land-cover areas, quality audits, model predictions and source image IDs.
+- Manifests preserve hashes, product definitions, coverage and processing rules.
 
-An authenticated Earth Engine session is needed for:
+## Evidence and limitations
 
-```bash
-npm run cases:forcing
-npm run cases:build
-npm run cases:figures
-```
+ERA5 monthly forcing reaches July 2026; combined MODIS snow reaches September
+2026 (partial month). Esri/Impact Observatory 10 m land cover covers 2017–2025.
+LST and albedo reach August 2026; gap-filled MOD16 ET reaches the last 2025
+composite. Historical JRC water history ends in 2021 and is cross-checked against
+Sentinel-2 for 2018–2021. Check manifests for exact dates.
 
-The extractor samples native cells at the existing station coordinates, retrieves
-only variables/months for which observations exist, and records image identifiers.
-ERA5 monthly temperature is converted K → °C and precipitation m → mm. CHIRPS v3
-uses six pentads per month; missing source images abort the retrieval. The previous
-CSV is replaced only after a complete extraction. The network retrieval has not
-been verified in this environment because saved Earth Engine credentials are absent.
+Pskem discharge remains 2001–2017. Monthly model training uses 2001–2010, with
+2000 physical warm-up, and testing uses 84 months in 2011–2017. Forest RMSE is
+23.58 m³/s versus the seasonal baseline's 26.09; the bucket and Bayesian model
+have higher RMSE. The strict snow experiment has six training and four test
+years, and the chosen snow predictor worsens seasonal-volume prediction.
+Results after 2017 are unverified continuation.
 
-The build accepts `--forcing path/to/station-product-monthly.csv`. Required fields
-are `station_id,period,variable,value,unit,product,spatial_support`, with `period`
-as `YYYY-MM`, `spatial_support=station_grid_cell`, and units `mm` or `°C`.
-Use the extractor for full coordinate/image provenance. Duplicate keys, mismatched
-units and basin-mean inputs fail validation. Absent or unpaired data produce no
-scores. Raw product scores appear automatically by station and season after
-extraction; fitted bias correction and anomaly skill are subsequent experiments
-specified in the protocols, not implemented model results.
+One impossible source date (2015-02-29) is quarantined and three source-flagged
+values are screened. Monthly means need 90% valid days; observed volumes need
+every day. Missing-day volumes are not extrapolated.
 
-Future work follows the evidence gates: station-elevation and independence audit;
-reviewed gauge boundary; historical snow and catchment forcing; disjoint-year
-forecast tests; then independently constrained glacier and reservoir analyses.
+Overall readiness is **red**: the gauge coordinate lies near a small tributary,
+about 700 m from plausible Pskem main-stem reaches. No coordinate was changed.
+The candidate is a full-unit reverse level-12 trace, not a verified partial-outlet
+delineation. Every scientific check must be green for release; fresh inputs
+alone cannot turn the status green.
+
+Copernicus 30 m is a new terrain reference, not sub-30 m information. ERA5 values
+by 250 m elevation band remain coarse-grid information. Accumulated runoff is
+summed modelled generation, not routed measured discharge. MODIS LST is surface
+temperature; MOD16 represents a restricted terrestrial footprint; land-cover
+accuracy has not been established locally. Same-day Terra/Aqua combination does
+not reproduce the full MODSNOW temporal cloud-removal algorithm.
+
+The six protocols retain further work where observations are insufficient:
+verified station elevations/product independence, recent discharge, independent
+land-cover labels, glacier mass balance, and reservoir levels/bathymetry.

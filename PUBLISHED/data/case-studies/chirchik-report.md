@@ -54,21 +54,41 @@ Station-product validation status: `raw_product_comparisons`. No score is fabric
 
 | Station | Product | Variable | Season | Pairs | RMSE | Bias |
 | --- | --- | --- | --- | ---: | ---: | ---: |
+| Tashkent | chirts-midrange | air_temperature_mean | all | 84 | 1.741 | -1.533 |
+| Tashkent | chirts-midrange | air_temperature_mean | DJF | 21 | 2.234 | -2.119 |
+| Tashkent | chirts-midrange | air_temperature_mean | MAM | 21 | 1.852 | -1.472 |
+| Tashkent | chirts-midrange | air_temperature_mean | JJA | 21 | 1.534 | -1.426 |
+| Tashkent | chirts-midrange | air_temperature_mean | SON | 21 | 1.164 | -1.117 |
 | Tashkent | era5-land | air_temperature_mean | all | 120 | 2.270 | -1.421 |
 | Tashkent | era5-land | air_temperature_mean | DJF | 30 | 3.897 | -2.645 |
 | Tashkent | era5-land | air_temperature_mean | MAM | 30 | 2.079 | -1.918 |
 | Tashkent | era5-land | air_temperature_mean | JJA | 30 | 0.668 | -0.522 |
 | Tashkent | era5-land | air_temperature_mean | SON | 30 | 0.807 | -0.597 |
+| Tashkent | chirps-v3 | precipitation_total | all | 120 | 13.287 | 2.301 |
+| Tashkent | chirps-v3 | precipitation_total | DJF | 30 | 12.922 | 5.268 |
+| Tashkent | chirps-v3 | precipitation_total | MAM | 30 | 19.984 | 4.991 |
+| Tashkent | chirps-v3 | precipitation_total | JJA | 30 | 6.728 | 0.198 |
+| Tashkent | chirps-v3 | precipitation_total | SON | 30 | 9.726 | -1.252 |
 | Tashkent | era5-land | precipitation_total | all | 120 | 16.630 | 6.725 |
 | Tashkent | era5-land | precipitation_total | DJF | 30 | 10.396 | 4.008 |
 | Tashkent | era5-land | precipitation_total | MAM | 30 | 28.351 | 21.955 |
 | Tashkent | era5-land | precipitation_total | JJA | 30 | 8.472 | 1.458 |
 | Tashkent | era5-land | precipitation_total | SON | 30 | 11.074 | -0.522 |
+| Pskem | chirts-midrange | air_temperature_mean | all | 81 | 1.318 | 1.176 |
+| Pskem | chirts-midrange | air_temperature_mean | DJF | 19 | 1.398 | 1.220 |
+| Pskem | chirts-midrange | air_temperature_mean | MAM | 20 | 1.068 | 0.941 |
+| Pskem | chirts-midrange | air_temperature_mean | JJA | 21 | 1.602 | 1.547 |
+| Pskem | chirts-midrange | air_temperature_mean | SON | 21 | 1.132 | 0.991 |
 | Pskem | era5-land | air_temperature_mean | all | 177 | 7.233 | -7.128 |
 | Pskem | era5-land | air_temperature_mean | DJF | 43 | 7.722 | -7.647 |
 | Pskem | era5-land | air_temperature_mean | MAM | 44 | 7.451 | -7.363 |
 | Pskem | era5-land | air_temperature_mean | JJA | 45 | 6.193 | -6.180 |
 | Pskem | era5-land | air_temperature_mean | SON | 45 | 7.493 | -7.351 |
+| Pskem | chirps-v3 | precipitation_total | all | 180 | 24.801 | -1.308 |
+| Pskem | chirps-v3 | precipitation_total | DJF | 45 | 27.628 | -11.989 |
+| Pskem | chirps-v3 | precipitation_total | MAM | 45 | 28.204 | 4.816 |
+| Pskem | chirps-v3 | precipitation_total | JJA | 45 | 18.930 | -3.708 |
+| Pskem | chirps-v3 | precipitation_total | SON | 45 | 23.308 | 5.651 |
 | Pskem | era5-land | precipitation_total | all | 180 | 41.593 | 34.094 |
 | Pskem | era5-land | precipitation_total | DJF | 45 | 31.529 | 24.762 |
 | Pskem | era5-land | precipitation_total | MAM | 45 | 46.713 | 39.788 |
@@ -79,6 +99,11 @@ Station-product validation status: `raw_product_comparisons`. No score is fabric
 | Oygaing | era5-land | air_temperature_mean | MAM | 9 | 4.038 | -3.946 |
 | Oygaing | era5-land | air_temperature_mean | JJA | 9 | 4.136 | -4.101 |
 | Oygaing | era5-land | air_temperature_mean | SON | 9 | 4.177 | -4.132 |
+| Oygaing | chirps-v3 | precipitation_total | all | 36 | 25.708 | -8.827 |
+| Oygaing | chirps-v3 | precipitation_total | DJF | 9 | 38.741 | -33.454 |
+| Oygaing | chirps-v3 | precipitation_total | MAM | 9 | 16.765 | -2.169 |
+| Oygaing | chirps-v3 | precipitation_total | JJA | 9 | 19.588 | -3.760 |
+| Oygaing | chirps-v3 | precipitation_total | SON | 9 | 21.862 | 4.074 |
 | Oygaing | era5-land | precipitation_total | all | 36 | 72.822 | 51.039 |
 | Oygaing | era5-land | precipitation_total | DJF | 9 | 11.836 | 8.492 |
 | Oygaing | era5-land | precipitation_total | MAM | 9 | 60.756 | 43.240 |
@@ -87,7 +112,7 @@ Station-product validation status: `raw_product_comparisons`. No score is fabric
 
 ## 1. Which precipitation product captures the mountain water input?
 
-**Status:** Raw product comparisons computed; correction experiments pending
+**Status:** Historical raw comparisons computed; see advanced correction results
 
 How well do ERA5-Land and CHIRPS v3 reproduce monthly precipitation at Pskem, Oygaing and Tashkent, and does the error change with season and location?
 
@@ -119,7 +144,7 @@ How well do ERA5-Land and CHIRPS v3 reproduce monthly precipitation at Pskem, Oy
 
 ### Evidence needed before stronger claims
 
-- Historical station-cell extraction is absent from this checkout; the existing 2025–2026 basin means cannot validate 2010–2024 station observations.
+- Historical station-cell comparisons and training-only corrections are now computed. Verify station metadata and contribution to blended products before claiming independent validation.
 - Station precipitation is a point measurement. Basin-mean precipitation requires separate spatial evaluation; a good station score alone does not validate catchment totals.
 
 **Decision supported:** Select and, if justified on held-out years, correct precipitation inputs before fitting a runoff model.
@@ -128,7 +153,7 @@ Sources: [ERA5-Land monthly aggregates: bands, units and limitations](https://de
 
 ## 2. Temperature, elevation and the timing of melt
 
-**Status:** Raw product comparisons computed; correction experiments pending
+**Status:** Historical raw comparisons computed; see advanced correction results
 
 Does gridded air temperature reproduce the observed seasonal cycle and cold-season anomalies well enough to drive a snowmelt model?
 
@@ -168,7 +193,7 @@ Sources: [ERA5-Land monthly aggregates: bands, units and limitations](https://de
 
 ## 3. From winter accumulation to Pskem summer flow
 
-**Status:** Observed regime and benchmark computed
+**Status:** MODIS checks and physical / ML / Bayesian models computed
 
 Can antecedent precipitation and snow conditions improve seasonal Pskem discharge estimates beyond the expected seasonal hydrograph?
 
@@ -182,7 +207,7 @@ Can antecedent precipitation and snow conditions improve seasonal Pskem discharg
 2. Trace NEXT_DOWN upstream of the gauge's containing level-12 unit. Review the gauge position against the river reach and delineate the partial outlet unit before calling this an exact gauge catchment. Keep transboundary contributing units.
 3. Build the first honest benchmark now: a calendar-month discharge climatology fitted on 2001–2010 and evaluated on 2011–2017. Report NSE, KGE (2009), bias, RMSE and MAE on eligible held-out months.
 4. Backfill MODIS snow for 2000–2017 and basin forcing for at least 2000–2017, including model warm-up. Use cloud/QA masks and valid-area fractions; derive snow-covered area from an explicit classification, never interpret the NDSI value as fractional cover.
-5. For an April 1 seasonal forecast, use only observations available by March 31. Compare an antecedent-precipitation model, then an added-snow model, using expanding-year validation within 2010–2017; report the very small number of independent years.
+5. For the April 1 experiment, fit fixed ridge specifications on qualifying 2001–2010 years and test qualifying 2011–2017 years. Use only pre-April climate and snow predictors. Report the strict coverage exclusions and compare all specifications on identical years.
 6. For process modelling, calibrate a parsimonious snow–soil–routing model and test on disjoint years. Convert area-weighted runoff depth to volume before routing. Compare against both monthly climatology and the same forcing model without snow predictors.
 
 ### Evaluation
@@ -202,7 +227,7 @@ Can antecedent precipitation and snow conditions improve seasonal Pskem discharg
 
 ### Evidence needed before stronger claims
 
-- The stored MODIS/ERA5 observations have no overlap with the historical discharge record. Their broad existing headwater selection excludes these stations.
+- Historical snow and climate overlap are now extracted. Gauge-to-main-stem assignment remains unresolved; the provisional boundary must be verified.
 - ERA5-Land runoff is local modelled runoff depth, not routed gauge discharge.
 - Eight overlapping climate–flow years are insufficient for strong attribution claims; reserve conclusions until independent validation is available.
 
@@ -252,7 +277,7 @@ Sources: [Randolph Glacier Inventory, Version 7](https://nsidc.org/data/nsidc-07
 
 ## 5. Charvak water extent and storage uncertainty
 
-**Status:** Historical image and level extraction required
+**Status:** JRC extent and Sentinel-2 cross-check computed; storage unconstrained
 
 What can public observations establish about Charvak filling, drawdown and storage change?
 
@@ -294,7 +319,7 @@ Sources: [ICESat-2 ATL13 inland water user guide](https://nsidc.org/sites/defaul
 
 ## 6. Development pressure upstream of water supply
 
-**Status:** Boundary and change validation required
+**Status:** Esri 10 m elevation profiles computed; local accuracy unverified
 
 Where has built-up land expanded around Charvak and within verified upstream conservation boundaries?
 
@@ -344,8 +369,8 @@ npm run build
 ```
 
 1. Review source discharge flags and gauge/reach placement; confirm station elevations and product independence.
-2. Run historical station-cell extraction; compare raw products before fitting corrections.
-3. Delineate the approved gauge catchment, backfill snow and catchment forcing, then test seasonal forecasts on disjoint years.
+2. Inspect historical product and correction results in chirchik-deep-study.md; audit representativeness before transfer.
+3. Verify the gauge catchment and repeat the completed snow, physical, machine-learning and Bayesian experiments for that boundary.
 4. Expand to Chatkal/Ugam and reservoir storage when their control sections and independent validation data are available.
 
 Every output is associated with source hashes, processing version, time support and existing station/basin identifiers. Study statuses describe the analyses actually run; the remaining protocols are research work, not claimed completed validation.

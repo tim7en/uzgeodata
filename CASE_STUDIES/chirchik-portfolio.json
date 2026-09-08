@@ -30,7 +30,7 @@
         "A justified forcing choice for Pskem with a transferability statement"
       ],
       "gates": [
-        "Historical station-cell extraction is absent from this checkout; the existing 2025–2026 basin means cannot validate 2010–2024 station observations.",
+        "Historical station-cell comparisons and training-only corrections are now computed. Verify station metadata and contribution to blended products before claiming independent validation.",
         "Station precipitation is a point measurement. Basin-mean precipitation requires separate spatial evaluation; a good station score alone does not validate catchment totals."
       ],
       "decision": "Select and, if justified on held-out years, correct precipitation inputs before fitting a runoff model.",

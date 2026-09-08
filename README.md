@@ -58,6 +58,9 @@ npm run stations:pskem          # Pskem/Oygaing/Tashkent workbooks into station 
 npm run cases:build             # observed-data analysis and six Chirchik case studies
 npm run cases:forcing           # historical ERA5/CHIRPS station cells (needs EE auth)
 npm run cases:figures           # export observation figure as PNG and vector PDF
+npm run cases:update            # refresh EE inputs and rebuild extended studies
+npm run cases:models            # physical, random-forest and Bayesian hindcasts
+npm run cases:figures:validation # scientific atlas, cited report and workbook
 npm run test:cases              # scientific validation and QC guard rails
 npm run headwaters:elevation    # SRTM elevation-band areas inside headwaters
 npm run headwaters:era5         # append every newly available ERA5-Land month
@@ -114,6 +117,6 @@ the public graph projections without requiring that private registry.
 | `/landcover.html` | An ontology-driven basin observatory: annual Esri land-cover area, share, dominant class and change rendered as a reactive BasinATLAS map with temporal and spatial charts, table rows and JSON evidence. |
 | `/climate.html` | The same reactive map generalized across every other already-measured basin table: CFSv2 climate state and anomaly, CHIRPS precipitation, CHIRTS and CPC temperature, CAMS air quality, and GHM human modification. One time slider, one choropleth per basin level (6, 7 or 12), colour by raw value or, where a baseline exists, by anomaly z-score. `npm run climate:web` rebuilds its projection from `PIPELINES/build_basin_layers_web.py`. |
 | `/relationships.html` | The stored facts themselves, as sortable and exportable tables. |
-| `/case-studies.html` | Six Chirchik–Charvak study protocols, interactive station/discharge evidence, a held-out seasonal-flow benchmark, candidate Pskem catchment and downloadable results with source hashes. |
+| `/case-studies.html` | Chirchik–Charvak validation, MODIS snow, 10 m land cover, elevation and energy profiles, physical/ML/Bayesian models, a readiness bar, scientific figures and supporting workbook. |
 | `/review.html` | Every layer the project holds, one at a time on a map, with its extent, geometry type and a sample of every attribute column. Stepping with the arrows walks the whole set; the fill percentage next to each field is what shows a column that carries nothing. |
 | `/catalogue.html` | Opens with the data groups — every kind of data the project references, under a short code, with its status checked against the working copy. Below that, every dataset the graph describes: what it measures, where it came from, and whether this checkout can actually open it. Availability is checked against the filesystem, not taken from the recorded URL. |

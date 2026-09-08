@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated_at": "2026-09-08T20:38:32.209006+00:00",
+  "generated_at": "2026-09-08T21:32:36.793632+00:00",
   "provenance": [
     {
       "path": "PUBLISHED/data/hydroclimate/pskem-station-monthly.csv",
@@ -34,18 +34,18 @@
     },
     {
       "path": "PUBLISHED/data/case-studies/station-product-monthly.csv",
-      "sha256": "7c72bce99f946d0fa76abeb248b3371d09cfa70ff0e7b8a177edb330168c0320",
-      "bytes": 291692
+      "sha256": "4d695375ce4f66c788dbaabbd859d2247db125adea60b581e939467b5c927ef2",
+      "bytes": 300394
     },
     {
       "path": "CASE_STUDIES/chirchik-portfolio.json",
-      "sha256": "9c878620043cff7aa999f5552d20c8efeab51972cabf67035b8773d66f4264c1",
-      "bytes": 18381
+      "sha256": "33b811d1f9ef34a97168a2eca5ecea8f7ead9c6eba66fffce920bc89afc3bcdc",
+      "bytes": 19768
     },
     {
       "path": "PIPELINES/build_chirchik_case_studies.py",
-      "sha256": "05e7f5cc4747845ad9fdb9a8952a1871c750c9fe1d654fc85bb6cf3695cb326e",
-      "bytes": 26589
+      "sha256": "852d53ac66fd01cb0bec1422b830f4140df82138366598c407b59804b1608577",
+      "bytes": 27037
     }
   ],
   "quality_policy": {

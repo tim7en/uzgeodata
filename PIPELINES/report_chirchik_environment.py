@@ -34,7 +34,8 @@ BLUE,ORANGE,PURPLE='#177e9b','#b86b28','#8263ad'
 def figure_atlas(d,a):
     plt.rcParams.update({'font.family':'DejaVu Sans','font.size':9,'axes.spines.top':False,'axes.spines.right':False,'axes.titlelocation':'left','axes.titleweight':'bold'})
     paths=[]
-    with PdfPages(OUT/'chirchik-scientific-atlas.pdf') as pdf:
+    temporary_pdf=OUT/'chirchik-scientific-atlas.tmp.pdf'
+    with PdfPages(temporary_pdf) as pdf:
         def save(fig,name,caption):
             fig.supxlabel(caption,fontsize=8)
             pdf.savefig(fig)
@@ -133,6 +134,7 @@ def figure_atlas(d,a):
         pairs=water['sentinel_check']['pairs'];axes[1].scatter([p['observed'] for p in pairs],[p['predicted'] for p in pairs],color=BLUE);axes[1].plot([10,40],[10,40],color=ORANGE,ls='--');axes[1].set(title=f"b. {len(pairs)} same-month sensor pairs",xlabel='JRC / Landsat (km²)',ylabel='Sentinel-2 (km²)')
         fig.suptitle('Charvak: water extent and an independent-sensor check',fontsize=15)
         save(fig,'charvak-water-verification','Sources: JRC Global Surface Water 1.4 and Sentinel-2 SR Harmonized. Both comparisons require ≥95% valid area.\nAcquisition dates differ within the month. The polygon plus 1 km domain includes adjacent channels; area is not storage volume.')
+    temporary_pdf.replace(OUT/'chirchik-scientific-atlas.pdf')
     return paths
 
 
@@ -216,7 +218,7 @@ def workbook(d):
         sheet.freeze_panes='A2';sheet.auto_filter.ref=sheet.dimensions
         for cell in sheet[1]:cell.font=Font(bold=True,color='FFFFFF');cell.fill=PatternFill('solid',fgColor='17495B')
         for col in sheet.columns:sheet.column_dimensions[col[0].column_letter].width=min(65,max(16,len(str(col[0].value))+3))
-    wb.save(OUT/'chirchik-analysis.xlsx')
+    temporary=OUT/'chirchik-analysis.tmp.xlsx';wb.save(temporary);temporary.replace(OUT/'chirchik-analysis.xlsx')
 
 
 def main():

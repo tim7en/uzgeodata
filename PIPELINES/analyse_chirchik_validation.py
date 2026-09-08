@@ -83,6 +83,8 @@ def climate_validation(observations, products):
                            *([result['correction']['raw_test'],result['correction']['corrected_test']] if result['correction'] else [])]:
                 if metric:
                     for key in ['kge','beta','pbias']:metric[key]=None
+            for bounds in [result['raw_intervals'],result['correction']['corrected_intervals'] if result['correction'] else None]:
+                if bounds:bounds['bounds'].pop('kge',None)
         results.append(result)
     return results,pairs
 
