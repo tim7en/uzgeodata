@@ -222,3 +222,27 @@ test('every level publishes the attribute store its overlay needs', () => {
   const fine = ladder.levels[ladder.levels.length - 1];
   assert.ok(coarse.attributesBytes * 4 < fine.attributesBytes);
 });
+
+test('the whole related dataset resolves for a single watershed', () => {
+  // What the modal renders: every attribute, its value, its kind, and the source
+  // it came from — for one basin, in one pass.
+  const groups = read('reference-attribute-groups.json');
+  const store = indexStore(read('reference-basin-attributes.json'));
+  const catalogue = read('reference-attribute-catalogue.json');
+  const hybasId = store.ids[Math.floor(store.ids.length / 2)];
+
+  const rows = ['basin_specific', 'basin_accumulation'].flatMap(groupId =>
+    groupAttributes(groups, store, hybasId, groupId).flatMap(category =>
+      category.attributes.map(attribute => ({ ...attribute, groupId, category: category.id }))));
+
+  assert.equal(rows.length, store.columns.length, 'every published column must reach the table');
+  for (const row of rows.slice(0, 40)) {
+    assert.ok(row.label && row.spatialExtentLabel && row.category);
+    assert.ok('value' in row);
+    const code = catalogue.columnIndex[row.column]?.variable;
+    const variable = catalogue.variables.find(entry => entry.code === code);
+    assert.ok(variable?.source, `${row.column} has no source to show`);
+    assert.ok(variable?.licence, `${row.column} has no licence to show`);
+    assert.equal(catalogue.columnIndex[row.column].group, row.groupId);
+  }
+});

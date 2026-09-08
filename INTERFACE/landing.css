@@ -90,3 +90,40 @@ body{margin:0;background:#060b0e;color:var(--ink);font-family:var(--body)}
 .land-legend em{font-style:normal;font:500 9px var(--mono);color:var(--dim)}
 .land-legend a{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font:700 8px var(--display);letter-spacing:.1em;text-transform:uppercase;color:#4cc9f0;text-decoration:none}
 .land-legend a:hover{text-decoration:underline}
+.land-open-table{width:100%;margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 11px;border:1px solid var(--line);border-left:2px solid var(--system,#4cc9f0);background:rgba(255,255,255,.02);color:var(--ink);text-align:left;cursor:pointer;transition:.18s}
+.land-open-table:hover{background:rgba(76,201,240,.1)}
+.land-open-table strong{display:block;font:600 11px var(--display);letter-spacing:.05em;text-transform:uppercase}
+.land-open-table small{display:block;margin-top:2px;font-size:8.5px;color:var(--dim)}
+.land-open-table svg{flex:none;color:#4cc9f0}
+.land-modal{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:32px;background:rgba(2,5,7,.72);backdrop-filter:blur(3px)}
+.land-modal>section{display:flex;flex-direction:column;width:min(1080px,100%);max-height:100%;border:1px solid var(--line);background:#070d10;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.land-modal header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.land-modal header span{font:800 7px var(--display);letter-spacing:.2em;text-transform:uppercase;color:#4cc9f0}
+.land-modal header h2{margin:5px 0 4px;font:700 25px var(--display);letter-spacing:.01em}
+.land-modal header p{margin:0;font-size:9.5px;color:var(--dim)}
+.land-modal header button{border:1px solid var(--line);background:transparent;color:var(--dim);padding:5px;cursor:pointer}
+.land-modal header button:hover{color:var(--ink)}
+.land-modal-tools{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.land-modal-tools label{display:flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid var(--line);background:rgba(3,8,10,.7);color:var(--dim);min-width:230px}
+.land-modal-tools input{min-width:0;flex:1;border:0;outline:0;background:none;color:var(--ink);font-size:10px}
+.land-modal-kinds{display:flex;gap:4px}
+.land-modal-kinds button{padding:6px 10px;border:1px solid var(--line);background:transparent;color:var(--dim);font:700 8px var(--display);letter-spacing:.09em;text-transform:uppercase;cursor:pointer}
+.land-modal-kinds button.active{background:#4cc9f0;border-color:#4cc9f0;color:#050a0c}
+.land-modal-tools>span{margin-left:auto;font:600 9px var(--mono);color:#5d6d75}
+.land-modal-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin}
+.land-modal table{width:100%;border-collapse:collapse}
+.land-modal thead th{position:sticky;top:0;z-index:1;background:#0a1216;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);font:800 6.5px var(--display);letter-spacing:.15em;text-transform:uppercase;color:#5d6d75}
+.land-modal tbody td{padding:8px 12px;border-bottom:1px solid rgba(29,40,45,.55);font-size:9.5px;color:var(--dim);vertical-align:top}
+.land-modal tbody tr:hover td{background:rgba(76,201,240,.05)}
+.land-modal tbody strong{display:block;color:var(--ink);font-size:10px;font-weight:600;line-height:1.35}
+.land-modal tbody code{display:block;margin-top:2px;font:600 8px var(--mono);color:#4cc9f0}
+.land-modal-value{white-space:nowrap;font:600 12px var(--mono);color:var(--ink)}
+.land-modal-value em{font-style:normal;font-size:8px;color:#5d6d75}
+.land-modal-source small{display:block;margin-top:2px;font-size:8px;color:#5d6d75}
+.land-kind{display:inline-block;padding:1px 5px;border:1px solid var(--line);font:700 7px var(--display);letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+.land-kind.basin_specific{color:#9fefff;border-color:rgba(159,239,255,.32)}
+.land-kind.basin_accumulation{color:#ffa552;border-color:rgba(255,165,82,.32)}
+.land-modal footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-top:1px solid var(--line);font-size:8.5px;color:#5d6d75}
+.land-modal footer code{font:600 8.5px var(--mono);color:#4cc9f0}
+.land-modal footer a{display:inline-flex;align-items:center;gap:4px;font:700 8px var(--display);letter-spacing:.1em;text-transform:uppercase;color:#4cc9f0;text-decoration:none}
+@media(max-width:820px){.land-modal{padding:12px}.land-modal-tools label{min-width:0;flex:1}}

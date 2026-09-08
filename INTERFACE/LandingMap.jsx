@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GeoJSON, MapContainer, ScaleControl, TileLayer, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
-import { ArrowUpRight, ChevronDown, Layers, Search, X } from 'lucide-react';
+import { ArrowUpRight, Layers, Search, X } from 'lucide-react';
 import {
-  HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle, carriesAttributes, formatAttribute,
-  formatNumber, groupAttributes, groupSummary, indexStore, legendStops, levelForZoom,
+  HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle, formatAttribute,
+  formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
   overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
 const LADDER_URL = '/data/hydroclimate/reference-basin-levels.json';
 const RIVER_LADDER_URL = '/data/hydroclimate/reference-river-levels.json';
 const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
+const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const CENTRE = [40.2, 70.5];
 const DEEPER = [
   { href: '/climate.html', label: 'Hydroclimate observatory', note: 'Snow, precipitation and anomalies by basin' },
@@ -37,24 +38,93 @@ function FitTo({ bounds }) {
   return null;
 }
 
-function AttributeGroup({ groups, store, hybasId, groupId, loading, onOpen }) {
-  const [open, setOpen] = useState(false);
-  const summary = groupSummary(groups, groupId);
-  const categories = open && store ? groupAttributes(groups, store, hybasId, groupId) : [];
-  return <section className={`land-group ${open ? 'open' : ''}`}>
-    <button type="button" onClick={() => { setOpen(current => !current); if (!open) onOpen(); }}>
-      <span><strong>{summary.label}</strong><small>{summary.attributeCount} attributes · {summary.categories} categories</small></span>
-      <ChevronDown size={14}/>
-    </button>
-    {open && (loading ? <p className="land-group-note">Loading the atlas attributes…</p>
-      : categories.map(category => <div className="land-category" key={category.id}>
-        <span>{category.id}</span>
-        <dl>{category.attributes.map(attribute => <div key={attribute.column}>
-          <dt title={attribute.label}>{attribute.label}</dt>
-          <dd>{attribute.value}{attribute.unit ? <em> {attribute.unit}</em> : null}</dd>
-        </div>)}</dl>
-      </div>))}
-  </section>;
+const GROUP_ORDER = ['basin_specific', 'basin_accumulation'];
+
+/**
+ * The whole related dataset for one watershed, as a table.
+ *
+ * 281 rows never fitted a 340px rail, so the panel now opens this instead: one
+ * scrollable table, filterable, with each row carrying the source product and
+ * licence it came from and whether it describes this sub-basin or everything
+ * upstream of it.
+ */
+function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
+  const [filter, setFilter] = useState('');
+  const [kind, setKind] = useState('all');
+
+  useEffect(() => {
+    const escape = event => { if (event.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', escape);
+    return () => window.removeEventListener('keydown', escape);
+  }, [onClose]);
+
+  const rows = useMemo(() => {
+    const term = filter.trim().toLowerCase();
+    const collected = [];
+    for (const groupId of GROUP_ORDER) {
+      if (kind !== 'all' && kind !== groupId) continue;
+      for (const category of groupAttributes(groups, store, basin.hybas_id, groupId)) {
+        for (const attribute of category.attributes) {
+          if (term && !attribute.label.toLowerCase().includes(term)
+            && !attribute.column.includes(term)
+            && !category.id.toLowerCase().includes(term)) continue;
+          const code = catalogue?.columnIndex?.[attribute.column]?.variable;
+          const variable = catalogue?.variables?.find(entry => entry.code === code);
+          collected.push({ ...attribute, category: category.id, groupId, variable });
+        }
+      }
+    }
+    return collected;
+  }, [groups, store, catalogue, basin.hybas_id, filter, kind]);
+
+  return <div className="land-modal" role="dialog" aria-modal="true" aria-label="Atlas attributes for this basin"
+    onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+    <section>
+      <header>
+        <div>
+          <span>{systemMeta(basin.system_id).label} · level {basin.basin_level}</span>
+          <h2>HYBAS {basin.hybas_id}</h2>
+          <p>{formatNumber(basin.area_km2)} km² in this sub-basin · {formatNumber(basin.upstream_km2)} km² upstream</p>
+        </div>
+        <button type="button" onClick={onClose} aria-label="Close"><X size={15}/></button>
+      </header>
+
+      <div className="land-modal-tools">
+        <label><Search size={12}/><input value={filter} onChange={event => setFilter(event.target.value)}
+          placeholder="Attribute, category or column"/></label>
+        <div className="land-modal-kinds">
+          {[['all', 'All'], ['basin_specific', 'This sub-basin'], ['basin_accumulation', 'Upstream']].map(([id, label]) =>
+            <button key={id} type="button" className={kind === id ? 'active' : ''} onClick={() => setKind(id)}>{label}</button>)}
+        </div>
+        <span>{formatNumber(rows.length)} attributes</span>
+      </div>
+
+      <div className="land-modal-scroll">
+        {loading && !store ? <p className="land-group-note">Loading the atlas attributes…</p>
+          : <table>
+            <thead><tr>
+              <th>Attribute</th><th>Value</th><th>Measured over</th><th>Category</th><th>Source</th>
+            </tr></thead>
+            <tbody>{rows.map(row => <tr key={row.column}>
+              <td><strong>{row.label}</strong><code>{row.column}</code></td>
+              <td className="land-modal-value">{row.value}{row.unit ? <em> {row.unit}</em> : null}</td>
+              <td><span className={`land-kind ${row.groupId}`}>{row.spatialExtentLabel}</span></td>
+              <td>{row.category}</td>
+              <td className="land-modal-source">
+                {row.variable?.source || '—'}
+                {row.variable?.licence ? <small>{row.variable.licence}</small> : null}
+              </td>
+            </tr>)}</tbody>
+          </table>}
+        {!rows.length && store ? <p className="land-group-note">Nothing matches that filter.</p> : null}
+      </div>
+
+      <footer>
+        <span>Values join on <code>hybas_id</code>; river reaches inherit through <code>HYBAS_L12</code>.</span>
+        <a href="/metadata.html">Full attribute catalogue <ArrowUpRight size={11}/></a>
+      </footer>
+    </section>
+  </div>;
 }
 
 export default function LandingMap() {
@@ -71,10 +141,13 @@ export default function LandingMap() {
   const [hoveredId, setHoveredId] = useState(null);
   const [query, setQuery] = useState('');
   const [overlay, setOverlay] = useState('');
+  const [tableOpen, setTableOpen] = useState(false);
+  const [catalogue, setCatalogue] = useState(null);
   const [bounds, setBounds] = useState(null);
   const layersById = useRef(new Map());
   const painted = useRef([]);
   const drawnLevel = useRef(null);
+  const inFlight = useRef(new Set());
 
   useEffect(() => {
     let live = true;
@@ -108,16 +181,29 @@ export default function LandingMap() {
   const [stores, setStores] = useState({});
   const wantsAttributes = Boolean(overlay) || storeRequested;
   const store = active ? stores[active.level] : null;
+  // The in-flight set lives in a ref rather than in state on purpose. Guarding on
+  // `loadingStore` made the effect depend on a value it sets itself: flipping the
+  // flag re-ran the effect, whose cleanup cancelled the very fetch that had just
+  // started, so the panel waited on a request that could never resolve.
   useEffect(() => {
-    if (!wantsAttributes || !active || stores[active.level] || loadingStore) return undefined;
-    let live = true;
+    if (!wantsAttributes || !active) return;
+    const level = active.level;
+    if (stores[level] || inFlight.current.has(level)) return;
+    inFlight.current.add(level);
     setLoadingStore(true);
     json(active.attributesUrl)
-      .then(document => live && setStores(current => ({ ...current, [active.level]: indexStore(document) })))
-      .catch(cause => live && setError(cause.message))
-      .finally(() => live && setLoadingStore(false));
-    return () => { live = false; };
-  }, [wantsAttributes, active, stores, loadingStore]);
+      .then(document => setStores(current => ({ ...current, [level]: indexStore(document) })))
+      .catch(cause => setError(cause.message))
+      .finally(() => {
+        inFlight.current.delete(level);
+        setLoadingStore(inFlight.current.size > 0);
+      });
+  }, [wantsAttributes, active, stores]);
+
+  useEffect(() => {
+    if (!tableOpen || catalogue) return;
+    json(CATALOGUE_URL).then(setCatalogue).catch(cause => setError(cause.message));
+  }, [tableOpen, catalogue]);
 
   const tier = useMemo(() => tierForZoom(zoom, riverLadder), [zoom, riverLadder]);
   const rivers = tier ? riverTiers[tier.id] : null;
@@ -300,13 +386,14 @@ export default function LandingMap() {
           <dt>{row.label}</dt>
           <dd>{row.value}{row.unit ? <em> {row.unit}</em> : null}</dd>
         </div>)}</dl>
-        {carriesAttributes(selected.properties, ladder) ? <>
-          <AttributeGroup groups={groups} store={store} hybasId={selected.properties.hybas_id}
-            groupId="basin_specific" loading={loadingStore} onOpen={() => setStoreRequested(true)}/>
-          <AttributeGroup groups={groups} store={store} hybasId={selected.properties.hybas_id}
-            groupId="basin_accumulation" loading={loadingStore} onOpen={() => setStoreRequested(true)}/>
-          <p className="land-note">Upstream values already account for everything above this basin. They cannot be added together across basins.</p>
-        </> : <p className="land-note">The {groups?.groups?.reduce((total, group) => total + group.attributeCount, 0) || 281} atlas attributes are published on level {ladder?.attributeLevel}. Zoom in to reach them.</p>}
+        <button type="button" className="land-open-table" onClick={() => { setStoreRequested(true); setTableOpen(true); }}>
+          <span>
+            <strong>Atlas attributes</strong>
+            <small>{groups?.groups?.reduce((total, group) => total + group.attributeCount, 0) || 281} measured values for this watershed</small>
+          </span>
+          <ArrowUpRight size={13}/>
+        </button>
+        <p className="land-note">Upstream values already account for everything above this basin. They cannot be added together across basins.</p>
       </div>}
 
       <nav className="land-deeper">
@@ -317,6 +404,9 @@ export default function LandingMap() {
         </a>)}
       </nav>
     </aside>
+
+    {tableOpen && selected && <AttributeModal basin={selected.properties} groups={groups} store={store}
+      catalogue={catalogue} loading={loadingStore} onClose={() => setTableOpen(false)}/>}
   </main>;
 }
 
