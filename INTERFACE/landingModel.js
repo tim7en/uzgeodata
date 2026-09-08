@@ -170,17 +170,19 @@ export function tierForZoom(zoom, ladder) {
 }
 
 const RIVER_WIDTHS = [
-  { from: 500, weight: 3.4 },
-  { from: 100, weight: 2.5 },
-  { from: 20, weight: 1.7 },
-  { from: 5, weight: 1.15 },
-  { from: 0, weight: 0.75 },
+  { from: 500, weight: 2.1 },
+  { from: 100, weight: 1.5 },
+  { from: 20, weight: 1.0 },
+  { from: 5, weight: 0.7 },
+  { from: 0, weight: 0.5 },
 ];
 
 /**
- * Rivers are the subject of this map, so they are drawn bright and sized by the
- * water they carry. A reach whose long-term average is not perennial is drawn
- * dashed and dimmed: it is a mapped channel, not a flowing river.
+ * Rivers are the subject of this map, so they are sized by the water they carry
+ * and kept bright enough to follow — but thin, and slightly transparent, so a
+ * dense headwater network reads as a network rather than a solid mat. A reach
+ * whose long-term average is not perennial is drawn dashed and dimmer: it is a
+ * mapped channel, not a flowing river.
  */
 export function riverStyle(properties) {
   const discharge = Number(properties?.discharge_cms) || 0;
@@ -189,7 +191,7 @@ export function riverStyle(properties) {
   return {
     color: perennial ? '#9fefff' : '#7d9aa8',
     weight,
-    opacity: perennial ? 0.92 : 0.5,
+    opacity: perennial ? 0.72 : 0.38,
     dashArray: perennial ? null : '2 4',
     lineCap: 'round',
     lineJoin: 'round',

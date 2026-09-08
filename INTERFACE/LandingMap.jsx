@@ -15,6 +15,7 @@ const DEEPER = [
   { href: '/climate.html', label: 'Hydroclimate observatory', note: 'Snow, precipitation and anomalies by basin' },
   { href: '/ontology.html', label: 'Living ontology', note: 'Trace a basin upstream and downstream' },
   { href: '/hydrography.html', label: 'Hydrography explorer', note: 'Rivers, lakes and basin attributes' },
+  { href: '/metadata.html', label: 'Attribute catalogue', note: 'Source, citation and licence for all 281 attributes' },
   { href: '/catalogue.html', label: 'Data catalogue', note: 'Every published dataset and its currency' },
   { href: '/portal.html', label: 'Portal overview', note: 'Atlas packages, use cases and standards' },
 ];
@@ -72,6 +73,7 @@ export default function LandingMap() {
   const [bounds, setBounds] = useState(null);
   const layersById = useRef(new Map());
   const painted = useRef([]);
+  const drawnLevel = useRef(null);
 
   useEffect(() => {
     let live = true;
@@ -135,6 +137,15 @@ export default function LandingMap() {
       .slice(0, 6);
   }, [query, features]);
 
+  // Swapping level mounts a fresh set of Leaflet layers, so the registry is
+  // emptied here, during render, before onEachFeature refills it. Doing it in an
+  // effect ran after that and wiped the new layers instead of the old ones.
+  if (drawnLevel.current !== active?.level) {
+    layersById.current = new Map();
+    painted.current = [];
+    drawnLevel.current = active?.level;
+  }
+
   // Restyling the whole collection on every pointer move would repaint 7,445
   // polygons; only the shape being left and the one being entered change.
   const restyle = useCallback((id, state) => {
@@ -150,7 +161,6 @@ export default function LandingMap() {
     painted.current = [hoveredId, selectedId].filter(Boolean);
   }, [selectedId, hoveredId, restyle, basins]);
 
-  useEffect(() => { layersById.current = new Map(); painted.current = []; }, [active?.level]);
 
   const onEachFeature = useCallback((feature, layer) => {
     const id = String(feature.properties.hybas_id);

@@ -50,6 +50,7 @@
     "basins:network": "python PIPELINES/build_basin_network_web.py",
     "basins:reference": "python PIPELINES/build_reference_basins.py",
     "rivers:reference": "python PIPELINES/build_reference_rivers.py",
+    "basins:catalogue": "python PIPELINES/build_reference_attribute_catalogue.py",
     "rivers:unified": "python PIPELINES/build_unified_river_network.py",
     "headwaters:update": "npm run headwaters:era5 && npm run headwaters:era5:elevation && npm run headwaters:anomaly && npm run headwaters:snow && npm run climate:web",
     "hydroclimate:update": "npm run rivers:unified && npm run basins:era5 && npm run basins:anomaly && npm run headwaters:era5:elevation && npm run headwaters:snow && npm run climate:web",

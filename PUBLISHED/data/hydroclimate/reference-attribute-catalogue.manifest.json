@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T12:20:29+00:00",
+  "observationClass": "reference",
+  "source": {
+    "vocabulary": "ONTOLOGY/vocab/hydroatlas-attributes.json",
+    "dictionary": "PUBLISHED/data/hydrography/attribute-dictionary.json",
+    "values": "PUBLISHED/data/hydroclimate/reference-basin-attributes.csv"
+  },
+  "counts": {
+    "variables": 56,
+    "columns": 281,
+    "basins": 7445,
+    "withCitation": 56,
+    "withLicence": 56,
+    "withSource": 56
+  },
+  "outputs": {
+    "catalogue": "PUBLISHED/data/hydroclimate/reference-attribute-catalogue.json"
+  },
+  "qualityNotes": [
+    "Every column names the global product it came from; the atlas is a compilation, not a single measurement campaign.",
+    "Licences differ between source products and are recorded per variable, not per file.",
+    "Values describe a fixed reference epoch and are not a time series."
+  ]
+}

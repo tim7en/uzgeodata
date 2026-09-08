@@ -134,7 +134,11 @@ test('a river is sized by the water it carries and dashed when it is not perenni
   const small = riverStyle({discharge_cms: 2, channel_class: 'perennial'});
   assert.ok(big.weight > small.weight);
   assert.equal(big.dashArray, null);
-  assert.ok(big.opacity > 0.8);
+  // Bright enough to follow, thin and slightly transparent so a dense network
+  // still reads as separate lines rather than a solid mat.
+  assert.ok(big.opacity > 0.6 && big.opacity < 0.85, `unexpected opacity ${big.opacity}`);
+  assert.ok(big.weight <= 2.2, `the widest river should stay hairline, got ${big.weight}`);
+  assert.ok(small.weight < 1);
 
   const dry = riverStyle({discharge_cms: 30, channel_class: 'ephemeral_or_dry'});
   assert.ok(dry.dashArray, 'a channel that carries no water must not read as a river');
