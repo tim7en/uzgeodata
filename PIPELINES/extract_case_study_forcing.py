@@ -86,7 +86,7 @@ def main():
                     if (station, props["period"], variable) not in wanted or (product == "chirps-v3" and variable != "precipitation_total") or (product == "chirts-midrange" and variable != "air_temperature_mean"):
                         continue
                     rows.append({"station_id": station, "period": props["period"], "variable": variable,
-                                 "value": props.get(variable, ""), "unit": unit, "product": product,
+                                 "value": props.get(variable, props.get("first", "")), "unit": unit, "product": product,
                                  "spatial_support": "station_grid_cell", "longitude": coordinates[station]["longitude"],
                                  "latitude": coordinates[station]["latitude"], "source_asset": asset,
                                  "source_images": "|".join(props["source_images"]), "scale_m": scale, "retrieved_at": retrieved})

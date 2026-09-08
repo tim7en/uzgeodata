@@ -50,11 +50,44 @@ The candidate Pskem trace has 20 level-12 units and 2626.9 km² of summed SUB_AR
 
 All four station links are outside the existing broad headwater pilot. The Pskem candidate must be reviewed before basin-forcing extraction. Neither its area nor the brief's approximate full-basin area should be reported as a surveyed gauge area.
 
-Station-product validation status: `awaiting_historical_station_cell_extraction`. No score is fabricated for an absent or non-overlapping product. Historical cell extraction is separate from the existing basin-mean series.
+Station-product validation status: `raw_product_comparisons`. No score is fabricated for an absent or non-overlapping product. Historical cell extraction is separate from the existing basin-mean series.
+
+| Station | Product | Variable | Season | Pairs | RMSE | Bias |
+| --- | --- | --- | --- | ---: | ---: | ---: |
+| Tashkent | era5-land | air_temperature_mean | all | 120 | 2.270 | -1.421 |
+| Tashkent | era5-land | air_temperature_mean | DJF | 30 | 3.897 | -2.645 |
+| Tashkent | era5-land | air_temperature_mean | MAM | 30 | 2.079 | -1.918 |
+| Tashkent | era5-land | air_temperature_mean | JJA | 30 | 0.668 | -0.522 |
+| Tashkent | era5-land | air_temperature_mean | SON | 30 | 0.807 | -0.597 |
+| Tashkent | era5-land | precipitation_total | all | 120 | 16.630 | 6.725 |
+| Tashkent | era5-land | precipitation_total | DJF | 30 | 10.396 | 4.008 |
+| Tashkent | era5-land | precipitation_total | MAM | 30 | 28.351 | 21.955 |
+| Tashkent | era5-land | precipitation_total | JJA | 30 | 8.472 | 1.458 |
+| Tashkent | era5-land | precipitation_total | SON | 30 | 11.074 | -0.522 |
+| Pskem | era5-land | air_temperature_mean | all | 177 | 7.233 | -7.128 |
+| Pskem | era5-land | air_temperature_mean | DJF | 43 | 7.722 | -7.647 |
+| Pskem | era5-land | air_temperature_mean | MAM | 44 | 7.451 | -7.363 |
+| Pskem | era5-land | air_temperature_mean | JJA | 45 | 6.193 | -6.180 |
+| Pskem | era5-land | air_temperature_mean | SON | 45 | 7.493 | -7.351 |
+| Pskem | era5-land | precipitation_total | all | 180 | 41.593 | 34.094 |
+| Pskem | era5-land | precipitation_total | DJF | 45 | 31.529 | 24.762 |
+| Pskem | era5-land | precipitation_total | MAM | 45 | 46.713 | 39.788 |
+| Pskem | era5-land | precipitation_total | JJA | 45 | 47.914 | 41.924 |
+| Pskem | era5-land | precipitation_total | SON | 45 | 38.052 | 29.901 |
+| Oygaing | era5-land | air_temperature_mean | all | 36 | 3.780 | -3.654 |
+| Oygaing | era5-land | air_temperature_mean | DJF | 9 | 2.506 | -2.439 |
+| Oygaing | era5-land | air_temperature_mean | MAM | 9 | 4.038 | -3.946 |
+| Oygaing | era5-land | air_temperature_mean | JJA | 9 | 4.136 | -4.101 |
+| Oygaing | era5-land | air_temperature_mean | SON | 9 | 4.177 | -4.132 |
+| Oygaing | era5-land | precipitation_total | all | 36 | 72.822 | 51.039 |
+| Oygaing | era5-land | precipitation_total | DJF | 9 | 11.836 | 8.492 |
+| Oygaing | era5-land | precipitation_total | MAM | 9 | 60.756 | 43.240 |
+| Oygaing | era5-land | precipitation_total | JJA | 9 | 127.758 | 125.153 |
+| Oygaing | era5-land | precipitation_total | SON | 9 | 32.536 | 27.269 |
 
 ## 1. Which precipitation product captures the mountain water input?
 
-**Status:** Historical product extraction required
+**Status:** Raw product comparisons computed; correction experiments pending
 
 How well do ERA5-Land and CHIRPS v3 reproduce monthly precipitation at Pskem, Oygaing and Tashkent, and does the error change with season and location?
 
@@ -95,7 +128,7 @@ Sources: [ERA5-Land monthly aggregates: bands, units and limitations](https://de
 
 ## 2. Temperature, elevation and the timing of melt
 
-**Status:** Historical product extraction required
+**Status:** Raw product comparisons computed; correction experiments pending
 
 Does gridded air temperature reproduce the observed seasonal cycle and cold-season anomalies well enough to drive a snowmelt model?
 
