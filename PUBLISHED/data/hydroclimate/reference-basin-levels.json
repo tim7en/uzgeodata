@@ -1,9 +1,11 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T12:06:07+00:00",
+  "generatedAt": "2026-09-08T12:40:09+00:00",
   "attributeLevel": 12,
   "levels": [
     {
+      "attributesUrl": "/data/hydroclimate/reference-basin-attributes-level07.json",
+      "attributesBytes": 373057,
       "level": 7,
       "minZoom": 0,
       "simplifyDegrees": 0.02,
@@ -13,6 +15,8 @@
       "carriesAtlasAttributes": false
     },
     {
+      "attributesUrl": "/data/hydroclimate/reference-basin-attributes-level10.json",
+      "attributesBytes": 5541506,
       "level": 10,
       "minZoom": 7,
       "simplifyDegrees": 0.01,
@@ -22,6 +26,8 @@
       "carriesAtlasAttributes": false
     },
     {
+      "attributesUrl": "/data/hydroclimate/reference-basin-attributes.json",
+      "attributesBytes": 6075406,
       "level": 12,
       "minZoom": 9,
       "simplifyDegrees": 0.006,

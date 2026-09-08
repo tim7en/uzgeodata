@@ -3,8 +3,9 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
-  carriesAttributes, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
-  readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
+  CHOROPLETH, HEADLINE_ATTRIBUTES, carriesAttributes, choroplethColor, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
+  legendStops, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
+  tierForZoom,
 } from '../INTERFACE/landingModel.js';
 
 const read = name => JSON.parse(readFileSync(
@@ -162,4 +163,62 @@ test('river tiers follow the same zoom ladder as the basins', () => {
   assert.ok(first.minDischargeCms > last.minDischargeCms);
   // The whole overlay must stay small beside the basins it sits on.
   assert.ok(first.sizeBytes < basins.levels[0].sizeBytes * 2);
+});
+
+test('a choropleth spreads classes over the values that exist', () => {
+  // Equal intervals would put nearly every basin in one class: discharge,
+  // glacier extent and population are all heavily skewed.
+  const skewed = [0, 0, 1, 1, 2, 3, 5, 8, 40, 900, null, undefined];
+  const breaks = quantileBreaks(skewed);
+  assert.ok(breaks.length > 0 && breaks.length <= CHOROPLETH.length - 1);
+  assert.deepEqual(breaks, [...breaks].sort((a, b) => a - b));
+
+  assert.equal(choroplethColor(null, breaks), null, 'no measurement must not read as a low value');
+  assert.equal(choroplethColor(900, breaks), CHOROPLETH[CHOROPLETH.length - 1]);
+  assert.equal(choroplethColor(0, breaks), CHOROPLETH[0]);
+  assert.equal(quantileBreaks([]).length, 0);
+  assert.equal(quantileBreaks([null, null]).length, 0);
+});
+
+test('the legend covers every class from open low to open high', () => {
+  const breaks = quantileBreaks([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  const stops = legendStops(breaks);
+  assert.equal(stops.length, breaks.length + 1);
+  assert.equal(stops[0].from, null, 'the lowest class is open ended');
+  assert.equal(stops[stops.length - 1].to, null, 'the highest class is open ended');
+  for (let index = 1; index < stops.length; index += 1) {
+    assert.equal(stops[index].from, stops[index - 1].to, 'classes must not leave a gap');
+  }
+  assert.equal(legendStops([]).length, 0);
+});
+
+test('an unmeasured basin stays unfilled under an overlay', () => {
+  const breaks = quantileBreaks([1, 5, 9, 20]);
+  const properties = {system_id: 'amu_darya'};
+  const measured = overlayStyle(properties, {}, 9, breaks);
+  const blank = overlayStyle(properties, {}, null, breaks);
+  assert.ok(measured.fillOpacity > 0.5, 'a measured basin has to read as coloured');
+  assert.ok(blank.fillOpacity < 0.1, 'a basin with no value must not look like a low value');
+  assert.equal(overlayStyle(properties, {selected: true}, 9, breaks).color, '#ffffff');
+});
+
+test('every headline attribute offered on the map exists in the published groups', () => {
+  const groups = read('reference-attribute-groups.json');
+  const columns = new Set(groups.groups.flatMap(group =>
+    group.categories.flatMap(category => category.attributes.map(a => a.column))));
+  for (const column of HEADLINE_ATTRIBUTES) {
+    assert.ok(columns.has(column), `${column} is offered but not published`);
+  }
+});
+
+test('every level publishes the attribute store its overlay needs', () => {
+  const ladder = read('reference-basin-levels.json');
+  for (const entry of ladder.levels) {
+    assert.match(entry.attributesUrl, /^\/data\/hydroclimate\/reference-basin-attributes/);
+    assert.ok(entry.attributesBytes > 0);
+  }
+  // The coarse level must stay cheap: it loads before anyone has zoomed.
+  const coarse = ladder.levels[0];
+  const fine = ladder.levels[ladder.levels.length - 1];
+  assert.ok(coarse.attributesBytes * 4 < fine.attributesBytes);
 });

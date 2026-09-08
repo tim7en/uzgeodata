@@ -78,3 +78,15 @@ body{margin:0;background:#060b0e;color:var(--ink);font-family:var(--body)}
   .land-panel{position:relative;width:100%;height:auto;padding:0 18px 24px;background:none}
   .land-panel.has-selection{background:none}
 }
+.land-overlay{border:1px solid var(--line);background:rgba(4,9,12,.72);padding:10px}
+.land-overlay>label{display:block}
+.land-overlay>label>span{display:block;font:800 7px var(--display);letter-spacing:.17em;text-transform:uppercase;color:#5d6d75;margin-bottom:5px}
+.land-overlay select{width:100%;padding:7px 8px;border:1px solid var(--line);background:#070d10;color:var(--ink);font:600 10px var(--body);outline:0;cursor:pointer}
+.land-legend{margin-top:9px}
+.land-legend>span{display:block;font:600 8px var(--mono);color:#5d6d75;margin-bottom:5px}
+.land-legend ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.land-legend li{display:flex;align-items:center;gap:7px}
+.land-legend i{width:16px;height:9px;flex:none;border:1px solid rgba(255,255,255,.14)}
+.land-legend em{font-style:normal;font:500 9px var(--mono);color:var(--dim)}
+.land-legend a{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font:700 8px var(--display);letter-spacing:.1em;text-transform:uppercase;color:#4cc9f0;text-decoration:none}
+.land-legend a:hover{text-decoration:underline}

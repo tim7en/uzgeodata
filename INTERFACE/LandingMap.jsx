@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { GeoJSON, MapContainer, ScaleControl, TileLayer, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
 import { ArrowUpRight, ChevronDown, Layers, Search, X } from 'lucide-react';
 import {
-  SYSTEMS, basinHeadline, basinStyle, carriesAttributes, formatNumber, groupAttributes,
-  groupSummary, indexStore, levelForZoom, riverStyle, systemMeta, systemTotals, tierForZoom,
+  HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle, carriesAttributes, formatAttribute,
+  formatNumber, groupAttributes, groupSummary, indexStore, legendStops, levelForZoom,
+  overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
 const LADDER_URL = '/data/hydroclimate/reference-basin-levels.json';
 const RIVER_LADDER_URL = '/data/hydroclimate/reference-river-levels.json';
 const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
-const ATTRIBUTES_URL = '/data/hydroclimate/reference-basin-attributes.json';
 const CENTRE = [40.2, 70.5];
 const DEEPER = [
   { href: '/climate.html', label: 'Hydroclimate observatory', note: 'Snow, precipitation and anomalies by basin' },
@@ -64,12 +64,13 @@ export default function LandingMap() {
   const [riverTiers, setRiverTiers] = useState({});
   const [zoom, setZoom] = useState(6);
   const [groups, setGroups] = useState(null);
-  const [store, setStore] = useState(null);
+  const [storeRequested, setStoreRequested] = useState(false);
   const [loadingStore, setLoadingStore] = useState(false);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
   const [hoveredId, setHoveredId] = useState(null);
   const [query, setQuery] = useState('');
+  const [overlay, setOverlay] = useState('');
   const [bounds, setBounds] = useState(null);
   const layersById = useRef(new Map());
   const painted = useRef([]);
@@ -88,16 +89,6 @@ export default function LandingMap() {
     return () => { live = false; };
   }, []);
 
-  // Six megabytes of attributes are worth fetching only once somebody asks to
-  // see them, which is why the map itself carries just the headline fields.
-  const loadStore = useCallback(() => {
-    if (store || loadingStore) return;
-    setLoadingStore(true);
-    json(ATTRIBUTES_URL)
-      .then(document => setStore(indexStore(document)))
-      .catch(cause => setError(cause.message))
-      .finally(() => setLoadingStore(false));
-  }, [store, loadingStore]);
 
   const active = useMemo(() => levelForZoom(zoom, ladder), [zoom, ladder]);
   const basins = active ? levels[active.level] : null;
@@ -112,6 +103,22 @@ export default function LandingMap() {
     return () => { live = false; };
   }, [active, levels]);
 
+  // Attributes are fetched per level, and only once a reader asks for them —
+  // either by opening a group in the panel or by colouring the map.
+  const [stores, setStores] = useState({});
+  const wantsAttributes = Boolean(overlay) || storeRequested;
+  const store = active ? stores[active.level] : null;
+  useEffect(() => {
+    if (!wantsAttributes || !active || stores[active.level] || loadingStore) return undefined;
+    let live = true;
+    setLoadingStore(true);
+    json(active.attributesUrl)
+      .then(document => live && setStores(current => ({ ...current, [active.level]: indexStore(document) })))
+      .catch(cause => live && setError(cause.message))
+      .finally(() => live && setLoadingStore(false));
+    return () => { live = false; };
+  }, [wantsAttributes, active, stores, loadingStore]);
+
   const tier = useMemo(() => tierForZoom(zoom, riverLadder), [zoom, riverLadder]);
   const rivers = tier ? riverTiers[tier.id] : null;
 
@@ -123,6 +130,25 @@ export default function LandingMap() {
       .catch(cause => live && setError(cause.message));
     return () => { live = false; };
   }, [tier, riverTiers]);
+
+  const overlayMeta = useMemo(() => {
+    if (!overlay || !groups) return null;
+    for (const group of groups.groups) {
+      for (const category of group.categories) {
+        const found = category.attributes.find(attribute => attribute.column === overlay);
+        if (found) return { ...found, group: group.id, category: category.id };
+      }
+    }
+    return null;
+  }, [overlay, groups]);
+  const overlayValues = overlay && store ? store.values?.[overlay] || null : null;
+  const overlayBreaks = useMemo(() => (overlayValues ? quantileBreaks(overlayValues) : []), [overlayValues]);
+  const legend = useMemo(() => legendStops(overlayBreaks), [overlayBreaks]);
+
+  const styleFor = useCallback((properties, state) => {
+    if (!overlay || !store) return basinStyle(properties, state);
+    return overlayStyle(properties, state, readAttribute(store, properties.hybas_id, overlay), overlayBreaks);
+  }, [overlay, store, overlayBreaks]);
 
   const features = basins?.features || [];
   const byId = useMemo(() => new Map(features.map(feature => [String(feature.properties.hybas_id), feature])), [features]);
@@ -150,8 +176,8 @@ export default function LandingMap() {
   // polygons; only the shape being left and the one being entered change.
   const restyle = useCallback((id, state) => {
     const layer = layersById.current.get(id);
-    if (layer) layer.setStyle(basinStyle(layer.feature.properties, state));
-  }, []);
+    if (layer) layer.setStyle(styleFor(layer.feature.properties, state));
+  }, [styleFor]);
 
   useEffect(() => {
     const previous = painted.current;
@@ -160,6 +186,13 @@ export default function LandingMap() {
     }
     painted.current = [hoveredId, selectedId].filter(Boolean);
   }, [selectedId, hoveredId, restyle, basins]);
+
+  // Changing the coloured attribute repaints every drawn basin once.
+  useEffect(() => {
+    for (const [id, layer] of layersById.current) {
+      layer.setStyle(styleFor(layer.feature.properties, { selected: id === selectedId, hovered: id === hoveredId }));
+    }
+  }, [styleFor, basins, selectedId, hoveredId]);
 
 
   const onEachFeature = useCallback((feature, layer) => {
@@ -190,7 +223,7 @@ export default function LandingMap() {
       <TileLayer attribution="&copy; OpenStreetMap contributors"
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" opacity={0.42}/>
       {basins && <GeoJSON key={active.level} data={basins} smoothFactor={1.6}
-        style={feature => basinStyle(feature.properties, {})} onEachFeature={onEachFeature}/>}
+        style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
       <FitTo bounds={bounds}/>
@@ -209,6 +242,29 @@ export default function LandingMap() {
 
     <aside className={`land-panel ${selected ? 'has-selection' : ''}`}>
       {!basins && <p className="land-loading">Loading the reference basins…</p>}
+      {basins && groups && <section className="land-overlay">
+        <label>
+          <span>Colour basins by</span>
+          <select value={overlay} onChange={event => setOverlay(event.target.value)}>
+            <option value="">River system</option>
+            {HEADLINE_ATTRIBUTES.map(column => {
+              const meta = attributeMeta(groups, column);
+              return meta ? <option key={column} value={column}>{meta.label}</option> : null;
+            })}
+          </select>
+        </label>
+        {overlay && !store && <p className="land-group-note">Loading level {active.level} attributes…</p>}
+        {overlay && legend.length > 0 && <div className="land-legend">
+          <span>{overlayMeta?.units || ''}</span>
+          <ol>{legend.map((stop, index) => <li key={index}>
+            <i style={{ background: stop.color }}/>
+            <em>{stop.from === null ? `< ${formatAttribute(stop.to, overlayMeta?.units).value}`
+              : stop.to === null ? `≥ ${formatAttribute(stop.from, overlayMeta?.units).value}`
+                : `${formatAttribute(stop.from, overlayMeta?.units).value} – ${formatAttribute(stop.to, overlayMeta?.units).value}`}</em>
+          </li>)}</ol>
+          <a href={`/atlas.html?attribute=${overlay}`}>Open in the atlas explorer <ArrowUpRight size={11}/></a>
+        </div>}
+      </section>}
       {basins && <p className="land-level">
         Level {active.level} · {formatNumber(features.length)} basins
         {rivers ? ` · ${formatNumber(rivers.features.length)} reaches` : ''}
@@ -246,9 +302,9 @@ export default function LandingMap() {
         </div>)}</dl>
         {carriesAttributes(selected.properties, ladder) ? <>
           <AttributeGroup groups={groups} store={store} hybasId={selected.properties.hybas_id}
-            groupId="basin_specific" loading={loadingStore} onOpen={loadStore}/>
+            groupId="basin_specific" loading={loadingStore} onOpen={() => setStoreRequested(true)}/>
           <AttributeGroup groups={groups} store={store} hybasId={selected.properties.hybas_id}
-            groupId="basin_accumulation" loading={loadingStore} onOpen={loadStore}/>
+            groupId="basin_accumulation" loading={loadingStore} onOpen={() => setStoreRequested(true)}/>
           <p className="land-note">Upstream values already account for everything above this basin. They cannot be added together across basins.</p>
         </> : <p className="land-note">The {groups?.groups?.reduce((total, group) => total + group.attributeCount, 0) || 281} atlas attributes are published on level {ladder?.attributeLevel}. Zoom in to reach them.</p>}
       </div>}
@@ -262,6 +318,16 @@ export default function LandingMap() {
       </nav>
     </aside>
   </main>;
+}
+
+function attributeMeta(groups, column) {
+  for (const group of groups?.groups || []) {
+    for (const category of group.categories) {
+      const found = category.attributes.find(attribute => attribute.column === column);
+      if (found) return found;
+    }
+  }
+  return null;
 }
 
 function coordinates(geometry) {

@@ -203,3 +203,74 @@ export function carriesAttributes(properties, ladder) {
   const level = Number(properties?.basin_level);
   return level === Number(ladder?.attributeLevel);
 }
+
+// A sequential ramp that stays legible on a dark basemap: dark blue through
+// teal and green to yellow, so the eye reads magnitude without a key.
+export const CHOROPLETH = ['#2c3e6b', '#256f8f', '#20a08b', '#5fc463', '#bfe040', '#fde725'];
+
+/** Attributes worth offering before a reader knows the catalogue exists. */
+export const HEADLINE_ATTRIBUTES = [
+  'dis_m3_pyr', 'run_mm_syr', 'pre_mm_syr', 'tmp_dc_syr', 'snw_pc_syr',
+  'gla_pc_sse', 'ele_mt_sav', 'for_pc_sse', 'crp_pc_sse', 'ppd_pk_sav',
+];
+
+/**
+ * Quantile breaks over the values that exist.
+ *
+ * Equal intervals would put almost every basin in one class: discharge, glacier
+ * extent and population are all heavily skewed. Quantiles spread the classes over
+ * the distribution actually present, and nulls are left out rather than counted
+ * as zero — a basin with no measurement is not a basin measuring nothing.
+ */
+export function quantileBreaks(values, classes = CHOROPLETH.length) {
+  const present = (values || []).filter(value => value !== null && value !== undefined && Number.isFinite(Number(value)))
+    .map(Number)
+    .sort((left, right) => left - right);
+  if (!present.length) return [];
+  const breaks = [];
+  for (let index = 1; index < classes; index += 1) {
+    const position = (present.length - 1) * (index / classes);
+    const low = Math.floor(position);
+    const high = Math.ceil(position);
+    breaks.push(present[low] + (present[high] - present[low]) * (position - low));
+  }
+  // A skewed column can repeat a break; collapsing keeps classes distinct.
+  return [...new Set(breaks)];
+}
+
+export function classOf(value, breaks) {
+  if (value === null || value === undefined || !Number.isFinite(Number(value))) return null;
+  const number = Number(value);
+  let index = 0;
+  while (index < breaks.length && number >= breaks[index]) index += 1;
+  return index;
+}
+
+export function choroplethColor(value, breaks, palette = CHOROPLETH) {
+  const index = classOf(value, breaks);
+  if (index === null) return null;
+  return palette[Math.min(index, palette.length - 1)];
+}
+
+/** Legend rows, low class first, each with the range it covers. */
+export function legendStops(breaks, palette = CHOROPLETH) {
+  if (!breaks.length) return [];
+  const edges = [null, ...breaks, null];
+  return edges.slice(0, -1).map((from, index) => ({
+    color: palette[Math.min(index, palette.length - 1)],
+    from,
+    to: edges[index + 1],
+  }));
+}
+
+export function overlayStyle(properties, state, value, breaks, palette = CHOROPLETH) {
+  const base = basinStyle(properties, state);
+  const fill = choroplethColor(value, breaks, palette);
+  if (!fill) return { ...base, fillOpacity: state?.selected ? 0.3 : 0.06 };
+  return {
+    ...base,
+    fillColor: fill,
+    fillOpacity: state?.selected ? 0.92 : state?.hovered ? 0.85 : 0.66,
+    color: state?.selected || state?.hovered ? '#ffffff' : fill,
+  };
+}

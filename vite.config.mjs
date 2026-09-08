@@ -23,6 +23,7 @@ export default defineConfig({
         main: here('./INTERFACE/index.html'),
         portal: here('./INTERFACE/portal.html'),
         metadata: here('./INTERFACE/metadata.html'),
+        atlas: here('./INTERFACE/atlas.html'),
         hydrography: here('./INTERFACE/hydrography.html'),
         landcover: here('./INTERFACE/landcover.html'),
         climate: here('./INTERFACE/climate.html'),

@@ -39,13 +39,13 @@ PUBLISHED_DIR = ROOT / "PUBLISHED/data/hydroclimate"
 FRAME = PUBLISHED_DIR / "basins-level12.geojson"
 ROLES = PUBLISHED_DIR / "basin-hydrological-roles.csv"
 DICTIONARY = ROOT / "PUBLISHED/data/hydrography/attribute-dictionary.json"
-CACHE = ROOT / "WORKSPACE/reference_basin_cache/level12-attributes.csv"
+CACHE_DIR = ROOT / "WORKSPACE/reference_basin_cache"
 LADDER = PUBLISHED_DIR / "reference-basin-levels.json"
 TABLE = PUBLISHED_DIR / "reference-basin-attributes.csv"
 COLUMNS_JSON = PUBLISHED_DIR / "reference-basin-attributes.json"
 GROUPS = PUBLISHED_DIR / "reference-attribute-groups.json"
 MANIFEST = PUBLISHED_DIR / "reference-basins.manifest.json"
-ASSET = "WWF/HydroATLAS/v1/Basins/level12"
+ASSET = "WWF/HydroATLAS/v1/Basins/level{level:02d}"
 # Zoom ladder. A whole-region view does not need 7,445 polygons, and level 7 at
 # 2 km simplification is a twentieth of the weight; the finer levels load only
 # once the reader has zoomed into them.
@@ -90,21 +90,59 @@ def read_roles(level: int = LEVEL) -> dict[int, dict]:
         }
 
 
-def download_attributes(columns: list[str], main_basins: list[int]) -> list[dict]:
-    """One table download; the CSV route has no 5000-element getInfo ceiling."""
+def attribute_cache(level: int) -> Path:
+    return CACHE_DIR / f"level{level:02d}-attributes.csv"
+
+
+def download_attributes(columns: list[str], main_basins: list[int], level: int) -> list[dict]:
+    """One table download per level; the CSV route has no 5000-element ceiling.
+
+    Every HydroATLAS level ships the same 281 columns, so a coarser level is read
+    from the asset rather than aggregated from level 12. Deriving it would mean
+    choosing a rule per column; reading it keeps the published value authoritative.
+    """
     import ee
     import requests
 
     ee.Initialize(project=PROJECT)
     selectors = ["HYBAS_ID", *columns]
-    collection = ee.FeatureCollection(ASSET).filter(ee.Filter.inList("MAIN_BAS", main_basins))
+    collection = (ee.FeatureCollection(ASSET.format(level=level))
+                  .filter(ee.Filter.inList("MAIN_BAS", main_basins)))
     url = collection.getDownloadURL(filetype="CSV", selectors=selectors)
     response = requests.get(url, timeout=DOWNLOAD_TIMEOUT)
     response.raise_for_status()
-    CACHE.parent.mkdir(parents=True, exist_ok=True)
-    CACHE.write_bytes(response.content)
-    with CACHE.open(encoding="utf-8", newline="") as handle:
+    path = attribute_cache(level)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(response.content)
+    with path.open(encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
+
+
+def attribute_url(level: int) -> str:
+    return ("/data/hydroclimate/reference-basin-attributes.json" if level == LEVEL
+            else f"/data/hydroclimate/reference-basin-attributes-level{level:02d}.json")
+
+
+def load_attributes(level: int, columns: list[str], frame: list[dict], refresh: bool) -> dict[int, dict]:
+    path = attribute_cache(level)
+    if path.exists() and not refresh:
+        with path.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        print(f"    reuse {path.relative_to(ROOT)} ({len(rows):,} rows)")
+    else:
+        main_basins = sorted({int(feature["properties"]["MAIN_BAS"]) for feature in frame})
+        rows = download_attributes(columns, main_basins, level)
+        print(f"    downloaded {len(rows):,} level-{level} rows")
+    return {int(float(row["HYBAS_ID"])): row for row in rows if row.get("HYBAS_ID")}
+
+
+def columnar(measured: dict[int, dict], ids: list[int], order: list[str]) -> dict:
+    values = {column: [] for column in order}
+    for hybas_id in ids:
+        row = measured.get(hybas_id, {})
+        for column in order:
+            values[column].append(number(row.get(column)))
+    return values
 
 
 def number(value):
@@ -127,18 +165,9 @@ def main() -> None:
     frame = json.loads(FRAME.read_text(encoding="utf-8"))["features"]
     retrieved = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     wanted = {int(feature["properties"]["HYBAS_ID"]) for feature in frame}
-    main_basins = sorted({int(feature["properties"]["MAIN_BAS"]) for feature in frame})
     print(f"Reference basins | level {LEVEL} | {len(wanted):,} units | {len(columns)} attributes")
 
-    if CACHE.exists() and not args.refresh_attributes:
-        with CACHE.open(encoding="utf-8", newline="") as handle:
-            rows = list(csv.DictReader(handle))
-        print(f"  reuse {CACHE.relative_to(ROOT)} ({len(rows):,} rows)")
-    else:
-        rows = download_attributes(sorted(columns), main_basins)
-        print(f"  downloaded {len(rows):,} rows from {ASSET}")
-
-    measured = {int(float(row["HYBAS_ID"])): row for row in rows if row.get("HYBAS_ID")}
+    measured = load_attributes(LEVEL, sorted(columns), frame, args.refresh_attributes)
     missing = sorted(wanted - set(measured))
     if missing:
         raise SystemExit(f"{len(missing)} frame units have no attribute row, first {missing[:5]}")
@@ -162,16 +191,6 @@ def main() -> None:
         writer.writeheader()
         writer.writerows(table_rows)
     os.replace(temporary, TABLE)
-
-    write_json(COLUMNS_JSON, {
-        "version": "1.0",
-        "generatedAt": retrieved,
-        "basinLevel": LEVEL,
-        "joinKey": "hybas_id",
-        "ids": ordered,
-        "columns": order,
-        "values": values,
-    })
 
     grouped: dict[str, dict[str, list]] = defaultdict(lambda: defaultdict(list))
     for column in order:
@@ -244,7 +263,27 @@ def main() -> None:
             "name": f"amu_syr_reference_basins_level{level:02d}",
             "features": features,
         })
+
+        # Every level carries the full attribute set, so a choropleth works at any
+        # zoom instead of only where the finest polygons are drawn.
+        level_ids = [feature["properties"]["hybas_id"] for feature in features]
+        level_values = (values if level == LEVEL
+                        else columnar(load_attributes(level, order, units, args.refresh_attributes),
+                                      level_ids, order))
+        attributes_path = PUBLISHED_DIR / attribute_url(level).split("/")[-1]
+        write_json(attributes_path, {
+            "version": "1.0",
+            "generatedAt": retrieved,
+            "basinLevel": level,
+            "joinKey": "hybas_id",
+            "ids": level_ids,
+            "columns": order,
+            "values": level_values,
+        })
+
         published_levels.append({
+            "attributesUrl": attribute_url(level),
+            "attributesBytes": attributes_path.stat().st_size,
             "level": level,
             "minZoom": entry["minZoom"],
             "simplifyDegrees": entry["simplify"],
@@ -256,7 +295,8 @@ def main() -> None:
         if level == LEVEL:
             for feature in features:
                 systems[feature["properties"]["system_id"]] += 1
-        print(f"    level {level:>2}: {len(features):>5,} units  {path.stat().st_size / 1e6:>5.1f} MB  from zoom {entry['minZoom']}")
+        print(f"    level {level:>2}: {len(features):>5,} units  {path.stat().st_size / 1e6:>5.1f} MB geometry  "
+              f"{attributes_path.stat().st_size / 1e6:>5.1f} MB attributes  from zoom {entry['minZoom']}")
 
     write_json(LADDER, {
         "version": "1.0",
