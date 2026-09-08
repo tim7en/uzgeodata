@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import {readFileSync} from 'node:fs';
 import {
-  cellAt, divergingColor, formatPeriod, mix, periodValues, sequentialColor, summaryStats,
-  timelineFor, valueAt,
+  cellAt, divergingColor, formatPeriod, frameTitle, mix, periodLabel, periodValues, scopeLabel,
+  sequentialColor, summaryStats, timelineFor, unitLabel, valueAt,
 } from '../INTERFACE/basinLayersModel.js';
 
 const series = {
@@ -56,4 +57,46 @@ test('formatPeriod renders month, pentad and day grains', () => {
   assert.equal(formatPeriod('month', '2024-06'), '2024 \u00b7 Jun');
   assert.equal(formatPeriod('pentad', '2024-06-p3'), '2024 \u00b7 Jun \u00b7 P3');
   assert.equal(formatPeriod('day', '2024-06-03'), '2024 \u00b7 Jun \u00b7 3');
+});
+
+test('a layer card names its frame, its units and its periods separately', () => {
+  const layer = {
+    spatialScope: 'headwater_formation', spatialUnit: 'HydroATLAS level-7 subbasin',
+    periodGrain: 'month', coverage: {basins: 121, periods: 10},
+  };
+  assert.equal(scopeLabel(layer.spatialScope), 'Upper Amu + Upper Syr \u00b7 runoff formation');
+  assert.equal(unitLabel(layer), '121 subbasins');
+  assert.equal(periodLabel(layer), '10 monthly periods');
+  assert.equal(frameTitle(layer), 'Upper Amu + Upper Syr formation zones');
+});
+
+test('a single unit or period is not labelled as a plural', () => {
+  assert.equal(periodLabel({periodGrain: 'month', coverage: {periods: 1}}), '1 monthly period');
+  assert.equal(periodLabel({periodGrain: 'year', coverage: {periods: 1}}), '1 year');
+  assert.equal(periodLabel({periodGrain: 'day', coverage: {periods: 332}}), '332 daily dates');
+  assert.equal(unitLabel({spatialUnit: 'headwater formation system', coverage: {basins: 2}}), '2 formation systems');
+  assert.equal(unitLabel({spatialUnit: 'HydroATLAS level-12 basin', coverage: {basins: 3863}}), '3,863 basins');
+});
+
+test('an undeclared scope degrades to readable words rather than a slug', () => {
+  assert.equal(scopeLabel('some_new_scope'), 'some new scope');
+  assert.equal(scopeLabel(undefined), 'scope not declared');
+  assert.equal(frameTitle({spatialScope: 'full_basin'}), 'Amu Darya + Syr Darya basin frame');
+});
+
+test('every published layer resolves to a curated frame label', () => {
+  const index = JSON.parse(readFileSync(
+    new URL('../PUBLISHED/data/basin-layers/index.json', import.meta.url), 'utf8'));
+  assert.ok(index.layers.length >= 10);
+  for (const layer of index.layers) {
+    // A raw slug reaching the card means a scope was added without a label.
+    assert.ok(!scopeLabel(layer.spatialScope).includes('_'), `${layer.id} has no curated scope label`);
+    assert.ok(!frameTitle(layer).includes('_'), `${layer.id} has no curated frame title`);
+    assert.match(unitLabel(layer), /^[\d,]+ [a-z ]+$/);
+    assert.match(periodLabel(layer), /^[\d,]+ [a-z ]+$/);
+  }
+  // The transboundary and national frames must stay distinguishable in the list.
+  const scopes = new Set(index.layers.map(layer => layer.spatialScope));
+  assert.ok(scopes.has('national_intersection'));
+  assert.ok(scopes.has('headwater_formation') || scopes.has('full_basin'));
 });

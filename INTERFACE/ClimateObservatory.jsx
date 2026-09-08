@@ -6,8 +6,8 @@ import {
   MapPin, Pause, Play, Search, Sparkles, Table2,
 } from 'lucide-react';
 import {
-  cellAt, divergingColor, formatPeriod, periodValues, sequentialColor, summaryStats,
-  timelineFor, valueAt,
+  cellAt, divergingColor, formatPeriod, frameTitle, periodLabel, periodValues, scopeLabel,
+  sequentialColor, summaryStats, timelineFor, unitLabel, valueAt,
 } from './basinLayersModel.js';
 
 const INDEX_URL = '/data/basin-layers/index.json';
@@ -15,39 +15,6 @@ const NO_DATA = '#111a1f';
 const SELECTED = '#ffffff';
 const PREFERRED_VARIABLES = ['precipitation', 'precipitation_total', 'temperature_mean',
   'tmax_mean', 'ghm_mean', 'aod_550nm'];
-
-const SCOPE_LABELS = {
-  full_basin: 'Amu + Syr · full natural basins',
-  headwater_formation: 'Upper Amu + Upper Syr · runoff formation',
-  national_intersection: 'Uzbekistan · national intersection',
-  aral_hydrographic_domain: 'Aral hydrographic domain',
-};
-
-function scopeLabel(scope) {
-  return SCOPE_LABELS[scope] || String(scope || 'scope not declared').replaceAll('_', ' ');
-}
-
-function frameTitle(layer) {
-  if (layer.spatialScope === 'full_basin') return 'Amu Darya + Syr Darya basin frame';
-  if (layer.spatialScope === 'headwater_formation') return 'Upper Amu + Upper Syr formation zones';
-  if (layer.spatialScope === 'national_intersection') return 'Uzbekistan national intersection';
-  if (layer.spatialScope === 'aral_hydrographic_domain') return 'Aral hydrographic domain';
-  return scopeLabel(layer.spatialScope);
-}
-
-function unitLabel(layer) {
-  const unit = layer.spatialUnit?.toLowerCase() || '';
-  const noun = unit.includes('system') ? 'formation systems'
-    : unit.includes('subbasin') ? 'subbasins' : 'units';
-  return `${layer.coverage.basins.toLocaleString()} ${noun}`;
-}
-
-function periodLabel(layer) {
-  const noun = layer.periodGrain === 'day' ? 'daily dates'
-    : layer.periodGrain === 'pentad' ? 'pentads'
-      : layer.periodGrain === 'month' ? 'monthly periods' : 'periods';
-  return `${layer.coverage.periods.toLocaleString()} ${noun}`;
-}
 
 function number(value, digits = 1) {
   if (value === null || value === undefined || Number.isNaN(value)) return '\u2014';

@@ -75,3 +75,53 @@ export function formatPeriod(grain, period) {
   if (grain === 'day' && suffix) return `${label} \u00b7 ${Number(suffix)}`;
   return label;
 }
+
+// How a layer names the ground it covers. The selector used to concatenate the
+// title, the counts and the raw scope slug into one line, which read as a single
+// sentence and hid the one fact that separates two layers of the same variable:
+// which frame the numbers were reduced over.
+const SCOPE_LABELS = {
+  full_basin: 'Amu + Syr \u00b7 full natural basins',
+  headwater_formation: 'Upper Amu + Upper Syr \u00b7 runoff formation',
+  national_intersection: 'Uzbekistan \u00b7 national intersection',
+  aral_hydrographic_domain: 'Aral hydrographic domain',
+};
+
+const FRAME_TITLES = {
+  full_basin: 'Amu Darya + Syr Darya basin frame',
+  headwater_formation: 'Upper Amu + Upper Syr formation zones',
+  national_intersection: 'Uzbekistan national intersection',
+  aral_hydrographic_domain: 'Aral hydrographic domain',
+};
+
+const PERIOD_NOUNS = {
+  day: ['daily date', 'daily dates'],
+  pentad: ['pentad', 'pentads'],
+  month: ['monthly period', 'monthly periods'],
+  year: ['year', 'years'],
+};
+
+function countLabel(count, [singular, plural]) {
+  const value = Number(count) || 0;
+  return `${value.toLocaleString('en-US')} ${value === 1 ? singular : plural}`;
+}
+
+export function scopeLabel(scope) {
+  return SCOPE_LABELS[scope] || String(scope || 'scope not declared').replaceAll('_', ' ');
+}
+
+export function frameTitle(layer) {
+  return FRAME_TITLES[layer?.spatialScope] || scopeLabel(layer?.spatialScope);
+}
+
+export function unitLabel(layer) {
+  const unit = layer?.spatialUnit?.toLowerCase() || '';
+  const nouns = unit.includes('system') ? ['formation system', 'formation systems']
+    : unit.includes('subbasin') ? ['subbasin', 'subbasins']
+      : unit.includes('basin') ? ['basin', 'basins'] : ['unit', 'units'];
+  return countLabel(layer?.coverage?.basins, nouns);
+}
+
+export function periodLabel(layer) {
+  return countLabel(layer?.coverage?.periods, PERIOD_NOUNS[layer?.periodGrain] || ['period', 'periods']);
+}
