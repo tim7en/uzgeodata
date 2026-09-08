@@ -179,26 +179,42 @@ export default function LandingMap() {
   // Attributes are fetched per level, and only once a reader asks for them —
   // either by opening a group in the panel or by colouring the map.
   const [stores, setStores] = useState({});
-  const wantsAttributes = Boolean(overlay) || storeRequested;
   const store = active ? stores[active.level] : null;
+  // HydroBASINS id spaces do not overlap between levels, so a level-7 id looked up
+  // in the level-10 store resolves to nothing at all. The panel therefore reads the
+  // store of the level the *selected* basin belongs to, which is not always the
+  // level being drawn — a selection is deliberately held when the reader zooms past
+  // it. Both stores are fetched when they differ.
+  const selectedLevel = selected ? Number(selected.properties.basin_level) : null;
+  const detailStore = selectedLevel ? stores[selectedLevel] || null : null;
+  const wantedLevels = useMemo(() => {
+    const levels = new Set();
+    if (overlay && active) levels.add(active.level);
+    if (storeRequested && selectedLevel) levels.add(selectedLevel);
+    return [...levels];
+  }, [overlay, active, storeRequested, selectedLevel]);
+
   // The in-flight set lives in a ref rather than in state on purpose. Guarding on
   // `loadingStore` made the effect depend on a value it sets itself: flipping the
   // flag re-ran the effect, whose cleanup cancelled the very fetch that had just
   // started, so the panel waited on a request that could never resolve.
   useEffect(() => {
-    if (!wantsAttributes || !active) return;
-    const level = active.level;
-    if (stores[level] || inFlight.current.has(level)) return;
-    inFlight.current.add(level);
-    setLoadingStore(true);
-    json(active.attributesUrl)
-      .then(document => setStores(current => ({ ...current, [level]: indexStore(document) })))
-      .catch(cause => setError(cause.message))
-      .finally(() => {
-        inFlight.current.delete(level);
-        setLoadingStore(inFlight.current.size > 0);
-      });
-  }, [wantsAttributes, active, stores]);
+    const pending = wantedLevels.filter(level => !stores[level] && !inFlight.current.has(level));
+    if (!pending.length) return;
+    for (const level of pending) {
+      const entry = ladder?.levels?.find(item => item.level === level);
+      if (!entry) continue;
+      inFlight.current.add(level);
+      setLoadingStore(true);
+      json(entry.attributesUrl)
+        .then(document => setStores(current => ({ ...current, [level]: indexStore(document) })))
+        .catch(cause => setError(cause.message))
+        .finally(() => {
+          inFlight.current.delete(level);
+          setLoadingStore(inFlight.current.size > 0);
+        });
+    }
+  }, [wantedLevels, stores, ladder]);
 
   useEffect(() => {
     if (!tableOpen || catalogue) return;
@@ -405,7 +421,7 @@ export default function LandingMap() {
       </nav>
     </aside>
 
-    {tableOpen && selected && <AttributeModal basin={selected.properties} groups={groups} store={store}
+    {tableOpen && selected && <AttributeModal basin={selected.properties} groups={groups} store={detailStore}
       catalogue={catalogue} loading={loadingStore} onClose={() => setTableOpen(false)}/>}
   </main>;
 }

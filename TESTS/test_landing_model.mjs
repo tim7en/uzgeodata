@@ -246,3 +246,51 @@ test('the whole related dataset resolves for a single watershed', () => {
     assert.equal(catalogue.columnIndex[row.column].group, row.groupId);
   }
 });
+
+test('a basin resolves only in the store of its own level', () => {
+  // HydroBASINS id spaces do not overlap between levels, so reading a level-7
+  // basin out of the level-10 store returns nothing for all 281 columns. The
+  // panel must pick the store by the selected basin's level, not by the drawn one.
+  const seven = indexStore(read('reference-basin-attributes-level07.json'));
+  const ten = indexStore(read('reference-basin-attributes-level10.json'));
+  const twelve = indexStore(read('reference-basin-attributes.json'));
+  assert.equal(seven.basinLevel, 7);
+  assert.equal(ten.basinLevel, 10);
+  assert.equal(twelve.basinLevel, 12);
+
+  const sevenIds = new Set(seven.ids);
+  assert.equal(ten.ids.filter(id => sevenIds.has(id)).length, 0);
+  assert.equal(twelve.ids.filter(id => sevenIds.has(id)).length, 0);
+
+  const probe = seven.ids[0];
+  assert.notEqual(readAttribute(seven, probe, 'ele_mt_sav'), null);
+  assert.equal(readAttribute(ten, probe, 'ele_mt_sav'), null, 'cross-level lookup must not silently succeed');
+});
+
+test('each level carries its own aggregate, not a copy of a finer unit', () => {
+  const seven = indexStore(read('reference-basin-attributes-level07.json'));
+  const twelve = indexStore(read('reference-basin-attributes.json'));
+  const geo7 = read('reference-basins-level07.geojson').features;
+  const geo12 = read('reference-basins-level12.geojson').features;
+
+  const children = new Map();
+  for (const feature of geo12) {
+    const prefix = String(feature.properties.pfaf_id).slice(0, 7);
+    children.set(prefix, [...(children.get(prefix) || []), feature.properties]);
+  }
+  const parent = geo7
+    .map(feature => ({props: feature.properties, kids: children.get(String(feature.properties.pfaf_id)) || []}))
+    .sort((left, right) => right.kids.length - left.kids.length)[0];
+  assert.ok(parent.kids.length > 20, 'need a level-7 unit with many children to compare');
+
+  const column = 'ele_mt_sav';
+  const parentValue = readAttribute(seven, parent.props.hybas_id, column);
+  const childValues = parent.kids
+    .map(kid => readAttribute(twelve, kid.hybas_id, column))
+    .filter(value => value !== null);
+  assert.ok(childValues.length > 10);
+  // A real aggregate sits inside the spread of its children rather than repeating one.
+  assert.ok(parentValue >= Math.min(...childValues) && parentValue <= Math.max(...childValues),
+    `level-7 ${column} ${parentValue} outside child range`);
+  assert.notEqual(parentValue, childValues[0]);
+});
