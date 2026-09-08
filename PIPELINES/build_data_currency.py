@@ -60,6 +60,16 @@ SOURCES = {
         "command": "npm run headwaters:era5",
         "note": "Monthly ERA5-Land state over the transboundary headwater formation scope.",
     },
+    "era5-land-full-basins-monthly": {
+        "cadence": "monthly", "latest": "era5-land", "unitReference": "transboundary07",
+        "command": "npm run basins:era5",
+        "note": "Monthly ERA5-Land state over every level-7 unit in the complete Amu and Syr systems.",
+    },
+    "era5-land-full-basin-anomaly": {
+        "cadence": "monthly", "latest": "era5-land", "unitReference": "transboundary07",
+        "command": "npm run basins:anomaly",
+        "note": "Full-system anomalies derived against the fixed 1991-2020 ERA5-Land normal.",
+    },
     "era5-land-headwater-anomaly": {
         "cadence": "monthly", "latest": "era5-land", "unitReference": "headwater07",
         "command": "npm run headwaters:anomaly",
@@ -152,6 +162,7 @@ UNIT_REFERENCES = {
     "basin12": ROOT / "PUBLISHED/data/review/basinatlas/basinatlas_uz_lev12.geojson",
     "adm2": ROOT / "PUBLISHED/data/admin/adm2.geojson",
     "headwater07": ROOT / "PUBLISHED/data/hydroclimate/headwater-units.geojson",
+    "transboundary07": ROOT / "PUBLISHED/data/hydroclimate/basins-level07.geojson",
 }
 
 # Where the upstream products currently stand. Kept here rather than queried, so

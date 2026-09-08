@@ -36,6 +36,8 @@ LAKES = ROOT / "PUBLISHED/data/hydroclimate/water-bodies-transboundary.csv"
 OUTPUT_DIR = ROOT / "PUBLISHED/data/hydrography"
 GEOJSON_OUTPUT = OUTPUT_DIR / "rivers-unified.geojson"
 CSV_OUTPUT = OUTPUT_DIR / "rivers-unified.csv"
+DOWNSTREAM_OUTPUT = OUTPUT_DIR / "river-downstream-unified.csv"
+BASIN_LINK_OUTPUT = OUTPUT_DIR / "river-basin-unified.csv"
 JSON_OUTPUT = OUTPUT_DIR / "relationships-unified.json"
 MANIFEST_OUTPUT = OUTPUT_DIR / "relationships-unified.manifest.json"
 
@@ -65,10 +67,10 @@ def atomic_json(path: Path, payload: object, *, compact: bool = False) -> None:
     os.replace(temporary, path)
 
 
-def atomic_csv(path: Path, rows: list[dict]) -> None:
+def atomic_csv(path: Path, rows: list[dict], fields: list[str] = CSV_COLUMNS) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     with temporary.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=CSV_COLUMNS)
+        writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
     os.replace(temporary, path)
@@ -188,6 +190,16 @@ def main() -> None:
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     atomic_csv(CSV_OUTPUT, records)
+    atomic_csv(DOWNSTREAM_OUTPUT, [{
+        "source_id": row["HYRIV_ID"],
+        "target_id": row["NEXT_DOWN"],
+        "target_scope": "selected" if row["NEXT_DOWN"] else "outlet",
+    } for row in records], ["source_id", "target_id", "target_scope"])
+    atomic_csv(BASIN_LINK_OUTPUT, [{
+        "river_id": row["HYRIV_ID"],
+        "basin_id": row["HYBAS_L12"],
+        "basin_scope": row["flow_position"],
+    } for row in records], ["river_id", "basin_id", "basin_scope"])
     web_frame = frame[CSV_COLUMNS + [frame.geometry.name]].copy()
     web_frame.geometry = web_frame.geometry.simplify(0.0015, preserve_topology=False)
     temporary_geojson = GEOJSON_OUTPUT.with_suffix(".geojson.tmp")
@@ -295,6 +307,8 @@ def main() -> None:
             "lakes": "/data/hydroclimate/water-bodies-transboundary.geojson",
             "boundary": "/data/hydrography/boundary.geojson",
             "riverTable": "/data/hydrography/rivers-unified.csv",
+            "downstreamTable": "/data/hydrography/river-downstream-unified.csv",
+            "riverBasinTable": "/data/hydrography/river-basin-unified.csv",
         },
         "rivers": rivers,
         "lakes": lakes,
@@ -322,6 +336,8 @@ def main() -> None:
             "relationships": {"path": str(JSON_OUTPUT.relative_to(ROOT)).replace("\\", "/"), "sha256": sha256(JSON_OUTPUT)},
             "geometry": {"path": str(GEOJSON_OUTPUT.relative_to(ROOT)).replace("\\", "/"), "sha256": sha256(GEOJSON_OUTPUT)},
             "table": {"path": str(CSV_OUTPUT.relative_to(ROOT)).replace("\\", "/"), "sha256": sha256(CSV_OUTPUT)},
+            "downstreamTable": {"path": str(DOWNSTREAM_OUTPUT.relative_to(ROOT)).replace("\\", "/"), "sha256": sha256(DOWNSTREAM_OUTPUT)},
+            "riverBasinTable": {"path": str(BASIN_LINK_OUTPUT.relative_to(ROOT)).replace("\\", "/"), "sha256": sha256(BASIN_LINK_OUTPUT)},
         }
     })
     print(

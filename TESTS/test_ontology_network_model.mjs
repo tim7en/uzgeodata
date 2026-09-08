@@ -93,3 +93,13 @@ test('the natural frame traces upstream past the national border', () => {
   assert.ok(view.upstreamCount >= 80, `expected a deep upstream trace, got ${view.upstreamCount}`);
   assert.ok(view.nodes.some(node => node.id === '4070529600'));
 });
+
+test('an upstream-only HydroRIVERS reach is searchable in the unified frame', () => {
+  const unified = JSON.parse(readFileSync(
+    new URL('../PUBLISHED/data/hydrography/relationships-unified.json', import.meta.url), 'utf8'));
+  const upstreamOnly = unified.rivers.find(reach => !reach.inNationalExtraction);
+  assert.ok(upstreamOnly, 'the complete systems must contain reaches beyond the national extraction');
+  const matches = findHydroEntities(String(upstreamOnly.id), unified.rivers, []);
+  assert.equal(matches[0]?.type, 'reach');
+  assert.equal(String(matches[0]?.record.id), String(upstreamOnly.id));
+});

@@ -93,14 +93,14 @@ def test_headwater_layer_uses_transboundary_geometry():
     assert entry["coverage"]["rows"] == entry["coverage"]["basins"] * entry["coverage"]["periods"] * 6
 
 
-def test_upstream_anomaly_is_the_default_layer_and_declares_fixed_baseline():
+def test_full_basin_anomaly_is_the_default_layer_and_declares_fixed_baseline():
     layer = web.LAYERS[0]
     entry, _ = web.build_layer(layer)
-    assert entry["id"] == "era5-land-headwater-anomaly"
-    assert entry["spatialScope"] == "headwater_formation"
+    assert entry["id"] == "era5-land-full-basin-anomaly"
+    assert entry["spatialScope"] == "full_basin"
     assert entry["baseline"] == "1991-2020"
-    assert entry["geometry"] == "/data/hydroclimate/headwater-units.geojson"
-    assert entry["coverage"]["basins"] == 121
+    assert entry["geometry"] == "/data/hydroclimate/basins-level07.geojson"
+    assert entry["coverage"]["basins"] == 438
 
 
 def test_daily_system_layer_uses_system_identifier():

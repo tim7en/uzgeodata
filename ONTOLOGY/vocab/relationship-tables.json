@@ -10,12 +10,12 @@
       "predicate": "uz:flowsInto",
       "subjectType": "RiverReach",
       "objectType": "RiverReach",
-      "container": "PUBLISHED/data/hydrography/rivers-unified.csv",
+      "container": "PUBLISHED/data/hydrography/river-downstream-unified.csv",
       "containerTable": null,
       "format": "CSV",
-      "subjectColumn": "HYRIV_ID",
-      "objectColumn": "NEXT_DOWN",
-      "scopeColumn": "in_national_extraction",
+      "subjectColumn": "source_id",
+      "objectColumn": "target_id",
+      "scopeColumn": "target_scope",
       "identifierScheme": "HYRIV_ID"
     },
     {
@@ -26,12 +26,12 @@
       "predicate": "uz:drainsToBasin",
       "subjectType": "RiverReach",
       "objectType": "Basin",
-      "container": "PUBLISHED/data/hydrography/rivers-unified.csv",
+      "container": "PUBLISHED/data/hydrography/river-basin-unified.csv",
       "containerTable": null,
       "format": "CSV",
-      "subjectColumn": "HYRIV_ID",
-      "objectColumn": "HYBAS_L12",
-      "scopeColumn": "in_headwater_formation",
+      "subjectColumn": "river_id",
+      "objectColumn": "basin_id",
+      "scopeColumn": "basin_scope",
       "identifierScheme": "HYBAS_ID"
     },
     {

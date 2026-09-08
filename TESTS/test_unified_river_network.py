@@ -46,3 +46,27 @@ def test_both_river_systems_and_all_flow_positions_are_present():
     assert {row["flowPosition"] for row in graph["rivers"]} >= {
         "runoff_formation", "transit", "endorheic_sink"
     }
+
+
+def test_every_reach_resolves_to_full_basin_era5_context():
+    graph = load("hydrography/relationships-unified.json")
+    level7 = load("hydroclimate/basin-network.json")["levels"]["7"]["basins"]
+    level7_by_pfaf = {str(row["pfafId"]): str(row["id"]) for row in level7}
+    level12_by_id = {int(row["id"]): row for row in graph["basins"]}
+    anomaly = load("basin-layers/era5-land-full-basin-anomaly.json")["basins"]
+
+    unresolved = []
+    for reach in graph["rivers"]:
+        basin = level12_by_id[int(reach["basinId"])]
+        parent = level7_by_pfaf.get(str(basin["pfafId"])[:7])
+        if parent not in anomaly:
+            unresolved.append(int(reach["id"]))
+    assert not unresolved
+
+
+def test_full_basin_state_is_rectangular_across_space_time_and_variables():
+    manifest = load("hydroclimate/era5-land-full-basins-monthly.manifest.json")
+    coverage = manifest["coverage"]
+    assert coverage["basins"] == 438
+    assert len(coverage["periods"]) == 10
+    assert coverage["rows"] == coverage["basins"] * len(coverage["periods"]) * 6

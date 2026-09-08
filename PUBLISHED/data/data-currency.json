@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T08:49:47+00:00",
+  "generatedAt": "2026-09-08T10:37:00+00:00",
   "statuses": {
     "CURRENT": "Reaches the latest period the source can supply, for every unit.",
     "BEHIND": "The source has moved on; the refresh command would extend it.",
@@ -45,8 +45,8 @@
   "counts": {
     "INCOMPLETE": 3,
     "MISSING": 3,
-    "CURRENT": 7,
-    "STATIC": 26
+    "CURRENT": 9,
+    "STATIC": 28
   },
   "tables": [
     {
@@ -186,6 +186,48 @@
       "refresh": "npm run cfsv2:observe -- --start <YYYY-MM> --end <YYYY-MM>",
       "note": "CFSv2 publishes six-hourly with a short lag; a month is complete once it ends.",
       "lastModified": "2026-09-07T17:06:58+00:00"
+    },
+    {
+      "id": "era5-land-full-basin-anomaly",
+      "label": "ERA5-Land monthly anomaly across the full Amu and Syr basins",
+      "predicate": "uz:hasBasinAnomaly",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-full-basin-anomaly.csv",
+      "exists": true,
+      "rows": 24638,
+      "units": 438,
+      "expectedUnits": 438,
+      "coverage": {
+        "from": "2025-10",
+        "to": "2026-07"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run basins:anomaly",
+      "note": "Full-system anomalies derived against the fixed 1991-2020 ERA5-Land normal.",
+      "lastModified": "2026-09-08T10:29:00+00:00"
+    },
+    {
+      "id": "era5-land-full-basins-monthly",
+      "label": "ERA5-Land monthly hydroclimate state across the full Amu and Syr basins",
+      "predicate": "uz:hasBasinStatistic",
+      "container": "PUBLISHED/data/hydroclimate/era5-land-full-basins-monthly.csv",
+      "exists": true,
+      "rows": 26280,
+      "units": 438,
+      "expectedUnits": 438,
+      "coverage": {
+        "from": "2025-10",
+        "to": "2026-07"
+      },
+      "cadence": "monthly",
+      "upstreamLatest": "2026-07",
+      "gap": null,
+      "status": "CURRENT",
+      "refresh": "npm run basins:era5",
+      "note": "Monthly ERA5-Land state over every level-7 unit in the complete Amu and Syr systems.",
+      "lastModified": "2026-09-08T10:18:43+00:00"
     },
     {
       "id": "era5-land-headwater-anomaly",
@@ -768,6 +810,42 @@
       "refresh": "npm run basins:roles",
       "note": "Rebuild after the frame changes or a control section is declared; the channel class comes from static HydroRIVERS discharge.",
       "lastModified": "2026-09-08T08:45:40+00:00"
+    },
+    {
+      "id": "transboundary-river-basin",
+      "label": "Unified river reach to level-12 basin",
+      "predicate": "uz:drainsToBasin",
+      "container": "PUBLISHED/data/hydrography/rivers-unified.csv",
+      "exists": true,
+      "rows": 46976,
+      "units": 7419,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": null,
+      "note": null,
+      "lastModified": "2026-09-08T10:31:42+00:00"
+    },
+    {
+      "id": "transboundary-river-downstream",
+      "label": "Unified Amu and Syr river-reach routing",
+      "predicate": "uz:flowsInto",
+      "container": "PUBLISHED/data/hydrography/rivers-unified.csv",
+      "exists": true,
+      "rows": 46976,
+      "units": 23261,
+      "expectedUnits": null,
+      "coverage": null,
+      "cadence": "static",
+      "upstreamLatest": null,
+      "gap": null,
+      "status": "STATIC",
+      "refresh": null,
+      "note": null,
+      "lastModified": "2026-09-08T10:31:42+00:00"
     },
     {
       "id": "transboundary-water-body-basin",
