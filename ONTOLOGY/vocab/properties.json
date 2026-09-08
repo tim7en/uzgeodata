@@ -788,6 +788,19 @@
       "broader": "uz:theme/hazards-terrain"
     },
     {
+      "id": "uz:prop/glacier-extent",
+      "prefLabel": "Glacier extent",
+      "altLabels": [
+        "glacier area",
+        "glacier outline",
+        "оледенение",
+        "площадь оледенения"
+      ],
+      "definition": "Ice-covered area of a glacier at its survey date, measured from mapped outlines with internal rock outcrops removed. An extent belongs to the survey epoch that produced the outline, not to the year it is read in.",
+      "unit": "km2",
+      "broader": "uz:theme/hazards-terrain"
+    },
+    {
       "id": "uz:prop/glacier-volume",
       "prefLabel": "Glacier ice volume",
       "altLabels": [

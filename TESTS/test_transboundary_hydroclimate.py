@@ -53,10 +53,30 @@ def test_elevation_bands_partition_each_headwater_system():
 def test_temporal_grain_is_preserved_in_download_tables():
     era5 = rows("era5-land-headwater-elevation-monthly.csv")
     snow = rows("modis-snow-headwaters-daily.csv")
-    assert len({row["period_start"] for row in era5}) == 7
+    assert len({row["period_start"] for row in era5}) >= 10
     assert len({row["date"] for row in snow}) >= 31
     assert all(row["valid_area_percent"] for row in snow)
     assert all(row["source_image"] for row in era5 + snow)
+
+
+def test_state_tables_reach_back_to_the_start_of_the_water_year():
+    """A water year opens on 1 October, so state must start there, not in January."""
+    for name in (
+        "era5-land-headwaters-monthly.csv",
+        "era5-land-headwater-elevation-monthly.csv",
+        "era5-land-headwater-anomaly.csv",
+    ):
+        months = sorted({row["period_start"] for row in rows(name)})
+        assert months[0] == "2025-10-01"
+        expected, year, month = [], 2025, 10
+        while f"{year:04d}-{month:02d}-01" <= months[-1]:
+            expected.append(f"{year:04d}-{month:02d}-01")
+            year, month = (year + 1, 1) if month == 12 else (year, month + 1)
+        assert months == expected
+
+    days = sorted({row["date"] for row in rows("modis-snow-headwaters-daily.csv")})
+    assert days[0] <= "2025-10-01"
+    assert len(days) >= 300
 
 
 def test_headwater_anomalies_use_a_fixed_climate_normal():

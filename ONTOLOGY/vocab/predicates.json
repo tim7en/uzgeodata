@@ -464,6 +464,23 @@
       "cardinality": "many",
       "mlProposable": false,
       "viaRelationshipTable": true
+    },
+    {
+      "id": "uz:formationUnitInBasin",
+      "label": "formation unit in basin",
+      "definition": "The subbasin a runoff-formation unit lies in, measured by exact geometric intersection and carrying the intersecting area. A glacier that crosses a drainage divide resolves to every subbasin it reaches, which is why the relation is many rather than one.",
+      "domain": [
+        "RunoffFormationUnit"
+      ],
+      "range": {
+        "kind": "entity",
+        "entityTypes": [
+          "Basin"
+        ]
+      },
+      "cardinality": "many",
+      "mlProposable": false,
+      "viaRelationshipTable": true
     }
   ]
 }

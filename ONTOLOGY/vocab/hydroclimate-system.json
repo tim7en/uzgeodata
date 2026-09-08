@@ -98,6 +98,16 @@
       "definition": "All level-7 HydroATLAS units routing to the unit immediately below the Naryn-Karadarya confluence."
     }
   ],
+  "glacierInventory": {
+    "asset": "GLIMS/20230607",
+    "snapshot": "2023-06-07",
+    "catalogUrl": "https://developers.google.com/earth-engine/datasets/catalog/GLIMS_20230607",
+    "outlineFilter": "line_type == glac_bound",
+    "excludedLineTypes": ["intrnl_rock"],
+    "deduplication": "latest src_date per glac_id",
+    "observationClass": "inventory",
+    "note": "GLIMS is a multi-temporal archive. Raw sums double count glaciers surveyed more than once, and internal rock outcrops must be subtracted before an outline is treated as ice area."
+  },
   "elevationBandsMetres": [
     {"id": "lt_1000", "minimum": null, "maximum": 1000},
     {"id": "1000_2000", "minimum": 1000, "maximum": 2000},

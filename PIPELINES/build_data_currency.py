@@ -75,6 +75,26 @@ SOURCES = {
         "command": "npm run headwaters:snow",
         "note": "Daily MODIS snow cover; cloud and invalid-pixel coverage is retained explicitly.",
     },
+    "glims-glacier-inventory": {
+        "cadence": "static", "latest": None,
+        "command": "npm run headwaters:glaciers",
+        "note": "One GLIMS snapshot with survey dates from 1994 to 2009. It moves when GLIMS releases, not with the water year.",
+    },
+    "glims-glacier-subbasin-links": {
+        "cadence": "static", "latest": None,
+        "command": "npm run headwaters:glaciers",
+        "note": "Geometric intersection of the same snapshot with HydroATLAS; rebuilt when either side is replaced.",
+    },
+    "glims-glacier-elevation-bands": {
+        "cadence": "static", "latest": None,
+        "command": "npm run headwaters:glaciers",
+        "note": "Elevation split of the same snapshot against the static SRTM masks.",
+    },
+    "glims-glacier-basin-elevation-bands": {
+        "cadence": "static", "latest": None,
+        "command": "npm run headwaters:glaciers",
+        "note": "Derived cross tabulation; carries no period because neither input is a time series.",
+    },
     "chirps-v3-basin-pentad": {
         "cadence": "monthly", "latest": "chirps", "unitReference": "basin12",
         "command": "npm run chirps:observe -- --start <YYYY-MM> --end <YYYY-MM>",

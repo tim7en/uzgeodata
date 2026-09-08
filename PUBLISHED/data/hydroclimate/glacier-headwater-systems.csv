@@ -1,0 +1,6 @@
+observation_unit_id,system_id,river_system_id,elevation_band,minimum_m_inclusive,maximum_m_exclusive,glacier_count,glacier_area_km2,band_area_km2,glacier_share_of_band_percent,share_of_system_glacier_area_percent,source_asset,survey_date_min,survey_date_max,scale_m,retrieved_at
+upper_syr_darya::1000_2000,upper_syr_darya,syr_darya,1000_2000,1000,2000,0,0.0000,20676.320,0.0000,0.0000,GLIMS/20230607,1994-08-18,2009-07-01,30,2026-09-08T06:55:17+00:00
+upper_syr_darya::2000_3000,upper_syr_darya,syr_darya,2000_3000,2000,3000,4,0.3017,31182.300,0.0010,0.0158,GLIMS/20230607,1994-08-18,2009-07-01,30,2026-09-08T06:55:17+00:00
+upper_syr_darya::3000_4000,upper_syr_darya,syr_darya,3000_4000,3000,4000,1561,450.8902,28500.299,1.5821,23.5376,GLIMS/20230607,1994-08-18,2009-07-01,30,2026-09-08T06:55:17+00:00
+upper_syr_darya::gte_4000,upper_syr_darya,syr_darya,gte_4000,4000,,2979,1464.4234,3704.812,39.5276,76.4466,GLIMS/20230607,1994-08-18,2009-07-01,30,2026-09-08T06:55:17+00:00
+upper_syr_darya::lt_1000,upper_syr_darya,syr_darya,lt_1000,,1000,0,0.0000,11355.140,0.0000,0.0000,GLIMS/20230607,1994-08-18,2009-07-01,30,2026-09-08T06:55:17+00:00

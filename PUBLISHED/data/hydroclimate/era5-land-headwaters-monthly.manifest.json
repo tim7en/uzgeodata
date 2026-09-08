@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T04:44:38+00:00",
+  "generatedAt": "2026-09-08T07:04:43+00:00",
   "hydroclimateStage": "source",
   "datasetKind": "reanalysis",
   "source": {
@@ -9,7 +9,7 @@
     "catalogUrl": "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_MONTHLY_AGGR",
     "latestAvailableMonth": "2026-07",
     "nominalScaleMetres": 11132,
-    "retrievedAt": "2026-09-08T04:44:38+00:00"
+    "retrievedAt": "2026-09-08T07:04:43+00:00"
   },
   "spatialFrame": {
     "asset": "WWF/HydroATLAS/v1/Basins/level07",
@@ -68,10 +68,13 @@
     }
   ],
   "coverage": {
-    "rows": 5082,
+    "rows": 7260,
     "systems": 2,
-    "basins": 121,
+    "basins": 242,
     "periods": [
+      "2025-10",
+      "2025-11",
+      "2025-12",
       "2026-01",
       "2026-02",
       "2026-03",

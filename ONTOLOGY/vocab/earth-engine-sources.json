@@ -12,12 +12,23 @@
       "attribution": "Copernicus Atmosphere Monitoring Service, ECMWF",
       "theme": "uz:theme/hazards-terrain",
       "analysis": "uz:analysis/state-observation",
-      "observes": ["uz:prop/aerosol-optical-depth", "uz:prop/particulate-matter", "uz:prop/dust-load"],
-      "places": ["uz:place/uzbekistan"],
-      "temporal": {"start": 2016, "end": 2026},
+      "observes": [
+        "uz:prop/aerosol-optical-depth",
+        "uz:prop/particulate-matter",
+        "uz:prop/dust-load"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2016,
+        "end": 2026
+      },
       "gridMetres": 44453,
       "basinLevel": 6,
-      "qualityFlags": ["forecast-product-verified-against-own-analysis"],
+      "qualityFlags": [
+        "forecast-product-verified-against-own-analysis"
+      ],
       "note": "A forecast system, not an observing one. The +0h analysis is the assimilated state and is what the ontology stores; the forecast tables record how far ahead it can be believed. Only aerosol optical depth and PM2.5 exist before 2021-07-01.",
       "derivedProducts": [
         {
@@ -25,18 +36,36 @@
           "label": "CAMS forecast skill against its own analysis",
           "description": "Mean absolute error, bias and correlation by lead time. This is internal forecast-to-analysis verification, not independent validation against ground observations.",
           "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.3_CAMS_FORECAST_SKILL/cams-forecast-skill.csv",
-          "observes": ["uz:prop/aerosol-optical-depth", "uz:prop/particulate-matter"],
-          "temporal": {"start": 2026, "end": 2026},
-          "qualityFlags": ["verified-against-own-analysis"]
+          "observes": [
+            "uz:prop/aerosol-optical-depth",
+            "uz:prop/particulate-matter"
+          ],
+          "temporal": {
+            "start": 2026,
+            "end": 2026
+          },
+          "qualityFlags": [
+            "verified-against-own-analysis"
+          ]
         },
         {
           "slug": "cams-event-verification",
           "label": "CAMS event detection verification at Tashkent",
           "description": "Event detection, false-alarm, correlation and bias metrics at one CAMS grid cell. The grid cell is not a street-level city monitor and the reference is the model analysis.",
           "container": "PUBLISHED/data/ontology/1_ATMOSPHERE/1.2_CAMS_EVENT_VERIFICATION/cams-event-verification.csv",
-          "observes": ["uz:prop/aerosol-optical-depth", "uz:prop/particulate-matter", "uz:prop/dust-load"],
-          "temporal": {"start": 2024, "end": 2026},
-          "qualityFlags": ["verified-against-own-analysis", "single-grid-cell-not-ground-monitor"]
+          "observes": [
+            "uz:prop/aerosol-optical-depth",
+            "uz:prop/particulate-matter",
+            "uz:prop/dust-load"
+          ],
+          "temporal": {
+            "start": 2024,
+            "end": 2026
+          },
+          "qualityFlags": [
+            "verified-against-own-analysis",
+            "single-grid-cell-not-ground-monitor"
+          ]
         }
       ]
     },
@@ -50,13 +79,27 @@
       "attribution": "NOAA NCEP Climate Forecast System",
       "theme": "uz:theme/climate",
       "analysis": "uz:analysis/state-observation",
-      "observes": ["uz:prop/precipitation", "uz:prop/air-temperature", "uz:prop/soil-moisture",
-                   "uz:prop/evapotranspiration", "uz:prop/solar-radiation", "uz:prop/specific-humidity"],
-      "places": ["uz:place/uzbekistan"],
-      "temporal": {"start": 1979, "end": 2026},
+      "observes": [
+        "uz:prop/precipitation",
+        "uz:prop/air-temperature",
+        "uz:prop/soil-moisture",
+        "uz:prop/evapotranspiration",
+        "uz:prop/solar-radiation",
+        "uz:prop/specific-humidity"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1979,
+        "end": 2026
+      },
       "gridMetres": 34771,
       "basinLevel": 7,
-      "qualityFlags": ["record-inhomogeneous-at-2011", "potential-evaporation-implausible-2026"],
+      "qualityFlags": [
+        "record-inhomogeneous-at-2011",
+        "potential-evaporation-implausible-2026"
+      ],
       "note": "Coupled model output, not observation. CFSR feeds the record to 2010 and operational CFSv2 from 2011, and 25 cm soil moisture steps 1.41 standard deviations across that boundary, so baselines stay inside the operational era."
     },
     {
@@ -69,9 +112,16 @@
       "attribution": "Climate Hazards Center InfraRed Precipitation with Station data v3",
       "theme": "uz:theme/climate",
       "analysis": "uz:analysis/state-observation",
-      "observes": ["uz:prop/precipitation"],
-      "places": ["uz:place/uzbekistan"],
-      "temporal": {"start": 1981, "end": 2026},
+      "observes": [
+        "uz:prop/precipitation"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1981,
+        "end": 2026
+      },
       "gridMetres": 5566,
       "basinLevel": 12,
       "note": "Computed pentadally; the daily product is a disaggregation of it and agrees to 0.00% over a month. Version 3 sits under UCSB-CHC, not the UCSB-CHG path version 2 uses, and differs from it by about nine percent here."
@@ -86,12 +136,23 @@
       "attribution": "Climate Hazards Center InfraRed Temperature with Stations",
       "theme": "uz:theme/climate",
       "analysis": "uz:analysis/state-observation",
-      "observes": ["uz:prop/air-temperature", "uz:prop/specific-humidity"],
-      "places": ["uz:place/uzbekistan"],
-      "temporal": {"start": 1983, "end": 2016},
+      "observes": [
+        "uz:prop/air-temperature",
+        "uz:prop/specific-humidity"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1983,
+        "end": 2016
+      },
       "gridMetres": 5566,
       "basinLevel": 12,
-      "qualityFlags": ["record-closed-2016", "heat-index-in-fahrenheit"],
+      "qualityFlags": [
+        "record-closed-2016",
+        "heat-index-in-fahrenheit"
+      ],
       "note": "Closed: the record stops at 2016-12-31. A historical baseline rather than a monitoring layer. Its heat index column is Fahrenheit and derived from the daily mean while every other column is metric."
     },
     {
@@ -104,12 +165,21 @@
       "attribution": "NOAA CPC Global Unified Temperature",
       "theme": "uz:theme/climate",
       "analysis": "uz:analysis/state-observation",
-      "observes": ["uz:prop/air-temperature"],
-      "places": ["uz:place/uzbekistan"],
-      "temporal": {"start": 1979, "end": 2026},
+      "observes": [
+        "uz:prop/air-temperature"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 1979,
+        "end": 2026
+      },
       "gridMetres": 55660,
       "basinLevel": 6,
-      "qualityFlags": ["sparse-station-coverage-over-uzbekistan"],
+      "qualityFlags": [
+        "sparse-station-coverage-over-uzbekistan"
+      ],
       "note": "Gauge-based and long, but the GTS feed over Uzbekistan is thin: 0.13 stations per cell per day, with 51% of basin-months seeing none. Mostly interpolation from distant reports here, and weighted accordingly against CHIRTS."
     },
     {
@@ -130,11 +200,21 @@
         "uz:prop/soil-moisture",
         "uz:prop/surface-runoff"
       ],
-      "places": ["uz:place/upper-amu-darya", "uz:place/upper-syr-darya"],
-      "temporal": {"start": 1950, "end": 2026},
+      "places": [
+        "uz:place/upper-amu-darya",
+        "uz:place/upper-syr-darya"
+      ],
+      "temporal": {
+        "start": 1950,
+        "end": 2026
+      },
       "gridMetres": 11132,
       "basinLevel": 7,
-      "qualityFlags": ["reanalysis-not-direct-observation", "runoff-is-modelled", "publication-lag"],
+      "qualityFlags": [
+        "reanalysis-not-direct-observation",
+        "runoff-is-modelled",
+        "publication-lag"
+      ],
       "note": "Monthly land reanalysis used for the transboundary runoff-formation pilot. Temperature, precipitation, snowfall, snow water equivalent, top-layer soil moisture and modelled runoff are reduced onto level-7 headwater units. Modelled runoff is not river-gauge discharge. The local reduction is registered as a relationship-table distribution of this dataset."
     },
     {
@@ -147,12 +227,24 @@
       "attribution": "NASA NSIDC DAAC at CIRES, MOD10A1 Collection 6.1",
       "theme": "uz:theme/climate",
       "analysis": "uz:analysis/state-observation",
-      "observes": ["uz:prop/snow-cover-fraction"],
-      "places": ["uz:place/upper-amu-darya", "uz:place/upper-syr-darya"],
-      "temporal": {"start": 2000, "end": 2026},
+      "observes": [
+        "uz:prop/snow-cover-fraction"
+      ],
+      "places": [
+        "uz:place/upper-amu-darya",
+        "uz:place/upper-syr-darya"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2026
+      },
       "gridMetres": 500,
       "basinLevel": 10,
-      "qualityFlags": ["cloud-affected", "valid-area-retained", "daily-native-grain"],
+      "qualityFlags": [
+        "cloud-affected",
+        "valid-area-retained",
+        "daily-native-grain"
+      ],
       "note": "Daily Terra snow cover retained at native daily grain and reduced by headwater formation system and SRTM elevation band. Provider codes above 100 are masked; valid-area percentage is stored so cloud is not interpreted as snow-free land."
     },
     {
@@ -166,12 +258,23 @@
       "attribution": "NASA / USGS / JPL-Caltech SRTMGL1 v3",
       "theme": "uz:theme/hazards-terrain",
       "analysis": "uz:analysis/environmental-feature",
-      "observes": ["uz:prop/elevation"],
-      "places": ["uz:place/upper-amu-darya", "uz:place/upper-syr-darya"],
-      "temporal": {"start": 2000, "end": 2000},
+      "observes": [
+        "uz:prop/elevation"
+      ],
+      "places": [
+        "uz:place/upper-amu-darya",
+        "uz:place/upper-syr-darya"
+      ],
+      "temporal": {
+        "start": 2000,
+        "end": 2000
+      },
       "gridMetres": 30,
       "basinLevel": 10,
-      "qualityFlags": ["static-dem", "analysis-reduced-at-90m"],
+      "qualityFlags": [
+        "static-dem",
+        "analysis-reduced-at-90m"
+      ],
       "note": "Thirty-metre SRTM elevation used to define five analytical elevation masks inside each runoff-formation system. Area statistics are evaluated at 90 m; elevation bands supplement rather than replace basin identity."
     },
     {
@@ -184,9 +287,18 @@
       "attribution": "Conservation Science Partners, global Human Modification (gHM)",
       "theme": "uz:theme/infrastructure",
       "analysis": "uz:analysis/state-observation",
-      "observes": ["uz:prop/human-modification", "uz:prop/settlement-extent", "uz:prop/road-density"],
-      "places": ["uz:place/uzbekistan"],
-      "temporal": {"start": 2016, "end": 2016},
+      "observes": [
+        "uz:prop/human-modification",
+        "uz:prop/settlement-extent",
+        "uz:prop/road-density"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2016,
+        "end": 2016
+      },
       "gridMetres": 1000,
       "basinLevel": 12,
       "note": "A single image with no timestamp — timeless rather than archival. Measured over both basins and districts because the frame changes the answer: 0.33 by basin against 0.61 by district."
@@ -201,13 +313,54 @@
       "attribution": "Impact Observatory / Esri 10 m Annual Land Use Land Cover",
       "theme": "uz:theme/land-agriculture",
       "analysis": "uz:analysis/change-over-time",
-      "observes": ["uz:prop/land-cover", "uz:prop/cropland-extent", "uz:prop/bare-surface",
-                   "uz:prop/settlement-extent"],
-      "places": ["uz:place/uzbekistan"],
-      "temporal": {"start": 2017, "end": 2025},
+      "observes": [
+        "uz:prop/land-cover",
+        "uz:prop/cropland-extent",
+        "uz:prop/bare-surface",
+        "uz:prop/settlement-extent"
+      ],
+      "places": [
+        "uz:place/uzbekistan"
+      ],
+      "temporal": {
+        "start": 2017,
+        "end": 2025
+      },
       "gridMetres": 10,
       "basinLevel": 12,
       "note": "Nine annual mosaics in a 9-class scheme. Area must come from pixelArea rather than a pixel count: the collection mosaics UTM tiles and the reduction falls back to a geographic projection where pixel ground area varies with latitude."
+    },
+    {
+      "slug": "glims-glaciers",
+      "label": "GLIMS glacier outlines",
+      "asset": "GLIMS/20230607",
+      "assetType": "FeatureCollection",
+      "agent": "uz:agent/glims-nsidc",
+      "agentLabel": "GLIMS and NSIDC",
+      "licence": "GLIMS data use policy; analysts and submitters must be credited",
+      "attribution": "GLIMS and NSIDC glacier database, snapshot 2023-06-07",
+      "theme": "uz:theme/hazards-terrain",
+      "analysis": "uz:analysis/environmental-feature",
+      "observes": [
+        "uz:prop/glacier-extent"
+      ],
+      "places": [
+        "uz:place/upper-amu-darya",
+        "uz:place/upper-syr-darya"
+      ],
+      "temporal": {
+        "start": 1994,
+        "end": 2009
+      },
+      "gridMetres": 30,
+      "basinLevel": 10,
+      "qualityFlags": [
+        "multi-temporal-archive",
+        "latest-survey-per-glacier",
+        "internal-rock-removed",
+        "survey-epoch-not-current-state"
+      ],
+      "note": "Glacier outlines for the transboundary formation zones. The archive holds one polygon per survey, so only the latest src_date per glac_id is kept and intrnl_rock outcrops are subtracted before an outline is read as ice. Outlines are linked to level-10 and level-12 subbasins by exact intersection and split across SRTM elevation bands. Survey dates run from 1994 to 2009: this is an inventory of a past epoch and must not be published as the current state of glaciation."
     }
   ]
 }

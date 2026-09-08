@@ -1,0 +1,94 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-08T06:55:17+00:00",
+  "spatialScope": "headwater_formation",
+  "observationClass": "inventory",
+  "source": {
+    "platform": "Google Earth Engine",
+    "asset": "GLIMS/20230607",
+    "snapshot": "2023-06-07",
+    "demAsset": "USGS/SRTMGL1_003",
+    "glacierScaleMetres": 30,
+    "basinScaleMetres": 90,
+    "catalogUrl": "https://developers.google.com/earth-engine/datasets/catalog/GLIMS_20230607"
+  },
+  "selection": {
+    "outlineFilter": "line_type == glac_bound",
+    "deduplication": "latest src_date per glac_id",
+    "internalRock": "intrnl_rock polygons of the same glac_id and src_date are subtracted",
+    "spatialFilter": "intersects the headwater_formation system polygon"
+  },
+  "systems": [
+    {
+      "systemId": "upper_syr_darya",
+      "riverSystemId": "syr_darya",
+      "glacierCount": 4544,
+      "glacierAreaKm2": 1915.615,
+      "outlineAreaKm2": 1930.247,
+      "internalRockAreaKm2": 14.632,
+      "internalRockPolygons": 559,
+      "surveyDateRange": [
+        "1994-08-18",
+        "2009-07-01"
+      ],
+      "glacierAreaByBandKm2": {
+        "lt_1000": 0.0,
+        "1000_2000": 0.0,
+        "2000_3000": 0.302,
+        "3000_4000": 450.89,
+        "gte_4000": 1464.423
+      },
+      "linkedSubbasins": {
+        "10": 280,
+        "12": 303
+      }
+    }
+  ],
+  "counts": {
+    "glaciers": 4544,
+    "glacierBandRows": 6216,
+    "basinLinks": 11707,
+    "basinBandRows": 3620,
+    "sourceSubmissions": 20
+  },
+  "levels": [
+    10,
+    12
+  ],
+  "outputs": {
+    "inventoryCSV": "PUBLISHED/data/hydroclimate/glacier-inventory-headwaters.csv",
+    "glacierElevationBandCSV": "PUBLISHED/data/hydroclimate/glacier-elevation-bands.csv",
+    "basinLinkCSV": "PUBLISHED/data/hydroclimate/glacier-basin-links.csv",
+    "basinElevationBandCSV": "PUBLISHED/data/hydroclimate/glacier-basin-elevation-bands.csv",
+    "systemCSV": "PUBLISHED/data/hydroclimate/glacier-headwater-systems.csv",
+    "attributionCSV": "PUBLISHED/data/hydroclimate/glacier-source-attribution.csv",
+    "webGeoJSON": "PUBLISHED/data/hydroclimate/glaciers-headwaters.geojson",
+    "summaryJSON": "PUBLISHED/data/hydroclimate/glacier-headwater-systems.json",
+    "exactGeoJSON": [
+      {
+        "path": "GEODATA/glaciers_headwaters_v1/glims-upper_syr_darya-outlines.geojson",
+        "features": 4544,
+        "sha256": "1a91eae08892b3f5609e23006199bcbb4bdf80c12952ab4721a51adf7ec8ba02"
+      },
+      {
+        "path": "GEODATA/glaciers_headwaters_v1/glims-upper_syr_darya-internal-rock.geojson",
+        "features": 559,
+        "sha256": "9ccc90b2137e0cd4834ea613b5d3245a671347e5db89466da1ad5692746b6ba3"
+      }
+    ]
+  },
+  "semantics": {
+    "identity": "glacier_id is the GLIMS glac_id; it is not a basin identifier",
+    "area": "geodesic vector area of the retained outline minus internal rock",
+    "elevationBands": "SRTM band masks at 30 m, rescaled so band areas sum to the vector area",
+    "basinAttribution": "exact vector intersection; a glacier crossing a divide appears once per subbasin",
+    "basinBandAttribution": "glacier band area distributed to subbasins by intersection share",
+    "temporalStatus": "survey epoch inventory, not a current-year state observation"
+  },
+  "qualityNotes": [
+    "GLIMS is multi-temporal: only the latest src_date per glac_id is retained.",
+    "Internal rock outcrops are removed so glacier area is ice area, not outline area.",
+    "Survey dates differ between submissions; survey_date is published per glacier.",
+    "Subbasin band areas are 90 m SRTM sums while glacier band areas are 30 m sums."
+  ]
+}

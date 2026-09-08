@@ -655,13 +655,34 @@
       "measureColumn": "z_score",
       "measureUnitColumn": null,
       "dimensionColumns": [
-        {"column": "system_id", "meaning": "transboundary runoff-formation system"},
-        {"column": "year", "meaning": "observation calendar year"},
-        {"column": "month", "meaning": "calendar month"},
-        {"column": "variable", "meaning": "hydroclimate variable"},
-        {"column": "classification", "meaning": "symmetric anomaly class"},
-        {"column": "baseline_start", "meaning": "first year of fixed climate normal"},
-        {"column": "baseline_end", "meaning": "last year of fixed climate normal"}
+        {
+          "column": "system_id",
+          "meaning": "transboundary runoff-formation system"
+        },
+        {
+          "column": "year",
+          "meaning": "observation calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month"
+        },
+        {
+          "column": "variable",
+          "meaning": "hydroclimate variable"
+        },
+        {
+          "column": "classification",
+          "meaning": "symmetric anomaly class"
+        },
+        {
+          "column": "baseline_start",
+          "meaning": "first year of fixed climate normal"
+        },
+        {
+          "column": "baseline_end",
+          "meaning": "last year of fixed climate normal"
+        }
       ]
     },
     {
@@ -683,9 +704,18 @@
       "measureColumn": "area_km2",
       "measureUnitColumn": null,
       "dimensionColumns": [
-        {"column": "system_id", "meaning": "headwater runoff-formation system"},
-        {"column": "elevation_band", "meaning": "configured SRTM elevation interval"},
-        {"column": "mean_elevation_m", "meaning": "area-weighted mean elevation within the interval"}
+        {
+          "column": "system_id",
+          "meaning": "headwater runoff-formation system"
+        },
+        {
+          "column": "elevation_band",
+          "meaning": "configured SRTM elevation interval"
+        },
+        {
+          "column": "mean_elevation_m",
+          "meaning": "area-weighted mean elevation within the interval"
+        }
       ]
     },
     {
@@ -707,10 +737,22 @@
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "dimensionColumns": [
-        {"column": "year", "meaning": "calendar year"},
-        {"column": "month", "meaning": "calendar month"},
-        {"column": "variable", "meaning": "hydroclimate variable"},
-        {"column": "elevation_band", "meaning": "configured SRTM elevation interval"}
+        {
+          "column": "year",
+          "meaning": "calendar year"
+        },
+        {
+          "column": "month",
+          "meaning": "calendar month"
+        },
+        {
+          "column": "variable",
+          "meaning": "hydroclimate variable"
+        },
+        {
+          "column": "elevation_band",
+          "meaning": "configured SRTM elevation interval"
+        }
       ]
     },
     {
@@ -732,10 +774,153 @@
       "measureColumn": "value",
       "measureUnitColumn": "unit",
       "dimensionColumns": [
-        {"column": "date", "meaning": "native daily observation date"},
-        {"column": "variable", "meaning": "snow cover percentage"},
-        {"column": "elevation_band", "meaning": "configured SRTM elevation interval"},
-        {"column": "valid_area_percent", "meaning": "share of the elevation unit carrying a valid retrieval"}
+        {
+          "column": "date",
+          "meaning": "native daily observation date"
+        },
+        {
+          "column": "variable",
+          "meaning": "snow cover percentage"
+        },
+        {
+          "column": "elevation_band",
+          "meaning": "configured SRTM elevation interval"
+        },
+        {
+          "column": "valid_area_percent",
+          "meaning": "share of the elevation unit carrying a valid retrieval"
+        }
+      ]
+    },
+    {
+      "id": "glims-glacier-inventory",
+      "dataset": "glims-glaciers",
+      "label": "GLIMS glacier inventory in the headwater formation zones",
+      "note": "One row per glacier: the latest GLIMS survey of each glac_id with internal rock outcrops subtracted. area_km2 is the whole glacier; area_in_headwater_km2 is the part inside level-10 subbasins of the formation zone, so a glacier on the outer divide is never counted whole. Survey dates run from 1994 to 2009 and are carried per row, because this is an inventory of a past epoch rather than a current-year state.",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "container": "PUBLISHED/data/hydroclimate/glacier-inventory-headwaters.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/glims-glaciers",
+      "objectColumn": "glacier_id",
+      "identifierScheme": "GLIMS_GLAC_ID",
+      "scopeColumn": null,
+      "measureColumn": "area_km2",
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "system_id",
+          "meaning": "headwater runoff-formation system"
+        },
+        {
+          "column": "survey_date",
+          "meaning": "GLIMS source survey date of the retained outline"
+        },
+        {
+          "column": "area_in_headwater_km2",
+          "meaning": "glacier area inside the formation zone"
+        },
+        {
+          "column": "dominant_elevation_band",
+          "meaning": "elevation interval holding most of the ice"
+        }
+      ]
+    },
+    {
+      "id": "glims-glacier-subbasin-links",
+      "dataset": "glims-glaciers",
+      "label": "Glacier to subbasin links, levels 10 and 12",
+      "note": "Exact vector intersection of each glacier with the HydroATLAS subbasins of its river system. A glacier crossing a divide appears once per subbasin with the shared area, and in_headwater_formation records whether that subbasin belongs to the formation zone. This is the relation the runoff-formation layer traces through, not centroid containment.",
+      "predicate": "uz:formationUnitInBasin",
+      "subjectType": "RunoffFormationUnit",
+      "objectType": "Basin",
+      "container": "PUBLISHED/data/hydroclimate/glacier-basin-links.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": "glacier_id",
+      "objectColumn": "hybas_id",
+      "identifierScheme": "GLIMS_GLAC_ID::HYBAS_ID",
+      "scopeColumn": "in_headwater_formation",
+      "measureColumn": "area_km2",
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "basin_level",
+          "meaning": "HydroATLAS level of the subbasin, 10 or 12"
+        },
+        {
+          "column": "share_of_glacier_percent",
+          "meaning": "share of the glacier lying in this subbasin"
+        },
+        {
+          "column": "is_primary_subbasin",
+          "meaning": "the subbasin holding the largest part of the glacier"
+        }
+      ]
+    },
+    {
+      "id": "glims-glacier-elevation-bands",
+      "dataset": "glims-glaciers",
+      "label": "Glacier area by elevation band",
+      "note": "Ice area of each glacier split across the configured SRTM elevation bands at 30 m and rescaled so the band areas sum to the glacier's vector area. Elevation bands are analytical masks and do not replace glacier or basin identity.",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "container": "PUBLISHED/data/hydroclimate/glacier-elevation-bands.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/glims-glaciers",
+      "objectColumn": "glacier_id",
+      "identifierScheme": "GLIMS_GLAC_ID",
+      "scopeColumn": null,
+      "measureColumn": "area_km2",
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "elevation_band",
+          "meaning": "configured SRTM elevation interval"
+        },
+        {
+          "column": "share_percent",
+          "meaning": "share of the glacier inside the interval"
+        }
+      ]
+    },
+    {
+      "id": "glims-glacier-basin-elevation-bands",
+      "dataset": "glims-glaciers",
+      "label": "Glacier and basin area by subbasin and elevation band",
+      "note": "Cross tabulation of subbasin by elevation band: the band area of the subbasin measured at 90 m and the glacier area distributed into it from the exact glacier-to-subbasin shares at 30 m. The two scales differ, so a small subbasin can report a glacier share slightly above 100 percent of a band.",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "container": "PUBLISHED/data/hydroclimate/glacier-basin-elevation-bands.csv",
+      "containerTable": null,
+      "format": "CSV",
+      "subjectColumn": null,
+      "subjectFixed": "uz:ds/glims-glaciers",
+      "objectColumn": "observation_unit_id",
+      "identifierScheme": "HYBAS_ID::ELEVATION_BAND_ID",
+      "scopeColumn": "in_headwater_formation",
+      "measureColumn": "glacier_area_km2",
+      "measureUnitColumn": null,
+      "dimensionColumns": [
+        {
+          "column": "basin_level",
+          "meaning": "HydroATLAS level of the subbasin, 10 or 12"
+        },
+        {
+          "column": "elevation_band",
+          "meaning": "configured SRTM elevation interval"
+        },
+        {
+          "column": "basin_band_area_km2",
+          "meaning": "area of the subbasin inside the interval"
+        }
       ]
     }
   ]

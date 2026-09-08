@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T05:33:55+00:00",
+  "generatedAt": "2026-09-08T07:04:59+00:00",
   "temporalResolution": "month",
   "spatialDimensions": [
     "headwater_formation",
@@ -13,10 +13,13 @@
     "latestAvailableMonth": "2026-07"
   },
   "coverage": {
-    "rows": 420,
+    "rows": 600,
     "systems": 2,
     "elevationBands": 5,
     "periods": [
+      "2025-10",
+      "2025-11",
+      "2025-12",
       "2026-01",
       "2026-02",
       "2026-03",

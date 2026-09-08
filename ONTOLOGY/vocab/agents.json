@@ -75,6 +75,15 @@
       "description": "Global hydrographic reference data developed by WWF and partners. Stable river, lake and basin identifiers are preserved in the Uzbekistan relationship database together with native downstream routing and Pfafstetter hierarchy."
     },
     {
+      "id": "uz:agent/glims-nsidc",
+      "type": "Agent",
+      "label": "GLIMS and NSIDC",
+      "agentKind": "organisation",
+      "agentVersion": "GLIMS database snapshot 2023-06-07",
+      "trustTier": "authoritative",
+      "description": "Global Land Ice Measurements from Space: a multi-temporal archive of glacier outlines contributed by regional analysis centres and distributed through NSIDC. Every outline keeps its submitter, analyst and survey date, so an inventory must state which survey it uses rather than summing the archive."
+    },
+    {
       "id": "uz:agent/curator",
       "type": "Agent",
       "label": "Portal curator",

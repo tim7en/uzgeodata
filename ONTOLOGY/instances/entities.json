@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T06:14:47+00:00",
+  "generatedAt": "2026-09-08T07:10:54+00:00",
   "entities": [
     {
       "id": "uz:agent/atlas-source",
@@ -60,6 +60,14 @@
       "agentVersion": "1.0",
       "trustTier": "authoritative",
       "description": "Measured facts produced by the conversion scripts: geometry type, feature counts, bounding boxes, field names, derivation lineage."
+    },
+    {
+      "id": "uz:agent/glims-nsidc",
+      "type": "Agent",
+      "label": "GLIMS and NSIDC",
+      "agentKind": "organisation",
+      "trustTier": "authoritative",
+      "description": "Producer of GLIMS glacier outlines."
     },
     {
       "id": "uz:agent/hydrosheds",
@@ -2372,6 +2380,19 @@
       "catalogId": null,
       "repositoryId": null,
       "description": "Delivered twice, once standalone and once inside the Uzhydromet transfer; both copies are recorded as distributions of one dataset."
+    },
+    {
+      "id": "uz:ds/glims-glaciers",
+      "type": "Dataset",
+      "label": "GLIMS glacier outlines",
+      "labels": {
+        "en": "GLIMS glacier outlines"
+      },
+      "sourceKey": "earth-engine/GLIMS/20230607",
+      "atlasNumber": null,
+      "catalogId": null,
+      "repositoryId": null,
+      "description": "Glacier outlines for the transboundary formation zones. The archive holds one polygon per survey, so only the latest src_date per glac_id is kept and intrnl_rock outcrops are subtracted before an outline is read as ice. Outlines are linked to level-10 and level-12 subbasins by exact intersection and split across SRTM elevation bands. Survey dates run from 1994 to 2009: this is an inventory of a past epoch and must not be published as the current state of glaciation."
     },
     {
       "id": "uz:ds/hydrobasins-level12-uzbekistan",
@@ -7496,7 +7517,7 @@
       "label": "ERA5-Land monthly anomaly by transboundary headwater basin",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 1071854,
+      "byteSize": 1542900,
       "storedName": "PUBLISHED/data/hydroclimate/era5-land-headwater-anomaly.csv",
       "url": null,
       "accessPolicy": "free",
@@ -7510,7 +7531,7 @@
       "measureUnitColumn": null,
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 4965,
+      "rowCount": 7141,
       "subjectFixed": "uz:ds/era5-land"
     },
     {
@@ -7519,7 +7540,7 @@
       "label": "ERA5-Land monthly state by headwater elevation band",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 97242,
+      "byteSize": 138975,
       "storedName": "PUBLISHED/data/hydroclimate/era5-land-headwater-elevation-monthly.csv",
       "url": null,
       "accessPolicy": "free",
@@ -7533,7 +7554,7 @@
       "measureUnitColumn": "unit",
       "containerTable": null,
       "identifierScheme": "HEADWATER_SYSTEM_ID::ELEVATION_BAND_ID",
-      "rowCount": 420,
+      "rowCount": 600,
       "subjectFixed": "uz:ds/era5-land"
     },
     {
@@ -7542,7 +7563,7 @@
       "label": "ERA5-Land monthly hydroclimate state by transboundary headwater basin",
       "role": "relationship-table",
       "format": "CSV",
-      "byteSize": 904108,
+      "byteSize": 1293289,
       "storedName": "PUBLISHED/data/hydroclimate/era5-land-headwaters-monthly.csv",
       "url": null,
       "accessPolicy": "free",
@@ -7556,7 +7577,7 @@
       "measureUnitColumn": "unit",
       "containerTable": null,
       "identifierScheme": "HYBAS_ID",
-      "rowCount": 5082,
+      "rowCount": 7260,
       "subjectFixed": "uz:ds/era5-land"
     },
     {
@@ -8072,6 +8093,109 @@
       "byteSize": 16585,
       "storedName": "glacial-lakes.geojson",
       "url": "/data/glacial-lakes.geojson",
+      "accessPolicy": "free"
+    },
+    {
+      "id": "uz:dist/glims-glacier-basin-elevation-bands",
+      "type": "Distribution",
+      "label": "Glacier and basin area by subbasin and elevation band",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 754570,
+      "storedName": "PUBLISHED/data/hydroclimate/glacier-basin-elevation-bands.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "objectColumn": "observation_unit_id",
+      "container": "PUBLISHED/data/hydroclimate/glacier-basin-elevation-bands.csv",
+      "scopeColumn": "in_headwater_formation",
+      "measureColumn": "glacier_area_km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "HYBAS_ID::ELEVATION_BAND_ID",
+      "rowCount": 3620,
+      "subjectFixed": "uz:ds/glims-glaciers"
+    },
+    {
+      "id": "uz:dist/glims-glacier-elevation-bands",
+      "type": "Distribution",
+      "label": "Glacier area by elevation band",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 898570,
+      "storedName": "PUBLISHED/data/hydroclimate/glacier-elevation-bands.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "objectColumn": "glacier_id",
+      "container": "PUBLISHED/data/hydroclimate/glacier-elevation-bands.csv",
+      "scopeColumn": null,
+      "measureColumn": "area_km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "GLIMS_GLAC_ID",
+      "rowCount": 6216,
+      "subjectFixed": "uz:ds/glims-glaciers"
+    },
+    {
+      "id": "uz:dist/glims-glacier-inventory",
+      "type": "Distribution",
+      "label": "GLIMS glacier inventory in the headwater formation zones",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 1275133,
+      "storedName": "PUBLISHED/data/hydroclimate/glacier-inventory-headwaters.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:hasFormationStatistic",
+      "subjectType": "Dataset",
+      "objectType": "RunoffFormationUnit",
+      "objectColumn": "glacier_id",
+      "container": "PUBLISHED/data/hydroclimate/glacier-inventory-headwaters.csv",
+      "scopeColumn": null,
+      "measureColumn": "area_km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "GLIMS_GLAC_ID",
+      "rowCount": 4544,
+      "subjectFixed": "uz:ds/glims-glaciers"
+    },
+    {
+      "id": "uz:dist/glims-glacier-subbasin-links",
+      "type": "Distribution",
+      "label": "Glacier to subbasin links, levels 10 and 12",
+      "role": "relationship-table",
+      "format": "CSV",
+      "byteSize": 1444068,
+      "storedName": "PUBLISHED/data/hydroclimate/glacier-basin-links.csv",
+      "url": null,
+      "accessPolicy": "free",
+      "predicate": "uz:formationUnitInBasin",
+      "subjectType": "RunoffFormationUnit",
+      "objectType": "Basin",
+      "objectColumn": "hybas_id",
+      "container": "PUBLISHED/data/hydroclimate/glacier-basin-links.csv",
+      "scopeColumn": "in_headwater_formation",
+      "measureColumn": "area_km2",
+      "measureUnitColumn": null,
+      "containerTable": null,
+      "identifierScheme": "GLIMS_GLAC_ID::HYBAS_ID",
+      "rowCount": 11707,
+      "subjectColumn": "glacier_id"
+    },
+    {
+      "id": "uz:dist/glims-glaciers-earth-engine-source",
+      "type": "Distribution",
+      "label": "GLIMS glacier outlines Earth Engine collection",
+      "role": "source-package",
+      "format": "Earth Engine FeatureCollection",
+      "byteSize": null,
+      "storedName": null,
+      "url": null,
       "accessPolicy": "free"
     },
     {

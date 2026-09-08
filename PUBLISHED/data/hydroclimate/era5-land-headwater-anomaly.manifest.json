@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-08T06:14:33+00:00",
+  "generatedAt": "2026-09-08T07:05:50+00:00",
   "spatialScope": "headwater_formation",
   "spatialUnit": "HydroATLAS level-7 subbasin",
   "temporalResolution": "month",
@@ -14,10 +14,13 @@
     "nominalScaleMetres": 11132
   },
   "coverage": {
-    "rows": 4965,
+    "rows": 7141,
     "basins": 121,
     "systems": 2,
     "periods": [
+      "2025-10",
+      "2025-11",
+      "2025-12",
       "2026-01",
       "2026-02",
       "2026-03",
@@ -34,7 +37,7 @@
       "snowfall_water_equivalent_total",
       "soil_moisture_layer_1_mean"
     ],
-    "skipped": 117
+    "skipped": 119
   },
   "outputs": {
     "climatologyCSV": "PUBLISHED/data/hydroclimate/era5-land-headwater-climatology.csv",
