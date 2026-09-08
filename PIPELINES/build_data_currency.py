@@ -75,6 +75,24 @@ SOURCES = {
         "command": "npm run headwaters:snow",
         "note": "Daily MODIS snow cover; cloud and invalid-pixel coverage is retained explicitly.",
     },
+    "transboundary-basin-downstream-level07": {
+        "cadence": "static", "latest": None, "command": "npm run basins:transboundary",
+        "note": "HydroATLAS routing. It moves when HydroSHEDS releases a new version, not with the season."},
+    "transboundary-basin-downstream-level10": {
+        "cadence": "static", "latest": None, "command": "npm run basins:transboundary",
+        "note": "HydroATLAS routing. It moves when HydroSHEDS releases a new version, not with the season."},
+    "transboundary-basin-downstream-level12": {
+        "cadence": "static", "latest": None, "command": "npm run basins:transboundary",
+        "note": "HydroATLAS routing. It moves when HydroSHEDS releases a new version, not with the season."},
+    "transboundary-basin-hierarchy": {
+        "cadence": "static", "latest": None, "command": "npm run basins:transboundary",
+        "note": "Pfafstetter containment across levels 12, 10 and 7 of the transboundary frame."},
+    "transboundary-basin-roles": {
+        "cadence": "static", "latest": None, "command": "npm run basins:roles",
+        "note": "Rebuild after the frame changes or a control section is declared; the channel class comes from static HydroRIVERS discharge."},
+    "transboundary-water-body-basin": {
+        "cadence": "static", "latest": None, "command": "npm run basins:waterbodies",
+        "note": "HydroLAKES shorelines are a fixed epoch. Storage levels are not in this layer and never will be."},
     "glims-glacier-inventory": {
         "cadence": "static", "latest": None,
         "command": "npm run headwaters:glaciers",
