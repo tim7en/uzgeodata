@@ -206,10 +206,16 @@ export default function AtlasExplorer() {
           style={styleFor} onEachFeature={onEachFeature}/>}
         {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} interactive={false}
           style={feature => riverStyle(feature.properties)} smoothFactor={1.2}/>}
+        {/* The dams go in the marker pane, not the overlay pane the basins use:
+            Leaflet hands a canvas click to the layer added last, and the basin
+            GeoJSON remounts on every level or attribute change, so sharing a
+            renderer with it makes the dams stop responding at unpredictable
+            moments. Their own pane settles both stacking and hit order. */}
         {showDams && dams?.features.map(feature => {
           const [longitude, latitude] = feature.geometry.coordinates;
           const selected = dam?.dam_id === feature.properties.dam_id;
           return <CircleMarker key={feature.properties.dam_id} center={[latitude, longitude]}
+            pane="markerPane"
             pathOptions={damStyle(feature.properties, { selected })}
             radius={damStyle(feature.properties, { selected }).radius}
             eventHandlers={{ click: () => { setDam(feature.properties); setHit(null); } }}>

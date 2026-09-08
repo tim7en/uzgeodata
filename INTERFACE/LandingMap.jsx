@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { GeoJSON, MapContainer, ScaleControl, TileLayer, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
-import { ArrowUpRight, Layers, Search, X } from 'lucide-react';
+import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
+import { ArrowUpRight, Database, Droplets, Layers, Search, X } from 'lucide-react';
 import {
-  HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle, formatAttribute,
-  formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
+  HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
+  damHeadline, damLabel, damLegendStops, damStyle, damTotals,
+  formatAttribute, formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
   overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
@@ -11,6 +12,7 @@ const LADDER_URL = '/data/hydroclimate/reference-basin-levels.json';
 const RIVER_LADDER_URL = '/data/hydroclimate/reference-river-levels.json';
 const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
 const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
+const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const CENTRE = [40.2, 70.5];
 const DEEPER = [
   { href: '/climate.html', label: 'Hydroclimate observatory', note: 'Snow, precipitation and anomalies by basin' },
@@ -144,6 +146,9 @@ export default function LandingMap() {
   const [tableOpen, setTableOpen] = useState(false);
   const [catalogue, setCatalogue] = useState(null);
   const [bounds, setBounds] = useState(null);
+  const [dams, setDams] = useState(null);
+  const [showDams, setShowDams] = useState(true);
+  const [dam, setDam] = useState(null);
   const layersById = useRef(new Map());
   const painted = useRef([]);
   const drawnLevel = useRef(null);
@@ -175,6 +180,17 @@ export default function LandingMap() {
       .catch(cause => live && setError(cause.message));
     return () => { live = false; };
   }, [active, levels]);
+
+  useEffect(() => {
+    if (!showDams || dams) return undefined;
+    let live = true;
+    // The dam layer is an overlay on the landing map, not its subject: a failure
+    // switches the layer off rather than replacing the map with an error page.
+    json(DAMS_URL).then(document => live && setDams(document)).catch(() => live && setShowDams(false));
+    return () => { live = false; };
+  }, [showDams, dams]);
+
+  const damStats = useMemo(() => (dams ? damTotals(dams.features) : null), [dams]);
 
   // Attributes are fetched per level, and only once a reader asks for them —
   // either by opening a group in the panel or by colouring the map.
@@ -303,12 +319,13 @@ export default function LandingMap() {
     layer.on({
       mouseover: () => setHoveredId(id),
       mouseout: () => setHoveredId(current => (current === id ? null : current)),
-      click: () => { setSelected(feature); setQuery(''); },
+      click: () => { setSelected(feature); setDam(null); setQuery(''); },
     });
   }, []);
 
   const focus = feature => {
     setSelected(feature);
+    setDam(null);
     setQuery('');
     setBounds(featureBounds(feature));
   };
@@ -328,6 +345,25 @@ export default function LandingMap() {
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
+      {showDams && dams?.features.map(feature => {
+        const [longitude, latitude] = feature.geometry.coordinates;
+        const state = { selected: dam?.dam_id === feature.properties.dam_id };
+        // The basins are a canvas layer in the overlay pane, and Leaflet gives a
+        // click to whichever layer was added to that renderer last. The basin
+        // GeoJSON remounts whenever the zoom ladder changes level, so it can
+        // land on top of the dams and swallow every click on them. Drawing the
+        // dams into the marker pane puts them in their own canvas above the
+        // overlay, which fixes both the stacking and the hit order for good.
+        return <CircleMarker key={feature.properties.dam_id} center={[latitude, longitude]}
+          pane="markerPane"
+          pathOptions={damStyle(feature.properties, state)}
+          radius={damStyle(feature.properties, state).radius}
+          eventHandlers={{ click: () => { setDam(feature.properties); setSelected(null); } }}>
+          <Tooltip direction="top" offset={[0, -4]} opacity={1} className="land-dam-tip">
+            {damLabel(feature.properties)}
+          </Tooltip>
+        </CircleMarker>;
+      })}
       <FitTo bounds={bounds}/>
       <WatchZoom onZoom={setZoom}/>
       <ZoomControl position="bottomright"/>
@@ -366,6 +402,31 @@ export default function LandingMap() {
           </li>)}</ol>
           <a href={`/atlas.html?attribute=${overlay}`}>Open in the atlas explorer <ArrowUpRight size={11}/></a>
         </div>}
+
+        <div className="land-dams">
+          <label className="land-toggle">
+            <input type="checkbox" checked={showDams} onChange={event => {
+              setShowDams(event.target.checked);
+              if (!event.target.checked) setDam(null);
+            }}/>
+            <Droplets size={12}/>
+            <span>Dams and reservoirs</span>
+          </label>
+          {showDams && damStats && <>
+            <ul className="land-sizekey">
+              {damLegendStops().map(stop => <li key={stop.capacity}>
+                <i style={{ width: stop.radius * 2, height: stop.radius * 2 }}/>
+                <em>{formatNumber(stop.capacity)}</em>
+              </li>)}
+            </ul>
+            <p className="land-group-note">
+              {damStats.dams} barriers holding {formatNumber(damStats.storageMcm)} MCM. Circle width
+              follows storage on a logarithmic scale, in MCM; a hollow ring is a barrier whose
+              capacity the source never reported.
+            </p>
+          </>}
+          {showDams && !damStats && <p className="land-group-note">Loading dams…</p>}
+        </div>
       </section>}
       {basins && <p className="land-level">
         Level {active.level} · {formatNumber(features.length)} basins
@@ -394,7 +455,33 @@ export default function LandingMap() {
         </button>)}</div>
       </div>}
 
-      {selected && <div className="land-detail" style={{ '--system': systemMeta(selected.properties.system_id).color }}>
+      {dam && <div className="land-detail land-dam-detail">
+        <button type="button" className="land-close" onClick={() => setDam(null)} aria-label="Clear dam"><X size={14}/></button>
+        <span className="land-kicker">{systemMeta(dam.system_id).label} · dam</span>
+        <h2>{damLabel(dam)}</h2>
+        <dl className="land-headline">{damHeadline(dam).map(row => <div key={row.label}>
+          <dt>{row.label}</dt>
+          <dd>{row.value}{row.unit ? <em> {row.unit}</em> : null}</dd>
+        </div>)}</dl>
+        <p className="land-note">
+          {Number(dam.in_headwater_formation) === 1
+            ? 'Stands in a runoff-formation zone: it regulates water where it is generated.'
+            : 'Stands downstream of the formation zones, on water generated above it.'}
+          {' '}Storage is nominal capacity, not an operating level.
+        </p>
+        <p className="land-note land-dam-ids">
+          <Database size={11}/>
+          <span>
+            <b>GDW <code>{dam.dam_id}</code></b>
+            {dam.grand_id ? <b>GRanD <code>{dam.grand_id}</code></b> : null}
+            {dam.hylak_id ? <b>HydroLAKES <code>{dam.hylak_id}</code></b> : null}
+            {dam.hyriv_id ? <b>reach <code>{dam.hyriv_id}</code></b> : null}
+            <b>basin <code>{dam.hybas_id_level12}</code></b>
+          </span>
+        </p>
+      </div>}
+
+      {selected && !dam && <div className="land-detail" style={{ '--system': systemMeta(selected.properties.system_id).color }}>
         <button type="button" className="land-close" onClick={() => setSelected(null)} aria-label="Clear selection"><X size={14}/></button>
         <span className="land-kicker">{systemMeta(selected.properties.system_id).label} · level {selected.properties.basin_level}</span>
         <h2>HYBAS {selected.properties.hybas_id}</h2>
