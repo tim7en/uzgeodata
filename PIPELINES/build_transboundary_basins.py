@@ -272,9 +272,18 @@ def main() -> None:
         })
 
         if level == 7:
-            headwater_features = [
-                feature for feature in web_features if feature["properties"]["in_headwater_formation"]
-            ]
+            headwater_features = []
+            for feature in web_features:
+                if not feature["properties"]["in_headwater_formation"]:
+                    continue
+                compatible = {
+                    "type": "Feature",
+                    "properties": dict(feature["properties"]),
+                    "geometry": feature["geometry"],
+                }
+                compatible["properties"]["river_system_id"] = compatible["properties"]["system_id"]
+                compatible["properties"]["system_id"] = compatible["properties"]["headwater_system_id"]
+                headwater_features.append(compatible)
             write_json(
                 PUBLISHED_DIR / "headwater-units.geojson",
                 {"type": "FeatureCollection", "name": "transboundary_headwater_units_level07", "features": headwater_features},
@@ -289,10 +298,12 @@ def main() -> None:
                     (headwater_systems, [f for f in group if f["properties"]["in_headwater_formation"]], "headwater_formation"),
                 ]:
                     geometry = unary_union([shape(f["geometry"]) for f in subset])
+                    headwater_name = subset[0]["properties"]["headwater_system_id"]
                     target.append({
                         "type": "Feature",
                         "properties": {
-                            "system_id": system_id,
+                            "system_id": headwater_name if scope == "headwater_formation" else system_id,
+                            "river_system_id": system_id,
                             "scope": scope,
                             "basin_level": level,
                             "unit_count": len(subset),
