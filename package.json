@@ -44,6 +44,7 @@
     "headwaters:glaciers": "python PIPELINES/build_glacier_inventory.py",
     "basins:roles": "python PIPELINES/build_basin_hydrological_roles.py",
     "basins:waterbodies": "python PIPELINES/build_transboundary_water_bodies.py",
+    "basins:network": "python PIPELINES/build_basin_network_web.py",
     "headwaters:update": "npm run headwaters:era5 && npm run headwaters:era5:elevation && npm run headwaters:anomaly && npm run headwaters:snow && npm run climate:web",
     "catalogue:build": "python PIPELINES/build_data_catalogue.py",
     "data:groups": "python PIPELINES/build_data_groups.py",
