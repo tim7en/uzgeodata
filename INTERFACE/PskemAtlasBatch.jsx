@@ -70,7 +70,7 @@ export default function PskemAtlasBatch() {
           {plan(a) && <div className="surrogate">
             <p><strong>Open surrogate ({a.surrogate_fidelity.replaceAll('_', ' ')}):</strong> {a.surrogate_values
               ? <>{number(a.surrogate_values[basin]?.raw_value)} {plan(a).units.surrogate}{plan(a).units.factor ? ` (${number(a.surrogate_values[basin]?.raw_value == null ? null : a.surrogate_values[basin].raw_value * plan(a).units.factor)} in stored units)` : ', not convertible to the stored units'}</>
-              : plan(a).pending_reason || 'Carried by the original-vintage pass.'}</p>
+              : a.surrogate_pending_reason || 'Not attempted in this pass.'}</p>
             <p><a href={plan(a).surrogate.catalogue_url} target="_blank" rel="noreferrer">{plan(a).surrogate.name}</a> · {plan(a).surrogate.provider} · {plan(a).surrogate.period} · {plan(a).surrogate.licence}</p>
             <p>Native resolution: {plan(a).resolution.native_scale_m ? `${plan(a).resolution.native_scale_m} m` : plan(a).resolution.grid}{plan(a).resolution.native_arcsec ? ` (${plan(a).resolution.native_arcsec} arc-seconds)` : ''} · processing grid {plan(a).resolution.processing_grid_arcsec} arc-seconds{plan(a).resolution.resampling ? ` · ${plan(a).resolution.resampling}` : ''}.</p>
             {a.surrogate_method && <p>Reduction: {a.surrogate_method}.{a.surrogate_wall_seconds != null ? ` Calculation: ${a.surrogate_wall_seconds.toFixed(6)} s.` : ''}</p>}

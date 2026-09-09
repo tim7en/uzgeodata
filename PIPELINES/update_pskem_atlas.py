@@ -257,6 +257,10 @@ def run(offline=False):
                         "carried_by_original_vintage_pass" if plan.get("handled_by") else "no_open_surrogate_in_this_pass"),
                     "surrogate_values": surrogate,
                     "surrogate_method": " / ".join(sorted(m for m in methods if m)) or None,
+                    "surrogate_pending_reason": None if surrogate else (
+                        plan.get("pending_reason")
+                        or (plan.get("pending_dimensions") or {}).get(attribute["dimension"])
+                        or ("Carried by the original-vintage pass." if plan.get("handled_by") else None)),
                     "surrogate_divergence": divergence(references[c], surrogate, convert) if surrogate else None,
                     "surrogate_wall_seconds": surrogate_seconds.get(c),
                     "surrogate_is_reproduction": False})
@@ -311,7 +315,7 @@ def run(offline=False):
                     "mae_raw": (a["surrogate_divergence"] or {}).get("mae_raw"),
                     "bias_raw": (a["surrogate_divergence"] or {}).get("bias_raw"),
                     "divergence_notes": " | ".join(plan["divergence"]),
-                    "pending_reason": plan.get("pending_reason"), "is_reproduction": False})
+                    "pending_reason": a["surrogate_pending_reason"], "is_reproduction": False})
             csv_out(directory / "surrogate-registry.csv", registry_rows)
             by_fidelity = defaultdict(int)
             for a in ledger:

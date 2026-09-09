@@ -9,6 +9,7 @@ Other atlas products must adopt this contract before implementation begins.
 - [Scientific requirements](core/REPRODUCIBILITY.md)
 - [HydroSHEDS methodology](hydrosheds/METHODOLOGY.md)
 - [Attribute recipes](hydrosheds/RECIPES.md)
+- [Open-data surrogates](hydrosheds/SURROGATES.md)
 - [Project roadmap](roadmap.json)
 - [Project updates and source news](updates.json)
 
@@ -25,8 +26,11 @@ changes require evidence links. Recipe counts are calculated from the module
 registry; a catalogue entry is not evidence of scientific reproduction.
 
 The current batch covers all 281 original reference attributes for the 20-unit
-Pskem pilot, with 34 independently calculated candidates and scientific release
-still pending. Run `npm run atlas:pskem`; see [batch evidence](hydrosheds/PSKEM_BATCH.md).
+Pskem pilot, with 34 independently calculated candidates, 196 open-data surrogate
+estimates, 51 attributes with no estimate and scientific release still pending.
+Run `npm run atlas:pskem`; see [batch evidence](hydrosheds/PSKEM_BATCH.md).
+Surrogate values carry their source, release, licence, native resolution and
+processing resolution, so a future geodatabase keeps resolution beside value.
 No annual history is generated. Raw rasters stay in GEODATA/object storage; runs go in
 `WORKSPACE/atlas_runs/<module>/<run_id>/`. Frozen publication manifests reference
 those assets and their hashes, rather than duplicating static data for every year.

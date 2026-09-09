@@ -105,6 +105,15 @@ Current implementation scope is restricted to the 20 Pskem pilot units. See
 34 source-based candidates, unresolved comparisons and complete processing times.
 An implemented candidate is not an independently reproduced scientific result.
 
+Alongside those candidates, [the surrogate plan](SURROGATES.md) gives every one of
+the 281 attributes an open-data estimate or a named obstacle. A surrogate is an
+independent estimate from a currently retrievable dataset, carrying its own
+fidelity class, native and processing resolution, units and conversion rule. It
+stands beside the original value and never replaces it, and its differences from
+the original are diagnostics rather than tests. Attributes whose original source
+needs a registered download, a bulk reprojection step or an unimplemented method
+stay explicitly without an estimate rather than being filled by a weaker proxy.
+
 ```text
 ATLAS_MODULES/<theme>/
   module.json          identity, scope, dependencies and status

@@ -74,6 +74,7 @@ def main():
     # Portable documentation downloads; do not serve arbitrary workspace files.
     for name, source in {"methodology.md": "hydrosheds/METHODOLOGY.md",
                          "recipes.md": "hydrosheds/RECIPES.md",
+                         "surrogates.md": "hydrosheds/SURROGATES.md",
                          "reproducibility.md": "core/REPRODUCIBILITY.md"}.items():
         (out / name).write_text((ROOT / "ATLAS_MODULES" / source).read_text(encoding="utf-8"), encoding="utf-8")
     stream = io.StringIO(newline="")
