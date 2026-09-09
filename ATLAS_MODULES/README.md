@@ -9,7 +9,8 @@ Other atlas products must adopt this contract before implementation begins.
 - [Scientific requirements](core/REPRODUCIBILITY.md)
 - [HydroSHEDS methodology](hydrosheds/METHODOLOGY.md)
 - [Attribute recipes](hydrosheds/RECIPES.md)
-- [Open-data surrogates](hydrosheds/SURROGATES.md)
+- [Open-data surrogates](hydrosheds/SURROGATES.md) — published as a page at `/surrogates.html`
+  via `npm run atlas:science`
 - [Project roadmap](roadmap.json)
 - [Project updates and source news](updates.json)
 

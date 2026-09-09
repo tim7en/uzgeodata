@@ -168,7 +168,7 @@ function App() {
         <div className="batch-table-scroll"><table>
           <thead><tr><th>Processing grid</th><th>Columns × rows</th><th>Megacells</th><th>GB per float32 band</th></tr></thead>
           <tbody>{Object.values(data.domain.grids).map(g => <tr key={g.arcsec}>
-            <td>{g.arcsec} arc-seconds</td><td>{number(g.columns)} × {number(g.rows)}</td>
+            <td>{g.arcsec} arc-second{g.arcsec === 1 ? '' : 's'}</td><td>{number(g.columns)} × {number(g.rows)}</td>
             <td>{number(g.megacells, 1)}</td><td>{g.gigabytes_per_float32_band}</td></tr>)}</tbody>
         </table></div>
         <p><strong>Measured at full extent on this machine:</strong> loading the {number(data.domain.basins)}-unit frame
