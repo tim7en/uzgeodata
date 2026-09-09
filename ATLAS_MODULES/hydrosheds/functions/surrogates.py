@@ -101,8 +101,12 @@ def result(value, method, support_count, coverage=1.0, valid=None, expected=None
             "coverage_fraction": coverage, "support_basin_count": support_count, "method": method}
 
 
-def export(image, name, domain, bands, record):
-    """Download one aligned multi-band subset, cache it, and pin its bytes."""
+def export(build, name, domain, bands, record):
+    """Download one aligned multi-band subset, cache it, and pin its bytes.
+
+    ``build`` is called only on a cache miss, so an offline rerun never touches the
+    remote catalogue. It may add fields to ``record`` before returning its image.
+    """
     import requests
     path = domain.cache / f"{name}.tif"
     metadata_path = domain.cache / f"{name}.json"
@@ -115,6 +119,7 @@ def export(image, name, domain, bands, record):
     else:
         if domain.offline:
             raise FileNotFoundError(f"Surrogate raster {name} is not cached")
+        image = build()
         url = image.unmask(NODATA).toFloat().getDownloadURL({
             "crs": "EPSG:4326", "crs_transform": domain.transform,
             "dimensions": [domain.width, domain.height], "format": "GEO_TIFF", "filePerBand": False})
@@ -230,19 +235,22 @@ def package(record, fields=None, majority=None, direct=None):
 
 def build_terraclimate(domain):
     """Monthly 1991-2020 climatology for actual and potential ET, soil water, precipitation."""
-    import ee
-    collection = ee.ImageCollection("IDAHO_EPSCOR/TERRACLIMATE").filterDate(*CLIMATOLOGY)
     scales = {"aet": 0.1, "pet": 0.1, "soil": 0.1, "pr": 1.0}
-    images, bands = [], []
-    for month in range(1, 13):
-        monthly = collection.filter(ee.Filter.calendarRange(month, month, "month"))
-        for band, scale in scales.items():
-            name = f"{band}_{month:02d}"
-            images.append(monthly.select(band).mean().multiply(scale).rename(name))
-            bands.append(name)
+    bands = [f"{band}_{month:02d}" for month in range(1, 13) for band in scales]
     record = {"asset": "IDAHO_EPSCOR/TERRACLIMATE", "climatology": list(CLIMATOLOGY), "band_scales": scales,
               "reduction": "per-calendar-month mean over 1991-2020"}
-    fields, record = export(ee.Image.cat(images), "terraclimate-15s", domain, bands, record)
+
+    def build():
+        import ee
+        collection = ee.ImageCollection("IDAHO_EPSCOR/TERRACLIMATE").filterDate(*CLIMATOLOGY)
+        images = []
+        for month in range(1, 13):
+            monthly = collection.filter(ee.Filter.calendarRange(month, month, "month"))
+            for band, scale in scales.items():
+                images.append(monthly.select(band).mean().multiply(scale).rename(f"{band}_{month:02d}"))
+        return ee.Image.cat(images)
+
+    fields, record = export(build, "terraclimate-15s", domain, bands, record)
 
     aet_year = sum(fields[f"aet_{m:02d}"] for m in range(1, 13))
     pet_year = sum(fields[f"pet_{m:02d}"] for m in range(1, 13))
@@ -265,18 +273,21 @@ def build_terraclimate(domain):
 
 def build_modis_snow(domain):
     """Fraction of cloud-free days carrying snow, by calendar month, 2003-2022."""
-    import ee
-    collection = ee.ImageCollection("MODIS/061/MYD10A1").filterDate("2003-01-01", "2023-01-01").select("NDSI_Snow_Cover")
     monthly, record = {}, None
     for month in range(1, 13):
-        subset = collection.filter(ee.Filter.calendarRange(month, month, "month"))
-        flags = subset.map(lambda image: image.updateMask(image.lte(100)).gte(40))
         name = f"snw_{month:02d}"
-        native = collection.first().projection()
-        image = flags.mean().multiply(100).rename(name).setDefaultProjection(native)
-        image = image.reduceResolution(ee.Reducer.mean(), maxPixels=1024).reproject(
-            crs="EPSG:4326", crsTransform=domain.transform)
-        fields, record = export(image, f"modis-snow-{month:02d}-15s", domain, [name],
+
+        def build(month=month, name=name):
+            import ee
+            collection = (ee.ImageCollection("MODIS/061/MYD10A1")
+                          .filterDate("2003-01-01", "2023-01-01").select("NDSI_Snow_Cover"))
+            subset = collection.filter(ee.Filter.calendarRange(month, month, "month"))
+            flags = subset.map(lambda image: image.updateMask(image.lte(100)).gte(40))
+            image = flags.mean().multiply(100).rename(name).setDefaultProjection(collection.first().projection())
+            return image.reduceResolution(ee.Reducer.mean(), maxPixels=1024).reproject(
+                crs="EPSG:4326", crsTransform=domain.transform)
+
+        fields, record = export(build, f"modis-snow-{month:02d}-15s", domain, [name],
                                 {"asset": "MODIS/061/MYD10A1", "period": ["2003-01-01", "2023-01-01"],
                                  "snow_threshold": "NDSI_Snow_Cover >= 40",
                                  "masking": "fill values above 100 excluded, not gap filled",
@@ -332,27 +343,29 @@ def _class_fraction(image, codes, name, domain):
 
 def build_copernicus_lc(domain):
     """GLC2000-legend class fractions crosswalked from the 2015 Copernicus classification."""
-    import ee
-    image = ee.Image(ee.ImageCollection("COPERNICUS/Landcover/100m/Proba-V-C3/Global")
-                     .filter(ee.Filter.eq("system:index", "2015")).first())
-    discrete = image.select("discrete_classification")
-    layers, bands = [], []
-    for target in range(1, 23):
-        codes = sorted(code for code, mapped in GLC2000_FROM_COPERNICUS.items() if mapped == target)
-        layers.append(_class_fraction(discrete, codes, f"glc_{target:02d}", domain))
-        bands.append(f"glc_{target:02d}")
-    for band, alias in (("tree-coverfraction", "for_frac"), ("crops-coverfraction", "crp_frac"),
-                        ("grass-coverfraction", "pst_frac")):
-        layers.append(image.select(band).reduceResolution(ee.Reducer.mean(), maxPixels=1024)
-                      .reproject(crs="EPSG:4326", crsTransform=domain.transform).rename(alias))
-        bands.append(alias)
-    unmapped = sorted(set(range(1, 23)) - set(GLC2000_FROM_COPERNICUS.values()))
+    fractions = (("tree-coverfraction", "for_frac"), ("crops-coverfraction", "crp_frac"),
+                 ("grass-coverfraction", "pst_frac"))
+    bands = [f"glc_{target:02d}" for target in range(1, 23)] + [alias for _, alias in fractions]
     record = {"asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global", "epoch": "2015",
               "crosswalk": "glc2000_from_copernicus",
               "crosswalk_table": {str(k): v for k, v in sorted(GLC2000_FROM_COPERNICUS.items())},
-              "unmapped_glc2000_classes": unmapped,
+              "unmapped_glc2000_classes": sorted(set(range(1, 23)) - set(GLC2000_FROM_COPERNICUS.values())),
               "aggregation": "class mask mean at 100 m, reprojected to the pilot 15 arc-second grid"}
-    fields, record = export(ee.Image.cat(layers), "copernicus-lc-15s", domain, bands, record)
+
+    def build():
+        import ee
+        image = ee.Image(ee.ImageCollection("COPERNICUS/Landcover/100m/Proba-V-C3/Global")
+                         .filter(ee.Filter.eq("system:index", "2015")).first())
+        discrete = image.select("discrete_classification")
+        layers = [_class_fraction(discrete, sorted(code for code, mapped in GLC2000_FROM_COPERNICUS.items()
+                                                   if mapped == target), f"glc_{target:02d}", domain)
+                  for target in range(1, 23)]
+        layers += [image.select(band).reduceResolution(ee.Reducer.mean(), maxPixels=1024)
+                   .reproject(crs="EPSG:4326", crsTransform=domain.transform).rename(alias)
+                   for band, alias in fractions]
+        return ee.Image.cat(layers)
+
+    fields, record = export(build, "copernicus-lc-15s", domain, bands, record)
     out = {}
     for target in range(1, 23):
         field = fields[f"glc_{target:02d}"]
@@ -367,20 +380,21 @@ def build_copernicus_lc(domain):
 
 def build_pnv_biome(domain):
     """EarthStat PNV-legend class fractions crosswalked from BIOME 6000 potential biomes."""
-    import ee
-    image = ee.Image("OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01").select("biome_type")
-    layers, bands = [], []
-    for target in range(1, 16):
-        codes = sorted(code for code, mapped in EARTHSTAT_PNV_FROM_BIOME00K.items() if mapped == target)
-        layers.append(_class_fraction(image, codes, f"pnv_{target:02d}", domain))
-        bands.append(f"pnv_{target:02d}")
-    unmapped = sorted(set(range(1, 16)) - set(EARTHSTAT_PNV_FROM_BIOME00K.values()))
+    bands = [f"pnv_{target:02d}" for target in range(1, 16)]
     record = {"asset": "OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01",
               "crosswalk": "earthstat_pnv_from_biome00k",
               "crosswalk_table": {str(k): v for k, v in sorted(EARTHSTAT_PNV_FROM_BIOME00K.items())},
-              "unmapped_earthstat_classes": unmapped,
+              "unmapped_earthstat_classes": sorted(set(range(1, 16)) - set(EARTHSTAT_PNV_FROM_BIOME00K.values())),
               "aggregation": "class mask mean at 1 km, reprojected to the pilot 15 arc-second grid"}
-    fields, record = export(ee.Image.cat(layers), "pnv-biome-15s", domain, bands, record)
+
+    def build():
+        import ee
+        image = ee.Image("OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01").select("biome_type")
+        return ee.Image.cat([_class_fraction(image, sorted(code for code, mapped in
+                                                           EARTHSTAT_PNV_FROM_BIOME00K.items() if mapped == target),
+                                             f"pnv_{target:02d}", domain) for target in range(1, 16)])
+
+    fields, record = export(build, "pnv-biome-15s", domain, bands, record)
     out = {}
     for target in range(1, 16):
         field = fields[f"pnv_{target:02d}"]
@@ -392,7 +406,6 @@ def build_pnv_biome(domain):
 
 def build_openlandmap_soil(domain):
     """Depth-integrated 0-100 cm texture fractions and an organic-carbon stock."""
-    import ee
     depths = [0, 10, 30, 60, 100]
     weights = np.zeros(len(depths))
     for index in range(len(depths) - 1):
@@ -400,21 +413,26 @@ def build_openlandmap_soil(domain):
         weights[index] += span / 2
         weights[index + 1] += span / 2
     weights = weights / weights.sum()
-
-    def integrate(asset, scale, name):
-        image = ee.Image(asset)
-        total = image.select(f"b{depths[0]}").multiply(scale * float(weights[0]))
-        for depth, weight in zip(depths[1:], weights[1:]):
-            total = total.add(image.select(f"b{depth}").multiply(scale * float(weight)))
-        return total.rename(name)
-
-    clay = integrate("OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02", 1.0, "clay")
-    sand = integrate("OpenLandMap/SOL/SOL_SAND-WFRACTION_USDA-3A1A1A_M/v02", 1.0, "sand")
-    carbon = integrate("OpenLandMap/SOL/SOL_ORGANIC-CARBON_USDA-6A1C_M/v02", 5.0, "orgc")
-    density = integrate("OpenLandMap/SOL/SOL_BULKDENS-FINEEARTH_USDA-4A1H_M/v02", 10.0, "bulk")
-    # g/kg times kg/m3 over a 1 m column gives g/m2; 1 g/m2 is 0.01 t/ha.
-    stock = carbon.multiply(density).multiply(0.01).rename("soc")
     bands = ["clay", "sand", "orgc", "bulk", "soc"]
+
+    def build():
+        import ee
+
+        def integrate(asset, scale, name):
+            image = ee.Image(asset)
+            total = image.select(f"b{depths[0]}").multiply(scale * float(weights[0]))
+            for depth, weight in zip(depths[1:], weights[1:]):
+                total = total.add(image.select(f"b{depth}").multiply(scale * float(weight)))
+            return total.rename(name)
+
+        clay = integrate("OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02", 1.0, "clay")
+        sand = integrate("OpenLandMap/SOL/SOL_SAND-WFRACTION_USDA-3A1A1A_M/v02", 1.0, "sand")
+        carbon = integrate("OpenLandMap/SOL/SOL_ORGANIC-CARBON_USDA-6A1C_M/v02", 5.0, "orgc")
+        density = integrate("OpenLandMap/SOL/SOL_BULKDENS-FINEEARTH_USDA-4A1H_M/v02", 10.0, "bulk")
+        # g/kg times kg/m3 over a 1 m column gives g/m2; 1 g/m2 is 0.01 t/ha.
+        stock = carbon.multiply(density).multiply(0.01).rename("soc")
+        return ee.Image.cat([clay, sand, carbon, density, stock])
+
     record = {"assets": ["OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02",
                          "OpenLandMap/SOL/SOL_SAND-WFRACTION_USDA-3A1A1A_M/v02",
                          "OpenLandMap/SOL/SOL_ORGANIC-CARBON_USDA-6A1C_M/v02",
@@ -423,8 +441,7 @@ def build_openlandmap_soil(domain):
               "depth_weights": {f"b{d}": round(float(w), 6) for d, w in zip(depths, weights)},
               "silt": "closed as 100 minus clay minus sand",
               "carbon_stock": "organic carbon content times bulk density over 0-100 cm, no coarse-fragment correction"}
-    fields, record = export(ee.Image.cat([clay, sand, carbon, density, stock]), "openlandmap-soil-15s",
-                            domain, bands, record)
+    fields, record = export(build, "openlandmap-soil-15s", domain, bands, record)
     silt = 100.0 - fields["clay"] - fields["sand"]
     out = {}
     for local_column, field in (("cly_pc_sav", fields["clay"]), ("snd_pc_sav", fields["sand"]),
@@ -436,13 +453,16 @@ def build_openlandmap_soil(domain):
 
 def build_gpw(domain):
     """Population density for 2015, accumulated by cell area for counts."""
-    import ee
-    density = ee.Image(ee.ImageCollection("CIESIN/GPWv411/GPW_Population_Density")
-                       .filter(ee.Filter.eq("system:index",
-                                            "gpw_v4_population_density_rev11_2015_30_sec")).first()).rename("ppd")
     record = {"asset": "CIESIN/GPWv411/GPW_Population_Density", "epoch": "2015", "revision": "v4.11",
               "counts": "density multiplied by geodesic cell area and summed over the support"}
-    fields, record = export(density, "gpw-density-15s", domain, ["ppd"], record)
+
+    def build():
+        import ee
+        return ee.Image(ee.ImageCollection("CIESIN/GPWv411/GPW_Population_Density")
+                        .filter(ee.Filter.eq("system:index",
+                                             "gpw_v4_population_density_rev11_2015_30_sec")).first()).rename("ppd")
+
+    fields, record = export(build, "gpw-density-15s", domain, ["ppd"], record)
     field = fields["ppd"]
     return package(record, fields={"ppd_pk_sav": (field, "mean"), "ppd_pk_uav": (field, "mean"),
                                    "pop_ct_ssu": (field, "sum_over_km2"), "pop_ct_usu": (field, "sum_over_km2")})
@@ -450,56 +470,69 @@ def build_gpw(domain):
 
 def build_ghsl(domain):
     """Built-up surface fraction for the 2015 epoch, as a percentage of cell area."""
-    import ee
-    image = ee.Image(ee.ImageCollection("JRC/GHSL/P2023A/GHS_BUILT_S")
-                     .filter(ee.Filter.eq("system:index", "2015")).first()).select("built_surface")
-    fraction = image.divide(100.0).reduceResolution(ee.Reducer.mean(), maxPixels=1024).reproject(
-        crs="EPSG:4326", crsTransform=domain.transform).rename("urb")
     record = {"asset": "JRC/GHSL/P2023A/GHS_BUILT_S", "epoch": "2015",
               "conversion": "built surface in square metres per 100 m cell divided by 100 to give percent"}
-    fields, record = export(fraction, "ghsl-built-15s", domain, ["urb"], record)
+
+    def build():
+        import ee
+        image = ee.Image(ee.ImageCollection("JRC/GHSL/P2023A/GHS_BUILT_S")
+                         .filter(ee.Filter.eq("system:index", "2015")).first()).select("built_surface")
+        return image.divide(100.0).reduceResolution(ee.Reducer.mean(), maxPixels=1024).reproject(
+            crs="EPSG:4326", crsTransform=domain.transform).rename("urb")
+
+    fields, record = export(build, "ghsl-built-15s", domain, ["urb"], record)
     return package(record, fields={"urb_pc_sse": (fields["urb"], "mean"), "urb_pc_use": (fields["urb"], "mean")})
 
 
 def build_dmsp_lights(domain):
     """DMSP-OLS stable lights for 2010, reported as the raw digital number."""
-    import ee
-    image = ee.Image(ee.ImageCollection("NOAA/DMSP-OLS/NIGHTTIME_LIGHTS")
-                     .filter(ee.Filter.eq("system:index", "F182010")).first()).select("stable_lights").rename("nli")
     record = {"asset": "NOAA/DMSP-OLS/NIGHTTIME_LIGHTS", "epoch": "F182010", "band": "stable_lights",
               "units": "digital number 0-63; the atlas index transformation is not applied"}
-    fields, record = export(image, "dmsp-lights-15s", domain, ["nli"], record)
+
+    def build():
+        import ee
+        return ee.Image(ee.ImageCollection("NOAA/DMSP-OLS/NIGHTTIME_LIGHTS")
+                        .filter(ee.Filter.eq("system:index", "F182010"))
+                        .first()).select("stable_lights").rename("nli")
+
+    fields, record = export(build, "dmsp-lights-15s", domain, ["nli"], record)
     return package(record, fields={"nli_ix_sav": (fields["nli"], "mean"), "nli_ix_uav": (fields["nli"], "mean")})
 
 
 def build_human_modification(domain):
     """Global Human Modification 2016, reported as an independent index."""
-    import ee
-    image = ee.Image(ee.ImageCollection("CSP/HM/GlobalHumanModification").first()).select("gHM").rename("hft")
     record = {"asset": "CSP/HM/GlobalHumanModification", "epoch": "2016",
               "units": "modification index 0-1; not the Human Footprint index",
               "dimension_note": "offered against the 2009 dimension only; no 1993 surface is available"}
-    fields, record = export(image, "human-modification-15s", domain, ["hft"], record)
+
+    def build():
+        import ee
+        return ee.Image(ee.ImageCollection("CSP/HM/GlobalHumanModification").first()).select("gHM").rename("hft")
+
+    fields, record = export(build, "human-modification-15s", domain, ["hft"], record)
     return package(record, fields={"hft_ix_s09": (fields["hft"], "mean"), "hft_ix_u09": (fields["hft"], "mean")})
 
 
 def build_surface_water(domain):
     """Optical surface-water shares from JRC occurrence, seasonality and maximum extent."""
-    import ee
-    water = ee.Image("JRC/GSW1_4/GlobalSurfaceWater")
-
-    def coarsen(image, name, factor=1.0):
-        return (image.reduceResolution(ee.Reducer.mean(), maxPixels=4096)
-                .reproject(crs="EPSG:4326", crsTransform=domain.transform).multiply(factor).rename(name))
-
-    layers = [coarsen(water.select("occurrence").unmask(0), "inu_lt"),
-              coarsen(water.select("seasonality").unmask(0).gte(12), "inu_mn", 100.0),
-              coarsen(water.select("max_extent").unmask(0), "inu_mx", 100.0)]
     record = {"asset": "JRC/GSW1_4/GlobalSurfaceWater",
               "long_term": "mean water occurrence percentage 1984-2021",
               "minimum": "share of the support classified as permanent water, twelve months of seasonality",
               "maximum": "share of the support ever observed as water"}
-    fields, record = export(ee.Image.cat(layers), "surface-water-15s", domain, ["inu_lt", "inu_mn", "inu_mx"], record)
+
+    def build():
+        import ee
+        water = ee.Image("JRC/GSW1_4/GlobalSurfaceWater")
+
+        def coarsen(image, name, factor=1.0):
+            return (image.reduceResolution(ee.Reducer.mean(), maxPixels=4096)
+                    .reproject(crs="EPSG:4326", crsTransform=domain.transform).multiply(factor).rename(name))
+
+        return ee.Image.cat([coarsen(water.select("occurrence").unmask(0), "inu_lt"),
+                             coarsen(water.select("seasonality").unmask(0).gte(12), "inu_mn", 100.0),
+                             coarsen(water.select("max_extent").unmask(0), "inu_mx", 100.0)])
+
+    fields, record = export(build, "surface-water-15s", domain, ["inu_lt", "inu_mn", "inu_mx"], record)
     out = {}
     for suffix, key in (("lt", "inu_lt"), ("mn", "inu_mn"), ("mx", "inu_mx")):
         out[f"inu_pc_s{suffix}"] = (fields[key], "mean")
@@ -509,14 +542,18 @@ def build_surface_water(domain):
 
 def build_gfsad(domain):
     """Irrigated cropland share from the GFSAD1000 cropland extent product."""
-    import ee
-    image = ee.Image("USGS/GFSAD1000_V1").select("landcover")
-    mask = image.eq(GFSAD_IRRIGATED[0])
-    for code in GFSAD_IRRIGATED[1:]:
-        mask = mask.Or(image.eq(code))
     record = {"asset": "USGS/GFSAD1000_V1", "epoch": "2010", "irrigated_classes": list(GFSAD_IRRIGATED),
               "units": "percent of the support classified as irrigated cropland"}
-    fields, record = export(mask.multiply(100).rename("ire"), "gfsad-irrigated-15s", domain, ["ire"], record)
+
+    def build():
+        import ee
+        image = ee.Image("USGS/GFSAD1000_V1").select("landcover")
+        mask = image.eq(GFSAD_IRRIGATED[0])
+        for code in GFSAD_IRRIGATED[1:]:
+            mask = mask.Or(image.eq(code))
+        return mask.multiply(100).rename("ire")
+
+    fields, record = export(build, "gfsad-irrigated-15s", domain, ["ire"], record)
     return package(record, fields={"ire_pc_sse": (fields["ire"], "mean"), "ire_pc_use": (fields["ire"], "mean")})
 
 
@@ -560,39 +597,57 @@ def _painted_fraction(collection, name, domain):
 
 def build_glims(domain):
     """Glacier share from GLIMS outlines, rasterised at 30 m before aggregation."""
-    import ee
-    outlines = (ee.FeatureCollection("GLIMS/current").filterBounds(domain.region())
-                .filter(ee.Filter.eq("line_type", "glac_bound")))
-    # Repeat submissions for one glacier would union into an inflated envelope, so keep
-    # only the most recent analysis of each glacier.
-    collection = outlines.sort("anlys_time", False).distinct("glac_id")
-    record = {"asset": "GLIMS/current", "outlines_in_domain": outlines.size().getInfo(),
-              "features_in_domain": collection.size().getInfo(),
+    record = {"asset": "GLIMS/current",
               "filter": "line_type equals glac_bound; most recent analysis per glac_id",
               "rasterisation": "outlines painted at 30 m, mean-aggregated to 15 arc-seconds",
               "note": "outline dates still vary between glaciers and are not a single epoch"}
-    fields, record = export(_painted_fraction(collection, "gla", domain), "glims-cover-15s", domain, ["gla"], record)
+
+    def build():
+        import ee
+        outlines = (ee.FeatureCollection("GLIMS/current").filterBounds(domain.region())
+                    .filter(ee.Filter.eq("line_type", "glac_bound")))
+        # Repeat submissions for one glacier would union into an inflated envelope, so
+        # keep only the most recent analysis of each glacier.
+        collection = outlines.sort("anlys_time", False).distinct("glac_id")
+        record["outlines_in_domain"] = outlines.size().getInfo()
+        record["features_in_domain"] = collection.size().getInfo()
+        return _painted_fraction(collection, "gla", domain)
+
+    fields, record = export(build, "glims-cover-15s", domain, ["gla"], record)
     return package(record, fields={"gla_pc_sse": (fields["gla"], "mean"), "gla_pc_use": (fields["gla"], "mean")})
 
 
 def build_wdpa(domain):
     """Protected-area share from the current WDPA polygon release."""
-    import ee
-    collection = ee.FeatureCollection("WCMC/WDPA/current/polygons").filterBounds(domain.region())
-    record = {"asset": "WCMC/WDPA/current/polygons", "features_in_domain": collection.size().getInfo(),
+    record = {"asset": "WCMC/WDPA/current/polygons",
               "rasterisation": "polygons painted at 30 m, mean-aggregated to 15 arc-seconds",
               "note": "current release, later than the 2014 snapshot cited by the atlas"}
-    fields, record = export(_painted_fraction(collection, "pac", domain), "wdpa-cover-15s", domain, ["pac"], record)
+
+    def build():
+        import ee
+        collection = ee.FeatureCollection("WCMC/WDPA/current/polygons").filterBounds(domain.region())
+        record["features_in_domain"] = collection.size().getInfo()
+        return _painted_fraction(collection, "pac", domain)
+
+    fields, record = export(build, "wdpa-cover-15s", domain, ["pac"], record)
     return package(record, fields={"pac_pc_sse": (fields["pac"], "mean"), "pac_pc_use": (fields["pac"], "mean")})
 
 
 def build_ecoregions(domain):
     """Majority RESOLVE ecoregion and biome by exact geodesic intersection area."""
-    import ee
-    collection = ee.FeatureCollection("RESOLVE/ECOREGIONS/2017").filterBounds(domain.region())
-    payload = collection.getInfo()["features"]
+    cache = domain.cache / "resolve-ecoregions.json"
+    if cache.exists():
+        payload = json.loads(cache.read_text(encoding="utf-8"))
+        domain.timer.event("Verified cached RESOLVE ecoregion features")
+    elif domain.offline:
+        raise FileNotFoundError("RESOLVE ecoregion features are not cached")
+    else:
+        import ee
+        payload = ee.FeatureCollection("RESOLVE/ECOREGIONS/2017").filterBounds(domain.region()).getInfo()["features"]
+        write_json(cache, payload)
     parts = [(shape(f["geometry"]), f["properties"]) for f in payload if f.get("geometry")]
     record = {"asset": "RESOLVE/ECOREGIONS/2017", "features_in_domain": len(parts),
+              "cache": cache.name, "sha256": sha256(cache),
               "method": "largest geodesic intersection area within the basin",
               "ecoregions": sorted({p["ECO_NAME"] for _, p in parts})}
     direct = {"tec_cl_smj": {}, "tbi_cl_smj": {}}
