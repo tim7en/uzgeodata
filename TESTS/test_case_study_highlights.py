@@ -67,10 +67,12 @@ def daily_model() -> dict:
 
 
 def test_the_daily_model_is_judged_on_years_it_never_saw():
+    """Holds for either split: calibration and validation years cannot overlap."""
     model = daily_model()
-    calibration = model["model"]["calibration"]["years"]
-    seasonal = {row["year"] for row in model["seasonalVolumes"] if row["period"] == "validation"}
-    assert all(year > calibration[1] for year in seasonal)
+    calibration = set(model["model"]["calibration"]["years"])
+    validation = {row["year"] for row in model["seasonalVolumes"] if row["period"] == "validation"}
+    assert validation
+    assert not (calibration & validation)
     assert model["skill"]["validation"]["n"] > 2000
     # Skill has to be positive out of sample, or the finding claiming it is wrong.
     assert model["skill"]["validation"]["nse"] > 0
@@ -89,8 +91,19 @@ def test_the_discharge_record_is_verified_against_the_published_monthly_table():
     """The workbook is named Monthly; the daily series had to be checked, not trusted."""
     provenance = daily_model()["observationProvenance"]
     assert "203 of 204" in provenance["reconciliation"]
-    assert provenance["suspectDaysExcludedFromScoring"] == 3
     for entry in provenance["screening"]:
         # Each screened month must name the day it removed, verified by reproducing the mean.
         assert entry["identified"], entry["period"]
         assert entry["screenedMean"] != entry["rawMean"]
+
+    # The published audit is extended, never overridden: its days stay excluded,
+    # and the dropouts it missed are added with their evidence.
+    audited = {entry["identified"] for entry in provenance["screening"]}
+    detected = {entry["date"] for entry in provenance["additionalDropoutsDetected"]}
+    assert audited and not (audited & detected)
+    assert provenance["suspectDaysExcludedFromScoring"] == len(audited | detected)
+    for entry in provenance["additionalDropoutsDetected"]:
+        # A dropout has to be far below its neighbourhood, not merely a low day.
+        assert entry["ratio"] < 0.5
+    # The two repeated readings in peak melt 2016 are the case that motivated this.
+    assert {"2016-07-01", "2016-07-02"} <= detected

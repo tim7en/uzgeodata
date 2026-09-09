@@ -1,19 +1,19 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-09T05:00:22+00:00",
+  "generatedAt": "2026-09-09T05:29:34+00:00",
   "model": {
     "family": "temperature-index snow with soil store and two linear reservoirs (HBV type)",
     "timestep": "day",
     "parameters": {
       "tt": -1.5,
-      "cfmax": 2.2364,
-      "sfcf": 1.212,
-      "fc": 50.0,
-      "beta": 1.0,
-      "perc": 4.0,
+      "cfmax": 1.6262,
+      "sfcf": 1.0959,
+      "fc": 57.2577,
+      "beta": 2.3347,
+      "perc": 3.8852,
       "k_fast": 0.05,
-      "k_slow": 0.0225,
-      "lapse": -7.5813
+      "k_slow": 0.0181,
+      "lapse": -6.4588
     },
     "parameterBounds": {
       "tt": [
@@ -55,9 +55,17 @@
     },
     "calibration": {
       "years": [
-        2001,
-        2010
+        2002,
+        2003,
+        2005,
+        2006,
+        2007,
+        2011,
+        2014,
+        2016,
+        2017
       ],
+      "split": "stratified",
       "objective": "KGE",
       "search": "seeded random search then local refinement",
       "samples": 25000,
@@ -68,7 +76,7 @@
     "count": 15,
     "meanElevationM": 2761.1,
     "publishedGradientPer1000m": -2.327,
-    "calibratedLapsePer1000m": -7.581,
+    "calibratedLapsePer1000m": -6.459,
     "source": "PUBLISHED/data/case-studies/elevation-profiles.csv"
   },
   "catchment": {
@@ -78,61 +86,61 @@
   },
   "skill": {
     "calibration": {
-      "n": 3652,
-      "nse": 0.8777,
-      "kge": 0.938,
-      "logNse": 0.3242,
-      "pbias": -1.133,
-      "rmseMm": 0.8011,
-      "r": 0.9393,
-      "alpha": 1.0063,
-      "beta": 0.9887
+      "n": 3280,
+      "nse": 0.8728,
+      "kge": 0.9361,
+      "logNse": 0.8917,
+      "pbias": -0.796,
+      "rmseMm": 0.7851,
+      "r": 0.9367,
+      "alpha": 1.0036,
+      "beta": 0.992
     },
     "validation": {
-      "n": 2554,
-      "nse": 0.6823,
-      "kge": 0.5777,
-      "logNse": 0.8571,
-      "pbias": 21.307,
-      "rmseMm": 0.9959,
-      "r": 0.9572,
-      "alpha": 1.362,
-      "beta": 1.2131
+      "n": 2921,
+      "nse": 0.8047,
+      "kge": 0.8371,
+      "logNse": -1.0014,
+      "pbias": -13.824,
+      "rmseMm": 0.8818,
+      "r": 0.9156,
+      "alpha": 0.9824,
+      "beta": 0.8618
     },
     "wholeRecord": {
       "n": 6209,
-      "nse": 0.8209,
-      "kge": 0.8482,
-      "logNse": 0.5374,
-      "pbias": 7.027,
-      "rmseMm": 0.8916,
-      "r": 0.9286,
-      "alpha": 1.1141,
-      "beta": 1.0703
+      "nse": 0.8403,
+      "kge": 0.8982,
+      "logNse": 0.0444,
+      "pbias": -6.691,
+      "rmseMm": 0.842,
+      "r": 0.9232,
+      "alpha": 0.9991,
+      "beta": 0.9331
     }
   },
   "monthlySkill": {
     "calibration": {
-      "n": 120,
-      "nse": 0.9016,
-      "kge": 0.949,
-      "logNse": 0.5395,
-      "pbias": -1.164,
-      "rmseMm": 0.6937,
-      "r": 0.9515,
-      "alpha": 1.0106,
-      "beta": 0.9884
+      "n": 108,
+      "nse": 0.9004,
+      "kge": 0.9495,
+      "logNse": 0.9085,
+      "pbias": -0.781,
+      "rmseMm": 0.6706,
+      "r": 0.9506,
+      "alpha": 1.0064,
+      "beta": 0.9922
     },
     "validation": {
-      "n": 84,
-      "nse": 0.7141,
-      "kge": 0.5743,
-      "logNse": 0.8824,
-      "pbias": 21.296,
-      "rmseMm": 0.9129,
-      "r": 0.9721,
-      "alpha": 1.3676,
-      "beta": 1.213
+      "n": 96,
+      "nse": 0.8306,
+      "kge": 0.8434,
+      "logNse": -0.5818,
+      "pbias": -13.852,
+      "rmseMm": 0.7959,
+      "r": 0.9296,
+      "alpha": 0.9803,
+      "beta": 0.8615
     }
   },
   "observationProvenance": {
@@ -165,137 +173,167 @@
         "value": 4.5
       }
     ],
-    "suspectDaysExcludedFromScoring": 3
+    "additionalDropoutsDetected": [
+      {
+        "date": "2010-01-20",
+        "value": 13.7,
+        "neighbourMedian": 30.4,
+        "ratio": 0.451
+      },
+      {
+        "date": "2015-07-25",
+        "value": 26.0,
+        "neighbourMedian": 126.0,
+        "ratio": 0.206
+      },
+      {
+        "date": "2016-07-01",
+        "value": 16.5,
+        "neighbourMedian": 158.0,
+        "ratio": 0.104
+      },
+      {
+        "date": "2016-07-02",
+        "value": 16.5,
+        "neighbourMedian": 158.0,
+        "ratio": 0.104
+      },
+      {
+        "date": "2017-02-15",
+        "value": 7.8,
+        "neighbourMedian": 20.8,
+        "ratio": 0.375
+      }
+    ],
+    "dropoutRule": "a day below half the median of the surrounding six days; the published audit catches only near-zero readings and misses partial dropouts",
+    "suspectDaysExcludedFromScoring": 8
   },
   "parametersAtBounds": [
     "tt",
-    "fc",
-    "beta",
-    "perc",
     "k_fast"
   ],
   "seasonalVolumes": [
     {
       "year": 2001,
       "observedMcm": 1945.6,
-      "simulatedMcm": 1181.5,
-      "period": "calibration"
+      "simulatedMcm": 954.7,
+      "period": "validation"
     },
     {
       "year": 2002,
       "observedMcm": 2790.1,
-      "simulatedMcm": 2528.3,
+      "simulatedMcm": 2263.7,
       "period": "calibration"
     },
     {
       "year": 2003,
       "observedMcm": 2371.3,
-      "simulatedMcm": 2560.4,
+      "simulatedMcm": 2268.6,
       "period": "calibration"
     },
     {
       "year": 2004,
       "observedMcm": 2110.5,
-      "simulatedMcm": 1850.2,
-      "period": "calibration"
+      "simulatedMcm": 1613.3,
+      "period": "validation"
     },
     {
       "year": 2005,
       "observedMcm": 2201.4,
-      "simulatedMcm": 2286.8,
+      "simulatedMcm": 1970.1,
       "period": "calibration"
     },
     {
       "year": 2006,
       "observedMcm": 1706.6,
-      "simulatedMcm": 1760.7,
+      "simulatedMcm": 1554.5,
       "period": "calibration"
     },
     {
       "year": 2007,
       "observedMcm": 1901.7,
-      "simulatedMcm": 2181.4,
+      "simulatedMcm": 1907.6,
       "period": "calibration"
     },
     {
       "year": 2008,
       "observedMcm": 1515.6,
-      "simulatedMcm": 1680.1,
-      "period": "calibration"
+      "simulatedMcm": 1431.6,
+      "period": "validation"
     },
     {
       "year": 2009,
       "observedMcm": 2183.6,
-      "simulatedMcm": 2070.7,
-      "period": "calibration"
+      "simulatedMcm": 1784.1,
+      "period": "validation"
     },
     {
       "year": 2010,
       "observedMcm": 2368.6,
-      "simulatedMcm": 2636.3,
-      "period": "calibration"
+      "simulatedMcm": 2368.9,
+      "period": "validation"
     },
     {
       "year": 2011,
       "observedMcm": 1477.2,
-      "simulatedMcm": 1762.3,
-      "period": "validation"
+      "simulatedMcm": 1552.8,
+      "period": "calibration"
     },
     {
       "year": 2012,
       "observedMcm": 1816.1,
-      "simulatedMcm": 2131.5,
+      "simulatedMcm": 1873.7,
       "period": "validation"
     },
     {
       "year": 2013,
       "observedMcm": 1476.9,
-      "simulatedMcm": 1822.3,
+      "simulatedMcm": 1572.6,
       "period": "validation"
     },
     {
       "year": 2014,
       "observedMcm": 1525.5,
-      "simulatedMcm": 1933.6,
-      "period": "validation"
+      "simulatedMcm": 1663.1,
+      "period": "calibration"
     },
     {
       "year": 2015,
       "observedMcm": 1739.4,
-      "simulatedMcm": 1931.0,
+      "simulatedMcm": 1653.5,
       "period": "validation"
     },
     {
       "year": 2016,
       "observedMcm": 1671.0,
-      "simulatedMcm": 2259.2,
-      "period": "validation"
+      "simulatedMcm": 2003.4,
+      "period": "calibration"
     },
     {
       "year": 2017,
       "observedMcm": 2136.2,
-      "simulatedMcm": 2686.3,
-      "period": "validation"
+      "simulatedMcm": 2380.5,
+      "period": "calibration"
     }
   ],
   "seasonalValidationScores": {
-    "n": 7,
-    "nse": -2.4331,
-    "kge": 0.572,
-    "logNse": -1.8988,
-    "pbias": 22.664,
-    "rmseMm": 405.6574,
-    "r": 0.9104,
-    "alpha": 1.3518,
-    "beta": 1.2266
+    "n": 8,
+    "nse": -1.0057,
+    "kge": 0.4103,
+    "logNse": -2.1208,
+    "pbias": -12.562,
+    "rmseMm": 420.6546,
+    "r": 0.4865,
+    "alpha": 1.2614,
+    "beta": 0.8744
   },
   "waterBalance": {
     "precipitationMm": 21873.0,
     "observedRunoffMm": 15532.0,
-    "simulatedRunoffMm": 16623.5,
+    "simulatedRunoffMm": 14492.9,
     "runoffCoefficientObserved": 0.71,
-    "runoffCoefficientSimulated": 0.76,
-    "peakSnowWaterEquivalentMm": 1014.3
+    "runoffCoefficientSimulated": 0.663,
+    "peakSnowWaterEquivalentMm": 844.0
   },
   "qualityNotes": [
     "Calibration and validation periods are separate years; no validation day informs a parameter.",

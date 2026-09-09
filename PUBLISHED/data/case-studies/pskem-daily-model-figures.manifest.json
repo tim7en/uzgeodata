@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T05:29:34+00:00",
+  "inputs": [
+    "PUBLISHED/data/case-studies/pskem-daily-model.csv",
+    "PUBLISHED/data/case-studies/pskem-daily-model.json"
+  ],
+  "outputs": [
+    "PUBLISHED/data/case-studies/pskem-daily-hydrograph.png",
+    "PUBLISHED/data/case-studies/pskem-monthly-skill.png",
+    "PUBLISHED/data/case-studies/pskem-seasonal-shape.png"
+  ],
+  "note": "Calibration and validation years are drawn apart in every figure."
+}

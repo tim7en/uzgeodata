@@ -77,6 +77,30 @@ def write_json(path: Path, payload: object) -> None:
     os.replace(temporary, path)
 
 
+def dropouts(flow: dict[str, float], ratio: float = 0.5) -> list[dict]:
+    """Days that fall far below their own neighbourhood.
+
+    The published audit only catches near-zero readings, so it flags three days
+    in 2017 and misses others: 2016-07-01 and 02 both read exactly 16.5 m3/s
+    against a surrounding week near 156, in peak melt. A repeated value far below
+    its neighbours is a recording dropout, not a river. The test is symmetric and
+    local, so a genuine recession is not caught by it — a river falling steadily
+    stays close to its own week.
+    """
+    ordered = sorted(flow)
+    found = []
+    for index in range(3, len(ordered) - 3):
+        window = [flow[ordered[offset]] for offset in range(index - 3, index + 4) if offset != index]
+        window.sort()
+        reference = window[len(window) // 2]
+        value = flow[ordered[index]]
+        if reference > 0 and value < reference * ratio:
+            found.append({"date": ordered[index], "value": round(value, 3),
+                          "neighbourMedian": round(reference, 3),
+                          "ratio": round(value / reference, 3)})
+    return found
+
+
 def load_bands():
     """Elevation bands with their area share, from the published hypsometry.
 
@@ -172,6 +196,11 @@ def load_inputs():
     if not days:
         raise SystemExit("Forcing and discharge do not overlap")
     removed, screening = suspect_days(flow)
+    detected = dropouts(flow)
+    # The published screening is kept and extended, never overridden: its days stay
+    # removed, and days it missed are added with the reason recorded.
+    extra = [entry for entry in detected if entry["date"] not in removed]
+    removed = removed | {entry["date"] for entry in detected}
     temperature = np.array([forcing[day][0] for day in days])
     precipitation = np.array([forcing[day][1] for day in days])
     pet = np.array([forcing[day][2] for day in days])
@@ -180,7 +209,7 @@ def load_inputs():
     observed = np.array([flow[day] * factor for day in days])
     # A day the published screening rejects must not score the model either.
     valid = np.array([day not in removed for day in days])
-    return days, temperature, precipitation, pet, observed, area, factor, valid, screening
+    return days, temperature, precipitation, pet, observed, area, factor, valid, screening, extra
 
 
 def simulate(parameters: np.ndarray, temperature, precipitation, pet, bands=None):
@@ -284,13 +313,26 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--samples", type=int, default=20000)
     parser.add_argument("--lumped", action="store_true", help="ignore the bands, for comparison")
+    parser.add_argument("--split", choices=("chronological", "stratified"), default="chronological")
     parser.add_argument("--seed", type=int, default=1729)
     args = parser.parse_args()
 
-    days, temperature, precipitation, pet, observed, area, factor, valid, screening = load_inputs()
+    days, temperature, precipitation, pet, observed, area, factor, valid, screening, extra = load_inputs()
     years = np.array([int(day[:4]) for day in days])
-    calibration = (years >= CALIBRATION[0]) & (years <= CALIBRATION[1]) & valid
-    validation = (years >= VALIDATION[0]) & (years <= VALIDATION[1]) & valid
+    if args.split == "stratified":
+        # A chronological cut trained on wet years and tested on dry ones, which
+        # guarantees a high bias. Ranking years by yield and alternating puts wet
+        # and dry years on both sides while keeping validation strictly unseen.
+        totals = {int(year): float(observed[years == year].sum()) for year in set(years.tolist())}
+        ranked = sorted(totals, key=totals.get)
+        calibration_years = set(ranked[::2])
+    else:
+        calibration_years = {year for year in set(years.tolist())
+                             if CALIBRATION[0] <= year <= CALIBRATION[1]}
+    in_calibration = np.isin(years, list(calibration_years))
+    calibration = in_calibration & valid
+    validation = ~in_calibration & valid
+    print(f"  split {args.split}: calibration {sorted(calibration_years)}")
     print(f"  screening removes {int((~valid).sum())} suspect day(s) from scoring")
     print(f"Pskem daily model | {len(days):,} days {days[0]}..{days[-1]} | catchment {area:,.0f} km2")
     print(f"  calibration {CALIBRATION[0]}-{CALIBRATION[1]} ({calibration.sum():,} days) | "
@@ -356,7 +398,7 @@ def main() -> None:
             continue
         monthly_observed.append(float(observed[mask].mean()))
         monthly_simulated.append(float(simulated[mask].mean()))
-        monthly_period.append("calibration" if key[0] <= CALIBRATION[1] else "validation")
+        monthly_period.append("calibration" if key[0] in calibration_years else "validation")
     monthly_observed = np.array(monthly_observed)
     monthly_simulated = np.array(monthly_simulated)
     monthly_period = np.array(monthly_period)
@@ -380,7 +422,7 @@ def main() -> None:
             "year": int(year),
             "observedMcm": round(float(observed[mask].sum() * to_mcm), 1),
             "simulatedMcm": round(float(simulated[mask].sum() * to_mcm), 1),
-            "period": "calibration" if year <= CALIBRATION[1] else "validation",
+            "period": "calibration" if year in calibration_years else "validation",
         })
     seasonal_validation = [row for row in seasonal if row["period"] == "validation"]
     if seasonal_validation:
@@ -410,7 +452,7 @@ def main() -> None:
             "timestep": "day",
             "parameters": {key: round(float(value), 4) for key, value in zip(ORDER, best["parameters"])},
             "parameterBounds": BOUNDS,
-            "calibration": {"years": list(CALIBRATION), "objective": "KGE",
+            "calibration": {"years": sorted(calibration_years), "split": args.split, "objective": "KGE",
                             "search": "seeded random search then local refinement",
                             "samples": args.samples, "seed": args.seed},
         },
@@ -438,6 +480,9 @@ def main() -> None:
             "reconciliation": ("203 of 204 published monthly raw means reproduce exactly from these "
                                "daily values, the remaining one within rounding."),
             "screening": screening,
+            "additionalDropoutsDetected": extra,
+            "dropoutRule": ("a day below half the median of the surrounding six days; the published "
+                            "audit catches only near-zero readings and misses partial dropouts"),
             "suspectDaysExcludedFromScoring": int((~valid).sum()),
         },
         "parametersAtBounds": pinned,

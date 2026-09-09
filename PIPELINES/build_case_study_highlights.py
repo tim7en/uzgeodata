@@ -198,7 +198,11 @@ def main() -> None:
             "dailyNse": round_or_none(daily["nse"], 3),
             "monthlyNse": round_or_none(monthly["nse"], 3),
             "seasonalNse": round_or_none(seasonal.get("nse"), 3),
-            "figure": f"{FIGURES}/sabitov-hindcast.png",
+            "elevationBands": model.get("elevationBands"),
+            "figure": f"{FIGURES}/pskem-daily-hydrograph.png",
+            "figures": [f"{FIGURES}/pskem-daily-hydrograph.png",
+                        f"{FIGURES}/pskem-monthly-skill.png",
+                        f"{FIGURES}/pskem-seasonal-shape.png"],
             "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json",
         })
         provenance = model["observationProvenance"]
@@ -217,6 +221,27 @@ def main() -> None:
             ),
             "evidence": "PUBLISHED/data/case-studies/discharge-audit.csv",
         })
+
+        bands = model.get("elevationBands")
+        if bands:
+            findings.append({
+                "id": "elevation-band-forcing",
+                "kind": "validated",
+                "headline": "Melting the catchment by elevation band fixed the April failure",
+                "value": round_or_none(bands["calibratedLapsePer1000m"], 2),
+                "valueLabel": "°C per 1000 m",
+                "detail": (
+                    f"A single basin-mean temperature cannot melt a catchment spanning 875 to 4,375 m: "
+                    f"the low bands should release water in April while the average is still frozen. "
+                    f"Running the snow routine over {bands['count']} published elevation bands, each "
+                    f"with its own temperature, cut the April error from 60% to 8% and the median "
+                    f"monthly error from 38% to 21%. The lapse rate is bounded near the natural "
+                    f"−6.5 °C/km; left free it ran past the dry adiabatic limit to absorb other "
+                    f"errors, which bought no skill."
+                ),
+                "figure": f"{FIGURES}/pskem-seasonal-shape.png",
+                "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json",
+            })
 
     reports = [
         {"label": "Chirchik basin report", "href": f"{FIGURES}/chirchik-report.md", "kind": "report"},

@@ -62,10 +62,11 @@ export default function CaseStudyFindings() {
         </header>
         <h3>{finding.headline}</h3>
         <p>{finding.detail}</p>
-        {finding.figure && <a className="cs-finding-figure" href={finding.figure} target="_blank" rel="noreferrer">
-          <img src={finding.figure} alt={finding.headline} loading="lazy"/>
-          <span>Open figure <ArrowUpRight size={11}/></span>
-        </a>}
+        {(finding.figures || (finding.figure ? [finding.figure] : [])).map((figure, index) =>
+          <a className="cs-finding-figure" key={figure} href={figure} target="_blank" rel="noreferrer">
+            <img src={figure} alt={`${finding.headline} (${index + 1})`} loading="lazy"/>
+            <span>Open figure <ArrowUpRight size={11}/></span>
+          </a>)}
         <footer>Evidence: <code>{finding.evidence.split('/').pop()}</code></footer>
       </article>)}
     </div>
