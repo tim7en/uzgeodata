@@ -1,0 +1,149 @@
+{
+  "run_id": "pskem-ele_mt_sav-20260909T163305354439Z",
+  "status": "complete",
+  "started_at": "2026-09-09T16:33:05.355+00:00",
+  "updated_at": "2026-09-09T16:33:13.052+00:00",
+  "wall_seconds": 7.69735520001268,
+  "cpu_seconds": 2.921875,
+  "stages": [
+    {
+      "name": "setup_and_input_validation",
+      "started_at": "2026-09-09T16:33:05.361+00:00",
+      "status": "complete",
+      "wall_seconds": 2.507227599999169,
+      "cpu_seconds": 1.453125
+    },
+    {
+      "name": "source_download_or_cache_verification",
+      "started_at": "2026-09-09T16:33:07.876+00:00",
+      "shared": true,
+      "status": "complete",
+      "wall_seconds": 0.13174449998768978,
+      "cpu_seconds": 0.125
+    },
+    {
+      "name": "dem_unpack_and_15arcsecond_mean",
+      "started_at": "2026-09-09T16:33:08.040+00:00",
+      "shared": true,
+      "status": "complete",
+      "wall_seconds": 4.792956999997841,
+      "cpu_seconds": 1.265625
+    },
+    {
+      "name": "pilot_zone_rasterization",
+      "started_at": "2026-09-09T16:33:12.842+00:00",
+      "shared": true,
+      "status": "complete",
+      "wall_seconds": 0.030012100003659725,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "calculate_ele_mt_sav",
+      "started_at": "2026-09-09T16:33:12.883+00:00",
+      "attribute": "ele_mt_sav",
+      "status": "complete",
+      "wall_seconds": 0.03373660001670942,
+      "cpu_seconds": 0.03125
+    },
+    {
+      "name": "reference_comparison_and_quality_checks",
+      "started_at": "2026-09-09T16:33:12.926+00:00",
+      "status": "complete",
+      "wall_seconds": 0.01762239998788573,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "export_and_provenance",
+      "started_at": "2026-09-09T16:33:12.972+00:00",
+      "status": "complete",
+      "wall_seconds": 0.0711682999972254,
+      "cpu_seconds": 0.03125
+    }
+  ],
+  "active_stage": null,
+  "events": [
+    {
+      "at": "2026-09-09T16:33:05.361+00:00",
+      "message": "START setup_and_input_validation"
+    },
+    {
+      "at": "2026-09-09T16:33:07.855+00:00",
+      "message": "Pilot Pskem: 20 native level-12 units; 1 DEM tile; attribute ele_mt_sav"
+    },
+    {
+      "at": "2026-09-09T16:33:07.869+00:00",
+      "message": "END setup_and_input_validation: 2.507s"
+    },
+    {
+      "at": "2026-09-09T16:33:07.876+00:00",
+      "message": "START source_download_or_cache_verification"
+    },
+    {
+      "at": "2026-09-09T16:33:07.997+00:00",
+      "message": "Verified cache EarthEnv-DEM90_N40E070: 34.3 MB in 0.03s"
+    },
+    {
+      "at": "2026-09-09T16:33:08.008+00:00",
+      "message": "END source_download_or_cache_verification: 0.132s"
+    },
+    {
+      "at": "2026-09-09T16:33:08.040+00:00",
+      "message": "START dem_unpack_and_15arcsecond_mean"
+    },
+    {
+      "at": "2026-09-09T16:33:12.825+00:00",
+      "message": "Prepared EarthEnv-DEM90_N40E070: arithmetic 5x5 native-cell means on the 15 arc-second grid"
+    },
+    {
+      "at": "2026-09-09T16:33:12.832+00:00",
+      "message": "END dem_unpack_and_15arcsecond_mean: 4.793s"
+    },
+    {
+      "at": "2026-09-09T16:33:12.842+00:00",
+      "message": "START pilot_zone_rasterization"
+    },
+    {
+      "at": "2026-09-09T16:33:12.864+00:00",
+      "message": "Rasterized 16,476 pilot cells; no overlapping zones"
+    },
+    {
+      "at": "2026-09-09T16:33:12.872+00:00",
+      "message": "END pilot_zone_rasterization: 0.030s"
+    },
+    {
+      "at": "2026-09-09T16:33:12.883+00:00",
+      "message": "START calculate_ele_mt_sav"
+    },
+    {
+      "at": "2026-09-09T16:33:12.905+00:00",
+      "message": "Calculated ele_mt_sav for 20 pilot units"
+    },
+    {
+      "at": "2026-09-09T16:33:12.917+00:00",
+      "message": "END calculate_ele_mt_sav: 0.034s"
+    },
+    {
+      "at": "2026-09-09T16:33:12.926+00:00",
+      "message": "START reference_comparison_and_quality_checks"
+    },
+    {
+      "at": "2026-09-09T16:33:12.934+00:00",
+      "message": "Comparison: 15/20 within 1.0 m; MAE=1.056 m"
+    },
+    {
+      "at": "2026-09-09T16:33:12.943+00:00",
+      "message": "END reference_comparison_and_quality_checks: 0.018s"
+    },
+    {
+      "at": "2026-09-09T16:33:12.972+00:00",
+      "message": "START export_and_provenance"
+    },
+    {
+      "at": "2026-09-09T16:33:13.043+00:00",
+      "message": "END export_and_provenance: 0.071s"
+    }
+  ],
+  "timing_note": "Wall time includes setup, source transfer/cache verification, processing, comparison and export. Subtasks are included in their parent stage; shared work is not charged to every attribute.",
+  "overhead_seconds": 0.11288670002250001,
+  "finished_at": "2026-09-09T16:33:13.052+00:00"
+}

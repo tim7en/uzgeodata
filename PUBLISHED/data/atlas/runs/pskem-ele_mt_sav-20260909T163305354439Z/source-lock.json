@@ -1,0 +1,42 @@
+{
+  "source": "EarthEnv-DEM90 v1",
+  "licence": "CC-BY-4.0",
+  "input_identity": {
+    "pilot_ids": [
+      "4120380180",
+      "4120380350",
+      "4120382970",
+      "4120383080",
+      "4120384960",
+      "4120384970",
+      "4120385070",
+      "4120385190",
+      "4120386210",
+      "4120386360",
+      "4121281950",
+      "4121282240",
+      "4121282310",
+      "4121283450",
+      "4121285900",
+      "4121286770",
+      "4121287290",
+      "4121287810",
+      "4121288140",
+      "4121289400"
+    ],
+    "geometry_sha256": "d201c7266af02b4bb5c9b18b7aa09dbb42e2aeec6708b41387c5ef3c87e80e61",
+    "reference_sha256": "625b85ee8d9496c7f5d028ae836c3d82835fcb15dc6ef7d1485c2390ef553d4d",
+    "tolerance_sha256": "81e3ec6fb5186fd502c7bec9bfe3f31886d3d27e49a1de54607a1f25b43f3dda"
+  },
+  "citation": "Robinson, Regetz & Guralnick (2014), doi:10.1016/j.isprsjprs.2013.11.002",
+  "tiles": [
+    {
+      "name": "EarthEnv-DEM90_N40E070",
+      "url": "https://de.cyverse.org/anon-files/iplant/home/shared/earthenv_dem_data/EarthEnv-DEM90/EarthEnv-DEM90_N40E070.tar.gz",
+      "sha256": "b9fd8644dd67b7794193ac65094e8d51d17d85a46b54ac1977d6a99bef353e6e",
+      "bytes": 34328445,
+      "south": 40,
+      "west": 70
+    }
+  ]
+}

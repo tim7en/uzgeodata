@@ -1,0 +1,21 @@
+{
+  "attribute": "pre_mm_s03",
+  "basin_count": 20,
+  "implementation_status": "implemented",
+  "mode": "baseline_reproduction_candidate",
+  "run_id": "pskem-all281-20260909T173021971104Z",
+  "comparison": {
+    "paired": 20,
+    "expected": 20,
+    "within_tolerance": 20,
+    "absolute_tolerance_raw": 1.0,
+    "bias_raw": 0.001994979222651949,
+    "mae_raw": 0.24949173415134213,
+    "rmse_raw": 0.29571724504959873,
+    "max_absolute_error_raw": 0.4738067520372482,
+    "coverage_pass": true,
+    "pass": true
+  },
+  "scientific_release": "not_eligible",
+  "review_required": "Original vector zones rasterized at 15 arc-seconds need equivalence review against the native atlas zone grid. WorldClim V1 mirror needs exact v1.4 vintage review. Independent operator rerun pending."
+}

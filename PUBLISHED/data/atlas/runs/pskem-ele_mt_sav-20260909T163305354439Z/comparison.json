@@ -1,0 +1,59 @@
+{
+  "attribute": "ele_mt_sav",
+  "pilot": "pskem",
+  "run_id": "pskem-ele_mt_sav-20260909T163305354439Z",
+  "implementation_status": "implemented",
+  "scientific_status": "candidate_not_independently_reproduced",
+  "basin_count": 20,
+  "metrics": {
+    "count": 20,
+    "missing_pairs": 0,
+    "bias_m": -0.394175049307114,
+    "mae_m": 1.0556832372996041,
+    "rmse_m": 2.385914695225347,
+    "max_absolute_error_m": 10.054999999999836,
+    "absolute_tolerance_m": 1.0,
+    "within_tolerance": 15,
+    "all_pairs_pass": false
+  },
+  "coverage_pass": true,
+  "numerical_gate_pass": false,
+  "limitations": [
+    "Original HydroSHEDS native zone raster is reconstructed from unsimplified basin polygons with cell-center assignment.",
+    "Exact ArcGIS intermediate numeric storage/rounding is not established; preserve floating 5x5 means and compare against published integer values.",
+    "No coastal or interior void filling is inferred; partial/missing source blocks fail the completeness gate.",
+    "Pskem gauge catchment is provisional; the 20 native sub-basin identities remain explicit.",
+    "A successful comparison is not an independent scientific rerun or a released reproduction."
+  ],
+  "input_identity": {
+    "pilot_ids": [
+      "4120380180",
+      "4120380350",
+      "4120382970",
+      "4120383080",
+      "4120384960",
+      "4120384970",
+      "4120385070",
+      "4120385190",
+      "4120386210",
+      "4120386360",
+      "4121281950",
+      "4121282240",
+      "4121282310",
+      "4121283450",
+      "4121285900",
+      "4121286770",
+      "4121287290",
+      "4121287810",
+      "4121288140",
+      "4121289400"
+    ],
+    "geometry_sha256": "d201c7266af02b4bb5c9b18b7aa09dbb42e2aeec6708b41387c5ef3c87e80e61",
+    "reference_sha256": "625b85ee8d9496c7f5d028ae836c3d82835fcb15dc6ef7d1485c2390ef553d4d",
+    "tolerance_sha256": "81e3ec6fb5186fd502c7bec9bfe3f31886d3d27e49a1de54607a1f25b43f3dda"
+  },
+  "method": "EarthEnv-DEM90 v1 -> 5x5 arithmetic mean -> native-polygon cell-center zones -> unweighted local cell mean. No spatial extrema or upstream attributes computed.",
+  "source_catalogue": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=12",
+  "methods_paper": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6901482/",
+  "scope_note": "Pskem candidate catchment IDs; gauge snapping remains unresolved. These are local native sub-basin values, not an exact gauge-catchment statistic."
+}

@@ -1,0 +1,90 @@
+{
+  "version": "0.1.0",
+  "as_of": "2026-09-09",
+  "title": "From basin attributes to a living atlas",
+  "phases": [
+    {
+      "id": "specification",
+      "title": "Specify the atlas",
+      "status": "in_progress",
+      "depends_on": [],
+      "description": "Catalogue sources and write a method for every BasinATLAS attribute.",
+      "gate": "Resolve source ambiguities and review all recipe specifications.",
+      "evidence": [
+        "ATLAS_MODULES/hydrosheds/RECIPES.md"
+      ]
+    },
+    {
+      "id": "reproduction",
+      "title": "Reproduce the baseline",
+      "status": "in_progress",
+      "depends_on": [
+        "specification"
+      ],
+      "description": "Implement and compare recipes against the original atlas, one family at a time.",
+      "gate": "Pinned inputs, declared tolerances, independent rerun and signed comparison report.",
+      "evidence": [
+        "PIPELINES/run_atlas_attribute.py",
+        "ATLAS_MODULES/hydrosheds/validation/ele_mt_sav.json",
+        "PIPELINES/update_pskem_atlas.py",
+        "ATLAS_MODULES/hydrosheds/PSKEM_BATCH.md"
+      ]
+    },
+    {
+      "id": "history",
+      "title": "Build basin history",
+      "status": "planned",
+      "depends_on": [
+        "reproduction"
+      ],
+      "description": "Assess 2000–2026 availability and develop explicitly versioned annual extensions.",
+      "gate": "Coverage, source transitions and provisional years documented for each attribute.",
+      "evidence": []
+    },
+    {
+      "id": "geodatabase",
+      "title": "Preserve the evidence",
+      "status": "planned",
+      "depends_on": [
+        "reproduction"
+      ],
+      "description": "Store versioned basin observations, sources, runs and snapshot membership.",
+      "gate": "Persistent IDs, geometry versions, provenance and tested recovery of a frozen snapshot.",
+      "evidence": []
+    },
+    {
+      "id": "edition",
+      "title": "Freeze an atlas edition",
+      "status": "planned",
+      "depends_on": [
+        "history",
+        "geodatabase"
+      ],
+      "description": "Publish reviewed maps and a reproducible scientific data package.",
+      "gate": "Complete observation periods and immutable manifest; 2026 remains provisional until year-end and source release.",
+      "evidence": []
+    },
+    {
+      "id": "living",
+      "title": "Maintain the living atlas",
+      "status": "planned",
+      "depends_on": [
+        "edition"
+      ],
+      "description": "Refresh eligible sources, publish annual changes and extend thematic modules.",
+      "gate": "Monitored updates, regression checks and revision history.",
+      "evidence": []
+    },
+    {
+      "id": "ontology",
+      "title": "Connect the knowledge",
+      "status": "planned",
+      "depends_on": [
+        "geodatabase"
+      ],
+      "description": "Connect basins, rivers and indicators through reviewed semantic relationships.",
+      "gate": "Scientific concepts, units, temporal support and relationship provenance reviewed.",
+      "evidence": []
+    }
+  ]
+}

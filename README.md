@@ -147,3 +147,11 @@ the public graph projections without requiring that private registry.
 | `/case-studies.html` | Chirchik–Charvak validation, MODIS snow, 10 m land cover, elevation and energy profiles, physical/ML/Bayesian models, a readiness bar, scientific figures and supporting workbook. |
 | `/review.html` | Every layer the project holds, one at a time on a map, with its extent, geometry type and a sample of every attribute column. Stepping with the arrows walks the whole set; the fill percentage next to each field is what shows a column that carries nothing. |
 | `/catalogue.html` | Opens with the data groups — every kind of data the project references, under a short code, with its status checked against the working copy. Below that, every dataset the graph describes: what it measures, where it came from, and whether this checkout can actually open it. Availability is checked against the filesystem, not taken from the recorded URL. |
+
+## Living atlas programme
+
+The [atlas module workspace](ATLAS_MODULES/README.md) defines the HydroSHEDS
+methodology, 281 attribute recipes and mandatory scientific reproduction gates.
+Open `/roadmap.html` for the visual roadmap, project updates and 2000–2026 history
+planning. Run `npm run atlas:publish` to refresh its data after specification or
+news changes; development startup and production builds also publish it.

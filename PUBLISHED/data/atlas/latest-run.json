@@ -1,0 +1,221 @@
+{
+  "attribute": "ele_mt_sav",
+  "pilot": "pskem",
+  "run_id": "pskem-ele_mt_sav-20260909T163305354439Z",
+  "implementation_status": "implemented",
+  "scientific_status": "candidate_not_independently_reproduced",
+  "basin_count": 20,
+  "metrics": {
+    "count": 20,
+    "missing_pairs": 0,
+    "bias_m": -0.394175049307114,
+    "mae_m": 1.0556832372996041,
+    "rmse_m": 2.385914695225347,
+    "max_absolute_error_m": 10.054999999999836,
+    "absolute_tolerance_m": 1.0,
+    "within_tolerance": 15,
+    "all_pairs_pass": false
+  },
+  "coverage_pass": true,
+  "numerical_gate_pass": false,
+  "limitations": [
+    "Original HydroSHEDS native zone raster is reconstructed from unsimplified basin polygons with cell-center assignment.",
+    "Exact ArcGIS intermediate numeric storage/rounding is not established; preserve floating 5x5 means and compare against published integer values.",
+    "No coastal or interior void filling is inferred; partial/missing source blocks fail the completeness gate.",
+    "Pskem gauge catchment is provisional; the 20 native sub-basin identities remain explicit.",
+    "A successful comparison is not an independent scientific rerun or a released reproduction."
+  ],
+  "input_identity": {
+    "pilot_ids": [
+      "4120380180",
+      "4120380350",
+      "4120382970",
+      "4120383080",
+      "4120384960",
+      "4120384970",
+      "4120385070",
+      "4120385190",
+      "4120386210",
+      "4120386360",
+      "4121281950",
+      "4121282240",
+      "4121282310",
+      "4121283450",
+      "4121285900",
+      "4121286770",
+      "4121287290",
+      "4121287810",
+      "4121288140",
+      "4121289400"
+    ],
+    "geometry_sha256": "d201c7266af02b4bb5c9b18b7aa09dbb42e2aeec6708b41387c5ef3c87e80e61",
+    "reference_sha256": "625b85ee8d9496c7f5d028ae836c3d82835fcb15dc6ef7d1485c2390ef553d4d",
+    "tolerance_sha256": "81e3ec6fb5186fd502c7bec9bfe3f31886d3d27e49a1de54607a1f25b43f3dda"
+  },
+  "method": "EarthEnv-DEM90 v1 -> 5x5 arithmetic mean -> native-polygon cell-center zones -> unweighted local cell mean. No spatial extrema or upstream attributes computed.",
+  "source_catalogue": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=12",
+  "methods_paper": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6901482/",
+  "scope_note": "Pskem candidate catchment IDs; gauge snapping remains unresolved. These are local native sub-basin values, not an exact gauge-catchment statistic.",
+  "timing": {
+    "run_id": "pskem-ele_mt_sav-20260909T163305354439Z",
+    "status": "complete",
+    "started_at": "2026-09-09T16:33:05.355+00:00",
+    "updated_at": "2026-09-09T16:33:13.052+00:00",
+    "wall_seconds": 7.69735520001268,
+    "cpu_seconds": 2.921875,
+    "stages": [
+      {
+        "name": "setup_and_input_validation",
+        "started_at": "2026-09-09T16:33:05.361+00:00",
+        "status": "complete",
+        "wall_seconds": 2.507227599999169,
+        "cpu_seconds": 1.453125
+      },
+      {
+        "name": "source_download_or_cache_verification",
+        "started_at": "2026-09-09T16:33:07.876+00:00",
+        "shared": true,
+        "status": "complete",
+        "wall_seconds": 0.13174449998768978,
+        "cpu_seconds": 0.125
+      },
+      {
+        "name": "dem_unpack_and_15arcsecond_mean",
+        "started_at": "2026-09-09T16:33:08.040+00:00",
+        "shared": true,
+        "status": "complete",
+        "wall_seconds": 4.792956999997841,
+        "cpu_seconds": 1.265625
+      },
+      {
+        "name": "pilot_zone_rasterization",
+        "started_at": "2026-09-09T16:33:12.842+00:00",
+        "shared": true,
+        "status": "complete",
+        "wall_seconds": 0.030012100003659725,
+        "cpu_seconds": 0.0
+      },
+      {
+        "name": "calculate_ele_mt_sav",
+        "started_at": "2026-09-09T16:33:12.883+00:00",
+        "attribute": "ele_mt_sav",
+        "status": "complete",
+        "wall_seconds": 0.03373660001670942,
+        "cpu_seconds": 0.03125
+      },
+      {
+        "name": "reference_comparison_and_quality_checks",
+        "started_at": "2026-09-09T16:33:12.926+00:00",
+        "status": "complete",
+        "wall_seconds": 0.01762239998788573,
+        "cpu_seconds": 0.0
+      },
+      {
+        "name": "export_and_provenance",
+        "started_at": "2026-09-09T16:33:12.972+00:00",
+        "status": "complete",
+        "wall_seconds": 0.0711682999972254,
+        "cpu_seconds": 0.03125
+      }
+    ],
+    "active_stage": null,
+    "events": [
+      {
+        "at": "2026-09-09T16:33:05.361+00:00",
+        "message": "START setup_and_input_validation"
+      },
+      {
+        "at": "2026-09-09T16:33:07.855+00:00",
+        "message": "Pilot Pskem: 20 native level-12 units; 1 DEM tile; attribute ele_mt_sav"
+      },
+      {
+        "at": "2026-09-09T16:33:07.869+00:00",
+        "message": "END setup_and_input_validation: 2.507s"
+      },
+      {
+        "at": "2026-09-09T16:33:07.876+00:00",
+        "message": "START source_download_or_cache_verification"
+      },
+      {
+        "at": "2026-09-09T16:33:07.997+00:00",
+        "message": "Verified cache EarthEnv-DEM90_N40E070: 34.3 MB in 0.03s"
+      },
+      {
+        "at": "2026-09-09T16:33:08.008+00:00",
+        "message": "END source_download_or_cache_verification: 0.132s"
+      },
+      {
+        "at": "2026-09-09T16:33:08.040+00:00",
+        "message": "START dem_unpack_and_15arcsecond_mean"
+      },
+      {
+        "at": "2026-09-09T16:33:12.825+00:00",
+        "message": "Prepared EarthEnv-DEM90_N40E070: arithmetic 5x5 native-cell means on the 15 arc-second grid"
+      },
+      {
+        "at": "2026-09-09T16:33:12.832+00:00",
+        "message": "END dem_unpack_and_15arcsecond_mean: 4.793s"
+      },
+      {
+        "at": "2026-09-09T16:33:12.842+00:00",
+        "message": "START pilot_zone_rasterization"
+      },
+      {
+        "at": "2026-09-09T16:33:12.864+00:00",
+        "message": "Rasterized 16,476 pilot cells; no overlapping zones"
+      },
+      {
+        "at": "2026-09-09T16:33:12.872+00:00",
+        "message": "END pilot_zone_rasterization: 0.030s"
+      },
+      {
+        "at": "2026-09-09T16:33:12.883+00:00",
+        "message": "START calculate_ele_mt_sav"
+      },
+      {
+        "at": "2026-09-09T16:33:12.905+00:00",
+        "message": "Calculated ele_mt_sav for 20 pilot units"
+      },
+      {
+        "at": "2026-09-09T16:33:12.917+00:00",
+        "message": "END calculate_ele_mt_sav: 0.034s"
+      },
+      {
+        "at": "2026-09-09T16:33:12.926+00:00",
+        "message": "START reference_comparison_and_quality_checks"
+      },
+      {
+        "at": "2026-09-09T16:33:12.934+00:00",
+        "message": "Comparison: 15/20 within 1.0 m; MAE=1.056 m"
+      },
+      {
+        "at": "2026-09-09T16:33:12.943+00:00",
+        "message": "END reference_comparison_and_quality_checks: 0.018s"
+      },
+      {
+        "at": "2026-09-09T16:33:12.972+00:00",
+        "message": "START export_and_provenance"
+      },
+      {
+        "at": "2026-09-09T16:33:13.043+00:00",
+        "message": "END export_and_provenance: 0.071s"
+      }
+    ],
+    "timing_note": "Wall time includes setup, source transfer/cache verification, processing, comparison and export. Subtasks are included in their parent stage; shared work is not charged to every attribute.",
+    "overhead_seconds": 0.11288670002250001,
+    "finished_at": "2026-09-09T16:33:13.052+00:00"
+  },
+  "downloads": [
+    {
+      "name": "EarthEnv-DEM90_N40E070",
+      "bytes": 34328445,
+      "cache_hit": true,
+      "wall_seconds": 0.03231060001417063
+    }
+  ],
+  "report_url": "/data/atlas/runs/pskem-ele_mt_sav-20260909T163305354439Z/comparison.json",
+  "observations_url": "/data/atlas/runs/pskem-ele_mt_sav-20260909T163305354439Z/observations.csv",
+  "timing_url": "/data/atlas/runs/pskem-ele_mt_sav-20260909T163305354439Z/timing.json",
+  "manifest_url": "/data/atlas/runs/pskem-ele_mt_sav-20260909T163305354439Z/manifest.json",
+  "source_lock_url": "/data/atlas/runs/pskem-ele_mt_sav-20260909T163305354439Z/source-lock.json"
+}

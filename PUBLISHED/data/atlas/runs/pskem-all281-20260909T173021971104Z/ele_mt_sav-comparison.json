@@ -1,0 +1,21 @@
+{
+  "attribute": "ele_mt_sav",
+  "basin_count": 20,
+  "implementation_status": "implemented",
+  "mode": "baseline_reproduction_candidate",
+  "run_id": "pskem-all281-20260909T173021971104Z",
+  "comparison": {
+    "paired": 20,
+    "expected": 20,
+    "within_tolerance": 15,
+    "absolute_tolerance_raw": 1.0,
+    "bias_raw": -0.3941750493066138,
+    "mae_raw": 1.0556832372999907,
+    "rmse_raw": 2.3859146952255665,
+    "max_absolute_error_raw": 10.055000000000064,
+    "coverage_pass": true,
+    "pass": false
+  },
+  "scientific_release": "not_eligible",
+  "review_required": "Original vector zones rasterized at 15 arc-seconds need equivalence review against the native atlas zone grid. Independent operator rerun pending."
+}

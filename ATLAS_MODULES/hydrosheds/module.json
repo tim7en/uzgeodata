@@ -1,0 +1,14 @@
+{
+  "id": "hydrosheds",
+  "title": "HydroSHEDS / BasinATLAS",
+  "version": "0.2.0",
+  "status": "implementation_in_progress",
+  "scope": "Current implementation: only 20 Pskem level-12 units and all 281 BasinATLAS reference attributes; wider basin programme remains planned",
+  "dependencies": [
+    "core/reproducibility",
+    "HydroBASINS v1 geometry and topology"
+  ],
+  "recipes": "recipes.json",
+  "sources": "sources.json",
+  "scientific_reproduction_required": true
+}

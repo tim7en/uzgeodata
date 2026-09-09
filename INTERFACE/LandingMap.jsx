@@ -25,6 +25,7 @@ const CENTRE = [40.2, 70.5];
 const OCCLUDED_TOP_LEFT = [300, 170];
 const OCCLUDED_BOTTOM_RIGHT = [40, 110];
 const DEEPER = [
+  { href: '/roadmap.html', label: 'Atlas roadmap', note: 'Methods, reproduction and basin history' },
   { href: '/case-studies.html', label: 'Case studies', note: 'Runoff models and station–satellite work' },
 ];
 

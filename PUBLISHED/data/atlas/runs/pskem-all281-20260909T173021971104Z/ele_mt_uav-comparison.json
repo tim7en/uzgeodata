@@ -1,0 +1,21 @@
+{
+  "attribute": "ele_mt_uav",
+  "basin_count": 20,
+  "implementation_status": "implemented",
+  "mode": "baseline_reproduction_candidate",
+  "run_id": "pskem-all281-20260909T173021971104Z",
+  "comparison": {
+    "paired": 20,
+    "expected": 20,
+    "within_tolerance": 19,
+    "absolute_tolerance_raw": 1.0,
+    "bias_raw": 0.18880381473484248,
+    "mae_raw": 0.4557494696548702,
+    "rmse_raw": 0.5437988596821337,
+    "max_absolute_error_raw": 1.2761472369766125,
+    "coverage_pass": true,
+    "pass": false
+  },
+  "scientific_release": "not_eligible",
+  "review_required": "Original vector zones rasterized at 15 arc-seconds need equivalence review against the native atlas zone grid. Upstream union of unique basin zones needs comparison with original pixel flow accumulation. Independent operator rerun pending."
+}

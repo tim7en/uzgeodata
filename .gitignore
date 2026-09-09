@@ -5,6 +5,7 @@ dist/
 *.local
 *.log
 WORKSPACE/
+GEODATA/atlas_sources/
 tmp/
 
 # Source geodatabases: multi-gigabyte binary directories that are reference data,

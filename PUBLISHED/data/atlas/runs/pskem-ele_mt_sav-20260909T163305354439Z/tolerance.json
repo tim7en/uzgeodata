@@ -1,0 +1,23 @@
+{
+  "attribute": "ele_mt_sav",
+  "version": "0.1.0",
+  "declared_before_first_run": "2026-09-09",
+  "review_status": "predeclared engineering comparison; independent scientific review pending",
+  "pilot": "pskem",
+  "basin_level": 12,
+  "absolute_tolerance_m": 1.0,
+  "relative_tolerance": 0.0,
+  "required_pair_pass_fraction": 1.0,
+  "minimum_valid_cell_fraction": 1.0,
+  "require_all_native_cells_valid": true,
+  "rationale": "The published field is an integer in meters. A 1 m absolute allowance accommodates sub-meter aggregation and final integer encoding; it is not a terrain-accuracy claim. Every paired basin must pass. Larger differences are investigated, never absorbed by post-hoc tolerance changes.",
+  "reference": "BasinATLAS v1 level12, cached project attribute table; source and selected-record hashes are stored per run",
+  "missing_policy": "Do not compare missing reference values or substitute zero for missing DEM cells. Report any excluded pair and fail complete-coverage gate.",
+  "limitations": [
+    "Original HydroSHEDS native zone raster is reconstructed from unsimplified basin polygons with cell-center assignment.",
+    "Exact ArcGIS intermediate numeric storage/rounding is not established; preserve floating 5x5 means and compare against published integer values.",
+    "No coastal or interior void filling is inferred; partial/missing source blocks fail the completeness gate.",
+    "Pskem gauge catchment is provisional; the 20 native sub-basin identities remain explicit.",
+    "A successful comparison is not an independent scientific rerun or a released reproduction."
+  ]
+}

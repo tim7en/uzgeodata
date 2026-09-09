@@ -1,0 +1,114 @@
+{
+  "run_id": "pskem-ele_mt_sav-20260909T163305354439Z",
+  "attribute": "ele_mt_sav",
+  "pilot": "pskem",
+  "code_commit": "26275b68fa11cb47a2901caed7aa77bf07db3792",
+  "code_snapshot": [
+    {
+      "path": "PIPELINES/run_atlas_attribute.py",
+      "sha256": "379d0233dadb0d9ac4006d71003612f70ab9eb3bb80841acc66564a258b69f31"
+    },
+    {
+      "path": "ATLAS_MODULES/core/runtime.py",
+      "sha256": "212f7ea29dfda1a73b0b95843989a1850b67a6c68f30d4247a4f75c900a8ba87"
+    },
+    {
+      "path": "ATLAS_MODULES/hydrosheds/functions/elevation.py",
+      "sha256": "c146b1a2010e3644012cea2976ab9e2435b02bcb93843fcd6fb497e73c3f5f09"
+    }
+  ],
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19044-SP0",
+  "package_versions": {
+    "numpy": "2.4.2",
+    "rasterio": "1.4.4",
+    "pyproj": "3.7.2",
+    "shapely": "2.1.2",
+    "requests": "2.34.2"
+  },
+  "command": [
+    "python",
+    "PIPELINES/run_atlas_attribute.py",
+    "--attribute",
+    "ele_mt_sav",
+    "--pilot",
+    "pskem"
+  ],
+  "source_lock": "source-lock.json",
+  "source_lock_sha256": "c3dd6d3828a5a82ac3d87dd6e00c84783c888c4ecfadb7258698786d4e548b56",
+  "inputs": {
+    "pilot_ids": [
+      "4120380180",
+      "4120380350",
+      "4120382970",
+      "4120383080",
+      "4120384960",
+      "4120384970",
+      "4120385070",
+      "4120385190",
+      "4120386210",
+      "4120386360",
+      "4121281950",
+      "4121282240",
+      "4121282310",
+      "4121283450",
+      "4121285900",
+      "4121286770",
+      "4121287290",
+      "4121287810",
+      "4121288140",
+      "4121289400"
+    ],
+    "geometry_sha256": "d201c7266af02b4bb5c9b18b7aa09dbb42e2aeec6708b41387c5ef3c87e80e61",
+    "reference_sha256": "625b85ee8d9496c7f5d028ae836c3d82835fcb15dc6ef7d1485c2390ef553d4d",
+    "tolerance_sha256": "81e3ec6fb5186fd502c7bec9bfe3f31886d3d27e49a1de54607a1f25b43f3dda"
+  },
+  "downloads": [
+    {
+      "name": "EarthEnv-DEM90_N40E070",
+      "url": "https://de.cyverse.org/anon-files/iplant/home/shared/earthenv_dem_data/EarthEnv-DEM90/EarthEnv-DEM90_N40E070.tar.gz",
+      "path": "F:\\uzgeodata\\GEODATA\\atlas_sources\\earthenv_dem90_v1\\EarthEnv-DEM90_N40E070.tar.gz",
+      "sha256": "b9fd8644dd67b7794193ac65094e8d51d17d85a46b54ac1977d6a99bef353e6e",
+      "bytes": 34328445,
+      "cache_hit": true,
+      "wall_seconds": 0.03231060001417063,
+      "south": 40,
+      "west": 70
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "pilot-basins.geojson",
+      "sha256": "d201c7266af02b4bb5c9b18b7aa09dbb42e2aeec6708b41387c5ef3c87e80e61"
+    },
+    {
+      "path": "reference-values.json",
+      "sha256": "625b85ee8d9496c7f5d028ae836c3d82835fcb15dc6ef7d1485c2390ef553d4d"
+    },
+    {
+      "path": "tolerance.json",
+      "sha256": "81e3ec6fb5186fd502c7bec9bfe3f31886d3d27e49a1de54607a1f25b43f3dda"
+    },
+    {
+      "path": "observations.csv",
+      "sha256": "cf03e5bce8651b421abf5158a17fe6170965437b25ae6d7df77ff109c0d7418e"
+    },
+    {
+      "path": "comparison.json",
+      "sha256": "2634521e7f3c7fb8507f15e421c92b71b6c260ef32b738d9c828071e8bde4233"
+    },
+    {
+      "path": "requirements.freeze.txt",
+      "sha256": "e1489b1da9aadf33f00903b816707ed0a1496aaf98d68a96b1a98cb1932f18d4"
+    }
+  ],
+  "prepared_rasters": [
+    {
+      "path": "EarthEnv-DEM90_N40E070-15s-mean.tif",
+      "sha256": "5238ae11fe4d51bff482551c35080a39eb3708686d178ad8acc7fd46ea0f7e4c"
+    }
+  ],
+  "timing": "timing.json",
+  "log": "processing.jsonl",
+  "scientific_status": "candidate_not_independently_reproduced"
+}

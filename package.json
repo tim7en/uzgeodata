@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "node server.mjs",
-    "prebuild": "npm run cases:publish",
+    "prebuild": "npm run atlas:publish && npm run cases:publish",
     "build": "vite build",
     "cases:publish": "python PIPELINES/build_pskem_model_review.py && python PIPELINES/build_study_landing.py && python PIPELINES/build_pskem_model_figures.py && python PIPELINES/build_case_study_highlights.py && python PIPELINES/verify_case_study_reproduction.py && python PIPELINES/build_case_study_package.py && python PIPELINES/build_tidy_downloads.py",
     "cases:model-review": "python PIPELINES/build_pskem_model_review.py",
@@ -111,7 +111,11 @@
     "cases:update": "python PIPELINES/update_chirchik_studies.py",
     "cases:reproduce": "python PIPELINES/verify_case_study_reproduction.py",
     "cases:package": "python PIPELINES/build_case_study_package.py",
-    "cases:tidy": "python PIPELINES/build_tidy_downloads.py"
+    "cases:tidy": "python PIPELINES/build_tidy_downloads.py",
+    "atlas:publish": "python PIPELINES/build_atlas_roadmap.py",
+    "predev": "npm run atlas:publish",
+    "atlas:attribute": "python PIPELINES/run_atlas_attribute.py",
+    "atlas:pskem": "python PIPELINES/update_pskem_atlas.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.1",

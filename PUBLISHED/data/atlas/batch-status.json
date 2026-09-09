@@ -1,0 +1,337 @@
+{
+  "run_id": "pskem-all281-20260909T173021971104Z",
+  "status": "complete_with_pending_reproduction",
+  "started_at": "2026-09-09T17:30:21.972+00:00",
+  "updated_at": "2026-09-09T17:33:19.048+00:00",
+  "wall_seconds": 177.07622119999724,
+  "cpu_seconds": 10.09375,
+  "stages": [
+    {
+      "name": "original_reference_and_pilot_validation",
+      "started_at": "2026-09-09T17:30:22.028+00:00",
+      "status": "complete",
+      "wall_seconds": 1.4770647999830544,
+      "cpu_seconds": 1.3125
+    },
+    {
+      "name": "source_and_code_provenance",
+      "started_at": "2026-09-09T17:30:23.538+00:00",
+      "status": "complete",
+      "wall_seconds": 160.20142040000064,
+      "cpu_seconds": 5.390625
+    },
+    {
+      "name": "elevation_source_preparation",
+      "started_at": "2026-09-09T17:33:03.748+00:00",
+      "status": "complete",
+      "wall_seconds": 3.896235699998215,
+      "cpu_seconds": 1.09375
+    },
+    {
+      "name": "elevation_attributes_one_by_one",
+      "started_at": "2026-09-09T17:33:07.652+00:00",
+      "status": "complete",
+      "wall_seconds": 0.48898940000799485,
+      "cpu_seconds": 0.453125
+    },
+    {
+      "name": "worldclim_source_preparation",
+      "started_at": "2026-09-09T17:33:08.150+00:00",
+      "status": "complete",
+      "wall_seconds": 10.156014299980598,
+      "cpu_seconds": 1.578125
+    },
+    {
+      "name": "worldclim_attributes_one_by_one",
+      "started_at": "2026-09-09T17:33:18.317+00:00",
+      "status": "complete",
+      "wall_seconds": 0.4550759000121616,
+      "cpu_seconds": 0.140625
+    },
+    {
+      "name": "all_281_attribute_audit_and_export",
+      "started_at": "2026-09-09T17:33:18.779+00:00",
+      "status": "complete",
+      "wall_seconds": 0.25938309999764897,
+      "cpu_seconds": 0.125
+    }
+  ],
+  "active_stage": null,
+  "events": [
+    {
+      "at": "2026-09-09T17:30:22.028+00:00",
+      "message": "START original_reference_and_pilot_validation"
+    },
+    {
+      "at": "2026-09-09T17:30:23.488+00:00",
+      "message": "Selected exactly 20 Pskem units and all 281 original attributes; upstream closure checked"
+    },
+    {
+      "at": "2026-09-09T17:30:23.506+00:00",
+      "message": "END original_reference_and_pilot_validation: 1.477s"
+    },
+    {
+      "at": "2026-09-09T17:30:23.538+00:00",
+      "message": "START source_and_code_provenance"
+    },
+    {
+      "at": "2026-09-09T17:33:03.739+00:00",
+      "message": "END source_and_code_provenance: 160.201s"
+    },
+    {
+      "at": "2026-09-09T17:33:03.748+00:00",
+      "message": "START elevation_source_preparation"
+    },
+    {
+      "at": "2026-09-09T17:33:03.873+00:00",
+      "message": "Verified cache EarthEnv-DEM90_N40E070: 34.3 MB in 0.03s"
+    },
+    {
+      "at": "2026-09-09T17:33:07.645+00:00",
+      "message": "END elevation_source_preparation: 3.896s"
+    },
+    {
+      "at": "2026-09-09T17:33:07.652+00:00",
+      "message": "START elevation_attributes_one_by_one"
+    },
+    {
+      "at": "2026-09-09T17:33:07.777+00:00",
+      "message": "ele_mt_sav: 15/20 within tolerance",
+      "attribute": "ele_mt_sav",
+      "attribute_wall_seconds": 0.1089380000194069
+    },
+    {
+      "at": "2026-09-09T17:33:07.902+00:00",
+      "message": "ele_mt_smn: 1/20 within tolerance",
+      "attribute": "ele_mt_smn",
+      "attribute_wall_seconds": 0.1163704999780748
+    },
+    {
+      "at": "2026-09-09T17:33:08.018+00:00",
+      "message": "ele_mt_smx: 0/20 within tolerance",
+      "attribute": "ele_mt_smx",
+      "attribute_wall_seconds": 0.10861980001209304
+    },
+    {
+      "at": "2026-09-09T17:33:08.133+00:00",
+      "message": "ele_mt_uav: 19/20 within tolerance",
+      "attribute": "ele_mt_uav",
+      "attribute_wall_seconds": 0.10880519999773242
+    },
+    {
+      "at": "2026-09-09T17:33:08.141+00:00",
+      "message": "END elevation_attributes_one_by_one: 0.489s"
+    },
+    {
+      "at": "2026-09-09T17:33:08.150+00:00",
+      "message": "START worldclim_source_preparation"
+    },
+    {
+      "at": "2026-09-09T17:33:18.267+00:00",
+      "message": "Downloaded masked WorldClim V1 subset: 323,832 bytes"
+    },
+    {
+      "at": "2026-09-09T17:33:18.306+00:00",
+      "message": "END worldclim_source_preparation: 10.156s"
+    },
+    {
+      "at": "2026-09-09T17:33:18.317+00:00",
+      "message": "START worldclim_attributes_one_by_one"
+    },
+    {
+      "at": "2026-09-09T17:33:18.329+00:00",
+      "message": "pre_mm_s01: 20/20 within tolerance",
+      "attribute": "pre_mm_s01",
+      "attribute_wall_seconds": 0.003780600003665313
+    },
+    {
+      "at": "2026-09-09T17:33:18.341+00:00",
+      "message": "pre_mm_s02: 20/20 within tolerance",
+      "attribute": "pre_mm_s02",
+      "attribute_wall_seconds": 0.0037341999995987862
+    },
+    {
+      "at": "2026-09-09T17:33:18.353+00:00",
+      "message": "pre_mm_s03: 20/20 within tolerance",
+      "attribute": "pre_mm_s03",
+      "attribute_wall_seconds": 0.0037410000222735107
+    },
+    {
+      "at": "2026-09-09T17:33:18.365+00:00",
+      "message": "pre_mm_s04: 20/20 within tolerance",
+      "attribute": "pre_mm_s04",
+      "attribute_wall_seconds": 0.0037477999867405742
+    },
+    {
+      "at": "2026-09-09T17:33:18.378+00:00",
+      "message": "pre_mm_s05: 20/20 within tolerance",
+      "attribute": "pre_mm_s05",
+      "attribute_wall_seconds": 0.0037118000036571175
+    },
+    {
+      "at": "2026-09-09T17:33:18.392+00:00",
+      "message": "pre_mm_s06: 20/20 within tolerance",
+      "attribute": "pre_mm_s06",
+      "attribute_wall_seconds": 0.0037330999912228435
+    },
+    {
+      "at": "2026-09-09T17:33:18.404+00:00",
+      "message": "pre_mm_s07: 20/20 within tolerance",
+      "attribute": "pre_mm_s07",
+      "attribute_wall_seconds": 0.0037493999989237636
+    },
+    {
+      "at": "2026-09-09T17:33:18.417+00:00",
+      "message": "pre_mm_s08: 20/20 within tolerance",
+      "attribute": "pre_mm_s08",
+      "attribute_wall_seconds": 0.0037174999888520688
+    },
+    {
+      "at": "2026-09-09T17:33:18.430+00:00",
+      "message": "pre_mm_s09: 20/20 within tolerance",
+      "attribute": "pre_mm_s09",
+      "attribute_wall_seconds": 0.0037136999890208244
+    },
+    {
+      "at": "2026-09-09T17:33:18.443+00:00",
+      "message": "pre_mm_s10: 20/20 within tolerance",
+      "attribute": "pre_mm_s10",
+      "attribute_wall_seconds": 0.003722099994774908
+    },
+    {
+      "at": "2026-09-09T17:33:18.456+00:00",
+      "message": "pre_mm_s11: 20/20 within tolerance",
+      "attribute": "pre_mm_s11",
+      "attribute_wall_seconds": 0.0037444000190589577
+    },
+    {
+      "at": "2026-09-09T17:33:18.475+00:00",
+      "message": "pre_mm_s12: 20/20 within tolerance",
+      "attribute": "pre_mm_s12",
+      "attribute_wall_seconds": 0.0037302999990060925
+    },
+    {
+      "at": "2026-09-09T17:33:18.488+00:00",
+      "message": "pre_mm_syr: 20/20 within tolerance",
+      "attribute": "pre_mm_syr",
+      "attribute_wall_seconds": 0.003743000008398667
+    },
+    {
+      "at": "2026-09-09T17:33:18.508+00:00",
+      "message": "pre_mm_uyr: 20/20 within tolerance",
+      "attribute": "pre_mm_uyr",
+      "attribute_wall_seconds": 0.00379590000375174
+    },
+    {
+      "at": "2026-09-09T17:33:18.522+00:00",
+      "message": "tmp_dc_s01: 20/20 within tolerance",
+      "attribute": "tmp_dc_s01",
+      "attribute_wall_seconds": 0.0037213999894447625
+    },
+    {
+      "at": "2026-09-09T17:33:18.533+00:00",
+      "message": "tmp_dc_s02: 20/20 within tolerance",
+      "attribute": "tmp_dc_s02",
+      "attribute_wall_seconds": 0.0037094999861437827
+    },
+    {
+      "at": "2026-09-09T17:33:18.564+00:00",
+      "message": "tmp_dc_s03: 20/20 within tolerance",
+      "attribute": "tmp_dc_s03",
+      "attribute_wall_seconds": 0.0037240000092424452
+    },
+    {
+      "at": "2026-09-09T17:33:18.577+00:00",
+      "message": "tmp_dc_s04: 20/20 within tolerance",
+      "attribute": "tmp_dc_s04",
+      "attribute_wall_seconds": 0.003753500001039356
+    },
+    {
+      "at": "2026-09-09T17:33:18.596+00:00",
+      "message": "tmp_dc_s05: 20/20 within tolerance",
+      "attribute": "tmp_dc_s05",
+      "attribute_wall_seconds": 0.003728899988345802
+    },
+    {
+      "at": "2026-09-09T17:33:18.611+00:00",
+      "message": "tmp_dc_s06: 20/20 within tolerance",
+      "attribute": "tmp_dc_s06",
+      "attribute_wall_seconds": 0.003715700004249811
+    },
+    {
+      "at": "2026-09-09T17:33:18.623+00:00",
+      "message": "tmp_dc_s07: 20/20 within tolerance",
+      "attribute": "tmp_dc_s07",
+      "attribute_wall_seconds": 0.003717599989613518
+    },
+    {
+      "at": "2026-09-09T17:33:18.653+00:00",
+      "message": "tmp_dc_s08: 20/20 within tolerance",
+      "attribute": "tmp_dc_s08",
+      "attribute_wall_seconds": 0.0037437999853864312
+    },
+    {
+      "at": "2026-09-09T17:33:18.667+00:00",
+      "message": "tmp_dc_s09: 20/20 within tolerance",
+      "attribute": "tmp_dc_s09",
+      "attribute_wall_seconds": 0.0037662999820895493
+    },
+    {
+      "at": "2026-09-09T17:33:18.679+00:00",
+      "message": "tmp_dc_s10: 20/20 within tolerance",
+      "attribute": "tmp_dc_s10",
+      "attribute_wall_seconds": 0.0037358000117819756
+    },
+    {
+      "at": "2026-09-09T17:33:18.693+00:00",
+      "message": "tmp_dc_s11: 20/20 within tolerance",
+      "attribute": "tmp_dc_s11",
+      "attribute_wall_seconds": 0.0037256000214256346
+    },
+    {
+      "at": "2026-09-09T17:33:18.705+00:00",
+      "message": "tmp_dc_s12: 20/20 within tolerance",
+      "attribute": "tmp_dc_s12",
+      "attribute_wall_seconds": 0.003712399979121983
+    },
+    {
+      "at": "2026-09-09T17:33:18.717+00:00",
+      "message": "tmp_dc_smn: 20/20 within tolerance",
+      "attribute": "tmp_dc_smn",
+      "attribute_wall_seconds": 0.003724899986991659
+    },
+    {
+      "at": "2026-09-09T17:33:18.729+00:00",
+      "message": "tmp_dc_smx: 20/20 within tolerance",
+      "attribute": "tmp_dc_smx",
+      "attribute_wall_seconds": 0.0037484000204131007
+    },
+    {
+      "at": "2026-09-09T17:33:18.741+00:00",
+      "message": "tmp_dc_syr: 20/20 within tolerance",
+      "attribute": "tmp_dc_syr",
+      "attribute_wall_seconds": 0.0037222000246401876
+    },
+    {
+      "at": "2026-09-09T17:33:18.762+00:00",
+      "message": "tmp_dc_uyr: 20/20 within tolerance",
+      "attribute": "tmp_dc_uyr",
+      "attribute_wall_seconds": 0.003784999978961423
+    },
+    {
+      "at": "2026-09-09T17:33:18.772+00:00",
+      "message": "END worldclim_attributes_one_by_one: 0.455s"
+    },
+    {
+      "at": "2026-09-09T17:33:18.779+00:00",
+      "message": "START all_281_attribute_audit_and_export"
+    },
+    {
+      "at": "2026-09-09T17:33:19.040+00:00",
+      "message": "END all_281_attribute_audit_and_export: 0.259s"
+    }
+  ],
+  "timing_note": "Wall time runs from timer initialization through scientific run-package export; excludes development, research, tests, final timing serialization and web publication. CPU is the main Python process only. Subtasks are included in their parent stage; shared preparation is not charged to every attribute.",
+  "overhead_seconds": 0.1420376000169199,
+  "finished_at": "2026-09-09T17:33:19.048+00:00"
+}

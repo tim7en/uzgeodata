@@ -1,0 +1,40 @@
+{
+  "updates": [
+    {
+      "id": "atlas-spec-20260909",
+      "date": "2026-09-09",
+      "kind": "project",
+      "phase": "specification",
+      "title": "HydroSHEDS module specification established",
+      "summary": "281 attribute recipes, 56 source-specific functions, mandatory reproduction gates and a 2000–2026 availability framework.",
+      "source": "ATLAS_MODULES/hydrosheds/METHODOLOGY.md"
+    },
+    {
+      "id": "snow-audit-20260909",
+      "date": "2026-09-09",
+      "kind": "method_review",
+      "phase": "specification",
+      "title": "Snow source identity requires review",
+      "summary": "Catalogue C09 names MYD10CM but describes and cites MYD10A1. Exact baseline reproduction must resolve this difference.",
+      "source": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=23"
+    },
+    {
+      "id": "pskem-elevation-first-20260909",
+      "date": "2026-09-09",
+      "kind": "implementation",
+      "phase": "reproduction",
+      "title": "First attribute implemented for the Pskem pilot",
+      "summary": "Mean elevation calculated for 20 native basin units. The cached run took 7.697 seconds; 15 of 20 comparisons are within the predeclared 1 m tolerance. Five mismatches remain under review.",
+      "source": "ATLAS_MODULES/hydrosheds/validation/ele_mt_sav.json"
+    },
+    {
+      "id": "pskem-all281-20260909",
+      "date": "2026-09-09",
+      "kind": "implementation",
+      "phase": "reproduction",
+      "title": "All 281 original attributes captured for Pskem; 34 candidates computed",
+      "summary": "20 Pskem units; 5,620 reference records, including 9 original missing values. All 30 WorldClim temperature/precipitation attributes pass numerical comparison for every basin; 4 elevation attributes need further method review. 247 attributes await source-method preparation. Full processing 177.076 seconds; independent reproduction remains pending.",
+      "source": "ATLAS_MODULES/hydrosheds/PSKEM_BATCH.md"
+    }
+  ]
+}
