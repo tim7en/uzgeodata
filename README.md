@@ -51,6 +51,7 @@ npm run hydrography:align-basins # publish the canonical BasinATLAS level-12 fra
 npm run headwaters:basins       # download/trace upper Amu and Syr headwater basins
 npm run basins:transboundary    # full Amu/Syr natural systems at levels 7, 10 and 12
 npm run basins:waterbodies      # lakes and reservoirs of the whole Amu/Syr systems
+npm run basins:waterbody-review # native dam/lake links, nearby candidates and name/property audit
 npm run basins:dams             # Global Dam Watch barriers, with basin/reach/lake links
 npm run basins:wastewater       # HydroWASTE plants and the dilution factor below each
 npm run rivers:condition        # GloRiC reach types and free-flowing connectivity status

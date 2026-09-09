@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Database, Scale, X } from 'lucide-react';
 import { damHeadline, damLabel, damUseLabel, formatNumber, systemMeta } from './landingModel.js';
 import './damModal.css';
@@ -15,6 +15,12 @@ import './damModal.css';
  * Shared by the landing map and the atlas explorer so the two never drift apart.
  */
 export default function DamModal({ dam, onClose }) {
+  const [review,setReview]=useState(null);
+  useEffect(()=>{
+    let active=true;setReview(null);
+    fetch('/data/hydroclimate/dam-lake-review.json').then(r=>r.ok?r.json():Promise.reject()).then(d=>{if(active)setReview(d.pairs.filter(r=>String(r.dam_id)===String(dam.dam_id)));}).catch(()=>{if(active)setReview([]);});
+    return()=>{active=false;};
+  },[dam?.dam_id]);
   useEffect(() => {
     const escape = event => { if (event.key === 'Escape') onClose(); };
     window.addEventListener('keydown', escape);
@@ -69,6 +75,15 @@ export default function DamModal({ dam, onClose }) {
         {uses.length <= 1 && dam.main_use && <p>Operated primarily for {damUseLabel(dam).toLowerCase()}.</p>}
       </section>
 
+      <section className="dam-modal-block">
+        <h3>Lake and reservoir cross-check</h3>
+        {review===null?<p>Loading the lake comparison…</p>:review.length?review.map(r=><div key={r.water_body_id}>
+          <p><strong>{r.lake_name||`HydroLAKES ${r.water_body_id} · unnamed in source`}</strong><br/>{r.link_method==='nearby_candidate'?'Nearby candidate, not a confirmed match':'Native source identifier link'} · {formatNumber(r.distance_to_polygon_m)} m from the mapped water polygon.</p>
+          <p>Mapped lake area: {formatNumber(r.lake_area_km2)} km²; GDW reservoir area: {formatNumber(r.dam_area_km2)} km². Lake storage: {formatNumber(r.lake_storage_mcm)} MCM; GDW capacity: {formatNumber(r.dam_capacity_mcm)} MCM.</p>
+          {r.spatial_check==='spatial_disagreement'&&<p><strong>Location discrepancy:</strong> the linked polygon is over 2 km away. Review the snapped dam position and catalogue association.</p>}
+        </div>):<p>No comparison is available in the current lake audit.</p>}
+        <a href="/data/hydroclimate/dam-lake-review.csv" download>Download source names, properties and match evidence ↗</a>
+      </section>
       <section className="dam-modal-block">
         <h3>Identifiers</h3>
         <dl className="dam-modal-ids">

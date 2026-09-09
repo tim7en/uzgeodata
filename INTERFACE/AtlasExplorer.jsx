@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
 import { ArrowLeft, BookOpen, Database, Droplets, Scale, Search } from 'lucide-react';
 import DamModal from './DamModal.jsx';
+import { svg } from 'leaflet';
 import {
   clusterDams, damClusterBounds, damClusterStyle,
   damLabel, damLegendStops, damStyle, damTotals,
@@ -67,6 +68,7 @@ export default function AtlasExplorer() {
   const [dams, setDams] = useState(null);
   const [showDams, setShowDams] = useState(true);
   const [dam, setDam] = useState(null);
+  const damRenderer = useMemo(() => svg({ pane: 'markerPane' }), []);
 
   useEffect(() => {
     let live = true;
@@ -223,16 +225,13 @@ export default function AtlasExplorer() {
           style={styleFor} onEachFeature={onEachFeature}/>}
         {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} interactive={false}
           style={feature => riverStyle(feature.properties)} smoothFactor={1.2}/>}
-        {/* The dams go in the marker pane, not the overlay pane the basins use:
-            Leaflet hands a canvas click to the layer added last, and the basin
-            GeoJSON remounts on every level or attribute change, so sharing a
-            renderer with it makes the dams stop responding at unpredictable
-            moments. Their own pane settles both stacking and hit order. */}
+        {/* SVG above the basin canvas keeps marker hit areas local, so blank
+            marker-pane space does not consume basin clicks after zoom changes. */}
         {damClusters.map(cluster => {
           if (cluster.count === 1) {
             const feature = cluster.members[0];
             const selected = dam?.dam_id === feature.properties.dam_id;
-            return <CircleMarker key={`dam-${feature.properties.dam_id}`} pane="markerPane"
+            return <CircleMarker key={`dam-${feature.properties.dam_id}`} pane="markerPane" renderer={damRenderer}
               center={[cluster.latitude, cluster.longitude]}
               pathOptions={damStyle(feature.properties, { selected })}
               radius={damStyle(feature.properties, { selected }).radius}
@@ -242,7 +241,7 @@ export default function AtlasExplorer() {
               </Tooltip>
             </CircleMarker>;
           }
-          return <CircleMarker key={`group-${cluster.key}`} pane="markerPane"
+          return <CircleMarker key={`group-${cluster.key}`} pane="markerPane" renderer={damRenderer}
             center={[cluster.latitude, cluster.longitude]}
             pathOptions={damClusterStyle(cluster)}
             radius={damClusterStyle(cluster).radius}

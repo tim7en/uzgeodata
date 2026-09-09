@@ -5,6 +5,10 @@ station validation, MODSNOW-style snow monitoring, elevation and land-cover
 profiles, surface-energy comparisons, physical / random-forest / Bayesian
 models, Charvak water extent and an evidence-readiness bar.
 
+The linked `sabitov-2018-review.md` reviews Sabitov's four Pskem model results,
+including the distinction between reported correlation/R², NSE and physical
+water-balance credibility. It is a literature review, not a numerical replication.
+
 Earth Engine authentication was completed and read access verified with project
 `ee-sabitovty`. Credentials remain in the local Earth Engine credential store.
 For another machine/account, run `python -m ee.cli.eecli authenticate --auth_mode=localhost`

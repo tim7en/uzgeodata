@@ -12,6 +12,7 @@
 .dam-modal-kicker{display:block;font:800 7.5px var(--display,'Barlow Condensed',sans-serif);letter-spacing:.2em;text-transform:uppercase;color:var(--system,#ff4d6d)}
 .dam-modal-card h2{margin:6px 0 0;font:700 27px/1.05 var(--display,'Barlow Condensed',sans-serif);text-transform:uppercase;color:#e8eef2}
 .dam-modal-sub{margin:5px 0 0;font-size:10px;color:#8fa3ad}
+.dam-modal a{color:#66c5e8;font-size:11px;line-height:1.7}.lake-modal .dam-modal-card{border-top-color:#159fcb}.lake-modal .dam-modal-kicker{color:#66c5e8}.lake-modal .land-lake-match{border-color:#24343e}
 
 .dam-modal-figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:1px;margin:18px 0 0;background:#1d2a31;border:1px solid #1d2a31}
 .dam-modal-figures>div{background:#0a1216;padding:9px 11px}

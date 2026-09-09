@@ -3,6 +3,8 @@ import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, 
 import { ArrowUpRight, Droplets, Layers, Search, X } from 'lucide-react';
 import DamModal from './DamModal.jsx';
 import { svg } from 'leaflet';
+import LakeLayer from './LakeLayer.jsx';
+import LakeModal from './LakeModal.jsx';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
   clusterDams, damClusterBounds, damClusterStyle,
@@ -153,6 +155,9 @@ export default function LandingMap() {
   const [dams, setDams] = useState(null);
   const [showDams, setShowDams] = useState(true);
   const [dam, setDam] = useState(null);
+  const [lakes, setLakes] = useState(null);
+  const [showLakes, setShowLakes] = useState(true);
+  const [lake, setLake] = useState(null);
   // SVG only intercepts events on its interactive paths. A marker-pane canvas
   // covers the entire map and prevents the basin canvas underneath receiving clicks.
   const damRenderer = useMemo(() => svg({ pane: 'markerPane' }), []);
@@ -198,6 +203,12 @@ export default function LandingMap() {
   }, [showDams, dams]);
 
   const damStats = useMemo(() => (dams ? damTotals(dams.features) : null), [dams]);
+  useEffect(()=>{
+    if(!showLakes||lakes)return;
+    let live=true;
+    json('/data/hydroclimate/water-bodies-reviewed.geojson').then(d=>{if(live)setLakes(d);}).catch(()=>{if(live)setShowLakes(false);});
+    return()=>{live=false;};
+  },[showLakes,lakes]);
   // Recomputed on every zoom change: this is what regroups the dams as the reader
   // moves in. A hundred points is small enough that the whole grid is rebuilt
   // rather than updated incrementally.
@@ -333,13 +344,14 @@ export default function LandingMap() {
     layer.on({
       mouseover: () => setHoveredId(id),
       mouseout: () => setHoveredId(current => (current === id ? null : current)),
-      click: () => { setSelected(feature); setDam(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
+      click: () => { setSelected(feature); setDam(null); setLake(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
     });
   }, []);
 
   const focus = feature => {
     setSelected(feature);
     setDam(null);
+    setLake(null);
     setQuery('');
     setBounds(featureBounds(feature));
   };
@@ -359,6 +371,7 @@ export default function LandingMap() {
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
+      {showLakes&&lakes&&<LakeLayer data={lakes} zoom={zoom} onSelect={properties=>{setLake(properties);setDam(null);setTableOpen(false);}}/>}
       {/* SVG markers remain above basins while allowing clicks between symbols
           to reach the basin canvas, including after a basin-level remount. */}
       {damClusters.map(cluster => {
@@ -369,7 +382,7 @@ export default function LandingMap() {
             center={[cluster.latitude, cluster.longitude]}
             pathOptions={damStyle(feature.properties, state)}
             radius={damStyle(feature.properties, state).radius}
-            eventHandlers={{ click: () => { setDam(feature.properties); setSelected(null); setTableOpen(false); } }}>
+            eventHandlers={{ click: () => { setDam(feature.properties); setLake(null); setSelected(null); setTableOpen(false); } }}>
             <Tooltip direction="top" offset={[0, -4]} opacity={1} className="land-dam-tip">
               {damLabel(feature.properties)}
             </Tooltip>
@@ -426,6 +439,11 @@ export default function LandingMap() {
           <a href={`/atlas.html?attribute=${overlay}`}>Open in the atlas explorer <ArrowUpRight size={11}/></a>
         </div>}
 
+        <div className="land-lakes">
+          <label className="land-toggle"><input type="checkbox" checked={showLakes} onChange={event=>{setShowLakes(event.target.checked);if(!event.target.checked)setLake(null);}}/><span className="land-lake-key" aria-hidden="true"><i/><i/><i/></span><span>Lakes and water surfaces</span></label>
+          {showLakes&&lakes&&<p className="land-group-note">{formatNumber(lakes.features.length)} catalogued water bodies. Blue parallel lines mark lakes and reservoir surfaces; smaller features appear as you zoom. Click a symbol or shoreline for properties and reservoir links.</p>}
+          <a className="land-water-audit" href="/data/hydroclimate/dam-lake-review.md" download>Reservoir–lake name and property audit ↗</a>
+        </div>
         <div className="land-dams">
           <label className="land-toggle">
             <input type="checkbox" checked={showDams} onChange={event => {
@@ -509,6 +527,7 @@ export default function LandingMap() {
       catalogue={catalogue} loading={loadingStore} onClose={() => setTableOpen(false)}/>}
 
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
+    {lake && <LakeModal lake={lake} onClose={()=>setLake(null)}/>}
   </main>;
 }
 
