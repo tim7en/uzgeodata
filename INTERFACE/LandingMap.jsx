@@ -371,7 +371,7 @@ export default function LandingMap() {
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
-      {showLakes&&lakes&&<LakeLayer data={lakes} zoom={zoom} onSelect={properties=>{setLake(properties);setDam(null);setTableOpen(false);}}/>}
+      {showLakes&&lakes&&<LakeLayer data={lakes} onSelect={properties=>{setLake(properties);setDam(null);setTableOpen(false);}}/>}
       {/* SVG markers remain above basins while allowing clicks between symbols
           to reach the basin canvas, including after a basin-level remount. */}
       {damClusters.map(cluster => {

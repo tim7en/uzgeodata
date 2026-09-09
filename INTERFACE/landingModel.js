@@ -456,13 +456,21 @@ export function damClusterCellSize(zoom) {
  * that dam rather than as a group, so zooming in never leaves a "1" bubble
  * sitting where the dam itself should be.
  */
-export function clusterDams(features, zoom) {
-  const cell = damClusterCellSize(zoom);
+/**
+ * The grid itself, over any features and any way of reading their position.
+ *
+ * Dams are points and carry their coordinate in the geometry; lakes are polygons
+ * and carry a separate label point in their properties. Both want exactly the
+ * same grouping behaviour, so the grid is written once and told how to find a
+ * position rather than being duplicated per layer.
+ */
+export function clusterPoints(features, zoom, positionOf, cellPixels = CLUSTER_CELL_PIXELS) {
+  const cell = damClusterCellSize(zoom) * (cellPixels / CLUSTER_CELL_PIXELS);
   const cells = new Map();
   for (const feature of features || []) {
-    const coordinates = feature.geometry?.coordinates || [];
-    const longitude = Number(coordinates[0]);
-    const latitude = Number(coordinates[1]);
+    const position = positionOf(feature) || [];
+    const longitude = Number(position[0]);
+    const latitude = Number(position[1]);
     if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) continue;
     const key = `${Math.floor(longitude / cell)}:${Math.floor(latitude / cell)}`;
     const bucket = cells.get(key) || { key, members: [], longitude: 0, latitude: 0 };
@@ -471,6 +479,20 @@ export function clusterDams(features, zoom) {
     bucket.latitude += latitude;
     cells.set(key, bucket);
   }
+  return [...cells.values()].map(bucket => ({
+    ...bucket,
+    count: bucket.members.length,
+    longitude: bucket.longitude / bucket.members.length,
+    latitude: bucket.latitude / bucket.members.length,
+  })).sort((left, right) => left.key.localeCompare(right.key));
+}
+
+/** Where a dam sits: a point feature, so straight from the geometry. */
+const damPosition = feature => feature.geometry?.coordinates;
+
+export function clusterDams(features, zoom) {
+  const cells = new Map();
+  for (const bucket of clusterPoints(features, zoom, damPosition)) cells.set(bucket.key, bucket);
 
   return [...cells.values()].map(bucket => {
     const properties = bucket.members.map(member => member.properties || {});
@@ -482,11 +504,11 @@ export function clusterDams(features, zoom) {
     ), properties[0]);
     return {
       key: bucket.key,
-      count: bucket.members.length,
+      count: bucket.count,
       // A group sits at the mean of its members, so it lands among the dams it
       // stands for rather than at a cell corner none of them occupies.
-      longitude: bucket.longitude / bucket.members.length,
-      latitude: bucket.latitude / bucket.members.length,
+      longitude: bucket.longitude,
+      latitude: bucket.latitude,
       members: bucket.members,
       storageMcm: capacities.reduce((total, value) => total + value, 0),
       withCapacity: capacities.length,
@@ -537,4 +559,110 @@ export function damClusterLabel(cluster) {
   if (cluster.count === 1) return damLabel(cluster.members[0].properties);
   const storage = cluster.storageMcm > 0 ? `, ${formatNumber(cluster.storageMcm)} MCM` : '';
   return `${cluster.count} dams${storage}`;
+}
+
+// ------------------------------------------------------ lake symbols
+
+// Lakes are drawn twice: the shoreline polygon, which is the real geometry, and
+// a symbol marking where the water body *is* when the polygon is too small to
+// see. The symbol is a locator, not a measurement, so it stays one small fixed
+// size at every zoom — scaling it by area would make it compete with the dam
+// circles, which do carry magnitude.
+const LAKE_SYMBOL_SIZE = { width: 17, height: 13 };
+
+// Lake symbols group on a tighter grid than dams. A dam bubble carries a number
+// and needs room; a lake symbol only has to stop two shorelines colliding, so a
+// smaller cell keeps more individual lakes legible before they merge.
+const LAKE_CELL_PIXELS = 34;
+
+export const lakeSymbolSize = () => ({ ...LAKE_SYMBOL_SIZE });
+
+/** Where a lake's symbol goes: a label point carried in its properties. */
+export const lakePosition = feature => [
+  Number(feature?.properties?.symbol_longitude),
+  Number(feature?.properties?.symbol_latitude),
+];
+
+/**
+ * Which lakes are worth drawing at all at this zoom.
+ *
+ * The full set is 1,393 water bodies down to 0.1 km². Drawing every one at
+ * national zoom is unreadable and slow, so the floor drops as the reader moves
+ * in and the small ponds appear only when there is room for them.
+ */
+export function lakeAreaFloor(zoom) {
+  const level = Number(zoom) || 0;
+  if (level < 7) return 10;
+  if (level < 9) return 1;
+  if (level < 11) return 0.25;
+  return 0;
+}
+
+/**
+ * Lake symbols for one zoom, grouped where they would overlap.
+ *
+ * Returns single entries and groups in one list. A group carries the largest
+ * member so the map can name the water body a reader is most likely looking for,
+ * and the count so the symbol can say how many are hidden behind it.
+ */
+export function clusterLakes(features, zoom) {
+  const floor = lakeAreaFloor(zoom);
+  const eligible = (features || []).filter(feature => {
+    const area = Number(feature?.properties?.area_km2);
+    return Number.isFinite(area) && area >= floor;
+  });
+  return clusterPoints(eligible, zoom, lakePosition, LAKE_CELL_PIXELS).map(bucket => {
+    const largest = bucket.members.reduce((best, member) => (
+      Number(member.properties?.area_km2 || 0) > Number(best.properties?.area_km2 || 0) ? member : best
+    ), bucket.members[0]);
+    return {
+      key: bucket.key,
+      count: bucket.count,
+      longitude: bucket.longitude,
+      latitude: bucket.latitude,
+      members: bucket.members,
+      largest: largest.properties,
+      areaKm2: bucket.members.reduce((total, member) => total + (Number(member.properties?.area_km2) || 0), 0),
+    };
+  });
+}
+
+/**
+ * The label a lake symbol carries.
+ *
+ * A group is named for its largest member with the rest counted, because "Charvak
+ * +3" tells a reader where they are and "4 lakes" does not.
+ */
+export function lakeClusterLabel(cluster) {
+  if (!cluster?.count) return '';
+  const name = (cluster.largest?.display_name || cluster.largest?.name || '').trim() || 'Unnamed water body';
+  return cluster.count === 1 ? name : `${name} +${cluster.count - 1}`;
+}
+
+/** Is this position inside a [[south, west], [north, east]] box? */
+export function withinBounds(position, bounds) {
+  if (!bounds) return true;
+  const [longitude, latitude] = position || [];
+  if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) return false;
+  const [[south, west], [north, east]] = bounds;
+  return latitude >= south && latitude <= north && longitude >= west && longitude <= east;
+}
+
+/**
+ * Which lake symbols get a name painted on the map.
+ *
+ * Names are what make the layer readable without pointing at it, but 1,393 of
+ * them would bury the map and every one is a DOM node. So the choice is made
+ * against what is actually on screen: the largest water bodies in view, above a
+ * floor that falls as the reader zooms in, and never more than `limit` of them.
+ * Zooming into a quiet valley therefore names its small lakes, while the
+ * national view names only the ones worth naming at that scale.
+ */
+export function labelledLakes(clusters, zoom, limit = 40) {
+  const level = Number(zoom) || 0;
+  const floor = level < 7 ? 50 : level < 9 ? 5 : level < 11 ? 0.5 : 0;
+  const eligible = (clusters || []).filter(cluster => (Number(cluster?.largest?.area_km2) || 0) >= floor);
+  const ranked = [...eligible].sort((left, right) =>
+    (Number(right.largest?.area_km2) || 0) - (Number(left.largest?.area_km2) || 0));
+  return new Set(ranked.slice(0, limit).map(cluster => cluster.key));
 }
