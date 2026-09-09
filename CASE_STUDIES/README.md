@@ -5,9 +5,22 @@ station validation, MODSNOW-style snow monitoring, elevation and land-cover
 profiles, surface-energy comparisons, physical / random-forest / Bayesian
 models, Charvak water extent and an evidence-readiness bar.
 
-The linked `sabitov-2018-review.md` reviews Sabitov's four Pskem model results,
-including the distinction between reported correlation/R², NSE and physical
-water-balance credibility. It is a literature review, not a numerical replication.
+The linked `sabitov-2018-review.md` now audits the full local thesis and documents
+four executed daily adaptations, dimensional corrections, held-out results and
+missing physical evidence. The “Sabitov methodology” section includes model
+comparisons, runoff pathways, flow duration, satellite checks and climate stress
+tests. These are transparent adaptations, not numerical replication.
+
+`npm run cases:sabitov:inputs` retrieves daily ERA5 forcing for 2000–2017 and
+Pskem-specific GLIMS outlines. `npm run cases:sabitov` rebuilds the four models,
+six-page PDF atlas, result workbook and full review offline. Extend forcing with
+`python PIPELINES/extract_sabitov_inputs.py --end YEAR`; this daily experiment
+defaults to the historical validation period, separately from latest-month updates.
+
+Independent land-cover samples belong in `landcover-reference-labels.csv`. Its
+empty starting state means no accuracy claim is available. Use unique sample IDs,
+dated independent sources and aligned mapped/reference class definitions.
+Sample accuracy is not an area-adjusted estimate for a stratified survey.
 
 Earth Engine authentication was completed and read access verified with project
 `ee-sabitovty`. Credentials remain in the local Earth Engine credential store.
@@ -25,6 +38,7 @@ npm run cases:update
 
 # Scientific guards and application build
 npm run test:cases
+npm run test:sabitov
 npm run build
 ```
 
@@ -52,6 +66,11 @@ Generated evidence is under `PUBLISHED/data/case-studies/`:
 - `chirchik-scientific-atlas.pdf`: ten scientific figures, including the study map;
   corresponding PNGs are adjacent.
 - `chirchik-analysis.xlsx`: supporting chart data, model scores and sources.
+- `sabitov-2018-review.md`: full-thesis audit, implemented methods and caveats.
+- `sabitov-methods.json`: daily scores, parameters, glacier depletion, sensitivity,
+  satellite checks, scenarios, gap matrix and source hashes.
+- `sabitov-methods-atlas.pdf` and `sabitov-methods-analysis.xlsx`: six additional
+  scientific figures and daily/summary chart data.
 - `advanced-validation.json`: corrections, uncertainty, paired records, strict
   seasonal-flow experiments and reservoir sensor checks.
 - `environment-modelling.json`: profiles, model results, predictive intervals,

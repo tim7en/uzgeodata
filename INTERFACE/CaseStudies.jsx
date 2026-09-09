@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AdvancedCaseStudy, { Readiness } from './AdvancedCaseStudy';
 import CaseStudyMap from './CaseStudyMap';
+import SabitovCaseStudy from './SabitovCaseStudy';
 import { ArrowUpRight, Download, Droplets, ArrowRight } from 'lucide-react';
 
 const BASE = '/data/case-studies/';
@@ -149,9 +150,9 @@ export default function CaseStudies() {
         <aside className="cs-scope"><span className="cs-eyebrow">THE STARTING POINT</span><h2>Pskem first.</h2><p>{data.scope}</p><div><strong>{s.joint_months}</strong><span>joint climate–flow months<br />{s.joint_start} to {s.joint_end}</span></div><p className="cs-note">Historical validation, satellite checks and three modelling approaches are available. Operational readiness remains limited by gauge location and the age of discharge observations.</p></aside>
       </section>
       <div className="cs-top-stats"><div><strong>3</strong><span>Meteorological stations</span></div><div><strong>2001–2017</strong><span>Pskem discharge record</span></div><div><strong>2010–2024</strong><span>Pskem climate record</span></div><div><strong>6</strong><span>Documented study protocols</span></div></div>
-      <nav className="cs-jump-nav" aria-label="Study sections"><a href="#station-evidence">Station validation</a><a href="#snow-evidence">Snow</a><a href="#elevation-evidence">Elevation & land cover</a><a href="#modelling-evidence">Model comparison</a><a href="#portfolio">Research protocols</a></nav>
+      <nav className="cs-jump-nav" aria-label="Study sections"><a href="#station-evidence">Station validation</a><a href="#snow-evidence">Snow</a><a href="#elevation-evidence">Elevation & land cover</a><a href="#modelling-evidence">Model comparison</a><a href="#sabitov-methods">Sabitov methodology</a><a href="#portfolio">Research protocols</a></nav>
       <Readiness environment={environment}/><CaseStudyMap data={data} geometry={geometry} environment={environment}/>
-      <StationEvidence data={data} /><DischargeEvidence data={data} /><AdvancedCaseStudy advanced={advanced} environment={environment} Chart={Chart}/><StudyPortfolio data={data} />
+      <StationEvidence data={data} /><DischargeEvidence data={data} /><AdvancedCaseStudy advanced={advanced} environment={environment} Chart={Chart}/><SabitovCaseStudy Chart={Chart}/><StudyPortfolio data={data} />
       <section className="cs-downloads cs-panel"><div><span className="cs-eyebrow">04 / REPRODUCIBLE EVIDENCE</span><h2>Take the analysis with you.</h2><p>Existing station URIs, basin identifiers, source hashes and processing rules travel with the results.</p></div><div>{[['chirchik-report.md', 'Full case-study report'], ['pskem-observation-evidence.pdf', 'Observation figure · vector PDF'], ['pskem-observation-evidence.png', 'Observation figure · PNG'], ['chirchik.json', 'All results & protocols · JSON'], ['chirchik.manifest.json', 'Source hashes & QC policy'], ['discharge-audit.csv', 'Discharge quality audit · CSV'], ['station-annual.csv', 'Complete-year climate summaries · CSV'], ['joint-climate-discharge.csv', 'Matched climate–flow months · CSV']].map(([file, label]) => <a key={file} href={BASE + file} download>{label}<Download size={15} /></a>)}</div></section>
     </main><footer>UZGEODATA / CHIRCHIK CASE STUDIES <span>Analysis v{data.version} · Built {data.generated_at.slice(0, 10)} · Observations retain their original dates</span></footer>
   </div>;

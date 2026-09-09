@@ -22,10 +22,13 @@ def main():
             ('Charvak water extent',['extract_chirchik_remote.py','--task','reservoir']),
             ('Charvak sensor check',['extract_chirchik_remote.py','--task','reservoir-check']),
             ('Terrain and land cover',['extract_chirchik_environment.py','--task','profiles']),
-            ('Latest energy inputs',['extract_chirchik_environment.py','--task','energy','--end',str(year)])]
+            ('Latest energy inputs',['extract_chirchik_environment.py','--task','energy','--end',str(year)]),
+            ('Thesis daily forcing and glacier zones',['extract_sabitov_inputs.py'])]
     tasks += [('Historical verification',['analyse_chirchik_validation.py']),('Observation page',['build_chirchik_case_studies.py']),
         ('Physical, forest and Bayesian models',['model_chirchik_water.py']),('Observation figure',['plot_chirchik_case_studies.py']),
-        ('Reports, figure atlas and workbook',['report_chirchik_environment.py'])]
+        ('Reports, figure atlas and workbook',['report_chirchik_environment.py']),
+        ('Sabitov daily model adaptations',['analyse_sabitov_methods.py']),
+        ('Thesis review and process checks',['report_sabitov_methods.py'])]
     status={'started_at':datetime.now(timezone.utc).isoformat(),'mode':'offline' if args.offline else 'refresh','status':'running','completed':0,'total':len(tasks),'steps':[]}
     try:
         for label,command in tasks:

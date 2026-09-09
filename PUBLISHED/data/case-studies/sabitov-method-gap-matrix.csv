@@ -1,0 +1,17 @@
+method,thesis_pages,status,implementation
+Daily forcing and time step,"pp.15,24–35",Implemented,"6,575 actual daily ERA5 values, 2000–2017; daily forcing is not inferred from monthly observations."
+Four structural models,Table 2-1; pp.24–35,Adapted,Lumped/distributed stores with and without glacier and CN processes; positive ET retained in all structures.
+Three elevation zones and seasonal lapse rates,"pp.22,26,34",Adapted,Exact 2300/3300 m thresholds; open outer bounds retain all terrain; basin ERA5 mean conserved when temperature is redistributed.
+"Independent snow, soil and groundwater storage",Eqs.17–22,Implemented,"Daily conservation checks, field-capacity recharge and previous-day groundwater recession; release is 1 minus retention."
+Five-day antecedent moisture and SCS runoff,Eqs.13–16,Adapted,"Prior rain only; dormant/growing thresholds in mm; daily-reset and event-accumulated variants, corrected SI retention."
+Hamon PET and water-limited AET,Eqs.1–2; p.17,Adapted,"Explicit vapour-pressure units; compare corrected Hamon, literal printed equation and ERA5 potential evaporation. No forced 250 mm annual ET."
+Glacier melt and area,"Eqs.10–11; pp.28,34",Adapted,"Pskem-specific dated GLIMS inventory, finite ice reservoir, snow shielding; degree-day melt plus annual-cubic sensitivity."
+Calibration and physical plausibility,p.36; Table 2-4,Implemented,"Fixed early calibration/later holdout; daily and monthly scores, seasonal baseline, budget/convergence and boundary parameters disclosed."
+Flow duration and specific runoff,"pp.20,38–41",Implemented,"Q50/Q90/Q95, Q90/Q50 proxy and area-normalized discharge; no unsupported recurrence-frequency extrapolation."
+Monthly flow trends,pp.40–42,Implemented,Kendall/Sen on 2001–2017 monthly flows with Holm correction; exploratory because serial correlation and short record remain.
+Climate perturbation experiments,Chapter 3; pp.58–60,Adapted,Warming/wetting and warming/drying stress tests with monthly timing and ice-area sensitivity. No date-specific 2050 forecast.
+Satellite process checks,Extension beyond thesis,Implemented,Held-out MODIS snow and MOD16 ET comparisons retain coverage filters and different spatial supports; not independent field truth.
+Land-cover confusion matrix,p.35; Table 2-3,Awaiting reference labels,Executable user/producer/overall accuracy evaluation and reference table supplied. No invented labels or transferred 82% accuracy.
+Soils and spatial curve numbers,pp.30–31,Awaiting soil evidence,CN50/CN90 remain thesis assumptions with sensitivity; Esri classes alone cannot establish hydrologic soil groups.
+Tributary mass balance and local lapse validation,pp.20–22,Awaiting observations,No simultaneous Oigaing/Maydantal/Charalma discharge or thesis-period paired elevation-confirmed daily meteorology in supplied files.
+"Gauge, ice thickness and recent verification","pp.15,28",Unresolved,Two gauge coordinates audited; fixed 15/30/60 m water-equivalent ice scenarios are not measurements; discharge ends in 2017.

@@ -1,0 +1,58 @@
+{
+  "daily_asset": "ECMWF/ERA5_LAND/DAILY_AGGR",
+  "projection": {
+    "type": "Projection",
+    "crs": "EPSG:4326",
+    "transform": [
+      0.1,
+      0,
+      -180.05,
+      0,
+      -0.1,
+      90.05
+    ]
+  },
+  "start": "2000-01-01",
+  "end": "2017-12-31",
+  "rows": 6575,
+  "dem_asset": "COPERNICUS/DEM/GLO30_2024_1",
+  "zones": [
+    {
+      "zone": 0,
+      "label": "Below 2300 m",
+      "area_km2": 709.8870340902163,
+      "mean_elevation_m": 1784.0466114316232,
+      "glacier_area_km2": 0,
+      "glacier_fraction": 0.0
+    },
+    {
+      "zone": 1,
+      "label": "2300–3300 m",
+      "area_km2": 1199.5349567503315,
+      "mean_elevation_m": 2842.0713145961768,
+      "glacier_area_km2": 4.614223538864316,
+      "glacier_fraction": 0.00384667700836726
+    },
+    {
+      "zone": 2,
+      "label": "Above 3300 m",
+      "area_km2": 720.9395657284574,
+      "mean_elevation_m": 3588.881097709614,
+      "glacier_area_km2": 91.90837797199472,
+      "glacier_fraction": 0.12748416419499453
+    }
+  ],
+  "glacier_source": "GLIMS/20230607 queried directly for Pskem; latest src_date per glac_id; matching internal rock removed",
+  "glacier_outline_dates": [
+    "2000-09-23",
+    "2002-07-10",
+    "2010-08-30"
+  ],
+  "glacier_features": 452,
+  "glacier_sha256": "a7324dc715e8fd05626323827641f0a55b5d2f5e9b46de0f201073395952d8d6",
+  "catchment_digest": "c182a6c815de",
+  "retrieved_at": "2026-09-09T02:35:01.147462+00:00",
+  "temperature_method": "Basin daily ERA5 mean redistributed around DEM area-weighted mean elevation with thesis seasonal lapse rates. Preserves basin mean; does not correct ERA5 model orography or replace observed station temperature.",
+  "precipitation_method": "Uniform basin daily ERA5 depth in all zones; no unsupported precipitation-elevation gradient.",
+  "glacier_note": "Fixed dated outline scenario, not a glacier area time series. Rasterized at 30 m; overlaps unioned before area calculation."
+}
