@@ -6,7 +6,6 @@ const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov
 const MODEL_NAMES = { seasonal_climatology: 'Seasonal baseline', physical_bucket: 'Snow & soil bucket', random_forest: 'Random forest', bayesian_linear: 'Bayesian linear model', climate: 'Climate only', climate_plus_snow: 'Climate + snow', climate_plus_snow40: 'Climate + conservative snow', climate_plus_swe: 'Climate + modelled SWE' };
 
 export function Readiness({ environment }) {
-  const [selected, setSelected] = useState(4);
   const [build, setBuild] = useState(null);
   useEffect(()=>{
     let active=true;
@@ -16,18 +15,57 @@ export function Readiness({ environment }) {
   },[]);
   if (!environment) return null;
   const { readiness, freshness } = environment;
+  const blockers = readiness.steps.filter(step => step.status === 'red');
+  const open = readiness.steps.filter(step => step.status === 'amber');
+  const done = readiness.steps.filter(step => step.status === 'green');
+
+  // The eight-button stepper made every check look equally important and hid
+  // the one that actually decides the question. What a reader needs first is
+  // the blocker; the rest is a list they can read, not a control to operate.
   return <section className="cs-readiness" aria-label="Data and modelling readiness">
-    <div className="cs-section-head"><div><span className="cs-eyebrow">EVIDENCE READINESS / PUBLISHED CHECKS</span><h2>Available does not yet mean ready.</h2></div><span className={`cs-readiness-status ${readiness.overall}`}>Modelling release: {readiness.operational_ready ? 'ready' : 'blocked'}</span></div>
-    <div className="cs-process" role="group" aria-label="Readiness checks">{readiness.steps.map((step, i) => <button key={step.label} className={step.status} aria-pressed={selected === i} onClick={() => setSelected(i)}><span>{i + 1}</span><strong>{step.label}</strong><small>{step.status === 'green' ? 'Check complete' : step.status === 'amber' ? 'Limitations remain' : 'Action needed'}</small></button>)}</div>
-    <p className="cs-readiness-detail"><strong>{readiness.steps[selected].label}:</strong> {readiness.steps[selected].reason}</p>
-    <p className="cs-note">{readiness.meaning} Latest ERA5 month: <strong>{freshness.era5_latest_available}</strong>. Observed discharge still ends in 2017.</p>
-    <details><summary>Data dates and refresh progress</summary><div className="cs-table-wrap"><table><thead><tr><th>Dataset</th><th>Latest available input</th><th>Meaning</th></tr></thead><tbody>
-      <tr><td>ERA5-Land</td><td>{freshness.era5_latest_available}</td><td>Monthly forcing and unverified model continuation</td></tr>
-      {Object.entries(freshness.modis_latest_available).map(([key,value])=><tr key={key}><td>MODIS {key.toUpperCase()}</td><td>{value}</td><td>Composite start date; product coverage differs</td></tr>)}
-      <tr><td>Esri / Impact Observatory land cover</td><td>{environment.profile_metadata.landcover_years[1]}</td><td>Annual classification</td></tr><tr><td>Observed discharge</td><td>2017-12</td><td>No recent gauge verification supplied</td></tr>
-    </tbody></table></div>{build&&<p>Last pipeline run: <strong>{build.status}</strong> · {build.completed}/{build.total} processing stages complete{build.current_step?` · ${build.current_step}`:''}. {build.finished_at?`Finished ${build.finished_at.slice(0,10)}.`:''} This is processing progress; scientific readiness is shown above. Reload the page after a completed refresh to load its new results.</p>}<p>Refresh command: <code>npm run cases:update</code>. The downloaded reports retain their input hashes and original observation dates.</p></details>
+    <div className="cs-section-head">
+      <div>
+        <span className="cs-eyebrow">RELEASE GATE</span>
+        <h2>{readiness.operational_ready
+          ? 'Every stated check is complete.'
+          : `Not ready for operational use: ${blockers.length || 'a'} unresolved ${blockers.length === 1 ? 'check' : 'checks'}.`}</h2>
+      </div>
+      <span className={`cs-readiness-status ${readiness.overall}`}>
+        {done.length} complete · {open.length} with limitations · {blockers.length} blocking
+      </span>
+    </div>
+
+    {blockers.map(step => <p key={step.label} className="cs-readiness-blocker">
+      <strong>{step.label}</strong> {step.reason}
+    </p>)}
+
+    <p className="cs-note">
+      Observed discharge ends 2017-12; latest ERA5 month is <strong>{freshness.era5_latest_available}</strong>.
+      Refreshing inputs does not replace validation.
+    </p>
+
+    <details><summary>All {readiness.steps.length} checks, data dates and refresh progress</summary>
+      <div className="cs-table-wrap"><table>
+        <thead><tr><th>Check</th><th>State</th><th>What that means here</th></tr></thead>
+        <tbody>{readiness.steps.map(step => <tr key={step.label}>
+          <td>{step.label}</td>
+          <td><span className={`cs-check cs-check-${step.status}`}>{step.status === 'green' ? 'complete' : step.status === 'amber' ? 'limitations remain' : 'blocking'}</span></td>
+          <td className="cs-check-reason">{step.reason}</td>
+        </tr>)}</tbody>
+      </table></div>
+      <p className="cs-note">{readiness.meaning}</p>
+      <div className="cs-table-wrap"><table><thead><tr><th>Dataset</th><th>Latest available input</th><th>Meaning</th></tr></thead><tbody>
+        <tr><td>ERA5-Land</td><td>{freshness.era5_latest_available}</td><td>Monthly forcing and unverified model continuation</td></tr>
+        {Object.entries(freshness.modis_latest_available).map(([key,value])=><tr key={key}><td>MODIS {key.toUpperCase()}</td><td>{value}</td><td>Composite start date; product coverage differs</td></tr>)}
+        <tr><td>Esri / Impact Observatory land cover</td><td>{environment.profile_metadata.landcover_years[1]}</td><td>Annual classification</td></tr>
+        <tr><td>Observed discharge</td><td>2017-12</td><td>No recent gauge verification supplied</td></tr>
+      </tbody></table></div>
+      {build&&<p>Last pipeline run: <strong>{build.status}</strong> · {build.completed}/{build.total} processing stages complete{build.current_step?` · ${build.current_step}`:''}. {build.finished_at?`Finished ${build.finished_at.slice(0,10)}.`:''} This is processing progress; scientific readiness is above.</p>}
+      <p>Refresh command: <code>npm run cases:update</code>. The downloaded reports retain their input hashes and original observation dates.</p>
+    </details>
   </section>;
 }
+
 
 function ScoreTable({ models, annual = false }) {
   return <div className="cs-table-wrap"><table><thead><tr><th>Model</th><th>Test observations</th><th>RMSE ({annual ? 'million m³' : 'm³/s'})</th><th>Bias</th><th>NSE</th><th>KGE</th></tr></thead><tbody>{models.map(r => <tr key={r.model}><td>{MODEL_NAMES[r.model] || r.model}</td><td>{r.scores.n}</td><td>{fmt(r.scores.rmse)}</td><td>{fmt(r.scores.bias)}</td><td>{fmt(r.scores.nse,3)}</td><td>{fmt(r.scores.kge,3)}</td></tr>)}</tbody></table></div>;

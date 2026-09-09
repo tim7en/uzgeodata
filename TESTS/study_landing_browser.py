@@ -106,6 +106,50 @@ with sync_playwright() as p:
     assert page.evaluate('document.documentElement.dataset.theme')=='dark'
     page.evaluate("localStorage.removeItem('uzgeodata-theme')")
 
+
+    # The map: basemaps a reader can switch, and a default theme that follows
+    # the clock rather than always opening dark.
+    page.goto(BASE+'/',wait_until='networkidle')
+    page.locator('.land-basemap select').wait_for()
+    options=page.eval_on_selector_all('.land-basemap option','els=>els.map(e=>e.value)')
+    assert options==['map','satellite','terrain','none'],options
+    page.select_option('.land-basemap select','satellite')
+    page.wait_for_timeout(1500)
+    sources=page.eval_on_selector_all('.land-map .leaflet-tile','els=>els.map(e=>e.src)')
+    assert sources and all('World_Imagery' in src for src in sources),'satellite tiles did not load'
+    assert 'Esri' in page.inner_text('.leaflet-control-attribution'),'imagery needs its attribution'
+    page.select_option('.land-basemap select','none')
+    page.wait_for_timeout(700)
+    assert page.locator('.land-map .leaflet-tile').count()==0,'no basemap should mean no tiles'
+    page.select_option('.land-basemap select','map')
+    page.wait_for_timeout(1200)
+
+    # The hero must sit above the sidebar wash, or the title is unreadable and
+    # the theme switch is unreachable - which is how it shipped before.
+    stacking=page.evaluate('''() => {
+      const head=document.querySelector('.land-head'), panel=document.querySelector('.land-panel');
+      return {head:+getComputedStyle(head).zIndex, panel:+getComputedStyle(panel).zIndex};
+    }''')
+    assert stacking['head']>stacking['panel'],stacking
+    box=page.locator('.land-head-tools').bounding_box()
+    assert box and box['width']>0,'the theme switch and basemap picker must be visible'
+
+    for hour,expected in ((10,'light'),(22,'dark'),(4,'dark')):
+        fresh=browser.new_page(viewport={'width':1280,'height':900})
+        fresh.add_init_script(f'''
+          const Real=Date;
+          class Fixed extends Real {{
+            constructor(...a){{ super(...(a.length?a:[Real.now()])); }}
+            getHours(){{ return {hour}; }}
+          }}
+          Fixed.now=Real.now; window.Date=Fixed;
+        ''')
+        fresh.goto(BASE+'/',wait_until='domcontentloaded')
+        fresh.wait_for_timeout(900)
+        assert fresh.evaluate('document.documentElement.dataset.theme')==expected,(
+            f'{hour}:00 should open {expected}')
+        fresh.close()
+
     assert not errors,errors
     browser.close()
-print('Study directory, image cards, lazy data, history navigation, current charts, mobile layout, retry, citable study paths, the reproducibility package and both themes passed.')
+print('Study directory, image cards, lazy data, history navigation, current charts, mobile layout, retry, citable study paths, the reproducibility package, both themes, basemap layers and the clock default passed.')

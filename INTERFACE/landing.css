@@ -324,3 +324,9 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-basemap select{border:0;background:transparent;color:var(--ink);font:600 11.5px var(--display);letter-spacing:.04em;padding:3px 2px;outline:0;cursor:pointer}
 .land-basemap select option{background:var(--l-bg-1);color:var(--ink)}
 @media(max-width:900px){.land-head-top{flex-direction:column;gap:14px}.land-panel{width:100%;padding-top:24px}}
+/* The panel's translucent wash starts at the top of the map and so painted over
+   the title, which is why the hero looked faded rather than dark. The header
+   belongs above it, with a ground of its own. */
+.land-head{z-index:700}
+.land-head::before{background:linear-gradient(165deg,var(--l-bg-1) 22%,transparent 92%);opacity:.97}
+.land-panel{padding-top:222px}

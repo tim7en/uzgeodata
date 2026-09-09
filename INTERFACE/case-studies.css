@@ -336,3 +336,66 @@
 .cs-package-convention dt{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .cs-package-convention dd{margin:4px 0 0;font-size:11px}
 .cs-package pre{overflow-x:auto;background:var(--c-bg-4);border:1px solid var(--line);border-radius:4px;padding:12px;font:10px/1.7 'IBM Plex Mono',monospace}
+/* Release gate: the blocker leads, the rest is a table to read rather than a
+   row of buttons implying eight equally weighted decisions. */
+.cs-readiness-blocker{border-left:3px solid #e47b87;background:#e47b8710;padding:13px 18px;margin:16px 0 0;font-size:13px;line-height:1.75}
+.cs-readiness-blocker strong{display:block;margin-bottom:5px;color:#f0a4ac;font-size:13px}
+[data-theme="light"] .cs-readiness-blocker strong{color:#8c1f2c}
+.cs-check{display:inline-block;padding:3px 9px;border-radius:3px;font:600 10px 'IBM Plex Mono',monospace;white-space:nowrap}
+.cs-check-green{background:#70bf9b1f;color:#79c9a6}
+.cs-check-amber{background:#edb06c1f;color:#e0a45f}
+.cs-check-red{background:#e47b871f;color:#ef9aa4}
+[data-theme="light"] .cs-check-green{color:#1d6b4c}
+[data-theme="light"] .cs-check-amber{color:#7a4d09}
+[data-theme="light"] .cs-check-red{color:#8c1f2c}
+.cs-check-reason{white-space:normal;min-width:280px}
+
+/* ---------------------------------------------------------------- type scale
+   Tables and notes were set at 9-12px, which is hard to read for the length of
+   text this study carries. Everything gains roughly two points, keeping the
+   hierarchy; headings are already large enough and are left alone. */
+.cs-app table{font-size:12.5px}
+.cs-app td,.cs-app th{padding:12px 14px}
+.cs-app .cs-note{font-size:12.5px;line-height:1.85}
+.cs-panel>p{font-size:14px}
+.cs-study p,.cs-study li{font-size:13.5px}
+.cs-study .cs-question{font-size:16px}
+.cs-study h4{font-size:14px}
+.cs-app details{font-size:13.5px}
+.cs-app summary{font-size:13px;padding:7px 0}
+.cs-eyebrow{font-size:11px}
+.cs-header nav{font-size:13px}
+.cs-logo{font-size:15px}
+.cs-logo span{font-size:11px}
+.cs-section-head>p{font-size:13px}
+.cs-score-grid span{font-size:11px}
+.cs-score-grid strong{font-size:30px}
+.cs-top-stats span{font-size:12.5px}
+.cs-top-stats strong{font-size:28px}
+.cs-scope p{font-size:14px}
+.cs-scope>div span{font-size:12px}
+.cs-hero>div>p{font-size:16px}
+.cs-hero-actions{font-size:13px}
+.cs-controls label{font-size:11.5px}
+.cs-controls select{font-size:13px}
+.cs-legend{font-size:12px}
+.cs-readout{font-size:11.5px}
+.cs-evidence-strip{font-size:12.5px}
+.cs-evidence-strip strong{font-size:15px}
+.cs-status{font-size:10.5px}
+.cs-downloads a,.cs-download-links a{font-size:12.5px}
+.cs-downloads p{font-size:13px}
+.cs-study-nav button strong{font-size:13px}
+.cs-study-nav button small{font-size:11.5px}
+.cs-finding p{font-size:12.5px}
+.cs-jump-nav{font-size:13px}
+.cs-package-tabs button{font-size:13px}
+.cs-package-stages p{font-size:13px}
+.cs-package-suite li{font-size:12.5px}
+.cs-package-limits li{font-size:12.5px}
+.cs-package-verdict strong{font-size:14px}
+.cs-package-verdict span{font-size:12.5px}
+.cs-package td code,.cs-package li code,.cs-package-stage-head code{font-size:11.5px}
+.cs-package pre,.cs-package-stages pre{font-size:11.5px}
+.cs-package-convention dd{font-size:12.5px}
+.cs-app footer{font-size:11px}
