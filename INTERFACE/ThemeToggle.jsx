@@ -3,9 +3,23 @@ import { Moon, Sun } from 'lucide-react';
 
 const KEY = 'uzgeodata-theme';
 
-/** What the operating system asks for, when the reader has not chosen. */
-function preferred() {
-  return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+// Daylight hours on the reader's own clock. Outside these the page opens dark,
+// which is what someone reading in the evening wants without being asked.
+const DAY_STARTS = 7;
+const DAY_ENDS = 19;
+
+/**
+ * The theme to open with, when the reader has not chosen one.
+ *
+ * The clock decides: a page opened at nine in the morning should be light and
+ * the same page at ten at night should be dark. An operating system set
+ * explicitly to dark still wins over a bright afternoon, because that is a
+ * stated preference rather than an inference from the hour.
+ */
+export function preferred(now = new Date()) {
+  if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) return 'dark';
+  const hour = now.getHours();
+  return hour >= DAY_STARTS && hour < DAY_ENDS ? 'light' : 'dark';
 }
 
 function stored() {
@@ -63,11 +77,16 @@ export default function ThemeToggle({ className = '' }) {
 
   useEffect(() => {
     if (explicit) return undefined;
-    const query = window.matchMedia?.('(prefers-color-scheme: light)');
-    if (!query) return undefined;
-    const follow = event => setTheme(event.matches ? 'light' : 'dark');
-    query.addEventListener('change', follow);
-    return () => query.removeEventListener('change', follow);
+    const query = window.matchMedia?.('(prefers-color-scheme: dark)');
+    const follow = () => setTheme(preferred());
+    query?.addEventListener('change', follow);
+    // A page left open across dusk should not stay bright; checked sparsely
+    // because nothing here needs to be exact to the minute.
+    const timer = setInterval(follow, 10 * 60 * 1000);
+    return () => {
+      query?.removeEventListener('change', follow);
+      clearInterval(timer);
+    };
   }, [explicit]);
 
   const toggle = useCallback(() => {

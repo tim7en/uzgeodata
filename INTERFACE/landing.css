@@ -19,7 +19,7 @@
   --l-line-2:#087fb7;
   --l-surface-1:#193d5135;
   --l-surface-2:#1d3a49;
-  --l-text-1:#7e8f97;
+  --l-text-1:#819199;
   --l-text-2:#d8e1e7;
   --l-text-3:#e8eef0;
   --l-text-4:#fff;
@@ -46,26 +46,26 @@
   color-scheme:dark;
 }
 [data-theme="light"]{
-  --l-accent-1:#0d7a9b;
+  --l-accent-1:#0c6f8d;
   --l-accent-2:#b20020;
-  --l-accent-3:#001420;
-  --l-accent-4:#005060;
+  --l-accent-3:#002033;
+  --l-accent-4:#00424f;
   --l-accent-5:#ad5300;
-  --l-bg-1:#f5f8fa;
-  --l-bg-2:#eff4f6;
-  --l-bg-3:#f4f7f9;
-  --l-bg-4:#f7f9fa;
-  --l-bg-5:#f0f4f6;
-  --l-bg-6:#f4ecef;
-  --l-bg-7:#dde5e9;
-  --l-line-1:#63747d;
-  --l-line-2:#48bff7;
-  --l-surface-1:#aed2e635;
-  --l-surface-2:#b6d3e2;
-  --l-text-1:#63747b;
-  --l-text-2:#182127;
-  --l-text-3:#0f1517;
-  --l-text-4:#000000;
+  --l-bg-1:#e7ebee;
+  --l-bg-2:#e5eaec;
+  --l-bg-3:#e7ebee;
+  --l-bg-4:#e8ecee;
+  --l-bg-5:#e5eaec;
+  --l-bg-6:#ebe3e6;
+  --l-bg-7:#d0dadf;
+  --l-line-1:#5a6972;
+  --l-line-2:#6cccf9;
+  --l-surface-1:#8abedb35;
+  --l-surface-2:#92bdd3;
+  --l-text-1:#515f64;
+  --l-text-2:#141b20;
+  --l-text-3:#141c1f;
+  --l-text-4:#1a1a1a;
   --l-sheen-1:rgba(0,0,0,.015);
   --l-sheen-2:rgba(0,0,0,.02);
   --l-sheen-3:rgba(0,0,0,.03);
@@ -270,3 +270,57 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 [data-theme="light"] .theme-toggle:hover{color:var(--l-accent-1);border-color:var(--l-accent-1)}
 /* .land-head span is the page kicker; the toggle's label is not that. */
 .theme-toggle span{color:inherit;font:inherit;letter-spacing:inherit}
+
+/* ---------------------------------------------------------------- type scale
+   The panel was set at 7-11px, which is a diagram legend rather than something
+   to read. Everything moves up roughly a third, keeping the hierarchy intact,
+   and the panel widens to hold the longer lines without new wrapping. */
+.land-panel{width:392px;padding:214px 24px 24px;gap:16px}
+.land-panel.has-selection{background:linear-gradient(90deg,var(--panel) 90%,transparent)}
+.land-head span{font-size:10px;letter-spacing:.22em}
+.land-head h1{font-size:46px;margin:8px 0 10px}
+.land-head p{font-size:13px;line-height:1.65;max-width:390px}
+.land-level{font-size:10px}
+.land-loading{font-size:12.5px}
+.land-search{padding:11px 12px}
+.land-search input{font-size:12.5px}
+.land-results strong{font-size:13px}
+.land-results small{font-size:11px}
+.land-hint{font-size:11px}
+.land-systems strong{font-size:15px}
+.land-systems small{font-size:11.5px}
+.land-kicker{font-size:9.5px;letter-spacing:.18em}
+.land-detail h2{font-size:27px}
+.land-headline dt{font-size:9.5px}
+.land-headline dd{font-size:18px}
+.land-headline dd em{font-size:10px}
+.land-note{font-size:11px;line-height:1.65}
+.land-group strong{font-size:12px}
+.land-group small{font-size:10.5px}
+.land-group-note{font-size:11.5px;line-height:1.6}
+.land-category>span{font-size:9.5px}
+.land-category dt{font-size:11.5px}
+.land-category dd{font-size:12px}
+.land-overlay>label>span{font-size:9.5px;letter-spacing:.14em}
+.land-overlay select{font-size:12.5px;padding:10px 30px 10px 11px}
+.land-legend>span{font-size:10.5px}
+.land-legend em{font-size:11px}
+.land-legend a{font-size:10.5px}
+.land-deeper>span{font-size:9.5px}
+.land-deeper strong{font-size:12.5px}
+.land-toggle span{font-size:11px}
+.land-sizekey li{font-size:10px}
+.land-lake-name,.land-dam-tip{font-size:12px}
+.theme-toggle{font-size:10.5px;padding:8px 12px}
+
+/* -------------------------------------------------------- header and its tools
+   The sidebar used to start under the title, so the theme switch sat behind it.
+   The header now owns a row of its own and the panel begins below it. */
+.land-head{max-width:none;width:100%;padding:22px 26px 0;display:block}
+.land-head-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;max-width:1180px}
+.land-head-tools{display:flex;align-items:center;gap:10px;pointer-events:auto}
+.land-basemap{display:flex;align-items:center;gap:8px;border:1px solid var(--l-line-1);background:var(--l-bg-7);border-radius:4px;padding:5px 10px}
+.land-basemap>span{font:600 9.5px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.land-basemap select{border:0;background:transparent;color:var(--ink);font:600 11.5px var(--display);letter-spacing:.04em;padding:3px 2px;outline:0;cursor:pointer}
+.land-basemap select option{background:var(--l-bg-1);color:var(--ink)}
+@media(max-width:900px){.land-head-top{flex-direction:column;gap:14px}.land-panel{width:100%;padding-top:24px}}

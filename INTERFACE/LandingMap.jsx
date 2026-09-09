@@ -130,8 +130,36 @@ function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
   </div>;
 }
 
+// Basemaps a reader can switch between. Satellite answers "what is actually on
+// the ground there", terrain answers "why does the water go that way", and the
+// plain option takes the basemap away so the basin colouring stands alone.
+// Each carries the attribution its licence requires; dimming is applied only to
+// the cartographic maps, because dimming imagery destroys what it is for.
+const BASEMAPS = [
+  {
+    id: 'map', label: 'Street map',
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 19, dim: true,
+  },
+  {
+    id: 'satellite', label: 'Satellite',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Imagery &copy; Esri, Maxar, Earthstar Geographics',
+    maxZoom: 19, dim: false,
+  },
+  {
+    id: 'terrain', label: 'Terrain',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Shaded relief &copy; Esri',
+    maxZoom: 13, dim: true,
+  },
+  { id: 'none', label: 'No basemap', url: null, attribution: '', dim: false },
+];
+
 export default function LandingMap() {
   const theme = useTheme();
+  const [basemap, setBasemap] = useState('map');
   const [ladder, setLadder] = useState(null);
   const [riverLadder, setRiverLadder] = useState(null);
   const [levels, setLevels] = useState({});
@@ -357,13 +385,16 @@ export default function LandingMap() {
     if (members.length) setBounds(collectionBounds(members));
   };
 
+  const base = BASEMAPS.find(entry => entry.id === basemap) || BASEMAPS[0];
+
   if (error) return <main className="land-state"><h1>The map could not load.</h1><p>{error}</p></main>;
 
   return <main className="land">
     <MapContainer center={CENTRE} zoom={6} zoomControl={false} className="land-map" preferCanvas>
-      <TileLayer attribution="&copy; OpenStreetMap contributors" key={theme}
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-        opacity={theme === 'light' ? 0.72 : 0.42}/>
+      {base.url && <TileLayer attribution={base.attribution} key={`${base.id}-${theme}`}
+        url={base.url} maxZoom={base.maxZoom}
+        className={base.dim ? 'land-tiles-dim' : 'land-tiles-plain'}
+        opacity={base.dim ? (theme === 'light' ? 0.78 : 0.5) : 1}/>}
       {basins && <GeoJSON key={active.level} data={basins} smoothFactor={1.6}
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
@@ -404,11 +435,22 @@ export default function LandingMap() {
     </MapContainer>
 
     <header className="land-head">
-      <div>
-        <span>UZGEODATA</span>
-        <h1>Where the water forms</h1>
+      <div className="land-head-top">
+        <div>
+          <span>UZGEODATA</span>
+          <h1>Where the water forms</h1>
+        </div>
+        <div className="land-head-tools">
+          <ThemeToggle className="land-theme"/>
+          <label className="land-basemap">
+            <span>Basemap</span>
+            <select value={basemap} onChange={event => setBasemap(event.target.value)}
+              aria-label="Basemap">
+              {BASEMAPS.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}
+            </select>
+          </label>
+        </div>
       </div>
-      <ThemeToggle className="land-theme"/>
       <p>Amu Darya and Syr Darya as they drain, not as borders cut them. Pick any sub-basin to read it.</p>
     </header>
 
