@@ -1,0 +1,176 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T03:53:48+00:00",
+  "study": {
+    "id": "chirchik",
+    "label": "Chirchik and Pskem",
+    "question": "Can published products stand in for the stations, and do they predict the season?",
+    "page": "/case-studies.html"
+  },
+  "findings": [
+    {
+      "id": "product-station-agreement",
+      "kind": "validated",
+      "headline": "Gridded products track the stations, except for mountain rainfall",
+      "value": 0.978,
+      "valueLabel": "NSE",
+      "detail": "chirts-midrange air temperature mean reaches NSE 0.978 (r 0.998) against Pskem over 81 months. The weakest pairing, era5-land precipitation total at Oygaing, falls to NSE -0.633 — worse than using the mean.",
+      "comparisons": 11,
+      "figure": "/data/case-studies/pskem-climate-validation.png",
+      "evidence": "PUBLISHED/data/case-studies/advanced-validation.json"
+    },
+    {
+      "id": "seasonal-flow-skill",
+      "kind": "negative",
+      "headline": "Seasonal flow prediction fails on its own test years",
+      "value": -2.496,
+      "valueLabel": "best NSE",
+      "detail": "Every model scores below zero, meaning none beats the mean of the observations. The best, climate, reaches NSE -2.50 and cuts RMSE 27% against climatology. Adding snow or snow water equivalent makes it worse, not better, on 4 held-out years.",
+      "models": [
+        {
+          "model": "climate",
+          "nse": -2.5,
+          "rmse": 265.3,
+          "skillVsClimatology": 0.274
+        },
+        {
+          "model": "seasonal_climatology",
+          "nse": -5.64,
+          "rmse": 365.5,
+          "skillVsClimatology": 0.0
+        },
+        {
+          "model": "climate_plus_snow",
+          "nse": -6.02,
+          "rmse": 376.0,
+          "skillVsClimatology": -0.029
+        },
+        {
+          "model": "climate_plus_snow40",
+          "nse": -6.55,
+          "rmse": 389.8,
+          "skillVsClimatology": -0.066
+        },
+        {
+          "model": "climate_plus_swe",
+          "nse": -8.09,
+          "rmse": 427.7,
+          "skillVsClimatology": -0.17
+        }
+      ],
+      "trainingYears": [
+        2001,
+        2004,
+        2005,
+        2007,
+        2008,
+        2009
+      ],
+      "testYears": [
+        2011,
+        2012,
+        2014,
+        2015
+      ],
+      "figure": "/data/case-studies/pskem-model-skill.png",
+      "evidence": "PUBLISHED/data/case-studies/advanced-validation.json"
+    },
+    {
+      "id": "snow-sensor-agreement",
+      "kind": "limitation",
+      "headline": "Two snow sensors agree closely — which is not the same as being right",
+      "value": 0.996,
+      "valueLabel": "r, Aqua vs Terra",
+      "detail": "Across the below1500 m band the two overpasses agree to r 0.996 over 3,190 paired days. That measures consistency between sensors, not accuracy against ground truth, and it is published as agreement for exactly that reason.",
+      "bands": 5,
+      "figure": "/data/case-studies/pskem-snow-calendar.png",
+      "evidence": "PUBLISHED/data/case-studies/advanced-validation.json"
+    },
+    {
+      "id": "charvak-water-surface",
+      "kind": "validated",
+      "headline": "Charvak's water surface moves by more than a factor of two",
+      "value": 36.3,
+      "valueLabel": "km² maximum",
+      "detail": "Between 2020-03 and 2019-08 the mapped surface ranges from 16.0 to 36.3 km². Only 126 of 264 months clear the valid-area threshold, so the rest are withheld rather than interpolated.",
+      "eligibleMonths": 126,
+      "totalMonths": 264,
+      "figure": "/data/case-studies/charvak-water-verification.png",
+      "evidence": "PUBLISHED/data/case-studies/advanced-validation.json"
+    },
+    {
+      "id": "monthly-discharge-trend",
+      "kind": "negative",
+      "headline": "No monthly discharge trend survives multiple-test correction",
+      "value": 0,
+      "valueLabel": "significant months of 12",
+      "detail": "Sen slopes run to -3.69 m³/s per year in month 6 over 17 years, but no month stays significant once Holm correction accounts for testing all twelve. An uncorrected reading of the same table would have reported a decline.",
+      "monthsTested": 12,
+      "figure": "/data/case-studies/sabitov-flow-diagnostics.png",
+      "evidence": "PUBLISHED/data/case-studies/sabitov-monthly-trends.csv"
+    }
+  ],
+  "reports": [
+    {
+      "label": "Chirchik basin report",
+      "href": "/data/case-studies/chirchik-report.md",
+      "kind": "report"
+    },
+    {
+      "label": "Environment and energy study",
+      "href": "/data/case-studies/chirchik-environment-study.md",
+      "kind": "report"
+    },
+    {
+      "label": "Deep study",
+      "href": "/data/case-studies/chirchik-deep-study.md",
+      "kind": "report"
+    },
+    {
+      "label": "Scientific figure atlas",
+      "href": "/data/case-studies/chirchik-scientific-atlas.pdf",
+      "kind": "atlas"
+    },
+    {
+      "label": "Methods atlas",
+      "href": "/data/case-studies/sabitov-methods-atlas.pdf",
+      "kind": "atlas"
+    },
+    {
+      "label": "Analysis workbook",
+      "href": "/data/case-studies/chirchik-analysis.xlsx",
+      "kind": "workbook"
+    }
+  ],
+  "figures": [
+    "/data/case-studies/charvak-water-verification.png",
+    "/data/case-studies/pskem-climate-validation.png",
+    "/data/case-studies/pskem-elevation-overview.png",
+    "/data/case-studies/pskem-elevation-profiles.png",
+    "/data/case-studies/pskem-evapotranspiration.png",
+    "/data/case-studies/pskem-landcover-elevation.png",
+    "/data/case-studies/pskem-landcover-overview.png",
+    "/data/case-studies/pskem-model-comparison.png",
+    "/data/case-studies/pskem-model-skill.png",
+    "/data/case-studies/pskem-observation-evidence.png",
+    "/data/case-studies/pskem-snow-calendar.png",
+    "/data/case-studies/pskem-study-map.png",
+    "/data/case-studies/pskem-surface-energy.png",
+    "/data/case-studies/pskem-terrain-overview.png",
+    "/data/case-studies/sabitov-climate-stress.png",
+    "/data/case-studies/sabitov-flow-diagnostics.png",
+    "/data/case-studies/sabitov-hindcast.png",
+    "/data/case-studies/sabitov-process-checks.png",
+    "/data/case-studies/sabitov-sensitivity.png",
+    "/data/case-studies/sabitov-water-balance.png"
+  ],
+  "counts": {
+    "findings": 5,
+    "figures": 20,
+    "reports": 6
+  },
+  "qualityNotes": [
+    "Numbers are read from the published evidence, not restated: a rerun that changes the evidence changes the headline.",
+    "Negative and limiting results are published beside the positive ones."
+  ]
+}
