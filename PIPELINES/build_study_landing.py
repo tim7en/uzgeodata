@@ -125,7 +125,7 @@ def main():
         ax.set_aspect(1/math.cos(math.radians(41)))
     preview(DATA/'regional-study-preview.svg',network)
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
-        {'id':'chirchik','href':'#chirchik-study','title':'From mountain snow to river flow',
+        {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
          'image':'/data/case-studies/chirchik-study-preview.svg',
          'image_alt':'Observed and simulated monthly runoff in held-out years, arranged consecutively as a study preview.',
@@ -134,7 +134,7 @@ def main():
          'metric_label':'Monthly NSE · chronological test' if review else 'Monthly NSE · historical validation',
          'detail':f"{len(eligible)} held-out months · seasonal-volume uncertainty remains",
          'status':'Chronological model re-evaluation' if review else 'Historical model evaluation'},
-        {'id':'regional','href':'#regional-study','title':'Read the landscape through its stations',
+        {'id':'regional','href':'/case-studies/regional','title':'Read the landscape through its stations',
          'region':'REGIONAL HYDROMET NETWORK','aim':'Explore how location, elevation and mapped soil texture relate to satellite vegetation and temperature.',
          'image':'/data/case-studies/regional-study-preview.svg',
          'image_alt':'Actual meteorological station locations, coloured by terrain elevation.',

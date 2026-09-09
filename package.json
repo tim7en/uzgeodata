@@ -10,7 +10,7 @@
     "dev": "node server.mjs",
     "prebuild": "npm run cases:publish",
     "build": "vite build",
-    "cases:publish": "python PIPELINES/build_pskem_model_review.py && python PIPELINES/build_study_landing.py && python PIPELINES/build_pskem_model_figures.py && python PIPELINES/build_case_study_highlights.py",
+    "cases:publish": "python PIPELINES/build_pskem_model_review.py && python PIPELINES/build_study_landing.py && python PIPELINES/build_pskem_model_figures.py && python PIPELINES/build_case_study_highlights.py && python PIPELINES/verify_case_study_reproduction.py && python PIPELINES/build_case_study_package.py",
     "cases:model-review": "python PIPELINES/build_pskem_model_review.py",
     "start": "cross-env NODE_ENV=production node server.mjs",
     "preview": "npm run start",
@@ -108,7 +108,9 @@
     "cases:energy": "python PIPELINES/extract_chirchik_environment.py --task energy --end 2026",
     "cases:models": "python PIPELINES/model_chirchik_water.py",
     "cases:figures:validation": "python PIPELINES/report_chirchik_environment.py",
-    "cases:update": "python PIPELINES/update_chirchik_studies.py"
+    "cases:update": "python PIPELINES/update_chirchik_studies.py",
+    "cases:reproduce": "python PIPELINES/verify_case_study_reproduction.py",
+    "cases:package": "python PIPELINES/build_case_study_package.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.1",

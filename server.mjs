@@ -194,7 +194,19 @@ app.use((error, _req, res, _next) => {
   res.status(error instanceof multer.MulterError ? 400 : 500).json({ error: error.message || 'Server error' });
 });
 
+// A case study is meant to be cited, so each one answers on its own path rather
+// than only behind a fragment on the directory page. Without this the SPA
+// fallback answers /case-studies/chirchik with the front page and a 200, which
+// is worse than a 404: a shared link looks like it worked.
+const STUDY_PATHS = new Set(['/case-studies/chirchik', '/case-studies/regional']);
+const studyEntry = (req, res, next) => {
+  if (req.method !== 'GET' || !STUDY_PATHS.has(req.path)) return next();
+  req.url = '/case-studies.html';
+  return next();
+};
+
 if (process.env.NODE_ENV === 'production') {
+  app.use(studyEntry);
   app.use(express.static(path.join(root, 'dist')));
   app.use((req, res, next) => req.method === 'GET' && req.accepts('html')
     ? res.sendFile(path.join(root, 'dist', 'index.html'))
@@ -210,6 +222,7 @@ if (process.env.NODE_ENV === 'production') {
     server: { middlewareMode: true },
     appType: 'spa',
   });
+  app.use(studyEntry);
   app.use(vite.middlewares);
 }
 

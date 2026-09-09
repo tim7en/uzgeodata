@@ -1,6 +1,7 @@
 """Landing projections must use current source data and strict JSON."""
 import csv
 import hashlib
+import re
 import json
 import sys
 from pathlib import Path
@@ -48,9 +49,16 @@ def test_figures_are_regenerated_for_current_sources():
 
 
 def test_cards_have_real_images_and_distinct_destinations():
+    """Each card points at a citable path the router actually resolves."""
     directory=strict(DATA/'study-directory.json')
     cards=directory['studies']
-    assert {r['href'] for r in cards}=={'#chirchik-study','#regional-study'}
+    destinations={r['href'] for r in cards}
+    assert len(destinations)==len(cards), 'two cards cannot share a destination'
+    # The router declares the paths it knows; a card pointing anywhere else
+    # would 200 with the wrong page instead of failing visibly.
+    router=(ROOT/'INTERFACE'/'CaseStudies.jsx').read_text(encoding='utf-8')
+    known=set(re.findall(r"'(/case-studies/[a-z-]+)'", router))
+    assert destinations<=known, f'{destinations-known} is not routed'
     for card in cards:
         assert card['aim'] and card['image_alt']
         assert (ROOT/'PUBLISHED'/card['image'].lstrip('/')).exists()

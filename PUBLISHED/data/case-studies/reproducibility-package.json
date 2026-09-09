@@ -1,0 +1,723 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T12:48:11+00:00",
+  "study": {
+    "id": "chirchik-pskem",
+    "title": "Chirchik–Charvak: from observations to water-supply evidence",
+    "scope": "Pskem is the observed pilot. Chatkal, Ugam and Charvak are expansion domains requiring their own control sections and observations. Tashkent is a lowland comparison station, not an upstream forcing proxy.",
+    "url": "/case-studies/chirchik",
+    "question": "Can daily snow accumulation and melt, driven by gridded temperature and precipitation over elevation bands, reproduce observed Pskem runoff well enough to classify a water year?",
+    "decision": "Preserve the published stratified reference. Foreground the stricter chronological test; do not tune further against its exposed holdout."
+  },
+  "data": {
+    "files": [
+      {
+        "path": "PUBLISHED/data/hydroclimate/pskem-station-monthly.csv",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 338563,
+        "sha256": "76f603898a6df08d754a06b7451d4538e5f94cfc118b5ce4aff10934cedd50f4"
+      },
+      {
+        "path": "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 735817,
+        "sha256": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e"
+      },
+      {
+        "path": "PUBLISHED/data/hydroclimate/pskem-station-basin-links.csv",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 896,
+        "sha256": "c1634c6ed61bd8bd7bba130e6aa15f500acfb8e72833357d65428f5bde38eb4a"
+      },
+      {
+        "path": "PUBLISHED/data/hydroclimate/pskem-observations.manifest.json",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 5190,
+        "sha256": "b1780fd892676fd270601320730c98f66d994e49edb4ef2237fef58dd3debd3d"
+      },
+      {
+        "path": "PUBLISHED/data/hydroclimate/basin-routing-level12.csv",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 677577,
+        "sha256": "5ac04a7f060bc6c2d059c8446891933e3ebf82a2a3fe6d3205e5fb35f96f9f73"
+      },
+      {
+        "path": "PUBLISHED/data/hydroclimate/basins-level12.geojson",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 20844898,
+        "sha256": "9ce2e5fa1416719043d927fa51fc9c42be7f84eacb3dd8f0f088a3a88e21d84f"
+      },
+      {
+        "path": "PUBLISHED/data/case-studies/station-product-monthly.csv",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 300394,
+        "sha256": "4d695375ce4f66c788dbaabbd859d2247db125adea60b581e939467b5c927ef2"
+      },
+      {
+        "path": "CASE_STUDIES/chirchik-portfolio.json",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 19769,
+        "sha256": "2796870a737ad3568bf300a8fc12b438cbb726b1fa33a42eef45958d65f93d00"
+      },
+      {
+        "path": "PIPELINES/build_chirchik_case_studies.py",
+        "role": "observation record input",
+        "available": true,
+        "bytes": 27037,
+        "sha256": "852d53ac66fd01cb0bec1422b830f4140df82138366598c407b59804b1608577"
+      },
+      {
+        "path": "PUBLISHED/data/case-studies/sabitov-daily-forcing.csv",
+        "role": "daily model input",
+        "available": true,
+        "bytes": 636603,
+        "sha256": "253fbb29f3048e0b0d2739549806733d069fa03d614d5dab0cf4e89f731aa4f9"
+      },
+      {
+        "path": "PUBLISHED/data/case-studies/pskem-candidate-catchment.geojson",
+        "role": "daily model input",
+        "available": true,
+        "bytes": 117502,
+        "sha256": "0b22c06bb0fc9985969d24d5b117f174bf2cc1e169eb4804bf67bfff85be971b"
+      },
+      {
+        "path": "PUBLISHED/data/case-studies/model-audit/chronological-20260909/pskem-daily-model.json",
+        "role": "chronological re-test input",
+        "available": true,
+        "bytes": 7971,
+        "sha256": "031d50159953c4742bc26c41731642b369a55ca25beaa2daf931e20973ef68ab"
+      },
+      {
+        "path": "PUBLISHED/data/case-studies/model-audit/chronological-20260909/pskem-daily-model.csv",
+        "role": "chronological re-test input",
+        "available": true,
+        "bytes": 535969,
+        "sha256": "bbf3accca98ac5fe6a4645ed57b6530dce071f16ddc66dd60863069a280fa472"
+      },
+      {
+        "path": "PUBLISHED/data/case-studies/pskem-daily-model.json",
+        "role": "chronological re-test input",
+        "available": true,
+        "bytes": 7947,
+        "sha256": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0"
+      },
+      {
+        "path": "PUBLISHED/data/case-studies/elevation-profiles.csv",
+        "role": "chronological re-test input",
+        "available": true,
+        "bytes": 1976,
+        "sha256": "26e681cf8e769ad8921abbd9d12f4530f8cee6f6e5ccfe70a0194eff51c86156"
+      },
+      {
+        "path": "PIPELINES/build_pskem_daily_model.py",
+        "role": "chronological re-test input",
+        "available": true,
+        "bytes": 28356,
+        "sha256": "b02efe663f6bc9ff6d8d1c056a525a7d1573233ae69a0683ca1aabea1956a4b5"
+      }
+    ],
+    "remoteAssets": [
+      {
+        "asset": "COPERNICUS/DEM/GLO30_2024_1",
+        "usedAs": [
+          "dem_asset"
+        ],
+        "recordedIn": [
+          "PUBLISHED/data/case-studies/sabitov-inputs.manifest.json",
+          "PUBLISHED/data/case-studies/environment-profile.manifest.json"
+        ],
+        "retrievedAt": "2026-09-09T02:35:01.147462+00:00"
+      },
+      {
+        "asset": "ECMWF/ERA5_LAND/DAILY_AGGR",
+        "usedAs": [
+          "daily_asset"
+        ],
+        "recordedIn": [
+          "PUBLISHED/data/case-studies/sabitov-inputs.manifest.json"
+        ],
+        "retrievedAt": "2026-09-09T02:35:01.147462+00:00"
+      },
+      {
+        "asset": "GLIMS/20230607 queried directly for Pskem; latest src_date per glac_id; matching internal rock removed",
+        "usedAs": [
+          "glacier_source"
+        ],
+        "recordedIn": [
+          "PUBLISHED/data/case-studies/sabitov-inputs.manifest.json"
+        ],
+        "retrievedAt": "2026-09-09T02:35:01.147462+00:00"
+      },
+      {
+        "asset": "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS",
+        "usedAs": [
+          "landcover_asset"
+        ],
+        "recordedIn": [
+          "PUBLISHED/data/case-studies/environment-profile.manifest.json"
+        ],
+        "retrievedAt": "2026-09-08T21:18:57.062234+00:00"
+      }
+    ],
+    "griddedProducts": [
+      "era5-land",
+      "chirps-v3",
+      "chirts-midrange"
+    ],
+    "note": "Local files can be hashed and compared directly. Remote assets are named by their catalogue id and the date they were reduced; a re-run against a later collection version may differ."
+  },
+  "method": [
+    {
+      "id": "observations",
+      "title": "Read and screen the station and gauge record",
+      "purpose": "Parse the Uzhydromet workbooks, transliterate names, screen impossible calendar dates and flag suspect daily discharge.",
+      "command": "npm run stations:pskem",
+      "runs": "python PIPELINES/build_pskem_observations.py",
+      "produces": [
+        {
+          "path": "PUBLISHED/data/hydroclimate/pskem-station-monthly.csv",
+          "bytes": 338563,
+          "sha256": "76f603898a6df08d754a06b7451d4538e5f94cfc118b5ce4aff10934cedd50f4"
+        },
+        {
+          "path": "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv",
+          "bytes": 735817,
+          "sha256": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e"
+        },
+        {
+          "path": "PUBLISHED/data/hydroclimate/pskem-observations.manifest.json",
+          "bytes": 5190,
+          "sha256": "b1780fd892676fd270601320730c98f66d994e49edb4ef2237fef58dd3debd3d"
+        }
+      ]
+    },
+    {
+      "id": "forcing",
+      "title": "Extract daily catchment forcing",
+      "purpose": "Reduce reanalysis temperature and precipitation over the candidate catchment and its elevation bands.",
+      "command": "npm run cases:sabitov:inputs",
+      "runs": "python PIPELINES/extract_sabitov_inputs.py",
+      "produces": [
+        {
+          "path": "PUBLISHED/data/case-studies/sabitov-daily-forcing.csv",
+          "bytes": 636603,
+          "sha256": "253fbb29f3048e0b0d2739549806733d069fa03d614d5dab0cf4e89f731aa4f9"
+        },
+        {
+          "path": "PUBLISHED/data/case-studies/sabitov-inputs.manifest.json",
+          "bytes": 2001,
+          "sha256": "0df1f30f9210d4dfb636aff1939e59aea0768e38533e4921693b143dccc7a2ee"
+        }
+      ]
+    },
+    {
+      "id": "study",
+      "title": "Build the observation evidence record",
+      "purpose": "Join stations to basins, compute climatologies, the seasonal benchmark and the joint climate-discharge months.",
+      "command": "npm run cases:build",
+      "runs": "python PIPELINES/build_chirchik_case_studies.py",
+      "produces": [
+        {
+          "path": "PUBLISHED/data/case-studies/chirchik.json",
+          "bytes": 1129313,
+          "sha256": "ecbb7d7574cb81be3fad12d3f0afe5f866b8ff6326b3a977d85db9ffde2a1265"
+        },
+        {
+          "path": "PUBLISHED/data/case-studies/chirchik.manifest.json",
+          "bytes": 2948,
+          "sha256": "faddb709892b5d05a1106bf2c724bc59e8bb32747f729d578c3fff90d60726c1"
+        }
+      ]
+    },
+    {
+      "id": "daily-model",
+      "title": "Calibrate the daily snowmelt model",
+      "purpose": "Fit the temperature-index model over elevation bands on the stratified split, then republish the study artefacts.",
+      "command": "npm run casestudy:dailymodel",
+      "runs": "python PIPELINES/build_pskem_daily_model.py && npm run cases:publish",
+      "produces": [
+        {
+          "path": "PUBLISHED/data/case-studies/pskem-daily-model.json",
+          "bytes": 7947,
+          "sha256": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0"
+        },
+        {
+          "path": "PUBLISHED/data/case-studies/pskem-daily-model.csv",
+          "bytes": 536274,
+          "sha256": "9f4da3f3a75d6be552e78b2ff606709368711dec26a3f8769669db67faa3212a"
+        },
+        {
+          "path": "PUBLISHED/data/case-studies/pskem-daily-model.manifest.json",
+          "bytes": 452,
+          "sha256": "3546ecdea825ebd357e709e734d90a97ca6f306f630c77d3aaff71fad872ea86"
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "title": "Re-test the same structure chronologically",
+      "purpose": "Recalibrate on 2002-2010 only, score 2011-2017, and compare against a calibration-only monthly climatology on identical support.",
+      "command": "npm run cases:model-review",
+      "runs": "python PIPELINES/build_pskem_model_review.py",
+      "produces": [
+        {
+          "path": "PUBLISHED/data/case-studies/model-review.json",
+          "bytes": 59573,
+          "sha256": "2e4cbd8eb4e21fa2c937fb5adb4627a24fd1f2beb87fe2e1893c666a9af6f013"
+        }
+      ]
+    },
+    {
+      "id": "publish",
+      "title": "Derive the findings and figures the page shows",
+      "purpose": "Recompute skill from the daily series, redraw the figures and derive every finding headline from the evidence.",
+      "command": "npm run cases:publish",
+      "runs": "python PIPELINES/build_pskem_model_review.py && python PIPELINES/build_study_landing.py && python PIPELINES/build_pskem_model_figures.py && python PIPELINES/build_case_study_highlights.py && python PIPELINES/verify_case_study_reproduction.py && python PIPELINES/build_case_study_package.py",
+      "produces": [
+        {
+          "path": "PUBLISHED/data/case-studies/case-study-highlights.json",
+          "bytes": 9295,
+          "sha256": "eaa56801b037a75d1cfe11ec1c0905417b6c6ddbc02207234b0ef4acaf5ebfbc"
+        },
+        {
+          "path": "PUBLISHED/data/case-studies/current-model.json",
+          "bytes": 47119,
+          "sha256": "5eb21e6704421444089d26ef042066568b1793386e57de1d6e40bf92c0398d02"
+        },
+        {
+          "path": "PUBLISHED/data/case-studies/study-landing.manifest.json",
+          "bytes": 689,
+          "sha256": "5052394219188a1c3c5f90417e495816cdf2e033778527ed4797bc967737f24c"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "label": "Daily runoff NSE, chronological held-out years",
+      "value": 0.7228,
+      "unit": null,
+      "split": "chronological",
+      "source": "PUBLISHED/data/case-studies/model-review.json",
+      "pointer": "candidate.daily.nse"
+    },
+    {
+      "label": "Monthly mean NSE, chronological held-out years",
+      "value": 0.7595,
+      "unit": null,
+      "split": "chronological",
+      "source": "PUBLISHED/data/case-studies/model-review.json",
+      "pointer": "candidate.monthly.nse"
+    },
+    {
+      "label": "April-September volume NSE, chronological held-out years",
+      "value": -1.0386,
+      "unit": null,
+      "split": "chronological",
+      "source": "PUBLISHED/data/case-studies/model-review.json",
+      "pointer": "candidate.seasonal.nse"
+    },
+    {
+      "label": "April-September volume NSE, calibration-only climatology",
+      "value": -3.8733,
+      "unit": null,
+      "split": "chronological",
+      "source": "PUBLISHED/data/case-studies/model-review.json",
+      "pointer": "benchmark.seasonal.nse"
+    },
+    {
+      "label": "Daily runoff NSE, stratified held-out years",
+      "value": 0.8787,
+      "unit": null,
+      "split": "stratified",
+      "source": "PUBLISHED/data/case-studies/pskem-daily-model.json",
+      "pointer": "skill.validation.nse"
+    },
+    {
+      "label": "Monthly mean NSE, stratified held-out years",
+      "value": 0.9008,
+      "unit": null,
+      "split": "stratified",
+      "source": "PUBLISHED/data/case-studies/pskem-daily-model.json",
+      "pointer": "monthlySkill.validation.nse"
+    },
+    {
+      "label": "April-September volume NSE, stratified held-out years",
+      "value": 0.5917,
+      "unit": null,
+      "split": "stratified",
+      "source": "PUBLISHED/data/case-studies/pskem-daily-model.json",
+      "pointer": "seasonalValidationScores.nse"
+    },
+    {
+      "label": "Seasons within one class, chronological",
+      "value": 6,
+      "unit": "of 7 held-out years",
+      "split": "chronological",
+      "source": "PUBLISHED/data/case-studies/model-review.json",
+      "pointer": "classes.within_one"
+    },
+    {
+      "label": "Seasons in the exact class, chronological",
+      "value": 2,
+      "unit": "of 7 held-out years",
+      "split": "chronological",
+      "source": "PUBLISHED/data/case-studies/model-review.json",
+      "pointer": "classes.exact"
+    }
+  ],
+  "verification": {
+    "checks": [
+      {
+        "label": "Daily NSE recomputed from the published daily series",
+        "published": 0.8787,
+        "recomputed": 0.8787,
+        "absoluteDifference": 7e-06,
+        "tolerance": 0.005,
+        "withinTolerance": true
+      },
+      {
+        "label": "Monthly NSE recomputed from the published daily series",
+        "published": 0.9008,
+        "recomputed": 0.9008,
+        "absoluteDifference": 2.5e-05,
+        "tolerance": 0.005,
+        "withinTolerance": true
+      }
+    ],
+    "allWithinTolerance": true,
+    "rerun": {
+      "stage": "npm run cases:build",
+      "compared": "PUBLISHED/data/case-studies/chirchik.json",
+      "reproduced": true,
+      "substantiveDifferenceCount": 0,
+      "provenanceDifferenceCount": 0,
+      "substantiveDifferences": [],
+      "checkedAt": "2026-09-09T12:46:56+00:00",
+      "command": "npm run cases:reproduce"
+    },
+    "method": "Two independent checks. The scores the page shows are recomputed from the published daily CSV and compared with the model's own summary. Separately, the observation stage is rebuilt into a temporary directory and diffed field by field against what is published, so a drift between the code and the artefacts shows up as a difference rather than as silence."
+  },
+  "tests": [
+    {
+      "path": "TESTS/test_chirchik_case_studies.py",
+      "command": "npm run test:cases",
+      "purpose": "The observation record: screening, joins, climatology and benchmark.",
+      "sha256": "2a90541061b9fc84d1bad3fde33ea4d0ae74cff8aed23e271a319c8f857e6176",
+      "caseCount": 10,
+      "cases": [
+        {
+          "name": "test_actual_delivery_builds_with_provenance_and_no_invented_validation",
+          "asserts": null
+        },
+        {
+          "name": "test_benchmark_cannot_learn_from_held_out_values",
+          "asserts": null
+        },
+        {
+          "name": "test_bias_sign_and_nonperfect_scores",
+          "asserts": null
+        },
+        {
+          "name": "test_calendar_quarantine_preserves_source_and_rejects_invalid_date",
+          "asserts": null
+        },
+        {
+          "name": "test_duplicate_daily_observations_are_not_double_counted",
+          "asserts": null
+        },
+        {
+          "name": "test_leap_month_volume_and_missing_days_are_not_extrapolated",
+          "asserts": null
+        },
+        {
+          "name": "test_perfect_and_undefined_metrics",
+          "asserts": null
+        },
+        {
+          "name": "test_product_pairs_require_matching_time_units_and_support",
+          "asserts": null
+        },
+        {
+          "name": "test_suspect_values_are_screened_without_changing_raw",
+          "asserts": null
+        },
+        {
+          "name": "test_upstream_trace_excludes_downstream_and_detects_cycles",
+          "asserts": null
+        }
+      ]
+    },
+    {
+      "path": "TESTS/test_chirchik_advanced.py",
+      "command": "npm run test:cases",
+      "purpose": "The advanced validation and environment modelling artefacts.",
+      "sha256": "dfc733563fc3c5c70e8a1f21966ac0014a1a60e73579439c0a00d1239867b8d3",
+      "caseCount": 11,
+      "cases": [
+        {
+          "name": "test_antecedent_rain_excludes_current_and_future_months",
+          "asserts": null
+        },
+        {
+          "name": "test_bayesian_prediction_does_not_restandardise_on_test_distribution",
+          "asserts": null
+        },
+        {
+          "name": "test_bucket_conserves_water_across_snow_accumulation_melt_and_overflow",
+          "asserts": null
+        },
+        {
+          "name": "test_et_composite_overlap_and_partial_month_policy",
+          "asserts": null
+        },
+        {
+          "name": "test_last_year_composite_uses_actual_five_days",
+          "asserts": null
+        },
+        {
+          "name": "test_readiness_cannot_average_out_a_red_or_amber_gate",
+          "asserts": null
+        },
+        {
+          "name": "test_ridge_fit_cannot_see_held_out_responses",
+          "asserts": null
+        },
+        {
+          "name": "test_snow_calendar_retains_cloud_gaps_and_minimum_days",
+          "asserts": null
+        },
+        {
+          "name": "test_station_correction_cannot_learn_test_observations",
+          "asserts": null
+        },
+        {
+          "name": "test_station_snow_bounds_do_not_treat_cloud_as_snow_free",
+          "asserts": null
+        },
+        {
+          "name": "test_zero_water_cannot_create_runoff",
+          "asserts": null
+        }
+      ]
+    },
+    {
+      "path": "TESTS/test_sabitov_methods.py",
+      "command": "npm run test:sabitov",
+      "purpose": "The independent methodology reimplementation and its diagnostics.",
+      "sha256": "eacf2debea91d464f16ca83b9299e06301b75f75275523af24468db102b3b5e5",
+      "caseCount": 10,
+      "cases": [
+        {
+          "name": "test_antecedent_thresholds_are_mm_and_ordered",
+          "asserts": null
+        },
+        {
+          "name": "test_future_weather_cannot_change_earlier_runoff",
+          "asserts": null
+        },
+        {
+          "name": "test_groundwater_retention_is_not_release_fraction",
+          "asserts": null
+        },
+        {
+          "name": "test_hamon_physical_units_and_freezing",
+          "asserts": null
+        },
+        {
+          "name": "test_monthly_prediction_uses_same_observed_days",
+          "asserts": null
+        },
+        {
+          "name": "test_no_water_no_ice_cannot_generate_flow_or_et",
+          "asserts": null
+        },
+        {
+          "name": "test_reference_accuracy_needs_labels_and_has_correct_orientation",
+          "asserts": null
+        },
+        {
+          "name": "test_scs_units_threshold_and_water_limit",
+          "asserts": null
+        },
+        {
+          "name": "test_stores_conserve_water_and_ice_is_finite",
+          "asserts": null
+        },
+        {
+          "name": "test_temperature_redistribution_preserves_basin_mean_and_rejects_gaps",
+          "asserts": null
+        }
+      ]
+    },
+    {
+      "path": "TESTS/test_case_study_highlights.py",
+      "command": "python -m pytest TESTS/test_case_study_highlights.py",
+      "purpose": "Every published finding is derived from evidence, not written by hand.",
+      "sha256": "d8a74b7a07c00900d5d0ed3bd6a72acb829234e9af29de8769d7079036bb1027",
+      "caseCount": 7,
+      "cases": [
+        {
+          "name": "test_every_finding_carries_a_value_and_the_evidence_behind_it",
+          "asserts": null
+        },
+        {
+          "name": "test_figures_and_reports_referenced_by_the_page_exist",
+          "asserts": null
+        },
+        {
+          "name": "test_headline_numbers_match_the_evidence_they_cite",
+          "asserts": "The values are derived, not typed: check them against the source file."
+        },
+        {
+          "name": "test_the_daily_model_is_judged_on_years_it_never_saw",
+          "asserts": "Holds for either split: calibration and validation years cannot overlap."
+        },
+        {
+          "name": "test_the_discharge_record_is_verified_against_the_published_monthly_table",
+          "asserts": "The workbook is named Monthly; the daily series had to be checked, not trusted."
+        },
+        {
+          "name": "test_the_model_closes_its_water_balance",
+          "asserts": null
+        },
+        {
+          "name": "test_the_summary_publishes_what_did_not_work",
+          "asserts": "A study page showing only successes would misrepresent the study."
+        }
+      ]
+    },
+    {
+      "path": "TESTS/test_pskem_model_review.py",
+      "command": "python -m pytest TESTS/test_pskem_model_review.py",
+      "purpose": "The chronological re-test: split integrity, leakage and benchmark support.",
+      "sha256": "380d544fac92af91ba90b45b6e5b83d730889883b2b2714d387b75ad3a97dc05",
+      "caseCount": 4,
+      "cases": [
+        {
+          "name": "test_directory_foregrounds_the_new_chronological_result",
+          "asserts": null
+        },
+        {
+          "name": "test_headlines_remove_unsupported_improvement_and_leaky_class_claims",
+          "asserts": null
+        },
+        {
+          "name": "test_review_matches_candidate_and_reference_is_preserved",
+          "asserts": null
+        },
+        {
+          "name": "test_season_thresholds_do_not_use_validation_outcomes",
+          "asserts": null
+        }
+      ]
+    },
+    {
+      "path": "TESTS/test_study_landing.py",
+      "command": "python -m pytest TESTS/test_study_landing.py",
+      "purpose": "The published study landing document and its recomputation checks.",
+      "sha256": "53bbb2b5099c378fd58d1cd41138d42b271b63295ad6ab05ed043d28cd3c51eb",
+      "caseCount": 5,
+      "cases": [
+        {
+          "name": "test_cards_have_real_images_and_distinct_destinations",
+          "asserts": "Each card points at a citable path the router actually resolves."
+        },
+        {
+          "name": "test_current_metrics_and_hashes_match_sources",
+          "asserts": null
+        },
+        {
+          "name": "test_figures_are_regenerated_for_current_sources",
+          "asserts": null
+        },
+        {
+          "name": "test_month_support_and_unused_periods",
+          "asserts": null
+        },
+        {
+          "name": "test_nonfinite_scores_are_null",
+          "asserts": null
+        }
+      ]
+    }
+  ],
+  "transferability": {
+    "tested": [
+      {
+        "domain": "Pskem at Mullala, western Tian Shan",
+        "extent": "20 level-12 sub-basins, 2,627 km2 of candidate catchment",
+        "period": "2002-2017",
+        "status": "exercised",
+        "evidence": "PUBLISHED/data/case-studies/model-review.json",
+        "note": "Calibrated on 2002-2010, scored on 2011-2017. One gauge, one catchment, retrospective reanalysis forcing."
+      }
+    ],
+    "untested": [
+      {
+        "domain": "Chatkal, Ugam and the wider Chirchik",
+        "period": "any",
+        "status": "not attempted",
+        "requirement": "Independent tributary discharge, and a catchment delineation confirmed against the surveyed gauge position."
+      },
+      {
+        "domain": "Amu Darya headwaters (Pyanj, Vakhsh, Surkhandarya)",
+        "period": "any",
+        "status": "not attempted",
+        "requirement": "Gauge records of comparable length, and a glacier melt term: the Pskem fit carries no explicit ice component."
+      },
+      {
+        "domain": "Pskem, forward period after the record ends",
+        "period": "after 2017",
+        "status": "not attempted",
+        "requirement": "Forecast forcing rather than reanalysis, and discharge to score against. The published record ends at 2017."
+      }
+    ],
+    "gates": [
+      "Historical station-cell comparisons and training-only corrections are now computed. Verify station metadata and contribution to blended products before claiming independent validation.",
+      "Station precipitation is a point measurement. Basin-mean precipitation requires separate spatial evaluation; a good station score alone does not validate catchment totals.",
+      "Station elevations and daily temperature are not verified by the monthly delivery.",
+      "Do not infer melt timing or daily extremes directly from monthly temperature means.",
+      "Historical snow and climate overlap are now extracted. Gauge-to-main-stem assignment remains unresolved; the provisional boundary must be verified.",
+      "ERA5-Land runoff is local modelled runoff depth, not routed gauge discharge.",
+      "Eight overlapping climate–flow years are insufficient for strong attribution claims; reserve conclusions until independent validation is available.",
+      "Perimeter cannot substitute for area; the 254 catalogue points do not establish a glacier-area trend.",
+      "A good discharge fit does not independently validate ice-melt fraction. Groundwater, snow and ice contributions may compensate for one another.",
+      "Copernicus GLO-30 does not observe submerged bathymetry; one reported capacity does not uniquely identify an elevation–volume curve.",
+      "Station precipitation, temperature and upstream discharge are useful context, but do not validate reservoir volume or operational rules.",
+      "Meteorological and discharge validation does not validate a land-cover classifier.",
+      "A claim of development inside a World Heritage property requires the official component boundary and dated evidence."
+    ],
+    "warmUpYear": {
+      "yearExcluded": "2001",
+      "reason": "stores start empty; the first simulated year is a cold start"
+    },
+    "statement": "The model has been calibrated and held out within a single catchment and a single 16-year record. No result here bears on another basin or on a future period; those rows are open, not pending publication."
+  },
+  "limitations": [
+    "Parameters were selected using calibration KGE only: 6,000 broad samples plus four refinement rounds of 3,000, seed 1729. Existing bounds were retained.",
+    "This is a different validation split, not an accuracy contest with the previous stratified run. Its old parameters saw some years now held out.",
+    "Baseline is the calibration-only monthly discharge climatology, evaluated on exactly the same valid days and months.",
+    "Negative seasonal NSE means worse squared error than the held-out seasonal mean; that diagnostic mean is not itself an operational forecast.",
+    "Monthly means need at least 20 paired days. Seasonal volumes sum available paired days; missing days are not extrapolated.",
+    "Discharge screening uses neighbouring days retrospectively. Forcing is reanalysis; the candidate catchment and surveyed gauge location still require review.",
+    "No observed snowpack/SWE or independent temperature-profile validation is available. Parameters at bounds are diagnostics, not permission to widen physical bounds to chase holdout skill.",
+    "Further development needs inner calibration-period cross-validation and a new external test, not repeated selection against 2011–2017."
+  ],
+  "counts": {
+    "inputFiles": 16,
+    "remoteAssets": 4,
+    "stages": 6,
+    "results": 9,
+    "testSuites": 6,
+    "testCases": 47
+  }
+}

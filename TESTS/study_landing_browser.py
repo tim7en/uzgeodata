@@ -46,6 +46,39 @@ with sync_playwright() as p:
     page.locator('.land-deeper').wait_for()
     assert page.locator('.land-deeper a').count()==1
     assert page.locator('.land-deeper a').get_attribute('href')=='/case-studies.html'
+
+    # A study must be citable: its own path has to render the study on a cold
+    # load, not fall through to the front page with a 200, and it must survive
+    # back and forward. The fragment the directory used before still resolves.
+    page.set_viewport_size({'width':1440,'height':1000})
+    page.goto(BASE+'/case-studies/chirchik',wait_until='networkidle')
+    page.locator('#reproducibility').wait_for()
+    assert page.title().startswith('Chirchik'),page.title()
+    page.goto(BASE+'/case-studies.html#chirchik-study',wait_until='networkidle')
+    assert page.title().startswith('Chirchik'),page.title()
+    page.goto(BASE+'/case-studies.html',wait_until='networkidle')
+    page.locator('.cs-study-card').first.wait_for()
+    assert page.locator('.cs-study-card').first.get_attribute('href')=='/case-studies/chirchik'
+    page.get_by_role('link',name='From mountain snow',exact=False).click()
+    page.locator('#reproducibility').wait_for()
+    assert page.url.endswith('/case-studies/chirchik'),page.url
+    page.go_back(wait_until='networkidle')
+    page.locator('.cs-study-card').first.wait_for()
+
+    # The reproducibility package answers four questions; each tab must render
+    # substance, and the verification tab must show a real rebuild verdict.
+    page.goto(BASE+'/case-studies/chirchik',wait_until='networkidle')
+    package=page.locator('#reproducibility')
+    package.wait_for()
+    package.scroll_into_view_if_needed()
+    for label in ('Data','Method','Results','Verification','Tests','Transfer'):
+        package.get_by_role('tab',name=label,exact=True).click()
+        assert package.locator('table tbody tr, li').count()>0,label
+    package.get_by_role('tab',name='Verification',exact=True).click()
+    assert package.locator('.cs-package-verdict').count()==1
+    package.get_by_role('tab',name='Transfer',exact=True).click()
+    assert 'not attempted' in package.inner_text(),'untested domains must stay visible'
+
     assert not errors,errors
     browser.close()
-print('Study directory, image cards, lazy data, history navigation, current charts, mobile layout, retry and front-page links passed.')
+print('Study directory, image cards, lazy data, history navigation, current charts, mobile layout, retry, citable study paths and the reproducibility package passed.')

@@ -82,3 +82,33 @@
 .cs-regional .cs-note{line-height:1.7}
 .cs-regional li{margin:10px 0;line-height:1.6}
 @media(max-width:800px){.cs-analysis-grid{grid-template-columns:1fr}.cs-study-switch button{width:100%;text-align:left}.cs-regional .cs-controls{flex-wrap:wrap}.cs-regional select{max-width:100%}}
+
+/* The reproducibility package: the study as something another researcher could
+   pick up. Tabs keep six dense sections addressable without a wall of tables. */
+.cs-package-tally{grid-template-columns:repeat(4,1fr)}
+.cs-package-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 0;border-bottom:1px solid var(--line);padding-bottom:12px}
+.cs-package-tabs button{border:1px solid var(--line);background:#132532;color:#b6c9d3;padding:9px 15px;border-radius:4px;font-size:12px}
+.cs-package-tabs button[aria-selected=true]{background:#1d3a49;border-color:var(--blue);color:#e2f6fc}
+.cs-app .cs-package-question{margin:12px 0 4px;color:var(--gold)}
+.cs-package td code,.cs-package li code,.cs-package-stage-head code{font:10px 'IBM Plex Mono',monospace;color:#9fd6e6;word-break:break-all}
+.cs-package td{white-space:normal;vertical-align:top}
+.cs-package-stages{list-style:none;padding:0;margin:18px 0 0;counter-reset:stage}
+.cs-package-stages>li{counter-increment:stage;border-left:2px solid var(--line);padding:0 0 20px 20px;position:relative}
+.cs-package-stages>li::before{content:counter(stage);position:absolute;left:-11px;top:0;width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:#1d3a49;color:var(--blue);font:600 10px 'IBM Plex Mono',monospace}
+.cs-package-stage-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px}
+.cs-package-stage-head strong{font-size:14px;color:#dfeaf1}
+.cs-package-stages p{font-size:12px;color:#adc0ca;margin:8px 0 0}
+.cs-package-stages pre{overflow-x:auto;background:#0d1a23;border:1px solid var(--line);border-radius:4px;padding:11px;font:10px/1.7 'IBM Plex Mono',monospace;color:#9fd6e6}
+.cs-package-verdict{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:5px;margin:18px 0;border-left:3px solid}
+.cs-package-pass{border-color:#70bf9b;background:#70bf9b0d}
+.cs-package-pass svg{color:#70bf9b;flex-shrink:0}
+.cs-package-fail{border-color:#e47b87;background:#e47b870d}
+.cs-package-fail svg{color:#e47b87;flex-shrink:0}
+.cs-package-verdict strong{display:block;font-size:13px;color:#e3eef4}
+.cs-package-verdict span{display:block;font-size:11px;color:#a9bcc7;margin-top:7px;line-height:1.8}
+.cs-package-suite ul{padding-left:18px;margin:8px 0 0}
+.cs-package-suite li{font-size:11px;color:#adc0ca;margin-bottom:7px;line-height:1.7}
+.cs-package-limits{padding-left:18px;margin:10px 0 0}
+.cs-package-limits li{font-size:11px;color:#adc0ca;margin-bottom:9px;line-height:1.8}
+.cs-package .cs-status{display:inline-flex;align-items:center;gap:5px}
+@media(max-width:650px){.cs-package-tally{grid-template-columns:1fr 1fr}.cs-package-tabs button{flex:1;padding:9px 6px;font-size:11px}}

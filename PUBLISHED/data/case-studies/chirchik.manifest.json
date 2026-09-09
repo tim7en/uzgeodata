@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated_at": "2026-09-08T21:32:36.793632+00:00",
+  "generated_at": "2026-09-09T12:30:47.859209+00:00",
   "provenance": [
     {
       "path": "PUBLISHED/data/hydroclimate/pskem-station-monthly.csv",
@@ -19,8 +19,8 @@
     },
     {
       "path": "PUBLISHED/data/hydroclimate/pskem-observations.manifest.json",
-      "sha256": "8e11671829700937cd5f3002b1bbea96bb73f864596cc603f0d6d0e9f6e85972",
-      "bytes": 5046
+      "sha256": "b1780fd892676fd270601320730c98f66d994e49edb4ef2237fef58dd3debd3d",
+      "bytes": 5190
     },
     {
       "path": "PUBLISHED/data/hydroclimate/basin-routing-level12.csv",
@@ -29,8 +29,8 @@
     },
     {
       "path": "PUBLISHED/data/hydroclimate/basins-level12.geojson",
-      "sha256": "361a3ce3918342ae8b14f3bfcbcc120e5647e6b210fb0fbdf5c8c809fdc4808f",
-      "bytes": 20844899
+      "sha256": "9ce2e5fa1416719043d927fa51fc9c42be7f84eacb3dd8f0f088a3a88e21d84f",
+      "bytes": 20844898
     },
     {
       "path": "PUBLISHED/data/case-studies/station-product-monthly.csv",
@@ -39,8 +39,8 @@
     },
     {
       "path": "CASE_STUDIES/chirchik-portfolio.json",
-      "sha256": "33b811d1f9ef34a97168a2eca5ecea8f7ead9c6eba66fffce920bc89afc3bcdc",
-      "bytes": 19768
+      "sha256": "2796870a737ad3568bf300a8fc12b438cbb726b1fa33a42eef45958d65f93d00",
+      "bytes": 19769
     },
     {
       "path": "PIPELINES/build_chirchik_case_studies.py",
