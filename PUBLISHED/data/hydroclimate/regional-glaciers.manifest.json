@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T09:47:32+00:00",
+  "observationClass": "inventory",
+  "spatialScope": "point (centre of glacier polygon, source geometry not delivered)",
+  "sources": [
+    {
+      "file": "Kashkadarya_2023.xlsx",
+      "basin": "Kashkadarya",
+      "sha256": "7259f2d732735831024b89f7850cc96463602e681ce247a32c95a34cfa5b5a08"
+    },
+    {
+      "file": "Surhandarya_2023.xlsx",
+      "basin": "Surkhandarya",
+      "sha256": "8d88af1cd24adf8360f13b253423aac8a664f5eeb2cd64da7bc50f11e27ab583"
+    }
+  ],
+  "counts": {
+    "glaciers": 210
+  },
+  "basins": {
+    "Kashkadarya": {
+      "rows": 60,
+      "exactDuplicatesRemoved": 1,
+      "catalogueNumberCollisions": [
+        "31"
+      ],
+      "rejectedRows": []
+    },
+    "Surkhandarya": {
+      "rows": 150,
+      "exactDuplicatesRemoved": 0,
+      "catalogueNumberCollisions": [],
+      "rejectedRows": []
+    }
+  },
+  "notes": [
+    "This is a separate 2023 point-catalogue survey, not the GLIMS-based inventory build_glacier_inventory.py publishes; the two are not merged because this delivery carries no outline geometry, only a reported area and a centre point.",
+    "An exact duplicate row (same name, area, perimeter and point) was dropped as one glacier counted twice; two different glaciers sharing one catalogue number were both kept and given an a/b suffix instead."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T09:48:23+00:00",
+  "observationClass": "station_observation",
+  "source": {
+    "folder": "storage",
+    "delivery": "Uzhydromet workbooks"
+  },
+  "text": {
+    "transliteration": "Cyrillic to Latin, reading-preserving",
+    "homoglyphRepair": "Latin look-alikes inside Cyrillic words are restored before transliteration; without it the same station splits in two"
+  },
+  "waterYear": "air temperature, precipitation and the Pedya index are delivered October to September; the row label is the water year and the calendar year is derived",
+  "variables": {
+    "air_temperature_mean": {
+      "rows": 50361,
+      "stations": 69,
+      "firstYear": 1950,
+      "lastYear": 2021
+    },
+    "precipitation_total": {
+      "rows": 50336,
+      "stations": 69,
+      "firstYear": 1950,
+      "lastYear": 2021
+    },
+    "soil_temperature_mean": {
+      "rows": 19536,
+      "stations": 79,
+      "firstYear": 2000,
+      "lastYear": 2020
+    }
+  },
+  "quality": {
+    "out-of-range": 192,
+    "outlier-station-month": 1431,
+    "ok": 118610
+  },
+  "emptyVariables": {
+    "pedya_index": "delivered as a header block in all 69 station sheets and empty in every one; parsed and found to hold no values rather than silently dropped"
+  },
+  "counts": {
+    "observations": 120233,
+    "stations": 261,
+    "stationsWithCoordinates": 113
+  },
+  "outputs": {
+    "observations": "PUBLISHED/data/hydromet/station-monthly.csv",
+    "registry": "PUBLISHED/data/hydromet/station-registry.csv"
+  },
+  "qualityNotes": [
+    "Suspect values are flagged, never deleted: quality carries ok, out-of-range or outlier-station-month and the value stays readable.",
+    "The outlier test compares a value with its own station and calendar month, so a cold January is not judged against July.",
+    "Coordinates come from the gauge registries only; meteorological and soil stations arrive without them and are published without invented positions."
+  ]
+}

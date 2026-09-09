@@ -1,5 +1,10 @@
 ﻿# Chirchik–Charvak case studies
 
+The page now separates Chirchik/Pskem from the implemented
+[regional station–satellite study](regional-station-environment.md), using 86
+station locations, QA-screened historical Earth Engine data, terrain/soil
+context, calendar audits, regression charts and CSV/JSON downloads.
+
 Open `/case-studies.html` in the running application. It contains historical
 station validation, MODSNOW-style snow monitoring, elevation and land-cover
 profiles, surface-energy comparisons, physical / random-forest / Bayesian

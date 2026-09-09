@@ -42,3 +42,20 @@
 .cs-findings-reports a{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid var(--cs-line,#25302f);text-decoration:none;font-size:10px}
 @media(max-width:820px){.cs-findings-head{grid-template-columns:1fr}.cs-findings-tally{flex-wrap:wrap}}
 .cs-finding .cs-finding-figure + .cs-finding-figure{margin-top:8px}
+
+/* Feature-level study navigation and scientific evidence panels. */
+.cs-study-switch{display:flex;gap:12px;padding:24px 0;flex-wrap:wrap}
+.cs-study-switch button{padding:14px 20px;border:1px solid var(--cs-line,#25302f);border-radius:6px;background:transparent;color:inherit;font:inherit;cursor:pointer}
+.cs-study-switch button[aria-pressed=true]{background:#183d43;border-color:#58c9e5;color:#bceef8}
+.cs-study-switch button:focus-visible,.cs-regional select:focus-visible{outline:2px solid #edb06c;outline-offset:4px}
+.cs-analysis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.cs-analysis-grid>*{min-width:0}
+.cs-regression svg{width:100%;height:auto}
+.cs-regression svg text{font-size:11px}
+.cs-science-warning{border-left:3px solid #edb06c;padding:14px 20px;background:#edb06c0a;margin-top:24px}
+.cs-download-links{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}
+.cs-download-links a{padding:10px 14px;border:1px solid var(--cs-line,#25302f);border-radius:4px}
+.cs-regional h3{font-size:23px;margin:0 0 12px}
+.cs-regional .cs-note{line-height:1.7}
+.cs-regional li{margin:10px 0;line-height:1.6}
+@media(max-width:800px){.cs-analysis-grid{grid-template-columns:1fr}.cs-study-switch button{width:100%;text-align:left}.cs-regional .cs-controls{flex-wrap:wrap}.cs-regional select{max-width:100%}}

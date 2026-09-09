@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T09:47:26+00:00",
+  "observationClass": "station_metadata",
+  "sources": [
+    {
+      "file": "gages_data_rus.xlsx",
+      "role": "delivered gauge/canal/outlet metadata",
+      "sha256": "5156e3b43661c20b1b0d7807f6ced4e0bac232c0c13e44433dcb1c326e0b19b0"
+    },
+    {
+      "file": "Water discharges.xlsx",
+      "role": "cross-check metadata, not discharge observations",
+      "sha256": "72d0e6725cddb103fdc98b96bdbfb2840776dbe44537f447b8a89a78b39523da"
+    },
+    {
+      "file": "Meteostan sheip original.zip",
+      "role": "meteorological station shapefile",
+      "sha256": "aa47f1b66640923edcccc8e278357f5179e55c398401c6d2c8d71669353ca1f3"
+    }
+  ],
+  "gaugeNetwork": {
+    "rows": 113,
+    "stationTypes": {
+      "river_gauge": 90,
+      "canal": 21,
+      "outlet": 2
+    },
+    "homoglyphFixes": 75,
+    "coordinateIssues": 0,
+    "elevationSentinelsRemoved": 7,
+    "crossCheck": {
+      "file": "Water discharges.xlsx",
+      "rowsCompared": 113,
+      "disagreements": []
+    },
+    "matchedOntologyEntities": 113,
+    "ontologyEntities": 113
+  },
+  "meteoNetwork": {
+    "rows": 86,
+    "homoglyphFixes": 0,
+    "coordinateIssues": 0,
+    "matchedOntologyEntities": 76,
+    "ontologyEntities": 77,
+    "ontologyEntitiesNotInShapefile": [
+      "uz:station/meteo-x01"
+    ],
+    "localIdentities": 9
+  },
+  "notes": [
+    "Cyrillic text was repaired for Latin-lookalike letters typed under the wrong keyboard layout (e.g. Latin C in 'Cырдарья') before matching or translating; the raw and repaired forms are both published so the fix is auditable.",
+    "elevation_m is null where the source recorded the -32768 DEM no-data sentinel; the sentinel is reported, not guessed at.",
+    "coordinate_flag marks points outside Uzbekistan's extent; they are kept, not dropped."
+  ]
+}

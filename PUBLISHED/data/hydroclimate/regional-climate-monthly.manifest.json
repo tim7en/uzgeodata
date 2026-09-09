@@ -1,0 +1,373 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T09:47:27+00:00",
+  "observationClass": "station_observation",
+  "spatialScope": "station",
+  "sources": [
+    {
+      "file": "Andijan+Namangan+Fergana.xlsx",
+      "sha256": "6562b0cdad4a8936e8362a5c5e3ef3ba5225ef011fb24192258166dbe7f8df82"
+    },
+    {
+      "file": "Bukhara+Samarkand.xlsx",
+      "sha256": "f232183cb5bedceaea9d458e5020c270ea2b450a00c0f7277d56feb01e70863b"
+    },
+    {
+      "file": "Jizzak+Syrdarya.xlsx",
+      "sha256": "9e333800f741545e69117e7c9c8a3e546ff2598e5b6cdd24c65a6bd0a70081d9"
+    },
+    {
+      "file": "Karakalpakstan.xlsx",
+      "sha256": "57d51b3a3e6841fc30813fb4494af6fba1d2cc6a06cad59b80769ce47832ae7d"
+    },
+    {
+      "file": "Kashkadarya+Surkhandarya.xlsx",
+      "sha256": "e11996672dc24f2f063544393da9d5ecf77ff40b19ef3c7c08f091a99875b2d8"
+    },
+    {
+      "file": "Khorezm+Navoi.xlsx",
+      "sha256": "3c29f3c96a11970615eb7be3bcec9ef0ffd36c390ea57f2be1e55af2fa4762d2"
+    },
+    {
+      "file": "Tashkent.xlsx",
+      "sha256": "7deea18bc5eb703ac6d7e5fc4baa0b005f1cc5cc27d5a868c522ce360ce9dc44"
+    },
+    {
+      "file": "Температура почвы.xlsx",
+      "sha256": "2f186fb2849c178b9d015c6f0f9a62cbce95efd1963bee34f28215f3b8c0ad67"
+    }
+  ],
+  "counts": {
+    "monthlyValues": 120233,
+    "variables": 3,
+    "stationsMatchedToNetwork": 74,
+    "valuesWithMatchedStation": 93260,
+    "valuesWithUnmatchedStation": 26973,
+    "valuesMatchedByFuzzyName": 0,
+    "suspectValues": 2593,
+    "duplicateExtraRows": 252,
+    "conflictingDuplicateKeys": 0
+  },
+  "variables": [
+    "air_temperature_mean",
+    "precipitation_total",
+    "soil_temperature_mean"
+  ],
+  "calendarAlignment": {
+    "reference": "pskem-station-monthly.csv",
+    "reference_sha256": "76f603898a6df08d754a06b7451d4538e5f94cfc118b5ce4aff10934cedd50f4",
+    "selected": "ending_year",
+    "note": "Zero shift is the selected ending-year mapping. +1 reproduces the former starting-year mapping. Differences in observations still require review.",
+    "comparisons": [
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "air_temperature_mean",
+        "season": "Jan-Sep",
+        "year_shift": -1,
+        "n": 90,
+        "mae": 1.9452222222222215
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "air_temperature_mean",
+        "season": "Jan-Sep",
+        "year_shift": 0,
+        "n": 90,
+        "mae": 0.22888888888888886
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "air_temperature_mean",
+        "season": "Jan-Sep",
+        "year_shift": 1,
+        "n": 90,
+        "mae": 2.034444444444444
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "air_temperature_mean",
+        "season": "Oct-Dec",
+        "year_shift": -1,
+        "n": 27,
+        "mae": 2.077777777777778
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "air_temperature_mean",
+        "season": "Oct-Dec",
+        "year_shift": 0,
+        "n": 30,
+        "mae": 0.006666666666666672
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "air_temperature_mean",
+        "season": "Oct-Dec",
+        "year_shift": 1,
+        "n": 30,
+        "mae": 2.0266666666666664
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "precipitation_total",
+        "season": "Jan-Sep",
+        "year_shift": -1,
+        "n": 90,
+        "mae": 20.924444444444447
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "precipitation_total",
+        "season": "Jan-Sep",
+        "year_shift": 0,
+        "n": 90,
+        "mae": 0.0022222222222222244
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "precipitation_total",
+        "season": "Jan-Sep",
+        "year_shift": 1,
+        "n": 90,
+        "mae": 20.13555555555556
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "precipitation_total",
+        "season": "Oct-Dec",
+        "year_shift": -1,
+        "n": 27,
+        "mae": 35.285185185185185
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "precipitation_total",
+        "season": "Oct-Dec",
+        "year_shift": 0,
+        "n": 30,
+        "mae": 0.0
+      },
+      {
+        "station_id": "uz:station/meteo-413694",
+        "variable": "precipitation_total",
+        "season": "Oct-Dec",
+        "year_shift": 1,
+        "n": 30,
+        "mae": 34.74333333333333
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "air_temperature_mean",
+        "season": "Jan-Sep",
+        "year_shift": -1,
+        "n": 87,
+        "mae": 1.6180216206896554
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "air_temperature_mean",
+        "season": "Jan-Sep",
+        "year_shift": 0,
+        "n": 96,
+        "mae": 0.08731848958333333
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "air_temperature_mean",
+        "season": "Jan-Sep",
+        "year_shift": 1,
+        "n": 105,
+        "mae": 1.5417801999999998
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "air_temperature_mean",
+        "season": "Oct-Dec",
+        "year_shift": -1,
+        "n": 27,
+        "mae": 1.8704950555555553
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "air_temperature_mean",
+        "season": "Oct-Dec",
+        "year_shift": 0,
+        "n": 30,
+        "mae": 0.04338404333333332
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "air_temperature_mean",
+        "season": "Oct-Dec",
+        "year_shift": 1,
+        "n": 33,
+        "mae": 1.9344332939393942
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "precipitation_total",
+        "season": "Jan-Sep",
+        "year_shift": -1,
+        "n": 90,
+        "mae": 41.71333333333334
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "precipitation_total",
+        "season": "Jan-Sep",
+        "year_shift": 0,
+        "n": 99,
+        "mae": 0.8636363636363636
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "precipitation_total",
+        "season": "Jan-Sep",
+        "year_shift": 1,
+        "n": 108,
+        "mae": 41.44166666666666
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "precipitation_total",
+        "season": "Oct-Dec",
+        "year_shift": -1,
+        "n": 27,
+        "mae": 70.81851851851853
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "precipitation_total",
+        "season": "Oct-Dec",
+        "year_shift": 0,
+        "n": 30,
+        "mae": 0.23999999999999985
+      },
+      {
+        "station_id": "uz:station/meteo-419704",
+        "variable": "precipitation_total",
+        "season": "Oct-Dec",
+        "year_shift": 1,
+        "n": 33,
+        "mae": 65.26666666666667
+      },
+      {
+        "station_id": "uz:station/meteo-422709",
+        "variable": "air_temperature_mean",
+        "season": "Jan-Sep",
+        "year_shift": 0,
+        "n": 9,
+        "mae": 0.10777777777777761
+      },
+      {
+        "station_id": "uz:station/meteo-422709",
+        "variable": "air_temperature_mean",
+        "season": "Jan-Sep",
+        "year_shift": 1,
+        "n": 18,
+        "mae": 1.7483333333333335
+      },
+      {
+        "station_id": "uz:station/meteo-422709",
+        "variable": "air_temperature_mean",
+        "season": "Oct-Dec",
+        "year_shift": 1,
+        "n": 3,
+        "mae": 2.2333333333333334
+      },
+      {
+        "station_id": "uz:station/meteo-422709",
+        "variable": "precipitation_total",
+        "season": "Jan-Sep",
+        "year_shift": 0,
+        "n": 9,
+        "mae": 2.666666666666666
+      },
+      {
+        "station_id": "uz:station/meteo-422709",
+        "variable": "precipitation_total",
+        "season": "Jan-Sep",
+        "year_shift": 1,
+        "n": 18,
+        "mae": 47.477777777777774
+      },
+      {
+        "station_id": "uz:station/meteo-422709",
+        "variable": "precipitation_total",
+        "season": "Oct-Dec",
+        "year_shift": 1,
+        "n": 3,
+        "mae": 24.866666666666664
+      }
+    ],
+    "checked_station_ids": [
+      "uz:station/meteo-413694",
+      "uz:station/meteo-419704"
+    ]
+  },
+  "temporalCoverage": {
+    "start": 1949,
+    "end": 2020
+  },
+  "suspectBlockLabels": {
+    "count": 2,
+    "sheets": [
+      "Andijan+Namangan+Fergana.xlsx / 38601 Ulugnar",
+      "Andijan+Namangan+Fergana.xlsx / 38612 Boz"
+    ],
+    "rule": "No automatic swaps. Negative precipitation quarantines the sheet pending source review."
+  },
+  "unmatchedStations": [
+    "Jizzak+Syrdarya.xlsx:38574 Yangkishlak",
+    "Jizzak+Syrdarya.xlsx:38577 Galliaaral",
+    "Jizzak+Syrdarya.xlsx:38579 Jizzakh",
+    "Jizzak+Syrdarya.xlsx:38702 Lyalmikor",
+    "Jizzak+Syrdarya.xlsx:38711 Bahmal",
+    "Karakalpakstan.xlsx:38023 Karakalpakia",
+    "Karakalpakstan.xlsx:38262 Chimbai",
+    "Kashkadarya+Surkhandarya.xlsx:38699 Shakhrisabz",
+    "Kashkadarya+Surkhandarya.xlsx:38818 Acrabat",
+    "Kashkadarya+Surkhandarya.xlsx:38819 Dehkanabad",
+    "Kashkadarya+Surkhandarya.xlsx:38827 Boysun",
+    "Khorezm+Navoi.xlsx:38403 Buzaubai",
+    "Khorezm+Navoi.xlsx:38407 Tuyamuyun",
+    "Khorezm+Navoi.xlsx:38562 Sentob Nurata",
+    "Tashkent.xlsx:38465 Angren valley",
+    "Tashkent.xlsx:38570 Bashkyzylsay",
+    "Tashkent.xlsx:38591 Cocaral",
+    "Температура почвы.xlsx:Андижанская:Юбилейная",
+    "Температура почвы.xlsx:Джизаксакая:Ляльмикор-Джизак",
+    "Температура почвы.xlsx:Кашкадарьинская:Акрабад",
+    "Температура почвы.xlsx:Кашкадарьинская:Шахрисабз",
+    "Температура почвы.xlsx:Навоийская:Сентоб-Нурата",
+    "Температура почвы.xlsx:Самаркандская:Дагбат",
+    "Температура почвы.xlsx:Ташкентская:Башкизилсай",
+    "Температура почвы.xlsx:Ферганская:Сарыканла"
+  ],
+  "qualityRanges": {
+    "air_temperature_mean": [
+      -35.0,
+      50.0
+    ],
+    "precipitation_total": [
+      0.0,
+      500.0
+    ],
+    "soil_temperature_mean": [
+      -30.0,
+      55.0
+    ],
+    "ped_drought_index": [
+      -25.0,
+      25.0
+    ]
+  },
+  "notes": [
+    "Air/precipitation use hydrological ending years; cross-checked for Tashkent/Pskem against existing calendar observations, inferred elsewhere. Source_cell and date_status retain traceability.",
+    "Soil temperature is not soil texture or soil type; measurement depth is not supplied.",
+    "Fuzzy name candidates are not accepted as station identities. Network identity is not proof of ontology membership.",
+    "quality_flag='suspect_out_of_range' values are kept, not deleted; filter on quality_flag=='ok' for an implementation-ready series.",
+    "Pedya index columns exist in every air_temp_precip sheet but carry no data in this delivery; no ped_drought_index rows are published as a result.",
+    "Station names were repaired for Cyrillic/Latin homoglyphs and matched to hydromet-meteo-network.csv by their transliterated form; entity_id is blank where no match was found."
+  ]
+}

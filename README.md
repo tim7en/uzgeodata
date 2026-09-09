@@ -17,11 +17,17 @@ Each top-level folder is named for the kind of information it holds.
 | --- | --- |
 | `ONTOLOGY/` | The knowledge graph: JSON Schema in `schema/`, controlled vocabularies in `vocab/`, the built graph and pipeline manifests in `instances/`. See [ONTOLOGY/README.md](ONTOLOGY/README.md). |
 | `PIPELINES/` | Every build and analysis script. `ontology/` projects the registries into the graph; the rest extract, convert and measure geodata. |
-| `INTERFACE/` | The browser application — React sources, stylesheets, and the four page entry points. This is Vite's root. |
+| `INTERFACE/` | Browser pages, React sources and styles. `features/case-studies/` holds reusable evidence views and charts. This is Vite's root. |
 | `PUBLISHED/` | Files the browser fetches, served at `/`. `data/` is a public URL namespace, so it stays lowercase. |
 | `GEODATA/` | Source deliveries: the HydroSHEDS and BasinATLAS geodatabases and the Uzbekistan extractions taken from them. Subfolders keep their package names because manifests and licences reference them. |
 | `WORKSPACE/` | Derived data, uploads and the private dataset registry. Not in version control. `ontology:build` reads it, and without it the rebuilt graph loses roughly a third of its records — do not run that pipeline in a checkout that lacks it. |
 | `TESTS/` | The ontology and converter test suites. |
+| `storage/` | Original station, gauge, climate, soil-temperature and glacier deliveries; unchanged for provenance. |
+| `CASE_STUDIES/` | Protocols and methodology; results remain in `PUBLISHED/data/case-studies/`. |
+
+See [hydromet modules](PIPELINES/hydromet/README.md) and the implemented
+[regional station–satellite study](CASE_STUDIES/regional-station-environment.md),
+available at `/case-studies.html#regional-study` alongside Chirchik/Pskem.
 
 `dist/` is Vite's build output and `node_modules/` is npm's; both are tool-owned
 and left as they are.
