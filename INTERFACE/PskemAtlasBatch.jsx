@@ -61,7 +61,9 @@ export default function PskemAtlasBatch() {
         <label>Search<input value={query} onChange={e => setQuery(e.target.value)} placeholder="Attribute or original source"/></label>
         <label>Readiness<select aria-label="Readiness" value={filter} onChange={e => setFilter(e.target.value)}><option value="all">All attributes</option><option value="computed">Recalculated candidates</option><option value="pass">Numerical comparison passed</option><option value="surrogate">Open surrogate estimate</option><option value="none">No estimate yet</option><option value="pending">Original inputs pending</option></select></label></div>
       <p>{rows.length} of 281 attributes · values below use the original stored units.</p>
-      <div className="attributes">{rows.map(a => <details key={a.column}><summary><code>{a.column}</code><span>{a.label}</span><small>{a.comparison ? `${a.comparison.within_tolerance}/20 within tolerance` : 'Inputs pending'}</small></summary>
+      <div className="attributes">{rows.map(a => <details key={a.column}><summary><code>{a.column}</code><span>{a.label}</span><small>{a.comparison ? `${a.comparison.within_tolerance}/20 within tolerance`
+        : a.surrogate_status === 'open_surrogate_estimate' ? `surrogate · ${a.surrogate_fidelity.replaceAll('_', ' ')}`
+        : 'no estimate yet'}</small></summary>
         <div className="recipe"><p><strong>Original reference: {number(a.reference_values[basin])}</strong> · Candidate: {a.candidate_values ? number(a.candidate_values[basin]?.raw_value) : 'Not computed'} · {a.units}</p>
           <p>Physical reference: {number(a.reference_values[basin] == null ? null : a.reference_values[basin] * a.physical_factor)} {a.physical_unit}. Spatial support: {a.spatial_support}. Original period: {a.reference_period}.</p>
           <p><a href={a.source_url} target="_blank" rel="noreferrer">{a.source_dataset}</a> · {a.source_citation}</p>
