@@ -1203,3 +1203,8 @@ Commands: `stations:network`, `stations:climate`, `stations:glaciers-regional`,
 The source/identity, graph-reconciliation and prospective-validation gates in
 section 13 remain open; a production-facing presentation does not resolve them.
 
+Final landing verification: 55 targeted Python tests and 36 landing-map tests
+passed. Both browser smoke suites passed against the production-mode app,
+including desktop/mobile navigation, lazy study data, chart selectors and
+failed-request retry. Production build passed; the local app serves `dist/`.
+

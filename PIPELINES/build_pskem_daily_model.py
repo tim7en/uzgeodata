@@ -318,20 +318,28 @@ def sample(count: int, rng, centre=None, spread=0.15):
 
 
 def main() -> None:
+    global SERIES, SUMMARY, MANIFEST
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--samples", type=int, default=20000)
     parser.add_argument("--lumped", action="store_true", help="ignore the bands, for comparison")
     parser.add_argument("--split", choices=("chronological", "stratified"), default="chronological")
     parser.add_argument("--seed", type=int, default=1729)
+    parser.add_argument('--output-dir', type=Path, default=OUT_DIR, help='Separate experiment directory; preserves the published model.')
     args = parser.parse_args()
+    args.output_dir = args.output_dir.resolve()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    SERIES = args.output_dir/'pskem-daily-model.csv'
+    SUMMARY = args.output_dir/'pskem-daily-model.json'
+    MANIFEST = args.output_dir/'pskem-daily-model.manifest.json'
+    if args.samples < 2:
+        parser.error('--samples must be at least 2')
 
     (days, temperature, precipitation, pet, observed, area, factor, valid,
      screening, extra, warmup_year) = load_inputs()
     years = np.array([int(day[:4]) for day in days])
     if args.split == "stratified":
-        # A chronological cut trained on wet years and tested on dry ones, which
-        # guarantees a high bias. Ranking years by yield and alternating puts wet
-        # and dry years on both sides while keeping validation strictly unseen.
+        # Exploratory outcome-stratified split. Validation outcomes inform year
+        # allocation, so this is not an independent prospective forecast test.
         totals = {int(year): float(observed[years == year].sum()) for year in set(years.tolist())}
         ranked = sorted(totals, key=totals.get)
         calibration_years = set(ranked[::2])
@@ -344,8 +352,8 @@ def main() -> None:
     print(f"  split {args.split}: calibration {sorted(calibration_years)}")
     print(f"  screening removes {int((~valid).sum())} suspect day(s) from scoring")
     print(f"Pskem daily model | {len(days):,} days {days[0]}..{days[-1]} | catchment {area:,.0f} km2")
-    print(f"  calibration {CALIBRATION[0]}-{CALIBRATION[1]} ({calibration.sum():,} days) | "
-          f"validation {VALIDATION[0]}-{VALIDATION[1]} ({validation.sum():,} days)")
+    print(f"  calibration years {sorted(set(years[calibration]))} ({calibration.sum():,} days) | "
+          f"validation years {sorted(set(years[validation]))} ({validation.sum():,} days)")
 
     bands = None if args.lumped else load_bands()
     if bands:

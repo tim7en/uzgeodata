@@ -31,17 +31,18 @@ export default function CaseStudyFindings() {
   }, []);
 
   if (!highlights) return null;
-  const { study, findings, reports, counts } = highlights;
+  const { reports } = highlights;
+  const supporting = new Set(['product-station-agreement','snow-sensor-agreement','charvak-water-surface','monthly-discharge-trend','discharge-record-verified']);
+  const findings = highlights.findings.filter(f => supporting.has(f.id));
 
   return <section className="cs-findings cs-panel" id="findings">
     <div className="cs-findings-head">
       <div>
-        <span className="cs-eyebrow">01 / WHAT THE STUDY FOUND</span>
-        <h2>{study.question}</h2>
+        <span className="cs-eyebrow">SUPPORTING ANALYSES / HISTORICAL CONTEXT</span>
+        <h2>Product agreement, water extent and observation checks</h2>
         <p>
-          {counts.findings} findings drawn from {counts.figures} figures and {counts.reports} reports.
-          Each number is read from the published evidence rather than restated, and the results that
-          did not work are here too.
+          These {findings.length} analyses answer separate questions. Satellite agreement and reservoir extent
+          are not evidence of runoff forecast accuracy. Original reports retain their own methods and dates.
         </p>
       </div>
       <dl className="cs-findings-tally">

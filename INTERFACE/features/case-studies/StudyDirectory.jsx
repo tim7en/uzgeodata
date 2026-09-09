@@ -12,7 +12,7 @@ export default function StudyDirectory() {
       <section id="study-cards" aria-label="Available case studies">
         {error ? <div className="cs-panel" role="alert"><h2>Study summaries are unavailable.</h2><p>{error}</p><button className="cs-primary" onClick={retry}>Try again</button></div> : !data ? <p role="status">Loading the latest study summaries…</p> : <>
           <div className="cs-directory-grid">{data.studies.map(study => <a className="cs-study-card" href={study.href} key={study.id}>
-            <div className="cs-card-image"><img src={`${study.image}?v=${data.source_hashes[study.id === 'chirchik' ? 'pskem-daily-model.json' : 'regional-station-study.json'].slice(0,12)}`} width="1080" height="552" alt={study.image_alt}/><span>{study.region}</span></div>
+            <div className="cs-card-image"><img src={`${study.image}?v=${study.image_revision}`} width="1080" height="552" alt={study.image_alt}/><span>{study.region}</span></div>
             <div className="cs-card-copy"><span className="cs-card-status">{study.status}</span><h2>{study.title}</h2><p>{study.aim}</p>
               <div className="cs-card-evidence"><strong>{study.metric.toLocaleString('en',{maximumFractionDigits:3})}</strong><span>{study.metric_label}<small>{study.detail}</small></span></div>
               <div className="cs-card-cta"><span>Explore this study</span><ArrowUpRight size={22}/></div>

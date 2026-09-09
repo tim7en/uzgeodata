@@ -19,6 +19,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from hydromet.io import write_json
 
+matplotlib.rcParams['svg.hashsalt'] = 'uzgeodata-study-previews-v1'
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT/'PUBLISHED/data/case-studies'
 
@@ -63,6 +65,7 @@ def preview(path, draw):
     fig.subplots_adjust(left=.04,right=.96,bottom=.08,top=.92)
     fig.savefig(path, facecolor=fig.get_facecolor(), format='svg', metadata={'Date':None})
     plt.close(fig)
+    path.write_text('\n'.join(line.rstrip() for line in path.read_text(encoding='utf8').splitlines())+'\n',encoding='utf8')
 
 
 def main():
@@ -87,8 +90,12 @@ def main():
     if len(eligible)!=model['monthlySkill']['validation']['n'] or abs(monthly_nse-model['monthlySkill']['validation']['nse'])>.0001:
         raise ValueError('Monthly aggregation disagrees with model metrics.')
     regional=json.loads((DATA/'regional-station-study.json').read_text(encoding='utf8'))
+    review_path=DATA/'model-review.json'
+    review=json.loads(review_path.read_text(encoding='utf8')) if review_path.exists() else None
     now=datetime.now(timezone.utc).isoformat()
     paths=[source,DATA/'pskem-daily-model.csv',DATA/'regional-station-study.json']
+    if review:
+        paths.append(review_path)
     hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
     current={'generated_at':now,'model_generated_at':model['generatedAt'],'source_hashes':hashes,
              'model':safe_json(model['model']),'catchment':model['catchment'],
@@ -105,7 +112,7 @@ def main():
              'scope':f"Historical hindcast using a {model['model']['calibration']['split']} split. Retrospective forcing is not prospective forecast validation."}
     write_json(DATA/'current-model.json',safe_json(current))
     def runoff(ax):
-        selected=[r for r in monthly if r['split']=='validation']
+        selected=[r for r in (review['monthly_rows'] if review else monthly) if r['split']=='validation']
         x=np.arange(len(selected))
         ax.fill_between(x,[r['observed'] for r in selected],color='#58c9e5',alpha=.15)
         ax.plot(x,[r['observed'] for r in selected],color='#58c9e5',linewidth=2)
@@ -122,9 +129,11 @@ def main():
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
          'image':'/data/case-studies/chirchik-study-preview.svg',
          'image_alt':'Observed and simulated monthly runoff in held-out years, arranged consecutively as a study preview.',
-         'evidence_date':model['generatedAt'],'metric':model['monthlySkill']['validation']['nse'],
-         'metric_label':'Monthly NSE · historical validation','detail':f"{len(eligible)} held-out months · daily snowmelt model",
-         'status':'Historical model evaluation'},
+         'evidence_date':review['generated_at'] if review else model['generatedAt'],
+         'metric':review['candidate']['monthly']['nse'] if review else model['monthlySkill']['validation']['nse'],
+         'metric_label':'Monthly NSE · chronological test' if review else 'Monthly NSE · historical validation',
+         'detail':f"{len(eligible)} held-out months · seasonal-volume uncertainty remains",
+         'status':'Chronological model re-evaluation' if review else 'Historical model evaluation'},
         {'id':'regional','href':'#regional-study','title':'Read the landscape through its stations',
          'region':'REGIONAL HYDROMET NETWORK','aim':'Explore how location, elevation and mapped soil texture relate to satellite vegetation and temperature.',
          'image':'/data/case-studies/regional-study-preview.svg',
@@ -132,6 +141,8 @@ def main():
          'evidence_date':regional['generated_at'],'metric':len(regional['stations']),
          'metric_label':'Meteorological locations','detail':f"{regional['period']} · {len(regional['monthly']):,} station-month records",
          'status':'Exploratory relationships'}]}
+    for card in payload['studies']:
+        card['image_revision']=hashlib.sha256((ROOT/'PUBLISHED'/card['image'].lstrip('/')).read_bytes()).hexdigest()[:12]
     write_json(DATA/'study-directory.json',payload)
     write_json(DATA/'study-landing.manifest.json',{'generated_at':now,'input_hashes':hashes,
                'daily_validation_nse_recomputed':nse,'monthly_validation_nse_recomputed':monthly_nse,

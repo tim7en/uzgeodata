@@ -146,9 +146,13 @@ def main() -> None:
     # The question a water manager actually asks, answered by the current model.
     def water_year_finding(model):
         rows = model["seasonalVolumes"]
-        volumes = [row["observedMcm"] for row in rows]
+        volumes = [row["observedMcm"] for row in rows if row['period']=='calibration']
+        if len(volumes) < 3:
+            raise ValueError('Season classes require at least three calibration-year volumes.')
         mean = sum(volumes) / len(volumes)
         spread = (sum((v - mean) ** 2 for v in volumes) / len(volumes)) ** 0.5
+        if spread == 0:
+            raise ValueError('Season classes are undefined for constant calibration volumes.')
         order = ["dry", "below", "normal", "above", "wet"]
 
         def band(value):
@@ -179,12 +183,12 @@ def main() -> None:
                 f"{seasonal.get('pbias', 0):+.1f}%. Placed into five classes from dry to wet, "
                 f"{exact} of {len(held)} land in the right class and {near} of {len(held)} are never "
                 f"more than one class out. The {model['model']['calibration']['split']} split and retrospective forcing "
-                "do not establish prospective seasonal forecast skill."
+                "do not establish prospective seasonal forecast skill. Class thresholds use calibration-year observations only."
             ),
             "exactClass": exact,
             "withinOneClass": near,
             "heldOutYears": len(held),
-            "figure": f"{FIGURES}/pskem-seasonal-shape.png",
+            "classThresholds": {'source':'calibration_only','meanMcm':mean,'standardDeviationMcm':spread,'n':len(volumes)},
             "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json",
         }
 
@@ -205,8 +209,8 @@ def main() -> None:
             "value": round_or_none(monthly["nse"], 2),
             "valueLabel": "monthly NSE, held-out years",
             "detail": (
-                f"Calibrated on {model['model']['calibration']['years'][0]}–"
-                f"{model['model']['calibration']['years'][1]} and tested on years it never saw, the "
+                f"Configured calibration years: {', '.join(map(str,model['model']['calibration']['years']))}; "
+                f"warm-up year {model['warmUp']['yearExcluded']} is excluded from scoring. On held-out years, the "
                 f"temperature-index model reaches NSE {daily['nse']:.2f} on daily flow and "
                 f"{monthly['nse']:.2f} on monthly means, closing the water balance at a runoff "
                 f"coefficient of {model['waterBalance']['runoffCoefficientSimulated']:.2f} against "
@@ -220,9 +224,6 @@ def main() -> None:
             "seasonalNse": round_or_none(seasonal.get("nse"), 3),
             "elevationBands": model.get("elevationBands"),
             "figure": f"{FIGURES}/pskem-daily-hydrograph.png",
-            "figures": [f"{FIGURES}/pskem-daily-hydrograph.png",
-                        f"{FIGURES}/pskem-monthly-skill.png",
-                        f"{FIGURES}/pskem-seasonal-shape.png"],
             "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json",
         })
         findings.append(water_year_finding(model))
@@ -247,20 +248,17 @@ def main() -> None:
         if bands:
             findings.append({
                 "id": "elevation-band-forcing",
-                "kind": "validated",
-                "headline": "Melting the catchment by elevation band fixed the April failure",
+                "kind": "limitation",
+                "headline": "Elevation-dependent snowmelt is a model assumption, not an independent validation",
                 "value": round_or_none(bands["calibratedLapsePer1000m"], 2),
                 "valueLabel": "°C per 1000 m",
                 "detail": (
-                    f"A single basin-mean temperature cannot melt a catchment spanning 875 to 4,375 m: "
-                    f"the low bands should release water in April while the average is still frozen. "
-                    f"Running the snow routine over {bands['count']} published elevation bands, each "
-                    f"with its own temperature, cut the April error from 60% to 8% and the median "
-                    f"monthly error from 38% to 21%. The lapse rate is bounded near the natural "
-                    f"−6.5 °C/km; left free it ran past the dry adiabatic limit to absorb other "
-                    f"errors, which bought no skill."
+                    f"The snow routine uses {bands['count']} elevation bands and a calibrated temperature "
+                    f"gradient of {bands['calibratedLapsePer1000m']:+.2f} °C/km. This gradient is not a "
+                    "measured atmospheric profile. An independently evaluated lumped-versus-banded "
+                    "comparison is required before claiming that elevation bands improved April flow. "
+                    "Snow-covered area alone does not validate modelled snow-water storage."
                 ),
-                "figure": f"{FIGURES}/pskem-seasonal-shape.png",
                 "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json",
             })
 
@@ -279,7 +277,7 @@ def main() -> None:
         "study": {
             "id": "chirchik",
             "label": "Chirchik and Pskem",
-            "question": "Can published products stand in for the stations, and do they predict the season?",
+            "question": "What does the Pskem runoff experiment establish?",
             "page": "/case-studies.html",
         },
         "findings": findings,

@@ -1,0 +1,345 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T10:25:49+00:00",
+  "model": {
+    "family": "temperature-index snow with soil store and two linear reservoirs (HBV type)",
+    "timestep": "day",
+    "parameters": {
+      "tt": -1.5,
+      "cfmax": 2.4713,
+      "sfcf": 1.2991,
+      "fc": 127.3605,
+      "beta": 3.3967,
+      "perc": 3.6996,
+      "k_fast": 0.05,
+      "k_slow": 0.0119,
+      "lapse": -7.472
+    },
+    "parameterBounds": {
+      "tt": [
+        -1.5,
+        2.5
+      ],
+      "cfmax": [
+        1.0,
+        7.0
+      ],
+      "sfcf": [
+        0.8,
+        1.8
+      ],
+      "fc": [
+        50.0,
+        600.0
+      ],
+      "beta": [
+        1.0,
+        5.0
+      ],
+      "perc": [
+        0.1,
+        4.0
+      ],
+      "k_fast": [
+        0.05,
+        0.6
+      ],
+      "k_slow": [
+        0.001,
+        0.15
+      ],
+      "lapse": [
+        -8.0,
+        -5.0
+      ]
+    },
+    "calibration": {
+      "years": [
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010
+      ],
+      "split": "chronological",
+      "objective": "KGE",
+      "search": "seeded random search then local refinement",
+      "samples": 6000,
+      "seed": 1729
+    }
+  },
+  "elevationBands": {
+    "count": 15,
+    "meanElevationM": 2761.1,
+    "publishedGradientPer1000m": -2.327,
+    "calibratedLapsePer1000m": -7.472,
+    "source": "PUBLISHED/data/case-studies/elevation-profiles.csv"
+  },
+  "warmUp": {
+    "yearExcluded": "2001",
+    "reason": "stores start empty; the first simulated year is a cold start"
+  },
+  "catchment": {
+    "areaKm2": 2626.9,
+    "gauge": "uz:station/gauge-16290",
+    "caveat": "The catchment is a candidate delineation: the gauge has not been snapped to a reach and reviewed, so the area used to convert discharge to millimetres carries that uncertainty."
+  },
+  "skill": {
+    "calibration": {
+      "n": 3286,
+      "nse": 0.9021,
+      "kge": 0.9501,
+      "logNse": 0.894,
+      "pbias": -1.034,
+      "rmseMm": 0.7258,
+      "r": 0.9513,
+      "alpha": 1.0044,
+      "beta": 0.9897
+    },
+    "validation": {
+      "n": 2550,
+      "nse": 0.7228,
+      "kge": 0.6203,
+      "logNse": 0.9035,
+      "pbias": 16.021,
+      "rmseMm": 0.9303,
+      "r": 0.9549,
+      "alpha": 1.3413,
+      "beta": 1.1602
+    },
+    "wholeRecord": {
+      "n": 6575,
+      "nse": null,
+      "kge": 0.8691,
+      "logNse": 0.8757,
+      "pbias": null,
+      "rmseMm": null,
+      "r": 0.9367,
+      "alpha": 1.1061,
+      "beta": 1.0435
+    }
+  },
+  "monthlySkill": {
+    "calibration": {
+      "n": 108,
+      "nse": 0.9296,
+      "kge": 0.9632,
+      "logNse": 0.9081,
+      "pbias": -1.035,
+      "rmseMm": 0.5939,
+      "r": 0.9651,
+      "alpha": 1.0058,
+      "beta": 0.9897
+    },
+    "validation": {
+      "n": 84,
+      "nse": 0.7595,
+      "kge": 0.6256,
+      "logNse": 0.9174,
+      "pbias": 16.074,
+      "rmseMm": 0.8399,
+      "r": 0.9683,
+      "alpha": 1.3367,
+      "beta": 1.1607
+    }
+  },
+  "observationProvenance": {
+    "sourceWorkbook": "Discharge_Pskem_Muallala_Monthly.xlsx",
+    "note": "The workbook is named Monthly but stores daily values: within every month the days vary as a hydrograph, and no month repeats a single figure. The daily series is the observation; the monthly table is derived from it.",
+    "reconciliation": "203 of 204 published monthly raw means reproduce exactly from these daily values, the remaining one within rounding.",
+    "screening": [
+      {
+        "period": "2017-04",
+        "suspectDays": 1,
+        "rawMean": 98.196,
+        "screenedMean": 101.566,
+        "identified": "2017-04-07",
+        "value": 0.49
+      },
+      {
+        "period": "2017-07",
+        "suspectDays": 1,
+        "rawMean": 157.854,
+        "screenedMean": 163.067,
+        "identified": "2017-07-17",
+        "value": 1.47
+      },
+      {
+        "period": "2017-09",
+        "suspectDays": 1,
+        "rawMean": 54.117,
+        "screenedMean": 55.828,
+        "identified": "2017-09-30",
+        "value": 4.5
+      }
+    ],
+    "additionalDropoutsDetected": [
+      {
+        "date": "2010-01-20",
+        "value": 13.7,
+        "neighbourMedian": 30.4,
+        "ratio": 0.451
+      },
+      {
+        "date": "2015-07-25",
+        "value": 26.0,
+        "neighbourMedian": 126.0,
+        "ratio": 0.206
+      },
+      {
+        "date": "2016-07-01",
+        "value": 16.5,
+        "neighbourMedian": 158.0,
+        "ratio": 0.104
+      },
+      {
+        "date": "2016-07-02",
+        "value": 16.5,
+        "neighbourMedian": 158.0,
+        "ratio": 0.104
+      },
+      {
+        "date": "2017-02-15",
+        "value": 7.8,
+        "neighbourMedian": 20.8,
+        "ratio": 0.375
+      }
+    ],
+    "dropoutRule": "a day below half the median of the surrounding six days; the published audit catches only near-zero readings and misses partial dropouts",
+    "suspectDaysExcludedFromScoring": 8,
+    "daysOutsideScoredWindow": 739
+  },
+  "parametersAtBounds": [
+    "tt",
+    "k_fast"
+  ],
+  "seasonalVolumes": [
+    {
+      "year": 2002,
+      "observedMcm": 2790.1,
+      "simulatedMcm": 2452.2,
+      "period": "calibration"
+    },
+    {
+      "year": 2003,
+      "observedMcm": 2371.3,
+      "simulatedMcm": 2471.7,
+      "period": "calibration"
+    },
+    {
+      "year": 2004,
+      "observedMcm": 2110.5,
+      "simulatedMcm": 1758.4,
+      "period": "calibration"
+    },
+    {
+      "year": 2005,
+      "observedMcm": 2201.4,
+      "simulatedMcm": 2179.2,
+      "period": "calibration"
+    },
+    {
+      "year": 2006,
+      "observedMcm": 1706.6,
+      "simulatedMcm": 1651.4,
+      "period": "calibration"
+    },
+    {
+      "year": 2007,
+      "observedMcm": 1901.7,
+      "simulatedMcm": 2087.0,
+      "period": "calibration"
+    },
+    {
+      "year": 2008,
+      "observedMcm": 1515.6,
+      "simulatedMcm": 1511.9,
+      "period": "calibration"
+    },
+    {
+      "year": 2009,
+      "observedMcm": 2183.6,
+      "simulatedMcm": 1933.6,
+      "period": "calibration"
+    },
+    {
+      "year": 2010,
+      "observedMcm": 2368.6,
+      "simulatedMcm": 2554.8,
+      "period": "calibration"
+    },
+    {
+      "year": 2011,
+      "observedMcm": 1477.2,
+      "simulatedMcm": 1669.9,
+      "period": "validation"
+    },
+    {
+      "year": 2012,
+      "observedMcm": 1816.1,
+      "simulatedMcm": 2038.5,
+      "period": "validation"
+    },
+    {
+      "year": 2013,
+      "observedMcm": 1476.9,
+      "simulatedMcm": 1659.1,
+      "period": "validation"
+    },
+    {
+      "year": 2014,
+      "observedMcm": 1525.5,
+      "simulatedMcm": 1832.5,
+      "period": "validation"
+    },
+    {
+      "year": 2015,
+      "observedMcm": 1737.2,
+      "simulatedMcm": 1839.6,
+      "period": "validation"
+    },
+    {
+      "year": 2016,
+      "observedMcm": 1668.2,
+      "simulatedMcm": 2128.1,
+      "period": "validation"
+    },
+    {
+      "year": 2017,
+      "observedMcm": 2135.6,
+      "simulatedMcm": 2632.3,
+      "period": "validation"
+    }
+  ],
+  "seasonalValidationScores": {
+    "n": 7,
+    "nse": -1.0386,
+    "kge": 0.5278,
+    "logNse": -0.6952,
+    "pbias": 16.587,
+    "rmseMm": 312.3061,
+    "r": 0.929,
+    "alpha": 1.4363,
+    "beta": 1.1659
+  },
+  "waterBalance": {
+    "precipitationMm": 20613.3,
+    "observedRunoffMm": 14583.6,
+    "simulatedRunoffMm": 15387.6,
+    "runoffCoefficientObserved": 0.707,
+    "runoffCoefficientSimulated": 0.746,
+    "peakSnowWaterEquivalentMm": 1030.5,
+    "scoredDays": 5836
+  },
+  "qualityNotes": [
+    "Calibration and validation periods are separate years; no validation day informs a parameter.",
+    "The validation period is drier than the calibration period, which is the harder direction.",
+    "Precipitation is gridded, not gauged; the snowfall correction factor absorbs undercatch and is reported rather than hidden.",
+    "Discharge is a historical record ending in 2017; this is a hindcast, not an operational forecast."
+  ]
+}

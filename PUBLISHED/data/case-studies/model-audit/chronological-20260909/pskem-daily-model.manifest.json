@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T10:25:49+00:00",
+  "inputs": [
+    "PUBLISHED/data/case-studies/sabitov-daily-forcing.csv",
+    "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv",
+    "PUBLISHED/data/case-studies/pskem-candidate-catchment.geojson"
+  ],
+  "outputs": [
+    "PUBLISHED/data/case-studies/model-audit/chronological-20260909/pskem-daily-model.csv",
+    "PUBLISHED/data/case-studies/model-audit/chronological-20260909/pskem-daily-model.json"
+  ],
+  "observationClass": "model_hindcast"
+}

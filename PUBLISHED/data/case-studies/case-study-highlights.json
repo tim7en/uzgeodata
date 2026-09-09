@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-09T10:18:16+00:00",
+  "generatedAt": "2026-09-09T10:30:39+00:00",
   "study": {
     "id": "chirchik",
     "label": "Chirchik and Pskem",
-    "question": "Can published products stand in for the stations, and do they predict the season?",
+    "question": "What does the Pskem runoff experiment establish?",
     "page": "/case-studies.html"
   },
   "findings": [
@@ -59,7 +59,7 @@
       "headline": "A daily snowmelt model reproduces the hydrograph and the seasonal total",
       "value": 0.9,
       "valueLabel": "monthly NSE, held-out years",
-      "detail": "Calibrated on 2004–2006 and tested on years it never saw, the temperature-index model reaches NSE 0.88 on daily flow and 0.90 on monthly means, closing the water balance at a runoff coefficient of 0.71 against 0.71 observed. The April–September volume reaches NSE +0.59 at -2.1% bias once the first year is treated as warm-up rather than scored from empty stores.",
+      "detail": "Configured calibration years: 2004, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2017; warm-up year 2001 is excluded from scoring. On held-out years, the temperature-index model reaches NSE 0.88 on daily flow and 0.90 on monthly means, closing the water balance at a runoff coefficient of 0.71 against 0.71 observed. The April–September volume reaches NSE +0.59 at -2.1% bias once the first year is treated as warm-up rather than scored from empty stores.",
       "dailyNse": 0.879,
       "monthlyNse": 0.901,
       "seasonalNse": 0.592,
@@ -71,24 +71,24 @@
         "source": "PUBLISHED/data/case-studies/elevation-profiles.csv"
       },
       "figure": "/data/case-studies/pskem-daily-hydrograph.png",
-      "figures": [
-        "/data/case-studies/pskem-daily-hydrograph.png",
-        "/data/case-studies/pskem-monthly-skill.png",
-        "/data/case-studies/pskem-seasonal-shape.png"
-      ],
       "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json"
     },
     {
       "id": "water-year-class",
       "kind": "validated",
-      "headline": "Historical seasonal classes: 7 of 7 within one class",
+      "headline": "Historical seasonal classes: 6 of 7 within one class",
       "value": 9.0,
       "valueLabel": "% median volume error",
-      "detail": "Across 7 held-out historical years, April–September volume is reproduced to a median 9% with NSE +0.59 and bias -2.1%. Placed into five classes from dry to wet, 4 of 7 land in the right class and 7 of 7 are never more than one class out. The stratified split and retrospective forcing do not establish prospective seasonal forecast skill.",
-      "exactClass": 4,
-      "withinOneClass": 7,
+      "detail": "Across 7 held-out historical years, April–September volume is reproduced to a median 9% with NSE +0.59 and bias -2.1%. Placed into five classes from dry to wet, 2 of 7 land in the right class and 6 of 7 are never more than one class out. The stratified split and retrospective forcing do not establish prospective seasonal forecast skill. Class thresholds use calibration-year observations only.",
+      "exactClass": 2,
+      "withinOneClass": 6,
       "heldOutYears": 7,
-      "figure": "/data/case-studies/pskem-seasonal-shape.png",
+      "classThresholds": {
+        "source": "calibration_only",
+        "meanMcm": 1875.1444444444444,
+        "standardDeviationMcm": 322.69965434375695,
+        "n": 9
+      },
       "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json"
     },
     {
@@ -102,12 +102,11 @@
     },
     {
       "id": "elevation-band-forcing",
-      "kind": "validated",
-      "headline": "Melting the catchment by elevation band fixed the April failure",
+      "kind": "limitation",
+      "headline": "Elevation-dependent snowmelt is a model assumption, not an independent validation",
       "value": -7.87,
       "valueLabel": "°C per 1000 m",
-      "detail": "A single basin-mean temperature cannot melt a catchment spanning 875 to 4,375 m: the low bands should release water in April while the average is still frozen. Running the snow routine over 15 published elevation bands, each with its own temperature, cut the April error from 60% to 8% and the median monthly error from 38% to 21%. The lapse rate is bounded near the natural −6.5 °C/km; left free it ran past the dry adiabatic limit to absorb other errors, which bought no skill.",
-      "figure": "/data/case-studies/pskem-seasonal-shape.png",
+      "detail": "The snow routine uses 15 elevation bands and a calibrated temperature gradient of -7.87 °C/km. This gradient is not a measured atmospheric profile. An independently evaluated lumped-versus-banded comparison is required before claiming that elevation bands improved April flow. Snow-covered area alone does not validate modelled snow-water storage.",
       "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json"
     }
   ],

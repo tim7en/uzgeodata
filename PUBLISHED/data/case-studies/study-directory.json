@@ -1,9 +1,10 @@
 {
-  "generated_at": "2026-09-09T10:18:14.680164+00:00",
+  "generated_at": "2026-09-09T10:30:38.340692+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "9f4da3f3a75d6be552e78b2ff606709368711dec26a3f8769669db67faa3212a",
-    "regional-station-study.json": "f1c0f711f7256c3c04183c7cc3cef4de9ea17ee03cf4b5784b4da3d2d7d83902"
+    "regional-station-study.json": "f1c0f711f7256c3c04183c7cc3cef4de9ea17ee03cf4b5784b4da3d2d7d83902",
+    "model-review.json": "991b4d4a68801056eb55e196e0358177e32cec1427a0c2b95109cf0d499e905c"
   },
   "studies": [
     {
@@ -14,11 +15,12 @@
       "aim": "Test how elevation, snowfall and soil-water storage shape seasonal river flow.",
       "image": "/data/case-studies/chirchik-study-preview.svg",
       "image_alt": "Observed and simulated monthly runoff in held-out years, arranged consecutively as a study preview.",
-      "evidence_date": "2026-09-09T05:55:52+00:00",
-      "metric": 0.9008,
-      "metric_label": "Monthly NSE · historical validation",
-      "detail": "84 held-out months · daily snowmelt model",
-      "status": "Historical model evaluation"
+      "evidence_date": "2026-09-09T10:30:37.460525+00:00",
+      "metric": 0.7595,
+      "metric_label": "Monthly NSE · chronological test",
+      "detail": "84 held-out months · seasonal-volume uncertainty remains",
+      "status": "Chronological model re-evaluation",
+      "image_revision": "123b37c3492f"
     },
     {
       "id": "regional",
@@ -32,7 +34,8 @@
       "metric": 86,
       "metric_label": "Meteorological locations",
       "detail": "2015–2020 · 6,192 station-month records",
-      "status": "Exploratory relationships"
+      "status": "Exploratory relationships",
+      "image_revision": "ddf77eee22c2"
     }
   ]
 }

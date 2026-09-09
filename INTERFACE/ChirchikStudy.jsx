@@ -16,6 +16,7 @@ import Chart from './features/case-studies/TimeSeriesChart.jsx';
 import { StationEvidence, DischargeEvidence } from './features/case-studies/ObservationEvidence.jsx';
 import StudyPortfolio from './features/case-studies/StudyPortfolio.jsx';
 import CurrentModel from './features/case-studies/CurrentModel.jsx';
+import ModelReview from './features/case-studies/ModelReview.jsx';
 
 export default function ChirchikStudy() {
   const [data, setData] = useState(null), [geometry, setGeometry] = useState(null), [error, setError] = useState('');
@@ -48,11 +49,12 @@ export default function ChirchikStudy() {
     <main>
       <nav className="cs-study-switch" aria-label="Case studies"><a href="/case-studies.html">← All case studies</a><a href="#regional-study">Regional station study →</a></nav>
       <section id="chirchik-study" className="cs-hero"><div><span className="cs-eyebrow">CHIRCHIK–CHARVAK / WESTERN TIAN SHAN</span><h1>Mountain processes.<br /><em>Measured evidence.</em></h1><p>A historical Pskem-centred experiment within the Chirchik basin: connect station observations, satellite snow and vegetation, terrain and modelled water balance. Extension to the whole Chirchik requires independent tributary checks.</p>
-        <div className="cs-hero-actions"><a className="cs-primary" href="#current-model">Explore the current model <ArrowRight size={16} /></a><a href="#station-evidence">Inspect the observations ↓</a></div></div>
-        <aside className="cs-scope"><span className="cs-eyebrow">THE STARTING POINT</span><h2>Pskem first.</h2><p>{data.scope}</p><div><strong>{s.joint_months}</strong><span>joint climate–flow months<br />{s.joint_start} to {s.joint_end}</span></div><p className="cs-note">The current daily snowmelt model is presented first; earlier experiments remain available as research context. Operational readiness remains limited by gauge location and the age of discharge observations.</p></aside>
+        <div className="cs-hero-actions"><a className="cs-primary" href="#model-review">Review the new model test <ArrowRight size={16} /></a><a href="#station-evidence">Inspect the observations ↓</a></div></div>
+        <aside className="cs-scope"><span className="cs-eyebrow">THE STARTING POINT</span><h2>Pskem first.</h2><p>{data.scope}</p><div><strong>{s.joint_months}</strong><span>joint climate–flow months<br />{s.joint_start} to {s.joint_end}</span></div><p className="cs-note">A new chronological test is presented first. The earlier stratified fit is preserved as a reference, not a directly comparable accuracy claim. Operational readiness remains limited by gauge location and the historical discharge record.</p></aside>
       </section>
       <div className="cs-top-stats"><div><strong>{stations.length}</strong><span>Meteorological stations in this experiment</span></div><div><strong>2001–2017</strong><span>Historical Pskem discharge</span></div><div><strong>2010–2024</strong><span>Pskem climate record</span></div><div><strong>{data.studies.length}</strong><span>Documented study protocols</span></div></div>
-      <CurrentModel/>
+      <ModelReview/>
+      <details className="cs-panel" id="reference-model"><summary>Earlier published reference model — different validation split</summary><CurrentModel/></details>
       <section className="cs-panel"><h2>One methodology, distinct evidence layers</h2><div className="cs-table-wrap"><table><thead><tr><th>Layer</th><th>Scientific role</th><th>Boundary of the claim</th></tr></thead><tbody>
         <tr><td>Stations and gauges</td><td>Temperature, precipitation and screened discharge targets</td><td>Coordinate, calendar, missingness and unit checks precede comparisons.</td></tr>
         <tr><td>Elevation, snow and glaciers</td><td>Height-stratified temperature and melt hypotheses; satellite snow timing</td><td>Snow-covered area is not measured snowpack water equivalent. Glacier catalogue centres are not outlines.</td></tr>
@@ -60,8 +62,8 @@ export default function ChirchikStudy() {
         <tr><td>Climate forcing and water balance</td><td>Compare gridded precipitation/air temperature with observations; test runoff pathways</td><td>Reanalysis and satellite-derived estimates remain distinct from instrument measurements.</td></tr>
         <tr><td>Evaluation</td><td>Seasonal benchmarks, held-out years, anomaly relationships and process checks</td><td>Discharge-stratified splits and retrospective forcing do not establish real-time forecast skill.</td></tr>
       </tbody></table></div><p className="cs-note">Keep negative results and uncertainty alongside successful experiments. A calibrated Pskem model does not yet validate Chatkal, Ugam, the entire Chirchik, or downstream allocation.</p></section>
-      <CaseStudyFindings/>
-      <nav className="cs-jump-nav" aria-label="Study sections"><a href="#findings">Findings</a><a href="#station-evidence">Station validation</a><a href="#snow-evidence">Snow</a><a href="#elevation-evidence">Elevation & land cover</a><a href="#modelling-evidence">Model comparison</a><a href="#sabitov-methods">Sabitov methodology</a><a href="#portfolio">Research protocols</a></nav>
+      <details className="cs-panel" id="supporting-evidence"><summary>Supporting satellite and observation studies — separate from runoff validation</summary><CaseStudyFindings/></details>
+      <nav className="cs-jump-nav" aria-label="Study sections"><a href="#model-review">New model evaluation</a><a href="#station-evidence">Station validation</a><a href="#snow-evidence">Snow</a><a href="#elevation-evidence">Elevation & land cover</a><a href="#modelling-evidence">Earlier models</a><a href="#sabitov-methods">Sabitov methodology</a><a href="#portfolio">Research protocols</a></nav>
       <Readiness environment={environment}/><CaseStudyMap data={data} geometry={geometry} environment={environment}/>
       <StationEvidence data={data} /><DischargeEvidence data={data} />
       <details className="cs-panel" id="earlier-models"><summary>Earlier model experiments and detailed process checks</summary><p>These experiments have different inputs and evaluation protocols. Compare scores only after matching temporal support and validation splits.</p><AdvancedCaseStudy advanced={advanced} environment={environment} Chart={Chart}/><SabitovCaseStudy Chart={Chart}/></details>
