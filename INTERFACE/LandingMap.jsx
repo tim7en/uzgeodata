@@ -442,7 +442,6 @@ export default function LandingMap() {
         <div className="land-lakes">
           <label className="land-toggle"><input type="checkbox" checked={showLakes} onChange={event=>{setShowLakes(event.target.checked);if(!event.target.checked)setLake(null);}}/><span className="land-lake-key" aria-hidden="true"><i/><i/><i/></span><span>Lakes and water surfaces</span></label>
           {showLakes&&lakes&&<p className="land-group-note">{formatNumber(lakes.features.length)} catalogued water bodies. Blue parallel lines mark lakes and reservoir surfaces; smaller features appear as you zoom. Click a symbol or shoreline for properties and reservoir links.</p>}
-          <a className="land-water-audit" href="/data/hydroclimate/dam-lake-review.md" download>Reservoir–lake name and property audit ↗</a>
         </div>
         <div className="land-dams">
           <label className="land-toggle">

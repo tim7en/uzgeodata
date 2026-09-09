@@ -81,18 +81,20 @@ Daily calibration uses 3,652 screened observations in 2001–2010; evaluation us
 | Model | Daily RMSE m³/s | Daily NSE | Monthly NSE | Modelled ice share | Mean AET mm/year |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Training seasonal baseline | 29.66 | 0.695 | — | — | — |
-| M1 adapted · lumped snow and stores | 30.99 | 0.667 | 0.766 | 0.00% | 323.5 |
-| M2 adapted · elevation and glacier | 25.92 | 0.767 | 0.837 | 0.00% | 101.8 |
-| M3 adapted · lumped curve number | 27.30 | 0.742 | 0.826 | 0.00% | 273.7 |
-| M4 adapted · elevation and curve number | 27.47 | 0.739 | 0.816 | 0.00% | 250.5 |
+| M1 adapted · lumped snow and stores | 30.26 | 0.683 | 0.779 | 0.00% | 323.4 |
+| M2 adapted · elevation and glacier | 25.89 | 0.768 | 0.837 | 0.00% | 98.3 |
+| M3 adapted · lumped curve number | 27.46 | 0.739 | 0.825 | 0.00% | 298.2 |
+| M4 adapted · elevation and curve number | 25.63 | 0.772 | 0.841 | 0.00% | 200.0 |
 
-These are new adaptations evaluated on a different period and forcing, not recovered thesis results. Snow, ET, geometry and calibration constraints can change the ordering. The main figures show every predefined model; the holdout is not used to tune a winning structure. Optimizer budget/termination and parameter-bound flags are exported. A limited search does not establish a global optimum.
+**Physical failure exposed:** The assumed glacier reservoirs are exhausted within the historical run. Zero late-period ice contribution is a failed physical assumption, not evidence that Pskem has no glacier runoff. Reservoir exhaustion dates: M2: 2009-10-01, M3: 2008-06-13, M4: 2010-08-05. The 60 m scenario retains more ice and changes flow; selecting a thickness to improve held-out scores would not validate it. No glacier contribution or future water-supply conclusion is accepted from the depleted runs.
 
-Maximum model water-balance residual is 3.4e-13 mm/day. This confirms numerical bookkeeping, not that flux magnitudes are correct. Fixed-parameter sensitivity experiments separate assumptions about CN, rainfall, ET, melt factors and glacier storage from fitted model performance.
+These are new adaptations evaluated on a different period and forcing, not recovered thesis results. Snow, ET, geometry and calibration constraints can change the ordering. The main figures show every predefined model; the holdout is not used to tune a winning structure. Optimizer budget/termination and parameter-bound flags are exported. A bounded local search does not establish a global optimum.
+
+Maximum model water-balance residual is 3.6e-13 mm/day. This confirms numerical bookkeeping, not that flux magnitudes are correct. Fixed-parameter sensitivity experiments separate assumptions about CN, rainfall, ET, melt factors and glacier storage from fitted model performance.
 
 ## Process checks, low flows and climate scenarios
 
-The M4 snow-area proxy has 27 eligible held-out MODIS monthly pairs; its RMSE is 9.32 percentage points. The ET check has 31 eligible MOD16 pairs and RMSE 18.50 mm/month. These differences include spatial/temporal support effects: three binary elevation zones versus fractional clear-sky snow, and whole-basin AET versus valid vegetated/terrestrial pixels. They reveal process mismatch, not independent sensor accuracy. Neither check influenced calibration.
+The M4 snow-area proxy has 27 eligible held-out MODIS monthly pairs; its RMSE is 9.64 percentage points. The ET check has 31 eligible MOD16 pairs and RMSE 13.66 mm/month. These differences include spatial/temporal support effects: three binary elevation zones versus fractional clear-sky snow, and whole-basin AET versus valid vegetated/terrestrial pixels. They reveal process mismatch, not independent sensor accuracy. Neither check influenced calibration.
 
 Held-out observed Q50/Q90/Q95 are 39.85, 18.80, 17.50 m³/s. Q90/Q50 is 0.472; it is a low-flow persistence proxy, not hydrograph-separated baseflow. Specific runoff is 25.35 L/s/km² under the provisional area. Annual recurrence estimates and tributary closure are not manufactured from missing data or copied from the thesis table with inconsistent ratios.
 

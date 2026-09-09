@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T02:48:48.376179+00:00",
+  "generated_at": "2026-09-09T03:08:04.035763+00:00",
   "status": "exploratory_adaptation_not_operational",
   "thesis": {
     "author": "Timur Sabitov",
@@ -8656,6 +8656,1156 @@
     "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e",
     "PUBLISHED/data/hydroclimate/pskem-observations.manifest.json": "8e11671829700937cd5f3002b1bbea96bb73f864596cc603f0d6d0e9f6e85972",
     "storage/Sabitov_Master_ERE_2018.pdf": "36754b0494a58dc19133d77334e96fe61a3e7bbb4a26cd6df7a09886602cee6e",
-    "CASE_STUDIES/landcover-reference-labels.csv": "7c2d49cd1f77accabccc4d0b7c4c421e7c493700a55fe6e057f8a3ab2f98fda8"
+    "CASE_STUDIES/landcover-reference-labels.csv": "7c2d49cd1f77accabccc4d0b7c4c421e7c493700a55fe6e057f8a3ab2f98fda8",
+    "PUBLISHED/data/case-studies/advanced-validation.json": "7bdbdf94f1fd2b9661e84cde1cfc90857b97104eacfd81480f39a3a54d2e1d3c",
+    "PUBLISHED/data/case-studies/environment-modelling.json": "b475b1248ec064f55778d54ed0eb22c2a8e990c9a37ec037ea1765c59d21e8e1",
+    "PUBLISHED/data/case-studies/pskem-glims-outlines.geojson": "a7324dc715e8fd05626323827641f0a55b5d2f5e9b46de0f201073395952d8d6"
+  },
+  "climate_scenarios": [
+    {
+      "model": "m3",
+      "scenario": "Historical forcing",
+      "temperature_delta_c": 0,
+      "precipitation_multiplier": 1,
+      "glacier_area_multiplier": 1,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 12.978526374423337
+        },
+        {
+          "month": 2,
+          "discharge_cms": 8.245810169731957
+        },
+        {
+          "month": 3,
+          "discharge_cms": 6.635886090348572
+        },
+        {
+          "month": 4,
+          "discharge_cms": 28.636196606473966
+        },
+        {
+          "month": 5,
+          "discharge_cms": 162.18036241791305
+        },
+        {
+          "month": 6,
+          "discharge_cms": 176.9199018166406
+        },
+        {
+          "month": 7,
+          "discharge_cms": 120.74782143843609
+        },
+        {
+          "month": 8,
+          "discharge_cms": 77.70859830344591
+        },
+        {
+          "month": 9,
+          "discharge_cms": 49.895158483787654
+        },
+        {
+          "month": 10,
+          "discharge_cms": 42.20529974453237
+        },
+        {
+          "month": 11,
+          "discharge_cms": 33.9563939646261
+        },
+        {
+          "month": 12,
+          "discharge_cms": 21.401965984876814
+        }
+      ],
+      "mean_discharge_cms": 62.074917087775006,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m3",
+      "scenario": "Warmer / wetter: +2.2 C, +5% P",
+      "temperature_delta_c": 2.2,
+      "precipitation_multiplier": 1.05,
+      "glacier_area_multiplier": 1,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 15.737559173675473
+        },
+        {
+          "month": 2,
+          "discharge_cms": 10.200991790666242
+        },
+        {
+          "month": 3,
+          "discharge_cms": 16.228182866224266
+        },
+        {
+          "month": 4,
+          "discharge_cms": 75.50076791008847
+        },
+        {
+          "month": 5,
+          "discharge_cms": 178.17299658980423
+        },
+        {
+          "month": 6,
+          "discharge_cms": 140.90179908955224
+        },
+        {
+          "month": 7,
+          "discharge_cms": 97.00868512851576
+        },
+        {
+          "month": 8,
+          "discharge_cms": 62.665399468102606
+        },
+        {
+          "month": 9,
+          "discharge_cms": 40.392916505481715
+        },
+        {
+          "month": 10,
+          "discharge_cms": 39.49016954391783
+        },
+        {
+          "month": 11,
+          "discharge_cms": 39.15983637056014
+        },
+        {
+          "month": 12,
+          "discharge_cms": 24.91848994046486
+        }
+      ],
+      "mean_discharge_cms": 61.946216385087304,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m3",
+      "scenario": "Warmer / wetter: +3.1 C, +7% P",
+      "temperature_delta_c": 3.1,
+      "precipitation_multiplier": 1.07,
+      "glacier_area_multiplier": 1,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 16.88808873955026
+        },
+        {
+          "month": 2,
+          "discharge_cms": 11.126902207315908
+        },
+        {
+          "month": 3,
+          "discharge_cms": 22.860070178108373
+        },
+        {
+          "month": 4,
+          "discharge_cms": 102.80115957340645
+        },
+        {
+          "month": 5,
+          "discharge_cms": 170.94623950609216
+        },
+        {
+          "month": 6,
+          "discharge_cms": 127.62597490367897
+        },
+        {
+          "month": 7,
+          "discharge_cms": 88.2430397525937
+        },
+        {
+          "month": 8,
+          "discharge_cms": 57.07506098667798
+        },
+        {
+          "month": 9,
+          "discharge_cms": 36.89270827975801
+        },
+        {
+          "month": 10,
+          "discharge_cms": 37.3435834716825
+        },
+        {
+          "month": 11,
+          "discharge_cms": 39.803934496588646
+        },
+        {
+          "month": 12,
+          "discharge_cms": 26.93027985640546
+        }
+      ],
+      "mean_discharge_cms": 61.75254615597976,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m3",
+      "scenario": "Warmer / drier: +2 C, -10% P",
+      "temperature_delta_c": 2,
+      "precipitation_multiplier": 0.9,
+      "glacier_area_multiplier": 1,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 12.249419384334026
+        },
+        {
+          "month": 2,
+          "discharge_cms": 7.948834524311559
+        },
+        {
+          "month": 3,
+          "discharge_cms": 13.447276366425552
+        },
+        {
+          "month": 4,
+          "discharge_cms": 66.57916606650586
+        },
+        {
+          "month": 5,
+          "discharge_cms": 151.36120369792368
+        },
+        {
+          "month": 6,
+          "discharge_cms": 115.2950884912651
+        },
+        {
+          "month": 7,
+          "discharge_cms": 77.63077150516862
+        },
+        {
+          "month": 8,
+          "discharge_cms": 49.650308052389086
+        },
+        {
+          "month": 9,
+          "discharge_cms": 31.718056433233933
+        },
+        {
+          "month": 10,
+          "discharge_cms": 30.688678269880874
+        },
+        {
+          "month": 11,
+          "discharge_cms": 30.71278358272354
+        },
+        {
+          "month": 12,
+          "discharge_cms": 19.526672415434046
+        }
+      ],
+      "mean_discharge_cms": 50.76895918629812,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m3",
+      "scenario": "Warmer / drier and half glacier area",
+      "temperature_delta_c": 2,
+      "precipitation_multiplier": 0.9,
+      "glacier_area_multiplier": 0.5,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 12.249419384334026
+        },
+        {
+          "month": 2,
+          "discharge_cms": 7.948834524311559
+        },
+        {
+          "month": 3,
+          "discharge_cms": 13.447276366425552
+        },
+        {
+          "month": 4,
+          "discharge_cms": 66.57916606650586
+        },
+        {
+          "month": 5,
+          "discharge_cms": 151.36120369792368
+        },
+        {
+          "month": 6,
+          "discharge_cms": 115.2950884912651
+        },
+        {
+          "month": 7,
+          "discharge_cms": 77.63077150516862
+        },
+        {
+          "month": 8,
+          "discharge_cms": 49.650308052389086
+        },
+        {
+          "month": 9,
+          "discharge_cms": 31.718056433233933
+        },
+        {
+          "month": 10,
+          "discharge_cms": 30.688678269880874
+        },
+        {
+          "month": 11,
+          "discharge_cms": 30.71278358272354
+        },
+        {
+          "month": 12,
+          "discharge_cms": 19.526672415434046
+        }
+      ],
+      "mean_discharge_cms": 50.76895918629812,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m4",
+      "scenario": "Historical forcing",
+      "temperature_delta_c": 0,
+      "precipitation_multiplier": 1,
+      "glacier_area_multiplier": 1,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 8.55644512637887
+        },
+        {
+          "month": 2,
+          "discharge_cms": 8.303049909149866
+        },
+        {
+          "month": 3,
+          "discharge_cms": 24.98803296105395
+        },
+        {
+          "month": 4,
+          "discharge_cms": 58.521437063106305
+        },
+        {
+          "month": 5,
+          "discharge_cms": 146.87671366130286
+        },
+        {
+          "month": 6,
+          "discharge_cms": 210.85283407608242
+        },
+        {
+          "month": 7,
+          "discharge_cms": 131.7716427157298
+        },
+        {
+          "month": 8,
+          "discharge_cms": 57.50708213839087
+        },
+        {
+          "month": 9,
+          "discharge_cms": 27.23751238639452
+        },
+        {
+          "month": 10,
+          "discharge_cms": 30.659967861357124
+        },
+        {
+          "month": 11,
+          "discharge_cms": 28.656212997786014
+        },
+        {
+          "month": 12,
+          "discharge_cms": 20.360627214141182
+        }
+      ],
+      "mean_discharge_cms": 63.06086593121713,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m4",
+      "scenario": "Warmer / wetter: +2.2 C, +5% P",
+      "temperature_delta_c": 2.2,
+      "precipitation_multiplier": 1.05,
+      "glacier_area_multiplier": 1,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 14.416117922367183
+        },
+        {
+          "month": 2,
+          "discharge_cms": 19.268441046379596
+        },
+        {
+          "month": 3,
+          "discharge_cms": 34.07328305896525
+        },
+        {
+          "month": 4,
+          "discharge_cms": 78.09435145937627
+        },
+        {
+          "month": 5,
+          "discharge_cms": 174.16797269498045
+        },
+        {
+          "month": 6,
+          "discharge_cms": 188.03328098386856
+        },
+        {
+          "month": 7,
+          "discharge_cms": 97.65275438041246
+        },
+        {
+          "month": 8,
+          "discharge_cms": 44.31447484540795
+        },
+        {
+          "month": 9,
+          "discharge_cms": 21.96981870909773
+        },
+        {
+          "month": 10,
+          "discharge_cms": 33.86453468733881
+        },
+        {
+          "month": 11,
+          "discharge_cms": 34.6344343189001
+        },
+        {
+          "month": 12,
+          "discharge_cms": 26.395752759720192
+        }
+      ],
+      "mean_discharge_cms": 64.05509131087949,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m4",
+      "scenario": "Warmer / wetter: +3.1 C, +7% P",
+      "temperature_delta_c": 3.1,
+      "precipitation_multiplier": 1.07,
+      "glacier_area_multiplier": 1,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 17.885603606123638
+        },
+        {
+          "month": 2,
+          "discharge_cms": 25.28468490793701
+        },
+        {
+          "month": 3,
+          "discharge_cms": 37.405905721895905
+        },
+        {
+          "month": 4,
+          "discharge_cms": 94.32157989671343
+        },
+        {
+          "month": 5,
+          "discharge_cms": 177.88024987186725
+        },
+        {
+          "month": 6,
+          "discharge_cms": 169.60379887761428
+        },
+        {
+          "month": 7,
+          "discharge_cms": 87.25638781116207
+        },
+        {
+          "month": 8,
+          "discharge_cms": 40.24805638909193
+        },
+        {
+          "month": 9,
+          "discharge_cms": 20.284938545804867
+        },
+        {
+          "month": 10,
+          "discharge_cms": 34.294729163308176
+        },
+        {
+          "month": 11,
+          "discharge_cms": 37.880271203231054
+        },
+        {
+          "month": 12,
+          "discharge_cms": 28.444641129093792
+        }
+      ],
+      "mean_discharge_cms": 64.34359432653878,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m4",
+      "scenario": "Warmer / drier: +2 C, -10% P",
+      "temperature_delta_c": 2,
+      "precipitation_multiplier": 0.9,
+      "glacier_area_multiplier": 1,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 11.401767001149237
+        },
+        {
+          "month": 2,
+          "discharge_cms": 15.563587137558466
+        },
+        {
+          "month": 3,
+          "discharge_cms": 29.300883628484133
+        },
+        {
+          "month": 4,
+          "discharge_cms": 68.53461540270104
+        },
+        {
+          "month": 5,
+          "discharge_cms": 149.23461185650396
+        },
+        {
+          "month": 6,
+          "discharge_cms": 156.5100841112255
+        },
+        {
+          "month": 7,
+          "discharge_cms": 79.12265937148942
+        },
+        {
+          "month": 8,
+          "discharge_cms": 34.8966727151088
+        },
+        {
+          "month": 9,
+          "discharge_cms": 16.50627379879997
+        },
+        {
+          "month": 10,
+          "discharge_cms": 26.14560762297225
+        },
+        {
+          "month": 11,
+          "discharge_cms": 27.431289976486664
+        },
+        {
+          "month": 12,
+          "discharge_cms": 21.33564774518226
+        }
+      ],
+      "mean_discharge_cms": 53.12079741147614,
+      "ice_fraction": 0.0
+    },
+    {
+      "model": "m4",
+      "scenario": "Warmer / drier and half glacier area",
+      "temperature_delta_c": 2,
+      "precipitation_multiplier": 0.9,
+      "glacier_area_multiplier": 0.5,
+      "monthly": [
+        {
+          "month": 1,
+          "discharge_cms": 11.401767001149237
+        },
+        {
+          "month": 2,
+          "discharge_cms": 15.563587137558466
+        },
+        {
+          "month": 3,
+          "discharge_cms": 29.300883628484133
+        },
+        {
+          "month": 4,
+          "discharge_cms": 68.53461540270104
+        },
+        {
+          "month": 5,
+          "discharge_cms": 149.23461185650396
+        },
+        {
+          "month": 6,
+          "discharge_cms": 156.5100841112255
+        },
+        {
+          "month": 7,
+          "discharge_cms": 79.12265937148942
+        },
+        {
+          "month": 8,
+          "discharge_cms": 34.8966727151088
+        },
+        {
+          "month": 9,
+          "discharge_cms": 16.50627379879997
+        },
+        {
+          "month": 10,
+          "discharge_cms": 26.14560762297225
+        },
+        {
+          "month": 11,
+          "discharge_cms": 27.431289976486664
+        },
+        {
+          "month": 12,
+          "discharge_cms": 21.33564774518226
+        }
+      ],
+      "mean_discharge_cms": 53.12079741147614,
+      "ice_fraction": 0.0
+    }
+  ],
+  "paired_year_bootstrap": [
+    {
+      "model": "m1",
+      "rmse_difference_vs_baseline_cms": 0.5948291865928432,
+      "lower95": -8.087180940411363,
+      "upper95": 9.627337500914006,
+      "resamples": 1000,
+      "years": 7
+    },
+    {
+      "model": "m2",
+      "rmse_difference_vs_baseline_cms": -3.7721783871343852,
+      "lower95": -7.482030100582815,
+      "upper95": 0.045577136583662664,
+      "resamples": 1000,
+      "years": 7
+    },
+    {
+      "model": "m3",
+      "rmse_difference_vs_baseline_cms": -2.203558983829499,
+      "lower95": -9.560246602193185,
+      "upper95": 5.450750077239952,
+      "resamples": 1000,
+      "years": 7
+    },
+    {
+      "model": "m4",
+      "rmse_difference_vs_baseline_cms": -4.0376326663781725,
+      "lower95": -7.189339991825978,
+      "upper95": -0.4232803587731237,
+      "resamples": 1000,
+      "years": 7
+    }
+  ],
+  "bootstrap_note": "Paired whole-calendar-year bootstrap of the seven held-out years; 1000 resamples, seed 1729. Negative RMSE difference favours the model. Conditional on the fitted parameters, forcing and boundary; not total predictive uncertainty.",
+  "physical_readiness": {
+    "status": "red",
+    "operational_ready": false,
+    "reason": "The assumed glacier reservoirs are exhausted within the historical run. Zero late-period ice contribution is a failed physical assumption, not evidence that Pskem has no glacier runoff.",
+    "exhaustion_dates": {
+      "m2": "2009-10-01",
+      "m3": "2008-06-13",
+      "m4": "2010-08-05"
+    }
+  },
+  "climate_scenario_note": "Predeclared stress tests, not probabilities or projections for 2050. +5%/+7% precipitation are rounded analogues of thesis Table 3-1; perturbations also apply during warm-up/calibration years while fitted parameters remain frozen. No dynamic glacier-area retreat model.",
+  "process_checks": {
+    "snow_pairs": [
+      {
+        "period": "2011-07",
+        "satellite_snow_percent": 11.606918688530866,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 28,
+        "mean_valid_area_percent": 89.20184744930482
+      },
+      {
+        "period": "2011-08",
+        "satellite_snow_percent": 6.004879757506069,
+        "model_snow_proxy_percent": 0.8841413822149026,
+        "eligible_days": 23,
+        "mean_valid_area_percent": 78.95368911809923
+      },
+      {
+        "period": "2011-09",
+        "satellite_snow_percent": 8.995141921070383,
+        "model_snow_proxy_percent": 8.222514854598593,
+        "eligible_days": 24,
+        "mean_valid_area_percent": 81.41516853281672
+      },
+      {
+        "period": "2012-04",
+        "satellite_snow_percent": 86.48707343455352,
+        "model_snow_proxy_percent": 78.40944618986359,
+        "eligible_days": 21,
+        "mean_valid_area_percent": 72.8821006732624
+      },
+      {
+        "period": "2012-07",
+        "satellite_snow_percent": 15.061832419079598,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 27,
+        "mean_valid_area_percent": 89.88287844952279
+      },
+      {
+        "period": "2012-08",
+        "satellite_snow_percent": 6.109624852484316,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 24,
+        "mean_valid_area_percent": 85.74293780308933
+      },
+      {
+        "period": "2012-09",
+        "satellite_snow_percent": 4.026270756165209,
+        "model_snow_proxy_percent": 3.347339686199715,
+        "eligible_days": 25,
+        "mean_valid_area_percent": 89.09340633461018
+      },
+      {
+        "period": "2013-07",
+        "satellite_snow_percent": 16.58941637975852,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 20,
+        "mean_valid_area_percent": 74.4592128120825
+      },
+      {
+        "period": "2013-08",
+        "satellite_snow_percent": 7.600023475089575,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 20,
+        "mean_valid_area_percent": 73.9367336381033
+      },
+      {
+        "period": "2013-09",
+        "satellite_snow_percent": 11.964171925222951,
+        "model_snow_proxy_percent": 4.568063808110329,
+        "eligible_days": 27,
+        "mean_valid_area_percent": 90.85414147341088
+      },
+      {
+        "period": "2013-10",
+        "satellite_snow_percent": 21.04933226139017,
+        "model_snow_proxy_percent": 36.49000316524467,
+        "eligible_days": 23,
+        "mean_valid_area_percent": 75.66717409868853
+      },
+      {
+        "period": "2014-05",
+        "satellite_snow_percent": 66.93502394386826,
+        "model_snow_proxy_percent": 65.65641662625409,
+        "eligible_days": 22,
+        "mean_valid_area_percent": 80.2681035987792
+      },
+      {
+        "period": "2014-06",
+        "satellite_snow_percent": 33.69971860917826,
+        "model_snow_proxy_percent": 23.753931802173714,
+        "eligible_days": 20,
+        "mean_valid_area_percent": 72.07507040602549
+      },
+      {
+        "period": "2014-07",
+        "satellite_snow_percent": 12.530471676319884,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 27,
+        "mean_valid_area_percent": 88.05369736508223
+      },
+      {
+        "period": "2014-08",
+        "satellite_snow_percent": 4.8306892672073465,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 29,
+        "mean_valid_area_percent": 93.95207934468948
+      },
+      {
+        "period": "2014-09",
+        "satellite_snow_percent": 6.534479701943523,
+        "model_snow_proxy_percent": 2.7408382848661974,
+        "eligible_days": 20,
+        "mean_valid_area_percent": 70.78792679445174
+      },
+      {
+        "period": "2015-06",
+        "satellite_snow_percent": 36.05542416808851,
+        "model_snow_proxy_percent": 22.840319040551645,
+        "eligible_days": 21,
+        "mean_valid_area_percent": 78.09845862746097
+      },
+      {
+        "period": "2015-07",
+        "satellite_snow_percent": 12.687417947833557,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 25,
+        "mean_valid_area_percent": 82.14191945873736
+      },
+      {
+        "period": "2015-08",
+        "satellite_snow_percent": 7.39241398939135,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 21,
+        "mean_valid_area_percent": 78.19092849550739
+      },
+      {
+        "period": "2015-09",
+        "satellite_snow_percent": 17.580459267037476,
+        "model_snow_proxy_percent": 11.876965901086859,
+        "eligible_days": 22,
+        "mean_valid_area_percent": 73.02464922906621
+      },
+      {
+        "period": "2016-06",
+        "satellite_snow_percent": 37.06656291588676,
+        "model_snow_proxy_percent": 25.58115732541785,
+        "eligible_days": 20,
+        "mean_valid_area_percent": 74.8964946585664
+      },
+      {
+        "period": "2016-08",
+        "satellite_snow_percent": 8.247270865368572,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 28,
+        "mean_valid_area_percent": 85.48123861555197
+      },
+      {
+        "period": "2017-05",
+        "satellite_snow_percent": 68.57375358787974,
+        "model_snow_proxy_percent": 65.65641662625409,
+        "eligible_days": 23,
+        "mean_valid_area_percent": 75.5593297231243
+      },
+      {
+        "period": "2017-06",
+        "satellite_snow_percent": 40.45016827844981,
+        "model_snow_proxy_percent": 26.49477008703991,
+        "eligible_days": 22,
+        "mean_valid_area_percent": 78.08776921160042
+      },
+      {
+        "period": "2017-07",
+        "satellite_snow_percent": 15.411454335273186,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 28,
+        "mean_valid_area_percent": 89.12792838551061
+      },
+      {
+        "period": "2017-08",
+        "satellite_snow_percent": 5.794619520478725,
+        "model_snow_proxy_percent": 0.0,
+        "eligible_days": 25,
+        "mean_valid_area_percent": 84.41427252755071
+      },
+      {
+        "period": "2017-09",
+        "satellite_snow_percent": 7.836681232146366,
+        "model_snow_proxy_percent": 9.128406296977078,
+        "eligible_days": 24,
+        "mean_valid_area_percent": 82.5335947997114
+      }
+    ],
+    "et_pairs": [
+      {
+        "period": "2011-06",
+        "mod16_et_mm": 50.85879179549938,
+        "model_et_mm": 40.03528448024161,
+        "mean_valid_area_percent": 76.0662685661477
+      },
+      {
+        "period": "2011-07",
+        "mod16_et_mm": 26.653975330930134,
+        "model_et_mm": 46.015929859527155,
+        "mean_valid_area_percent": 96.31180256494102
+      },
+      {
+        "period": "2011-08",
+        "mod16_et_mm": 12.121976534320638,
+        "model_et_mm": 33.17578935396173,
+        "mean_valid_area_percent": 98.41643898306067
+      },
+      {
+        "period": "2011-09",
+        "mod16_et_mm": 10.208841992836412,
+        "model_et_mm": 22.284175858648787,
+        "mean_valid_area_percent": 96.9538278487421
+      },
+      {
+        "period": "2011-10",
+        "mod16_et_mm": 23.62800725731737,
+        "model_et_mm": 13.89388213693278,
+        "mean_valid_area_percent": 79.03274479202716
+      },
+      {
+        "period": "2012-06",
+        "mod16_et_mm": 49.80891720297637,
+        "model_et_mm": 41.43885702999894,
+        "mean_valid_area_percent": 79.3851630624624
+      },
+      {
+        "period": "2012-07",
+        "mod16_et_mm": 31.375040582652396,
+        "model_et_mm": 47.23512233700347,
+        "mean_valid_area_percent": 95.48765541518907
+      },
+      {
+        "period": "2012-08",
+        "mod16_et_mm": 13.553561076370448,
+        "model_et_mm": 34.134525445779715,
+        "mean_valid_area_percent": 98.42484291727747
+      },
+      {
+        "period": "2012-09",
+        "mod16_et_mm": 6.952509378286111,
+        "model_et_mm": 17.344027436276846,
+        "mean_valid_area_percent": 97.71423189529135
+      },
+      {
+        "period": "2012-10",
+        "mod16_et_mm": 17.34421803180383,
+        "model_et_mm": 11.072467713190846,
+        "mean_valid_area_percent": 83.56747776100644
+      },
+      {
+        "period": "2013-06",
+        "mod16_et_mm": 41.56228463347686,
+        "model_et_mm": 38.937296061373665,
+        "mean_valid_area_percent": 77.42561956539689
+      },
+      {
+        "period": "2013-07",
+        "mod16_et_mm": 30.336287439815365,
+        "model_et_mm": 45.68737952565388,
+        "mean_valid_area_percent": 92.12819059900372
+      },
+      {
+        "period": "2013-08",
+        "mod16_et_mm": 19.386571459070762,
+        "model_et_mm": 39.38838551179345,
+        "mean_valid_area_percent": 97.78854748029383
+      },
+      {
+        "period": "2013-09",
+        "mod16_et_mm": 8.387037092998902,
+        "model_et_mm": 26.88725062801962,
+        "mean_valid_area_percent": 96.80343845654073
+      },
+      {
+        "period": "2013-10",
+        "mod16_et_mm": 14.973350537840947,
+        "model_et_mm": 9.10611232638427,
+        "mean_valid_area_percent": 90.55316322968514
+      },
+      {
+        "period": "2014-06",
+        "mod16_et_mm": 39.26873379775917,
+        "model_et_mm": 40.54232909718962,
+        "mean_valid_area_percent": 77.43019246884872
+      },
+      {
+        "period": "2014-07",
+        "mod16_et_mm": 22.690349483009307,
+        "model_et_mm": 29.349102918090963,
+        "mean_valid_area_percent": 96.5578840689848
+      },
+      {
+        "period": "2014-08",
+        "mod16_et_mm": 11.696350038153271,
+        "model_et_mm": 33.43824264304741,
+        "mean_valid_area_percent": 98.41719246634109
+      },
+      {
+        "period": "2014-09",
+        "mod16_et_mm": 11.283792149693443,
+        "model_et_mm": 18.98115911008576,
+        "mean_valid_area_percent": 96.90114344882507
+      },
+      {
+        "period": "2015-06",
+        "mod16_et_mm": 44.989760212953094,
+        "model_et_mm": 44.703223519885604,
+        "mean_valid_area_percent": 81.09162441589818
+      },
+      {
+        "period": "2015-07",
+        "mod16_et_mm": 29.1657176261653,
+        "model_et_mm": 39.827913894876296,
+        "mean_valid_area_percent": 96.99311219649792
+      },
+      {
+        "period": "2015-08",
+        "mod16_et_mm": 15.040341250992473,
+        "model_et_mm": 30.914743554026554,
+        "mean_valid_area_percent": 97.82009664291603
+      },
+      {
+        "period": "2015-09",
+        "mod16_et_mm": 20.12499233031843,
+        "model_et_mm": 25.78670519235643,
+        "mean_valid_area_percent": 94.60321861452289
+      },
+      {
+        "period": "2016-06",
+        "mod16_et_mm": 57.892387763818135,
+        "model_et_mm": 44.42929482085987,
+        "mean_valid_area_percent": 77.22450318582862
+      },
+      {
+        "period": "2016-07",
+        "mod16_et_mm": 41.61280058761577,
+        "model_et_mm": 47.67201813132665,
+        "mean_valid_area_percent": 93.08810426543626
+      },
+      {
+        "period": "2016-08",
+        "mod16_et_mm": 22.71525728598419,
+        "model_et_mm": 41.18456955561983,
+        "mean_valid_area_percent": 97.548032459948
+      },
+      {
+        "period": "2016-09",
+        "mod16_et_mm": 14.155025790915722,
+        "model_et_mm": 31.715943126135315,
+        "mean_valid_area_percent": 96.60511457228604
+      },
+      {
+        "period": "2017-06",
+        "mod16_et_mm": 48.35446355427427,
+        "model_et_mm": 43.04255356403724,
+        "mean_valid_area_percent": 76.62161063711032
+      },
+      {
+        "period": "2017-07",
+        "mod16_et_mm": 29.490211606669448,
+        "model_et_mm": 43.62347514579056,
+        "mean_valid_area_percent": 96.01314653569578
+      },
+      {
+        "period": "2017-08",
+        "mod16_et_mm": 13.08773766404885,
+        "model_et_mm": 34.54421928341234,
+        "mean_valid_area_percent": 98.61415655195464
+      },
+      {
+        "period": "2017-09",
+        "mod16_et_mm": 10.844240012772657,
+        "model_et_mm": 23.67080137896106,
+        "mean_valid_area_percent": 95.95419923245014
+      }
+    ],
+    "snow_scores": {
+      "n": 27,
+      "bias": -7.0915023740870105,
+      "mae": 8.330939112508137,
+      "rmse": 9.644719209979879,
+      "pbias": -33.17683227085895,
+      "r": 0.9558909981005754,
+      "nse": 0.7969988208722594,
+      "kge": 0.6629961626401358,
+      "alpha": 1.039443153954007,
+      "beta": 0.6682316772914104
+    },
+    "et_scores": {
+      "n": 31,
+      "bias": 8.080620939972542,
+      "mae": 12.12921509075031,
+      "rmse": 13.659137816129626,
+      "pbias": 31.726294230285617,
+      "r": 0.6542082519660297,
+      "nse": 0.1013365029752461,
+      "kge": 0.47488643300101674,
+      "alpha": 0.7643804959700037,
+      "beta": 1.3172629423028561
+    },
+    "note": "Diagnostic comparisons, not measurement-error estimates: monthly mean of a three-zone SWE>1 mm proxy versus MODIS cloud-screened fractional snow; whole-basin model AET versus valid terrestrial MOD16 pixels. Dates and spatial sampling differ. No parameters fitted to these checks."
+  },
+  "method_gap_matrix": [
+    {
+      "method": "Daily forcing and time step",
+      "thesis_pages": "pp.15,24–35",
+      "status": "Implemented",
+      "implementation": "6,575 actual daily ERA5 values, 2000–2017; daily forcing is not inferred from monthly observations."
+    },
+    {
+      "method": "Four structural models",
+      "thesis_pages": "Table 2-1; pp.24–35",
+      "status": "Adapted",
+      "implementation": "Lumped/distributed stores with and without glacier and CN processes; positive ET retained in all structures."
+    },
+    {
+      "method": "Three elevation zones and seasonal lapse rates",
+      "thesis_pages": "pp.22,26,34",
+      "status": "Adapted",
+      "implementation": "Exact 2300/3300 m thresholds; open outer bounds retain all terrain; basin ERA5 mean conserved when temperature is redistributed."
+    },
+    {
+      "method": "Independent snow, soil and groundwater storage",
+      "thesis_pages": "Eqs.17–22",
+      "status": "Implemented",
+      "implementation": "Daily conservation checks, field-capacity recharge and previous-day groundwater recession; release is 1 minus retention."
+    },
+    {
+      "method": "Five-day antecedent moisture and SCS runoff",
+      "thesis_pages": "Eqs.13–16",
+      "status": "Adapted",
+      "implementation": "Prior rain only; dormant/growing thresholds in mm; daily-reset and event-accumulated variants, corrected SI retention."
+    },
+    {
+      "method": "Hamon PET and water-limited AET",
+      "thesis_pages": "Eqs.1–2; p.17",
+      "status": "Adapted",
+      "implementation": "Explicit vapour-pressure units; compare corrected Hamon, literal printed equation and ERA5 potential evaporation. No forced 250 mm annual ET."
+    },
+    {
+      "method": "Glacier melt and area",
+      "thesis_pages": "Eqs.10–11; pp.28,34",
+      "status": "Adapted",
+      "implementation": "Pskem-specific dated GLIMS inventory, finite ice reservoir, snow shielding; degree-day melt plus annual-cubic sensitivity."
+    },
+    {
+      "method": "Calibration and physical plausibility",
+      "thesis_pages": "p.36; Table 2-4",
+      "status": "Implemented",
+      "implementation": "Fixed early calibration/later holdout; daily and monthly scores, seasonal baseline, budget/convergence and boundary parameters disclosed."
+    },
+    {
+      "method": "Flow duration and specific runoff",
+      "thesis_pages": "pp.20,38–41",
+      "status": "Implemented",
+      "implementation": "Q50/Q90/Q95, Q90/Q50 proxy and area-normalized discharge; no unsupported recurrence-frequency extrapolation."
+    },
+    {
+      "method": "Monthly flow trends",
+      "thesis_pages": "pp.40–42",
+      "status": "Implemented",
+      "implementation": "Kendall/Sen on 2001–2017 monthly flows with Holm correction; exploratory because serial correlation and short record remain."
+    },
+    {
+      "method": "Climate perturbation experiments",
+      "thesis_pages": "Chapter 3; pp.58–60",
+      "status": "Adapted",
+      "implementation": "Warming/wetting and warming/drying stress tests with monthly timing and ice-area sensitivity. No date-specific 2050 forecast."
+    },
+    {
+      "method": "Satellite process checks",
+      "thesis_pages": "Extension beyond thesis",
+      "status": "Implemented",
+      "implementation": "Held-out MODIS snow and MOD16 ET comparisons retain coverage filters and different spatial supports; not independent field truth."
+    },
+    {
+      "method": "Land-cover confusion matrix",
+      "thesis_pages": "p.35; Table 2-3",
+      "status": "Awaiting reference labels",
+      "implementation": "Executable user/producer/overall accuracy evaluation and reference table supplied. No invented labels or transferred 82% accuracy."
+    },
+    {
+      "method": "Soils and spatial curve numbers",
+      "thesis_pages": "pp.30–31",
+      "status": "Awaiting soil evidence",
+      "implementation": "CN50/CN90 remain thesis assumptions with sensitivity; Esri classes alone cannot establish hydrologic soil groups."
+    },
+    {
+      "method": "Tributary mass balance and local lapse validation",
+      "thesis_pages": "pp.20–22",
+      "status": "Awaiting observations",
+      "implementation": "No simultaneous Oigaing/Maydantal/Charalma discharge or thesis-period paired elevation-confirmed daily meteorology in supplied files."
+    },
+    {
+      "method": "Gauge, ice thickness and recent verification",
+      "thesis_pages": "pp.15,28",
+      "status": "Unresolved",
+      "implementation": "Two gauge coordinates audited; fixed 15/30/60 m water-equivalent ice scenarios are not measurements; discharge ends in 2017."
+    }
+  ],
+  "code_hashes": {
+    "PIPELINES/extract_sabitov_inputs.py": "5689e6c006bd6e20c0b9711a36b267ca37bff44f00b015b31d086700ec845ecb",
+    "PIPELINES/analyse_sabitov_methods.py": "962aecbe76fb0f702fd484e2424aa13581e6d7e13221399e158cc435ceda4615",
+    "PIPELINES/report_sabitov_methods.py": "19900db7480c971ae3bac3ed683fd7993b02f76a7f7c2e6d5e1a5783d757698e"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T02:43:57.359123+00:00",
+  "generated_at": "2026-09-09T03:08:17.766612+00:00",
   "input_hashes": {
     "PUBLISHED/data/case-studies/sabitov-daily-forcing.csv": "253fbb29f3048e0b0d2739549806733d069fa03d614d5dab0cf4e89f731aa4f9",
     "PUBLISHED/data/case-studies/sabitov-inputs.manifest.json": "0df1f30f9210d4dfb636aff1939e59aea0768e38533e4921693b143dccc7a2ee",
@@ -13,19 +13,19 @@
   },
   "code_hashes": {
     "PIPELINES/extract_sabitov_inputs.py": "5689e6c006bd6e20c0b9711a36b267ca37bff44f00b015b31d086700ec845ecb",
-    "PIPELINES/analyse_sabitov_methods.py": "295f2b41b5922272bd8b80f56b08a1eefe0ccf55c752bf383b383fa864d3b64f",
-    "PIPELINES/report_sabitov_methods.py": "db0cd9ed4c31930b05d8bd88d87ec984aa78197f2a4e0354946654f12f81493e"
+    "PIPELINES/analyse_sabitov_methods.py": "962aecbe76fb0f702fd484e2424aa13581e6d7e13221399e158cc435ceda4615",
+    "PIPELINES/report_sabitov_methods.py": "19900db7480c971ae3bac3ed683fd7993b02f76a7f7c2e6d5e1a5783d757698e"
   },
   "outputs": {
-    "sabitov-hindcast.png": "689d473cf518dfaf3cd0e19d36cbe5813dd013ba885502ab1fa82a03ed1c4d85",
-    "sabitov-flow-diagnostics.png": "deb0dc4c148257008e9691e1c142f323d11c1b82b52042138576ebb4d62345e3",
-    "sabitov-water-balance.png": "3e8605dc33ae6752de2556d408389bf12ab465d8adc9e0781d449bd07fd3865a",
-    "sabitov-sensitivity.png": "f4dd69a493253e5a62245f823bfef3dfa9bfa778e92b47b91df7c0402bf65e75",
-    "sabitov-climate-stress.png": "63a3bef435f5e9b4fa196eef1389de5b6b743bc70411d4a6123d8c9bcd1d3d7a",
-    "sabitov-process-checks.png": "22b1e5a440761832c6916ca404f27e03676aab5635e326f373bd3a7dbb953c98",
-    "sabitov-methods.json": "e34e84b9c08224e1132c73edb0124eff481b1a6c9816e3b87fa2b4a3c066fee1",
-    "sabitov-2018-review.md": "2488d6a43a9ffb6e4185b1f94c72e54040d349500017705f1aa32305d90e6b96",
-    "sabitov-methods-atlas.pdf": "e4c5e578d88d19ed24f6f24546bd193e70eb1744113075957b0e8857d4f8419d",
-    "sabitov-methods-analysis.xlsx": "9163ca717c2fe417d116f0f8a1670008946e512b7d9896074a1d6c7d41e3d54c"
+    "sabitov-hindcast.png": "f9d34c8017805c275a3cd584df01b95215b7ac62fc54cd2e78419578922b758a",
+    "sabitov-flow-diagnostics.png": "85c43d243b71df19686b55b8bca0ef0a21c23fa2e5d9b47849f49da43ed24d6e",
+    "sabitov-water-balance.png": "54a996c1d7d61d242b45d049330dac02a70f3aecf4a10cadf5d428e6563faaf3",
+    "sabitov-sensitivity.png": "0357bad2915c43d1fb58f2a67ca5b8cb48014fbbc4f8ee819b9c874bf17d1692",
+    "sabitov-climate-stress.png": "f60ec42653a947e1c51211e5dcb73161b1e58537c0b02070e7f5da1213d74b88",
+    "sabitov-process-checks.png": "36796fd6fd1a894ff4570e7145f340d89b3aa903950e230cd806c10aa2559cf6",
+    "sabitov-methods.json": "b2d6d8c139d357df156d9e420c573524e8d64675c3645d2b5339fa960afb3117",
+    "sabitov-2018-review.md": "296dc8d87cee304c5352fbd955a40aff5927bea9fca5a5af2d619cf18938094b",
+    "sabitov-methods-atlas.pdf": "5a4242230307ea0189ee43abee0e03d8f105e543a93a978fbc92e07728e84289",
+    "sabitov-methods-analysis.xlsx": "c8d5925fb098c626c333641ebc3221956b791bff69236f658ef955f47eac2ea9"
   }
 }
