@@ -1098,3 +1098,79 @@ NSE +0,44 по месяцам звучит приемлемо, но практи
 Заголовок вывода о суточной модели теперь формируется из чисел, а не из памяти о
 прежнем результате.
 
+## 13. Regional station audit and case-study modularization — 2026-09-09
+
+This stage extends the evidence system, not the claimed operational coverage.
+The detailed hydrological experiment remains Pskem-centred within Chirchik.
+Full-basin geometry does not imply complete tributary observations or validation.
+
+### Completed, in execution order
+
+- [x] Reviewed the delivered meteo shapefile, gauge/canal workbooks, regional
+  air/precipitation and soil-temperature workbooks, and 2023 glacier catalogues.
+  Raw source deliveries remain unchanged.
+- [x] Published 86 unique meteo identities, including nine deterministic local
+  IDs replacing placeholder-key collisions. Fuzzy names no longer authorize
+  station joins. Meteo CRS transformation, coordinate screening, source names
+  and hashes are retained. Local IDs still require ontology reconciliation.
+- [x] Cross-checked 113 gauge/canal/outlet metadata records; classified 90 river
+  gauges, 21 canals and two outlets. Removed seven elevation sentinels without
+  imputation; declared missing source CRS/height-method information explicitly.
+  These files are not new discharge time series.
+- [x] Rebuilt all 120,233 monthly source rows with cell-level provenance and QC.
+  Quarantined 2,593 suspect values, including two suspect-labelled sheets;
+  removed automatic temperature/rainfall block swaps. Represented 252 identical
+  duplicate extras once in JSON while retaining source records in CSV.
+- [x] Corrected the October–September calendar to **ending years**, supported
+  by comparison against separate Tashkent/Pskem observations. Published ±1-year
+  alignment audits. Checked date status requires both variables and both
+  seasonal halves to pass; other station dates remain inferred.
+- [x] Rebuilt 210 glacier centres (60 Kashkadarya, 150 Surkhandarya), with DMS
+  component validation, source rows/hashes and explicit no-outline semantics.
+- [x] Fetched native-grid Earth Engine context and 2015–2020 monthly products
+  for 86 meteo sites: SRTM terrain, OpenLandMap texture, MODIS NDVI/LST/snow,
+  MCD12Q1 endpoint classes and ERA5-Land temperature/precipitation. Published
+  6,192 station-month rows, raw/screened values, valid-image counts, source image
+  IDs, retrieval timestamps and CSV/JSON downloads. Offline cache replay works.
+- [x] Implemented regional spatial regressions, location-adjusted temperature
+  coefficient, categorical soil summaries, station temperature line charts,
+  seasonal-cycle-removed comparisons and block-bootstrap slope intervals.
+  No snow gradient is fabricated when all-season coverage fails the threshold.
+- [x] Updated the Chirchik page's scientific scope and evidence-layer methodology;
+  kept negative findings and forecast caveats, removed stale pending-extraction
+  prose, and collapsed detailed protocols separately from results. Added a
+  separate regional study view and explicit loading/error/missing-data states.
+- [x] Extracted reusable UI modules under `INTERFACE/features/case-studies/` and
+  pipeline modules under `PIPELINES/hydromet/`. Established CLI and data URLs
+  remain compatible; original workbook paths were not moved.
+- [x] Verification: 50 targeted tests passed; desktop/mobile browser smoke passed
+  with no page errors or horizontal overflow; production build passed.
+  Full Python suite: **178 passed, 2 failed** on unchanged ontology/dam-basin
+  graph registration checks. No broad ontology rebuild was performed.
+
+Methodology and results: [regional station study](CASE_STUDIES/regional-station-environment.md).
+Commands: `stations:network`, `stations:climate`, `stations:glaciers-regional`,
+`cases:regional`, `cases:regional -- --offline`, `test:hydromet`.
+
+### Next steps, with evidence gates
+
+1. **Source and identity reconciliation:** confirm the 25 unmatched source
+   station blocks (26,973 records), aliases/WMO links, relocations and local-ID
+   ontology membership. Resolve the two suspect sheets with the provider;
+   confirm ending-year semantics elsewhere and soil sensor depths. Do not
+   lower matching or QC thresholds merely to increase coverage.
+2. **Graph consistency:** reconcile the existing `dam-basin-links.csv`
+   distribution with the stored ontology and rerun the two failing relationship
+   tests. Preserve private registry inputs during any rebuild.
+3. **Regional validation:** extend date-checked station–product overlap,
+   common-period sensitivity and spatial-block-size checks; acquire independent
+   soil/land-cover observations before causal soil or land-change claims.
+4. **Chirchik generalization:** independently verify Chatkal/Ugam control sections
+   and discharge records; add measured snowpack/SWE and glacier evidence where
+   available; evaluate chronological held-out forecasts using only information
+   available at the issue date. Existing retrospective skill is not operational
+   forecast validation.
+5. **Managed water connectivity:** connect verified reservoir releases,
+   abstractions, canals and demand only when observations support these edges;
+   keep exposure separate from traced allocation and causal downstream impacts.
+
