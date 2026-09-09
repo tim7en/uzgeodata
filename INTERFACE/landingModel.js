@@ -649,20 +649,29 @@ export function withinBounds(position, bounds) {
 }
 
 /**
+ * Does this water body have a real name, or only a catalogue identifier?
+ *
+ * 1,361 of the 1,393 bodies are unnamed in the sources and carry a placeholder
+ * built from their id. Painting "Unnamed lake · 14344" across a map is noise
+ * pretending to be information, so only the 32 genuinely named bodies — from
+ * HydroLAKES or a linked Global Dam Watch reservoir — are ever labelled.
+ */
+export function lakeIsNamed(properties) {
+  const source = (properties?.display_name_source || '').trim();
+  return Boolean(source) && source !== 'catalogue identifier';
+}
+
+/**
  * Which lake symbols get a name painted on the map.
  *
- * Names are what make the layer readable without pointing at it, but 1,393 of
- * them would bury the map and every one is a DOM node. So the choice is made
- * against what is actually on screen: the largest water bodies in view, above a
- * floor that falls as the reader zooms in, and never more than `limit` of them.
- * Zooming into a quiet valley therefore names its small lakes, while the
- * national view names only the ones worth naming at that scale.
+ * Named bodies only, largest first, capped so a dense view stays readable, and
+ * ranked against what is currently on screen — so zooming into a valley names
+ * the reservoirs in it rather than only the ones that are large nationally.
+ * Everything else still gives its name and area on hover.
  */
-export function labelledLakes(clusters, zoom, limit = 40) {
-  const level = Number(zoom) || 0;
-  const floor = level < 7 ? 50 : level < 9 ? 5 : level < 11 ? 0.5 : 0;
-  const eligible = (clusters || []).filter(cluster => (Number(cluster?.largest?.area_km2) || 0) >= floor);
-  const ranked = [...eligible].sort((left, right) =>
+export function labelledLakes(clusters, zoom, limit = 24) {
+  const named = (clusters || []).filter(cluster => lakeIsNamed(cluster?.largest));
+  const ranked = [...named].sort((left, right) =>
     (Number(right.largest?.area_km2) || 0) - (Number(left.largest?.area_km2) || 0));
   return new Set(ranked.slice(0, limit).map(cluster => cluster.key));
 }

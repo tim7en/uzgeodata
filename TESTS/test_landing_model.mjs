@@ -8,6 +8,8 @@ import {
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
   clusterDams, damClusterBounds, damClusterCellSize, damClusterLabel, damClusterStyle,
+  clusterLakes, labelledLakes, lakeAreaFloor, lakeClusterLabel, lakeIsNamed, lakePosition,
+  lakeSymbolSize, withinBounds,
 } from '../INTERFACE/landingModel.js';
 
 const read = name => JSON.parse(readFileSync(
@@ -449,4 +451,80 @@ test('a group is drawn larger than a single dam and stays inside its bounds', ()
   const formation = damClusterStyle({ storageMcm: 100, count: 3, inFormationZone: 3 });
   const transit = damClusterStyle({ storageMcm: 100, count: 3, inFormationZone: 0 });
   assert.notEqual(formation.fillColor, transit.fillColor);
+});
+
+const lakes = () => read('water-bodies-reviewed.geojson').features;
+
+test('a lake symbol is a locator, not a magnitude, so it stays small and fixed', () => {
+  const size = lakeSymbolSize();
+  assert.ok(size.width <= 20 && size.height <= 16, 'the symbol must not rival the dam bubbles');
+  // Unlike damRadius it takes no value at all: size carries no meaning here.
+  assert.equal(lakeSymbolSize().width, size.width);
+});
+
+test('lake symbols group as they overlap and split as the map zooms in', () => {
+  const features = lakes();
+  const counts = [6, 7, 8, 9, 11].map(zoom => clusterLakes(features, zoom).length);
+  for (let i = 1; i < counts.length; i += 1) {
+    assert.ok(counts[i] >= counts[i - 1], `zooming in must not merge symbols: ${counts}`);
+  }
+  // Every eligible lake is in exactly one group at any zoom.
+  for (const zoom of [6, 9, 12]) {
+    const clusters = clusterLakes(features, zoom);
+    const eligible = features.filter(f => Number(f.properties.area_km2) >= lakeAreaFloor(zoom));
+    assert.equal(clusters.reduce((total, c) => total + c.count, 0), eligible.length);
+    const seen = new Set(clusters.flatMap(c => c.members.map(m => m.properties.water_body_id)));
+    assert.equal(seen.size, eligible.length, `zoom ${zoom} lost or duplicated a lake`);
+  }
+  // The small ponds only appear once there is room for them.
+  assert.ok(lakeAreaFloor(6) > lakeAreaFloor(9));
+  assert.equal(lakeAreaFloor(12), 0);
+});
+
+test('a group is named for its largest member so the label still locates you', () => {
+  const clusters = clusterLakes(lakes(), 6);
+  const group = clusters.filter(c => c.count > 1)
+    .sort((a, b) => Number(b.largest.area_km2) - Number(a.largest.area_km2))[0];
+  assert.ok(group);
+  const biggest = group.members
+    .reduce((best, m) => Number(m.properties.area_km2) > Number(best.properties.area_km2) ? m : best);
+  assert.equal(group.largest.water_body_id, biggest.properties.water_body_id);
+  assert.match(lakeClusterLabel(group), /\+\d+$/, 'a group says how many it hides');
+  const single = clusters.find(c => c.count === 1);
+  assert.doesNotMatch(lakeClusterLabel(single), /\+\d+$/);
+});
+
+test('only genuinely named water bodies get a label painted on the map', () => {
+  const features = lakes();
+  // 1,361 of 1,393 carry a catalogue identifier rather than a name.
+  const named = features.filter(f => lakeIsNamed(f.properties));
+  assert.ok(named.length > 0 && named.length < features.length / 10,
+    `expected a small named minority, got ${named.length}/${features.length}`);
+  assert.equal(lakeIsNamed({ display_name_source: 'catalogue identifier' }), false);
+  assert.equal(lakeIsNamed({ display_name_source: 'HydroLAKES' }), true);
+  assert.equal(lakeIsNamed({}), false);
+
+  for (const zoom of [6, 9, 12]) {
+    const clusters = clusterLakes(features, zoom);
+    const labels = labelledLakes(clusters, zoom);
+    assert.ok(labels.size <= 24, `too many labels at zoom ${zoom}: ${labels.size}`);
+    for (const cluster of clusters) {
+      if (!labels.has(cluster.key)) continue;
+      assert.ok(lakeIsNamed(cluster.largest),
+        `labelled an unnamed body: ${cluster.largest.display_name}`);
+    }
+  }
+});
+
+test('symbols are culled to what is actually on screen', () => {
+  const features = lakes();
+  const box = [[41, 69], [42.5, 71]];           // the Chirchik headwaters
+  const inside = features.filter(f => withinBounds(lakePosition(f), box));
+  assert.ok(inside.length > 0 && inside.length < features.length);
+  for (const feature of inside) {
+    const [lon, lat] = lakePosition(feature);
+    assert.ok(lat >= 41 && lat <= 42.5 && lon >= 69 && lon <= 71);
+  }
+  assert.equal(withinBounds([70, 41.5], null), true, 'no bounds means no culling');
+  assert.equal(withinBounds([NaN, 41.5], box), false);
 });
