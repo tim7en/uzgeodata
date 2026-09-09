@@ -29,6 +29,7 @@ ROOT = Path(__file__).resolve().parent.parent
 STUDY = ROOT / "PUBLISHED/data/case-studies"
 VALIDATION = STUDY / "advanced-validation.json"
 TRENDS = STUDY / "sabitov-monthly-trends.csv"
+DAILY_MODEL = STUDY / "pskem-daily-model.json"
 OUTPUT = STUDY / "case-study-highlights.json"
 FIGURES = "/data/case-studies"
 
@@ -170,6 +171,51 @@ def main() -> None:
             "monthsTested": len(rows),
             "figure": f"{FIGURES}/sabitov-flow-diagnostics.png",
             "evidence": "PUBLISHED/data/case-studies/sabitov-monthly-trends.csv",
+        })
+
+    # 6. The daily model, and what verifying the observation record changed.
+    if DAILY_MODEL.exists():
+        model = json.loads(DAILY_MODEL.read_text(encoding="utf-8"))
+        daily = model["skill"]["validation"]
+        monthly = model["monthlySkill"]["validation"]
+        seasonal = model.get("seasonalValidationScores", {})
+        findings.append({
+            "id": "daily-process-model",
+            "kind": "validated",
+            "headline": "A daily snowmelt model has real skill; the seasonal total still does not",
+            "value": round_or_none(monthly["nse"], 2),
+            "valueLabel": "monthly NSE, held-out years",
+            "detail": (
+                f"Calibrated on {model['model']['calibration']['years'][0]}–"
+                f"{model['model']['calibration']['years'][1]} and tested on years it never saw, the "
+                f"temperature-index model reaches NSE {daily['nse']:.2f} on daily flow and "
+                f"{monthly['nse']:.2f} on monthly means, closing the water balance at a runoff "
+                f"coefficient of {model['waterBalance']['runoffCoefficientSimulated']:.2f} against "
+                f"{model['waterBalance']['runoffCoefficientObserved']:.2f} observed. The April–September "
+                f"total remains the hard part, at NSE {seasonal.get('nse', float('nan')):.2f}: daily "
+                "behaviour is reproducible where the seasonal volume is not."
+            ),
+            "dailyNse": round_or_none(daily["nse"], 3),
+            "monthlyNse": round_or_none(monthly["nse"], 3),
+            "seasonalNse": round_or_none(seasonal.get("nse"), 3),
+            "figure": f"{FIGURES}/sabitov-hindcast.png",
+            "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json",
+        })
+        provenance = model["observationProvenance"]
+        findings.append({
+            "id": "discharge-record-verified",
+            "kind": "validated",
+            "headline": "The daily discharge is observation, not disaggregated monthly values",
+            "value": provenance["suspectDaysExcludedFromScoring"],
+            "valueLabel": "days removed by screening",
+            "detail": (
+                "The workbook is named Monthly, so the series was checked rather than trusted: within "
+                "every month the days vary as a hydrograph and no month repeats one figure. "
+                + provenance["reconciliation"] + " Screening rejects "
+                f"{provenance['suspectDaysExcludedFromScoring']} day(s), all in 2017, and those days "
+                "are excluded from scoring the model as well as from the published means."
+            ),
+            "evidence": "PUBLISHED/data/case-studies/discharge-audit.csv",
         })
 
     reports = [

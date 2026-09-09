@@ -60,3 +60,37 @@ def test_headline_numbers_match_the_evidence_they_cite():
     reservoir = validation["reservoir"]
     assert by_id["charvak-water-surface"]["eligibleMonths"] == reservoir["eligible_months"]
     assert by_id["charvak-water-surface"]["totalMonths"] == reservoir["total_months"]
+
+
+def daily_model() -> dict:
+    return json.loads((STUDY / "pskem-daily-model.json").read_text(encoding="utf-8"))
+
+
+def test_the_daily_model_is_judged_on_years_it_never_saw():
+    model = daily_model()
+    calibration = model["model"]["calibration"]["years"]
+    seasonal = {row["year"] for row in model["seasonalVolumes"] if row["period"] == "validation"}
+    assert all(year > calibration[1] for year in seasonal)
+    assert model["skill"]["validation"]["n"] > 2000
+    # Skill has to be positive out of sample, or the finding claiming it is wrong.
+    assert model["skill"]["validation"]["nse"] > 0
+    assert model["monthlySkill"]["validation"]["nse"] > model["skill"]["validation"]["nse"]
+
+
+def test_the_model_closes_its_water_balance():
+    balance = daily_model()["waterBalance"]
+    observed = balance["runoffCoefficientObserved"]
+    simulated = balance["runoffCoefficientSimulated"]
+    assert 0 < observed < 1, "a catchment cannot yield more water than it receives"
+    assert abs(simulated - observed) < 0.15, "simulated yield must stay near the observed one"
+
+
+def test_the_discharge_record_is_verified_against_the_published_monthly_table():
+    """The workbook is named Monthly; the daily series had to be checked, not trusted."""
+    provenance = daily_model()["observationProvenance"]
+    assert "203 of 204" in provenance["reconciliation"]
+    assert provenance["suspectDaysExcludedFromScoring"] == 3
+    for entry in provenance["screening"]:
+        # Each screened month must name the day it removed, verified by reproducing the mean.
+        assert entry["identified"], entry["period"]
+        assert entry["screenedMean"] != entry["rawMean"]
