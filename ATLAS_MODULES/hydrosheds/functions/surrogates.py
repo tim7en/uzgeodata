@@ -89,6 +89,13 @@ class Domain:
         return sorted(self.members[bid]) if kind in ("u", "p") else [bid]
 
 
+def upstream_column(column):
+    """Swap the support character of an attribute column from local to upstream."""
+    if column[7] != "s":
+        raise ValueError(f"{column} is not a local-support column")
+    return column[:7] + "u" + column[8:]
+
+
 def result(value, method, support_count, coverage=1.0, valid=None, expected=None):
     return {"raw_value": value, "valid_cells": valid, "expected_cells": expected,
             "coverage_fraction": coverage, "support_basin_count": support_count, "method": method}
@@ -265,7 +272,8 @@ def build_modis_snow(domain):
         subset = collection.filter(ee.Filter.calendarRange(month, month, "month"))
         flags = subset.map(lambda image: image.updateMask(image.lte(100)).gte(40))
         name = f"snw_{month:02d}"
-        image = flags.mean().multiply(100).rename(name)
+        native = collection.first().projection()
+        image = flags.mean().multiply(100).rename(name).setDefaultProjection(native)
         image = image.reduceResolution(ee.Reducer.mean(), maxPixels=1024).reproject(
             crs="EPSG:4326", crsTransform=domain.transform)
         fields, record = export(image, f"modis-snow-{month:02d}-15s", domain, [name],
@@ -288,7 +296,7 @@ def build_dem_terrain(domain, native_path=None):
     with rasterio.open(native_path) as source:
         elevation = source.read(1, masked=True)
         native = source.transform
-    values = elevation.filled(np.nan).astype("float64")
+    values = elevation.astype("float64").filled(np.nan)
     latitudes = native.f + (np.arange(values.shape[0]) + 0.5) * native.e
     metres_y = abs(native.e) * 111_320.0
     metres_x = abs(native.a) * 111_320.0 * np.cos(np.radians(latitudes))[:, None]
@@ -300,7 +308,13 @@ def build_dem_terrain(domain, native_path=None):
     slope = np.degrees(np.arctan(np.hypot(horn_x, horn_y)))
     aggregated, counts = aggregate_5x5(slope)
     aggregated[counts != 25] = np.nan
+    column = int(round((domain.transform[2] - native.c) / CELL))
+    row = int(round((native.f - domain.transform[5]) / CELL))
+    if row < 0 or column < 0 or row + domain.height > aggregated.shape[0] or column + domain.width > aggregated.shape[1]:
+        raise ValueError("Pilot grid falls outside the aggregated elevation tile")
+    aggregated = aggregated[row:row + domain.height, column:column + domain.width]
     record = {"asset": "EarthEnv-DEM90 v1", "native_arcsec": 3.0, "algorithm": "Horn 3x3 slope",
+              "window": {"row": row, "column": column, "height": domain.height, "width": domain.width},
               "cell_metres": "geodetic degree-to-metre scaling by latitude",
               "aggregation": "5x5 arithmetic mean to 15 arc-seconds, complete blocks only",
               "native_source": str(native_path)}
@@ -399,7 +413,7 @@ def build_openlandmap_soil(domain):
     carbon = integrate("OpenLandMap/SOL/SOL_ORGANIC-CARBON_USDA-6A1C_M/v02", 5.0, "orgc")
     density = integrate("OpenLandMap/SOL/SOL_BULKDENS-FINEEARTH_USDA-4A1H_M/v02", 10.0, "bulk")
     # g/kg times kg/m3 over a 1 m column gives g/m2; 1 g/m2 is 0.01 t/ha.
-    stock = carbon.multiply(density).divide(1000.0).multiply(0.01).rename("soc")
+    stock = carbon.multiply(density).multiply(0.01).rename("soc")
     bands = ["clay", "sand", "orgc", "bulk", "soc"]
     record = {"assets": ["OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02",
                          "OpenLandMap/SOL/SOL_SAND-WFRACTION_USDA-3A1A1A_M/v02",
@@ -416,7 +430,7 @@ def build_openlandmap_soil(domain):
     for local_column, field in (("cly_pc_sav", fields["clay"]), ("snd_pc_sav", fields["sand"]),
                                 ("slt_pc_sav", silt), ("soc_th_sav", fields["soc"])):
         out[local_column] = (field, "mean")
-        out[local_column[:4] + "u" + local_column[5:]] = (field, "mean")
+        out[upstream_column(local_column)] = (field, "mean")
     return package(record, fields=out)
 
 
@@ -547,10 +561,16 @@ def _painted_fraction(collection, name, domain):
 def build_glims(domain):
     """Glacier share from GLIMS outlines, rasterised at 30 m before aggregation."""
     import ee
-    collection = ee.FeatureCollection("GLIMS/current").filterBounds(domain.region())
-    record = {"asset": "GLIMS/current", "features_in_domain": collection.size().getInfo(),
+    outlines = (ee.FeatureCollection("GLIMS/current").filterBounds(domain.region())
+                .filter(ee.Filter.eq("line_type", "glac_bound")))
+    # Repeat submissions for one glacier would union into an inflated envelope, so keep
+    # only the most recent analysis of each glacier.
+    collection = outlines.sort("anlys_time", False).distinct("glac_id")
+    record = {"asset": "GLIMS/current", "outlines_in_domain": outlines.size().getInfo(),
+              "features_in_domain": collection.size().getInfo(),
+              "filter": "line_type equals glac_bound; most recent analysis per glac_id",
               "rasterisation": "outlines painted at 30 m, mean-aggregated to 15 arc-seconds",
-              "note": "outline dates vary by submission and are not a single epoch"}
+              "note": "outline dates still vary between glaciers and are not a single epoch"}
     fields, record = export(_painted_fraction(collection, "gla", domain), "glims-cover-15s", domain, ["gla"], record)
     return package(record, fields={"gla_pc_sse": (fields["gla"], "mean"), "gla_pc_use": (fields["gla"], "mean")})
 
@@ -570,8 +590,8 @@ def build_ecoregions(domain):
     """Majority RESOLVE ecoregion and biome by exact geodesic intersection area."""
     import ee
     collection = ee.FeatureCollection("RESOLVE/ECOREGIONS/2017").filterBounds(domain.region())
-    payload = collection.select(["ECO_ID", "BIOME_NUM", "ECO_NAME"], None, False).getInfo()["features"]
-    parts = [(shape(f["geometry"]), f["properties"]) for f in payload]
+    payload = collection.getInfo()["features"]
+    parts = [(shape(f["geometry"]), f["properties"]) for f in payload if f.get("geometry")]
     record = {"asset": "RESOLVE/ECOREGIONS/2017", "features_in_domain": len(parts),
               "method": "largest geodesic intersection area within the basin",
               "ecoregions": sorted({p["ECO_NAME"] for _, p in parts})}

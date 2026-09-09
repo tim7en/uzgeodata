@@ -1,0 +1,575 @@
+{
+  "run_id": "pskem-all281-20260909T181935163851Z",
+  "status": "partial_source_failure",
+  "started_at": "2026-09-09T18:19:35.164+00:00",
+  "updated_at": "2026-09-09T18:19:52.439+00:00",
+  "wall_seconds": 17.273426600004314,
+  "cpu_seconds": 12.046875,
+  "stages": [
+    {
+      "name": "original_reference_and_pilot_validation",
+      "started_at": "2026-09-09T18:19:35.171+00:00",
+      "status": "complete",
+      "wall_seconds": 1.546607900003437,
+      "cpu_seconds": 1.359375
+    },
+    {
+      "name": "source_and_code_provenance",
+      "started_at": "2026-09-09T18:19:36.727+00:00",
+      "status": "complete",
+      "wall_seconds": 7.153863300016383,
+      "cpu_seconds": 5.703125
+    },
+    {
+      "name": "elevation_source_preparation",
+      "started_at": "2026-09-09T18:19:43.890+00:00",
+      "status": "complete",
+      "wall_seconds": 3.7985056999896187,
+      "cpu_seconds": 1.140625
+    },
+    {
+      "name": "elevation_attributes_one_by_one",
+      "started_at": "2026-09-09T18:19:47.705+00:00",
+      "status": "complete",
+      "wall_seconds": 0.5154233000066597,
+      "cpu_seconds": 0.46875
+    },
+    {
+      "name": "worldclim_source_preparation",
+      "started_at": "2026-09-09T18:19:48.231+00:00",
+      "status": "complete",
+      "wall_seconds": 0.10772120000910945,
+      "cpu_seconds": 0.0625
+    },
+    {
+      "name": "worldclim_attributes_one_by_one",
+      "started_at": "2026-09-09T18:19:48.351+00:00",
+      "status": "failed",
+      "wall_seconds": 0.15515310000046156,
+      "cpu_seconds": 0.0625
+    },
+    {
+      "name": "surrogate_domain_preparation",
+      "started_at": "2026-09-09T18:19:48.531+00:00",
+      "status": "complete",
+      "wall_seconds": 0.036194800020894036,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_copernicus_lc",
+      "started_at": "2026-09-09T18:19:48.577+00:00",
+      "status": "failed",
+      "wall_seconds": 0.27965180002502166,
+      "cpu_seconds": 0.25
+    },
+    {
+      "name": "surrogate_dem_terrain",
+      "started_at": "2026-09-09T18:19:48.898+00:00",
+      "status": "complete",
+      "wall_seconds": 2.5435123999777716,
+      "cpu_seconds": 2.5
+    },
+    {
+      "name": "surrogate_dmsp_lights",
+      "started_at": "2026-09-09T18:19:51.466+00:00",
+      "status": "failed",
+      "wall_seconds": 0.0218211000028532,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_ecoregions",
+      "started_at": "2026-09-09T18:19:51.521+00:00",
+      "status": "failed",
+      "wall_seconds": 0.011090299987699836,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_era5_runoff",
+      "started_at": "2026-09-09T18:19:51.554+00:00",
+      "status": "failed",
+      "wall_seconds": 0.011075699992943555,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_gfsad",
+      "started_at": "2026-09-09T18:19:51.588+00:00",
+      "status": "failed",
+      "wall_seconds": 0.009900399978505448,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_ghsl",
+      "started_at": "2026-09-09T18:19:51.632+00:00",
+      "status": "failed",
+      "wall_seconds": 0.010945200017886236,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_glims",
+      "started_at": "2026-09-09T18:19:51.665+00:00",
+      "status": "failed",
+      "wall_seconds": 0.009752699988894165,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_gpw",
+      "started_at": "2026-09-09T18:19:51.698+00:00",
+      "status": "failed",
+      "wall_seconds": 0.011246099980780855,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_human_modification",
+      "started_at": "2026-09-09T18:19:51.731+00:00",
+      "status": "failed",
+      "wall_seconds": 0.011058099975343794,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_hydrolakes",
+      "started_at": "2026-09-09T18:19:51.764+00:00",
+      "status": "complete",
+      "wall_seconds": 0.03998860000865534,
+      "cpu_seconds": 0.03125
+    },
+    {
+      "name": "surrogate_modis_snow",
+      "started_at": "2026-09-09T18:19:51.815+00:00",
+      "status": "failed",
+      "wall_seconds": 0.00971329997992143,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_openlandmap_soil",
+      "started_at": "2026-09-09T18:19:51.854+00:00",
+      "status": "failed",
+      "wall_seconds": 0.011031500005628914,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_pnv_biome",
+      "started_at": "2026-09-09T18:19:51.887+00:00",
+      "status": "failed",
+      "wall_seconds": 0.009564000007230788,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "surrogate_surface_water",
+      "started_at": "2026-09-09T18:19:51.921+00:00",
+      "status": "failed",
+      "wall_seconds": 0.011462900001788512,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_terraclimate",
+      "started_at": "2026-09-09T18:19:51.954+00:00",
+      "status": "failed",
+      "wall_seconds": 0.010599900007946417,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_wdpa",
+      "started_at": "2026-09-09T18:19:51.998+00:00",
+      "status": "failed",
+      "wall_seconds": 0.011180500005139038,
+      "cpu_seconds": 0.0
+    },
+    {
+      "name": "all_281_attribute_audit_and_export",
+      "started_at": "2026-09-09T18:19:52.048+00:00",
+      "status": "complete",
+      "wall_seconds": 0.3787376999971457,
+      "cpu_seconds": 0.171875
+    }
+  ],
+  "active_stage": null,
+  "events": [
+    {
+      "at": "2026-09-09T18:19:35.171+00:00",
+      "message": "START original_reference_and_pilot_validation"
+    },
+    {
+      "at": "2026-09-09T18:19:36.699+00:00",
+      "message": "Selected exactly 20 Pskem units and all 281 original attributes; upstream closure checked"
+    },
+    {
+      "at": "2026-09-09T18:19:36.719+00:00",
+      "message": "END original_reference_and_pilot_validation: 1.547s"
+    },
+    {
+      "at": "2026-09-09T18:19:36.727+00:00",
+      "message": "START source_and_code_provenance"
+    },
+    {
+      "at": "2026-09-09T18:19:43.880+00:00",
+      "message": "END source_and_code_provenance: 7.154s"
+    },
+    {
+      "at": "2026-09-09T18:19:43.890+00:00",
+      "message": "START elevation_source_preparation"
+    },
+    {
+      "at": "2026-09-09T18:19:44.024+00:00",
+      "message": "Verified cache EarthEnv-DEM90_N40E070: 34.3 MB in 0.04s"
+    },
+    {
+      "at": "2026-09-09T18:19:47.689+00:00",
+      "message": "END elevation_source_preparation: 3.799s"
+    },
+    {
+      "at": "2026-09-09T18:19:47.705+00:00",
+      "message": "START elevation_attributes_one_by_one"
+    },
+    {
+      "at": "2026-09-09T18:19:47.842+00:00",
+      "message": "ele_mt_sav: 15/20 within tolerance",
+      "attribute": "ele_mt_sav",
+      "attribute_wall_seconds": 0.11068549999617971
+    },
+    {
+      "at": "2026-09-09T18:19:47.969+00:00",
+      "message": "ele_mt_smn: 1/20 within tolerance",
+      "attribute": "ele_mt_smn",
+      "attribute_wall_seconds": 0.11810390002210625
+    },
+    {
+      "at": "2026-09-09T18:19:48.089+00:00",
+      "message": "ele_mt_smx: 0/20 within tolerance",
+      "attribute": "ele_mt_smx",
+      "attribute_wall_seconds": 0.11022309999680147
+    },
+    {
+      "at": "2026-09-09T18:19:48.212+00:00",
+      "message": "ele_mt_uav: 19/20 within tolerance",
+      "attribute": "ele_mt_uav",
+      "attribute_wall_seconds": 0.11421600001631305
+    },
+    {
+      "at": "2026-09-09T18:19:48.221+00:00",
+      "message": "END elevation_attributes_one_by_one: 0.515s"
+    },
+    {
+      "at": "2026-09-09T18:19:48.231+00:00",
+      "message": "START worldclim_source_preparation"
+    },
+    {
+      "at": "2026-09-09T18:19:48.297+00:00",
+      "message": "Verified cached WorldClim V1 pilot raster"
+    },
+    {
+      "at": "2026-09-09T18:19:48.338+00:00",
+      "message": "END worldclim_source_preparation: 0.108s"
+    },
+    {
+      "at": "2026-09-09T18:19:48.351+00:00",
+      "message": "START worldclim_attributes_one_by_one"
+    },
+    {
+      "at": "2026-09-09T18:19:48.367+00:00",
+      "message": "pre_mm_s01: 20/20 within tolerance",
+      "attribute": "pre_mm_s01",
+      "attribute_wall_seconds": 0.0038308000075630844
+    },
+    {
+      "at": "2026-09-09T18:19:48.380+00:00",
+      "message": "pre_mm_s02: 20/20 within tolerance",
+      "attribute": "pre_mm_s02",
+      "attribute_wall_seconds": 0.003681500005768612
+    },
+    {
+      "at": "2026-09-09T18:19:48.401+00:00",
+      "message": "pre_mm_s03: 20/20 within tolerance",
+      "attribute": "pre_mm_s03",
+      "attribute_wall_seconds": 0.0036943999875802547
+    },
+    {
+      "at": "2026-09-09T18:19:48.413+00:00",
+      "message": "pre_mm_s04: 20/20 within tolerance",
+      "attribute": "pre_mm_s04",
+      "attribute_wall_seconds": 0.0037236999778542668
+    },
+    {
+      "at": "2026-09-09T18:19:48.433+00:00",
+      "message": "pre_mm_s05: 20/20 within tolerance",
+      "attribute": "pre_mm_s05",
+      "attribute_wall_seconds": 0.003689500008476898
+    },
+    {
+      "at": "2026-09-09T18:19:48.446+00:00",
+      "message": "pre_mm_s06: 20/20 within tolerance",
+      "attribute": "pre_mm_s06",
+      "attribute_wall_seconds": 0.003852900001220405
+    },
+    {
+      "at": "2026-09-09T18:19:48.466+00:00",
+      "message": "pre_mm_s07: 20/20 within tolerance",
+      "attribute": "pre_mm_s07",
+      "attribute_wall_seconds": 0.003704399976413697
+    },
+    {
+      "at": "2026-09-09T18:19:48.479+00:00",
+      "message": "pre_mm_s08: 20/20 within tolerance",
+      "attribute": "pre_mm_s08",
+      "attribute_wall_seconds": 0.0036835000209975988
+    },
+    {
+      "at": "2026-09-09T18:19:48.493+00:00",
+      "message": "pre_mm_s09: 20/20 within tolerance",
+      "attribute": "pre_mm_s09",
+      "attribute_wall_seconds": 0.0036760999937541783
+    },
+    {
+      "at": "2026-09-09T18:19:48.507+00:00",
+      "message": "END worldclim_attributes_one_by_one: 0.155s"
+    },
+    {
+      "at": "2026-09-09T18:19:48.518+00:00",
+      "message": "worldclim candidates unavailable; reference baseline retained",
+      "reason": "PermissionError: [WinError 5] Access is denied: 'F:\\\\uzgeodata\\\\PUBLISHED\\\\data\\\\atlas\\\\batch-status.json.tmp' -> 'F:\\\\uzgeodata\\\\PUBLISHED\\\\data\\\\atlas\\\\batch-status.json'"
+    },
+    {
+      "at": "2026-09-09T18:19:48.531+00:00",
+      "message": "START surrogate_domain_preparation"
+    },
+    {
+      "at": "2026-09-09T18:19:48.557+00:00",
+      "message": "Prepared the shared surrogate grid: 280 by 156 cells at 15 arc-seconds"
+    },
+    {
+      "at": "2026-09-09T18:19:48.566+00:00",
+      "message": "END surrogate_domain_preparation: 0.036s"
+    },
+    {
+      "at": "2026-09-09T18:19:48.577+00:00",
+      "message": "START surrogate_copernicus_lc"
+    },
+    {
+      "at": "2026-09-09T18:19:48.857+00:00",
+      "message": "END surrogate_copernicus_lc: 0.280s"
+    },
+    {
+      "at": "2026-09-09T18:19:48.868+00:00",
+      "message": "copernicus_lc surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:48.898+00:00",
+      "message": "START surrogate_dem_terrain"
+    },
+    {
+      "at": "2026-09-09T18:19:51.422+00:00",
+      "message": "dem_terrain: 2 surrogate attributes",
+      "builder": "dem_terrain"
+    },
+    {
+      "at": "2026-09-09T18:19:51.441+00:00",
+      "message": "END surrogate_dem_terrain: 2.544s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.466+00:00",
+      "message": "START surrogate_dmsp_lights"
+    },
+    {
+      "at": "2026-09-09T18:19:51.488+00:00",
+      "message": "END surrogate_dmsp_lights: 0.022s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.510+00:00",
+      "message": "dmsp_lights surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.521+00:00",
+      "message": "START surrogate_ecoregions"
+    },
+    {
+      "at": "2026-09-09T18:19:51.533+00:00",
+      "message": "END surrogate_ecoregions: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.543+00:00",
+      "message": "ecoregions surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.554+00:00",
+      "message": "START surrogate_era5_runoff"
+    },
+    {
+      "at": "2026-09-09T18:19:51.565+00:00",
+      "message": "END surrogate_era5_runoff: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.576+00:00",
+      "message": "era5_runoff surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.588+00:00",
+      "message": "START surrogate_gfsad"
+    },
+    {
+      "at": "2026-09-09T18:19:51.598+00:00",
+      "message": "END surrogate_gfsad: 0.010s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.620+00:00",
+      "message": "gfsad surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.632+00:00",
+      "message": "START surrogate_ghsl"
+    },
+    {
+      "at": "2026-09-09T18:19:51.644+00:00",
+      "message": "END surrogate_ghsl: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.655+00:00",
+      "message": "ghsl surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.665+00:00",
+      "message": "START surrogate_glims"
+    },
+    {
+      "at": "2026-09-09T18:19:51.675+00:00",
+      "message": "END surrogate_glims: 0.010s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.685+00:00",
+      "message": "glims surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.698+00:00",
+      "message": "START surrogate_gpw"
+    },
+    {
+      "at": "2026-09-09T18:19:51.709+00:00",
+      "message": "END surrogate_gpw: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.720+00:00",
+      "message": "gpw surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.731+00:00",
+      "message": "START surrogate_human_modification"
+    },
+    {
+      "at": "2026-09-09T18:19:51.742+00:00",
+      "message": "END surrogate_human_modification: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.753+00:00",
+      "message": "human_modification surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.764+00:00",
+      "message": "START surrogate_hydrolakes"
+    },
+    {
+      "at": "2026-09-09T18:19:51.795+00:00",
+      "message": "hydrolakes: 3 surrogate attributes",
+      "builder": "hydrolakes"
+    },
+    {
+      "at": "2026-09-09T18:19:51.805+00:00",
+      "message": "END surrogate_hydrolakes: 0.040s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.815+00:00",
+      "message": "START surrogate_modis_snow"
+    },
+    {
+      "at": "2026-09-09T18:19:51.825+00:00",
+      "message": "END surrogate_modis_snow: 0.010s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.836+00:00",
+      "message": "modis_snow surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.854+00:00",
+      "message": "START surrogate_openlandmap_soil"
+    },
+    {
+      "at": "2026-09-09T18:19:51.864+00:00",
+      "message": "END surrogate_openlandmap_soil: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.875+00:00",
+      "message": "openlandmap_soil surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.887+00:00",
+      "message": "START surrogate_pnv_biome"
+    },
+    {
+      "at": "2026-09-09T18:19:51.896+00:00",
+      "message": "END surrogate_pnv_biome: 0.010s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.910+00:00",
+      "message": "pnv_biome surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.921+00:00",
+      "message": "START surrogate_surface_water"
+    },
+    {
+      "at": "2026-09-09T18:19:51.932+00:00",
+      "message": "END surrogate_surface_water: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.943+00:00",
+      "message": "surface_water surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.954+00:00",
+      "message": "START surrogate_terraclimate"
+    },
+    {
+      "at": "2026-09-09T18:19:51.965+00:00",
+      "message": "END surrogate_terraclimate: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:51.975+00:00",
+      "message": "terraclimate surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:51.998+00:00",
+      "message": "START surrogate_wdpa"
+    },
+    {
+      "at": "2026-09-09T18:19:52.009+00:00",
+      "message": "END surrogate_wdpa: 0.011s"
+    },
+    {
+      "at": "2026-09-09T18:19:52.020+00:00",
+      "message": "wdpa surrogate unavailable; original values retained",
+      "reason": "EEException: Earth Engine client library not initialized. See http://goo.gle/ee-auth."
+    },
+    {
+      "at": "2026-09-09T18:19:52.048+00:00",
+      "message": "START all_281_attribute_audit_and_export"
+    },
+    {
+      "at": "2026-09-09T18:19:52.427+00:00",
+      "message": "END all_281_attribute_audit_and_export: 0.379s"
+    }
+  ],
+  "timing_note": "Wall time runs from timer initialization through scientific run-package export; excludes development, research, tests, final timing serialization and web publication. CPU is the main Python process only. Subtasks are included in their parent stage; shared preparation is not charged to every attribute.",
+  "overhead_seconds": 0.5576251000165939,
+  "finished_at": "2026-09-09T18:19:52.439+00:00"
+}

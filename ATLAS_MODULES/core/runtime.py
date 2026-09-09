@@ -42,6 +42,7 @@ class RunTimer:
         self.current = None
         self.status = "running"
         self.events = []
+        self.progress_write_failures = 0
         self.publish()
 
     def snapshot(self):
@@ -51,6 +52,7 @@ class RunTimer:
                   "wall_seconds": wall, "cpu_seconds": time.process_time() - self.cpu_started,
                   "stages": self.stages, "active_stage": self.current,
                   "events": self.events[-100:],
+                  "progress_write_failures": getattr(self, "progress_write_failures", 0),
                   "timing_note": "Wall time runs from timer initialization through scientific run-package export; excludes development, research, tests, final timing serialization and web publication. CPU is the main Python process only. Subtasks are included in their parent stage; shared preparation is not charged to every attribute."}
         if self.status != "running":
             result["overhead_seconds"] = max(0, wall - sum(s["wall_seconds"] for s in self.stages))
@@ -61,7 +63,17 @@ class RunTimer:
         value = self.snapshot()
         write_json(self.directory / "timing.json", value)
         if self.progress_path:
-            write_json(self.progress_path, value)
+            # The shared progress file is a status view. A transient lock on it must not
+            # abort scientific work; the run's own timing.json stays strict.
+            for attempt in range(3):
+                try:
+                    write_json(self.progress_path, value)
+                    break
+                except OSError:
+                    if attempt == 2:
+                        self.progress_write_failures += 1
+                    else:
+                        time.sleep(0.05)
         return value
 
     def event(self, message, **details):

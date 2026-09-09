@@ -1,12 +1,15 @@
-"""Import all 281 original Pskem attributes and compare available source candidates.
+"""Import all 281 original Pskem attributes, compare source candidates, and build open surrogates.
 
 python PIPELINES/update_pskem_atlas.py [--offline]
-Never promotes numerical agreement to independent scientific reproduction.
+Never promotes numerical agreement to independent scientific reproduction, and never
+promotes an open-data surrogate to a reproduction of the attribute it stands beside.
 """
 from __future__ import annotations
 import argparse
+from collections import defaultdict
 import csv
 from datetime import datetime, timezone
+import functools
 import json
 from pathlib import Path
 import platform
@@ -29,6 +32,31 @@ def csv_out(path, rows):
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
+
+
+def divergence(reference, surrogate, factor):
+    """Report how far an independent open estimate sits from the stored attribute.
+
+    There is no tolerance and no pass flag: a surrogate is never a reproduction, so
+    agreement cannot certify one and disagreement cannot invalidate the original.
+    """
+    if factor is None:
+        return {"comparable": False,
+                "reason": "surrogate units are not convertible to the stored units"}
+    pairs = [(reference[bid], entry["raw_value"] * factor)
+             for bid, entry in surrogate.items()
+             if reference.get(bid) is not None and entry["raw_value"] is not None]
+    if not pairs:
+        return {"comparable": True, "paired": 0}
+    errors = [value - ref for ref, value in pairs]
+    magnitude = sum(abs(ref) for ref, _ in pairs) / len(pairs)
+    return {"comparable": True, "paired": len(pairs), "expected": len(reference),
+            "bias_raw": sum(errors) / len(errors),
+            "mae_raw": sum(map(abs, errors)) / len(errors),
+            "rmse_raw": (sum(error * error for error in errors) / len(errors)) ** 0.5,
+            "max_absolute_error_raw": max(map(abs, errors)),
+            "mean_reference_magnitude_raw": magnitude,
+            "relative_mae": (sum(map(abs, errors)) / len(errors) / magnitude) if magnitude else None}
 
 
 def run(offline=False):
@@ -79,7 +107,9 @@ def run(offline=False):
             code = [Path(__file__), ROOT / "ATLAS_MODULES/core/runtime.py",
                     ROOT / "ATLAS_MODULES/hydrosheds/functions/pilot_batch.py",
                     ROOT / "ATLAS_MODULES/hydrosheds/functions/elevation.py",
-                    ROOT / "ATLAS_MODULES/hydrosheds/recipes.json", ROOT / "ATLAS_MODULES/hydrosheds/sources.json"]
+                    ROOT / "ATLAS_MODULES/hydrosheds/functions/surrogates.py",
+                    ROOT / "ATLAS_MODULES/hydrosheds/recipes.json", ROOT / "ATLAS_MODULES/hydrosheds/sources.json",
+                    ROOT / "ATLAS_MODULES/hydrosheds/surrogates.json"]
             code_hashes = {}
             for path in code:
                 rel = path.relative_to(ROOT)
@@ -97,6 +127,7 @@ def run(offline=False):
             write_json(directory / "source-lock.json", lock)
 
         candidates, comparisons, attribute_seconds, failures = {}, {}, {}, {}
+        native_dem = None
         for family in ("elevation", "worldclim"):
             try:
                 with timer.stage(f"{family}_source_preparation"):
@@ -105,6 +136,7 @@ def run(offline=False):
                         if offline and not (cache / "EarthEnv-DEM90_N40E070.tar.gz").exists():
                             raise FileNotFoundError("Original elevation archive not cached")
                         field, transform, source_record = elevation_source(features, cache, directory, timer)
+                        native_dem = directory / "native" / source_record["name"] / (source_record["name"] + ".bil")
                         fields = {c: field for c in columns if c.startswith("ele_")}
                     else:
                         monthly, transform, source_record, _ = worldclim_source(features, ROOT / "GEODATA/atlas_sources/worldclim_v1_pskem", timer, offline)
@@ -128,6 +160,72 @@ def run(offline=False):
                 failures[family] = f"{type(error).__name__}: {error}"
                 timer.event(f"{family} candidates unavailable; reference baseline retained", reason=failures[family])
 
+        registry = read(ROOT / "ATLAS_MODULES/hydrosheds/surrogates.json")
+        families = {a["column"]: a["variable"] for a in attributes}
+        surrogates, surrogate_seconds, surrogate_records, surrogate_failures = {}, {}, {}, {}
+        try:
+            with timer.stage("surrogate_domain_preparation"):
+                import rasterio.transform
+                from ATLAS_MODULES.hydrosheds.functions import surrogates as sg
+                if not offline:
+                    import ee
+                    ee.Initialize(project="ee-sabitovty")
+                grid_transform, width, height, bounds = sg.pilot_grid(features)
+                affine = rasterio.transform.Affine(*grid_transform)
+                grid_zones = zones_for(features, affine, (height, width))
+                grid_areas = np.broadcast_to(cell_areas(affine, height)[:, None], grid_zones.shape)
+                domain = sg.Domain(features, members, grid_zones, grid_areas, grid_transform, width, height,
+                                   bounds, ROOT / "GEODATA/atlas_sources/surrogates_pskem", timer, offline)
+                lock["surrogate_grid"] = {"transform": grid_transform, "width": width, "height": height,
+                                          "bounds": list(bounds), "cell_arcsec": 15.0}
+                timer.event(f"Prepared the shared surrogate grid: {width} by {height} cells at 15 arc-seconds")
+        except Exception as error:
+            surrogate_failures["domain"] = f"{type(error).__name__}: {error}"
+            domain = None
+            timer.event("Surrogate grid unavailable; no open surrogate is attempted", reason=surrogate_failures["domain"])
+
+        planned = defaultdict(list)
+        for name, entry in registry["families"].items():
+            if entry["executable"] and entry.get("builder") and not entry.get("handled_by"):
+                planned[entry["builder"]].append(name)
+        for builder_name in sorted(planned) if domain else []:
+            try:
+                with timer.stage(f"surrogate_{builder_name}"):
+                    function = sg.BUILDERS[builder_name]
+                    if builder_name == "dem_terrain":
+                        if native_dem is None or not native_dem.exists():
+                            raise FileNotFoundError("Native EarthEnv-DEM90 tile is not unpacked in this run")
+                        function = functools.partial(function, native_path=native_dem)
+                    elif builder_name == "hydrolakes":
+                        function = functools.partial(
+                            function, gdb=ROOT / "GEODATA/HydroLAKES_polys_v10.gdb/HydroLAKES_polys_v10.gdb")
+                    payload = function(domain)
+                    surrogate_records[builder_name] = payload["record"]
+                    for column, (field, statistic) in sorted(payload["fields"].items()):
+                        start = time.perf_counter()
+                        surrogates[column] = sg.reduce_general(field, domain, column.split("_")[2][0], statistic)
+                        surrogate_seconds[column] = time.perf_counter() - start
+                    for column, (fractions, support) in sorted(payload["majority"].items()):
+                        start = time.perf_counter()
+                        surrogates[column] = sg.majority_from_fractions(fractions, domain, support)
+                        surrogate_seconds[column] = time.perf_counter() - start
+                    for column, values in sorted(payload["direct"].items()):
+                        surrogates[column] = values
+                        surrogate_seconds.setdefault(column, None)
+                    produced = set(payload["fields"]) | set(payload["majority"]) | set(payload["direct"])
+                    unknown = sorted(produced - set(columns))
+                    if unknown:
+                        raise ValueError(f"{builder_name} produced columns outside the atlas schema: {unknown}")
+                    timer.event(f"{builder_name}: {len(payload['fields']) + len(payload['majority']) + len(payload['direct'])} surrogate attributes",
+                                builder=builder_name)
+            except Exception as error:
+                surrogate_failures[builder_name] = f"{type(error).__name__}: {error}"
+                timer.event(f"{builder_name} surrogate unavailable; original values retained",
+                            reason=surrogate_failures[builder_name])
+        if surrogate_records:
+            lock["surrogate_sources"] = surrogate_records
+            write_json(directory / "source-lock.json", lock)
+
         with timer.stage("all_281_attribute_audit_and_export"):
             rows, ledger = [], []
             functions = {f["id"]: f for f in recipes["functions"]}
@@ -148,9 +246,26 @@ def run(offline=False):
                          "scientifically_reproduced": False, "review_required": reason,
                          "physical_factor": factor, "physical_unit": physical_unit,
                          "calculation_wall_seconds": attribute_seconds.get(c)}
+                plan = registry["families"][families[c]]
+                surrogate = surrogates.get(c)
+                convert = plan["units"]["factor"] if surrogate else None
+                # One method describes the whole attribute, so it is not repeated per basin.
+                methods = {entry.pop("method", None) for entry in (surrogate or {}).values()}
+                entry.update({
+                    "surrogate_family": families[c], "surrogate_fidelity": plan["fidelity"],
+                    "surrogate_status": "open_surrogate_estimate" if surrogate else (
+                        "carried_by_original_vintage_pass" if plan.get("handled_by") else "no_open_surrogate_in_this_pass"),
+                    "surrogate_values": surrogate,
+                    "surrogate_method": " / ".join(sorted(m for m in methods if m)) or None,
+                    "surrogate_divergence": divergence(references[c], surrogate, convert) if surrogate else None,
+                    "surrogate_wall_seconds": surrogate_seconds.get(c),
+                    "surrogate_is_reproduction": False})
                 ledger.append(entry)
+                resolution = plan["resolution"]
                 for bid, value in references[c].items():
                     result = candidate.get(bid) if candidate else None
+                    estimate = surrogate.get(bid) if surrogate else None
+                    physical = estimate["raw_value"] if estimate else None
                     rows.append({"run_id": run_id, "hybas_id": bid, "attribute": c,
                                  "reference_raw": value, "stored_unit": attribute["units"],
                                  "reference_physical": value * factor if value is not None else None,
@@ -158,18 +273,67 @@ def run(offline=False):
                                  "candidate_raw": result["raw_value"] if result else None,
                                  "candidate_status": entry["candidate_status"],
                                  "coverage_fraction": result["coverage_fraction"] if result else None,
+                                 "surrogate_physical": physical,
+                                 "surrogate_unit": plan["units"]["surrogate"],
+                                 "surrogate_raw_equivalent": physical * convert if physical is not None and convert else None,
+                                 "surrogate_status": entry["surrogate_status"],
+                                 "surrogate_fidelity": plan["fidelity"],
+                                 "surrogate_asset": plan["surrogate"]["asset"],
+                                 "surrogate_period": plan["surrogate"]["period"],
+                                 "surrogate_native_scale_m": resolution["native_scale_m"],
+                                 "surrogate_native_arcsec": resolution["native_arcsec"],
+                                 "processing_grid_arcsec": resolution["processing_grid_arcsec"],
+                                 "surrogate_coverage_fraction": estimate["coverage_fraction"] if estimate else None,
                                  "reference_period": attribute["reference_period"], "observation_year": None,
                                  "spatial_support": attribute["spatial_support"], "source_url": attribute["source_url"],
                                  "scientifically_reproduced": False})
             assert len(rows) == 5620
             csv_out(directory / "observations.csv", rows)
-            csv_out(directory / "attribute-audit.csv", [{k: a[k] for k in ("column", "source_dataset", "source_citation", "source_url", "units", "reference_period", "spatial_support", "reference_nonmissing", "candidate_status", "review_required", "calculation_wall_seconds")} for a in ledger])
+            csv_out(directory / "attribute-audit.csv", [{k: a[k] for k in ("column", "source_dataset", "source_citation", "source_url", "units", "reference_period", "spatial_support", "reference_nonmissing", "candidate_status", "review_required", "calculation_wall_seconds", "surrogate_status", "surrogate_fidelity", "surrogate_wall_seconds")} for a in ledger])
+            registry_rows = []
+            for a in ledger:
+                plan = registry["families"][a["surrogate_family"]]
+                source, resolution, units = plan["surrogate"], plan["resolution"], plan["units"]
+                registry_rows.append({
+                    "attribute": a["column"], "family": a["surrogate_family"], "fidelity": a["surrogate_fidelity"],
+                    "status": a["surrogate_status"], "provider": source["provider"], "asset": source["asset"],
+                    "citation": source["citation"], "period": source["period"], "licence": source["licence"],
+                    "catalogue_url": source["catalogue_url"],
+                    "native_scale_m": resolution["native_scale_m"], "native_arcsec": resolution["native_arcsec"],
+                    "native_grid": resolution["grid"],
+                    "processing_grid_arcsec": resolution["processing_grid_arcsec"],
+                    "resampling": resolution["resampling"], "support_change": resolution["support_change"],
+                    "surrogate_unit": units["surrogate"], "stored_unit": units["reference_stored"],
+                    "convertible": units["convertible"], "stored_conversion_factor": units["factor"],
+                    "original_dataset": a["source_dataset"], "original_citation": a["source_citation"],
+                    "spatial_support": a["spatial_support"],
+                    "relative_mae": (a["surrogate_divergence"] or {}).get("relative_mae"),
+                    "mae_raw": (a["surrogate_divergence"] or {}).get("mae_raw"),
+                    "bias_raw": (a["surrogate_divergence"] or {}).get("bias_raw"),
+                    "divergence_notes": " | ".join(plan["divergence"]),
+                    "pending_reason": plan.get("pending_reason"), "is_reproduction": False})
+            csv_out(directory / "surrogate-registry.csv", registry_rows)
+            by_fidelity = defaultdict(int)
+            for a in ledger:
+                if a["surrogate_status"] == "open_surrogate_estimate":
+                    by_fidelity[a["surrogate_fidelity"]] += 1
             summary = {"run_id": run_id, "pilot": "pskem", "basin_count": 20, "attribute_count": 281,
                        "reference_records": len(rows), "reference_nonmissing": sum(r["reference_raw"] is not None for r in rows),
                        "candidate_attributes": len(candidates), "numerical_pass_attributes": sum(c["pass"] for c in comparisons.values()),
                        "pending_attributes": 281 - len(candidates), "independently_reproduced": 0,
+                       "surrogate_attributes": len(surrogates),
+                       "surrogate_comparable_attributes": sum(1 for a in ledger if (a["surrogate_divergence"] or {}).get("comparable")),
+                       "surrogate_by_fidelity": dict(sorted(by_fidelity.items())),
+                       "surrogate_families": registry["families"],
+                       "surrogate_fidelity_classes": registry["fidelity_classes"],
+                       "surrogate_release_rule": registry["release_rule"],
+                       "surrogate_comparison_policy": registry["comparison_policy"],
+                       "attributes_without_any_estimate": sum(1 for a in ledger
+                                                              if a["candidate_status"] != "computed_candidate"
+                                                              and a["surrogate_status"] != "open_surrogate_estimate"),
+                       "surrogate_failures": surrogate_failures,
                        "scope_note": "Pskem candidate catchment: 20 complete level-12 units, outlet 4121289400. Gauge-to-reach placement still requires review.",
-                       "status_note": "Original-vintage reference import plus independent source candidates. Numerical agreement is not scientific reproduction. No annual observations are inferred.",
+                       "status_note": "Original-vintage reference import, independent source candidates, and open-data surrogates. Numerical agreement is not scientific reproduction, a surrogate is not a reproduction, and no annual observations are inferred.",
                        "failures": failures, "attributes": ledger, "basin_ids": sorted(str(i) for i in ids),
                        "download_base": f"/data/atlas/runs/{run_id}/"}
             write_json(directory / "batch.json", summary)
@@ -180,13 +344,17 @@ def run(offline=False):
         timing = timer.finish("complete_with_pending_reproduction" if not failures else "partial_source_failure")
         destination = published / "runs" / run_id
         destination.mkdir(parents=True, exist_ok=False)
-        for name in ("batch.json", "observations.csv", "reference-wide.csv", "attribute-audit.csv", "pilot-basins.geojson", "manifest.json", "source-lock.json", "tolerance.json", "timing.json", "requirements.freeze.txt"):
+        for name in ("batch.json", "observations.csv", "reference-wide.csv", "attribute-audit.csv", "surrogate-registry.csv", "pilot-basins.geojson", "manifest.json", "source-lock.json", "tolerance.json", "timing.json", "requirements.freeze.txt"):
             shutil.copy2(directory / name, destination / name)
         summary["timing"] = timing
         write_json(published / "batch-latest.json", summary)
         from PIPELINES.run_atlas_attribute import publish_history
         publish_history()
-        print(json.dumps({k: summary[k] for k in ("run_id", "reference_records", "candidate_attributes", "numerical_pass_attributes", "pending_attributes", "failures")}, indent=2))
+        print(json.dumps({k: summary[k] for k in ("run_id", "reference_records", "candidate_attributes",
+                                                  "numerical_pass_attributes", "pending_attributes",
+                                                  "surrogate_attributes", "surrogate_by_fidelity",
+                                                  "attributes_without_any_estimate", "failures",
+                                                  "surrogate_failures")}, indent=2))
         print(f"Full scientific processing wall time: {timing['wall_seconds']:.3f}s")
         return summary
     except BaseException:
