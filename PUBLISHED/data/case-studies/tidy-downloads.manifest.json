@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-09-09T12:59:05+00:00",
+  "convention": {
+    "missingValue": "empty field",
+    "dateFormat": "ISO 8601, YYYY-MM-DD",
+    "lineTerminator": "LF",
+    "encoding": "UTF-8 without BOM",
+    "columnNaming": "snake_case with the unit in the name"
+  },
+  "tables": [
+    {
+      "file": "pskem_daily.csv",
+      "bytes": 342018,
+      "rows": 6575
+    },
+    {
+      "file": "pskem_monthly.csv",
+      "bytes": 23570,
+      "rows": 432
+    },
+    {
+      "file": "pskem_seasonal.csv",
+      "bytes": 1854,
+      "rows": 32
+    },
+    {
+      "file": "model_scores.csv",
+      "bytes": 3250,
+      "rows": 81
+    },
+    {
+      "file": "study_inputs.csv",
+      "bytes": 2665,
+      "rows": 16
+    },
+    {
+      "file": "method_stages.csv",
+      "bytes": 1236,
+      "rows": 6
+    },
+    {
+      "file": "tests.csv",
+      "bytes": 5850,
+      "rows": 47
+    },
+    {
+      "file": "transferability.csv",
+      "bytes": 725,
+      "rows": 4
+    },
+    {
+      "file": "data_dictionary.csv",
+      "bytes": 3546,
+      "rows": 47
+    }
+  ]
+}

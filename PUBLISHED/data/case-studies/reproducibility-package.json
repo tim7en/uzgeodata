@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-09T12:48:11+00:00",
+  "generatedAt": "2026-09-09T12:59:05+00:00",
   "study": {
     "id": "chirchik-pskem",
     "title": "Chirchik–Charvak: from observations to water-supply evidence",
@@ -120,8 +120,8 @@
         "path": "PIPELINES/build_pskem_daily_model.py",
         "role": "chronological re-test input",
         "available": true,
-        "bytes": 28356,
-        "sha256": "b02efe663f6bc9ff6d8d1c056a525a7d1573233ae69a0683ca1aabea1956a4b5"
+        "bytes": 28858,
+        "sha256": "ba571b92e1cc825807394a33a960617d5b8238cde1cfba93f954608278eaf29f"
       }
     ],
     "remoteAssets": [
@@ -271,7 +271,7 @@
         {
           "path": "PUBLISHED/data/case-studies/model-review.json",
           "bytes": 59573,
-          "sha256": "2e4cbd8eb4e21fa2c937fb5adb4627a24fd1f2beb87fe2e1893c666a9af6f013"
+          "sha256": "f671601646b08848ee8800deb34810e506aca12c76f15e6c4b31cbe5cbf92878"
         }
       ]
     },
@@ -280,22 +280,22 @@
       "title": "Derive the findings and figures the page shows",
       "purpose": "Recompute skill from the daily series, redraw the figures and derive every finding headline from the evidence.",
       "command": "npm run cases:publish",
-      "runs": "python PIPELINES/build_pskem_model_review.py && python PIPELINES/build_study_landing.py && python PIPELINES/build_pskem_model_figures.py && python PIPELINES/build_case_study_highlights.py && python PIPELINES/verify_case_study_reproduction.py && python PIPELINES/build_case_study_package.py",
+      "runs": "python PIPELINES/build_pskem_model_review.py && python PIPELINES/build_study_landing.py && python PIPELINES/build_pskem_model_figures.py && python PIPELINES/build_case_study_highlights.py && python PIPELINES/verify_case_study_reproduction.py && python PIPELINES/build_case_study_package.py && python PIPELINES/build_tidy_downloads.py",
       "produces": [
         {
           "path": "PUBLISHED/data/case-studies/case-study-highlights.json",
           "bytes": 9295,
-          "sha256": "eaa56801b037a75d1cfe11ec1c0905417b6c6ddbc02207234b0ef4acaf5ebfbc"
+          "sha256": "9598fd49046776682c107f38f83459219d7ac4f50d9679ddea87b904c1c99285"
         },
         {
           "path": "PUBLISHED/data/case-studies/current-model.json",
           "bytes": 47119,
-          "sha256": "5eb21e6704421444089d26ef042066568b1793386e57de1d6e40bf92c0398d02"
+          "sha256": "69cd4f6742adac8a2f454ef56f895f4be5477d96bae38bd6b55664b7a078dab5"
         },
         {
           "path": "PUBLISHED/data/case-studies/study-landing.manifest.json",
           "bytes": 689,
-          "sha256": "5052394219188a1c3c5f90417e495816cdf2e033778527ed4797bc967737f24c"
+          "sha256": "1edfe05b0a2ee6d5007c29c531ca7be089ba5d3936072ecdd7016efdc156d833"
         }
       ]
     }
@@ -401,7 +401,7 @@
       "substantiveDifferenceCount": 0,
       "provenanceDifferenceCount": 0,
       "substantiveDifferences": [],
-      "checkedAt": "2026-09-09T12:46:56+00:00",
+      "checkedAt": "2026-09-09T12:59:03+00:00",
       "command": "npm run cases:reproduce"
     },
     "method": "Two independent checks. The scores the page shows are recomputed from the published daily CSV and compared with the model's own summary. Separately, the observation stage is rebuilt into a temporary directory and diffed field by field against what is published, so a drift between the code and the artefacts shows up as a difference rather than as silence."

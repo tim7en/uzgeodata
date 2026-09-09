@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T12:46:54.318690+00:00",
+  "generated_at": "2026-09-09T12:59:00.474400+00:00",
   "candidate_generated_at": "2026-09-09T10:25:49+00:00",
   "run_directory": "/data/case-studies/model-audit/chronological-20260909/",
   "decision": "Preserve the published stratified reference. Foreground the stricter chronological test; do not tune further against its exposed holdout.",
@@ -2329,7 +2329,7 @@
     "PUBLISHED/data/case-studies/pskem-candidate-catchment.geojson": "0b22c06bb0fc9985969d24d5b117f174bf2cc1e169eb4804bf67bfff85be971b",
     "PUBLISHED/data/case-studies/elevation-profiles.csv": "26e681cf8e769ad8921abbd9d12f4530f8cee6f6e5ccfe70a0194eff51c86156",
     "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e",
-    "PIPELINES/build_pskem_daily_model.py": "b02efe663f6bc9ff6d8d1c056a525a7d1573233ae69a0683ca1aabea1956a4b5"
+    "PIPELINES/build_pskem_daily_model.py": "ba571b92e1cc825807394a33a960617d5b8238cde1cfba93f954608278eaf29f"
   },
   "limitations": [
     "Parameters were selected using calibration KGE only: 6,000 broad samples plus four refinement rounds of 3,000, seed 1729. Existing bounds were retained.",

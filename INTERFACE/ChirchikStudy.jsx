@@ -4,6 +4,7 @@ import AdvancedCaseStudy, { Readiness } from './AdvancedCaseStudy';
 import CaseStudyMap from './CaseStudyMap';
 import SabitovCaseStudy from './SabitovCaseStudy';
 import { Download, Droplets, ArrowRight } from 'lucide-react';
+import ThemeToggle from './ThemeToggle.jsx';
 
 const BASE = '/data/case-studies/';
 const fetchJSON = async url => {
@@ -46,7 +47,7 @@ export default function ChirchikStudy() {
   const { summary: s } = data;
   const stations = [...new Map(data.inventory.map(r => [r.station_id, r])).values()];
   return <div className="cs-app">
-    <header className="cs-header"><a className="cs-logo" href="/"><Droplets size={22} /> UZGEODATA <span>/ FIELD STUDIES</span></a><nav><a href="/climate.html">Climate</a><a href="/hydrography.html">Hydrography</a><a href={`${BASE}chirchik-deep-study.md`} download><Download size={14} /> Study report</a></nav></header>
+    <header className="cs-header"><a className="cs-logo" href="/"><Droplets size={22} /> UZGEODATA <span>/ FIELD STUDIES</span></a><nav><a href="/climate.html">Climate</a><a href="/hydrography.html">Hydrography</a><a href={`${BASE}chirchik-deep-study.md`} download><Download size={14} /> Study report</a><ThemeToggle/></nav></header>
     <main>
       <nav className="cs-study-switch" aria-label="Case studies"><a href="/case-studies.html">← All case studies</a><a href="#regional-study">Regional station study →</a></nav>
       <section id="chirchik-study" className="cs-hero"><div><span className="cs-eyebrow">CHIRCHIK–CHARVAK / WESTERN TIAN SHAN</span><h1>Mountain processes.<br /><em>Measured evidence.</em></h1><p>A historical Pskem-centred experiment within the Chirchik basin: connect station observations, satellite snow and vegetation, terrain and modelled water balance. Extension to the whole Chirchik requires independent tributary checks.</p>

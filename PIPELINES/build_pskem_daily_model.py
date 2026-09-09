@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 import os
 from datetime import date, timedelta
 from pathlib import Path
@@ -452,14 +453,24 @@ def main() -> None:
     else:
         seasonal_scores = {}
 
+    def cell(value, digits):
+        """Empty for a missing day, so R and pandas both read the column as numeric.
+
+        Writing the literal "nan" turns the whole column into text on import,
+        which is a silent corruption: a reader gets a character vector and no
+        warning. An empty field is read as NA by every tool that opens this.
+        """
+        number = float(value)
+        return "" if not math.isfinite(number) else round(number, digits)
+
     with SERIES.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle)
         writer.writerow(["date", "observed_mm", "simulated_mm", "snow_water_equivalent_mm",
                          "temperature_c", "precipitation_mm", "period"])
         for index, day in enumerate(days):
             writer.writerow([
-                day, round(float(observed[index]), 4), round(float(simulated[index]), 4),
-                round(float(snow[index]), 2), temperature[index], precipitation[index],
+                day, cell(observed[index], 4), cell(simulated[index], 4),
+                cell(snow[index], 2), cell(temperature[index], 3), cell(precipitation[index], 3),
                 "calibration" if calibration[index] else ("validation" if validation[index] else "unused"),
             ])
 

@@ -1,0 +1,48 @@
+file,column,unit,description
+pskem_daily.csv,date,date,"ISO date, YYYY-MM-DD"
+pskem_daily.csv,observed_mm,mm/day,Observed runoff depth over the catchment; empty where the gauge record has no accepted value
+pskem_daily.csv,simulated_mm,mm/day,Runoff simulated by the calibrated temperature-index model
+pskem_daily.csv,snow_water_equivalent_mm,mm,Modelled catchment snow storage as water equivalent
+pskem_daily.csv,temperature_c,degrees C,Catchment mean daily air temperature from reanalysis forcing
+pskem_daily.csv,precipitation_mm,mm/day,Catchment mean daily precipitation from reanalysis forcing
+pskem_daily.csv,period,category,"calibration, validation or unused, for the published stratified split"
+pskem_monthly.csv,month,date,"First day of the month, YYYY-MM-DD"
+pskem_monthly.csv,split,category,"calibration, validation or unused"
+pskem_monthly.csv,evaluation,category,stratified (published reference) or chronological (stricter re-test)
+pskem_monthly.csv,observed_mm_day,mm/day,Mean observed runoff over the paired days of the month
+pskem_monthly.csv,simulated_mm_day,mm/day,Mean simulated runoff over the same days
+pskem_monthly.csv,benchmark_mm_day,mm/day,Calibration-only monthly climatology; chronological evaluation only
+pskem_monthly.csv,valid_days,count,Days with both an observation and a simulation
+pskem_monthly.csv,expected_days,count,Calendar days in the month
+pskem_seasonal.csv,water_year,year,Year of the April-September season
+pskem_seasonal.csv,evaluation,category,stratified or chronological
+pskem_seasonal.csv,split,category,calibration or validation
+pskem_seasonal.csv,observed_mcm,million m3,Observed April-September volume over the paired days
+pskem_seasonal.csv,simulated_mcm,million m3,Simulated volume over the same days
+pskem_seasonal.csv,benchmark_mcm,million m3,Calibration-only climatology; chronological evaluation only
+pskem_seasonal.csv,valid_days,count,Days contributing to the volume
+pskem_seasonal.csv,expected_days,count,Calendar days in April-September
+model_scores.csv,evaluation,category,stratified or chronological
+model_scores.csv,source,category,model or benchmark climatology
+model_scores.csv,target,category,"daily, monthly or seasonal"
+model_scores.csv,metric,category,"nse, kge, pbias, rmse_mm, r, alpha, beta, log_nse or n"
+model_scores.csv,value,number,"The score; units follow the metric, pbias in percent"
+study_inputs.csv,path,text,Repository path of the input
+study_inputs.csv,role,text,How the study uses it
+study_inputs.csv,bytes,count,File size when the package was built
+study_inputs.csv,sha256,text,Content hash at that moment
+study_inputs.csv,available,boolean,Whether the file was present
+study_inputs.csv,changed_since_recorded,boolean,TRUE if the file no longer matches the hash recorded when the study was built
+method_stages.csv,step,count,Order in which the stages run
+method_stages.csv,stage,text,Stage identifier
+method_stages.csv,title,text,What the stage does
+method_stages.csv,command,text,The command that runs it
+method_stages.csv,produces,text,"Artefacts written, separated by a semicolon"
+tests.csv,suite,text,Test file
+tests.csv,command,text,How to run that suite
+tests.csv,test,text,Test function name
+tests.csv,asserts,text,"What the test checks, from its docstring"
+transferability.csv,domain,text,Catchment or region
+transferability.csv,period,text,"Years covered, or 'any' where nothing has been attempted"
+transferability.csv,status,category,exercised or not attempted
+transferability.csv,detail,text,Evidence where exercised; what would be required where not

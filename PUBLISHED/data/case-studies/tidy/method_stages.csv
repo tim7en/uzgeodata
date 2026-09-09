@@ -1,0 +1,7 @@
+step,stage,title,command,produces
+1,observations,Read and screen the station and gauge record,npm run stations:pskem,PUBLISHED/data/hydroclimate/pskem-station-monthly.csv; PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv; PUBLISHED/data/hydroclimate/pskem-observations.manifest.json
+2,forcing,Extract daily catchment forcing,npm run cases:sabitov:inputs,PUBLISHED/data/case-studies/sabitov-daily-forcing.csv; PUBLISHED/data/case-studies/sabitov-inputs.manifest.json
+3,study,Build the observation evidence record,npm run cases:build,PUBLISHED/data/case-studies/chirchik.json; PUBLISHED/data/case-studies/chirchik.manifest.json
+4,daily-model,Calibrate the daily snowmelt model,npm run casestudy:dailymodel,PUBLISHED/data/case-studies/pskem-daily-model.json; PUBLISHED/data/case-studies/pskem-daily-model.csv; PUBLISHED/data/case-studies/pskem-daily-model.manifest.json
+5,review,Re-test the same structure chronologically,npm run cases:model-review,PUBLISHED/data/case-studies/model-review.json
+6,publish,Derive the findings and figures the page shows,npm run cases:publish,PUBLISHED/data/case-studies/case-study-highlights.json; PUBLISHED/data/case-studies/current-model.json; PUBLISHED/data/case-studies/study-landing.manifest.json

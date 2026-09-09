@@ -6,7 +6,7 @@ export default function StudyDirectory() {
   const {data,error,retry} = usePublishedData('/data/case-studies/study-directory.json');
   return <div className="cs-app cs-directory">
     <a className="cs-skip" href="#study-cards">Skip to case studies</a>
-    <header className="cs-header"><a className="cs-logo" href="/"><Droplets size={22}/> UZGEODATA</a><nav><a href="/">Explore the basin map <ArrowUpRight size={14}/></a></nav></header>
+    <header className="cs-header"><a className="cs-logo" href="/"><Droplets size={22}/> UZGEODATA</a><nav><a href="/">Explore the basin map <ArrowUpRight size={14}/></a><ThemeToggle/></nav></header>
     <main>
       <section className="cs-directory-hero"><span className="cs-eyebrow">HYDROCLIMATE / EVIDENCE IN PRACTICE</span><h1>Understand the water.<br/><em>Explore the evidence.</em></h1><p>From snow in the mountains to conditions around a weather station. Choose a study to explore its question, observations and results.</p></section>
       <section id="study-cards" aria-label="Available case studies">

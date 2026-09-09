@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import ThemeToggle, { useTheme } from './ThemeToggle.jsx';
 import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
 import { ArrowUpRight, Droplets, Layers, Search, X } from 'lucide-react';
 import DamModal from './DamModal.jsx';
@@ -130,6 +131,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
 }
 
 export default function LandingMap() {
+  const theme = useTheme();
   const [ladder, setLadder] = useState(null);
   const [riverLadder, setRiverLadder] = useState(null);
   const [levels, setLevels] = useState({});
@@ -359,8 +361,9 @@ export default function LandingMap() {
 
   return <main className="land">
     <MapContainer center={CENTRE} zoom={6} zoomControl={false} className="land-map" preferCanvas>
-      <TileLayer attribution="&copy; OpenStreetMap contributors"
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" opacity={0.42}/>
+      <TileLayer attribution="&copy; OpenStreetMap contributors" key={theme}
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        opacity={theme === 'light' ? 0.72 : 0.42}/>
       {basins && <GeoJSON key={active.level} data={basins} smoothFactor={1.6}
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
@@ -405,6 +408,7 @@ export default function LandingMap() {
         <span>UZGEODATA</span>
         <h1>Where the water forms</h1>
       </div>
+      <ThemeToggle className="land-theme"/>
       <p>Amu Darya and Syr Darya as they drain, not as borders cut them. Pick any sub-basin to read it.</p>
     </header>
 
