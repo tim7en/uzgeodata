@@ -70,9 +70,11 @@ ORDER = list(BOUNDS)
 
 
 def write_json(path: Path, payload: object) -> None:
+    # Undefined scores (e.g. unobserved warm-up days) are JSON null, never NaN.
+    from build_study_landing import safe_json
     temporary = path.with_suffix(path.suffix + ".tmp")
     with temporary.open("w", encoding="utf-8", newline="\n") as handle:
-        json.dump(payload, handle, ensure_ascii=False, indent=2)
+        json.dump(safe_json(payload), handle, ensure_ascii=False, indent=2, allow_nan=False)
         handle.write("\n")
     os.replace(temporary, path)
 

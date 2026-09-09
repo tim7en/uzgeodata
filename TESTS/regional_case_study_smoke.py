@@ -9,8 +9,9 @@ with sync_playwright() as p:
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.goto('http://localhost:5173/case-studies.html', wait_until='networkidle')
+    page.get_by_role('link', name='From mountain snow', exact=False).click()
     page.get_by_role('heading', name='One methodology, distinct evidence layers').wait_for()
-    page.get_by_role('button', name='Regional network', exact=False).click()
+    page.get_by_role('link', name='Regional station study', exact=False).click()
     page.get_by_role('heading', name='How does location shape the satellite signal?').wait_for()
     page.get_by_label('Regional station', exact=True).select_option('uz:station/meteo-419704')
     page.get_by_label('Station measurement', exact=True).select_option('air')
@@ -24,7 +25,7 @@ with sync_playwright() as p:
     page.set_viewport_size({'width':390,'height':844})
     page.screenshot(path=str(path/'regional-study-mobile.png'))
     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
-    page.get_by_role('button', name='Chirchik / Pskem', exact=False).click()
+    page.get_by_role('link', name='Chirchik / Pskem', exact=False).click()
     page.get_by_role('heading', name='One methodology, distinct evidence layers').wait_for()
     assert not errors, errors
     browser.close()

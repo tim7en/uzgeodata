@@ -17,6 +17,7 @@ import argparse
 import csv
 import json
 import os
+import hashlib
 from collections import defaultdict
 from pathlib import Path
 
@@ -62,25 +63,26 @@ def main() -> None:
 
     # 1. The hydrograph over the validation years, with the snowpack underneath.
     mask = period == "validation"
-    index = np.arange(mask.sum())
+    index = np.array(dates, dtype='datetime64[D]')
     figure, (top, bottom) = plt.subplots(
         2, 1, figsize=(11, 6), height_ratios=[3, 1], sharex=True, dpi=140)
-    top.plot(index, observed[mask], color=OBSERVED, linewidth=1.1, label="Observed")
-    top.plot(index, simulated[mask], color=SIMULATED, linewidth=1.0, alpha=.9, label="Modelled")
+    top.plot(index, np.where(mask, observed, np.nan), color=OBSERVED, linewidth=1.1, label="Observed")
+    top.plot(index, np.where(mask, simulated, np.nan), color=SIMULATED, linewidth=1.0, alpha=.9, label="Modelled")
     top.set_ylabel("Runoff, mm/day", fontsize=9, color=INK)
     validation = summary["skill"]["validation"]
     top.set_title(
-        f"Pskem daily runoff, years the model never saw  ·  NSE {validation['nse']:+.2f}, "
+        f"Pskem historical runoff, held-out years  ·  NSE {validation['nse']:+.2f}, "
         f"KGE {validation['kge']:+.2f}, bias {validation['pbias']:+.0f}%",
         fontsize=11, color=INK, loc="left")
     top.legend(frameon=False, fontsize=8.5)
     style(top)
-    bottom.fill_between(index, snow[mask], color=CALIBRATION, alpha=.55, linewidth=0)
-    bottom.set_ylabel("Snow, mm", fontsize=9, color=INK)
+    bottom.fill_between(index, np.where(mask, snow, np.nan), color=CALIBRATION, alpha=.55, linewidth=0)
+    bottom.set_ylabel("Modelled SWE, mm", fontsize=9, color=INK)
     style(bottom)
-    ticks = [i for i, position in enumerate(np.where(mask)[0]) if dates[position].endswith("-01-01")]
+    ticks = [index[i] for i in np.where(mask)[0] if dates[i].endswith("-01-01")]
     bottom.set_xticks(ticks)
-    bottom.set_xticklabels([dates[np.where(mask)[0][i]][:4] for i in ticks])
+    bottom.set_xticklabels([str(date)[:4] for date in ticks])
+    bottom.set_xlim(index[mask][0], index[mask][-1])
     figure.tight_layout()
     path = STUDY / "pskem-daily-hydrograph.png"
     figure.savefig(path, facecolor="white")
@@ -90,20 +92,20 @@ def main() -> None:
     # 2. Monthly means against the 1:1 line, the unit the project publishes.
     monthly = defaultdict(lambda: {"o": [], "s": [], "period": None})
     for row, obs, sim in zip(rows, observed, simulated):
-        if row["period"] == "unused":
+        if row["period"] not in {'calibration', 'validation'} or not (np.isfinite(obs) and np.isfinite(sim)):
             continue
         key = row["date"][:7]
         monthly[key]["o"].append(obs)
         monthly[key]["s"].append(sim)
         monthly[key]["period"] = row["period"]
-    keys = sorted(monthly)
+    keys = sorted(k for k in monthly if len(monthly[k]['o']) >= 20)
     figure, axis = plt.subplots(figsize=(5.6, 5.6), dpi=140)
     for label, colour in (("calibration", CALIBRATION), ("validation", SIMULATED)):
         xs = [np.mean(monthly[k]["o"]) for k in keys if monthly[k]["period"] == label]
         ys = [np.mean(monthly[k]["s"]) for k in keys if monthly[k]["period"] == label]
         axis.scatter(xs, ys, s=26, color=colour, alpha=.85, linewidth=0,
                      label=f"{label} ({len(xs)} months)")
-    limit = max(observed.max(), simulated.max()) * .55
+    limit = max(max(np.mean(monthly[k]['o']), np.mean(monthly[k]['s'])) for k in keys) * 1.05
     axis.plot([0, limit], [0, limit], color=INK, linewidth=.9, linestyle="--")
     axis.set_xlabel("Observed monthly mean, mm/day", fontsize=9, color=INK)
     axis.set_ylabel("Modelled monthly mean, mm/day", fontsize=9, color=INK)
@@ -138,8 +140,7 @@ def main() -> None:
     axis.set_xticks(positions)
     axis.set_xticklabels([names[m-1] for m in months])
     axis.set_ylabel("Runoff, mm/day", fontsize=9, color=INK)
-    axis.set_title("Seasonal shape in the held-out years  ·  melt now starts on time, "
-                   "early summer still runs high", fontsize=11, color=INK, loc="left")
+    axis.set_title("Seasonal shape in held-out years · observed and simulated runoff", fontsize=11, color=INK, loc="left")
     axis.legend(frameon=False, fontsize=8.5)
     style(axis)
     figure.tight_layout()
@@ -154,6 +155,7 @@ def main() -> None:
         "inputs": [str(SERIES.relative_to(ROOT)).replace("\\", "/"),
                    str(SUMMARY.relative_to(ROOT)).replace("\\", "/")],
         "outputs": [str(path.relative_to(ROOT)).replace("\\", "/") for path in written],
+        "inputHashes": {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in [SERIES, SUMMARY]},
         "note": "Calibration and validation years are drawn apart in every figure.",
     }
     temporary = MANIFEST.with_suffix(MANIFEST.suffix + ".tmp")

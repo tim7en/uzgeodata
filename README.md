@@ -40,6 +40,26 @@ npm run dev            # portal at http://localhost:5173
 npm run build          # static build into dist/
 ```
 
+The front-page research navigation now leads only to the case-study directory
+at `/case-studies.html`. Individual studies retain deep links
+`#chirchik-study` and `#regional-study`; other research tools remain accessible
+at their existing URLs.
+
+`npm run build` first runs `cases:publish`: it verifies current model scores
+against the daily CSV and regenerates the study cards, chart JSON and figures.
+This build step requires Python with NumPy and Matplotlib (`python -m pip install
+numpy matplotlib`) and the published study inputs. It does not refit models or
+contact Earth Engine. A deployment serving the resulting `dist/` needs no Python
+runtime. `npm run cases:publish` refreshes the presentation without a full build;
+`npm run casestudy:dailymodel` refits and then republishes it.
+On Windows, stop the development server before rebuilding if it holds a
+generated JSON file open; restart afterward. Publication remains atomic and
+never truncates a live file to bypass a reader lock.
+
+Browser checks: `python TESTS/study_landing_browser.py`; set `STUDY_TEST_URL` to
+test another local deployment. Guardrails: `python -m pytest
+TESTS/test_study_landing.py -q`.
+
 The data pipelines are Python and run independently of the web app:
 
 ```bash

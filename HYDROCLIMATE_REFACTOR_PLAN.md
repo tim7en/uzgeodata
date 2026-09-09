@@ -1174,3 +1174,32 @@ Commands: `stations:network`, `stations:climate`, `stations:glaciers-regional`,
    abstractions, canals and demand only when observations support these edges;
    keep exposure separate from traced allocation and causal downstream impacts.
 
+### 13.1 Production-facing landing and current model presentation — 2026-09-09
+
+- [x] Simplified map-front-page research navigation to one case-study entry;
+  existing specialist tools and their URLs were preserved, not deleted.
+- [x] Replaced the direct-to-report case-study entrance with a responsive image
+  card directory: Chirchik/Pskem runoff modelling and regional station–satellite
+  relationships, with explicit aims and data-derived previews.
+- [x] Separated the directory, lazy-loaded study routes and current-model view;
+  retained direct study/section links and back/forward navigation.
+- [x] Checked current daily and monthly validation scores against the source CSV.
+  Published lightweight `current-model.json` with scores, monthly chart values,
+  seasonal volumes, split years, paired-day coverage and source hashes.
+- [x] Regenerated daily hydrograph, monthly skill and seasonal-pattern figures.
+  Fixed the NaN monthly-axis limit, retained calendar gaps between held-out
+  years, and labelled snow storage as modelled SWE. Undefined source JSON
+  numbers now publish as null, not non-standard NaN tokens.
+- [x] Promoted the current daily snowmelt model; placed earlier model experiments
+  behind a labelled disclosure. Current validation NSE is approximately 0.879
+  daily and 0.901 monthly; no new fit or prospective forecast claim was made.
+- [x] Added `cases:publish` and a production prebuild step so checked scores,
+  figures and cards regenerate together. Disagreement between summary scores
+  and source output fails publication rather than displaying stale results.
+- [x] Added strict-JSON/source-hash tests and browser checks for image loading,
+  lazy data, chart controls, mobile layout, history navigation and failed-fetch
+  recovery. Build-time dependencies and deployment commands are documented.
+
+The source/identity, graph-reconciliation and prospective-validation gates in
+section 13 remain open; a production-facing presentation does not resolve them.
+

@@ -170,16 +170,16 @@ def main() -> None:
         return {
             "id": "water-year-class",
             "kind": "validated",
-            "headline": "The season can be called normal, dry or wet — to within one class",
+            "headline": f"Historical seasonal classes: {near} of {len(held)} within one class",
             "value": round(median, 0),
             "valueLabel": "% median volume error",
             "detail": (
-                f"Over {len(held)} years the model never saw, the April–September volume is predicted "
+                f"Across {len(held)} held-out historical years, April–September volume is reproduced "
                 f"to a median {median:.0f}% with NSE {seasonal.get('nse', 0):+.2f} and bias "
                 f"{seasonal.get('pbias', 0):+.1f}%. Placed into five classes from dry to wet, "
                 f"{exact} of {len(held)} land in the right class and {near} of {len(held)} are never "
-                "more than one class out. This is the question the earlier annual regression could "
-                "not answer at all."
+                "more than one class out. The discharge-stratified split and retrospective forcing "
+                "do not establish prospective seasonal forecast skill."
             ),
             "exactClass": exact,
             "withinOneClass": near,

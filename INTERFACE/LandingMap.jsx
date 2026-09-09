@@ -20,13 +20,7 @@ const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const CENTRE = [40.2, 70.5];
 const DEEPER = [
-  { href: '/case-studies.html', label: 'Chirchik case studies', note: 'Precipitation, temperature and discharge validation' },
-  { href: '/climate.html', label: 'Hydroclimate observatory', note: 'Snow, precipitation and anomalies by basin' },
-  { href: '/ontology.html', label: 'Living ontology', note: 'Trace a basin upstream and downstream' },
-  { href: '/hydrography.html', label: 'Hydrography explorer', note: 'Rivers, lakes and basin attributes' },
-  { href: '/metadata.html', label: 'Attribute catalogue', note: 'Source, citation and licence for all 281 attributes' },
-  { href: '/catalogue.html', label: 'Data catalogue', note: 'Every published dataset and its currency' },
-  { href: '/portal.html', label: 'Portal overview', note: 'Atlas packages, use cases and standards' },
+  { href: '/case-studies.html', label: 'Explore the case studies', note: 'Mountain runoff models and regional station–satellite relationships' },
 ];
 
 const json = url => fetch(url).then(response => response.ok
@@ -514,7 +508,7 @@ export default function LandingMap() {
       </div>}
 
       <nav className="land-deeper">
-        <span><Layers size={12}/> Go deeper</span>
+        <span><Layers size={12}/> Evidence in practice</span>
         {DEEPER.map(item => <a key={item.href} href={item.href}>
           <span><strong>{item.label}</strong><small>{item.note}</small></span>
           <ArrowUpRight size={13}/>

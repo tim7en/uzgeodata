@@ -1,0 +1,2004 @@
+{
+  "generated_at": "2026-09-09T10:16:27.261737+00:00",
+  "model_generated_at": "2026-09-09T05:55:52+00:00",
+  "source_hashes": {
+    "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
+    "pskem-daily-model.csv": "9f4da3f3a75d6be552e78b2ff606709368711dec26a3f8769669db67faa3212a",
+    "regional-station-study.json": "f1c0f711f7256c3c04183c7cc3cef4de9ea17ee03cf4b5784b4da3d2d7d83902"
+  },
+  "model": {
+    "family": "temperature-index snow with soil store and two linear reservoirs (HBV type)",
+    "timestep": "day",
+    "parameters": {
+      "tt": -1.2691,
+      "cfmax": 1.7797,
+      "sfcf": 1.1147,
+      "fc": 50.0,
+      "beta": 1.0331,
+      "perc": 3.2211,
+      "k_fast": 0.05,
+      "k_slow": 0.0184,
+      "lapse": -7.871
+    },
+    "parameterBounds": {
+      "tt": [
+        -1.5,
+        2.5
+      ],
+      "cfmax": [
+        1.0,
+        7.0
+      ],
+      "sfcf": [
+        0.8,
+        1.8
+      ],
+      "fc": [
+        50.0,
+        600.0
+      ],
+      "beta": [
+        1.0,
+        5.0
+      ],
+      "perc": [
+        0.1,
+        4.0
+      ],
+      "k_fast": [
+        0.05,
+        0.6
+      ],
+      "k_slow": [
+        0.001,
+        0.15
+      ],
+      "lapse": [
+        -8.0,
+        -5.0
+      ]
+    },
+    "calibration": {
+      "years": [
+        2004,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2013,
+        2017
+      ],
+      "split": "stratified",
+      "objective": "KGE",
+      "search": "seeded random search then local refinement",
+      "samples": 25000,
+      "seed": 1729
+    }
+  },
+  "catchment": {
+    "areaKm2": 2626.9,
+    "gauge": "uz:station/gauge-16290",
+    "caveat": "The catchment is a candidate delineation: the gauge has not been snapped to a reach and reviewed, so the area used to convert discharge to millimetres carries that uncertainty."
+  },
+  "daily": {
+    "n": 2554,
+    "nse": 0.8787,
+    "kge": 0.8842,
+    "logNse": 0.9086,
+    "pbias": 1.787,
+    "rmseMm": 0.7925,
+    "r": 0.9382,
+    "alpha": 0.9037,
+    "beta": 1.0179
+  },
+  "monthly": {
+    "n": 84,
+    "nse": 0.9008,
+    "kge": 0.8934,
+    "logNse": 0.922,
+    "pbias": 1.777,
+    "rmseMm": 0.6933,
+    "r": 0.9503,
+    "alpha": 0.9074,
+    "beta": 1.0178
+  },
+  "seasonal": {
+    "n": 7,
+    "nse": 0.5917,
+    "kge": 0.4838,
+    "logNse": 0.6209,
+    "pbias": -2.067,
+    "rmseMm": 268.8542,
+    "r": 0.8462,
+    "alpha": 0.5077,
+    "beta": 0.9793
+  },
+  "monthly_rows": [
+    {
+      "period": "2000-01",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-02",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 29,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-03",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-04",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 30,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-05",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-06",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 30,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-07",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-08",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-09",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 30,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-10",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-11",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 30,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2000-12",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-01",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-02",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 28,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-03",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-04",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 30,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-05",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-06",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 30,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-07",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-08",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-09",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 30,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-10",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-11",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 30,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2001-12",
+      "split": "unused",
+      "valid_days": 0,
+      "expected_days": 31,
+      "observed": null,
+      "simulated": null
+    },
+    {
+      "period": "2002-01",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9252838709677423,
+      "simulated": 0.9486161290322578
+    },
+    {
+      "period": "2002-02",
+      "split": "validation",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.8314285714285715,
+      "simulated": 0.7563571428571428
+    },
+    {
+      "period": "2002-03",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.3807709677419355,
+      "simulated": 1.1839387096774194
+    },
+    {
+      "period": "2002-04",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 4.701919999999999,
+      "simulated": 3.18971
+    },
+    {
+      "period": "2002-05",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 5.174412903225806,
+      "simulated": 3.9914032258064513
+    },
+    {
+      "period": "2002-06",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 8.58881,
+      "simulated": 5.998503333333332
+    },
+    {
+      "period": "2002-07",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 8.677783870967742,
+      "simulated": 7.11491935483871
+    },
+    {
+      "period": "2002-08",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 5.099087096774193,
+      "simulated": 4.933032258064516
+    },
+    {
+      "period": "2002-09",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.530706666666666,
+      "simulated": 2.664516666666666
+    },
+    {
+      "period": "2002-10",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.7264258064516131,
+      "simulated": 1.9470290322580643
+    },
+    {
+      "period": "2002-11",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.1571933333333333,
+      "simulated": 1.4068333333333334
+    },
+    {
+      "period": "2002-12",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.8621548387096777,
+      "simulated": 1.086732258064516
+    },
+    {
+      "period": "2003-01",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7877612903225808,
+      "simulated": 1.0044387096774192
+    },
+    {
+      "period": "2003-02",
+      "split": "validation",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.7671571428571429,
+      "simulated": 0.834375
+    },
+    {
+      "period": "2003-03",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.012067741935484,
+      "simulated": 1.0953193548387095
+    },
+    {
+      "period": "2003-04",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.67389,
+      "simulated": 3.309183333333334
+    },
+    {
+      "period": "2003-05",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 5.001477419354839,
+      "simulated": 3.8805322580645165
+    },
+    {
+      "period": "2003-06",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 9.021856666666666,
+      "simulated": 7.433783333333333
+    },
+    {
+      "period": "2003-07",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 7.414145161290323,
+      "simulated": 6.868793548387096
+    },
+    {
+      "period": "2003-08",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.4395,
+      "simulated": 4.076987096774193
+    },
+    {
+      "period": "2003-09",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.010703333333333,
+      "simulated": 2.6992433333333334
+    },
+    {
+      "period": "2003-10",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.2077096774193548,
+      "simulated": 1.8337516129032259
+    },
+    {
+      "period": "2003-11",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.080893333333333,
+      "simulated": 1.7040233333333332
+    },
+    {
+      "period": "2003-12",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.8771064516129031,
+      "simulated": 1.1930741935483868
+    },
+    {
+      "period": "2004-01",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7658096774193548,
+      "simulated": 0.8193838709677419
+    },
+    {
+      "period": "2004-02",
+      "split": "calibration",
+      "valid_days": 29,
+      "expected_days": 29,
+      "observed": 0.9169655172413793,
+      "simulated": 0.7381620689655173
+    },
+    {
+      "period": "2004-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.277941935483871,
+      "simulated": 1.1921322580645164
+    },
+    {
+      "period": "2004-04",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 3.062543333333333,
+      "simulated": 1.9270433333333332
+    },
+    {
+      "period": "2004-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 5.328264516129031,
+      "simulated": 4.0477225806451615
+    },
+    {
+      "period": "2004-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 6.598933333333333,
+      "simulated": 5.770143333333333
+    },
+    {
+      "period": "2004-07",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 5.47149677419355,
+      "simulated": 4.089629032258065
+    },
+    {
+      "period": "2004-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.621558064516129,
+      "simulated": 2.8641967741935477
+    },
+    {
+      "period": "2004-09",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.2165966666666663,
+      "simulated": 1.9237866666666668
+    },
+    {
+      "period": "2004-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.3749193548387095,
+      "simulated": 1.3006193548387093
+    },
+    {
+      "period": "2004-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.1050066666666667,
+      "simulated": 1.0464133333333334
+    },
+    {
+      "period": "2004-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9860806451612901,
+      "simulated": 1.121367741935484
+    },
+    {
+      "period": "2005-01",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.8579129032258064,
+      "simulated": 0.9077225806451615
+    },
+    {
+      "period": "2005-02",
+      "split": "validation",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.8173285714285713,
+      "simulated": 0.7822428571428571
+    },
+    {
+      "period": "2005-03",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.8880193548387096,
+      "simulated": 1.8969870967741937
+    },
+    {
+      "period": "2005-04",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.916513333333333,
+      "simulated": 2.1778633333333333
+    },
+    {
+      "period": "2005-05",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 5.0173903225806455,
+      "simulated": 3.6448838709677425
+    },
+    {
+      "period": "2005-06",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 8.817936666666668,
+      "simulated": 7.217890000000001
+    },
+    {
+      "period": "2005-07",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 5.841774193548388,
+      "simulated": 5.927883870967742
+    },
+    {
+      "period": "2005-08",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.1238451612903226,
+      "simulated": 3.727767741935483
+    },
+    {
+      "period": "2005-09",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.7504333333333333,
+      "simulated": 2.3935233333333334
+    },
+    {
+      "period": "2005-10",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.003364516129032,
+      "simulated": 1.537641935483871
+    },
+    {
+      "period": "2005-11",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 0.7735833333333334,
+      "simulated": 0.9558833333333332
+    },
+    {
+      "period": "2005-12",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.6742612903225805,
+      "simulated": 0.6550903225806453
+    },
+    {
+      "period": "2006-01",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.5687935483870967,
+      "simulated": 0.48529999999999995
+    },
+    {
+      "period": "2006-02",
+      "split": "calibration",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.8253214285714287,
+      "simulated": 0.8027928571428571
+    },
+    {
+      "period": "2006-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9555096774193548,
+      "simulated": 0.963658064516129
+    },
+    {
+      "period": "2006-04",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.265153333333333,
+      "simulated": 1.681973333333333
+    },
+    {
+      "period": "2006-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.926145161290322,
+      "simulated": 4.681138709677419
+    },
+    {
+      "period": "2006-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 5.2953633333333325,
+      "simulated": 5.559000000000001
+    },
+    {
+      "period": "2006-07",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.958422580645161,
+      "simulated": 4.0005
+    },
+    {
+      "period": "2006-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.138067741935484,
+      "simulated": 2.2086612903225804
+    },
+    {
+      "period": "2006-09",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.6713866666666668,
+      "simulated": 1.6131433333333334
+    },
+    {
+      "period": "2006-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.3131806451612904,
+      "simulated": 1.721416129032258
+    },
+    {
+      "period": "2006-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.3248333333333326,
+      "simulated": 1.7202
+    },
+    {
+      "period": "2006-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9250709677419352,
+      "simulated": 1.1649612903225806
+    },
+    {
+      "period": "2007-01",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7894709677419358,
+      "simulated": 0.8029096774193548
+    },
+    {
+      "period": "2007-02",
+      "split": "calibration",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.7673928571428573,
+      "simulated": 0.73415
+    },
+    {
+      "period": "2007-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.1054322580645162,
+      "simulated": 1.1315225806451612
+    },
+    {
+      "period": "2007-04",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 3.2459599999999997,
+      "simulated": 3.1979800000000003
+    },
+    {
+      "period": "2007-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.658774193548388,
+      "simulated": 5.683054838709678
+    },
+    {
+      "period": "2007-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 6.194379999999999,
+      "simulated": 6.05047
+    },
+    {
+      "period": "2007-07",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.838090322580647,
+      "simulated": 4.680183870967742
+    },
+    {
+      "period": "2007-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 2.9569548387096773,
+      "simulated": 2.9534322580645163
+    },
+    {
+      "period": "2007-09",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.8219299999999996,
+      "simulated": 1.8607766666666665
+    },
+    {
+      "period": "2007-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.0519645161290323,
+      "simulated": 1.0969548387096775
+    },
+    {
+      "period": "2007-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 0.9859400000000001,
+      "simulated": 0.7311633333333334
+    },
+    {
+      "period": "2007-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.899506451612903,
+      "simulated": 0.6477645161290321
+    },
+    {
+      "period": "2008-01",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.8463451612903226,
+      "simulated": 0.4156741935483872
+    },
+    {
+      "period": "2008-02",
+      "split": "calibration",
+      "valid_days": 29,
+      "expected_days": 29,
+      "observed": 0.8321172413793103,
+      "simulated": 0.3330413793103448
+    },
+    {
+      "period": "2008-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.2402935483870967,
+      "simulated": 0.9152258064516129
+    },
+    {
+      "period": "2008-04",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.042926666666667,
+      "simulated": 1.7022266666666666
+    },
+    {
+      "period": "2008-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.183348387096775,
+      "simulated": 4.312477419354839
+    },
+    {
+      "period": "2008-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 5.167093333333335,
+      "simulated": 5.82428
+    },
+    {
+      "period": "2008-07",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.4779129032258065,
+      "simulated": 3.1700387096774194
+    },
+    {
+      "period": "2008-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 2.6083193548387094,
+      "simulated": 2.1605032258064516
+    },
+    {
+      "period": "2008-09",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.4093599999999997,
+      "simulated": 1.37623
+    },
+    {
+      "period": "2008-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9831032258064518,
+      "simulated": 1.1888419354838708
+    },
+    {
+      "period": "2008-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 0.8748933333333333,
+      "simulated": 1.2908333333333333
+    },
+    {
+      "period": "2008-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7419387096774196,
+      "simulated": 0.8807258064516129
+    },
+    {
+      "period": "2009-01",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.8135612903225807,
+      "simulated": 0.7011645161290323
+    },
+    {
+      "period": "2009-02",
+      "split": "calibration",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.8597321428571428,
+      "simulated": 0.6458642857142858
+    },
+    {
+      "period": "2009-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.3128548387096775,
+      "simulated": 1.0349193548387097
+    },
+    {
+      "period": "2009-04",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.342133333333334,
+      "simulated": 1.787163333333333
+    },
+    {
+      "period": "2009-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.517248387096774,
+      "simulated": 2.96465806451613
+    },
+    {
+      "period": "2009-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 7.338956666666666,
+      "simulated": 5.649406666666668
+    },
+    {
+      "period": "2009-07",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 6.651303225806453,
+      "simulated": 5.480067741935484
+    },
+    {
+      "period": "2009-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.150574193548386,
+      "simulated": 3.9211129032258065
+    },
+    {
+      "period": "2009-09",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.1978500000000003,
+      "simulated": 2.6478966666666666
+    },
+    {
+      "period": "2009-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.4967258064516127,
+      "simulated": 1.9862870967741932
+    },
+    {
+      "period": "2009-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.1538,
+      "simulated": 1.27295
+    },
+    {
+      "period": "2009-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.0129225806451614,
+      "simulated": 0.8392709677419354
+    },
+    {
+      "period": "2010-01",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 31,
+      "observed": 0.9224733333333334,
+      "simulated": 0.7617299999999999
+    },
+    {
+      "period": "2010-02",
+      "split": "calibration",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.9205892857142858,
+      "simulated": 1.02995
+    },
+    {
+      "period": "2010-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.8706096774193548,
+      "simulated": 2.154503225806452
+    },
+    {
+      "period": "2010-04",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 3.494513333333333,
+      "simulated": 2.8586933333333335
+    },
+    {
+      "period": "2010-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 5.952129032258065,
+      "simulated": 4.806987096774194
+    },
+    {
+      "period": "2010-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 8.106403333333336,
+      "simulated": 8.25966
+    },
+    {
+      "period": "2010-07",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 6.6046225806451595,
+      "simulated": 7.103329032258066
+    },
+    {
+      "period": "2010-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.453287096774194,
+      "simulated": 3.7366903225806447
+    },
+    {
+      "period": "2010-09",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.9106166666666664,
+      "simulated": 2.529539999999999
+    },
+    {
+      "period": "2010-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.3006645161290322,
+      "simulated": 1.945754838709677
+    },
+    {
+      "period": "2010-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.05688,
+      "simulated": 1.4764200000000003
+    },
+    {
+      "period": "2010-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.88921935483871,
+      "simulated": 0.9004870967741935
+    },
+    {
+      "period": "2011-01",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7497935483870966,
+      "simulated": 0.540225806451613
+    },
+    {
+      "period": "2011-02",
+      "split": "calibration",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.6668607142857143,
+      "simulated": 0.64925
+    },
+    {
+      "period": "2011-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.689625806451613,
+      "simulated": 0.8193806451612905
+    },
+    {
+      "period": "2011-04",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.0349433333333335,
+      "simulated": 1.6721099999999998
+    },
+    {
+      "period": "2011-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.498690322580645,
+      "simulated": 4.936412903225806
+    },
+    {
+      "period": "2011-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 4.219193333333333,
+      "simulated": 5.872416666666666
+    },
+    {
+      "period": "2011-07",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.575512903225805,
+      "simulated": 3.6923387096774194
+    },
+    {
+      "period": "2011-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.0858548387096776,
+      "simulated": 2.2058193548387095
+    },
+    {
+      "period": "2011-09",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.9918566666666664,
+      "simulated": 1.5436033333333337
+    },
+    {
+      "period": "2011-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9641225806451612,
+      "simulated": 1.1713709677419357
+    },
+    {
+      "period": "2011-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 0.81065,
+      "simulated": 1.2466666666666666
+    },
+    {
+      "period": "2011-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7092774193548388,
+      "simulated": 1.129809677419355
+    },
+    {
+      "period": "2012-01",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.6081645161290323,
+      "simulated": 0.6869870967741936
+    },
+    {
+      "period": "2012-02",
+      "split": "validation",
+      "valid_days": 29,
+      "expected_days": 29,
+      "observed": 0.6004137931034482,
+      "simulated": 0.4955103448275862
+    },
+    {
+      "period": "2012-03",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.6721258064516129,
+      "simulated": 0.6166870967741936
+    },
+    {
+      "period": "2012-04",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 3.150703333333333,
+      "simulated": 2.1540166666666667
+    },
+    {
+      "period": "2012-05",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.31396129032258,
+      "simulated": 4.742306451612904
+    },
+    {
+      "period": "2012-06",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 6.153810000000001,
+      "simulated": 6.719603333333334
+    },
+    {
+      "period": "2012-07",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.46886129032258,
+      "simulated": 5.228780645161291
+    },
+    {
+      "period": "2012-08",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 2.757377419354839,
+      "simulated": 2.824425806451613
+    },
+    {
+      "period": "2012-09",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.8160199999999997,
+      "simulated": 1.8046900000000001
+    },
+    {
+      "period": "2012-10",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.0369,
+      "simulated": 1.096416129032258
+    },
+    {
+      "period": "2012-11",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 0.708573333333333,
+      "simulated": 0.8253366666666667
+    },
+    {
+      "period": "2012-12",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.5622258064516129,
+      "simulated": 0.6154032258064519
+    },
+    {
+      "period": "2013-01",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.5084193548387096,
+      "simulated": 0.4621354838709678
+    },
+    {
+      "period": "2013-02",
+      "split": "calibration",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.5735714285714285,
+      "simulated": 0.48371071428571416
+    },
+    {
+      "period": "2013-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.8858193548387095,
+      "simulated": 0.978683870967742
+    },
+    {
+      "period": "2013-04",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.8093066666666668,
+      "simulated": 1.6295899999999999
+    },
+    {
+      "period": "2013-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.2152032258064516,
+      "simulated": 3.170258064516129
+    },
+    {
+      "period": "2013-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 4.846959999999999,
+      "simulated": 5.949219999999999
+    },
+    {
+      "period": "2013-07",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 3.7717999999999994,
+      "simulated": 4.778351612903226
+    },
+    {
+      "period": "2013-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 2.9928193548387103,
+      "simulated": 2.789319354838709
+    },
+    {
+      "period": "2013-09",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.7716999999999996,
+      "simulated": 1.8201133333333337
+    },
+    {
+      "period": "2013-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.1310161290322582,
+      "simulated": 1.1043
+    },
+    {
+      "period": "2013-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 0.8173333333333332,
+      "simulated": 0.6846899999999999
+    },
+    {
+      "period": "2013-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7000387096774193,
+      "simulated": 0.6276870967741934
+    },
+    {
+      "period": "2014-01",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.593941935483871,
+      "simulated": 0.5036741935483872
+    },
+    {
+      "period": "2014-02",
+      "split": "validation",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.5288392857142856,
+      "simulated": 0.6848964285714284
+    },
+    {
+      "period": "2014-03",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7250709677419356,
+      "simulated": 0.7648
+    },
+    {
+      "period": "2014-04",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.5699799999999997,
+      "simulated": 1.4243933333333336
+    },
+    {
+      "period": "2014-05",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.45061935483871,
+      "simulated": 4.3120806451612905
+    },
+    {
+      "period": "2014-06",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 4.941246666666666,
+      "simulated": 7.048220000000001
+    },
+    {
+      "period": "2014-07",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.123193548387096,
+      "simulated": 4.523867741935483
+    },
+    {
+      "period": "2014-08",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 2.336377419354839,
+      "simulated": 2.341945161290323
+    },
+    {
+      "period": "2014-09",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.5720633333333327,
+      "simulated": 1.4955433333333332
+    },
+    {
+      "period": "2014-10",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.153932258064516,
+      "simulated": 1.9799
+    },
+    {
+      "period": "2014-11",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.1247533333333333,
+      "simulated": 1.6352566666666666
+    },
+    {
+      "period": "2014-12",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.086974193548387,
+      "simulated": 1.1560419354838711
+    },
+    {
+      "period": "2015-01",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9580774193548389,
+      "simulated": 0.7968903225806452
+    },
+    {
+      "period": "2015-02",
+      "split": "validation",
+      "valid_days": 28,
+      "expected_days": 28,
+      "observed": 0.9588607142857141,
+      "simulated": 0.8403535714285714
+    },
+    {
+      "period": "2015-03",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.0860225806451616,
+      "simulated": 0.9448225806451612
+    },
+    {
+      "period": "2015-04",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.403296666666667,
+      "simulated": 1.7327733333333335
+    },
+    {
+      "period": "2015-05",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.649751612903226,
+      "simulated": 4.449232258064516
+    },
+    {
+      "period": "2015-06",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 6.06282,
+      "simulated": 6.036139999999999
+    },
+    {
+      "period": "2015-07",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 31,
+      "observed": 4.737323333333333,
+      "simulated": 4.7338666666666676
+    },
+    {
+      "period": "2015-08",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 2.535535483870967,
+      "simulated": 2.606925806451613
+    },
+    {
+      "period": "2015-09",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.4151733333333338,
+      "simulated": 1.8050466666666667
+    },
+    {
+      "period": "2015-10",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.0780548387096773,
+      "simulated": 1.5067032258064519
+    },
+    {
+      "period": "2015-11",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.0421700000000003,
+      "simulated": 1.6193799999999996
+    },
+    {
+      "period": "2015-12",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9871322580645161,
+      "simulated": 1.327132258064516
+    },
+    {
+      "period": "2016-01",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7669967741935483,
+      "simulated": 1.043667741935484
+    },
+    {
+      "period": "2016-02",
+      "split": "validation",
+      "valid_days": 29,
+      "expected_days": 29,
+      "observed": 0.6590758620689656,
+      "simulated": 0.7528068965517242
+    },
+    {
+      "period": "2016-03",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.1835193548387095,
+      "simulated": 1.2320903225806452
+    },
+    {
+      "period": "2016-04",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 2.2794266666666667,
+      "simulated": 2.0136966666666667
+    },
+    {
+      "period": "2016-05",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 4.27151935483871,
+      "simulated": 5.605735483870967
+    },
+    {
+      "period": "2016-06",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 5.785443333333332,
+      "simulated": 6.903773333333333
+    },
+    {
+      "period": "2016-07",
+      "split": "validation",
+      "valid_days": 29,
+      "expected_days": 31,
+      "observed": 4.318862068965517,
+      "simulated": 5.498468965517241
+    },
+    {
+      "period": "2016-08",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 2.5952709677419357,
+      "simulated": 3.2682645161290327
+    },
+    {
+      "period": "2016-09",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.8322233333333326,
+      "simulated": 2.1998100000000003
+    },
+    {
+      "period": "2016-10",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.3151935483870962,
+      "simulated": 1.698106451612903
+    },
+    {
+      "period": "2016-11",
+      "split": "validation",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 1.0240999999999998,
+      "simulated": 1.4546266666666665
+    },
+    {
+      "period": "2016-12",
+      "split": "validation",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.9342967741935483,
+      "simulated": 1.4821612903225803
+    },
+    {
+      "period": "2017-01",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.7225387096774195,
+      "simulated": 1.0207709677419352
+    },
+    {
+      "period": "2017-02",
+      "split": "calibration",
+      "valid_days": 27,
+      "expected_days": 28,
+      "observed": 0.7289592592592592,
+      "simulated": 1.0796111111111113
+    },
+    {
+      "period": "2017-03",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.0690516129032255,
+      "simulated": 1.1641225806451614
+    },
+    {
+      "period": "2017-04",
+      "split": "calibration",
+      "valid_days": 29,
+      "expected_days": 30,
+      "observed": 3.3405275862068957,
+      "simulated": 3.121375862068965
+    },
+    {
+      "period": "2017-05",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 6.055032258064515,
+      "simulated": 5.590306451612904
+    },
+    {
+      "period": "2017-06",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 7.478196666666666,
+      "simulated": 8.782580000000001
+    },
+    {
+      "period": "2017-07",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 31,
+      "observed": 5.36335,
+      "simulated": 6.784733333333333
+    },
+    {
+      "period": "2017-08",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 2.900416129032257,
+      "simulated": 3.334448387096775
+    },
+    {
+      "period": "2017-09",
+      "split": "calibration",
+      "valid_days": 29,
+      "expected_days": 30,
+      "observed": 1.8361793103448272,
+      "simulated": 2.018734482758621
+    },
+    {
+      "period": "2017-10",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 1.2610870967741934,
+      "simulated": 1.733603225806452
+    },
+    {
+      "period": "2017-11",
+      "split": "calibration",
+      "valid_days": 30,
+      "expected_days": 30,
+      "observed": 0.8569033333333334,
+      "simulated": 1.2875933333333334
+    },
+    {
+      "period": "2017-12",
+      "split": "calibration",
+      "valid_days": 31,
+      "expected_days": 31,
+      "observed": 0.6484677419354841,
+      "simulated": 0.893409677419355
+    }
+  ],
+  "seasonal_rows": [
+    {
+      "year": 2002,
+      "observedMcm": 2790.1,
+      "simulatedMcm": 2240.2,
+      "period": "2002",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2003,
+      "observedMcm": 2371.3,
+      "simulatedMcm": 2266.7,
+      "period": "2003",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2004,
+      "observedMcm": 2110.5,
+      "simulatedMcm": 1654.1,
+      "period": "2004",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2005,
+      "observedMcm": 2201.4,
+      "simulatedMcm": 2012.2,
+      "period": "2005",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2006,
+      "observedMcm": 1706.6,
+      "simulatedMcm": 1584.6,
+      "period": "2006",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2007,
+      "observedMcm": 1901.7,
+      "simulatedMcm": 1959.9,
+      "period": "2007",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2008,
+      "observedMcm": 1515.6,
+      "simulatedMcm": 1486.9,
+      "period": "2008",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2009,
+      "observedMcm": 2183.6,
+      "simulatedMcm": 1801.7,
+      "period": "2009",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2010,
+      "observedMcm": 2368.6,
+      "simulatedMcm": 2349.7,
+      "period": "2010",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2011,
+      "observedMcm": 1477.2,
+      "simulatedMcm": 1598.5,
+      "period": "2011",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2012,
+      "observedMcm": 1816.1,
+      "simulatedMcm": 1883.5,
+      "period": "2012",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2013,
+      "observedMcm": 1476.9,
+      "simulatedMcm": 1615.1,
+      "period": "2013",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2014,
+      "observedMcm": 1525.5,
+      "simulatedMcm": 1695.8,
+      "period": "2014",
+      "expected_days": 183,
+      "valid_days": 183
+    },
+    {
+      "year": 2015,
+      "observedMcm": 1737.2,
+      "simulatedMcm": 1702.2,
+      "period": "2015",
+      "expected_days": 183,
+      "valid_days": 182
+    },
+    {
+      "year": 2016,
+      "observedMcm": 1668.2,
+      "simulatedMcm": 2017.6,
+      "period": "2016",
+      "expected_days": 183,
+      "valid_days": 181
+    },
+    {
+      "year": 2017,
+      "observedMcm": 2135.6,
+      "simulatedMcm": 2345.2,
+      "period": "2017",
+      "expected_days": 183,
+      "valid_days": 180
+    }
+  ],
+  "validation_years": [
+    2002,
+    2003,
+    2005,
+    2012,
+    2014,
+    2015,
+    2016
+  ],
+  "calibration_years": [
+    2004,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2013,
+    2017
+  ],
+  "parameters_at_bounds": [
+    "fc",
+    "k_fast"
+  ],
+  "monthly_support": "Monthly means require at least 20 paired valid days, matching this model evaluation. Counts are retained; incomplete months are not total-volume estimates.",
+  "scope": "Historical hindcast. Discharge-stratified held-out years and retrospective forcing are not prospective forecast validation."
+}

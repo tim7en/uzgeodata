@@ -23,7 +23,7 @@ export default function CaseStudyFindings() {
 
   useEffect(() => {
     let active = true;
-    fetch(HIGHLIGHTS_URL)
+    fetch(HIGHLIGHTS_URL, {cache:'no-cache'})
       .then(response => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
       .then(document => active && setHighlights(document))
       .catch(() => undefined);
@@ -64,7 +64,7 @@ export default function CaseStudyFindings() {
         <p>{finding.detail}</p>
         {(finding.figures || (finding.figure ? [finding.figure] : [])).map((figure, index) =>
           <a className="cs-finding-figure" key={figure} href={figure} target="_blank" rel="noreferrer">
-            <img src={figure} alt={`${finding.headline} (${index + 1})`} loading="lazy"/>
+            <img src={`${figure}?v=${encodeURIComponent(highlights.generatedAt || highlights.generated_at || '')}`} alt={`${finding.headline} (${index + 1})`} loading="lazy"/>
             <span>Open figure <ArrowUpRight size={11}/></span>
           </a>)}
         <footer>Evidence: <code>{finding.evidence.split('/').pop()}</code></footer>

@@ -8,7 +8,9 @@
   },
   "scripts": {
     "dev": "node server.mjs",
+    "prebuild": "npm run cases:publish",
     "build": "vite build",
+    "cases:publish": "python PIPELINES/build_study_landing.py && python PIPELINES/build_pskem_model_figures.py && python PIPELINES/build_case_study_highlights.py",
     "start": "cross-env NODE_ENV=production node server.mjs",
     "preview": "npm run start",
     "ontology:profile": "python PIPELINES/ontology/profile_external_source.py",
@@ -72,7 +74,7 @@
     "rivers:reference": "python PIPELINES/build_reference_rivers.py",
     "basins:catalogue": "python PIPELINES/build_reference_attribute_catalogue.py",
     "casestudy:highlights": "python PIPELINES/build_case_study_highlights.py",
-    "casestudy:dailymodel": "python PIPELINES/build_pskem_daily_model.py",
+    "casestudy:dailymodel": "python PIPELINES/build_pskem_daily_model.py && npm run cases:publish",
     "casestudy:figures": "python PIPELINES/build_pskem_model_figures.py",
     "hydromet:stations": "python PIPELINES/build_hydromet_station_data.py",
     "rivers:unified": "python PIPELINES/build_unified_river_network.py",
