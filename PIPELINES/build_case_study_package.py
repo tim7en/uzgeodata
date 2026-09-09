@@ -40,6 +40,7 @@ ROOT = Path(__file__).resolve().parent.parent
 STUDY = ROOT / "PUBLISHED/data/case-studies"
 OUTPUT = STUDY / "reproducibility-package.json"
 REPRODUCTION = STUDY / "reproduction-check.json"
+TIDY_MANIFEST = STUDY / "tidy-downloads.manifest.json"
 PACKAGE_JSON = ROOT / "package.json"
 
 # How close a re-run must land before the published number is called reproduced.
@@ -494,6 +495,16 @@ def main() -> None:
         "transferability": build_transferability(),
         "limitations": review.get("limitations", []),
     }
+    # The tidy tables are built after this document, so on a first run they are
+    # simply absent rather than a failure; the page hides the tab when they are.
+    if TIDY_MANIFEST.exists():
+        tidy = load(TIDY_MANIFEST)
+        package["downloads"] = {
+            "directory": "/data/case-studies/tidy/",
+            "convention": tidy["convention"],
+            "generatedAt": tidy["generatedAt"],
+            "tables": tidy["tables"],
+        }
     package["counts"] = {
         "inputFiles": len(package["data"]["files"]),
         "remoteAssets": len(package["data"]["remoteAssets"]),

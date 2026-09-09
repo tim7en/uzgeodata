@@ -119,7 +119,7 @@
   --c-accent-11:#996b00;
   --c-accent-12:#1a8ba707;
   --c-accent-13:#227e94;
-  --c-accent-14:#1b7d90;
+  --c-accent-14:#187283;
   --c-accent-15:#408f6b0d;
   --c-accent-16:#106372;
   --c-accent-17:#264858;
@@ -328,3 +328,11 @@
 .theme-toggle:hover{border-color:var(--c-accent-2,#58c9e5);color:var(--c-accent-2,#58c9e5)}
 .cs-header nav{align-items:center}
 [data-theme="light"] .cs-map .leaflet-container,[data-theme="light"] .cs-study-map .leaflet-container{background:#e8eef1}
+/* The call to action inverts in light mode: a mid blue that carries white text
+   on a dark page cannot carry pale text on a light one. */
+[data-theme="light"] .cs-primary{background:#0b5f74;color:#fff}
+[data-theme="light"] .cs-primary:hover{background:#084e60}
+.cs-package-convention{display:flex;flex-wrap:wrap;gap:8px 26px;margin:14px 0 0;padding:12px 0;border-top:1px solid var(--line)}
+.cs-package-convention dt{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cs-package-convention dd{margin:4px 0 0;font-size:11px}
+.cs-package pre{overflow-x:auto;background:var(--c-bg-4);border:1px solid var(--line);border-radius:4px;padding:12px;font:10px/1.7 'IBM Plex Mono',monospace}

@@ -79,6 +79,33 @@ with sync_playwright() as p:
     package.get_by_role('tab',name='Transfer',exact=True).click()
     assert 'not attempted' in package.inner_text(),'untested domains must stay visible'
 
+
+    # Both themes must be readable, not merely available. Contrast is measured
+    # rather than eyeballed: a light palette derived from a dark one fails in
+    # exactly the places a screenshot flatters.
+    contrast=(ROOT/'TESTS'/'contrast_probe.js').read_text(encoding='utf-8')
+    for theme in ('dark','light'):
+        page.goto(BASE+'/case-studies/chirchik',wait_until='networkidle')
+        page.evaluate("theme => localStorage.setItem('uzgeodata-theme', theme)",theme)
+        page.reload(wait_until='networkidle')
+        page.locator('#reproducibility').wait_for()
+        assert page.evaluate('document.documentElement.dataset.theme')==theme
+        failures=[r for r in page.evaluate(contrast) if r['ratio']<r['need']]
+        assert not failures,f'{theme}: '+'; '.join(
+            f"{r['ratio']} {r['text'][:40]}" for r in failures[:5])
+    # The switch itself: start from a known theme, then toggle both ways and
+    # confirm the choice survives a reload rather than resetting to the default.
+    page.evaluate("localStorage.setItem('uzgeodata-theme','dark')")
+    page.reload(wait_until='networkidle')
+    page.locator('#reproducibility').wait_for()
+    page.get_by_role('button',name='Switch to light mode').click()
+    assert page.evaluate('document.documentElement.dataset.theme')=='light'
+    page.reload(wait_until='networkidle')
+    assert page.evaluate('document.documentElement.dataset.theme')=='light','choice must persist'
+    page.get_by_role('button',name='Switch to dark mode').click()
+    assert page.evaluate('document.documentElement.dataset.theme')=='dark'
+    page.evaluate("localStorage.removeItem('uzgeodata-theme')")
+
     assert not errors,errors
     browser.close()
-print('Study directory, image cards, lazy data, history navigation, current charts, mobile layout, retry, citable study paths and the reproducibility package passed.')
+print('Study directory, image cards, lazy data, history navigation, current charts, mobile layout, retry, citable study paths, the reproducibility package and both themes passed.')

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-09T12:59:05+00:00",
+  "generatedAt": "2026-09-09T13:18:55+00:00",
   "study": {
     "id": "chirchik-pskem",
     "title": "Chirchik–Charvak: from observations to water-supply evidence",
@@ -271,7 +271,7 @@
         {
           "path": "PUBLISHED/data/case-studies/model-review.json",
           "bytes": 59573,
-          "sha256": "f671601646b08848ee8800deb34810e506aca12c76f15e6c4b31cbe5cbf92878"
+          "sha256": "417bff322de525aedfb4f3c5abcdd9cd997913b4ac8bc87f95aa4b6960cd0a8a"
         }
       ]
     },
@@ -285,17 +285,17 @@
         {
           "path": "PUBLISHED/data/case-studies/case-study-highlights.json",
           "bytes": 9295,
-          "sha256": "9598fd49046776682c107f38f83459219d7ac4f50d9679ddea87b904c1c99285"
+          "sha256": "0f292b0df7a703d33b611d01ab2cb7bc0270209fd31d7aedf343543e573b5e12"
         },
         {
           "path": "PUBLISHED/data/case-studies/current-model.json",
           "bytes": 47119,
-          "sha256": "69cd4f6742adac8a2f454ef56f895f4be5477d96bae38bd6b55664b7a078dab5"
+          "sha256": "71637dd10244599a7d20bcfbaee64845766a941e31539f60de921e4c01840cbe"
         },
         {
           "path": "PUBLISHED/data/case-studies/study-landing.manifest.json",
           "bytes": 689,
-          "sha256": "1edfe05b0a2ee6d5007c29c531ca7be089ba5d3936072ecdd7016efdc156d833"
+          "sha256": "4e70d3e9ad3de93ea6e8884f606602fa7b0454514576392674dc0a763d68d544"
         }
       ]
     }
@@ -401,7 +401,7 @@
       "substantiveDifferenceCount": 0,
       "provenanceDifferenceCount": 0,
       "substantiveDifferences": [],
-      "checkedAt": "2026-09-09T12:59:03+00:00",
+      "checkedAt": "2026-09-09T13:18:53+00:00",
       "command": "npm run cases:reproduce"
     },
     "method": "Two independent checks. The scores the page shows are recomputed from the published daily CSV and compared with the model's own summary. Separately, the observation stage is rebuilt into a temporary directory and diffed field by field against what is published, so a drift between the code and the artefacts shows up as a difference rather than as silence."
@@ -712,6 +712,64 @@
     "No observed snowpack/SWE or independent temperature-profile validation is available. Parameters at bounds are diagnostics, not permission to widen physical bounds to chase holdout skill.",
     "Further development needs inner calibration-period cross-validation and a new external test, not repeated selection against 2011–2017."
   ],
+  "downloads": {
+    "directory": "/data/case-studies/tidy/",
+    "convention": {
+      "missingValue": "empty field",
+      "dateFormat": "ISO 8601, YYYY-MM-DD",
+      "lineTerminator": "LF",
+      "encoding": "UTF-8 without BOM",
+      "columnNaming": "snake_case with the unit in the name"
+    },
+    "generatedAt": "2026-09-09T13:18:00+00:00",
+    "tables": [
+      {
+        "file": "pskem_daily.csv",
+        "bytes": 342018,
+        "rows": 6575
+      },
+      {
+        "file": "pskem_monthly.csv",
+        "bytes": 23570,
+        "rows": 432
+      },
+      {
+        "file": "pskem_seasonal.csv",
+        "bytes": 1854,
+        "rows": 32
+      },
+      {
+        "file": "model_scores.csv",
+        "bytes": 3250,
+        "rows": 81
+      },
+      {
+        "file": "study_inputs.csv",
+        "bytes": 2665,
+        "rows": 16
+      },
+      {
+        "file": "method_stages.csv",
+        "bytes": 1236,
+        "rows": 6
+      },
+      {
+        "file": "tests.csv",
+        "bytes": 5850,
+        "rows": 47
+      },
+      {
+        "file": "transferability.csv",
+        "bytes": 725,
+        "rows": 4
+      },
+      {
+        "file": "data_dictionary.csv",
+        "bytes": 3546,
+        "rows": 47
+      }
+    ]
+  },
   "counts": {
     "inputFiles": 16,
     "remoteAssets": 4,

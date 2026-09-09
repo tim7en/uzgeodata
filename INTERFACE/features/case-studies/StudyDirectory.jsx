@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, Droplets } from 'lucide-react';
 import usePublishedData from './usePublishedData.js';
+import ThemeToggle from '../../ThemeToggle.jsx';
 
 export default function StudyDirectory() {
   const {data,error,retry} = usePublishedData('/data/case-studies/study-directory.json');

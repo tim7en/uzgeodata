@@ -5,6 +5,12 @@ import usePublishedData from './usePublishedData.js';
 const SOURCE = '/data/case-studies/reproducibility-package.json';
 const BASE = '/data/case-studies/';
 
+const R_SNIPPET = [
+  'daily  <- read.csv("pskem_daily.csv")',
+  'scores <- read.csv("model_scores.csv")',
+  'subset(scores, evaluation == "chronological" & metric == "nse")',
+].join(String.fromCharCode(10));
+
 const TABS = [
   ['data', 'Data', 'Can I obtain the same input data?'],
   ['method', 'Method', 'Can I run the same procedure?'],
@@ -12,6 +18,7 @@ const TABS = [
   ['verification', 'Verification', 'Do I obtain approximately the same result?'],
   ['tests', 'Tests', 'What is checked automatically?'],
   ['transferability', 'Transfer', 'Does the method work elsewhere, or later?'],
+  ['downloads', 'Tables', 'How do I get this into R or pandas?'],
 ];
 
 const short = value => (value == null ? '—' : String(value).slice(0, 12));
@@ -185,6 +192,26 @@ export default function ReproducibilityPackage() {
         <ul className="cs-package-limits">{transferability.gates.map(gate => <li key={gate}>{gate}</li>)}</ul>
       </details>}
     </>}
+
+    {tab === 'downloads' && (data.downloads ? <>
+      <p className="cs-note">Flat CSV, one row per observation. Missing values are empty rather than <code>nan</code>, so a column of numbers imports as numbers. Column meanings and units are in <code>data_dictionary.csv</code>.</p>
+      <div className="cs-table-wrap"><table>
+        <thead><tr><th>Table</th><th>Rows</th><th>Size</th><th></th></tr></thead>
+        <tbody>{data.downloads.tables.map(table => <tr key={table.file}>
+          <td><code>{table.file}</code></td>
+          <td>{table.rows.toLocaleString('en')}</td>
+          <td>{kb(table.bytes)}</td>
+          <td><a href={`${data.downloads.directory}${table.file}`} download>Download</a></td>
+        </tr>)}</tbody>
+      </table></div>
+      <dl className="cs-package-convention">
+        {Object.entries(data.downloads.convention).map(([key, value]) => <div key={key}>
+          <dt>{key.replace(/([A-Z])/g, ' $1').toLowerCase()}</dt><dd>{value}</dd>
+        </div>)}
+      </dl>
+      <pre>{R_SNIPPET}</pre>
+      <div className="cs-download-links"><a href={`${data.downloads.directory}README.md`} download>Bundle README <Download size={14}/></a></div>
+    </> : <p className="cs-note">The tidy tables have not been built yet. Run <code>npm run cases:tidy</code>.</p>)}
 
     <div className="cs-download-links">
       <a href={BASE + 'reproducibility-package.json'} download>The whole package · JSON <Download size={14} /></a>

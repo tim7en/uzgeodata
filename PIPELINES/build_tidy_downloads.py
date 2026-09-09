@@ -27,9 +27,12 @@ import argparse
 import csv
 import json
 import math
-import os
 from datetime import datetime, timezone
 from pathlib import Path
+
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from hydromet.io import atomic_write
 
 ROOT = Path(__file__).resolve().parent.parent
 STUDY = ROOT / "PUBLISHED/data/case-studies"
@@ -62,14 +65,15 @@ def clean(value, digits=DECIMALS["default"]):
 def write(name: str, columns: list[str], rows: list[dict], digits=None) -> Path:
     digits = digits or {}
     path = TIDY / name
-    temporary = path.with_suffix(path.suffix + ".tmp")
-    with temporary.open("w", encoding="utf-8", newline="") as handle:
+
+    def emit(handle):
         writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(columns)
         for row in rows:
             writer.writerow([clean(row.get(column), digits.get(column, DECIMALS["default"]))
                              for column in columns])
-    os.replace(temporary, path)
+
+    atomic_write(path, emit)
     return path
 
 
@@ -319,9 +323,8 @@ def main() -> None:
                     "rows": max(0, path.read_text(encoding="utf-8").count("\n") - 1)}
                    for path in written if path.suffix == ".csv"],
     }
-    temporary = MANIFEST.with_suffix(MANIFEST.suffix + ".tmp")
-    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    os.replace(temporary, MANIFEST)
+    atomic_write(MANIFEST, lambda handle: handle.write(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n"))
 
     total = sum(path.stat().st_size for path in written)
     for table in payload["tables"]:
