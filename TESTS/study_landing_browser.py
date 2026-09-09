@@ -19,6 +19,10 @@ with sync_playwright() as p:
     out=ROOT/'WORKSPACE/derived/ui-review';out.mkdir(parents=True,exist_ok=True)
     page.screenshot(path=str(out/'study-directory-desktop.png'),full_page=True)
     page.get_by_role('link',name='From mountain snow',exact=False).click()
+    page.get_by_role('heading',name='Flow timing has skill. Seasonal volume remains uncertain.').wait_for()
+    assert page.locator('#model-review .cs-chart svg').count()==2
+    assert not page.locator('#supporting-evidence').get_attribute('open')
+    page.locator('#reference-model > summary').click()
     page.get_by_role('heading',name='Snow storage, soil water and river flow.').wait_for()
     page.get_by_label('Current model chart').select_option('seasonal')
     assert 'million m³' in page.locator('#current-model').inner_text()

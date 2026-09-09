@@ -5,6 +5,11 @@ The page now separates Chirchik/Pskem from the implemented
 station locations, QA-screened historical Earth Engine data, terrain/soil
 context, calendar audits, regression charts and CSV/JSON downloads.
 
+The [2026-09-09 Pskem model review](pskem-model-review-20260909.md) replaces the
+mixed headline gallery with a new chronological evaluation. The previous
+stratified fit remains a reference; improved monthly timing does not establish
+seasonal water-volume forecast skill.
+
 Open `/case-studies.html` in the running application. It contains historical
 station validation, MODSNOW-style snow monitoring, elevation and land-cover
 profiles, surface-energy comparisons, physical / random-forest / Bayesian

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-09T10:30:39+00:00",
+  "generatedAt": "2026-09-09T12:19:36+00:00",
   "study": {
     "id": "chirchik",
     "label": "Chirchik and Pskem",
@@ -56,10 +56,11 @@
     {
       "id": "daily-process-model",
       "kind": "validated",
-      "headline": "A daily snowmelt model reproduces the hydrograph and the seasonal total",
+      "headline": "A daily snowmelt model reproduces the hydrograph; the seasonal total depends on the split",
       "value": 0.9,
       "valueLabel": "monthly NSE, held-out years",
-      "detail": "Configured calibration years: 2004, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2017; warm-up year 2001 is excluded from scoring. On held-out years, the temperature-index model reaches NSE 0.88 on daily flow and 0.90 on monthly means, closing the water balance at a runoff coefficient of 0.71 against 0.71 observed. The April–September volume reaches NSE +0.59 at -2.1% bias once the first year is treated as warm-up rather than scored from empty stores.",
+      "detail": "Configured calibration years: 2004, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2017; warm-up year 2001 is excluded from scoring. On held-out years, the temperature-index model reaches NSE 0.88 on daily flow and 0.90 on monthly means, closing the water balance at a runoff coefficient of 0.71 against 0.71 observed. The April–September volume reaches NSE +0.59 at -2.1% bias on this split. Under the stricter chronological split, where every test year follows every calibration year, the same structure falls to seasonal NSE -1.04. Daily and monthly behaviour survives that test; the seasonal volume does not.",
+      "strictSeasonalNse": -1.039,
       "dailyNse": 0.879,
       "monthlyNse": 0.901,
       "seasonalNse": 0.592,
@@ -79,7 +80,15 @@
       "headline": "Historical seasonal classes: 6 of 7 within one class",
       "value": 9.0,
       "valueLabel": "% median volume error",
-      "detail": "Across 7 held-out historical years, April–September volume is reproduced to a median 9% with NSE +0.59 and bias -2.1%. Placed into five classes from dry to wet, 2 of 7 land in the right class and 6 of 7 are never more than one class out. The stratified split and retrospective forcing do not establish prospective seasonal forecast skill. Class thresholds use calibration-year observations only.",
+      "detail": "Across 7 held-out historical years, April–September volume is reproduced to a median 9% with NSE +0.59 and bias -2.1%. Placed into five classes from dry to wet, 2 of 7 land in the right class and 6 of 7 are never more than one class out. The stratified split and retrospective forcing do not establish prospective seasonal forecast skill. Class thresholds use calibration-year observations only. Under the chronological split, where every test year follows every calibration year, 2 of 7 land in the right class and 6 of 7 stay within one, so the class result survives the split that the seasonal volume score does not.",
+      "strictClasses": {
+        "training_years": 9,
+        "mean_mcm": 2127.7111111111108,
+        "std_mcm": 360.25723662850953,
+        "test_years": 7,
+        "exact": 2,
+        "within_one": 6
+      },
       "exactClass": 2,
       "withinOneClass": 6,
       "heldOutYears": 7,

@@ -1208,3 +1208,70 @@ passed. Both browser smoke suites passed against the production-mode app,
 including desktop/mobile navigation, lazy study data, chart selectors and
 failed-request retry. Production build passed; the local app serves `dist/`.
 
+### 13.2 Review of misleading findings and independent model rerun — 2026-09-09
+
+- [x] Audited the screenshot's mixed findings, repeated/cropped images and
+  supporting sources; moved non-runoff analyses into a separate disclosure.
+- [x] Removed unsupported April-error improvement text and corrected the
+  misreported calibration-year list. Classified elevation banding as a model
+  assumption requiring independent evaluation.
+- [x] Fixed seasonal class thresholds to use calibration observations only;
+  the previous reference's within-one-class count is now 6/7, not 7/7.
+- [x] Ran a separate chronological experiment: 18,000 candidate parameter sets,
+  fixed seed, unchanged bounds, calibration-only KGE selection. Scored training
+  years 2002–2010; held-out years 2011–2017. Preserved the prior reference fit.
+- [x] Evaluated a training-only monthly climatology on identical valid-day and
+  month support. New model NSE: daily 0.7228, monthly 0.7595, seasonal −1.0386;
+  seasonal bias +16.587%. These are not directly comparable to the prior
+  stratified split's higher scores, and do not establish seasonal forecast skill.
+- [x] Published new full-size monthly and seasonal comparison charts, parameter
+  diagnostics, coverage and JSON/CSV downloads; foregrounded the new test in
+  both the study and its directory card.
+- [x] Verification: 59 targeted tests passed, both production browser smoke
+  suites passed, mobile overflow check passed, and production build passed.
+
+See [the model-review record](CASE_STUDIES/pskem-model-review-20260909.md).
+Next gate: inner calibration-period cross-validation plus independent forcing,
+snowpack and discharge evidence; do not tune repeatedly to the exposed holdout.
+
+
+### 13.1 Завершение прогона: одно утверждение на странице и полнота графа — 2026-09-09
+
+Хронологический эксперимент оставил на странице два несовместимых утверждения:
+карточка вывода сообщала, что сезонный объём воспроизведён (NSE +0.59 по
+стратифицированному разбиению), а вынесенный вперёд обзор — что он не
+воспроизведён (NSE −1.04 при климатологии −3.87). Читателю оставалось выбирать.
+
+- [x] `build_case_study_highlights.py` читает `model-review.json` и ведёт
+  заголовок вывода `daily-process-model` от более строгого разбиения:
+  «суточный ход воспроизводится, сезонный объём зависит от разбиения». Оба
+  числа названы в тексте вывода, ни одно не спрятано.
+- [x] Вывод `water-year-class` теперь сообщает классификацию по обоим
+  разбиениям: 2 из 7 точно и 6 из 7 в пределах одного класса — совпадает,
+  то есть классовый результат переживает то разбиение, которое сезонный
+  NSE не переживает.
+- [x] `CurrentModel.jsx` (свёрнутый блок прежней публикации) прямо указывает,
+  что его сезонная оценка получена на стратифицированном разбиении и не
+  сопоставима с хронологической оценкой в начале страницы.
+
+Параллельно закрыты два давних падавших теста онтологии. Причиной была не
+нехватка лицензии или агента — они объявлены в `vocab/external-sources.json`, —
+а рассинхронизация: инвентаризация `earth-engine-hydro` была переснята по
+каталогу, в котором нет узбекских выборок, поэтому сборка теряла 64 сущности
+BasinATLAS и HydroBASINS-lake, а таблицы связей GDW, HydroWASTE, GloRiC и FFR
+никогда не попадали в граф.
+
+- [x] Профилированы `GEODATA/uzbekistan_basinatlas_v10` и
+  `GEODATA/uzbekistan_hydrobasins_lake_v1c`, их 59 файлов слиты в
+  инвентаризацию с сохранением префикса каталога, который ожидают шаблоны
+  `match`.
+- [x] Пересборка онтологии: 48 таблиц связей вместо 38, 1 584 890 объявленных
+  связей вместо 1 122 992, предупреждений 5 вместо 18. Сущностей 954 против
+  937 в HEAD, **потеряно 0**.
+- [x] Оставшиеся три предупреждения — отсутствующий
+  `WORKSPACE/derived/hydrography/uzbekistan-hydrography.gpkg`: это нехватка
+  данных, а не метаданных.
+- [x] Исправлен жёстко зашитый счётчик в хвосте списка предупреждений сборки
+  («… and N more» считал от 12 независимо от показанного числа).
+- [x] Проверка: 189 тестов pytest (было 187 при двух падавших), 77 узловых
+  тестов, сборка и полная цепочка `npm run cases:publish` — без ошибок.

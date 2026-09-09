@@ -2033,10 +2033,11 @@ def main(argv=None) -> int:
     builder.log(f"  portal graph: {graph['counts']['datasets']} datasets")
     if builder.warnings:
         builder.log(f"  {len(builder.warnings)} warnings:")
-        for warning in builder.warnings[:12]:
+        shown = 12
+        for warning in builder.warnings[:shown]:
             builder.log(f"    - {warning}")
-        if len(builder.warnings) > 12:
-            builder.log(f"    ... and {len(builder.warnings) - 12} more")
+        if len(builder.warnings) > shown:
+            builder.log(f"    ... and {len(builder.warnings) - shown} more")
     return 0
 
 

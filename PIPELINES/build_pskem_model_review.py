@@ -69,7 +69,7 @@ def main():
     inputs=[RUN/'pskem-daily-model.json',RUN/'pskem-daily-model.csv',DATA/'pskem-daily-model.json']
     inputs += [ROOT/'PUBLISHED/data/case-studies'/name for name in ['sabitov-daily-forcing.csv','pskem-candidate-catchment.geojson','elevation-profiles.csv']]
     inputs += [ROOT/'PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv',ROOT/'PIPELINES/build_pskem_daily_model.py']
-    result={'generated_at':datetime.now(timezone.utc).isoformat(),'run_directory':'/data/case-studies/model-audit/chronological-20260909/',
+    result={'generated_at':datetime.now(timezone.utc).isoformat(),'candidate_generated_at':model['generatedAt'],'run_directory':'/data/case-studies/model-audit/chronological-20260909/',
             'decision':'Preserve the published stratified reference. Foreground the stricter chronological test; do not tune further against its exposed holdout.',
             'train_years':train_years,'test_years':test_years,'model':model['model'],
             'candidate':{'daily':model['skill']['validation'],'monthly':model['monthlySkill']['validation'],'seasonal':model['seasonalValidationScores']},
@@ -79,7 +79,7 @@ def main():
             'classes':class_summary(model['seasonalVolumes']),'parameters_at_bounds':model['parametersAtBounds'],
             'inputs':{str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},
             'limitations':[
-                'Parameters were selected using calibration KGE only: 6,000 broad samples plus four refinement rounds of 3,000, seed 1729. Existing bounds were retained.',
+                f"Parameters were selected using calibration KGE only: {model['model']['calibration']['samples']:,} broad samples plus four refinement rounds of {model['model']['calibration']['samples']//2:,}, seed {model['model']['calibration']['seed']}. Existing bounds were retained.",
                 'This is a different validation split, not an accuracy contest with the previous stratified run. Its old parameters saw some years now held out.',
                 'Baseline is the calibration-only monthly discharge climatology, evaluated on exactly the same valid days and months.',
                 'Negative seasonal NSE means worse squared error than the held-out seasonal mean; that diagnostic mean is not itself an operational forecast.',

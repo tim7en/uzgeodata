@@ -1,5 +1,6 @@
 {
-  "generated_at": "2026-09-09T10:30:37.460525+00:00",
+  "generated_at": "2026-09-09T12:19:34.169381+00:00",
+  "candidate_generated_at": "2026-09-09T10:25:49+00:00",
   "run_directory": "/data/case-studies/model-audit/chronological-20260909/",
   "decision": "Preserve the published stratified reference. Foreground the stricter chronological test; do not tune further against its exposed holdout.",
   "train_years": [

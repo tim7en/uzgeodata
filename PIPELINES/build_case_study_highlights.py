@@ -30,6 +30,7 @@ STUDY = ROOT / "PUBLISHED/data/case-studies"
 VALIDATION = STUDY / "advanced-validation.json"
 TRENDS = STUDY / "sabitov-monthly-trends.csv"
 DAILY_MODEL = STUDY / "pskem-daily-model.json"
+MODEL_REVIEW = STUDY / "model-review.json"
 OUTPUT = STUDY / "case-study-highlights.json"
 FIGURES = "/data/case-studies"
 
@@ -171,6 +172,15 @@ def main() -> None:
                         for row in held)
         median = errors[len(errors) // 2]
         seasonal = model.get("seasonalValidationScores", {})
+        # The chronological review classifies its own held-out years the same way.
+        # Reporting both is what distinguishes a class result that survives the
+        # harder split from one that only holds under the stratified one.
+        strict_classes = None
+        if MODEL_REVIEW.exists():
+            review = json.loads(MODEL_REVIEW.read_text(encoding="utf-8"))
+            classes = review.get("classes") or {}
+            if classes.get("test_years"):
+                strict_classes = classes
         return {
             "id": "water-year-class",
             "kind": "validated",
@@ -184,7 +194,13 @@ def main() -> None:
                 f"{exact} of {len(held)} land in the right class and {near} of {len(held)} are never "
                 f"more than one class out. The {model['model']['calibration']['split']} split and retrospective forcing "
                 "do not establish prospective seasonal forecast skill. Class thresholds use calibration-year observations only."
+                + (f" Under the chronological split, where every test year follows every calibration "
+                   f"year, {strict_classes['exact']} of {strict_classes['test_years']} land in the right "
+                   f"class and {strict_classes['within_one']} of {strict_classes['test_years']} stay "
+                   "within one, so the class result survives the split that the seasonal volume score does not."
+                   if strict_classes else "")
             ),
+            "strictClasses": strict_classes,
             "exactClass": exact,
             "withinOneClass": near,
             "heldOutYears": len(held),
@@ -198,14 +214,23 @@ def main() -> None:
         daily = model["skill"]["validation"]
         monthly = model["monthlySkill"]["validation"]
         seasonal = model.get("seasonalValidationScores", {})
+        # The chronological review is the harder test of the same structure.
+        strict_seasonal = None
+        if MODEL_REVIEW.exists():
+            review = json.loads(MODEL_REVIEW.read_text(encoding="utf-8"))
+            candidate = review.get("candidate", {})
+            strict = candidate.get("seasonalValidationScores") or candidate.get("seasonal") or {}
+            strict_seasonal = strict.get("nse")
         findings.append({
             "id": "daily-process-model",
             "kind": "validated",
-            # The headline follows the numbers rather than a remembered result: the
-            # seasonal total was negative until the warm-up year was excluded.
-            "headline": ("A daily snowmelt model reproduces the hydrograph and the seasonal total"
-                         if (seasonal.get("nse") or -1) > 0
-                         else "A daily snowmelt model has real skill; the seasonal total still does not"),
+            # Two splits disagree about the seasonal total, so the headline reports
+            # the stricter one. Claiming the reproducible result while a harsher
+            # test on the same page says otherwise would leave a reader to pick.
+            "headline": ("A daily snowmelt model reproduces the hydrograph; the seasonal total "
+                         "depends on the split"
+                         if strict_seasonal is not None and strict_seasonal <= 0
+                         else "A daily snowmelt model reproduces the hydrograph and the seasonal total"),
             "value": round_or_none(monthly["nse"], 2),
             "valueLabel": "monthly NSE, held-out years",
             "detail": (
@@ -216,9 +241,13 @@ def main() -> None:
                 f"coefficient of {model['waterBalance']['runoffCoefficientSimulated']:.2f} against "
                 f"{model['waterBalance']['runoffCoefficientObserved']:.2f} observed. The April–September "
                 f"volume reaches NSE {seasonal.get('nse', float('nan')):+.2f} at "
-                f"{seasonal.get('pbias', 0):+.1f}% bias once the first year is treated as warm-up "
-                "rather than scored from empty stores."
+                f"{seasonal.get('pbias', 0):+.1f}% bias on this split."
+                + (f" Under the stricter chronological split, where every test year follows every "
+                   f"calibration year, the same structure falls to seasonal NSE {strict_seasonal:+.2f}. "
+                   "Daily and monthly behaviour survives that test; the seasonal volume does not."
+                   if strict_seasonal is not None else "")
             ),
+            "strictSeasonalNse": round_or_none(strict_seasonal, 3),
             "dailyNse": round_or_none(daily["nse"], 3),
             "monthlyNse": round_or_none(monthly["nse"], 3),
             "seasonalNse": round_or_none(seasonal.get("nse"), 3),
