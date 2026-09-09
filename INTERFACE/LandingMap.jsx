@@ -20,8 +20,21 @@ const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
 const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const CENTRE = [40.2, 70.5];
+// How much of each corner the fixed UI takes up, in pixels, so a fitted view
+// never lands a basin under the sidebar, the header or the zoom controls.
+const OCCLUDED_TOP_LEFT = [300, 170];
+const OCCLUDED_BOTTOM_RIGHT = [40, 110];
 const DEEPER = [
-  { href: '/case-studies.html', label: 'Explore the case studies', note: 'Mountain runoff models and regional station–satellite relationships' },
+  { href: '/case-studies.html', label: 'Case studies', note: 'Runoff models and station–satellite work' },
+];
+
+// Sections the programme will carry. They are listed now so the navigation has
+// its final shape, and marked as unbuilt rather than linked to a dead page:
+// a link that goes nowhere is worse than one that says it is not ready.
+const PROGRAMME = [
+  { id: 'about', label: 'About', note: 'What this system is and who maintains it' },
+  { id: 'projects', label: 'Projects', note: 'Work running on this data' },
+  { id: 'support', label: 'Support', note: 'How to get help or report a problem' },
 ];
 
 const json = url => fetch(url).then(response => response.ok
@@ -36,7 +49,11 @@ function WatchZoom({ onZoom }) {
 function FitTo({ bounds }) {
   const map = useMap();
   useEffect(() => {
-    if (bounds) map.flyToBounds(bounds, { padding: [40, 40], duration: 0.8 });
+    if (bounds) map.flyToBounds(bounds, {
+      paddingTopLeft: OCCLUDED_TOP_LEFT,
+      paddingBottomRight: OCCLUDED_BOTTOM_RIGHT,
+      duration: 0.8,
+    });
   }, [bounds, map]);
   return null;
 }
@@ -320,6 +337,16 @@ export default function LandingMap() {
   const features = basins?.features || [];
   const byId = useMemo(() => new Map(features.map(feature => [String(feature.properties.hybas_id), feature])), [features]);
   const totals = useMemo(() => systemTotals(features), [features]);
+  // The static centre/zoom the map mounts with is only a placeholder: as soon as
+  // the first level of basins arrives, fit their real extent into whatever area
+  // the sidebar and header leave uncovered, once, so the country never opens
+  // partly hidden behind the panel.
+  const initialFit = useRef(false);
+  useEffect(() => {
+    if (initialFit.current || !features.length) return;
+    initialFit.current = true;
+    setBounds(collectionBounds(features));
+  }, [features]);
   const selectedId = selected ? String(selected.properties.hybas_id) : null;
   const results = useMemo(() => {
     const term = query.trim();
@@ -449,6 +476,27 @@ export default function LandingMap() {
               {BASEMAPS.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}
             </select>
           </label>
+          {/* Water bodies and barriers are map layers, so they are switched on
+              the map rather than from a reading panel down the side. */}
+          <fieldset className="land-layers">
+            <legend>Layers</legend>
+            <label className="land-toggle">
+              <input type="checkbox" checked={showLakes} onChange={event => {
+                setShowLakes(event.target.checked);
+                if (!event.target.checked) setLake(null);
+              }}/>
+              <span className="land-lake-key" aria-hidden="true"><i/><i/><i/></span>
+              <span>Lakes{lakes ? ` · ${formatNumber(lakes.features.length)}` : ''}</span>
+            </label>
+            <label className="land-toggle">
+              <input type="checkbox" checked={showDams} onChange={event => {
+                setShowDams(event.target.checked);
+                if (!event.target.checked) setDam(null);
+              }}/>
+              <Droplets size={12}/>
+              <span>Dams{damStats ? ` · ${formatNumber(damStats.dams)}` : ''}</span>
+            </label>
+          </fieldset>
         </div>
       </div>
       <p>Amu Darya and Syr Darya as they drain, not as borders cut them. Pick any sub-basin to read it.</p>
@@ -456,58 +504,6 @@ export default function LandingMap() {
 
     <aside className={`land-panel ${selected ? 'has-selection' : ''}`}>
       {!basins && <p className="land-loading">Loading the reference basins…</p>}
-      {basins && groups && <section className="land-overlay">
-        <label>
-          <span>Colour basins by</span>
-          <select value={overlay} onChange={event => setOverlay(event.target.value)}>
-            <option value="">River system</option>
-            {HEADLINE_ATTRIBUTES.map(column => {
-              const meta = attributeMeta(groups, column);
-              return meta ? <option key={column} value={column}>{meta.label}</option> : null;
-            })}
-          </select>
-        </label>
-        {overlay && !store && <p className="land-group-note">Loading level {active.level} attributes…</p>}
-        {overlay && legend.length > 0 && <div className="land-legend">
-          <span>{overlayMeta?.units || ''}</span>
-          <ol>{legend.map((stop, index) => <li key={index}>
-            <i style={{ background: stop.color }}/>
-            <em>{stop.from === null ? `< ${formatAttribute(stop.to, overlayMeta?.units).value}`
-              : stop.to === null ? `≥ ${formatAttribute(stop.from, overlayMeta?.units).value}`
-                : `${formatAttribute(stop.from, overlayMeta?.units).value} – ${formatAttribute(stop.to, overlayMeta?.units).value}`}</em>
-          </li>)}</ol>
-          <a href={`/atlas.html?attribute=${overlay}`}>Open in the atlas explorer <ArrowUpRight size={11}/></a>
-        </div>}
-
-        <div className="land-lakes">
-          <label className="land-toggle"><input type="checkbox" checked={showLakes} onChange={event=>{setShowLakes(event.target.checked);if(!event.target.checked)setLake(null);}}/><span className="land-lake-key" aria-hidden="true"><i/><i/><i/></span><span>Lakes and water surfaces</span></label>
-          {showLakes&&lakes&&<p className="land-group-note">{formatNumber(lakes.features.length)} catalogued water bodies. Blue parallel lines mark lakes and reservoir surfaces; smaller features appear as you zoom. Click a symbol or shoreline for properties and reservoir links.</p>}
-        </div>
-        <div className="land-dams">
-          <label className="land-toggle">
-            <input type="checkbox" checked={showDams} onChange={event => {
-              setShowDams(event.target.checked);
-              if (!event.target.checked) setDam(null);
-            }}/>
-            <Droplets size={12}/>
-            <span>Dams and reservoirs</span>
-          </label>
-          {showDams && damStats && <>
-            <ul className="land-sizekey">
-              {damLegendStops().map(stop => <li key={stop.capacity}>
-                <i style={{ width: stop.radius * 2, height: stop.radius * 2 }}/>
-                <em>{formatNumber(stop.capacity)}</em>
-              </li>)}
-            </ul>
-            <p className="land-group-note">
-              {damStats.dams} barriers holding {formatNumber(damStats.storageMcm)} MCM. Circle width
-              follows storage on a logarithmic scale, in MCM; a hollow ring is a barrier whose
-              capacity the source never reported.
-            </p>
-          </>}
-          {showDams && !damStats && <p className="land-group-note">Loading dams…</p>}
-        </div>
-      </section>}
       {basins && <p className="land-level">
         Level {active.level} · {formatNumber(features.length)} basins
         {rivers ? ` · ${formatNumber(rivers.features.length)} reaches` : ''}
@@ -559,8 +555,50 @@ export default function LandingMap() {
           <span><strong>{item.label}</strong><small>{item.note}</small></span>
           <ArrowUpRight size={13}/>
         </a>)}
+        {PROGRAMME.map(item => <span key={item.id} className="land-soon" title={item.note}>
+          <span><strong>{item.label}</strong><small>{item.note}</small></span>
+          <em>Soon</em>
+        </span>)}
       </nav>
     </aside>
+
+
+    {basins && groups && <section className="land-dock" aria-label="Basin colouring and map key">
+      <label className="land-dock-select">
+        <span>Colour basins by</span>
+        <select value={overlay} onChange={event => setOverlay(event.target.value)}>
+          <option value="">River system</option>
+          {HEADLINE_ATTRIBUTES.map(column => {
+            const meta = attributeMeta(groups, column);
+            return meta ? <option key={column} value={column}>{meta.label}</option> : null;
+          })}
+        </select>
+      </label>
+      {overlay && !store && <p className="land-group-note">Loading level {active.level} attributes…</p>}
+      {overlay && legend.length > 0 && <div className="land-legend">
+        <span>{overlayMeta?.units || ''}</span>
+        <ol>{legend.map((stop, index) => <li key={index}>
+          <i style={{ background: stop.color }}/>
+          <em>{stop.from === null ? `< ${formatAttribute(stop.to, overlayMeta?.units).value}`
+            : stop.to === null ? `≥ ${formatAttribute(stop.from, overlayMeta?.units).value}`
+              : `${formatAttribute(stop.from, overlayMeta?.units).value} – ${formatAttribute(stop.to, overlayMeta?.units).value}`}</em>
+        </li>)}</ol>
+        <a href={`/atlas.html?attribute=${overlay}`}>Open in the atlas explorer <ArrowUpRight size={11}/></a>
+      </div>}
+      {!overlay && <p className="land-group-note">Basins are coloured by river system. Choose a measured
+        attribute to shade them by value.</p>}
+      {showDams && damStats && <div className="land-dock-key">
+        <span>Storage, MCM</span>
+        <ul className="land-sizekey">
+          {damLegendStops().map(stop => <li key={stop.capacity}>
+            <i style={{ width: stop.radius * 2, height: stop.radius * 2 }}/>
+            <em>{formatNumber(stop.capacity)}</em>
+          </li>)}
+        </ul>
+        <p className="land-group-note">{formatNumber(damStats.storageMcm)} MCM across {damStats.dams} barriers.
+          A hollow ring is a barrier whose capacity the source never reported.</p>
+      </div>}
+    </section>}
 
     {tableOpen && selected && <AttributeModal basin={selected.properties} groups={groups} store={detailStore}
       catalogue={catalogue} loading={loadingStore} onClose={() => setTableOpen(false)}/>}

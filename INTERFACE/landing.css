@@ -168,10 +168,6 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
   .land-panel{position:relative;width:100%;height:auto;padding:0 18px 24px;background:none}
   .land-panel.has-selection{background:none}
 }
-.land-overlay{border:1px solid var(--line);background:var(--l-veil-7);padding:10px}
-.land-overlay>label{display:block}
-.land-overlay>label>span{display:block;font:800 7px var(--display);letter-spacing:.17em;text-transform:uppercase;color:var(--l-line-1);margin-bottom:5px}
-.land-overlay select{width:100%;padding:7px 8px;border:1px solid var(--line);background:var(--l-bg-3);color:var(--ink);font:600 10px var(--body);outline:0;cursor:pointer}
 .land-legend{margin-top:9px}
 .land-legend>span{display:block;font:600 8px var(--mono);color:var(--l-line-1);margin-bottom:5px}
 .land-legend ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
@@ -218,9 +214,6 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-modal footer a{display:inline-flex;align-items:center;gap:4px;font:700 8px var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--l-accent-1);text-decoration:none}
 @media(max-width:820px){.land-modal{padding:12px}.land-modal-tools label{min-width:0;flex:1}}
 
-/* Dams sit in the overlay section with the basin colouring, because both are
-   controls for what the map draws rather than facts about a selection. */
-.land-dams{border-top:1px solid var(--line);margin-top:10px;padding:10px 10px 2px}
 .land-toggle{display:flex;gap:7px;align-items:center;cursor:pointer;font:700 8.5px var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
 .land-toggle input{accent-color:var(--l-accent-2);width:12px;height:12px;cursor:pointer}
 .land-toggle svg{color:var(--l-accent-2)}
@@ -243,7 +236,7 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-dam-ids>span{display:flex;flex-wrap:wrap;gap:3px 9px;min-width:0}
 .land-dam-ids b{display:inline-flex;gap:4px;align-items:baseline;font:500 8px var(--display);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
 .land-dam-ids code{font:600 8.5px var(--mono);color:var(--ink)}
-.land-lakes{border-top:1px solid var(--line);margin-top:10px;padding:10px 10px 2px}.land-lakes input{accent-color:var(--l-line-2)}.land-lake-key{width:19px;display:flex;flex-direction:column;align-items:center;gap:3px}.land-lake-key i{display:block;width:15px;height:2px;background:var(--l-line-2);border-radius:1px}.land-lake-key i:nth-child(2){width:19px}.land-lake-symbol{background:transparent;border:0}.land-lake-symbol svg{width:30px;height:24px;filter:drop-shadow(0 1px 1px var(--l-surface-1))}.land-lake-symbol:focus-visible{outline:2px solid var(--l-line-2);outline-offset:3px}.land-lake-match{border-top:1px solid var(--l-text-2);padding-top:10px;margin-top:12px}.land-lake-match p{margin:6px 0;font-size:12px}
+.land-lake-key{width:19px;display:flex;flex-direction:column;align-items:center;gap:3px}.land-lake-key i{display:block;width:15px;height:2px;background:var(--l-line-2);border-radius:1px}.land-lake-key i:nth-child(2){width:19px}.land-lake-symbol{background:transparent;border:0}.land-lake-symbol svg{width:30px;height:24px;filter:drop-shadow(0 1px 1px var(--l-surface-1))}.land-lake-symbol:focus-visible{outline:2px solid var(--l-line-2);outline-offset:3px}.land-lake-match{border-top:1px solid var(--l-text-2);padding-top:10px;margin-top:12px}.land-lake-match p{margin:6px 0;font-size:12px}
 /* Lake names ride in Leaflet's tooltip pane (z-index 650), above the basin
    overlay, the rivers and the shorelines, so a name is never painted under the
    geography it belongs to. They are labels rather than tooltips: no bubble, no
@@ -301,8 +294,6 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-category>span{font-size:9.5px}
 .land-category dt{font-size:11.5px}
 .land-category dd{font-size:12px}
-.land-overlay>label>span{font-size:9.5px;letter-spacing:.14em}
-.land-overlay select{font-size:12.5px;padding:10px 30px 10px 11px}
 .land-legend>span{font-size:10.5px}
 .land-legend em{font-size:11px}
 .land-legend a{font-size:10.5px}
@@ -318,7 +309,7 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
    The header now owns a row of its own and the panel begins below it. */
 .land-head{max-width:none;width:100%;padding:22px 26px 0;display:block}
 .land-head-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;max-width:1180px}
-.land-head-tools{display:flex;align-items:center;gap:10px;pointer-events:auto}
+.land-head-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;pointer-events:auto}
 .land-basemap{display:flex;align-items:center;gap:8px;border:1px solid var(--l-line-1);background:var(--l-bg-7);border-radius:4px;padding:5px 10px}
 .land-basemap>span{font:600 9.5px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .land-basemap select{border:0;background:transparent;color:var(--ink);font:600 11.5px var(--display);letter-spacing:.04em;padding:3px 2px;outline:0;cursor:pointer}
@@ -330,3 +321,41 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-head{z-index:700}
 .land-head::before{background:linear-gradient(165deg,var(--l-bg-1) 22%,transparent 92%);opacity:.97}
 .land-panel{padding-top:222px}
+
+/* ------------------------------------------------- map controls and the dock
+   Layers belong on the map, not in a reading panel: the sidebar is for what a
+   selected basin says, and the map carries what is drawn on it. */
+.land-layers{display:flex;align-items:center;gap:14px;margin:0;padding:4px 12px 5px;border:1px solid var(--l-line-1);border-radius:4px;background:var(--l-bg-7)}
+.land-layers legend{padding:0 5px;font:600 9.5px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.land-layers .land-toggle{display:flex;align-items:center;gap:7px;margin:0;font:600 11.5px var(--display);letter-spacing:.03em;color:var(--ink);cursor:pointer;white-space:nowrap}
+.land-layers .land-toggle input{margin:0;accent-color:var(--l-accent-1);cursor:pointer}
+.land-layers svg{color:var(--l-accent-2)}
+
+/* The key sits where a map key belongs: over the map, out of the way of the
+   basins, and near the zoom controls a reader is already looking at. */
+.land-dock{position:absolute;right:18px;bottom:74px;z-index:650;width:284px;max-height:62vh;overflow-y:auto;scrollbar-width:thin;
+  padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:var(--panel);backdrop-filter:blur(9px)}
+.land-dock-select{display:block}
+.land-dock-select>span{display:block;font:800 9.5px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--l-accent-1);margin-bottom:7px}
+.land-dock-select select{width:100%;background:var(--l-bg-7);border:1px solid var(--line);border-radius:4px;color:var(--ink);font:600 12.5px var(--display);padding:9px 10px}
+.land-dock .land-legend{margin-top:12px}
+.land-dock .land-group-note{padding:0;margin:10px 0 0}
+.land-dock-key{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.land-dock-key>span{display:block;font:800 9.5px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+
+/* ------------------------------------------------------------- sidebar width
+   Narrower now that the layer switches and the key have left it: it holds the
+   search, the two systems, whatever basin is selected, and where to go next.
+   The gradient's opaque stop is pulled in too, so it fades out well before the
+   panel's own edge instead of shading the map right up to it. */
+.land-panel{width:278px;padding:190px 16px 20px;gap:12px}
+.land-panel,.land-panel.has-selection{background:linear-gradient(90deg,var(--panel) 68%,transparent)}
+.land-detail h2{font-size:23px}
+.land-headline dd{font-size:16px}
+.land-soon{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);opacity:.72}
+.land-soon strong{display:block;font:600 12.5px var(--display);letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
+.land-soon small{display:block;color:var(--dim);font-size:10.5px;margin-top:2px}
+.land-soon em{flex:0 0 auto;font:600 9px var(--mono);font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:3px;padding:3px 6px}
+@media(max-width:1100px){.land-dock{width:250px;bottom:70px}}
+@media(max-width:900px){.land-dock{position:static;width:auto;max-height:none;margin:14px;backdrop-filter:none}
+  .land-layers{flex-wrap:wrap;gap:10px}}

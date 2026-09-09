@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-09T13:37:38+00:00",
+  "generatedAt": "2026-09-09T13:41:54+00:00",
   "study": {
     "id": "chirchik-pskem",
     "title": "Chirchik–Charvak: from observations to water-supply evidence",
@@ -271,7 +271,7 @@
         {
           "path": "PUBLISHED/data/case-studies/model-review.json",
           "bytes": 59573,
-          "sha256": "58286652747770e9ec029ca05d6aac970acc58a6f5901c62771b367ff991362d"
+          "sha256": "ca6a012d5b3e90522666c056721a7a68c47a5688d3ff65caf5ab3435038f210e"
         }
       ]
     },
@@ -285,17 +285,17 @@
         {
           "path": "PUBLISHED/data/case-studies/case-study-highlights.json",
           "bytes": 9295,
-          "sha256": "4281b228fc03032c4972f4c80f11861c45b1f95fc580e0d3d0579c7ff99fbd30"
+          "sha256": "19e3bc32e0c8f0c8d95b0d9cfe508c137be9ba78bb3e37a89b6a08fbe0bca1a6"
         },
         {
           "path": "PUBLISHED/data/case-studies/current-model.json",
           "bytes": 47119,
-          "sha256": "22d82407cd2a9089ebadc543ac2b3fbbef299b7133eb19b51df7be0b5c25956d"
+          "sha256": "1ea6a104fcaed5960edbe2894a21d12ce836347fde8db4083d1f03a5d22e3fe4"
         },
         {
           "path": "PUBLISHED/data/case-studies/study-landing.manifest.json",
           "bytes": 689,
-          "sha256": "b40dd0f8d16bcd19e15874dc2380f9b0a6991ef90ba06b2d856137893ad45966"
+          "sha256": "896237bda8f6f754339adbe42d7d5e52746ff3a08f741509032227af1e99c364"
         }
       ]
     }
@@ -401,7 +401,7 @@
       "substantiveDifferenceCount": 0,
       "provenanceDifferenceCount": 0,
       "substantiveDifferences": [],
-      "checkedAt": "2026-09-09T13:37:37+00:00",
+      "checkedAt": "2026-09-09T13:41:52+00:00",
       "command": "npm run cases:reproduce"
     },
     "method": "Two independent checks. The scores the page shows are recomputed from the published daily CSV and compared with the model's own summary. Separately, the observation stage is rebuilt into a temporary directory and diffed field by field against what is published, so a drift between the code and the artefacts shows up as a difference rather than as silence."
@@ -721,7 +721,7 @@
       "encoding": "UTF-8 without BOM",
       "columnNaming": "snake_case with the unit in the name"
     },
-    "generatedAt": "2026-09-09T13:34:28+00:00",
+    "generatedAt": "2026-09-09T13:40:59+00:00",
     "tables": [
       {
         "file": "pskem_daily.csv",
