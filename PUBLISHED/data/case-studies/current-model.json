@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T10:16:27.261737+00:00",
+  "generated_at": "2026-09-09T10:18:14.680164+00:00",
   "model_generated_at": "2026-09-09T05:55:52+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
@@ -2000,5 +2000,5 @@
     "k_fast"
   ],
   "monthly_support": "Monthly means require at least 20 paired valid days, matching this model evaluation. Counts are retained; incomplete months are not total-volume estimates.",
-  "scope": "Historical hindcast. Discharge-stratified held-out years and retrospective forcing are not prospective forecast validation."
+  "scope": "Historical hindcast using a stratified split. Retrospective forcing is not prospective forecast validation."
 }

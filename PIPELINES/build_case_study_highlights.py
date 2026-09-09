@@ -178,7 +178,7 @@ def main() -> None:
                 f"to a median {median:.0f}% with NSE {seasonal.get('nse', 0):+.2f} and bias "
                 f"{seasonal.get('pbias', 0):+.1f}%. Placed into five classes from dry to wet, "
                 f"{exact} of {len(held)} land in the right class and {near} of {len(held)} are never "
-                "more than one class out. The discharge-stratified split and retrospective forcing "
+                f"more than one class out. The {model['model']['calibration']['split']} split and retrospective forcing "
                 "do not establish prospective seasonal forecast skill."
             ),
             "exactClass": exact,

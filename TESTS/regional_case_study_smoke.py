@@ -16,7 +16,7 @@ with sync_playwright() as p:
     page.get_by_label('Regional station', exact=True).select_option('uz:station/meteo-419704')
     page.get_by_label('Station measurement', exact=True).select_option('air')
     page.get_by_label('Temporal comparison', exact=True).select_option('raw')
-    assert page.locator('svg').count() >= 8
+    assert page.locator('.cs-chart svg').count() >= 7
     assert page.get_by_role('link', name='Monthly values and QA counts').count() == 1
     page.get_by_label('Temporal comparison', exact=True).select_option('anomaly')
     path = ROOT/'WORKSPACE/derived/ui-review'

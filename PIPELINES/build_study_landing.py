@@ -102,7 +102,7 @@ def main():
              'calibration_years':model['model']['calibration']['years'],
              'parameters_at_bounds':model.get('parametersAtBounds'),
              'monthly_support':'Monthly means require at least 20 paired valid days, matching this model evaluation. Counts are retained; incomplete months are not total-volume estimates.',
-             'scope':'Historical hindcast. Discharge-stratified held-out years and retrospective forcing are not prospective forecast validation.'}
+             'scope':f"Historical hindcast using a {model['model']['calibration']['split']} split. Retrospective forcing is not prospective forecast validation."}
     write_json(DATA/'current-model.json',safe_json(current))
     def runoff(ax):
         selected=[r for r in monthly if r['split']=='validation']

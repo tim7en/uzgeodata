@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-09T10:16:28+00:00",
+  "generatedAt": "2026-09-09T10:18:16+00:00",
   "study": {
     "id": "chirchik",
     "label": "Chirchik and Pskem",
@@ -84,7 +84,7 @@
       "headline": "Historical seasonal classes: 7 of 7 within one class",
       "value": 9.0,
       "valueLabel": "% median volume error",
-      "detail": "Across 7 held-out historical years, April–September volume is reproduced to a median 9% with NSE +0.59 and bias -2.1%. Placed into five classes from dry to wet, 4 of 7 land in the right class and 7 of 7 are never more than one class out. The discharge-stratified split and retrospective forcing do not establish prospective seasonal forecast skill.",
+      "detail": "Across 7 held-out historical years, April–September volume is reproduced to a median 9% with NSE +0.59 and bias -2.1%. Placed into five classes from dry to wet, 4 of 7 land in the right class and 7 of 7 are never more than one class out. The stratified split and retrospective forcing do not establish prospective seasonal forecast skill.",
       "exactClass": 4,
       "withinOneClass": 7,
       "heldOutYears": 7,
