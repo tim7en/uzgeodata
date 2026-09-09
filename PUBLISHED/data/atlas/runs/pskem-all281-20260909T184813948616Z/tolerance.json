@@ -1,0 +1,37 @@
+{
+  "version": "0.2.0",
+  "pilot": "pskem",
+  "basin_level": 12,
+  "basin_count": 20,
+  "mode": "original_vintage_baseline_and_candidate_reconstruction",
+  "comparison_rules": {
+    "ele": {
+      "absolute_tolerance_raw": 1.0,
+      "unit_raw": "m",
+      "rationale": "Retain the original predeclared 1 m tolerance; covers integer export precision, not elevation accuracy."
+    },
+    "tmp": {
+      "absolute_tolerance_raw": 1.0,
+      "unit_raw": "0.1 degree Celsius",
+      "rationale": "One stored integer unit, predeclared before this climate batch; no relative tolerance."
+    },
+    "pre": {
+      "absolute_tolerance_raw": 1.0,
+      "unit_raw": "mm",
+      "rationale": "One stored integer unit, predeclared before this climate batch; annual sums retain the same 1 mm tolerance."
+    }
+  },
+  "required_pairs": 20,
+  "required_valid_coverage": 1.0,
+  "relative_tolerance": 0,
+  "pass_rule": "Every pair is present, fully covered and within its declared absolute tolerance. A passed numerical comparison does not establish source-version equivalence or independent scientific reproduction.",
+  "scientific_release_gate": "Not eligible: independent operator rerun, original native zone-grid equivalence and exact input-vintage review are still required.",
+  "source_rules": [
+    "Reference imports must come from the intact original BasinATLAS v1 level-12 geodatabase, preserving raw precision and nodata.",
+    "Every one of the 281 attributes must retain its catalogue reference, stored unit, physical-unit conversion, spatial support and original temporal meaning.",
+    "Never average upstream attributes over the pilot. Candidate upstream calculations use unique contributing sub-basins and additive weighted sums.",
+    "WorldClim V1 hosted in Earth Engine is a candidate source; the catalogue's v1.4 identity and historical-period description require review even if values match.",
+    "Do not use modern replacement datasets to claim original-atlas reproduction.",
+    "Missing raw source inputs mean reconstruction pending, not a fabricated value or an implemented reproduction."
+  ]
+}

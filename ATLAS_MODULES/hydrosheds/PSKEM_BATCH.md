@@ -12,7 +12,7 @@ The candidate catchment includes the complete outlet unit; the precise gauge to
 reach placement still requires review. The routing table confirms that the pilot
 contains all contributing units represented in that table.
 
-Run `pskem-all281-20260909T182641263450Z` imported all 281 original attributes:
+Run `pskem-all281-20260909T184834061745Z` imported all 281 original attributes:
 5,620 basin-attribute records, 5,611 populated values and 9 original missing values.
 Raw numeric precision is preserved from the intact original level-12 geodatabase.
 Stored units, physical conversions, spatial support, catalogue citations and
@@ -88,13 +88,17 @@ appears to lack Western Tien Shan coverage rather than to disagree about area.
 
 ## Processing time and reproducibility
 
-Full scientific run with an empty surrogate cache: **209.562 seconds wall time**,
-23.891 seconds CPU. Surrogate stages accounted for 195.539 seconds, of which the
-twelve MODIS monthly snow climatologies took 132.942 seconds; every other surrogate
-source was acquired in under nine seconds. A rerun against the warm cache completed
-the same 281 attributes in **26.489 seconds**. Source and code provenance took
-6.773 seconds here; hashing the complete 5.95 GB original database costs
-substantially more from cold storage, as an earlier run's 160.201 seconds shows.
+The published run completed all 281 attributes in **24.158 seconds wall time**,
+15.391 seconds CPU, against a warm surrogate cache; its 17 surrogate stages took
+9.994 seconds together. A cold-cache run of the same pipeline, `pskem-all281-20260909T182641263450Z`,
+took **209.562 seconds**, of which surrogate stages accounted for 195.539 seconds
+and the twelve MODIS monthly snow climatologies alone for 132.942 seconds; every
+other surrogate source was acquired in under nine seconds. Source and code
+provenance took 6.897 seconds here; hashing the complete 5.95 GB original database
+costs substantially more from cold storage, as an earlier run's 160.201 seconds
+shows. An `--offline` rerun reaches the same 196 surrogates in 19.356 seconds
+without contacting any remote catalogue, because every cached raster is verified
+by hash before use and no source expression is constructed on a cache hit.
 Per-attribute times appear in the audit and live page; shared preparation is
 counted once. These timings exclude development, research, tests and web builds.
 

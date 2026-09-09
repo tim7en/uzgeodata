@@ -559,19 +559,19 @@ def build_gfsad(domain):
 
 def build_era5_runoff(domain):
     """ERA5-Land runoff climatology, and discharge accumulated over the pilot units only."""
-    import ee
-    collection = ee.ImageCollection("ECMWF/ERA5_LAND/MONTHLY_AGGR").filterDate(*CLIMATOLOGY).select("runoff_sum")
-    images, bands = [], []
-    for month in range(1, 13):
-        name = f"ro_{month:02d}"
-        images.append(collection.filter(ee.Filter.calendarRange(month, month, "month"))
-                      .mean().multiply(1000.0).rename(name))
-        bands.append(name)
+    bands = [f"ro_{month:02d}" for month in range(1, 13)]
     record = {"asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR", "band": "runoff_sum", "climatology": list(CLIMATOLOGY),
               "conversion": "metres of monthly runoff multiplied by 1000 to give millimetres",
               "discharge": "runoff depth times support area divided by the length of the month or year",
               "boundary": "accumulation covers pilot units only; inflow from outside the pilot is absent by construction"}
-    fields, record = export(ee.Image.cat(images), "era5-runoff-15s", domain, bands, record)
+
+    def build():
+        import ee
+        collection = ee.ImageCollection("ECMWF/ERA5_LAND/MONTHLY_AGGR").filterDate(*CLIMATOLOGY).select("runoff_sum")
+        return ee.Image.cat([collection.filter(ee.Filter.calendarRange(month, month, "month"))
+                             .mean().multiply(1000.0).rename(f"ro_{month:02d}") for month in range(1, 13)])
+
+    fields, record = export(build, "era5-runoff-15s", domain, bands, record)
     monthly = [fields[f"ro_{m:02d}"] for m in range(1, 13)]
     annual = sum(monthly)
     reduced = [reduce_general(field / 1000.0 / (days * 86400), domain, "p", "sum_over_m2")

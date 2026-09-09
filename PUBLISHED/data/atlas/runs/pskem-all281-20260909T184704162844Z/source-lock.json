@@ -1,0 +1,1179 @@
+{
+  "original_database": "GEODATA\\BasinATLAS_Data_v10.gdb\\BasinATLAS_Data_v10.gdb\\BasinATLAS_v10.gdb",
+  "database_files": [
+    {
+      "name": "a00000001.gdbindexes",
+      "bytes": 110,
+      "sha256": "80ba95b873e151074244f7655f9e29ce8967aab1bd57ff4c06a329b723a3d46c"
+    },
+    {
+      "name": "a00000001.gdbtable",
+      "bytes": 650,
+      "sha256": "81da960f4f81cf0a7f79fda2b9307366b654bfa5ff40689825b3663996b91df2"
+    },
+    {
+      "name": "a00000001.gdbtablx",
+      "bytes": 5152,
+      "sha256": "ed7e66b1f18b3ac84ee60c45150ed69c0f57fd7e8aae867fd0445e1be1bf22b3"
+    },
+    {
+      "name": "a00000001.TablesByName.atx",
+      "bytes": 4118,
+      "sha256": "4f2d9490e7e0f8a9088d5bf03495d4a82236eae85333bc8bd13193fea7ac0389"
+    },
+    {
+      "name": "a00000002.gdbtable",
+      "bytes": 2055,
+      "sha256": "9efa50dc62a40e109a546054943ae5ad4b3d41aa81ece0dfa026b7b23cb09da8"
+    },
+    {
+      "name": "a00000002.gdbtablx",
+      "bytes": 5152,
+      "sha256": "f3ac9865dec6ab40e73d91dd1f5c2eef0248e66e359d4abb1d97edba92b5df88"
+    },
+    {
+      "name": "a00000003.gdbindexes",
+      "bytes": 42,
+      "sha256": "de0911d18e2f304380c04ae123ea18057d262d788301f7cc3148298231c7c618"
+    },
+    {
+      "name": "a00000003.gdbtable",
+      "bytes": 758,
+      "sha256": "437a85eb80b030c87d93606b6e851f517c4dc1c57371d72ef1f6d36ecd542bb8"
+    },
+    {
+      "name": "a00000003.gdbtablx",
+      "bytes": 5152,
+      "sha256": "d63fd5f8a490aa6aeffde1336e80ce35b5399af5752a72b316570a670b09d167"
+    },
+    {
+      "name": "a00000004.CatItemsByPhysicalName.atx",
+      "bytes": 4118,
+      "sha256": "8e99393f57d441fe81dc02faa46695dc68361576d5334429e4273aa53f29eaa8"
+    },
+    {
+      "name": "a00000004.CatItemsByType.atx",
+      "bytes": 4118,
+      "sha256": "371ea253fcb05c81f1bed5bf5ea4195b1ddbff3cdfd2cd79756dc426fc57abc5"
+    },
+    {
+      "name": "a00000004.FDO_UUID.atx",
+      "bytes": 4118,
+      "sha256": "3506e67b055262350fc2ee96a52aa5610a3edbfb5b28689acec2cc8b5bbc57af"
+    },
+    {
+      "name": "a00000004.gdbindexes",
+      "bytes": 310,
+      "sha256": "f29887c93b126a3feb0e20958cd73cc774f76ab79284b9c7286dc12eb05db858"
+    },
+    {
+      "name": "a00000004.gdbtable",
+      "bytes": 982875,
+      "sha256": "2fc2ea149e262099b4dab81df48ba8d39f62d7f83a7f24e0759dd7f01a3aa9fe"
+    },
+    {
+      "name": "a00000004.gdbtablx",
+      "bytes": 5152,
+      "sha256": "ca41fee364a8b2e5e4300316761e7e092514c432ad1544ae06165a8b243cb960"
+    },
+    {
+      "name": "a00000004.spx",
+      "bytes": 4118,
+      "sha256": "027866f78134de031571290fab2599ab7879bd7df84030ee324b233b891058aa"
+    },
+    {
+      "name": "a00000005.CatItemTypesByName.atx",
+      "bytes": 12310,
+      "sha256": "2e9b559b43d52e86da57828af9a35912203124736fcb52ec537e716de3de4173"
+    },
+    {
+      "name": "a00000005.CatItemTypesByParentTypeID.atx",
+      "bytes": 4118,
+      "sha256": "e3d6a30eee00234d5b76ad9540dd39e50ddcef299e32a2efd2b9db2e6c72bc9b"
+    },
+    {
+      "name": "a00000005.CatItemTypesByUUID.atx",
+      "bytes": 4118,
+      "sha256": "1198b10eef2e305714e948102f2ffa361a7b5c44dfb0a57de978410ea81cbe73"
+    },
+    {
+      "name": "a00000005.gdbindexes",
+      "bytes": 296,
+      "sha256": "c21e650994b48cc72d174b3caf2ac1bd19e2d7305c8087aaae97e24caecf98a5"
+    },
+    {
+      "name": "a00000005.gdbtable",
+      "bytes": 1803,
+      "sha256": "002f9b7ea9872b3713e5de466eabb42db419827f798a2ceb89a5e9135b321e18"
+    },
+    {
+      "name": "a00000005.gdbtablx",
+      "bytes": 5152,
+      "sha256": "76fe0c6425a4f4f0576cc93d293cfa639084122610938d58a8ca2877c166510c"
+    },
+    {
+      "name": "a00000006.CatRelsByDestinationID.atx",
+      "bytes": 4118,
+      "sha256": "5187da62637526da4bb5b48ea9c28355bd3236503dd93cce8e6728ad1fdfd8d2"
+    },
+    {
+      "name": "a00000006.CatRelsByOriginID.atx",
+      "bytes": 4118,
+      "sha256": "8e8d445b6920bd56a8e5128353fed62ba790e12a35725d977e395aad8cac3d5a"
+    },
+    {
+      "name": "a00000006.CatRelsByType.atx",
+      "bytes": 4118,
+      "sha256": "edf2b2ec80f0c8c8d35a9d2558d0a005d059e62f387645d61cc8ab52df7df4a9"
+    },
+    {
+      "name": "a00000006.FDO_UUID.atx",
+      "bytes": 4118,
+      "sha256": "12e1c3a3171532a0f325598e941fb8bd8362d321d3f44b9f8229629be2876967"
+    },
+    {
+      "name": "a00000006.gdbindexes",
+      "bytes": 318,
+      "sha256": "1919a00326f198a90dc97545ec448c10b2b90d367020222212f7b00433fe09b5"
+    },
+    {
+      "name": "a00000006.gdbtable",
+      "bytes": 1066,
+      "sha256": "06d64e765a291d7d7f68f587399b9afdec0a7b6fe07d6fa4a95a9bcf2977b6cb"
+    },
+    {
+      "name": "a00000006.gdbtablx",
+      "bytes": 5152,
+      "sha256": "3cdd6688603e0b8adc7a0d1eb917875b928e729224f6502be555246e3fdf7087"
+    },
+    {
+      "name": "a00000007.CatRelTypesByBackwardLabel.atx",
+      "bytes": 4118,
+      "sha256": "0717cf75203091ec9f7b729d4b8cdc93c853cf4e09f0462cf338a9c93673b860"
+    },
+    {
+      "name": "a00000007.CatRelTypesByDestItemTypeID.atx",
+      "bytes": 4118,
+      "sha256": "61e7a2896a3e5376ca164e79306138bfe44deec5abae188fef199ec1b577c93d"
+    },
+    {
+      "name": "a00000007.CatRelTypesByForwardLabel.atx",
+      "bytes": 4118,
+      "sha256": "8e8df5327b76bf55f5295eb08be634107a0707fa54c2413e8b9749781d93c01e"
+    },
+    {
+      "name": "a00000007.CatRelTypesByName.atx",
+      "bytes": 4118,
+      "sha256": "64007cc61b51b7ba6bc9fbb9e95553cdbbef2e3e962414e68cba7ed6799f4f11"
+    },
+    {
+      "name": "a00000007.CatRelTypesByOriginItemTypeID.atx",
+      "bytes": 4118,
+      "sha256": "79b87aa580c9a82e51c192c7cb6df7e7ad9e10642c6cb3a99967f06525a13468"
+    },
+    {
+      "name": "a00000007.CatRelTypesByUUID.atx",
+      "bytes": 4118,
+      "sha256": "fa2257189d6421165e4c9dd6f6b522039ba7ef18e27ee306b45b9a1cff3d808f"
+    },
+    {
+      "name": "a00000007.gdbindexes",
+      "bytes": 602,
+      "sha256": "dc98e24d04eddd7f38905d176c1ea43c547a3a2daa0c80091a20d3443c726621"
+    },
+    {
+      "name": "a00000007.gdbtable",
+      "bytes": 2504,
+      "sha256": "29380bad26c4f515b1492c1619b60b03e819159565f634159180c6783e656729"
+    },
+    {
+      "name": "a00000007.gdbtablx",
+      "bytes": 5152,
+      "sha256": "a8640bd73b2129f5e79c269151e9c371beeb0fd8fa5fad2fad08ea3217acc1e3"
+    },
+    {
+      "name": "a00000009.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a00000009.gdbtable",
+      "bytes": 12753605,
+      "sha256": "5666e873cda598f6011637dce3324663369617a9f6de95ece7d960b21960a055"
+    },
+    {
+      "name": "a00000009.gdbtablx",
+      "bytes": 5152,
+      "sha256": "6eca5319959069fac11144b027cdf0e128834b03c10280a271a6f92d8d1203fb"
+    },
+    {
+      "name": "a00000009.spx",
+      "bytes": 4118,
+      "sha256": "4cc2c39c1c9912bd97b5c23fe435549e9b04f8093ead0ab1792c3b1783332628"
+    },
+    {
+      "name": "a0000000a.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a0000000a.gdbtable",
+      "bytes": 16997878,
+      "sha256": "f59c1a0284d3297c48af89bca37b33ced468132ae352827f600e3fa490a40083"
+    },
+    {
+      "name": "a0000000a.gdbtablx",
+      "bytes": 5152,
+      "sha256": "fd3fca4454c402c6ea9d4c713fc2e3fd624323556411a40c5f1ca42fced3a4d2"
+    },
+    {
+      "name": "a0000000a.spx",
+      "bytes": 4118,
+      "sha256": "1f3c53dee5b2a9a8e04ac793ecebd4e0584997b2c5367a10bb6e57696c897734"
+    },
+    {
+      "name": "a0000000b.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a0000000b.gdbtable",
+      "bytes": 22456176,
+      "sha256": "ebaae16fdc8b3cce5721958fc03caa94c0fea9b7e1ed9528c80cd575f9fee118"
+    },
+    {
+      "name": "a0000000b.gdbtablx",
+      "bytes": 5152,
+      "sha256": "30247371d96eef05b5bae5df52816dc1c28c9196f1c5edd2ee93c1dbf8b82011"
+    },
+    {
+      "name": "a0000000b.spx",
+      "bytes": 12310,
+      "sha256": "954c931511de3f91ab5998f4341a6a94c22172ce8ec1a10d52d1554cc24c7bf7"
+    },
+    {
+      "name": "a0000000c.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a0000000c.gdbtable",
+      "bytes": 37403914,
+      "sha256": "ffa5e56e6f286bb91c55ac9861cac8304cbd70a60242562b432a584ad6f8500a"
+    },
+    {
+      "name": "a0000000c.gdbtablx",
+      "bytes": 10272,
+      "sha256": "514184d4e646891e2921572018135db0bcfa559ee4e2798ad43a88739dcd6db5"
+    },
+    {
+      "name": "a0000000c.spx",
+      "bytes": 36886,
+      "sha256": "f64d5a29797ef01f3bf75ab7a214edb603ad1fdf5de94b1eeb65794ad99ab0c0"
+    },
+    {
+      "name": "a0000000d.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a0000000d.gdbtable",
+      "bytes": 61696543,
+      "sha256": "3638ea112b1a5ec3dfc5cbc66e1a5907fff0bf70ce54d8e70a52568bec374720"
+    },
+    {
+      "name": "a0000000d.gdbtablx",
+      "bytes": 25632,
+      "sha256": "c513755ded697a60bf64c3d7a52a23e9432c483b371c323bc9ef94717e394350"
+    },
+    {
+      "name": "a0000000d.spx",
+      "bytes": 110614,
+      "sha256": "f2a2027de394700da4a8448b5b2d4da71c8d55a70ac83ce3774dff349ef75f17"
+    },
+    {
+      "name": "a0000000e.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a0000000e.gdbtable",
+      "bytes": 107816719,
+      "sha256": "95dda91c924241fe6f19ed7363286558069deaa37fc20919e3615f3ae5acacf3"
+    },
+    {
+      "name": "a0000000e.gdbtablx",
+      "bytes": 87072,
+      "sha256": "81b6e96852d957895637f2d9a25ad1ec428e937fb32fcc1f32d44af5f8e5c519"
+    },
+    {
+      "name": "a0000000e.spx",
+      "bytes": 380950,
+      "sha256": "d58a6df3cf3fd3fc556b1af763fb2bb662d511176acfd6e2138de42f332012d9"
+    },
+    {
+      "name": "a0000000f.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a0000000f.gdbtable",
+      "bytes": 205067671,
+      "sha256": "cc7725c08047b0005bf1233906b0567295a646ad4847548d8217a161adb3b46d"
+    },
+    {
+      "name": "a0000000f.gdbtablx",
+      "bytes": 291872,
+      "sha256": "544f9147da686c1d2c6c6139b11163bce4ff215b4a85a222433909684c99073a"
+    },
+    {
+      "name": "a0000000f.spx",
+      "bytes": 1359894,
+      "sha256": "356343f8accbfccbf5224cb8465529658c5cc6fcd12ea6190a720123e5555d6e"
+    },
+    {
+      "name": "a00000010.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a00000010.gdbtable",
+      "bytes": 417031629,
+      "sha256": "ce06c8e845c2fee0315a005674e4d670913b7a7eb936a0712d356e7dcdf90055"
+    },
+    {
+      "name": "a00000010.gdbtablx",
+      "bytes": 957472,
+      "sha256": "730f2953945b38641f1f25491260d9c5492e5eb1cf9ec4d2f46952485da0e24c"
+    },
+    {
+      "name": "a00000010.spx",
+      "bytes": 4370454,
+      "sha256": "f899707967c7d6a96ed2ade765ecbadd5e2d566c4cde9354bfb802d040e9f84b"
+    },
+    {
+      "name": "a00000011.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a00000011.gdbtable",
+      "bytes": 818845419,
+      "sha256": "23602b154c0754b09dc2f9495d70d04e7165954e872db547b38cd618a74248c7"
+    },
+    {
+      "name": "a00000011.gdbtablx",
+      "bytes": 2544672,
+      "sha256": "ee497f513191119122a841ef5261f2c47a1dbe78e1476e4ae7a43897fd56db7c"
+    },
+    {
+      "name": "a00000011.spx",
+      "bytes": 12230678,
+      "sha256": "c7866c9b7cad15b1ae9292b808ce2f01c6fe99469e9ebf177e4d61f4e04b479c"
+    },
+    {
+      "name": "a00000012.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a00000012.gdbtable",
+      "bytes": 1310659778,
+      "sha256": "164c418a8fff2e3cb7d17c18b629e597e32450fa4471295a37fd8206b87b6efe"
+    },
+    {
+      "name": "a00000012.gdbtablx",
+      "bytes": 4705312,
+      "sha256": "9eda34ab1179fe5de5d23484aa9a9ea3adce1af4128a5cf4c867f1353fe0f6f8"
+    },
+    {
+      "name": "a00000012.spx",
+      "bytes": 24723478,
+      "sha256": "a4e669aff441278cc5cf9bb08bb82021e60e157af0796b16f6d5bb5f0e375129"
+    },
+    {
+      "name": "a00000013.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a00000013.gdbtable",
+      "bytes": 1409167040,
+      "sha256": "4bb91d423ecdf38fd8b757d3be6c7a445b5b3f8b38617374f50e14893f0ea29e"
+    },
+    {
+      "name": "a00000013.gdbtablx",
+      "bytes": 5160992,
+      "sha256": "cda37967776dacf01f8ed38f860f6565e9adf7117aa48f95a8aef0ef77899f28"
+    },
+    {
+      "name": "a00000013.spx",
+      "bytes": 28094486,
+      "sha256": "afebf0288fc6feed5cb1db936606dc852ad15ed0f046cf5f839c652a1d9a0267"
+    },
+    {
+      "name": "a00000014.gdbindexes",
+      "bytes": 116,
+      "sha256": "760bd4864717c60d5e7c0c6461a622062680e6f79f51250f49456aa609b43774"
+    },
+    {
+      "name": "a00000014.gdbtable",
+      "bytes": 1411693845,
+      "sha256": "1206352466253906db0cbb093d4f3fb8b4b1d8e8bb906c51450f7f7bb6ffb641"
+    },
+    {
+      "name": "a00000014.gdbtablx",
+      "bytes": 5171232,
+      "sha256": "1ca69978e5a4488087073afbda403330cd8f49d7a0aaba55aef95dd0f469c18a"
+    },
+    {
+      "name": "a00000014.spx",
+      "bytes": 28135446,
+      "sha256": "5625edc099b61df763df042db28d32f889e90ed070800b2825f514e3732b72de"
+    },
+    {
+      "name": "gdb",
+      "bytes": 4,
+      "sha256": "2594b6a92ebfb1c3312deb7d01c015fb95e9fbe9bd7bc6b527af07813ec7b910"
+    },
+    {
+      "name": "timestamps",
+      "bytes": 400,
+      "sha256": "1184084bb1211c2fa7af92a251e07efc0a6cc49725ce66a73f3ea1acaef86198"
+    }
+  ],
+  "catalogue_sha256": "c512796abee4cca0b41ee4b8700de5c95bbbbe32a66456189596e51c63ed5e47",
+  "pilot_selection_sha256": "0b22c06bb0fc9985969d24d5b117f174bf2cc1e169eb4804bf67bfff85be971b",
+  "selected_geometry_sha256": "0ca4fa011417a05a28f1cbfe29d30cdee579417ce056212b5ce60283aceafc8b",
+  "reference_sha256": "721752877c7f5361c0016e062bf2a8995d955ac10156b426656ca65502617f47",
+  "tolerance_sha256": "d9bbea08327573e6013fd937e8129f3489f8bfbe2691a0b7acc42e9177ec6c49",
+  "code": {
+    "PIPELINES/update_pskem_atlas.py": "85f38e607cf4ec00f9e9ee96da5c87eae5317d7811b75579566c0fc137ba9d20",
+    "ATLAS_MODULES/core/runtime.py": "9f9c6524385ce553043b46d60f0585b2e5991f3c7e76bdff2fa2bca6b361df47",
+    "ATLAS_MODULES/hydrosheds/functions/pilot_batch.py": "37d45438c348e1550f9140b0f244e6873ba702d2d925edde935bf2523fbc8484",
+    "ATLAS_MODULES/hydrosheds/functions/elevation.py": "c146b1a2010e3644012cea2976ab9e2435b02bcb93843fcd6fb497e73c3f5f09",
+    "ATLAS_MODULES/hydrosheds/functions/surrogates.py": "d6137eeb023f5f1319447ad54066a97117968d6593389e491e7d2f940789b4dd",
+    "ATLAS_MODULES/hydrosheds/recipes.json": "3ce2f934b8e2ce22e535e9c1d467044cd6af9323ed3a97f00ecdaa222a565c8a",
+    "ATLAS_MODULES/hydrosheds/sources.json": "f1a99d1b27d89293287708933539a15c4dfec992871e20e82f63c58f4687b324",
+    "ATLAS_MODULES/hydrosheds/surrogates.json": "e62a9b5f841526dc28288626afde3a34d7e6b559b4792d237a88e06462706e3e"
+  },
+  "candidate_sources": {
+    "elevation": {
+      "name": "EarthEnv-DEM90_N40E070",
+      "url": "https://de.cyverse.org/anon-files/iplant/home/shared/earthenv_dem_data/EarthEnv-DEM90/EarthEnv-DEM90_N40E070.tar.gz",
+      "path": "F:\\uzgeodata\\GEODATA\\atlas_sources\\earthenv_dem90_v1\\EarthEnv-DEM90_N40E070.tar.gz",
+      "sha256": "b9fd8644dd67b7794193ac65094e8d51d17d85a46b54ac1977d6a99bef353e6e",
+      "bytes": 34328445,
+      "cache_hit": true,
+      "wall_seconds": 0.03361879999283701,
+      "south": 40,
+      "west": 70
+    },
+    "worldclim": {
+      "asset": "WORLDCLIM/V1/MONTHLY",
+      "sha256": "1cda57b604df3d50ed1091ee3f0c7c92ce285045bedcf6dba577b769297a8c7b",
+      "retrieved_at": "2026-09-09T17:33:18.263+00:00",
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "band_order": [
+        "tmp_01",
+        "pre_01",
+        "tmp_02",
+        "pre_02",
+        "tmp_03",
+        "pre_03",
+        "tmp_04",
+        "pre_04",
+        "tmp_05",
+        "pre_05",
+        "tmp_06",
+        "pre_06",
+        "tmp_07",
+        "pre_07",
+        "tmp_08",
+        "pre_08",
+        "tmp_09",
+        "pre_09",
+        "tmp_10",
+        "pre_10",
+        "tmp_11",
+        "pre_11",
+        "tmp_12",
+        "pre_12"
+      ],
+      "nodata": -32768,
+      "source_metadata": {
+        "type": "Image",
+        "bands": [
+          {
+            "id": "tavg",
+            "data_type": {
+              "type": "PixelType",
+              "precision": "float"
+            },
+            "dimensions": [
+              43200,
+              18000
+            ],
+            "crs": "EPSG:4326",
+            "crs_transform": [
+              0.008333333333333333,
+              0,
+              -180,
+              0,
+              -0.008333333333333333,
+              90
+            ]
+          },
+          {
+            "id": "tmin",
+            "data_type": {
+              "type": "PixelType",
+              "precision": "float"
+            },
+            "dimensions": [
+              43200,
+              18000
+            ],
+            "crs": "EPSG:4326",
+            "crs_transform": [
+              0.008333333333333333,
+              0,
+              -180,
+              0,
+              -0.008333333333333333,
+              90
+            ]
+          },
+          {
+            "id": "tmax",
+            "data_type": {
+              "type": "PixelType",
+              "precision": "float"
+            },
+            "dimensions": [
+              43200,
+              18000
+            ],
+            "crs": "EPSG:4326",
+            "crs_transform": [
+              0.008333333333333333,
+              0,
+              -180,
+              0,
+              -0.008333333333333333,
+              90
+            ]
+          },
+          {
+            "id": "prec",
+            "data_type": {
+              "type": "PixelType",
+              "precision": "float"
+            },
+            "dimensions": [
+              43200,
+              18000
+            ],
+            "crs": "EPSG:4326",
+            "crs_transform": [
+              0.008333333333333333,
+              0,
+              -180,
+              0,
+              -0.008333333333333333,
+              90
+            ]
+          }
+        ],
+        "version": 1493666430825000.0,
+        "id": "WORLDCLIM/V1/MONTHLY/01",
+        "properties": {
+          "month": 1,
+          "system:footprint": {
+            "type": "LinearRing",
+            "coordinates": [
+              [
+                -180,
+                -90
+              ],
+              [
+                180,
+                -90
+              ],
+              [
+                180,
+                90
+              ],
+              [
+                -180,
+                90
+              ],
+              [
+                -180,
+                -90
+              ]
+            ]
+          },
+          "system:asset_size": 660138843,
+          "system:index": "01"
+        }
+      },
+      "resampling": "nearest neighbor to aligned 15 arc-second grid",
+      "licence": "CC-BY-SA-4.0",
+      "source_catalogue": "https://developers.google.com/earth-engine/datasets/catalog/WORLDCLIM_V1_MONTHLY",
+      "source_equivalence": "WorldClim V1 mirror; exact v1.4 vintage equivalence requires review"
+    }
+  },
+  "surrogate_grid": {
+    "transform": [
+      0.004166666666666667,
+      0,
+      70.10416666666667,
+      0,
+      -0.004166666666666667,
+      42.3125
+    ],
+    "width": 280,
+    "height": 156,
+    "bounds": [
+      70.10416666666667,
+      41.6625,
+      71.27083333333333,
+      42.3125
+    ],
+    "cell_arcsec": 15.0
+  },
+  "surrogate_sources": {
+    "copernicus_lc": {
+      "asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global",
+      "epoch": "2015",
+      "crosswalk": "glc2000_from_copernicus",
+      "crosswalk_table": {
+        "20": 12,
+        "30": 13,
+        "40": 16,
+        "50": 22,
+        "60": 19,
+        "70": 21,
+        "80": 20,
+        "90": 15,
+        "100": 14,
+        "111": 4,
+        "112": 1,
+        "113": 5,
+        "114": 2,
+        "115": 6,
+        "116": 6,
+        "121": 4,
+        "122": 1,
+        "123": 5,
+        "124": 3,
+        "125": 6,
+        "126": 6,
+        "200": 20
+      },
+      "unmapped_glc2000_classes": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        17,
+        18
+      ],
+      "aggregation": "class mask mean at 100 m, reprojected to the pilot 15 arc-second grid",
+      "sha256": "d5f902169ffeb70fcb01016864fc15505d0d274e0622e89f0136ab7964b4a543",
+      "retrieved_at": "2026-09-09T18:27:03.698+00:00",
+      "bytes": 513516,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "glc_01",
+        "glc_02",
+        "glc_03",
+        "glc_04",
+        "glc_05",
+        "glc_06",
+        "glc_07",
+        "glc_08",
+        "glc_09",
+        "glc_10",
+        "glc_11",
+        "glc_12",
+        "glc_13",
+        "glc_14",
+        "glc_15",
+        "glc_16",
+        "glc_17",
+        "glc_18",
+        "glc_19",
+        "glc_20",
+        "glc_21",
+        "glc_22",
+        "for_frac",
+        "crp_frac",
+        "pst_frac"
+      ],
+      "nodata": -9999.0
+    },
+    "dem_terrain": {
+      "asset": "EarthEnv-DEM90 v1",
+      "native_arcsec": 3.0,
+      "algorithm": "Horn 3x3 slope",
+      "window": {
+        "row": 645,
+        "column": 25,
+        "height": 156,
+        "width": 280
+      },
+      "cell_metres": "geodetic degree-to-metre scaling by latitude",
+      "aggregation": "5x5 arithmetic mean to 15 arc-seconds, complete blocks only",
+      "native_source": "F:\\uzgeodata\\WORKSPACE\\atlas_runs\\hydrosheds\\pskem-all281-20260909T184704162844Z\\native\\EarthEnv-DEM90_N40E070\\EarthEnv-DEM90_N40E070.bil"
+    },
+    "dmsp_lights": {
+      "asset": "NOAA/DMSP-OLS/NIGHTTIME_LIGHTS",
+      "epoch": "F182010",
+      "band": "stable_lights",
+      "units": "digital number 0-63; the atlas index transformation is not applied",
+      "sha256": "9b92ff7c7445d34126b019459aa368ab13b2d015b297bed2548b3c011feb8e40",
+      "retrieved_at": "2026-09-09T18:27:07.997+00:00",
+      "bytes": 1160,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "nli"
+      ],
+      "nodata": -9999.0
+    },
+    "ecoregions": {
+      "asset": "RESOLVE/ECOREGIONS/2017",
+      "features_in_domain": 2,
+      "cache": "resolve-ecoregions.json",
+      "sha256": "770f933277f807139e2a345e8670203739e46c099dacbf35af185d19983c9719",
+      "method": "largest geodesic intersection area within the basin",
+      "ecoregions": [
+        "Gissaro-Alai open woodlands",
+        "Tian Shan montane steppe and meadows"
+      ]
+    },
+    "era5_runoff": {
+      "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+      "band": "runoff_sum",
+      "climatology": [
+        "1991-01-01",
+        "2021-01-01"
+      ],
+      "conversion": "metres of monthly runoff multiplied by 1000 to give millimetres",
+      "discharge": "runoff depth times support area divided by the length of the month or year",
+      "boundary": "accumulation covers pilot units only; inflow from outside the pilot is absent by construction",
+      "sha256": "cda064edcbb9370d232b33b4ef8202253a47e7ef0eb7732edf259f7d3115f5dd",
+      "retrieved_at": "2026-09-09T18:27:11.527+00:00",
+      "bytes": 19485,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "ro_01",
+        "ro_02",
+        "ro_03",
+        "ro_04",
+        "ro_05",
+        "ro_06",
+        "ro_07",
+        "ro_08",
+        "ro_09",
+        "ro_10",
+        "ro_11",
+        "ro_12"
+      ],
+      "nodata": -9999.0
+    },
+    "gfsad": {
+      "asset": "USGS/GFSAD1000_V1",
+      "epoch": "2010",
+      "irrigated_classes": [
+        1,
+        2
+      ],
+      "units": "percent of the support classified as irrigated cropland",
+      "sha256": "4f813d46997ca276bbbcefd0aee892b1ff1546d87a7821476c088b891c3b3b7b",
+      "retrieved_at": "2026-09-09T18:27:13.617+00:00",
+      "bytes": 2403,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "ire"
+      ],
+      "nodata": -9999.0
+    },
+    "ghsl": {
+      "asset": "JRC/GHSL/P2023A/GHS_BUILT_S",
+      "epoch": "2015",
+      "conversion": "built surface in square metres per 100 m cell divided by 100 to give percent",
+      "sha256": "1fefe5e4b7bf2c5c73791d317ceb8de7dfdfda1e3d16fa22b6611ffb72c1649e",
+      "retrieved_at": "2026-09-09T18:27:15.854+00:00",
+      "bytes": 12266,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "urb"
+      ],
+      "nodata": -9999.0
+    },
+    "glims": {
+      "asset": "GLIMS/current",
+      "outlines_in_domain": 1164,
+      "features_in_domain": 606,
+      "filter": "line_type equals glac_bound; most recent analysis per glac_id",
+      "rasterisation": "outlines painted at 30 m, mean-aggregated to 15 arc-seconds",
+      "note": "outline dates still vary between glaciers and are not a single epoch",
+      "sha256": "34739cb1b36a7c4b2dea484b022a7b8fa0dac1248dba69a3b2d9748cd28db874",
+      "retrieved_at": "2026-09-09T18:27:24.542+00:00",
+      "bytes": 13161,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "gla"
+      ],
+      "nodata": -9999.0
+    },
+    "gpw": {
+      "asset": "CIESIN/GPWv411/GPW_Population_Density",
+      "epoch": "2015",
+      "revision": "v4.11",
+      "counts": "density multiplied by geodesic cell area and summed over the support",
+      "sha256": "8b571c0f064aaf8b2cac984a1e3880067d64960c9b55f7a199f4077c93f52b66",
+      "retrieved_at": "2026-09-09T18:27:26.044+00:00",
+      "bytes": 10150,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "ppd"
+      ],
+      "nodata": -9999.0
+    },
+    "human_modification": {
+      "asset": "CSP/HM/GlobalHumanModification",
+      "epoch": "2016",
+      "units": "modification index 0-1; not the Human Footprint index",
+      "dimension_note": "offered against the 2009 dimension only; no 1993 surface is available",
+      "sha256": "cc26506b75f8d1bf564a9251b351194de39ed07a0b7391f34ef963ea95429c63",
+      "retrieved_at": "2026-09-09T18:27:28.312+00:00",
+      "bytes": 28038,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "hft"
+      ],
+      "nodata": -9999.0
+    },
+    "hydrolakes": {
+      "asset": "F:\\uzgeodata\\GEODATA\\HydroLAKES_polys_v10.gdb\\HydroLAKES_polys_v10.gdb",
+      "lakes_in_domain": 4,
+      "cover": "exact geodesic intersection of lake polygons with basin polygons",
+      "volume": "lake total volume assigned to the basin containing the lake pour point"
+    },
+    "modis_snow": {
+      "asset": "MODIS/061/MYD10A1",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "snow_threshold": "NDSI_Snow_Cover >= 40",
+      "masking": "fill values above 100 excluded, not gap filled",
+      "reduction": "mean of cloud-free daily snow flags for this calendar month",
+      "sha256": "3c970bd240834d3fb8b2fee91064840bbb201ace1bd2f4aab24913fe9c9564b0",
+      "retrieved_at": "2026-09-09T18:29:41.322+00:00",
+      "bytes": 125387,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "snw_12"
+      ],
+      "nodata": -9999.0,
+      "months": 12,
+      "annual": "mean of the twelve monthly climatologies"
+    },
+    "openlandmap_soil": {
+      "assets": [
+        "OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02",
+        "OpenLandMap/SOL/SOL_SAND-WFRACTION_USDA-3A1A1A_M/v02",
+        "OpenLandMap/SOL/SOL_ORGANIC-CARBON_USDA-6A1C_M/v02",
+        "OpenLandMap/SOL/SOL_BULKDENS-FINEEARTH_USDA-4A1H_M/v02"
+      ],
+      "band_scales": {
+        "clay": 1.0,
+        "sand": 1.0,
+        "orgc": 5.0,
+        "bulk": 10.0
+      },
+      "depth_weights": {
+        "b0": 0.05,
+        "b10": 0.15,
+        "b30": 0.25,
+        "b60": 0.35,
+        "b100": 0.2
+      },
+      "silt": "closed as 100 minus clay minus sand",
+      "carbon_stock": "organic carbon content times bulk density over 0-100 cm, no coarse-fragment correction",
+      "sha256": "362f6cace69ad7429039b84fa01fab539595b3716ebee91fa8b43a5bddb4953a",
+      "retrieved_at": "2026-09-09T18:29:48.595+00:00",
+      "bytes": 478024,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "clay",
+        "sand",
+        "orgc",
+        "bulk",
+        "soc"
+      ],
+      "nodata": -9999.0
+    },
+    "pnv_biome": {
+      "asset": "OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01",
+      "crosswalk": "earthstat_pnv_from_biome00k",
+      "crosswalk_table": {
+        "1": 1,
+        "2": 1,
+        "3": 2,
+        "4": 3,
+        "7": 8,
+        "8": 4,
+        "9": 8,
+        "13": 5,
+        "14": 7,
+        "15": 6,
+        "16": 11,
+        "17": 4,
+        "18": 9,
+        "20": 12,
+        "22": 10,
+        "27": 14,
+        "28": 13,
+        "30": 13,
+        "31": 13,
+        "32": 13
+      },
+      "unmapped_earthstat_classes": [
+        15
+      ],
+      "aggregation": "class mask mean at 1 km, reprojected to the pilot 15 arc-second grid",
+      "sha256": "df2f1967ba3be6d718c8b02b01410570a07d64889a5434244c51fc17d3143954",
+      "retrieved_at": "2026-09-09T18:29:51.044+00:00",
+      "bytes": 18244,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "pnv_01",
+        "pnv_02",
+        "pnv_03",
+        "pnv_04",
+        "pnv_05",
+        "pnv_06",
+        "pnv_07",
+        "pnv_08",
+        "pnv_09",
+        "pnv_10",
+        "pnv_11",
+        "pnv_12",
+        "pnv_13",
+        "pnv_14",
+        "pnv_15"
+      ],
+      "nodata": -9999.0
+    },
+    "surface_water": {
+      "asset": "JRC/GSW1_4/GlobalSurfaceWater",
+      "long_term": "mean water occurrence percentage 1984-2021",
+      "minimum": "share of the support classified as permanent water, twelve months of seasonality",
+      "maximum": "share of the support ever observed as water",
+      "sha256": "9d341b4c3b799910dfa331dc7b534f29609fe3ec5771dda954ede183828be14a",
+      "retrieved_at": "2026-09-09T18:29:58.171+00:00",
+      "bytes": 21259,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "inu_lt",
+        "inu_mn",
+        "inu_mx"
+      ],
+      "nodata": -9999.0
+    },
+    "terraclimate": {
+      "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+      "climatology": [
+        "1991-01-01",
+        "2021-01-01"
+      ],
+      "band_scales": {
+        "aet": 0.1,
+        "pet": 0.1,
+        "soil": 0.1,
+        "pr": 1.0
+      },
+      "reduction": "per-calendar-month mean over 1991-2020",
+      "sha256": "3c85deb5924d09dc842d92658d2b0ecb078a9846742eb43bc7487ed007bc378e",
+      "retrieved_at": "2026-09-09T18:30:03.783+00:00",
+      "bytes": 691954,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "aet_01",
+        "pet_01",
+        "soil_01",
+        "pr_01",
+        "aet_02",
+        "pet_02",
+        "soil_02",
+        "pr_02",
+        "aet_03",
+        "pet_03",
+        "soil_03",
+        "pr_03",
+        "aet_04",
+        "pet_04",
+        "soil_04",
+        "pr_04",
+        "aet_05",
+        "pet_05",
+        "soil_05",
+        "pr_05",
+        "aet_06",
+        "pet_06",
+        "soil_06",
+        "pr_06",
+        "aet_07",
+        "pet_07",
+        "soil_07",
+        "pr_07",
+        "aet_08",
+        "pet_08",
+        "soil_08",
+        "pr_08",
+        "aet_09",
+        "pet_09",
+        "soil_09",
+        "pr_09",
+        "aet_10",
+        "pet_10",
+        "soil_10",
+        "pr_10",
+        "aet_11",
+        "pet_11",
+        "soil_11",
+        "pr_11",
+        "aet_12",
+        "pet_12",
+        "soil_12",
+        "pr_12"
+      ],
+      "nodata": -9999.0
+    },
+    "wdpa": {
+      "asset": "WCMC/WDPA/current/polygons",
+      "features_in_domain": 7,
+      "rasterisation": "polygons painted at 30 m, mean-aggregated to 15 arc-seconds",
+      "note": "current release, later than the 2014 snapshot cited by the atlas",
+      "sha256": "16e1475d73c0b9b1c96a22b1414e47ed90615dd03b4ad28fcdcb79e975d85514",
+      "retrieved_at": "2026-09-09T18:30:10.267+00:00",
+      "bytes": 8655,
+      "transform": [
+        0.004166666666666667,
+        0,
+        70.10416666666667,
+        0,
+        -0.004166666666666667,
+        42.3125
+      ],
+      "bands": [
+        "pac"
+      ],
+      "nodata": -9999.0
+    }
+  }
+}

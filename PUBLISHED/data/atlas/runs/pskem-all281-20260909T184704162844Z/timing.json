@@ -1,0 +1,645 @@
+{
+  "run_id": "pskem-all281-20260909T184704162844Z",
+  "status": "complete_with_pending_reproduction",
+  "started_at": "2026-09-09T18:47:04.163+00:00",
+  "updated_at": "2026-09-09T18:47:29.070+00:00",
+  "wall_seconds": 24.906290200015064,
+  "cpu_seconds": 15.015625,
+  "stages": [
+    {
+      "name": "original_reference_and_pilot_validation",
+      "started_at": "2026-09-09T18:47:04.219+00:00",
+      "status": "complete",
+      "wall_seconds": 1.5944909999961965,
+      "cpu_seconds": 1.421875
+    },
+    {
+      "name": "source_and_code_provenance",
+      "started_at": "2026-09-09T18:47:05.823+00:00",
+      "status": "complete",
+      "wall_seconds": 7.180248100019526,
+      "cpu_seconds": 6.03125
+    },
+    {
+      "name": "elevation_source_preparation",
+      "started_at": "2026-09-09T18:47:13.012+00:00",
+      "status": "complete",
+      "wall_seconds": 3.6885199999960605,
+      "cpu_seconds": 1.15625
+    },
+    {
+      "name": "elevation_attributes_one_by_one",
+      "started_at": "2026-09-09T18:47:16.711+00:00",
+      "status": "complete",
+      "wall_seconds": 0.725309900008142,
+      "cpu_seconds": 0.5625
+    },
+    {
+      "name": "worldclim_source_preparation",
+      "started_at": "2026-09-09T18:47:17.463+00:00",
+      "status": "complete",
+      "wall_seconds": 0.08163250001962297,
+      "cpu_seconds": 0.046875
+    },
+    {
+      "name": "worldclim_attributes_one_by_one",
+      "started_at": "2026-09-09T18:47:17.556+00:00",
+      "status": "complete",
+      "wall_seconds": 0.5643437000107951,
+      "cpu_seconds": 0.25
+    },
+    {
+      "name": "surrogate_domain_preparation",
+      "started_at": "2026-09-09T18:47:18.140+00:00",
+      "status": "complete",
+      "wall_seconds": 4.486550299974624,
+      "cpu_seconds": 1.25
+    },
+    {
+      "name": "surrogate_copernicus_lc",
+      "started_at": "2026-09-09T18:47:22.657+00:00",
+      "status": "complete",
+      "wall_seconds": 0.30106250001699664,
+      "cpu_seconds": 0.28125
+    },
+    {
+      "name": "surrogate_dem_terrain",
+      "started_at": "2026-09-09T18:47:22.987+00:00",
+      "status": "complete",
+      "wall_seconds": 2.6137648000149056,
+      "cpu_seconds": 2.578125
+    },
+    {
+      "name": "surrogate_dmsp_lights",
+      "started_at": "2026-09-09T18:47:25.633+00:00",
+      "status": "complete",
+      "wall_seconds": 0.05395589998806827,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_ecoregions",
+      "started_at": "2026-09-09T18:47:25.696+00:00",
+      "status": "complete",
+      "wall_seconds": 0.988147600000957,
+      "cpu_seconds": 0.0625
+    },
+    {
+      "name": "surrogate_era5_runoff",
+      "started_at": "2026-09-09T18:47:26.695+00:00",
+      "status": "complete",
+      "wall_seconds": 0.11172899999655783,
+      "cpu_seconds": 0.0625
+    },
+    {
+      "name": "surrogate_gfsad",
+      "started_at": "2026-09-09T18:47:26.831+00:00",
+      "status": "complete",
+      "wall_seconds": 0.04597369997645728,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_ghsl",
+      "started_at": "2026-09-09T18:47:26.898+00:00",
+      "status": "complete",
+      "wall_seconds": 0.052225999999791384,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_glims",
+      "started_at": "2026-09-09T18:47:26.961+00:00",
+      "status": "complete",
+      "wall_seconds": 0.0601942999928724,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_gpw",
+      "started_at": "2026-09-09T18:47:27.032+00:00",
+      "status": "complete",
+      "wall_seconds": 0.07148409998626448,
+      "cpu_seconds": 0.03125
+    },
+    {
+      "name": "surrogate_human_modification",
+      "started_at": "2026-09-09T18:47:27.115+00:00",
+      "status": "complete",
+      "wall_seconds": 0.05456580000463873,
+      "cpu_seconds": 0.015625
+    },
+    {
+      "name": "surrogate_hydrolakes",
+      "started_at": "2026-09-09T18:47:27.183+00:00",
+      "status": "complete",
+      "wall_seconds": 0.05796020000707358,
+      "cpu_seconds": 0.03125
+    },
+    {
+      "name": "surrogate_modis_snow",
+      "started_at": "2026-09-09T18:47:27.253+00:00",
+      "status": "complete",
+      "wall_seconds": 0.372214700008044,
+      "cpu_seconds": 0.15625
+    },
+    {
+      "name": "surrogate_openlandmap_soil",
+      "started_at": "2026-09-09T18:47:27.637+00:00",
+      "status": "complete",
+      "wall_seconds": 0.09053610000410117,
+      "cpu_seconds": 0.046875
+    },
+    {
+      "name": "surrogate_pnv_biome",
+      "started_at": "2026-09-09T18:47:27.760+00:00",
+      "status": "complete",
+      "wall_seconds": 0.2161111000168603,
+      "cpu_seconds": 0.1875
+    },
+    {
+      "name": "surrogate_surface_water",
+      "started_at": "2026-09-09T18:47:28.003+00:00",
+      "status": "complete",
+      "wall_seconds": 0.10025059999316,
+      "cpu_seconds": 0.046875
+    },
+    {
+      "name": "surrogate_terraclimate",
+      "started_at": "2026-09-09T18:47:28.125+00:00",
+      "status": "complete",
+      "wall_seconds": 0.30925079999724403,
+      "cpu_seconds": 0.296875
+    },
+    {
+      "name": "surrogate_wdpa",
+      "started_at": "2026-09-09T18:47:28.467+00:00",
+      "status": "complete",
+      "wall_seconds": 0.05448140000225976,
+      "cpu_seconds": 0.03125
+    },
+    {
+      "name": "all_281_attribute_audit_and_export",
+      "started_at": "2026-09-09T18:47:28.539+00:00",
+      "status": "complete",
+      "wall_seconds": 0.5200714000093285,
+      "cpu_seconds": 0.28125
+    }
+  ],
+  "active_stage": null,
+  "events": [
+    {
+      "at": "2026-09-09T18:47:17.776+00:00",
+      "message": "pre_mm_syr: 20/20 within tolerance",
+      "attribute": "pre_mm_syr",
+      "attribute_wall_seconds": 0.0038616000092588365
+    },
+    {
+      "at": "2026-09-09T18:47:17.808+00:00",
+      "message": "pre_mm_uyr: 20/20 within tolerance",
+      "attribute": "pre_mm_uyr",
+      "attribute_wall_seconds": 0.0037699999811593443
+    },
+    {
+      "at": "2026-09-09T18:47:17.821+00:00",
+      "message": "tmp_dc_s01: 20/20 within tolerance",
+      "attribute": "tmp_dc_s01",
+      "attribute_wall_seconds": 0.003866799990646541
+    },
+    {
+      "at": "2026-09-09T18:47:17.835+00:00",
+      "message": "tmp_dc_s02: 20/20 within tolerance",
+      "attribute": "tmp_dc_s02",
+      "attribute_wall_seconds": 0.003783399995882064
+    },
+    {
+      "at": "2026-09-09T18:47:17.849+00:00",
+      "message": "tmp_dc_s03: 20/20 within tolerance",
+      "attribute": "tmp_dc_s03",
+      "attribute_wall_seconds": 0.003731300006620586
+    },
+    {
+      "at": "2026-09-09T18:47:17.862+00:00",
+      "message": "tmp_dc_s04: 20/20 within tolerance",
+      "attribute": "tmp_dc_s04",
+      "attribute_wall_seconds": 0.0037290999898687005
+    },
+    {
+      "at": "2026-09-09T18:47:17.888+00:00",
+      "message": "tmp_dc_s05: 20/20 within tolerance",
+      "attribute": "tmp_dc_s05",
+      "attribute_wall_seconds": 0.003718699997989461
+    },
+    {
+      "at": "2026-09-09T18:47:17.902+00:00",
+      "message": "tmp_dc_s06: 20/20 within tolerance",
+      "attribute": "tmp_dc_s06",
+      "attribute_wall_seconds": 0.0037931999831926078
+    },
+    {
+      "at": "2026-09-09T18:47:17.915+00:00",
+      "message": "tmp_dc_s07: 20/20 within tolerance",
+      "attribute": "tmp_dc_s07",
+      "attribute_wall_seconds": 0.0038423000078182667
+    },
+    {
+      "at": "2026-09-09T18:47:17.928+00:00",
+      "message": "tmp_dc_s08: 20/20 within tolerance",
+      "attribute": "tmp_dc_s08",
+      "attribute_wall_seconds": 0.004182800010312349
+    },
+    {
+      "at": "2026-09-09T18:47:17.941+00:00",
+      "message": "tmp_dc_s09: 20/20 within tolerance",
+      "attribute": "tmp_dc_s09",
+      "attribute_wall_seconds": 0.0037053000123705715
+    },
+    {
+      "at": "2026-09-09T18:47:18.014+00:00",
+      "message": "tmp_dc_s10: 20/20 within tolerance",
+      "attribute": "tmp_dc_s10",
+      "attribute_wall_seconds": 0.003728699986822903
+    },
+    {
+      "at": "2026-09-09T18:47:18.027+00:00",
+      "message": "tmp_dc_s11: 20/20 within tolerance",
+      "attribute": "tmp_dc_s11",
+      "attribute_wall_seconds": 0.003750700008822605
+    },
+    {
+      "at": "2026-09-09T18:47:18.041+00:00",
+      "message": "tmp_dc_s12: 20/20 within tolerance",
+      "attribute": "tmp_dc_s12",
+      "attribute_wall_seconds": 0.003701400011777878
+    },
+    {
+      "at": "2026-09-09T18:47:18.054+00:00",
+      "message": "tmp_dc_smn: 20/20 within tolerance",
+      "attribute": "tmp_dc_smn",
+      "attribute_wall_seconds": 0.0037259000237099826
+    },
+    {
+      "at": "2026-09-09T18:47:18.077+00:00",
+      "message": "tmp_dc_smx: 20/20 within tolerance",
+      "attribute": "tmp_dc_smx",
+      "attribute_wall_seconds": 0.004161399992881343
+    },
+    {
+      "at": "2026-09-09T18:47:18.092+00:00",
+      "message": "tmp_dc_syr: 20/20 within tolerance",
+      "attribute": "tmp_dc_syr",
+      "attribute_wall_seconds": 0.004270799981895834
+    },
+    {
+      "at": "2026-09-09T18:47:18.110+00:00",
+      "message": "tmp_dc_uyr: 20/20 within tolerance",
+      "attribute": "tmp_dc_uyr",
+      "attribute_wall_seconds": 0.004010000004200265
+    },
+    {
+      "at": "2026-09-09T18:47:18.121+00:00",
+      "message": "END worldclim_attributes_one_by_one: 0.564s"
+    },
+    {
+      "at": "2026-09-09T18:47:18.140+00:00",
+      "message": "START surrogate_domain_preparation"
+    },
+    {
+      "at": "2026-09-09T18:47:22.607+00:00",
+      "message": "Prepared the shared surrogate grid: 280 by 156 cells at 15 arc-seconds"
+    },
+    {
+      "at": "2026-09-09T18:47:22.627+00:00",
+      "message": "END surrogate_domain_preparation: 4.487s"
+    },
+    {
+      "at": "2026-09-09T18:47:22.657+00:00",
+      "message": "START surrogate_copernicus_lc"
+    },
+    {
+      "at": "2026-09-09T18:47:22.676+00:00",
+      "message": "Verified cached surrogate raster copernicus-lc-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:22.947+00:00",
+      "message": "copernicus_lc: 51 surrogate attributes",
+      "builder": "copernicus_lc"
+    },
+    {
+      "at": "2026-09-09T18:47:22.958+00:00",
+      "message": "END surrogate_copernicus_lc: 0.301s"
+    },
+    {
+      "at": "2026-09-09T18:47:22.987+00:00",
+      "message": "START surrogate_dem_terrain"
+    },
+    {
+      "at": "2026-09-09T18:47:25.582+00:00",
+      "message": "dem_terrain: 2 surrogate attributes",
+      "builder": "dem_terrain"
+    },
+    {
+      "at": "2026-09-09T18:47:25.601+00:00",
+      "message": "END surrogate_dem_terrain: 2.614s"
+    },
+    {
+      "at": "2026-09-09T18:47:25.633+00:00",
+      "message": "START surrogate_dmsp_lights"
+    },
+    {
+      "at": "2026-09-09T18:47:25.651+00:00",
+      "message": "Verified cached surrogate raster dmsp-lights-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:25.677+00:00",
+      "message": "dmsp_lights: 2 surrogate attributes",
+      "builder": "dmsp_lights"
+    },
+    {
+      "at": "2026-09-09T18:47:25.687+00:00",
+      "message": "END surrogate_dmsp_lights: 0.054s"
+    },
+    {
+      "at": "2026-09-09T18:47:25.696+00:00",
+      "message": "START surrogate_ecoregions"
+    },
+    {
+      "at": "2026-09-09T18:47:26.674+00:00",
+      "message": "ecoregions: 2 surrogate attributes",
+      "builder": "ecoregions"
+    },
+    {
+      "at": "2026-09-09T18:47:26.685+00:00",
+      "message": "END surrogate_ecoregions: 0.988s"
+    },
+    {
+      "at": "2026-09-09T18:47:26.695+00:00",
+      "message": "START surrogate_era5_runoff"
+    },
+    {
+      "at": "2026-09-09T18:47:26.717+00:00",
+      "message": "Verified cached surrogate raster era5-runoff-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:26.789+00:00",
+      "message": "era5_runoff: 4 surrogate attributes",
+      "builder": "era5_runoff"
+    },
+    {
+      "at": "2026-09-09T18:47:26.806+00:00",
+      "message": "END surrogate_era5_runoff: 0.112s"
+    },
+    {
+      "at": "2026-09-09T18:47:26.831+00:00",
+      "message": "START surrogate_gfsad"
+    },
+    {
+      "at": "2026-09-09T18:47:26.847+00:00",
+      "message": "Verified cached surrogate raster gfsad-irrigated-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:26.866+00:00",
+      "message": "gfsad: 2 surrogate attributes",
+      "builder": "gfsad"
+    },
+    {
+      "at": "2026-09-09T18:47:26.877+00:00",
+      "message": "END surrogate_gfsad: 0.046s"
+    },
+    {
+      "at": "2026-09-09T18:47:26.898+00:00",
+      "message": "START surrogate_ghsl"
+    },
+    {
+      "at": "2026-09-09T18:47:26.917+00:00",
+      "message": "Verified cached surrogate raster ghsl-built-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:26.937+00:00",
+      "message": "ghsl: 2 surrogate attributes",
+      "builder": "ghsl"
+    },
+    {
+      "at": "2026-09-09T18:47:26.950+00:00",
+      "message": "END surrogate_ghsl: 0.052s"
+    },
+    {
+      "at": "2026-09-09T18:47:26.961+00:00",
+      "message": "START surrogate_glims"
+    },
+    {
+      "at": "2026-09-09T18:47:26.980+00:00",
+      "message": "Verified cached surrogate raster glims-cover-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.001+00:00",
+      "message": "glims: 2 surrogate attributes",
+      "builder": "glims"
+    },
+    {
+      "at": "2026-09-09T18:47:27.021+00:00",
+      "message": "END surrogate_glims: 0.060s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.032+00:00",
+      "message": "START surrogate_gpw"
+    },
+    {
+      "at": "2026-09-09T18:47:27.050+00:00",
+      "message": "Verified cached surrogate raster gpw-density-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.092+00:00",
+      "message": "gpw: 4 surrogate attributes",
+      "builder": "gpw"
+    },
+    {
+      "at": "2026-09-09T18:47:27.104+00:00",
+      "message": "END surrogate_gpw: 0.071s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.115+00:00",
+      "message": "START surrogate_human_modification"
+    },
+    {
+      "at": "2026-09-09T18:47:27.135+00:00",
+      "message": "Verified cached surrogate raster human-modification-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.157+00:00",
+      "message": "human_modification: 2 surrogate attributes",
+      "builder": "human_modification"
+    },
+    {
+      "at": "2026-09-09T18:47:27.170+00:00",
+      "message": "END surrogate_human_modification: 0.055s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.183+00:00",
+      "message": "START surrogate_hydrolakes"
+    },
+    {
+      "at": "2026-09-09T18:47:27.230+00:00",
+      "message": "hydrolakes: 3 surrogate attributes",
+      "builder": "hydrolakes"
+    },
+    {
+      "at": "2026-09-09T18:47:27.241+00:00",
+      "message": "END surrogate_hydrolakes: 0.058s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.253+00:00",
+      "message": "START surrogate_modis_snow"
+    },
+    {
+      "at": "2026-09-09T18:47:27.281+00:00",
+      "message": "Verified cached surrogate raster modis-snow-01-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.302+00:00",
+      "message": "Verified cached surrogate raster modis-snow-02-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.325+00:00",
+      "message": "Verified cached surrogate raster modis-snow-03-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.346+00:00",
+      "message": "Verified cached surrogate raster modis-snow-04-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.368+00:00",
+      "message": "Verified cached surrogate raster modis-snow-05-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.391+00:00",
+      "message": "Verified cached surrogate raster modis-snow-06-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.413+00:00",
+      "message": "Verified cached surrogate raster modis-snow-07-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.440+00:00",
+      "message": "Verified cached surrogate raster modis-snow-08-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.462+00:00",
+      "message": "Verified cached surrogate raster modis-snow-09-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.485+00:00",
+      "message": "Verified cached surrogate raster modis-snow-10-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.509+00:00",
+      "message": "Verified cached surrogate raster modis-snow-11-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.537+00:00",
+      "message": "Verified cached surrogate raster modis-snow-12-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.613+00:00",
+      "message": "modis_snow: 15 surrogate attributes",
+      "builder": "modis_snow"
+    },
+    {
+      "at": "2026-09-09T18:47:27.626+00:00",
+      "message": "END surrogate_modis_snow: 0.372s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.637+00:00",
+      "message": "START surrogate_openlandmap_soil"
+    },
+    {
+      "at": "2026-09-09T18:47:27.655+00:00",
+      "message": "Verified cached surrogate raster openlandmap-soil-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.706+00:00",
+      "message": "openlandmap_soil: 8 surrogate attributes",
+      "builder": "openlandmap_soil"
+    },
+    {
+      "at": "2026-09-09T18:47:27.727+00:00",
+      "message": "END surrogate_openlandmap_soil: 0.091s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.760+00:00",
+      "message": "START surrogate_pnv_biome"
+    },
+    {
+      "at": "2026-09-09T18:47:27.779+00:00",
+      "message": "Verified cached surrogate raster pnv-biome-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:27.963+00:00",
+      "message": "pnv_biome: 31 surrogate attributes",
+      "builder": "pnv_biome"
+    },
+    {
+      "at": "2026-09-09T18:47:27.976+00:00",
+      "message": "END surrogate_pnv_biome: 0.216s"
+    },
+    {
+      "at": "2026-09-09T18:47:28.003+00:00",
+      "message": "START surrogate_surface_water"
+    },
+    {
+      "at": "2026-09-09T18:47:28.043+00:00",
+      "message": "Verified cached surrogate raster surface-water-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:28.079+00:00",
+      "message": "surface_water: 6 surrogate attributes",
+      "builder": "surface_water"
+    },
+    {
+      "at": "2026-09-09T18:47:28.103+00:00",
+      "message": "END surrogate_surface_water: 0.100s"
+    },
+    {
+      "at": "2026-09-09T18:47:28.125+00:00",
+      "message": "START surrogate_terraclimate"
+    },
+    {
+      "at": "2026-09-09T18:47:28.145+00:00",
+      "message": "Verified cached surrogate raster terraclimate-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:28.422+00:00",
+      "message": "terraclimate: 58 surrogate attributes",
+      "builder": "terraclimate"
+    },
+    {
+      "at": "2026-09-09T18:47:28.434+00:00",
+      "message": "END surrogate_terraclimate: 0.309s"
+    },
+    {
+      "at": "2026-09-09T18:47:28.467+00:00",
+      "message": "START surrogate_wdpa"
+    },
+    {
+      "at": "2026-09-09T18:47:28.486+00:00",
+      "message": "Verified cached surrogate raster wdpa-cover-15s"
+    },
+    {
+      "at": "2026-09-09T18:47:28.510+00:00",
+      "message": "wdpa: 2 surrogate attributes",
+      "builder": "wdpa"
+    },
+    {
+      "at": "2026-09-09T18:47:28.521+00:00",
+      "message": "END surrogate_wdpa: 0.054s"
+    },
+    {
+      "at": "2026-09-09T18:47:28.539+00:00",
+      "message": "START all_281_attribute_audit_and_export"
+    },
+    {
+      "at": "2026-09-09T18:47:29.058+00:00",
+      "message": "END all_281_attribute_audit_and_export: 0.520s"
+    }
+  ],
+  "progress_write_failures": 0,
+  "timing_note": "Wall time runs from timer initialization through scientific run-package export; excludes development, research, tests, final timing serialization and web publication. CPU is the main Python process only. Subtasks are included in their parent stage; shared preparation is not charged to every attribute.",
+  "overhead_seconds": 0.5112146999745164,
+  "finished_at": "2026-09-09T18:47:29.070+00:00"
+}

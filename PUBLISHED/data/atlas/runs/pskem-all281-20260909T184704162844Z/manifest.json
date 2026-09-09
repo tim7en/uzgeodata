@@ -1,0 +1,19 @@
+{
+  "run_id": "pskem-all281-20260909T184704162844Z",
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.19044-SP0",
+  "command": "python PIPELINES/update_pskem_atlas.py",
+  "mode": "original_vintage_baseline_and_candidate_reconstruction",
+  "scientific_release": "not_eligible",
+  "files": {
+    "attribute-audit.csv": "9a13eb1cbd9b37a9fc14506819d210a6b217ebcaabd59f274554408c5daec0bb",
+    "batch.json": "58e4a947419bb7bbeb636f9cc50bdbfa3c41a727529fafc77c0041e6b787861c",
+    "observations.csv": "78b21ab79485ea1dad40aff96f263e79596baf436b4d10ce1581f0b4a92be0fb",
+    "pilot-basins.geojson": "0ca4fa011417a05a28f1cbfe29d30cdee579417ce056212b5ce60283aceafc8b",
+    "reference-wide.csv": "721752877c7f5361c0016e062bf2a8995d955ac10156b426656ca65502617f47",
+    "requirements.freeze.txt": "e1489b1da9aadf33f00903b816707ed0a1496aaf98d68a96b1a98cb1932f18d4",
+    "source-lock.json": "e1655c63f94b592d4b15830b04d3ad060aaa0f4dcd130ef37d3011ee62e8cd30",
+    "surrogate-registry.csv": "31bf2804637dc81111a9b3d756888b36b9d2258326a676a273d15b96537fcf53",
+    "tolerance.json": "c5341b2977a60786d5587c9039c0cef2f1f2fcd53fd2e58e1ad7fe6077a57427"
+  }
+}
