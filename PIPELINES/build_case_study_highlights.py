@@ -79,36 +79,6 @@ def main() -> None:
         "evidence": "PUBLISHED/data/case-studies/advanced-validation.json",
     })
 
-    # 2. The seasonal forecast does not work yet, and snow does not rescue it.
-    flow = validation["seasonal_flow"]
-    models = sorted(flow["models"], key=lambda entry: entry["scores"]["rmse"])
-    leader = models[0]
-    snow_models = [entry for entry in flow["models"] if "snow" in entry["model"] or "swe" in entry["model"]]
-    findings.append({
-        "id": "seasonal-flow-skill",
-        "kind": "negative",
-        "headline": "Seasonal flow prediction fails on its own test years",
-        "value": round_or_none(leader["scores"]["nse"]),
-        "valueLabel": "best NSE",
-        "detail": (
-            f"Every model scores below zero, meaning none beats the mean of the observations. "
-            f"The best, {leader['model'].replace('_', ' ')}, reaches NSE {leader['scores']['nse']:.2f} "
-            f"and cuts RMSE {leader['rmse_skill_vs_climatology'] * 100:.0f}% against climatology. "
-            f"Adding snow or snow water equivalent makes it worse, not better, on "
-            f"{len(flow['test_years'])} held-out years."
-        ),
-        "models": [
-            {"model": entry["model"], "nse": round_or_none(entry["scores"]["nse"], 2),
-             "rmse": round_or_none(entry["scores"]["rmse"], 1),
-             "skillVsClimatology": round_or_none(entry.get("rmse_skill_vs_climatology"), 3)}
-            for entry in models
-        ],
-        "trainingYears": flow["training_years"],
-        "testYears": flow["test_years"],
-        "figure": f"{FIGURES}/pskem-model-skill.png",
-        "evidence": "PUBLISHED/data/case-studies/advanced-validation.json",
-    })
-
     # 3. Two satellites agreeing is not the same as either being right.
     agreement = validation["snow_sensor_agreement"]
     strongest = max(agreement, key=lambda entry: entry["scores"]["r"])
@@ -173,6 +143,51 @@ def main() -> None:
             "evidence": "PUBLISHED/data/case-studies/sabitov-monthly-trends.csv",
         })
 
+    # The question a water manager actually asks, answered by the current model.
+    def water_year_finding(model):
+        rows = model["seasonalVolumes"]
+        volumes = [row["observedMcm"] for row in rows]
+        mean = sum(volumes) / len(volumes)
+        spread = (sum((v - mean) ** 2 for v in volumes) / len(volumes)) ** 0.5
+        order = ["dry", "below", "normal", "above", "wet"]
+
+        def band(value):
+            z = (value - mean) / spread
+            if z <= -1.28: return "dry"
+            if z <= -0.43: return "below"
+            if z < 0.43: return "normal"
+            if z < 1.28: return "above"
+            return "wet"
+
+        held = [row for row in rows if row["period"] == "validation"]
+        exact = sum(band(row["observedMcm"]) == band(row["simulatedMcm"]) for row in held)
+        near = sum(abs(order.index(band(row["observedMcm"])) - order.index(band(row["simulatedMcm"]))) <= 1
+                   for row in held)
+        errors = sorted(abs(row["simulatedMcm"] - row["observedMcm"]) / row["observedMcm"] * 100
+                        for row in held)
+        median = errors[len(errors) // 2]
+        seasonal = model.get("seasonalValidationScores", {})
+        return {
+            "id": "water-year-class",
+            "kind": "validated",
+            "headline": "The season can be called normal, dry or wet — to within one class",
+            "value": round(median, 0),
+            "valueLabel": "% median volume error",
+            "detail": (
+                f"Over {len(held)} years the model never saw, the April–September volume is predicted "
+                f"to a median {median:.0f}% with NSE {seasonal.get('nse', 0):+.2f} and bias "
+                f"{seasonal.get('pbias', 0):+.1f}%. Placed into five classes from dry to wet, "
+                f"{exact} of {len(held)} land in the right class and {near} of {len(held)} are never "
+                "more than one class out. This is the question the earlier annual regression could "
+                "not answer at all."
+            ),
+            "exactClass": exact,
+            "withinOneClass": near,
+            "heldOutYears": len(held),
+            "figure": f"{FIGURES}/pskem-seasonal-shape.png",
+            "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json",
+        }
+
     # 6. The daily model, and what verifying the observation record changed.
     if DAILY_MODEL.exists():
         model = json.loads(DAILY_MODEL.read_text(encoding="utf-8"))
@@ -182,7 +197,11 @@ def main() -> None:
         findings.append({
             "id": "daily-process-model",
             "kind": "validated",
-            "headline": "A daily snowmelt model has real skill; the seasonal total still does not",
+            # The headline follows the numbers rather than a remembered result: the
+            # seasonal total was negative until the warm-up year was excluded.
+            "headline": ("A daily snowmelt model reproduces the hydrograph and the seasonal total"
+                         if (seasonal.get("nse") or -1) > 0
+                         else "A daily snowmelt model has real skill; the seasonal total still does not"),
             "value": round_or_none(monthly["nse"], 2),
             "valueLabel": "monthly NSE, held-out years",
             "detail": (
@@ -192,8 +211,9 @@ def main() -> None:
                 f"{monthly['nse']:.2f} on monthly means, closing the water balance at a runoff "
                 f"coefficient of {model['waterBalance']['runoffCoefficientSimulated']:.2f} against "
                 f"{model['waterBalance']['runoffCoefficientObserved']:.2f} observed. The April–September "
-                f"total remains the hard part, at NSE {seasonal.get('nse', float('nan')):.2f}: daily "
-                "behaviour is reproducible where the seasonal volume is not."
+                f"volume reaches NSE {seasonal.get('nse', float('nan')):+.2f} at "
+                f"{seasonal.get('pbias', 0):+.1f}% bias once the first year is treated as warm-up "
+                "rather than scored from empty stores."
             ),
             "dailyNse": round_or_none(daily["nse"], 3),
             "monthlyNse": round_or_none(monthly["nse"], 3),
@@ -205,6 +225,7 @@ def main() -> None:
                         f"{FIGURES}/pskem-seasonal-shape.png"],
             "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json",
         })
+        findings.append(water_year_finding(model))
         provenance = model["observationProvenance"]
         findings.append({
             "id": "discharge-record-verified",

@@ -192,8 +192,9 @@ def load_inputs():
 
     area = sum(feature["properties"]["SUB_AREA"]
                for feature in json.loads(CATCHMENT.read_text(encoding="utf-8"))["features"])
-    days = sorted(set(forcing) & set(flow))
-    if not days:
+    days = sorted(forcing)
+    scored = set(flow)
+    if not (scored & set(days)):
         raise SystemExit("Forcing and discharge do not overlap")
     removed, screening = suspect_days(flow)
     detected = dropouts(flow)
@@ -206,10 +207,15 @@ def load_inputs():
     pet = np.array([forcing[day][2] for day in days])
     # One cubic metre per second for a day, spread over the catchment, in mm.
     factor = 86400.0 / (area * 1e6) * 1000.0
-    observed = np.array([flow[day] * factor for day in days])
-    # A day the published screening rejects must not score the model either.
-    valid = np.array([day not in removed for day in days])
-    return days, temperature, precipitation, pet, observed, area, factor, valid, screening, extra
+    observed = np.array([flow.get(day, np.nan) * factor for day in days])
+    # Scoring starts only once the snow and soil stores have had a year to fill:
+    # the first simulated year begins empty, and judging it would blame the model
+    # for a cold start. A day the published screening rejects is excluded too.
+    warmup = min(scored)[:4]
+    valid = np.array([day in scored and day not in removed and day[:4] != warmup
+                      for day in days])
+    return (days, temperature, precipitation, pet, observed, area, factor, valid,
+            screening, extra, min(scored)[:4])
 
 
 def simulate(parameters: np.ndarray, temperature, precipitation, pet, bands=None):
@@ -317,7 +323,8 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=1729)
     args = parser.parse_args()
 
-    days, temperature, precipitation, pet, observed, area, factor, valid, screening, extra = load_inputs()
+    (days, temperature, precipitation, pet, observed, area, factor, valid,
+     screening, extra, warmup_year) = load_inputs()
     years = np.array([int(day[:4]) for day in days])
     if args.split == "stratified":
         # A chronological cut trained on wet years and tested on dry ones, which
@@ -379,13 +386,16 @@ def main() -> None:
     }
     # A model that reproduces the hydrograph while losing the mass budget is not a
     # model, so the balance is reported next to the skill.
+    # The balance is taken over the scored days only: forcing runs a year longer
+    # than the gauge, and mixing the two would compare different periods.
     balance = {
-        "precipitationMm": round(float(precipitation.sum()), 1),
-        "observedRunoffMm": round(float(observed.sum()), 1),
-        "simulatedRunoffMm": round(float(simulated.sum()), 1),
-        "runoffCoefficientObserved": round(float(observed.sum() / precipitation.sum()), 3),
-        "runoffCoefficientSimulated": round(float(simulated.sum() / precipitation.sum()), 3),
+        "precipitationMm": round(float(precipitation[valid].sum()), 1),
+        "observedRunoffMm": round(float(observed[valid].sum()), 1),
+        "simulatedRunoffMm": round(float(simulated[valid].sum()), 1),
+        "runoffCoefficientObserved": round(float(observed[valid].sum() / precipitation[valid].sum()), 3),
+        "runoffCoefficientSimulated": round(float(simulated[valid].sum() / precipitation[valid].sum()), 3),
         "peakSnowWaterEquivalentMm": round(float(snow.max()), 1),
+        "scoredDays": int(valid.sum()),
     }
 
     # The published product is a monthly mean, so the model is also judged there:
@@ -414,7 +424,7 @@ def main() -> None:
     months = np.array([int(day[5:7]) for day in days])
     season = (months >= 4) & (months <= 9)
     for year in sorted(set(years.tolist())):
-        mask = season & (years == year)
+        mask = season & (years == year) & valid
         if mask.sum() < 150:
             continue
         to_mcm = area * 1e6 / 1000 / 1e6
@@ -463,6 +473,8 @@ def main() -> None:
             "calibratedLapsePer1000m": round(float(best["parameters"][ORDER.index("lapse")]), 3),
             "source": "PUBLISHED/data/case-studies/elevation-profiles.csv",
         },
+        "warmUp": {"yearExcluded": warmup_year,
+                   "reason": "stores start empty; the first simulated year is a cold start"},
         "catchment": {
             "areaKm2": round(area, 1),
             "gauge": "uz:station/gauge-16290",
@@ -483,7 +495,12 @@ def main() -> None:
             "additionalDropoutsDetected": extra,
             "dropoutRule": ("a day below half the median of the surrounding six days; the published "
                             "audit catches only near-zero readings and misses partial dropouts"),
-            "suspectDaysExcludedFromScoring": int((~valid).sum()),
+            # Two different exclusions, kept apart: days rejected for quality, and
+            # days outside the scored window at all (warm-up, or no gauge record).
+            "suspectDaysExcludedFromScoring": len(
+                {entry["identified"] for entry in screening if entry["identified"]}
+                | {entry["date"] for entry in extra}),
+            "daysOutsideScoredWindow": int((~valid).sum()),
         },
         "parametersAtBounds": pinned,
         "seasonalVolumes": seasonal,

@@ -51,11 +51,8 @@ def test_headline_numbers_match_the_evidence_they_cite():
     scored = [row for row in validation["climate_validation"] if row["raw"].get("nse") is not None]
     assert by_id["product-station-agreement"]["value"] == round(max(row["raw"]["nse"] for row in scored), 3)
 
-    flow = by_id["seasonal-flow-skill"]
-    best = min(validation["seasonal_flow"]["models"], key=lambda entry: entry["scores"]["rmse"])
-    assert flow["value"] == round(best["scores"]["nse"], 3)
-    # The finding claims every model is worse than the mean; hold it to that.
-    assert all(entry["scores"]["nse"] < 0 for entry in validation["seasonal_flow"]["models"])
+    # The superseded annual regression is no longer published as a headline.
+    assert "seasonal-flow-skill" not in by_id
 
     reservoir = validation["reservoir"]
     assert by_id["charvak-water-surface"]["eligibleMonths"] == reservoir["eligible_months"]
@@ -102,6 +99,8 @@ def test_the_discharge_record_is_verified_against_the_published_monthly_table():
     detected = {entry["date"] for entry in provenance["additionalDropoutsDetected"]}
     assert audited and not (audited & detected)
     assert provenance["suspectDaysExcludedFromScoring"] == len(audited | detected)
+    # Warm-up and ungauged days are excluded too, but counted separately.
+    assert provenance["daysOutsideScoredWindow"] > provenance["suspectDaysExcludedFromScoring"]
     for entry in provenance["additionalDropoutsDetected"]:
         # A dropout has to be far below its neighbourhood, not merely a low day.
         assert entry["ratio"] < 0.5
