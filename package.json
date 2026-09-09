@@ -115,7 +115,8 @@
     "atlas:publish": "python PIPELINES/build_atlas_roadmap.py",
     "predev": "npm run atlas:publish",
     "atlas:attribute": "python PIPELINES/run_atlas_attribute.py",
-    "atlas:pskem": "python PIPELINES/update_pskem_atlas.py"
+    "atlas:pskem": "python PIPELINES/update_pskem_atlas.py",
+    "atlas:science": "python PIPELINES/build_surrogate_science.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.1",

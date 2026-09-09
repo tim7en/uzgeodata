@@ -1,0 +1,2891 @@
+{
+  "generated_at": "2026-09-09T19:11:02+00:00",
+  "run_id": "pskem-all281-20260909T184834061745Z",
+  "release_rule": "A surrogate value is an independent open-data estimate. It is never a reproduction of the original attribute and never replaces it.",
+  "comparison_policy": "Numerical differences against the original attribute are reported as divergence diagnostics only. Agreement does not certify reproduction, and disagreement does not invalidate the original value.",
+  "fidelity_classes": {
+    "original_source": "Same dataset and version as the atlas source.",
+    "original_source_family": "Same dataset lineage, a different release or epoch.",
+    "open_surrogate": "A different open dataset measuring the same quantity.",
+    "derived_surrogate": "The quantity is derived from open inputs by an explicit formula.",
+    "method_reimplementation": "The atlas index formula is recomputed from different open inputs.",
+    "crosswalk_surrogate": "Class legends differ and are mapped by an explicit, imperfect crosswalk.",
+    "weak_surrogate": "The closest open dataset measures a related but materially different quantity.",
+    "units_mismatch_surrogate": "An open dataset exists but its units are not convertible to the stored units.",
+    "method_not_implemented": "Inputs are available; the method is not implemented in this pass.",
+    "pending_open_source": "No open, programmatically retrievable source was in place for this pass."
+  },
+  "excluded_sources": {
+    "WWF/HydroATLAS/v1/Basins/level12": "An Earth Engine copy of the atlas itself. It is never used to build a candidate value, because that would reproduce the reference from itself."
+  },
+  "pilot": {
+    "basins": 20,
+    "cells_15arcsec": 43680,
+    "wall_seconds": 24.15802890001214,
+    "cold_cache_wall_seconds": 209.562,
+    "cold_cache_run_id": "pskem-all281-20260909T182641263450Z",
+    "cold_surrogate_seconds": 195.539,
+    "cold_modis_snow_seconds": 132.942,
+    "attributes": 281,
+    "records": 5620,
+    "candidates": 34,
+    "candidate_pass": 30,
+    "surrogates": 196,
+    "without_estimate": 51,
+    "independently_reproduced": 0,
+    "by_fidelity": {
+      "crosswalk_surrogate": 78,
+      "derived_surrogate": 4,
+      "method_reimplementation": 16,
+      "open_surrogate": 57,
+      "original_source": 3,
+      "original_source_family": 12,
+      "units_mismatch_surrogate": 14,
+      "weak_surrogate": 12
+    }
+  },
+  "domain": {
+    "systems": {
+      "Amu Darya": 4917,
+      "Syr Darya": 2528
+    },
+    "level": 12,
+    "basins": 7445,
+    "total_area_km2": 965725,
+    "median_unit_km2": 135.7,
+    "bounds": [
+      58.117,
+      34.483,
+      78.358,
+      47.221
+    ],
+    "bbox_area_km2": 2400451,
+    "basin_share_of_bbox": 0.4,
+    "cells_inside_basins_15arcsec": 5937391,
+    "grids": {
+      "15_arcsec": {
+        "arcsec": 15,
+        "columns": 4858,
+        "rows": 3057,
+        "megacells": 14.9,
+        "gigabytes_per_float32_band": 0.06
+      },
+      "3_arcsec": {
+        "arcsec": 3,
+        "columns": 24290,
+        "rows": 15285,
+        "megacells": 371.3,
+        "gigabytes_per_float32_band": 1.49
+      },
+      "1_arcsec": {
+        "arcsec": 1,
+        "columns": 72870,
+        "rows": 45855,
+        "megacells": 3341.5,
+        "gigabytes_per_float32_band": 13.37
+      }
+    }
+  },
+  "families": [
+    {
+      "family": "aet",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 14,
+      "estimated_attributes": 14,
+      "original": {
+        "id": "C06",
+        "dataset": "Global High-Resolution Soil-Water Balance",
+        "citation": "Trabucco & Zomer 2010",
+        "units": "millimeters",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=20"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+        "name": "TerraClimate monthly climate and water balance",
+        "citation": "Abatzoglou et al. 2018",
+        "period": "1958-2024 monthly; 1991-2020 climatology used",
+        "licence": "Public domain (CC0 1.0)",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE",
+        "bands": [
+          "aet"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 4638.3,
+        "native_arcsec": 150.0,
+        "grid": "geographic 1/24 degree",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "millimetres per month",
+        "reference_stored": "millimeters",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Different water-balance model and forcing than Trabucco & Zomer 2010",
+        "1991-2020 epoch rather than the original climatology period",
+        "Native grid 150 arc-seconds against roughly 30 arc-seconds originally"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 14,
+      "relative_mae_mean": 0.5395,
+      "relative_mae_min": 0.0741,
+      "relative_mae_max": 0.9812
+    },
+    {
+      "family": "ari",
+      "fidelity": "method_reimplementation",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "C07",
+        "dataset": "Global Aridity Index v1",
+        "citation": "Zomer et al. 2008",
+        "units": "index value (x100)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=21"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+        "name": "TerraClimate monthly climate and water balance",
+        "citation": "Abatzoglou et al. 2018",
+        "period": "1958-2024 monthly; 1991-2020 climatology used",
+        "licence": "Public domain (CC0 1.0)",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE",
+        "bands": [
+          "pr",
+          "pet"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 4638.3,
+        "native_arcsec": 150.0,
+        "grid": "geographic 1/24 degree",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "index",
+        "reference_stored": "index value (x100)",
+        "convertible": true,
+        "factor": 100.0
+      },
+      "divergence_notes": [
+        "Aridity index recomputed as annual precipitation over annual PET",
+        "Original is Global Aridity Index v1 built on WorldClim v1.4 and Global-PET v1"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.0571,
+      "relative_mae_min": 0.031,
+      "relative_mae_max": 0.0832
+    },
+    {
+      "family": "cls",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "C02",
+        "dataset": "Global Environmental Stratification (GEnS)",
+        "citation": "Metzger et al. 2013",
+        "units": "classes (125)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=16"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Environmental Stratification (GEnS)",
+        "name": "Global Environmental Stratification (GEnS)",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://doi.org/10.1111/geb.12022"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "The GEnS raster is distributed on request rather than from an open endpoint, and no open substitute carries the same 125-class legend.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "cly",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "S01",
+        "dataset": "SoilGrids1km",
+        "citation": "Hengl et al. 2014",
+        "units": "percent",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=41"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02",
+        "name": "OpenLandMap soil property",
+        "citation": "Hengl et al. 2018",
+        "period": "Predicted present-day soil state",
+        "licence": "CC-BY-SA 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/OpenLandMap_SOL_SOL_CLAY-WFRACTION_USDA-3A1A1A_M_v02",
+        "bands": [
+          "b0",
+          "b10",
+          "b30",
+          "b60",
+          "b100",
+          "b200"
+        ],
+        "depth_note": "0-100 cm trapezoidal depth mean"
+      },
+      "resolution": {
+        "native_scale_m": 231.9,
+        "native_arcsec": null,
+        "grid": "geographic 250 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "depth-weighted average over 0-100 cm, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent by weight",
+        "reference_stored": "percent",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "OpenLandMap 250 m predictions replace SoilGrids1km",
+        "Depth aggregation over 0-100 cm here; the atlas depth convention still requires review"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.1442,
+      "relative_mae_min": 0.1408,
+      "relative_mae_max": 0.1477
+    },
+    {
+      "family": "clz",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "C01",
+        "dataset": "Global Environmental Stratification (GEnS)",
+        "citation": "Metzger et al. 2013",
+        "units": "classes (18)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=15"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Environmental Stratification (GEnS)",
+        "name": "Global Environmental Stratification (GEnS)",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://doi.org/10.1111/geb.12022"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "Same distribution constraint as the 125-class stratification; the 18-zone legend has no open equivalent.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "cmi",
+      "fidelity": "method_reimplementation",
+      "status": "open_surrogate_estimate",
+      "attributes": 14,
+      "estimated_attributes": 14,
+      "original": {
+        "id": "C08",
+        "dataset": "WorldClim v1.4 and Global-PET v1",
+        "citation": "Hijmans et al. 2005",
+        "units": "index value (x100)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=22"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+        "name": "TerraClimate monthly climate and water balance",
+        "citation": "Abatzoglou et al. 2018",
+        "period": "1958-2024 monthly; 1991-2020 climatology used",
+        "licence": "Public domain (CC0 1.0)",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE",
+        "bands": [
+          "pr",
+          "pet"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 4638.3,
+        "native_arcsec": 150.0,
+        "grid": "geographic 1/24 degree",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "index",
+        "reference_stored": "index value (x100)",
+        "convertible": true,
+        "factor": 100.0
+      },
+      "divergence_notes": [
+        "Willmott & Feddema moisture index recomputed from TerraClimate precipitation and PET",
+        "Original combines WorldClim v1.4 precipitation with Global-PET v1"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 14,
+      "relative_mae_mean": 0.2792,
+      "relative_mae_min": 0.0251,
+      "relative_mae_max": 1.0404
+    },
+    {
+      "family": "crp",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "L08",
+        "dataset": "EarthStat",
+        "citation": "Ramankutty et al. 2008",
+        "units": "percent cover",
+        "period": "circa 2000",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=31"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global",
+        "name": "Copernicus Global Land Cover, collection 3",
+        "citation": "Buchhorn et al. 2020",
+        "period": "2015-2019 annual; 2015 epoch used",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_Landcover_100m_Proba-V-C3_Global",
+        "bands": [
+          "crops-coverfraction"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 100.0,
+        "native_arcsec": null,
+        "grid": "geographic 100 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "class fractions computed at 100 m, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Copernicus crop cover fraction for 2015 replaces EarthStat cropland for the year 2000"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.8492,
+      "relative_mae_min": 0.8377,
+      "relative_mae_max": 0.8607
+    },
+    {
+      "family": "dis",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 3,
+      "estimated_attributes": 3,
+      "original": {
+        "id": "H01",
+        "dataset": "WaterGAP v2.2 (data of 2014)",
+        "citation": "Döll et al. 2003",
+        "units": "cubic meters/second",
+        "period": "1971-2000",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=2"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "name": "ERA5-Land monthly aggregates",
+        "citation": "Munoz-Sabater et al. 2021",
+        "period": "1950-present; 1991-2020 climatology used",
+        "licence": "Copernicus licence",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_MONTHLY_AGGR",
+        "bands": [
+          "runoff"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 11132.0,
+        "native_arcsec": 360.0,
+        "grid": "geographic 0.1 degree",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest-neighbour onto the pilot 15 arc-second grid",
+        "support_change": "the native grid is far coarser than the basins being accumulated"
+      },
+      "units": {
+        "surrogate": "cubic metres per second",
+        "reference_stored": "cubic meters/second",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Discharge accumulated from ERA5-Land runoff over the upstream pilot units only",
+        "The pilot ends at the Pskem outlet, so inflow from outside the pilot is absent by construction",
+        "No routing, storage, abstraction or reservoir operation is represented"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 3,
+      "relative_mae_mean": 0.6881,
+      "relative_mae_min": 0.4228,
+      "relative_mae_max": 0.8722
+    },
+    {
+      "family": "dor",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "H07",
+        "dataset": "HydroSHEDS and Global Reservoir and Dams (GRanD) database v1.1",
+        "citation": "Lehner et al. 2011",
+        "units": "percent (x10)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=8"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Degree of regulation from GRanD and HydroSHEDS",
+        "name": "Degree of regulation from GRanD and HydroSHEDS",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.globaldamwatch.org/grand"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "Degree of regulation needs GRanD storage volumes together with a settled discharge field; neither is in place.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "ele",
+      "fidelity": "original_source_family",
+      "status": "carried_by_original_vintage_pass",
+      "attributes": 4,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "P01",
+        "dataset": "EarthEnv-DEM90",
+        "citation": "Robinson et al. 2014",
+        "units": "meters a.s.l.",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=12"
+      },
+      "surrogate": {
+        "provider": "Original-vintage pass",
+        "asset": "EarthEnv-DEM90",
+        "name": "EarthEnv-DEM90",
+        "citation": "Robinson et al. 2014",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "licence": "Creative Commons CC-BY 4.0",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=12"
+      },
+      "resolution": {
+        "native_scale_m": 90.0,
+        "native_arcsec": 3.0,
+        "grid": "geographic 3 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "meters a.s.l.",
+        "reference_stored": "meters a.s.l.",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "EarthEnv-DEM90 original-vintage candidate, already computed"
+      ],
+      "pending_reason": "Carried by the original-vintage pass.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "ero",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 2,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "S08",
+        "dataset": "RUSLE-based Global Soil Erosion Modelling platform (GloSEM) v1.2",
+        "citation": "Borrelli et al. 2017",
+        "units": "kg/hectare per year",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=48"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Soil Erosion Modelling platform (RUSLE)",
+        "name": "Global Soil Erosion Modelling platform (RUSLE)",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://esdac.jrc.ec.europa.eu/"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "The ESDAC erosion grid requires a registered download and has no open substitute at this resolution.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "fec",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "L17",
+        "dataset": "Freshwater Ecoregions of the World (FEOW)",
+        "citation": "Abell et al. 2008",
+        "units": "classes (426)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=40"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Freshwater Ecoregions of the World",
+        "name": "Freshwater Ecoregions of the World",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.feow.org/"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "FEOW polygons need a shapefile download; no Earth Engine copy exists.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "fmh",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "L16",
+        "dataset": "Freshwater Ecoregions of the World (FEOW)",
+        "citation": "Abell et al. 2008",
+        "units": "classes (13)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=39"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Freshwater Ecoregions of the World major habitat types",
+        "name": "Freshwater Ecoregions of the World major habitat types",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.feow.org/"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "Same download requirement as the freshwater ecoregion classes.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "for",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "L07",
+        "dataset": "GLC2000",
+        "citation": "Bartholomé & Belward 2005",
+        "units": "percent cover",
+        "period": "2000",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=30"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global",
+        "name": "Copernicus Global Land Cover, collection 3",
+        "citation": "Buchhorn et al. 2020",
+        "period": "2015-2019 annual; 2015 epoch used",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_Landcover_100m_Proba-V-C3_Global",
+        "bands": [
+          "tree-coverfraction"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 100.0,
+        "native_arcsec": null,
+        "grid": "geographic 100 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "class fractions computed at 100 m, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Copernicus tree cover fraction replaces the GLC2000 forest class aggregation",
+        "Fractional cover and class-area percentage are different quantities"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 2.7599,
+      "relative_mae_min": 2.3664,
+      "relative_mae_max": 3.1534
+    },
+    {
+      "family": "gad",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "A07",
+        "dataset": "Global Administrative Areas (GADM) v2.0",
+        "citation": "University of Berkeley 2012",
+        "units": "ID number",
+        "period": "2012",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=55"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Administrative Areas v2.0",
+        "name": "Global Administrative Areas v2.0",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://gadm.org/"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "GADM v2.0 identifiers are release-specific, so a later release would not reproduce the stored identifier.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "gdp",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 3,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "A08",
+        "dataset": "Gross Domestic Product Purchasing Power Parity (GDP PPP) v2",
+        "citation": "Kummu et al. 2018",
+        "units": "US dollars",
+        "period": "2015",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=56"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Gridded GDP purchasing power parity (Kummu et al. 2018)",
+        "name": "Gridded GDP purchasing power parity (Kummu et al. 2018)",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://doi.org/10.5061/dryad.dk1j0"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "The Dryad NetCDF bundle needs a download and subsetting step that was not implemented in this pass.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "gla",
+      "fidelity": "original_source_family",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "L11",
+        "dataset": "Global Land Ice Measurements from Space (GLIMS)",
+        "citation": "GLIMS & NSIDC 2012",
+        "units": "percent cover",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=34"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "GLIMS/current",
+        "name": "Global Land Ice Measurements from Space glacier outlines",
+        "citation": "GLIMS & NSIDC",
+        "period": "Multi-date inventory, current release",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/GLIMS_current"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "vector polygons",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "polygon rasterised at pilot 15 arc-second cell centres",
+        "support_change": "polygon-to-grid discretisation; sub-cell partial cover is lost"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "The current GLIMS release contains later submissions than the 2012 snapshot cited by the atlas",
+        "Outline dates vary by region and are not a single epoch"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "glc-cl",
+      "fidelity": "crosswalk_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 1,
+      "estimated_attributes": 1,
+      "original": {
+        "id": "L01",
+        "dataset": "GLC2000",
+        "citation": "Bartholomé & Belward 2005",
+        "units": "classes (22)",
+        "period": "2000",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=24"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global",
+        "name": "Copernicus Global Land Cover, collection 3",
+        "citation": "Buchhorn et al. 2020",
+        "period": "2015-2019 annual; 2015 epoch used",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_Landcover_100m_Proba-V-C3_Global"
+      },
+      "resolution": {
+        "native_scale_m": 100.0,
+        "native_arcsec": null,
+        "grid": "geographic 100 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "class fractions computed at 100 m, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "class",
+        "reference_stored": "classes (22)",
+        "convertible": false,
+        "factor": null
+      },
+      "divergence_notes": [
+        "Majority class after the same GLC2000 crosswalk; class identity is approximate"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "glc-pc",
+      "fidelity": "crosswalk_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 44,
+      "estimated_attributes": 44,
+      "original": {
+        "id": "L02",
+        "dataset": "GLC2000",
+        "citation": "Bartholomé & Belward 2005",
+        "units": "percent cover",
+        "period": "2000",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=25"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global",
+        "name": "Copernicus Global Land Cover, collection 3",
+        "citation": "Buchhorn et al. 2020",
+        "period": "2015-2019 annual; 2015 epoch used",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_Landcover_100m_Proba-V-C3_Global"
+      },
+      "resolution": {
+        "native_scale_m": 100.0,
+        "native_arcsec": null,
+        "grid": "geographic 100 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "class fractions computed at 100 m, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Copernicus discrete classes are crosswalked to the 22 GLC2000 legend classes",
+        "The legends are not one-to-one; several GLC2000 classes have no Copernicus counterpart",
+        "2015 epoch against the GLC2000 year-2000 epoch"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 16,
+      "relative_mae_mean": 0.9971,
+      "relative_mae_min": 0.6179,
+      "relative_mae_max": 1.438
+    },
+    {
+      "family": "gwt",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "H10",
+        "dataset": "Global Groundwater Map",
+        "citation": "Fan et al. 2013",
+        "units": "centimeters",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=11"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Groundwater Map (Fan et al. 2013)",
+        "name": "Global Groundwater Map (Fan et al. 2013)",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://doi.org/10.1126/science.1229881"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "The water-table depth grid needs a bulk download and reprojection step that was not implemented in this pass.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "hdi",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "A09",
+        "dataset": "Human Development Index (HDI) v2",
+        "citation": "Kummu et al. 2018",
+        "units": "index value (x1000)",
+        "period": "2015",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=57"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Gridded Human Development Index (Kummu et al. 2018)",
+        "name": "Gridded Human Development Index (Kummu et al. 2018)",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://doi.org/10.5061/dryad.dk1j0"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "Same download requirement as the gridded GDP surface.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "hft",
+      "fidelity": "weak_surrogate",
+      "status": "partial_surrogate",
+      "attributes": 4,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "A06",
+        "dataset": "Global Human Footprint v2",
+        "citation": "Venter et al. 2016",
+        "units": "index value (x10)",
+        "period": "1993 / 2009",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=54"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "CSP/HM/GlobalHumanModification",
+        "name": "Global Human Modification",
+        "citation": "Kennedy et al. 2019",
+        "period": "2016",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/CSP_HM_GlobalHumanModification",
+        "bands": [
+          "gHM"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 1002.9,
+        "native_arcsec": null,
+        "grid": "geographic 1 km",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "modification index 0-1",
+        "reference_stored": "index value (x10)",
+        "convertible": false,
+        "factor": null
+      },
+      "divergence_notes": [
+        "Global Human Modification is a different index from the Human Footprint of Venter et al. 2016",
+        "Only a 2016 layer exists here, so neither the 1993 nor the 2009 epoch is matched",
+        "Values are reported as an independent index, not as a footprint estimate"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "inu",
+      "fidelity": "weak_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 6,
+      "estimated_attributes": 6,
+      "original": {
+        "id": "H03",
+        "dataset": "Global Inundation Extent from Multi-Satellites (GIEMS-D15)",
+        "citation": "Fluet-Chouinard et al. 2015",
+        "units": "percent cover",
+        "period": "1993-2004",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=4"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "JRC/GSW1_4/GlobalSurfaceWater",
+        "name": "JRC Global Surface Water",
+        "citation": "Pekel et al. 2016",
+        "period": "1984-2021",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_4_GlobalSurfaceWater",
+        "bands": [
+          "occurrence",
+          "seasonality",
+          "max_extent"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 30.0,
+        "native_arcsec": null,
+        "grid": "geographic 30 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "water fractions at 30 m, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from much finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent surface water",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Optical surface-water extent replaces the multi-satellite inundation estimate of GIEMS-D15",
+        "GIEMS detects inundation under vegetation, which optical water mapping does not",
+        "Long-term, minimum and maximum are read from occurrence and seasonality, not from a monthly series"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 4,
+      "relative_mae_mean": 3.092,
+      "relative_mae_min": 1.0598,
+      "relative_mae_max": 6.0526
+    },
+    {
+      "family": "ire",
+      "fidelity": "weak_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "L10",
+        "dataset": "Historical Irrigation Dataset (HID) v1.0",
+        "citation": "Siebert et al. 2015",
+        "units": "percent cover",
+        "period": "2005",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=33"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "USGS/GFSAD1000_V1",
+        "name": "Global Food Security-support Analysis Data cropland extent",
+        "citation": "Teluguntla et al. 2016",
+        "period": "2010",
+        "licence": "Public domain (USGS)",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/USGS_GFSAD1000_V1",
+        "bands": [
+          "landcover"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 993.9,
+        "native_arcsec": null,
+        "grid": "geographic 1 km",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Irrigated cropland classes of GFSAD1000 replace the Historical Irrigation Dataset area equipped for irrigation",
+        "Irrigated extent detected from imagery differs from area equipped for irrigation"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "kar",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 2,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "S07",
+        "dataset": "World Map of Carbonate Rock Outcrops v3.0",
+        "citation": "Williams & Ford 2006",
+        "units": "percent cover",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=47"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "World Map of Carbonate Rock Outcrops v3.0",
+        "name": "World Map of Carbonate Rock Outcrops v3.0",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://doi.org/10.1029/2005WR004709"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "The carbonate outcrop map has no open programmatic endpoint and no gridded open substitute was located.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "lit",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "S06",
+        "dataset": "Global Lithological Map (GLiM)",
+        "citation": "Hartmann & Moosdorf 2012",
+        "units": "classes (16)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=46"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Lithological Map (GLiM)",
+        "name": "Global Lithological Map (GLiM)",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.dh.uni-hamburg.de/en/forschung/glim.html"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "GLiM is a registered download and the Earth Engine community mirror is not readable by this account.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "lka",
+      "fidelity": "original_source",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "H04",
+        "dataset": "HydroLAKES",
+        "citation": "Messager et al. 2016",
+        "units": "percent cover (x10)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=5"
+      },
+      "surrogate": {
+        "provider": "Local archive",
+        "asset": "GEODATA/HydroLAKES_polys_v10.gdb",
+        "name": "HydroLAKES v1.0 polygons",
+        "citation": "Messager et al. 2016",
+        "period": "circa 2015 compilation",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://www.hydrosheds.org/products/hydrolakes"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "vector polygons",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "polygon rasterised at pilot 15 arc-second cell centres",
+        "support_change": "polygon-to-grid discretisation; sub-cell partial cover is lost"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover (x10)",
+        "convertible": true,
+        "factor": 10.0
+      },
+      "divergence_notes": [
+        "Same source version as the atlas; the polygon-to-basin intersection method still requires review"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.7216,
+      "relative_mae_min": 0.1505,
+      "relative_mae_max": 1.2927
+    },
+    {
+      "family": "lkv",
+      "fidelity": "original_source",
+      "status": "open_surrogate_estimate",
+      "attributes": 1,
+      "estimated_attributes": 1,
+      "original": {
+        "id": "H05",
+        "dataset": "HydroLAKES",
+        "citation": "Messager et al. 2016",
+        "units": "million cubic meters",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=6"
+      },
+      "surrogate": {
+        "provider": "Local archive",
+        "asset": "GEODATA/HydroLAKES_polys_v10.gdb",
+        "name": "HydroLAKES v1.0 polygons",
+        "citation": "Messager et al. 2016",
+        "period": "circa 2015 compilation",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://www.hydrosheds.org/products/hydrolakes"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "vector polygons",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "polygon rasterised at pilot 15 arc-second cell centres",
+        "support_change": "polygon-to-grid discretisation; sub-cell partial cover is lost"
+      },
+      "units": {
+        "surrogate": "million cubic metres",
+        "reference_stored": "million cubic meters",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Lake volume attributed to the basin containing each lake pour point; the atlas rule requires review"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 1,
+      "relative_mae_mean": 0.1382,
+      "relative_mae_min": 0.1382,
+      "relative_mae_max": 0.1382
+    },
+    {
+      "family": "nli",
+      "fidelity": "original_source_family",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "A04",
+        "dataset": "DMSP-OLS Nighttime Lights v4",
+        "citation": "Doll 2008",
+        "units": "index value (x100)",
+        "period": "2008",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=52"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "NOAA/DMSP-OLS/NIGHTTIME_LIGHTS",
+        "name": "DMSP-OLS nighttime lights, version 4",
+        "citation": "NOAA NGDC",
+        "period": "1992-2013 annual; 2010 composite used",
+        "licence": "Public domain (NOAA)",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/NOAA_DMSP-OLS_NIGHTTIME_LIGHTS",
+        "bands": [
+          "stable_lights",
+          "avg_vis"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 927.7,
+        "native_arcsec": 30.0,
+        "grid": "geographic 30 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "digital number 0-63",
+        "reference_stored": "index value (x100)",
+        "convertible": false,
+        "factor": null
+      },
+      "divergence_notes": [
+        "The atlas index transformation of Doll 2008 is not published here, so the digital number is reported raw",
+        "Values are not comparable with the stored index until that transformation is resolved"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "pac",
+      "fidelity": "original_source_family",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "L13",
+        "dataset": "World Database on Protected Areas (WDPA)",
+        "citation": "IUCN & UNEP-WCMC 2014",
+        "units": "percent cover",
+        "period": "2014-10",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=36"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "WCMC/WDPA/current/polygons",
+        "name": "World Database on Protected Areas",
+        "citation": "IUCN & UNEP-WCMC",
+        "period": "Current monthly release",
+        "licence": "WDPA terms of use, non-commercial",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/WCMC_WDPA_current_polygons"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "vector polygons",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "polygon rasterised at pilot 15 arc-second cell centres",
+        "support_change": "polygon-to-grid discretisation; sub-cell partial cover is lost"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Current WDPA release rather than the 2014 snapshot cited by the atlas",
+        "Protected-area designations were added and revised in the intervening years"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.1887,
+      "relative_mae_min": 0.1488,
+      "relative_mae_max": 0.2287
+    },
+    {
+      "family": "pet",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 14,
+      "estimated_attributes": 14,
+      "original": {
+        "id": "C05",
+        "dataset": "Global-PET v1",
+        "citation": "Zomer et al. 2008",
+        "units": "millimeters",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=19"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+        "name": "TerraClimate monthly climate and water balance",
+        "citation": "Abatzoglou et al. 2018",
+        "period": "1958-2024 monthly; 1991-2020 climatology used",
+        "licence": "Public domain (CC0 1.0)",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE",
+        "bands": [
+          "pet"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 4638.3,
+        "native_arcsec": 150.0,
+        "grid": "geographic 1/24 degree",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "millimetres per month",
+        "reference_stored": "millimeters",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "TerraClimate uses ASCE Penman-Monteith reference ET; Global-PET v1 uses a Hargreaves formulation",
+        "1991-2020 epoch rather than the original climatology period"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 14,
+      "relative_mae_mean": 0.3991,
+      "relative_mae_min": 0.0353,
+      "relative_mae_max": 0.9743
+    },
+    {
+      "family": "pnv-cl",
+      "fidelity": "crosswalk_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 1,
+      "estimated_attributes": 1,
+      "original": {
+        "id": "L03",
+        "dataset": "EarthStat",
+        "citation": "Ramankutty & Foley 1999",
+        "units": "classes (15)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=26"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01",
+        "name": "Potential natural biome type (BIOME 6000)",
+        "citation": "Hengl et al. 2018",
+        "period": "Potential natural state, no single year",
+        "licence": "CC-BY-SA 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/OpenLandMap_PNV_PNV_BIOME-TYPE_BIOME00K_C_v01",
+        "bands": [
+          "biome_type"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 927.7,
+        "native_arcsec": 30.0,
+        "grid": "geographic 30 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "class",
+        "reference_stored": "classes (15)",
+        "convertible": false,
+        "factor": null
+      },
+      "divergence_notes": [
+        "Majority class after the same PNV crosswalk; class identity is approximate"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "pnv-pc",
+      "fidelity": "crosswalk_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 30,
+      "estimated_attributes": 30,
+      "original": {
+        "id": "L04",
+        "dataset": "EarthStat",
+        "citation": "Ramankutty & Foley 1999",
+        "units": "percent cover",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=27"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01",
+        "name": "Potential natural biome type (BIOME 6000)",
+        "citation": "Hengl et al. 2018",
+        "period": "Potential natural state, no single year",
+        "licence": "CC-BY-SA 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/OpenLandMap_PNV_PNV_BIOME-TYPE_BIOME00K_C_v01",
+        "bands": [
+          "biome_type"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 927.7,
+        "native_arcsec": 30.0,
+        "grid": "geographic 30 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "class fractions at 1 km, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "the native grid is coarser than the pilot grid"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "BIOME 6000 potential biomes are crosswalked to the 15 EarthStat PNV classes",
+        "Different reconstruction method and legend than Ramankutty & Foley 1999"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 10,
+      "relative_mae_mean": 1.0,
+      "relative_mae_min": 1.0,
+      "relative_mae_max": 1.0
+    },
+    {
+      "family": "pop",
+      "fidelity": "original_source_family",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "A01",
+        "dataset": "Gridded Population of the World (GPW) v4",
+        "citation": "CIESIN 2016",
+        "units": "count (thousands)",
+        "period": "2010",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=49"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "CIESIN/GPWv411/GPW_Population_Count",
+        "name": "Gridded Population of the World v4.11",
+        "citation": "CIESIN 2018",
+        "period": "2015 estimate",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/CIESIN_GPWv411_GPW_Population_Count",
+        "bands": [
+          "population_count"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 927.7,
+        "native_arcsec": 30.0,
+        "grid": "geographic 30 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "density-preserving resample, then summed over basin cells",
+        "support_change": "counts are apportioned by cell area rather than resampled directly"
+      },
+      "units": {
+        "surrogate": "people",
+        "reference_stored": "count (thousands)",
+        "convertible": true,
+        "factor": 0.001
+      },
+      "divergence_notes": [
+        "Revision 11 of GPW v4 rather than the 2016 revision cited by the atlas"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.0857,
+      "relative_mae_min": 0.0856,
+      "relative_mae_max": 0.0858
+    },
+    {
+      "family": "ppd",
+      "fidelity": "original_source_family",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "A02",
+        "dataset": "Gridded Population of the World (GPW) v4",
+        "citation": "CIESIN 2016",
+        "units": "people per km²",
+        "period": "2010",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=50"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "CIESIN/GPWv411/GPW_Population_Density",
+        "name": "Gridded Population of the World v4.11",
+        "citation": "CIESIN 2018",
+        "period": "2015 estimate",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/CIESIN_GPWv411_GPW_Population_Density",
+        "bands": [
+          "population_density"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 927.7,
+        "native_arcsec": 30.0,
+        "grid": "geographic 30 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "people per square kilometre",
+        "reference_stored": "people per km²",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Revision 11 of GPW v4 rather than the 2016 revision cited by the atlas"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.0862,
+      "relative_mae_min": 0.0859,
+      "relative_mae_max": 0.0865
+    },
+    {
+      "family": "pre",
+      "fidelity": "original_source_family",
+      "status": "carried_by_original_vintage_pass",
+      "attributes": 14,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "C04",
+        "dataset": "WorldClim v1.4",
+        "citation": "Hijmans et al. 2005",
+        "units": "millimeters",
+        "period": "1950-2000 source climatology",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=18"
+      },
+      "surrogate": {
+        "provider": "Original-vintage pass",
+        "asset": "WorldClim v1.4",
+        "name": "WorldClim v1.4",
+        "citation": "Hijmans et al. 2005",
+        "period": "1950-2000 source climatology",
+        "licence": "Original: Creative Commons CC-BY-SA 4.0 -- HydroATLAS: Creative Commons CC-BY 4.0",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=18"
+      },
+      "resolution": {
+        "native_scale_m": 927.7,
+        "native_arcsec": 30.0,
+        "grid": "geographic 30 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "millimeters",
+        "reference_stored": "millimeters",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "WorldClim V1 original-vintage candidate, already computed"
+      ],
+      "pending_reason": "Carried by the original-vintage pass.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "prm",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 2,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "L12",
+        "dataset": "Permafrost Zonation Index (PZI)",
+        "citation": "Gruber 2012",
+        "units": "percent cover",
+        "period": "1961-1990 model basis",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=35"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Permafrost Zonation Index (Gruber 2012)",
+        "name": "Permafrost Zonation Index (Gruber 2012)",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://doi.org/10.5194/tc-6-221-2012"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "The PZI grid requires a manual download and the Earth Engine community mirror is not readable by this account.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "pst",
+      "fidelity": "weak_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "L09",
+        "dataset": "EarthStat",
+        "citation": "Ramankutty et al. 2008",
+        "units": "percent cover",
+        "period": "circa 2000",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=32"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global",
+        "name": "Copernicus Global Land Cover, collection 3",
+        "citation": "Buchhorn et al. 2020",
+        "period": "2015-2019 annual; 2015 epoch used",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_Landcover_100m_Proba-V-C3_Global",
+        "bands": [
+          "grass-coverfraction"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 100.0,
+        "native_arcsec": null,
+        "grid": "geographic 100 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "class fractions computed at 100 m, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent cover",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Grass cover fraction is a land-cover measure; EarthStat pasture is a land-use measure",
+        "Unmanaged alpine grassland is counted here but is not pasture in the original"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.1631,
+      "relative_mae_min": 0.1309,
+      "relative_mae_max": 0.1953
+    },
+    {
+      "family": "rdd",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 2,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "A05",
+        "dataset": "Global Roads Inventory Project (GRIP) v4",
+        "citation": "Meijer et al. 2018",
+        "units": "meters per km²",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=53"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Roads Inventory Project v4",
+        "name": "Global Roads Inventory Project v4",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.globio.info/download-grip-dataset"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "GRIP4 density grids need a bulk download, and an OpenStreetMap substitute would change both the road definition and the completeness.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "rev",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "H06",
+        "dataset": "Global Reservoir and Dams (GRanD) database v1.1",
+        "citation": "Lehner et al. 2011",
+        "units": "million cubic meters",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=7"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Reservoir and Dam database v1.1",
+        "name": "Global Reservoir and Dam database v1.1",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.globaldamwatch.org/grand"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "GRanD requires an authenticated download, and the local dam tables in this repository are not GRanD-derived.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "ria",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 2,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "H08",
+        "dataset": "HydroSHEDS and WaterGAP v2.2",
+        "citation": "Lehner & Grill 2013",
+        "units": "hectares",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=9"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "River area from HydroSHEDS and WaterGAP hydraulic geometry",
+        "name": "River area from HydroSHEDS and WaterGAP hydraulic geometry",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.hydrosheds.org/"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "River surface area follows the Lehner and Grill hydraulic-geometry relations, which are not implemented here.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "riv",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 2,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "H09",
+        "dataset": "HydroSHEDS and WaterGAP v2.2",
+        "citation": "Lehner & Grill 2013",
+        "units": "thousand cubic meters",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=10"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "River volume from HydroSHEDS and WaterGAP hydraulic geometry",
+        "name": "River volume from HydroSHEDS and WaterGAP hydraulic geometry",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.hydrosheds.org/"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "River volume depends on the same unimplemented hydraulic-geometry relations.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "run",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 1,
+      "estimated_attributes": 1,
+      "original": {
+        "id": "H02",
+        "dataset": "WaterGAP v2.2 (data of 2014)",
+        "citation": "Döll et al. 2003",
+        "units": "millimeters",
+        "period": "1971-2000",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=3"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "name": "ERA5-Land monthly aggregates",
+        "citation": "Munoz-Sabater et al. 2021",
+        "period": "1950-present; 1991-2020 climatology used",
+        "licence": "Copernicus licence",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_MONTHLY_AGGR",
+        "bands": [
+          "runoff"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 11132.0,
+        "native_arcsec": 360.0,
+        "grid": "geographic 0.1 degree",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest-neighbour onto the pilot 15 arc-second grid",
+        "support_change": "the native grid is far coarser than the pilot grid and than the basins"
+      },
+      "units": {
+        "surrogate": "millimetres per year",
+        "reference_stored": "millimeters",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "ERA5-Land land-surface runoff replaces the WaterGAP v2.2 global hydrological model",
+        "A 0.1 degree grid barely resolves these level-12 basins",
+        "No naturalisation, calibration or water-use correction is applied"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 1,
+      "relative_mae_mean": 0.7185,
+      "relative_mae_min": 0.7185,
+      "relative_mae_max": 0.7185
+    },
+    {
+      "family": "sgr",
+      "fidelity": "method_not_implemented",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "P03",
+        "dataset": "EarthEnv-DEM90",
+        "citation": "Robinson et al. 2014",
+        "units": "decimeters per km",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=14"
+      },
+      "surrogate": {
+        "provider": "EarthEnv and HydroSHEDS",
+        "asset": "EarthEnv-DEM90 v1 with a river network",
+        "name": "Stream gradient along mapped reaches",
+        "citation": "Robinson et al. 2014",
+        "period": "2000s composite",
+        "licence": "Free for non-commercial use",
+        "catalogue_url": "https://www.earthenv.org/DEM.html"
+      },
+      "resolution": {
+        "native_scale_m": 90.0,
+        "native_arcsec": 3.0,
+        "grid": "geographic 3 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "decimetres per kilometre",
+        "reference_stored": "decimeters per km",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Requires reach-wise elevation profiles along a pinned river network",
+        "HydroRIVERS v1.0 is cached locally but reach extraction and gradient fitting are not implemented"
+      ],
+      "pending_reason": "Reach-profile extraction along HydroRIVERS and the atlas gradient definition are not implemented.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "slp",
+      "fidelity": "original_source_family",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "P02",
+        "dataset": "EarthEnv-DEM90",
+        "citation": "Robinson et al. 2014",
+        "units": "degrees (x10)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=13"
+      },
+      "surrogate": {
+        "provider": "EarthEnv",
+        "asset": "EarthEnv-DEM90 v1",
+        "name": "EarthEnv-DEM90",
+        "citation": "Robinson et al. 2014",
+        "period": "2000s composite",
+        "licence": "Free for non-commercial use",
+        "catalogue_url": "https://www.earthenv.org/DEM.html"
+      },
+      "resolution": {
+        "native_scale_m": 90.0,
+        "native_arcsec": 3.0,
+        "grid": "geographic 3 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "Horn slope at 3 arc-seconds, then mean-aggregated to 15 arc-seconds",
+        "support_change": "computed at native support before aggregation"
+      },
+      "units": {
+        "surrogate": "degrees",
+        "reference_stored": "degrees (x10)",
+        "convertible": true,
+        "factor": 10.0
+      },
+      "divergence_notes": [
+        "Slope computed here with Horn's method on geodetic cell spacing",
+        "The atlas slope algorithm, cell spacing and aggregation order still require review"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.0009,
+      "relative_mae_min": 0.0008,
+      "relative_mae_max": 0.0011
+    },
+    {
+      "family": "slt",
+      "fidelity": "derived_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "S02",
+        "dataset": "SoilGrids1km",
+        "citation": "Hengl et al. 2014",
+        "units": "percent",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=42"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02",
+        "name": "OpenLandMap soil property",
+        "citation": "Hengl et al. 2018",
+        "period": "Predicted present-day soil state",
+        "licence": "CC-BY-SA 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/OpenLandMap_SOL_SOL_CLAY-WFRACTION_USDA-3A1A1A_M_v02",
+        "bands": [
+          "b0",
+          "b10",
+          "b30",
+          "b60",
+          "b100",
+          "b200"
+        ],
+        "depth_note": "silt taken as 100 minus clay minus sand"
+      },
+      "resolution": {
+        "native_scale_m": 231.9,
+        "native_arcsec": null,
+        "grid": "geographic 250 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "depth-weighted average over 0-100 cm, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent by weight",
+        "reference_stored": "percent",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "OpenLandMap publishes no silt fraction, so silt is closed from clay and sand",
+        "Closure errors in the two published fractions propagate into silt"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.2264,
+      "relative_mae_min": 0.1959,
+      "relative_mae_max": 0.2569
+    },
+    {
+      "family": "snd",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "S03",
+        "dataset": "SoilGrids1km",
+        "citation": "Hengl et al. 2014",
+        "units": "percent",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=43"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "OpenLandMap/SOL/SOL_SAND-WFRACTION_USDA-3A1A1A_M/v02",
+        "name": "OpenLandMap soil property",
+        "citation": "Hengl et al. 2018",
+        "period": "Predicted present-day soil state",
+        "licence": "CC-BY-SA 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/OpenLandMap_SOL_SOL_SAND-WFRACTION_USDA-3A1A1A_M_v02",
+        "bands": [
+          "b0",
+          "b10",
+          "b30",
+          "b60",
+          "b100",
+          "b200"
+        ],
+        "depth_note": "0-100 cm trapezoidal depth mean"
+      },
+      "resolution": {
+        "native_scale_m": 231.9,
+        "native_arcsec": null,
+        "grid": "geographic 250 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "depth-weighted average over 0-100 cm, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent by weight",
+        "reference_stored": "percent",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "OpenLandMap 250 m predictions replace SoilGrids1km"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 0.2126,
+      "relative_mae_min": 0.1728,
+      "relative_mae_max": 0.2523
+    },
+    {
+      "family": "snw",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 15,
+      "estimated_attributes": 15,
+      "original": {
+        "id": "C09",
+        "dataset": "MODIS/Aqua Snow Cover (MYD10CM)",
+        "citation": "Hall & Riggs 2016",
+        "units": "percent cover",
+        "period": "2002-07/2015-04",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=23"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "MODIS/061/MYD10A1",
+        "name": "MODIS/Aqua daily snow cover, collection 6.1",
+        "citation": "Hall & Riggs 2021",
+        "period": "2003-2024 daily; monthly climatology used",
+        "licence": "Public domain (NASA)",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MYD10A1",
+        "bands": [
+          "NDSI_Snow_Cover"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 463.3,
+        "native_arcsec": null,
+        "grid": "MODIS sinusoidal 500 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "mean-aggregated to the pilot 15 arc-second grid",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent snow-covered days",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Daily MYD10A1 aggregated here; the atlas uses the MYD10CM 0.05 degree monthly product",
+        "Snow-covered-day frequency is not identical to the monthly fractional snow cover of MYD10CM",
+        "Cloud-obscured days are excluded rather than gap-filled"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 15,
+      "relative_mae_mean": 0.6222,
+      "relative_mae_min": 0.0044,
+      "relative_mae_max": 5.9718
+    },
+    {
+      "family": "soc",
+      "fidelity": "derived_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "S04",
+        "dataset": "SoilGrids1km",
+        "citation": "Hengl et al. 2014",
+        "units": "tonnes/hectare",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=44"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "OpenLandMap/SOL/SOL_ORGANIC-CARBON_USDA-6A1C_M/v02",
+        "name": "OpenLandMap soil property",
+        "citation": "Hengl et al. 2018",
+        "period": "Predicted present-day soil state",
+        "licence": "CC-BY-SA 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/OpenLandMap_SOL_SOL_ORGANIC-CARBON_USDA-6A1C_M_v02",
+        "bands": [
+          "b0",
+          "b10",
+          "b30",
+          "b60",
+          "b100",
+          "b200"
+        ],
+        "depth_note": "0-100 cm stock from carbon content and bulk density"
+      },
+      "resolution": {
+        "native_scale_m": 231.9,
+        "native_arcsec": null,
+        "grid": "geographic 250 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "depth-weighted average over 0-100 cm, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "tonnes per hectare",
+        "reference_stored": "tonnes/hectare",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Stock integrated from organic-carbon content and OpenLandMap bulk density over 0-100 cm",
+        "No coarse-fragment correction is applied"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 2,
+      "relative_mae_mean": 7.404,
+      "relative_mae_min": 6.6054,
+      "relative_mae_max": 8.2026
+    },
+    {
+      "family": "swc",
+      "fidelity": "units_mismatch_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 14,
+      "estimated_attributes": 14,
+      "original": {
+        "id": "S05",
+        "dataset": "Global High-Resolution Soil-Water Balance",
+        "citation": "Trabucco & Zomer 2010",
+        "units": "percent",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=45"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+        "name": "TerraClimate monthly climate and water balance",
+        "citation": "Abatzoglou et al. 2018",
+        "period": "1958-2024 monthly; 1991-2020 climatology used",
+        "licence": "Public domain (CC0 1.0)",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE",
+        "bands": [
+          "soil"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 4638.3,
+        "native_arcsec": 150.0,
+        "grid": "geographic 1/24 degree",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "millimetres of extractable soil water",
+        "reference_stored": "percent",
+        "convertible": false,
+        "factor": null
+      },
+      "divergence_notes": [
+        "TerraClimate reports a soil-water depth, the atlas a soil-water content percentage",
+        "No published capacity field is available to convert depth to percent, so values are not comparable"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "tbi",
+      "fidelity": "crosswalk_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 1,
+      "estimated_attributes": 1,
+      "original": {
+        "id": "L14",
+        "dataset": "Terrestrial Ecoregions of the World (TEOW)",
+        "citation": "Dinerstein et al. 2017",
+        "units": "classes (14)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=37"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "RESOLVE/ECOREGIONS/2017",
+        "name": "RESOLVE Ecoregions 2017",
+        "citation": "Dinerstein et al. 2017",
+        "period": "2017",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/RESOLVE_ECOREGIONS_2017"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "vector polygons",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "polygon rasterised at pilot 15 arc-second cell centres",
+        "support_change": "polygon-to-grid discretisation; sub-cell partial cover is lost"
+      },
+      "units": {
+        "surrogate": "RESOLVE BIOME_NUM",
+        "reference_stored": "classes (14)",
+        "convertible": false,
+        "factor": null
+      },
+      "divergence_notes": [
+        "RESOLVE biome numbering is close to the atlas biome legend but has not been verified class by class"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "tec",
+      "fidelity": "crosswalk_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 1,
+      "estimated_attributes": 1,
+      "original": {
+        "id": "L15",
+        "dataset": "Terrestrial Ecoregions of the World (TEOW)",
+        "citation": "Dinerstein et al. 2017",
+        "units": "classes (846)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=38"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "RESOLVE/ECOREGIONS/2017",
+        "name": "RESOLVE Ecoregions 2017",
+        "citation": "Dinerstein et al. 2017",
+        "period": "2017",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/RESOLVE_ECOREGIONS_2017"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "vector polygons",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "polygon rasterised at pilot 15 arc-second cell centres",
+        "support_change": "polygon-to-grid discretisation; sub-cell partial cover is lost"
+      },
+      "units": {
+        "surrogate": "RESOLVE ECO_ID",
+        "reference_stored": "classes (846)",
+        "convertible": false,
+        "factor": null
+      },
+      "divergence_notes": [
+        "RESOLVE 2017 ecoregion identifiers differ from the terrestrial ecoregion codes stored by the atlas",
+        "The class value is reported as an independent identifier, not as a reproduction of the stored code"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "tmp",
+      "fidelity": "original_source_family",
+      "status": "carried_by_original_vintage_pass",
+      "attributes": 16,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "C03",
+        "dataset": "WorldClim v1.4",
+        "citation": "Hijmans et al. 2005",
+        "units": "degrees Celsius (x10)",
+        "period": "1950-2000 source climatology",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=17"
+      },
+      "surrogate": {
+        "provider": "Original-vintage pass",
+        "asset": "WorldClim v1.4",
+        "name": "WorldClim v1.4",
+        "citation": "Hijmans et al. 2005",
+        "period": "1950-2000 source climatology",
+        "licence": "Original: Creative Commons CC-BY-SA 4.0 -- HydroATLAS: Creative Commons CC-BY 4.0",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=17"
+      },
+      "resolution": {
+        "native_scale_m": 927.7,
+        "native_arcsec": 30.0,
+        "grid": "geographic 30 arc-second",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "nearest neighbour onto the pilot 15 arc-second grid",
+        "support_change": "resampled to the pilot grid; no sub-grid detail is created"
+      },
+      "units": {
+        "surrogate": "degrees Celsius (x10)",
+        "reference_stored": "degrees Celsius (x10)",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "WorldClim V1 original-vintage candidate, already computed"
+      ],
+      "pending_reason": "Carried by the original-vintage pass.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "urb",
+      "fidelity": "open_surrogate",
+      "status": "open_surrogate_estimate",
+      "attributes": 2,
+      "estimated_attributes": 2,
+      "original": {
+        "id": "A03",
+        "dataset": "Global Human Settlement (GHS) Settlement Model v1.0 (2016)",
+        "citation": "Pesaresi & Freire 2016",
+        "units": "percent cover",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=51"
+      },
+      "surrogate": {
+        "provider": "Earth Engine",
+        "asset": "JRC/GHSL/P2023A/GHS_BUILT_S",
+        "name": "Global Human Settlement built-up surface",
+        "citation": "Pesaresi & Politis 2023",
+        "period": "2015 epoch used",
+        "licence": "CC-BY 4.0",
+        "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/JRC_GHSL_P2023A_GHS_BUILT_S",
+        "bands": [
+          "built_surface"
+        ]
+      },
+      "resolution": {
+        "native_scale_m": 100.0,
+        "native_arcsec": null,
+        "grid": "Mollweide 100 m",
+        "processing_grid_arcsec": 15.0,
+        "resampling": "built fraction at 100 m, then area-mean aggregated to 15 arc-seconds",
+        "support_change": "aggregated from finer to coarser support"
+      },
+      "units": {
+        "surrogate": "percent built surface",
+        "reference_stored": "percent cover",
+        "convertible": true,
+        "factor": 1.0
+      },
+      "divergence_notes": [
+        "Built-up surface fraction replaces the GHS Settlement Model urban class extent",
+        "The P2023A release supersedes the v1.0 model cited by the atlas"
+      ],
+      "pending_reason": null,
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "wet-cl",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 1,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "L05",
+        "dataset": "Global Lakes and Wetlands Database (GLWD)",
+        "citation": "Lehner & Döll 2004",
+        "units": "classes (12)",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=28"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Lakes and Wetlands Database level 3",
+        "name": "Global Lakes and Wetlands Database level 3",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.worldwildlife.org/pages/global-lakes-and-wetlands-database"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "Same download requirement as the wetland class percentages.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    },
+    {
+      "family": "wet-pc",
+      "fidelity": "pending_open_source",
+      "status": "no_open_surrogate_in_this_pass",
+      "attributes": 22,
+      "estimated_attributes": 0,
+      "original": {
+        "id": "L06",
+        "dataset": "Global Lakes and Wetlands Database (GLWD)",
+        "citation": "Lehner & Döll 2004",
+        "units": "percent cover",
+        "period": "Mixed/source-specific; resolve exact release and observation period before execution",
+        "catalogue_url": "https://data.hydrosheds.org/file/technical-documentation/BasinATLAS_Catalog_v10.pdf#page=29"
+      },
+      "surrogate": {
+        "provider": "Direct download",
+        "asset": "Global Lakes and Wetlands Database level 3",
+        "name": "Global Lakes and Wetlands Database level 3",
+        "citation": "",
+        "period": "",
+        "licence": "See provider",
+        "catalogue_url": "https://www.worldwildlife.org/pages/global-lakes-and-wetlands-database"
+      },
+      "resolution": {
+        "native_scale_m": null,
+        "native_arcsec": null,
+        "grid": "not resolved in this pass",
+        "processing_grid_arcsec": 15.0,
+        "resampling": null,
+        "support_change": null
+      },
+      "units": {
+        "surrogate": null,
+        "reference_stored": null,
+        "convertible": null,
+        "factor": null
+      },
+      "divergence_notes": [],
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes.",
+      "compared_attributes": 0,
+      "relative_mae_mean": null,
+      "relative_mae_min": null,
+      "relative_mae_max": null
+    }
+  ],
+  "verification": {
+    "spatial": {
+      "convertible_attributes": 174,
+      "with_reference_magnitude": 118,
+      "closest": [
+        {
+          "attribute": "slp_dg_sav",
+          "family": "slp",
+          "fidelity": "original_source_family",
+          "relative_mae": 0.0008
+        },
+        {
+          "attribute": "slp_dg_uav",
+          "family": "slp",
+          "fidelity": "original_source_family",
+          "relative_mae": 0.0011
+        },
+        {
+          "attribute": "snw_pc_smx",
+          "family": "snw",
+          "fidelity": "open_surrogate",
+          "relative_mae": 0.0044
+        },
+        {
+          "attribute": "snw_pc_s02",
+          "family": "snw",
+          "fidelity": "open_surrogate",
+          "relative_mae": 0.0051
+        },
+        {
+          "attribute": "snw_pc_s01",
+          "family": "snw",
+          "fidelity": "open_surrogate",
+          "relative_mae": 0.0085
+        },
+        {
+          "attribute": "snw_pc_s03",
+          "family": "snw",
+          "fidelity": "open_surrogate",
+          "relative_mae": 0.0161
+        },
+        {
+          "attribute": "cmi_ix_s09",
+          "family": "cmi",
+          "fidelity": "method_reimplementation",
+          "relative_mae": 0.0251
+        },
+        {
+          "attribute": "snw_pc_s12",
+          "family": "snw",
+          "fidelity": "open_surrogate",
+          "relative_mae": 0.0265
+        }
+      ],
+      "furthest": [
+        {
+          "attribute": "for_pc_use",
+          "family": "for",
+          "fidelity": "open_surrogate",
+          "relative_mae": 3.1534
+        },
+        {
+          "attribute": "inu_pc_umx",
+          "family": "inu",
+          "fidelity": "weak_surrogate",
+          "relative_mae": 3.5885
+        },
+        {
+          "attribute": "snw_pc_s08",
+          "family": "snw",
+          "fidelity": "open_surrogate",
+          "relative_mae": 5.9718
+        },
+        {
+          "attribute": "inu_pc_smx",
+          "family": "inu",
+          "fidelity": "weak_surrogate",
+          "relative_mae": 6.0526
+        },
+        {
+          "attribute": "soc_th_uav",
+          "family": "soc",
+          "fidelity": "derived_surrogate",
+          "relative_mae": 6.6054
+        },
+        {
+          "attribute": "soc_th_sav",
+          "family": "soc",
+          "fidelity": "derived_surrogate",
+          "relative_mae": 8.2026
+        }
+      ],
+      "basis": "Every surrogate is reduced over the same 20 basins and the same support rule as the original attribute, then differenced in stored units."
+    },
+    "temporal": {
+      "stations": 261,
+      "monthly_records": 120233,
+      "variables": [
+        "air_temperature_mean",
+        "precipitation_total",
+        "soil_temperature_mean"
+      ],
+      "first_year": 1950,
+      "last_year": 2021,
+      "testable_families": [
+        "tmp",
+        "pre"
+      ],
+      "note": "Station air temperature and precipitation can test a surrogate through time. The atlas attributes are static or climatological single values, so they cannot themselves be verified temporally; only a surrogate against observations can."
+    }
+  },
+  "scale_projection": {
+    "basis": "Measured on this machine at full Amu + Syr extent; source acquisition is extrapolated linearly from the pilot cold run and is the least certain figure here.",
+    "cell_scale_factor": 341,
+    "basin_scale_factor": 372,
+    "measured": {
+      "frame_load_seconds": 2.19,
+      "rasterise_seconds": 0.97,
+      "bincount_pass_seconds": 0.091,
+      "per_basin_mask_seconds": 0.034,
+      "reduction_passes": 250
+    },
+    "reduction_minutes_bincount": 0.4,
+    "reduction_hours_current_kernel": 17.6,
+    "kernel_speedup_required": 2772,
+    "acquisition_hours_linear": 18.5,
+    "acquisition_hours_linear_modis_only": 12.6,
+    "raster_gigabytes_15arcsec": 7.5
+  }
+}
