@@ -44,6 +44,7 @@ FORCING = ROOT / "PUBLISHED/data/case-studies/sabitov-daily-forcing.csv"
 DISCHARGE = ROOT / "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv"
 CATCHMENT = ROOT / "PUBLISHED/data/case-studies/pskem-candidate-catchment.geojson"
 AUDIT = ROOT / "PUBLISHED/data/case-studies/discharge-audit.csv"
+HYPSOMETRY = ROOT / "PUBLISHED/data/case-studies/elevation-profiles.csv"
 OUT_DIR = ROOT / "PUBLISHED/data/case-studies"
 SERIES = OUT_DIR / "pskem-daily-model.csv"
 SUMMARY = OUT_DIR / "pskem-daily-model.json"
@@ -60,6 +61,10 @@ BOUNDS = {
     "perc": (0.1, 4.0),       # percolation to the slow store, mm/day
     "k_fast": (0.05, 0.6),    # fast recession, per day
     "k_slow": (0.001, 0.15),  # slow recession, per day
+    # Bracketed on the environmental lapse rate (about -6.5) rather than left free.
+    # Unconstrained, calibration drove it past the dry adiabatic limit to absorb
+    # errors elsewhere, which buys no skill and stops being physics.
+    "lapse": (-8.0, -5.0),    # temperature lapse, degrees C per 1000 m
 }
 ORDER = list(BOUNDS)
 
@@ -70,6 +75,37 @@ def write_json(path: Path, payload: object) -> None:
         json.dump(payload, handle, ensure_ascii=False, indent=2)
         handle.write("\n")
     os.replace(temporary, path)
+
+
+def load_bands():
+    """Elevation bands with their area share, from the published hypsometry.
+
+    A basin-mean temperature cannot melt a catchment that spans 875 to 4375 m:
+    the low bands should be releasing water in April while the average is still
+    below the snow threshold. Each band therefore gets its own temperature, and
+    the model sums their contributions by area.
+    """
+    if not HYPSOMETRY.exists():
+        return None
+    rows = []
+    with HYPSOMETRY.open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            rows.append({
+                "mid": (float(row["minimum_m"]) + float(row["maximum_m"])) / 2,
+                "area": float(row["area_km2"]),
+                "temperature": float(row["temperature_c"]),
+            })
+    total = sum(row["area"] for row in rows)
+    elevation = np.array([row["mid"] for row in rows])
+    fraction = np.array([row["area"] for row in rows]) / total
+    mean_elevation = float((elevation * fraction).sum())
+    # The gradient the published band temperatures themselves imply, kept for the
+    # record beside the calibrated one.
+    centred = elevation - elevation.mean()
+    observed = np.array([row["temperature"] for row in rows])
+    measured = float((centred * (observed - observed.mean())).sum() / (centred ** 2).sum() * 1000)
+    return {"elevation": elevation, "fraction": fraction, "meanElevation": mean_elevation,
+            "measuredLapsePer1000m": round(measured, 3), "count": len(rows)}
 
 
 def suspect_days(flow: dict[str, float]) -> tuple[set[str], list[dict]]:
@@ -147,11 +183,24 @@ def load_inputs():
     return days, temperature, precipitation, pet, observed, area, factor, valid, screening
 
 
-def simulate(parameters: np.ndarray, temperature, precipitation, pet):
-    """Run every candidate parameter set at once; the time loop is the slow axis."""
-    tt, cfmax, sfcf, fc, beta, perc, k_fast, k_slow = (parameters[:, index] for index in range(len(ORDER)))
+def simulate(parameters: np.ndarray, temperature, precipitation, pet, bands=None):
+    """Run every candidate parameter set at once; the time loop is the slow axis.
+
+    With bands, the snow routine runs per elevation band and their melt and rain
+    are combined by area share before the soil store sees them.
+    """
+    tt, cfmax, sfcf, fc, beta, perc, k_fast, k_slow, lapse = (
+        parameters[:, index] for index in range(len(ORDER)))
     count = parameters.shape[0]
-    swe = np.zeros(count)
+    if bands is None:
+        offsets = np.zeros((count, 1))
+        weights = np.ones((1, 1))
+    else:
+        # degrees C offset of each band from the forcing's reference elevation
+        drop = (bands["elevation"] - bands["meanElevation"]) / 1000.0
+        offsets = lapse[:, None] * drop[None, :]
+        weights = bands["fraction"][None, :]
+    swe = np.zeros((count, offsets.shape[1]))
     soil = fc * 0.3
     fast = np.zeros(count)
     slow = np.zeros(count)
@@ -159,14 +208,15 @@ def simulate(parameters: np.ndarray, temperature, precipitation, pet):
     snow_store = np.empty((len(temperature), count))
 
     for step in range(len(temperature)):
-        air = temperature[step]
-        rain = np.where(air > tt, precipitation[step], 0.0)
-        snowfall = np.where(air <= tt, precipitation[step] * sfcf, 0.0)
+        air = temperature[step] + offsets
+        threshold = tt[:, None]
+        rain = np.where(air > threshold, precipitation[step], 0.0)
+        snowfall = np.where(air <= threshold, precipitation[step] * sfcf[:, None], 0.0)
         swe += snowfall
-        melt = np.minimum(swe, np.maximum(cfmax * (air - tt), 0.0))
+        melt = np.minimum(swe, np.maximum(cfmax[:, None] * (air - threshold), 0.0))
         swe -= melt
 
-        liquid = rain + melt
+        liquid = ((rain + melt) * weights).sum(axis=1)
         wetness = np.clip(soil / fc, 0.0, 1.0)
         recharge = liquid * wetness ** beta
         soil += liquid - recharge
@@ -184,7 +234,7 @@ def simulate(parameters: np.ndarray, temperature, precipitation, pet):
         fast -= flow_fast
         slow -= flow_slow
         discharge[step] = flow_fast + flow_slow
-        snow_store[step] = swe
+        snow_store[step] = (swe * weights).sum(axis=1)
     return discharge, snow_store
 
 
@@ -233,6 +283,7 @@ def sample(count: int, rng, centre=None, spread=0.15):
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--samples", type=int, default=20000)
+    parser.add_argument("--lumped", action="store_true", help="ignore the bands, for comparison")
     parser.add_argument("--seed", type=int, default=1729)
     args = parser.parse_args()
 
@@ -245,6 +296,13 @@ def main() -> None:
     print(f"  calibration {CALIBRATION[0]}-{CALIBRATION[1]} ({calibration.sum():,} days) | "
           f"validation {VALIDATION[0]}-{VALIDATION[1]} ({validation.sum():,} days)")
 
+    bands = None if args.lumped else load_bands()
+    if bands:
+        print(f"  {bands['count']} elevation bands, mean {bands['meanElevation']:.0f} m, "
+              f"published gradient {bands['measuredLapsePer1000m']:+.2f} degC/1000 m")
+    else:
+        print("  lumped: one basin-mean temperature")
+
     rng = np.random.default_rng(args.seed)
     best = None
     # Broad search, then narrowing rounds around the leader. Refinement matters:
@@ -253,7 +311,7 @@ def main() -> None:
                                           for spread in (0.20, 0.10, 0.05, 0.02)]
     for round_index, (count, centre, spread) in enumerate(plan):
         candidates = sample(count, rng) if centre is None else sample(count, rng, best["parameters"], spread)
-        simulated, _ = simulate(candidates, temperature, precipitation, pet)
+        simulated, _ = simulate(candidates, temperature, precipitation, pet, bands)
         for index in range(candidates.shape[0]):
             score, _ = kling_gupta(simulated[calibration, index], observed[calibration])
             if best is None or score > best["kge"]:
@@ -268,7 +326,7 @@ def main() -> None:
         print(f"  parameters resting on a bound: {', '.join(pinned)}")
 
     parameters = best["parameters"].reshape(1, -1)
-    simulated, snow = simulate(parameters, temperature, precipitation, pet)
+    simulated, snow = simulate(parameters, temperature, precipitation, pet, bands)
     simulated = simulated[:, 0]
     snow = snow[:, 0]
 
@@ -355,6 +413,13 @@ def main() -> None:
             "calibration": {"years": list(CALIBRATION), "objective": "KGE",
                             "search": "seeded random search then local refinement",
                             "samples": args.samples, "seed": args.seed},
+        },
+        "elevationBands": None if not bands else {
+            "count": bands["count"],
+            "meanElevationM": round(bands["meanElevation"], 1),
+            "publishedGradientPer1000m": bands["measuredLapsePer1000m"],
+            "calibratedLapsePer1000m": round(float(best["parameters"][ORDER.index("lapse")]), 3),
+            "source": "PUBLISHED/data/case-studies/elevation-profiles.csv",
         },
         "catchment": {
             "areaKm2": round(area, 1),

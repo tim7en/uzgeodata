@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-09T04:20:01+00:00",
+  "generatedAt": "2026-09-09T05:00:57+00:00",
   "study": {
     "id": "chirchik",
     "label": "Chirchik and Pskem",
@@ -113,12 +113,12 @@
       "id": "daily-process-model",
       "kind": "validated",
       "headline": "A daily snowmelt model has real skill; the seasonal total still does not",
-      "value": 0.44,
+      "value": 0.71,
       "valueLabel": "monthly NSE, held-out years",
-      "detail": "Calibrated on 2001–2010 and tested on years it never saw, the temperature-index model reaches NSE 0.21 on daily flow and 0.44 on monthly means, closing the water balance at a runoff coefficient of 0.70 against 0.71 observed. The April–September total remains the hard part, at NSE -0.30: daily behaviour is reproducible where the seasonal volume is not.",
-      "dailyNse": 0.207,
-      "monthlyNse": 0.442,
-      "seasonalNse": -0.3,
+      "detail": "Calibrated on 2001–2010 and tested on years it never saw, the temperature-index model reaches NSE 0.68 on daily flow and 0.71 on monthly means, closing the water balance at a runoff coefficient of 0.76 against 0.71 observed. The April–September total remains the hard part, at NSE -2.43: daily behaviour is reproducible where the seasonal volume is not.",
+      "dailyNse": 0.682,
+      "monthlyNse": 0.714,
+      "seasonalNse": -2.433,
       "figure": "/data/case-studies/sabitov-hindcast.png",
       "evidence": "PUBLISHED/data/case-studies/pskem-daily-model.json"
     },
