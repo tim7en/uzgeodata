@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { basinIsPublished, isUpstream, payloadMatchesBasin, storedUnitsValue, substituteRows } from './substitutesModel.js';
 
 const number = value => value == null ? '—' : Number(value).toLocaleString(undefined, { maximumFractionDigits: 3 });
 async function json(url) {
   const response = await fetch(url, { cache: 'no-store' });
   if (!response.ok) throw Error(`Substitute data could not be loaded (${response.status}).`);
   return response.json();
-}
-
-export function substituteRows(definitions, basinData, filter = '', kind = 'all') {
-  const term = filter.trim().toLowerCase();
-  return definitions.attributes.filter(a => {
-    const upstream = ['u', 'p'].includes(a.support);
-    return (kind === 'all' || (kind === 'basin_accumulation' ? upstream : !upstream))
-      && `${a.column} ${a.label} ${a.category} ${definitions.families[a.family].source.name}`.toLowerCase().includes(term);
-  }).map(a => ({ ...a, ...basinData.values[a.column], familyData: definitions.families[a.family] }));
 }
 
 export default function BasinSubstitutes({ basin, filter, kind }) {
@@ -23,15 +15,14 @@ export default function BasinSubstitutes({ basin, filter, kind }) {
     setState({ loading: true });
     (async () => {
       const index = await json('/data/atlas/substitutes-index.json');
-      if (Number(basin.basin_level) !== index.basin_level || !index.basin_ids.includes(String(basin.hybas_id))) {
+      if (!basinIsPublished(index, basin)) {
         if (live) setState({ index, absent: true });
         return;
       }
       const [definitions, values] = await Promise.all([
         json(`${index.base_url}definitions.json`), json(`${index.base_url}${basin.hybas_id}.json`),
       ]);
-      if (definitions.run_id !== index.run_id || values.run_id !== index.run_id
-        || String(values.hybas_id) !== String(basin.hybas_id) || values.basin_level !== Number(basin.basin_level)) {
+      if (!payloadMatchesBasin(index, definitions, values, basin)) {
         throw Error('Substitute basin or run does not match the selected basin. Refresh the data.');
       }
       if (live) setState({ index, definitions, values });
@@ -48,12 +39,12 @@ export default function BasinSubstitutes({ basin, filter, kind }) {
     <table className="land-sub-table"><thead><tr><th>Attribute / status</th><th>Substitute value</th><th>Original / comparison</th><th>Period &amp; support</th><th>Resolution &amp; future work</th><th>Source &amp; evidence</th></tr></thead><tbody>
       {rows.map(row => {
         const f = row.familyData, r = f.resolution, filled = row.value != null;
-        const converted = filled && f.units.convertible ? row.value * f.units.factor : null;
+        const converted = storedUnitsValue(f, row.value);
         return <tr key={row.column} data-substitute-status={filled ? 'available' : 'pending'}>
           <td><strong>{row.label}</strong><code>{row.column}</code><small>{filled ? 'Substitute available' : row.candidate_available ? 'Candidate exists; no substitute' : 'Pending substitute'}</small></td>
           <td className={filled ? 'land-sub-updated' : ''}><strong>{number(row.value)}</strong>{filled && <small>{f.units.surrogate}</small>}{!filled && <small>{row.pending_reason}</small>}</td>
           <td>{number(row.reference_raw)} <small>{f.units.reference_stored}</small>{filled && <small>{converted != null ? `Substitute in stored units: ${number(converted)}` : 'Different units; direct comparison unavailable'}</small>}</td>
-          <td>{filled ? f.used_period : 'Not computed'}<small>{['u', 'p'].includes(row.support) ? 'Upstream support' : 'This sub-basin'} · {row.support}</small>{row.coverage != null && <small>{number(row.coverage * 100)}% spatial coverage; temporal QA separate</small>}</td>
+          <td>{filled ? f.used_period : 'Not computed'}<small>{isUpstream(row.support) ? 'Upstream support' : 'This sub-basin'} · {row.support}</small>{row.coverage != null && <small>{number(row.coverage * 100)}% spatial coverage; temporal QA separate</small>}</td>
           <td>{r.grid}<small>{r.native_scale_m ? `${number(r.native_scale_m)} m native · ` : ''}{r.processing_grid_arcsec}″ processing grid</small>
             {f.opportunities.spatial && <span className="land-opportunity" title={f.opportunities.spatial}>Spatial opportunity</span>}
             {f.opportunities.temporal && <span className="land-opportunity" title={f.opportunities.temporal}>Temporal opportunity</span>}

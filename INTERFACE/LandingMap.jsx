@@ -71,7 +71,7 @@ const GROUP_ORDER = ['basin_specific', 'basin_accumulation'];
  * licence it came from and whether it describes this sub-basin or everything
  * upstream of it.
  */
-export function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
+function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
   const [filter, setFilter] = useState('');
   const [kind, setKind] = useState('all');
   const [tab, setTab] = useState('original');

@@ -45,10 +45,22 @@ def test_two_atlas_plan_preserves_evidence_and_temporal_prerequisites():
         assert stage['gate'] and stage['deliverables']
         assert all((ROOT / p).is_file() for p in stage['evidence'])
     science = json.loads((ROOT / plan['runtime']['evidence']).read_text(encoding='utf-8'))
-    assert plan['runtime']['domain_basins'] == science['domain']['basins']
-    assert plan['runtime']['evidence_run_id'] == science['run_id']
-    assert plan['runtime']['regional_acquisition_hours_extrapolated'] == science['scale_projection']['acquisition_hours_linear']
-    assert plan['runtime']['regional_current_reduction_hours_extrapolated'] == science['scale_projection']['reduction_hours_current_kernel']
+    runtime, projection, grids = plan['runtime'], science['scale_projection'], science['domain']['grids']
+    assert runtime['domain_basins'] == science['domain']['basins']
+    assert runtime['systems'] == science['domain']['systems']
+    assert sum(runtime['systems'].values()) == runtime['domain_basins']
+    assert runtime['evidence_run_id'] == science['run_id']
+    # Every figure the plan page presents as measured has to come from the run,
+    # or a re-run leaves stale numbers labelled "measured" on a published page.
+    assert runtime['pilot_basins'] == science['pilot']['basins']
+    assert runtime['pilot_warm_seconds'] == science['pilot']['wall_seconds']
+    assert runtime['pilot_cold_seconds'] == science['pilot']['cold_cache_wall_seconds']
+    assert runtime['regional_acquisition_hours_extrapolated'] == projection['acquisition_hours_linear']
+    assert runtime['regional_current_reduction_hours_extrapolated'] == projection['reduction_hours_current_kernel']
+    assert runtime['regional_grouped_kernel_minutes'] == projection['reduction_minutes_bincount']
+    assert runtime['raster_storage_15arcsec_gb'] == projection['raster_gigabytes_15arcsec']
+    for key, grid in (('fine_grid_multiplier_3arcsec', '3_arcsec'), ('fine_grid_multiplier_1arcsec', '1_arcsec')):
+        assert runtime[key] == round((grids['15_arcsec']['arcsec'] / grids[grid]['arcsec']) ** 2)
     fields = ' '.join(plan['storage_contract']['time_fields'])
     assert all(k in fields for k in ['period_end_exclusive', 'climatology', 'retrieved_at', 'supersedes_observation_id'])
 
