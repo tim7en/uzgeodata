@@ -11,9 +11,16 @@
       "title": "Attach HydroATLAS reference attributes to basins",
       "status": "complete",
       "description": "Keep the original 281-attribute baseline attached to native level-12 HYBAS_IDs, with source descriptions, units and local/upstream support. Attachment is complete; independent reproduction is a separate requirement.",
-      "deliverables": ["Versioned reference values and basin geometry", "Explicit joins at the correct basin level", "Original values available in the basin modal"],
+      "deliverables": [
+        "Versioned reference values and basin geometry",
+        "Explicit joins at the correct basin level",
+        "Original values available in the basin modal"
+      ],
       "gate": "Original values and missing values preserved; no pilot-to-region copying or accidental joins between nested basin levels.",
-      "evidence": ["PUBLISHED/data/hydroclimate/reference-basin-attributes.csv", "PUBLISHED/data/hydroclimate/reference-attribute-catalogue.json"]
+      "evidence": [
+        "PUBLISHED/data/hydroclimate/reference-basin-attributes.csv",
+        "PUBLISHED/data/hydroclimate/reference-attribute-catalogue.json"
+      ]
     },
     {
       "number": 2,
@@ -21,9 +28,18 @@
       "title": "Update HydroATLAS substitutes: pilot, benchmark, region",
       "status": "in_progress",
       "description": "The 20-unit Pskem run has 196 substitutes and 34 original-source candidates. Expose the saved estimates in a separate modal tab; develop dated adapters and resumable batches before regional execution.",
-      "deliverables": ["Updated substitutes tab; light green only for an available value on the exact basin", "Pilot dated precipitation, temperature, water balance and snow with QA counts", "Representative 100–250 basin benchmark across both systems", "Resumable regional source/period batches and regional coverage ledger"],
-      "gate": "Stage 5 storage contract adopted before new temporal ingestion; pilot method review, source completeness, units, topology and retry/idempotency tests pass before expanding. Report pending families instead of inventing substitutes.",
-      "evidence": ["PUBLISHED/data/atlas/batch-latest.json", "PUBLISHED/data/atlas/substitutes-index.json", "PIPELINES/build_dynamic_atlas.py"]
+      "deliverables": [
+        "Updated substitutes tab; light green only for an available value on the exact basin",
+        "Pilot dated precipitation, temperature, water balance and snow with QA counts",
+        "Representative 100–250 basin benchmark across both systems",
+        "Resumable regional source/period batches and regional coverage ledger"
+      ],
+      "gate": "Stage 5 storage contract adopted (done: every new value enters through the observation store); pilot method review, source completeness, units, topology and retry/idempotency tests pass before expanding. Report pending families instead of inventing substitutes.",
+      "evidence": [
+        "PUBLISHED/data/atlas/batch-latest.json",
+        "PUBLISHED/data/atlas/substitutes-index.json",
+        "PIPELINES/build_dynamic_atlas.py"
+      ]
     },
     {
       "number": 3,
@@ -31,9 +47,18 @@
       "title": "Reimplement the Uzbekistan environmental atlas",
       "status": "planned",
       "description": "Use the existing 134-package national environmental inventory to catalogue each theme's original method, source, scale, legend and period. Reimplement one thematic module in Pskem, validate it, then apply the same batching contract to the two river systems.",
-      "deliverables": ["Environmental-atlas theme-to-source/method crosswalk; include unavailable inputs and licence limits", "Pilot environmental indicators linked to basin observations", "Reviewed batches for Amu Darya and Syr Darya", "Separate exact reimplementations, alternative-source estimates and non-comparable indicators"],
+      "deliverables": [
+        "Environmental-atlas theme-to-source/method crosswalk; include unavailable inputs and licence limits",
+        "Pilot environmental indicators linked to basin observations",
+        "Reviewed batches for Amu Darya and Syr Darya",
+        "Separate exact reimplementations, alternative-source estimates and non-comparable indicators"
+      ],
       "gate": "Resolve source methods and units, validate one complete thematic pilot, retain local/upstream support and run an independent reproduction. Compare to national reference only where that reference has coverage; transboundary transfer requires separate validation.",
-      "evidence": ["PUBLISHED/data/data-catalogue.json", "PUBLISHED/data/archive-catalog.json", "PIPELINES/build_basin_zonal_stats.py"]
+      "evidence": [
+        "PUBLISHED/data/data-catalogue.json",
+        "PUBLISHED/data/archive-catalog.json",
+        "PIPELINES/build_basin_zonal_stats.py"
+      ]
     },
     {
       "number": 4,
@@ -41,19 +66,39 @@
       "title": "Publish research and accessible basin data",
       "status": "in_progress",
       "description": "The local portal already serves maps, pilot evidence and downloads. Extend it to reviewed regional editions, dated basin series, methodological comparisons and reproducible research packages.",
-      "deliverables": ["Basin tabs for original and substitute evidence, period selector when real dated records exist", "CSV/Parquet tables, versioned geometry, metadata and frozen run manifests", "Citable research pages and reproducible analysis notebooks/scripts", "Public deployment, licensing checks and accessible downloads"],
+      "deliverables": [
+        "Basin tabs for original and substitute evidence, period selector when real dated records exist",
+        "CSV/Parquet tables, versioned geometry, metadata and frozen run manifests",
+        "Citable research pages and reproducible analysis notebooks/scripts",
+        "Public deployment, licensing checks and accessible downloads"
+      ],
       "gate": "Browser and download checks, explicit missing/QA states, consistent snapshot IDs and a clean-environment rerun. Local publication does not imply public deployment or peer review.",
-      "evidence": ["INTERFACE/LandingMap.jsx", "INTERFACE/dynamic-atlas.html", "INTERFACE/case-studies.html"]
+      "evidence": [
+        "INTERFACE/LandingMap.jsx",
+        "INTERFACE/dynamic-atlas.html",
+        "INTERFACE/case-studies.html"
+      ]
     },
     {
       "number": 5,
       "id": "temporal-resolution",
       "title": "Preserve time, resolution and research opportunities",
       "status": "in_progress",
-      "description": "This is foundational work starting with stage 2, not work deferred until after publication. Current immutable runs preserve snapshots and fixed normals; production temporal storage and dated atlas adapters remain to be implemented.",
-      "deliverables": ["Append-only basin observation/revision store with source, method, geometry and run identities", "Distinct observation period, retrieval time and publication time", "Native spatial resolution, processing grid, basin support, cadence and completeness beside every value", "Spatial/temporal opportunity flags in attribute tables; never equate a flag with an achieved improvement"],
+      "description": "The observation/revision contract is adopted and executable: ATLAS_MODULES/core/observations.py is the only way into the store, and the frozen Pskem run is staged through it as 10,260 rows carrying their source release, method, geometry and QA denominators. No observation year is invented, because this run holds none: its values are static attributes, source epochs and climatologies. Dated monthly adapters, the production physical design and revision traffic from real corrections remain to be implemented.",
+      "deliverables": [
+        "Append-only basin observation/revision store with source, method, geometry and run identities",
+        "Distinct observation period, retrieval time and publication time",
+        "Native spatial resolution, processing grid, basin support, cadence and completeness beside every value",
+        "Spatial/temporal opportunity flags in attribute tables; never equate a flag with an achieved improvement"
+      ],
       "gate": "Round-trip a frozen snapshot, append a corrected month without losing the earlier version, preserve nulls and distinguish monthly observations from monthly climatologies. Reject mixed units, changed geometry or period definitions in an unversioned series.",
-      "evidence": ["ATLAS_MODULES/hydrosheds/DYNAMIC_ATLAS.md", "PIPELINES/build_dynamic_atlas.py", "INTERFACE/BasinSubstitutes.jsx"]
+      "evidence": [
+        "ATLAS_MODULES/core/observations.py",
+        "ATLAS_MODULES/core/REPRODUCIBILITY.md",
+        "PIPELINES/stage_pilot_observations.py",
+        "TESTS/test_observation_store.py",
+        "PUBLISHED/data/atlas/observations/manifest.json"
+      ]
     },
     {
       "number": 6,
@@ -61,35 +106,102 @@
       "title": "Report changes, monitor anomalies and connect the ontology",
       "status": "planned",
       "description": "After both atlas methods and temporal records are reviewed, run scheduled source checks, thematic comparisons and anomaly reporting. Extend the existing ontology with evidence-linked observations and research findings.",
-      "deliverables": ["Thematic difference reports with source/method-change attribution", "Seasonal anomaly series against pinned baselines and independently checked events", "Source freshness, incomplete-period and failed-batch monitoring", "Reviewed links among basin, observed property, source, method, observation, run and finding"],
+      "deliverables": [
+        "Thematic difference reports with source/method-change attribution",
+        "Seasonal anomaly series against pinned baselines and independently checked events",
+        "Source freshness, incomplete-period and failed-batch monitoring",
+        "Reviewed links among basin, observed property, source, method, observation, run and finding"
+      ],
       "gate": "A source or sensor change cannot silently become an environmental-change claim. Anomalies require comparable units/methods, complete-period rules, baseline/sample counts and declared thresholds; ontology assertions cite evidence and carry review status.",
-      "evidence": ["ONTOLOGY/README.md", "PIPELINES/ontology/review_assertions.py"]
+      "evidence": [
+        "ONTOLOGY/README.md",
+        "PIPELINES/ontology/review_assertions.py"
+      ]
     }
   ],
   "next_batches": [
-    "Adopt the observation/revision contract and stage existing pilot evidence without inventing observation years.",
-    "Implement one complete dated monthly family in the 20 Pskem basins; retain source IDs and per-basin QA denominators.",
+    "Implement one complete dated monthly family in the 20 Pskem basins through the adopted contract: time_kind 'observation', real years and months, per-basin QA denominators and source IDs retained. This is the first traffic the revision path will carry.",
     "Benchmark 100–250 representative level-12 basins across both systems at native source scales. Measure cold and warm runs, complete periods, data volume, queue delays and failures.",
     "Replace full-grid per-basin scans with grouped reductions or Earth Engine batch exports; use complete regional topology for upstream accumulation across batch boundaries.",
     "Expand by source × period × spatial batch with bounded concurrency, checkpoints, hashes, idempotent retries and a regional completeness ledger.",
     "Repeat the validated process for the first environmental-atlas thematic module before adding the other themes."
   ],
   "storage_contract": {
-    "status": "Proposed production contract; existing static run CSVs are retained",
-    "observation_identity": ["basin_id", "basin_level", "geometry_version", "indicator_id", "value_role", "source_snapshot_id", "method_version", "period_start", "period_end_exclusive", "temporal_statistic", "spatial_support", "revision_id"],
-    "value_fields": ["value", "unit", "missing_reason", "qa_status", "coverage_fraction", "valid_count", "expected_count", "uncertainty_or_limit"],
-    "time_fields": ["period_kind: static / source_epoch / climatology / observation", "period_start", "period_end_exclusive", "calendar_month_if_climatology", "retrieved_at", "published_at", "provisional", "supersedes_observation_id"],
-    "resolution_fields": ["native_crs", "native_scale_or_pixel_size", "analysis_crs", "analysis_grid", "resampling_or_area_method", "source_cadence", "published_temporal_statistic", "spatial_support", "geometry_version"],
-    "provenance_fields": ["source_asset_and_band", "source_release", "source_items_or_snapshot_manifest", "source_hashes", "licence_and_citation", "method_description", "code_commit_or_code_hash", "parameters_and_QA_masks", "environment_lock", "run_id", "review_status"],
+    "status": "Adopted for staging in ATLAS_MODULES/core/observations.py, which enforces it on every record; existing static run CSVs are retained. The production physical design stays open.",
+    "implementation": "The executable field names follow the long table specified in ATLAS_MODULES/core/REPRODUCIBILITY.md, which is the single authority; the groupings below describe the same record. Staged to PUBLISHED/data/atlas/observations/ as CSV partitioned by time kind, with versioned run, recipe, source-release and basin-geometry tables beside it.",
+    "observation_identity": [
+      "basin_id",
+      "basin_level",
+      "geometry_version",
+      "indicator_id",
+      "value_role",
+      "source_snapshot_id",
+      "method_version",
+      "period_start",
+      "period_end_exclusive",
+      "temporal_statistic",
+      "spatial_support",
+      "revision_id"
+    ],
+    "value_fields": [
+      "value",
+      "unit",
+      "missing_reason",
+      "qa_status",
+      "coverage_fraction",
+      "valid_count",
+      "expected_count",
+      "uncertainty_or_limit"
+    ],
+    "time_fields": [
+      "period_kind: static / source_epoch / climatology / observation",
+      "period_start",
+      "period_end_exclusive",
+      "calendar_month_if_climatology",
+      "retrieved_at",
+      "published_at",
+      "provisional",
+      "supersedes_observation_id"
+    ],
+    "resolution_fields": [
+      "native_crs",
+      "native_scale_or_pixel_size",
+      "analysis_crs",
+      "analysis_grid",
+      "resampling_or_area_method",
+      "source_cadence",
+      "published_temporal_statistic",
+      "spatial_support",
+      "geometry_version"
+    ],
+    "provenance_fields": [
+      "source_asset_and_band",
+      "source_release",
+      "source_items_or_snapshot_manifest",
+      "source_hashes",
+      "licence_and_citation",
+      "method_description",
+      "code_commit_or_code_hash",
+      "parameters_and_QA_masks",
+      "environment_lock",
+      "run_id",
+      "review_status"
+    ],
     "physical_design": "Versioned basin/source/method/run tables plus partitioned long observations (year/source family), indexed by basin/indicator/period. Start with portable Parquet and a query engine or PostgreSQL/PostGIS; benchmark the choice before production. Raster evidence stays in source/tile/period storage with checksums, not duplicated per basin.",
     "ontology_mapping": "Proposed mapping: basin as feature of interest, indicator as observed property, dated value as observation, method as procedure, source snapshot as provenance entity and extraction run as provenance activity. Keep numeric arrays in the observation store and link them from the ontology. Semantic mappings require review.",
-    "sources": ["https://www.w3.org/TR/vocab-ssn/", "https://www.w3.org/TR/prov-o/"]
+    "sources": [
+      "https://www.w3.org/TR/vocab-ssn/",
+      "https://www.w3.org/TR/prov-o/"
+    ]
   },
   "runtime": {
     "evidence": "PUBLISHED/data/atlas/surrogate-science.json",
     "evidence_run_id": "pskem-all281-20260909T184834061745Z",
     "domain_basins": 7445,
-    "systems": {"Amu Darya": 4917, "Syr Darya": 2528},
+    "systems": {
+      "Amu Darya": 4917,
+      "Syr Darya": 2528
+    },
     "pilot_basins": 20,
     "pilot_cold_seconds": 209.562,
     "pilot_warm_seconds": 24.15802890001214,

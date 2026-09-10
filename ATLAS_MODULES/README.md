@@ -6,7 +6,8 @@ contracts live in `core/`; scripts in `PIPELINES/` orchestrate modules; the
 interface only presents their outputs. HydroSHEDS / BasinATLAS is the first module.
 Other atlas products must adopt this contract before implementation begins.
 
-- [Scientific requirements](core/REPRODUCIBILITY.md)
+- [Scientific requirements](core/REPRODUCIBILITY.md) — and `core/observations.py`, the
+  executable observation/revision contract every atlas value enters through
 - [HydroSHEDS methodology](hydrosheds/METHODOLOGY.md)
 - [Attribute recipes](hydrosheds/RECIPES.md)
 - [Open-data surrogates](hydrosheds/SURROGATES.md) — published as a page at `/surrogates.html`

@@ -17,6 +17,16 @@ their limitations. `atlas:publish` derives these views from the frozen run into
 value file per basin. These are display projections; the immutable scientific
 run and source lock remain the provenance authority.
 
+The same frozen run is staged into the append-only observation store with
+`npm run atlas:observations`: 10,260 rows, one per basin, attribute and value role
+(reference import, open-data estimate, independent candidate). The run contributes
+no dated observations and none are invented for it. Its values are static
+attributes, source epochs and climatologies, recorded as such: a January snow
+climatology keeps its 2003-2023 MODIS window and remains one climatology rather
+than twenty Januaries, and a land-cover class code such as `glc_pc_s01` is class 1,
+never a calendar month. Attributes whose family has no pinned source release in
+this run are left out instead of stored as sourceless nulls.
+
 Open `/dynamic-atlas.html` for the actual Pskem results, all 56 variable-family
 crosswalks, native and processing resolutions, periods used, live source checks,
 and the update pathway. This inventory covers BasinATLAS attributes on the 20

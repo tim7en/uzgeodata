@@ -126,7 +126,7 @@
           "Representative 100–250 basin benchmark across both systems",
           "Resumable regional source/period batches and regional coverage ledger"
         ],
-        "gate": "Stage 5 storage contract adopted before new temporal ingestion; pilot method review, source completeness, units, topology and retry/idempotency tests pass before expanding. Report pending families instead of inventing substitutes.",
+        "gate": "Stage 5 storage contract adopted (done: every new value enters through the observation store); pilot method review, source completeness, units, topology and retry/idempotency tests pass before expanding. Report pending families instead of inventing substitutes.",
         "evidence": [
           "PUBLISHED/data/atlas/batch-latest.json",
           "PUBLISHED/data/atlas/substitutes-index.json",
@@ -176,7 +176,7 @@
         "id": "temporal-resolution",
         "title": "Preserve time, resolution and research opportunities",
         "status": "in_progress",
-        "description": "This is foundational work starting with stage 2, not work deferred until after publication. Current immutable runs preserve snapshots and fixed normals; production temporal storage and dated atlas adapters remain to be implemented.",
+        "description": "The observation/revision contract is adopted and executable: ATLAS_MODULES/core/observations.py is the only way into the store, and the frozen Pskem run is staged through it as 10,260 rows carrying their source release, method, geometry and QA denominators. No observation year is invented, because this run holds none: its values are static attributes, source epochs and climatologies. Dated monthly adapters, the production physical design and revision traffic from real corrections remain to be implemented.",
         "deliverables": [
           "Append-only basin observation/revision store with source, method, geometry and run identities",
           "Distinct observation period, retrieval time and publication time",
@@ -185,9 +185,11 @@
         ],
         "gate": "Round-trip a frozen snapshot, append a corrected month without losing the earlier version, preserve nulls and distinguish monthly observations from monthly climatologies. Reject mixed units, changed geometry or period definitions in an unversioned series.",
         "evidence": [
-          "ATLAS_MODULES/hydrosheds/DYNAMIC_ATLAS.md",
-          "PIPELINES/build_dynamic_atlas.py",
-          "INTERFACE/BasinSubstitutes.jsx"
+          "ATLAS_MODULES/core/observations.py",
+          "ATLAS_MODULES/core/REPRODUCIBILITY.md",
+          "PIPELINES/stage_pilot_observations.py",
+          "TESTS/test_observation_store.py",
+          "PUBLISHED/data/atlas/observations/manifest.json"
         ]
       },
       {
@@ -210,15 +212,15 @@
       }
     ],
     "next_batches": [
-      "Adopt the observation/revision contract and stage existing pilot evidence without inventing observation years.",
-      "Implement one complete dated monthly family in the 20 Pskem basins; retain source IDs and per-basin QA denominators.",
+      "Implement one complete dated monthly family in the 20 Pskem basins through the adopted contract: time_kind 'observation', real years and months, per-basin QA denominators and source IDs retained. This is the first traffic the revision path will carry.",
       "Benchmark 100–250 representative level-12 basins across both systems at native source scales. Measure cold and warm runs, complete periods, data volume, queue delays and failures.",
       "Replace full-grid per-basin scans with grouped reductions or Earth Engine batch exports; use complete regional topology for upstream accumulation across batch boundaries.",
       "Expand by source × period × spatial batch with bounded concurrency, checkpoints, hashes, idempotent retries and a regional completeness ledger.",
       "Repeat the validated process for the first environmental-atlas thematic module before adding the other themes."
     ],
     "storage_contract": {
-      "status": "Proposed production contract; existing static run CSVs are retained",
+      "status": "Adopted for staging in ATLAS_MODULES/core/observations.py, which enforces it on every record; existing static run CSVs are retained. The production physical design stays open.",
+      "implementation": "The executable field names follow the long table specified in ATLAS_MODULES/core/REPRODUCIBILITY.md, which is the single authority; the groupings below describe the same record. Staged to PUBLISHED/data/atlas/observations/ as CSV partitioned by time kind, with versioned run, recipe, source-release and basin-geometry tables beside it.",
       "observation_identity": [
         "basin_id",
         "basin_level",
@@ -7594,6 +7596,15 @@
       "source": "ATLAS_MODULES/implementation-plan.json"
     },
     {
+      "id": "observation-store-20260910",
+      "date": "2026-09-10",
+      "kind": "implementation",
+      "phase": "geodatabase",
+      "title": "Observation/revision contract adopted; pilot evidence staged",
+      "summary": "ATLAS_MODULES/core/observations.py makes the REPRODUCIBILITY.md long table executable: identity, revisions and provenance are enforced on every record. The frozen Pskem run is staged as 10,260 rows (5,620 reference imports, 3,960 open-data estimates, 680 candidates) with 49 nulls that keep their reasons. Zero dated observations: static values, source epochs and climatologies are recorded as such, and no observation year is invented. A January climatology built from 2003-2023 MODIS imagery keeps that window and stays one climatology; land-cover class 01 is never a month. 83 attributes whose family has no pinned source release in this run are excluded rather than written as sourceless nulls.",
+      "source": "ATLAS_MODULES/core/observations.py"
+    },
+    {
       "id": "snow-audit-20260909",
       "date": "2026-09-09",
       "kind": "method_review",
@@ -7665,5 +7676,5 @@
     "reproduced": 0
   },
   "refresh_policy": "Curated updates and module changes are republished at dev start/build; browser checks every 60 seconds.",
-  "revision": "e32eafe3efd56abb6df0f8da6401a4a8ceb7ae50332ca087dfb6533ac9ab954d"
+  "revision": "46cbf362608643f9f59b62a57be7d0f24d0974d5afd09657ae847d725efea5ea"
 }

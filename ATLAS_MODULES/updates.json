@@ -44,6 +44,15 @@
       "title": "Two-atlas regional programme and basin substitute tab",
       "summary": "Six stages cover reference joins, pilot-to-region HydroATLAS and environmental-atlas methods, research publication, temporal/resolution storage and monitoring/ontology. Temporal storage starts before new dated ingestion. Basin modal shows only exact-ID published substitutes in light green. Regional runtime remains a projection requiring a batch benchmark.",
       "source": "ATLAS_MODULES/implementation-plan.json"
+    },
+    {
+      "id": "observation-store-20260910",
+      "date": "2026-09-10",
+      "kind": "implementation",
+      "phase": "geodatabase",
+      "title": "Observation/revision contract adopted; pilot evidence staged",
+      "summary": "ATLAS_MODULES/core/observations.py makes the REPRODUCIBILITY.md long table executable: identity, revisions and provenance are enforced on every record. The frozen Pskem run is staged as 10,260 rows (5,620 reference imports, 3,960 open-data estimates, 680 candidates) with 49 nulls that keep their reasons. Zero dated observations: static values, source epochs and climatologies are recorded as such, and no observation year is invented. A January climatology built from 2003-2023 MODIS imagery keeps that window and stays one climatology; land-cover class 01 is never a month. 83 attributes whose family has no pinned source release in this run are excluded rather than written as sourceless nulls.",
+      "source": "ATLAS_MODULES/core/observations.py"
     }
   ]
 }

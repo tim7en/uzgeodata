@@ -47,6 +47,11 @@ During development, `baseline_reproduction_candidate` is an explicit interim mod
 it permits test calculations with documented method uncertainties and blocks
 scientific reproduction/release claims. It is not an additional final atlas product.
 
+`observations.py` in this folder is the executable form of the long table below, and the
+only way into the store: identity, revisions, provenance and the traps named here are
+enforced on every record. `TESTS/test_observation_store.py` holds the acceptance gate.
+`npm run atlas:observations` stages a frozen run into `PUBLISHED/data/atlas/observations/`.
+
 Scientific observations use a long table: `observation_id, basin_id,
 geometry_version, basin_level, attribute_id, recipe_version, mode, spatial_support,
 time_kind, valid_start, valid_end, year, month, value, unit, coverage_fraction,

@@ -23,6 +23,14 @@ substitutes** tab with light-green available values, explicit pending basins,
 and future spatial/temporal resolution flags. Regional runtime figures are
 labelled projections; dated monthly updates need a representative batch benchmark.
 
+Basin values are staged into an append-only observation store at
+`PUBLISHED/data/atlas/observations/` by `npm run atlas:observations`. The contract
+is [core/observations.py](ATLAS_MODULES/core/observations.py), the executable form
+of the long table in [core/REPRODUCIBILITY.md](ATLAS_MODULES/core/REPRODUCIBILITY.md):
+every row carries its source release, method, geometry and QA denominators, a
+correction supersedes rather than overwrites, and no observation year is invented
+for a static value or a climatology.
+
 Each top-level folder is named for the kind of information it holds.
 
 | Folder | What lives here |

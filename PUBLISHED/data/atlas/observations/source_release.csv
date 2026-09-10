@@ -1,0 +1,21 @@
+source_release_id,name,asset,sha256,epoch,valid_start,valid_end,retrieved_at,pinned
+basinatlas_v10@c512796abee4,BasinATLAS v10,GEODATA\BasinATLAS_Data_v10.gdb\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb,c512796abee4cca0b41ee4b8700de5c95bbbbe32a66456189596e51c63ed5e47,,,,,True
+elevation@b9fd8644dd67,EarthEnv-DEM90_N40E070,https://de.cyverse.org/anon-files/iplant/home/shared/earthenv_dem_data/EarthEnv-DEM90/EarthEnv-DEM90_N40E070.tar.gz,b9fd8644dd67b7794193ac65094e8d51d17d85a46b54ac1977d6a99bef353e6e,,,,,True
+worldclim@1cda57b604df,worldclim,,1cda57b604df3d50ed1091ee3f0c7c92ce285045bedcf6dba577b769297a8c7b,,,,2026-09-09T17:33:18.263+00:00,True
+copernicus_lc@d5f902169ffe,copernicus_lc,COPERNICUS/Landcover/100m/Proba-V-C3/Global,d5f902169ffeb70fcb01016864fc15505d0d274e0622e89f0136ab7964b4a543,2015,2015-01-01,2016-01-01,2026-09-09T18:27:03.698+00:00,True
+dem_terrain@unpinned,dem_terrain,EarthEnv-DEM90 v1,,,,,,False
+dmsp_lights@9b92ff7c7445,dmsp_lights,NOAA/DMSP-OLS/NIGHTTIME_LIGHTS,9b92ff7c7445d34126b019459aa368ab13b2d015b297bed2548b3c011feb8e40,F182010,,,2026-09-09T18:27:07.997+00:00,True
+ecoregions@770f933277f8,ecoregions,RESOLVE/ECOREGIONS/2017,770f933277f807139e2a345e8670203739e46c099dacbf35af185d19983c9719,,,,,True
+era5_runoff@cda064edcbb9,era5_runoff,ECMWF/ERA5_LAND/MONTHLY_AGGR,cda064edcbb9370d232b33b4ef8202253a47e7ef0eb7732edf259f7d3115f5dd,,1991-01-01,2021-01-01,2026-09-09T18:27:11.527+00:00,True
+gfsad@4f813d46997c,gfsad,USGS/GFSAD1000_V1,4f813d46997ca276bbbcefd0aee892b1ff1546d87a7821476c088b891c3b3b7b,2010,2010-01-01,2011-01-01,2026-09-09T18:27:13.617+00:00,True
+ghsl@1fefe5e4b7bf,ghsl,JRC/GHSL/P2023A/GHS_BUILT_S,1fefe5e4b7bf2c5c73791d317ceb8de7dfdfda1e3d16fa22b6611ffb72c1649e,2015,2015-01-01,2016-01-01,2026-09-09T18:27:15.854+00:00,True
+glims@34739cb1b36a,glims,GLIMS/current,34739cb1b36a7c4b2dea484b022a7b8fa0dac1248dba69a3b2d9748cd28db874,,,,2026-09-09T18:27:24.542+00:00,True
+gpw@8b571c0f064a,gpw,CIESIN/GPWv411/GPW_Population_Density,8b571c0f064aaf8b2cac984a1e3880067d64960c9b55f7a199f4077c93f52b66,2015,2015-01-01,2016-01-01,2026-09-09T18:27:26.044+00:00,True
+human_modification@cc26506b75f8,human_modification,CSP/HM/GlobalHumanModification,cc26506b75f8d1bf564a9251b351194de39ed07a0b7391f34ef963ea95429c63,2016,2016-01-01,2017-01-01,2026-09-09T18:27:28.312+00:00,True
+hydrolakes@unpinned,hydrolakes,F:\uzgeodata\GEODATA\HydroLAKES_polys_v10.gdb\HydroLAKES_polys_v10.gdb,,,,,,False
+modis_snow@3c970bd24083,modis_snow,MODIS/061/MYD10A1,3c970bd240834d3fb8b2fee91064840bbb201ace1bd2f4aab24913fe9c9564b0,,2003-01-01,2023-01-01,2026-09-09T18:29:41.322+00:00,True
+openlandmap_soil@362f6cace69a,openlandmap_soil,,362f6cace69ad7429039b84fa01fab539595b3716ebee91fa8b43a5bddb4953a,,,,2026-09-09T18:29:48.595+00:00,True
+pnv_biome@df2f1967ba3b,pnv_biome,OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01,df2f1967ba3be6d718c8b02b01410570a07d64889a5434244c51fc17d3143954,,,,2026-09-09T18:29:51.044+00:00,True
+surface_water@9d341b4c3b79,surface_water,JRC/GSW1_4/GlobalSurfaceWater,9d341b4c3b799910dfa331dc7b534f29609fe3ec5771dda954ede183828be14a,,,,2026-09-09T18:29:58.171+00:00,True
+terraclimate@3c85deb5924d,terraclimate,IDAHO_EPSCOR/TERRACLIMATE,3c85deb5924d09dc842d92658d2b0ecb078a9846742eb43bc7487ed007bc378e,,1991-01-01,2021-01-01,2026-09-09T18:30:03.783+00:00,True
+wdpa@16e1475d73c0,wdpa,WCMC/WDPA/current/polygons,16e1475d73c0b9b1c96a22b1414e47ed90615dd03b4ad28fcdcb79e975d85514,,,,2026-09-09T18:30:10.267+00:00,True
