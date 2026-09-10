@@ -116,6 +116,8 @@
     "cases:tidy": "python PIPELINES/build_tidy_downloads.py",
     "atlas:publish": "python PIPELINES/build_atlas_roadmap.py && python PIPELINES/build_dynamic_atlas.py && python PIPELINES/stage_pilot_observations.py",
     "atlas:observations": "python PIPELINES/stage_pilot_observations.py",
+    "atlas:dated-snow": "python PIPELINES/extract_dated_snow.py",
+    "atlas:benchmark": "python PIPELINES/benchmark_regional_batch.py",
     "atlas:audit": "python PIPELINES/build_dynamic_atlas.py --probe",
     "predev": "npm run atlas:publish",
     "atlas:attribute": "python PIPELINES/run_atlas_attribute.py",

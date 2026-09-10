@@ -65,6 +65,39 @@ def test_two_atlas_plan_preserves_evidence_and_temporal_prerequisites():
     assert all(k in fields for k in ['period_end_exclusive', 'climatology', 'retrieved_at', 'supersedes_observation_id'])
 
 
+def test_measured_regional_figures_trace_to_the_benchmark_that_produced_them():
+    """Regional numbers are measurements now, not extrapolations, and must stay tied
+    to the run that measured them."""
+    import json
+    plan = module.assemble()['implementation_plan']
+    runtime = plan['runtime']
+    bench = json.loads((ROOT / runtime['regional_benchmark_evidence']).read_text(encoding='utf-8'))
+    reduction, server = bench['measured_reduction'], bench['measured_server_side']
+
+    assert bench['domain']['basins'] == runtime['domain_basins']
+    assert bench['domain']['systems'] == runtime['systems']
+    assert runtime['regional_reduction_passes'] == reduction['reduction_passes_per_run']
+    assert runtime['regional_grouped_reduction_minutes_measured'] == reduction['grouped_hours_full_run'] * 60
+    assert runtime['regional_scan_reduction_hours_measured'] == reduction['scan_hours_full_run']
+    assert runtime['regional_reduction_speedup'] == reduction['speedup_over_scan']
+    assert runtime['regional_frame_load_seconds'] == bench['measured_frame']['geometry_load_seconds']
+    assert runtime['regional_rasterise_seconds'] == bench['measured_frame']['rasterise_seconds']
+    assert runtime['regional_sample_basins'] == server['basins']
+    assert runtime['regional_server_side_cold_seconds'] == server['cold_seconds']
+    assert runtime['regional_server_side_rows'] == server['cold_rows']
+    assert runtime['regional_server_side_values'] == server['cold_values']
+    assert server['cold_values'] <= server['cold_rows'], 'a null month is not a value'
+    assert (runtime['regional_monthly_series_hours_extrapolated']
+            == bench['extrapolated']['server_side_hours_full_domain_twenty_years'])
+
+    # The sample really does span both systems, or it is not representative of them.
+    assert 100 <= server['basins'] <= 250, 'the roadmap asked for a 100-250 basin sample'
+    assert reduction['speedup_over_scan'] > 1, 'the replacement is faster than what it replaced'
+    # The superseded projection is kept beside what replaced it, not quietly deleted.
+    assert bench['supersedes']['published_extrapolation_hours'] == runtime['regional_current_reduction_hours_extrapolated']
+    assert 'Superseded by measurement' in runtime['regional_current_reduction_note']
+
+
 def test_news_is_republished_and_missing_recipe_fails(tmp_path):
     import json
     import shutil

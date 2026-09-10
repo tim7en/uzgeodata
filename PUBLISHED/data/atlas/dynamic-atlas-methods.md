@@ -27,6 +27,22 @@ than twenty Januaries, and a land-cover class code such as `glc_pc_s01` is class
 never a calendar month. Attributes whose family has no pinned source release in
 this run are left out instead of stored as sourceless nulls.
 
+Dated monthly snow cover for the same 20 basins covers 2003-2022 as 4,800 real
+observations (`npm run atlas:dated-snow`). It is published as its own attribute,
+`uzgeodata.dated.v1.snw_pc_s`, because `snw_pc_s01` is defined as a January
+climatology and keeps that meaning; the two share a snow definition, mask and
+analysis grid, so comparing them is meaningful, and the comparison is reported
+without adjusting any value. Every month carries the cloud-free cell counts it was
+computed from, and a month with no cloud-free day would be stored as a null with
+that reason rather than as zero snow.
+
+Regional cost is measured rather than extrapolated (`npm run atlas:benchmark`).
+On the real 7,445-basin level-12 frame a grouped reduction pass takes about 0.5
+seconds, so a 250-pass run is roughly 2.1 minutes where the per-basin scan it
+replaced measures 14.3 hours. Server-side acquisition over a representative
+250-basin sample across both systems returned twelve months of snow in 17 seconds
+with no raster downloaded.
+
 Open `/dynamic-atlas.html` for the actual Pskem results, all 56 variable-family
 crosswalks, native and processing resolutions, periods used, live source checks,
 and the update pathway. This inventory covers BasinATLAS attributes on the 20

@@ -31,6 +31,13 @@ every row carries its source release, method, geometry and QA denominators, a
 correction supersedes rather than overwrites, and no observation year is invented
 for a static value or a climatology.
 
+The first dated family is monthly MODIS snow cover for the pilot basins, 2003-2022
+(`npm run atlas:dated-snow`). `npm run atlas:benchmark` measures a regional batch on
+the real 7,445-basin frame rather than extrapolating one: the grouped reduction in
+[core/zonal.py](ATLAS_MODULES/core/zonal.py) replaced a per-basin scan and is about
+405 times faster, and server-side acquisition returns basin values without
+downloading a raster.
+
 Each top-level folder is named for the kind of information it holds.
 
 | Folder | What lives here |

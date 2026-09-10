@@ -20,6 +20,7 @@ from shapely.geometry import shape
 from shapely.ops import unary_union
 
 from ATLAS_MODULES.core.runtime import sha256, write_json, utc_now
+from ATLAS_MODULES.core.zonal import grouped_statistics, parts_by_id
 from ATLAS_MODULES.hydrosheds.functions.elevation import (
     CELL, acquire_tile, unpack_tile, aggregate_tile, cell_areas, required_tiles)
 
@@ -87,15 +88,8 @@ def zones_for(features, transform, dimensions):
 def reduce_field(values, features, zones, areas, members, support, statistic="mean"):
     """Local arithmetic mean/extrema or upstream cell-area-weighted mean."""
     ids = [str(int(f["properties"]["HYBAS_ID"])) for f in features]
-    local = {}
-    for i, bid in enumerate(ids, 1):
-        mask = zones == i
-        valid = mask & np.isfinite(values)
-        local[bid] = {"count": int(valid.sum()), "expected": int(mask.sum()),
-                      "sum": float(values[valid].sum()), "area": float(areas[valid].sum()),
-                      "weighted": float((values[valid] * areas[valid]).sum()),
-                      "minimum": float(values[valid].min()) if valid.any() else None,
-                      "maximum": float(values[valid].max()) if valid.any() else None}
+    local = parts_by_id(grouped_statistics(values, zones, areas, len(ids), extremes=True),
+                        ids, extremes=True)
     result = {}
     for bid in ids:
         selected = [local[key] for key in sorted(members[bid])] if support == "u" else [local[bid]]

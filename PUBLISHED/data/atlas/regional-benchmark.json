@@ -1,0 +1,68 @@
+{
+  "generated_at": "2026-09-10T06:47:34.692+00:00",
+  "domain": {
+    "basins": 7445,
+    "level": 12,
+    "systems": {
+      "Amu Darya": 4917,
+      "Syr Darya": 2528
+    },
+    "grid": {
+      "cell_arcsec": 15,
+      "columns": 4858,
+      "rows": 3057,
+      "megacells": 14.9
+    }
+  },
+  "measured_frame": {
+    "geometry_load_seconds": 4.101195199998983,
+    "rasterise_seconds": 0.9801887000012357
+  },
+  "measured_reduction": {
+    "basis": "Synthetic field on the real regional label grid. A reduction's cost follows the grid size and basin count, not the values, so the timing transfers; the numbers reduced here are not scientific results.",
+    "grouped_pass_seconds": 0.5093627000005654,
+    "scan_seconds_per_basin": 0.027701632500020425,
+    "scan_basins_measured": 40,
+    "scan_seconds_projected_full_domain": 206.23865396265205,
+    "speedup_over_scan": 404.8954781385114,
+    "reduction_passes_per_run": 250,
+    "grouped_hours_full_run": 0.03537240972226149,
+    "scan_hours_full_run": 14.322128747406392,
+    "note": "The grouped pass is one sweep over the grid for every basin at once. The scan it replaced masked the whole grid once per basin, and is projected here from 40 measured basins because running all 7445 would take hours."
+  },
+  "measured_server_side": {
+    "basins": 250,
+    "year": 2022,
+    "month": 1,
+    "crs_transform": [
+      0.004166666666666667,
+      0.0,
+      58.11666666666667,
+      0.0,
+      -0.004166666666666667,
+      47.22083333333333
+    ],
+    "cold_seconds": 16.67574380000042,
+    "cold_values": 2968,
+    "cold_rows": 3000,
+    "cold_payload_bytes": 359092,
+    "warm_seconds": 14.483921700000792,
+    "warm_values": 2968,
+    "warm_rows": 3000,
+    "warm_payload_bytes": 359087,
+    "basis": "Real MODIS MYD10A1 imagery reduced on the server over the sampled basins, twelve months in one call. No raster is downloaded.",
+    "seconds_per_basin_month": 0.005558581266666807,
+    "note": "Cold is the first call for this sample; warm repeats it. Earth Engine caches and queues on its own schedule, so warm is not a guaranteed second-run cost."
+  },
+  "extrapolated": {
+    "server_side_hours_full_domain_one_month": 0.011495454869537326,
+    "server_side_hours_full_domain_twenty_years": 2.7589091686889584,
+    "basis": "Linear in basin count from the 250-basin sample. Earth Engine does not scale linearly under quota, queueing or retry, so treat these as planning allowances, not delivery times."
+  },
+  "supersedes": {
+    "published_extrapolation_hours": 17.6,
+    "measured_equivalent_hours": 14.322128747406392,
+    "replacement_hours": 0.03537240972226149,
+    "meaning": "The published 17.6 hours extrapolated the per-basin scan over 250 reduction passes. Measuring that same scan on the real frame gives the middle figure; the grouped pass that replaced it gives the last. Acquisition is a separate cost and is measured above."
+  }
+}

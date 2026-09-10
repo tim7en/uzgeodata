@@ -269,6 +269,33 @@ def write_partitions(directory, rows):
     return written
 
 
+def merge_table(path, rows, key):
+    """Side tables accumulate. Each pipeline contributes the rows it can vouch for,
+    and never drops another pipeline's, so a run staged from one source does not
+    erase the source releases of the next."""
+    path = Path(path)
+    existing, fields = {}, []
+    if path.exists():
+        with path.open(encoding="utf-8", newline="") as stream:
+            reader = csv.DictReader(stream)
+            fields = list(reader.fieldnames or [])
+            for row in reader:
+                existing[row[key]] = row
+    for row in rows:
+        record = {name: _text(value) for name, value in row.items()}
+        for name in record:
+            if name not in fields:
+                fields.append(name)
+        existing[record[key]] = record
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer.writeheader()
+        for name in sorted(existing):
+            writer.writerow({field: existing[name].get(field, "") for field in fields})
+    return len(existing)
+
+
 def read_partitions(directory):
     rows = []
     for path in sorted(Path(directory).glob("**/part.csv")):
@@ -288,11 +315,18 @@ def _decode(raw):
     return record
 
 
+# Who fetched a value and when is not the value. Re-fetching an immutable source
+# yields the same observation, so these three fields identify the visit rather than
+# the measurement and are left out of the comparison below.
+VISIT = ("run_id", "retrieved_at", "recorded_at")
+
+
 def _content(record):
     """What a re-run must reproduce exactly. The store keeps the run that first
     established a value, so a later run confirming the same number is a no-op and
-    a later run disagreeing has to supersede it."""
-    return {field: record[field] for field in FIELDS if field not in ("run_id", "recorded_at")}
+    a later run disagreeing has to supersede it. If a source is mutable and gives a
+    different number on re-fetch, that difference still surfaces as a conflict."""
+    return {field: record[field] for field in FIELDS if field not in VISIT}
 
 
 def _text(value):

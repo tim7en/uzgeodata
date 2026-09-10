@@ -43,10 +43,13 @@ def manifest():
 
 
 def test_the_staged_pilot_invents_no_observation_year(staged, manifest):
+    """The HydroATLAS run contributes no dated value, however many the store holds."""
+    batch, _ = latest_run()
+    pilot = [row for row in staged if row["run_id"] == batch["run_id"]]
     assert manifest["rows"] == len(staged)
-    assert manifest["dated_observations"] == 0
-    assert all(row["year"] is None for row in staged), "this run holds no dated observations"
-    assert {row["time_kind"] for row in staged} == {"static", "source_epoch", "climatology"}
+    assert manifest["staged_from_this_run"] == len(pilot)
+    assert all(row["year"] is None for row in pilot), "this run holds no dated observations"
+    assert {row["time_kind"] for row in pilot} == {"static", "source_epoch", "climatology"}
     assert manifest["by_mode"]["reference_import"] == manifest["basins"] * 281
 
 
@@ -164,10 +167,42 @@ def test_the_store_round_trips_through_its_partitions(tmp_path):
 def test_the_published_store_round_trips_and_matches_its_run(staged):
     batch, lock = latest_run()
     rebuilt, _ = build_rows(batch, lock)
-    assert len(rebuilt) == len(staged)
-    assert {observations.row_key(row) for row in rebuilt} == {observations.row_key(row) for row in staged}
-    assert not observations.series_conflicts(staged)
-    assert all(row["run_id"] == batch["run_id"] for row in staged)
+    pilot = [row for row in staged if row["run_id"] == batch["run_id"]]
+    assert len(rebuilt) == len(pilot)
+    assert {observations.row_key(row) for row in rebuilt} == {observations.row_key(row) for row in pilot}
+    assert not observations.series_conflicts(staged), "sources coexist without drifting"
+
+
+def test_the_dated_snow_series_is_a_real_observation_series(staged, manifest):
+    """The first dated family: twenty basins, twenty years, twelve months each."""
+    dated = [row for row in staged if row["time_kind"] == "observation"]
+    assert len(dated) == manifest["dated_observations"] == 4800
+    assert {row["attribute_id"] for row in dated} == {"uzgeodata.dated.v1.snw_pc_s"}
+    assert {row["year"] for row in dated} == set(range(2003, 2023))
+    assert {row["month"] for row in dated} == set(range(1, 13))
+    assert {row["basin_id"] for row in dated} == set(json.loads(
+        (STORE.parent / "substitutes-index.json").read_text(encoding="utf-8"))["basin_ids"])
+
+    # A dated month carries the month it covers, and every value its QA denominator.
+    for row in dated:
+        assert row["valid_start"][:7] == f"{row['year']:04d}-{row['month']:02d}"
+        assert row["temporal_statistic"] == "monthly_mean"
+        assert row["expected_count"] and row["valid_count"] <= row["expected_count"]
+        assert row["value"] is None or 0 <= row["value"] <= 100
+
+    # It does not overwrite the climatology it was derived alongside.
+    climatology = {row["attribute_id"] for row in staged if row["time_kind"] == "climatology"}
+    assert "uzgeodata.dated.v1.snw_pc_s" not in climatology
+    assert any(a.endswith("snw_pc_s01") for a in climatology), "the January climatology still stands"
+
+
+def test_a_dated_month_is_partitioned_by_its_year(staged):
+    for year in (2003, 2012, 2022):
+        path = STORE / "time_kind=observation" / f"year={year}" / "part.csv"
+        assert path.is_file(), f"{year} has its own partition"
+    rows = observations.read_partitions(STORE / "time_kind=observation" / "year=2003")
+    assert {row["year"] for row in rows} == {2003}
+    assert len(rows) == 20 * 12
 
 
 def test_qa_denominators_must_agree_with_their_coverage():

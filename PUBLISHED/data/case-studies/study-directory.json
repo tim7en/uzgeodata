@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-10T06:04:29.817128+00:00",
+  "generated_at": "2026-09-10T06:53:07.511657+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "9f4da3f3a75d6be552e78b2ff606709368711dec26a3f8769669db67faa3212a",
     "regional-station-study.json": "f1c0f711f7256c3c04183c7cc3cef4de9ea17ee03cf4b5784b4da3d2d7d83902",
-    "model-review.json": "00bc5fc86fd72d0b3cb8e874c8f6490ae33bbe22473663c394f0fddb6e7f12a0"
+    "model-review.json": "3fc4075bf909d255b26f58b44dc3378a7f8038250d79470bbe32069ccbfb655f"
   },
   "studies": [
     {
@@ -15,7 +15,7 @@
       "aim": "Test how elevation, snowfall and soil-water storage shape seasonal river flow.",
       "image": "/data/case-studies/chirchik-study-preview.svg",
       "image_alt": "Observed and simulated monthly runoff in held-out years, arranged consecutively as a study preview.",
-      "evidence_date": "2026-09-10T06:04:28.423110+00:00",
+      "evidence_date": "2026-09-10T06:53:06.544023+00:00",
       "metric": 0.7595,
       "metric_label": "Monthly NSE · chronological test",
       "detail": "84 held-out months · seasonal-volume uncertainty remains",

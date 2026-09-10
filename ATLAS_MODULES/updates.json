@@ -53,6 +53,15 @@
       "title": "Observation/revision contract adopted; pilot evidence staged",
       "summary": "ATLAS_MODULES/core/observations.py makes the REPRODUCIBILITY.md long table executable: identity, revisions and provenance are enforced on every record. The frozen Pskem run is staged as 10,260 rows (5,620 reference imports, 3,960 open-data estimates, 680 candidates) with 49 nulls that keep their reasons. Zero dated observations: static values, source epochs and climatologies are recorded as such, and no observation year is invented. A January climatology built from 2003-2023 MODIS imagery keeps that window and stays one climatology; land-cover class 01 is never a month. 83 attributes whose family has no pinned source release in this run are excluded rather than written as sourceless nulls.",
       "source": "ATLAS_MODULES/core/observations.py"
+    },
+    {
+      "id": "dated-series-and-regional-benchmark-20260910",
+      "date": "2026-09-10",
+      "kind": "implementation",
+      "phase": "geodatabase",
+      "title": "First dated series, grouped reduction kernel, and a measured regional batch",
+      "summary": "Monthly MODIS snow cover for the 20 Pskem basins, 2003-2022: 4,800 dated observations with real years and months, per-basin QA denominators and no gap filling. It is a new attribute, not a new vintage of the January climatology, which keeps its meaning. The per-basin scan kernel is replaced by one grouped pass in ATLAS_MODULES/core/zonal.py, verified against the scan it replaced. Measured on the real 7,445-basin frame: a reduction pass takes 0.51 s, so a 250-pass run is 2.1 minutes against 14.3 hours for the scan, superseding the published 17.6-hour extrapolation. Server-side acquisition over a representative 250-basin sample across both systems returned twelve months in 16.7 s with no raster downloaded; a full twenty-year regional monthly series extrapolates to about 2.8 hours.",
+      "source": "PUBLISHED/data/atlas/regional-benchmark.json"
     }
   ]
 }

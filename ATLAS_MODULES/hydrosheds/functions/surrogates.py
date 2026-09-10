@@ -19,6 +19,7 @@ from shapely.geometry import Point, shape
 from shapely.ops import unary_union
 
 from ATLAS_MODULES.core.runtime import sha256, write_json, utc_now
+from ATLAS_MODULES.core.zonal import grouped_statistics, parts_by_id
 
 CELL = 15 / 3600
 GEOD = Geod(ellps="WGS84")
@@ -142,15 +143,9 @@ def export(build, name, domain, bands, record):
 
 
 def cell_statistics(values, domain):
-    """Per-basin sufficient statistics on the pilot grid."""
-    parts = {}
-    for index, bid in enumerate(domain.ids, 1):
-        mask = domain.zones == index
-        valid = mask & np.isfinite(values)
-        parts[bid] = {"count": int(valid.sum()), "expected": int(mask.sum()),
-                      "sum": float(values[valid].sum()), "area": float(domain.areas[valid].sum()),
-                      "weighted": float((values[valid] * domain.areas[valid]).sum())}
-    return parts
+    """Per-basin sufficient statistics on the pilot grid, in one grouped pass."""
+    statistics = grouped_statistics(values, domain.zones, domain.areas, len(domain.ids))
+    return parts_by_id(statistics, domain.ids)
 
 
 def reduce_general(values, domain, support, statistic="mean"):

@@ -19,7 +19,6 @@ rather than written as sourceless nulls; the run's own coverage report already
 names them, and the manifest counts them here.
 """
 from __future__ import annotations
-import csv
 from datetime import date
 import json
 from pathlib import Path
@@ -192,21 +191,15 @@ def side_tables(batch, lock, rows):
     return {"source_release": releases, "basin_geometry": geometry, "run": runs, "recipe": recipes}
 
 
-def write_table(path, rows):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
-        writer.writeheader()
-        writer.writerows(rows)
-
-
 def stage(store=STORE, published=PUBLISHED):
     batch, lock = latest_run(published)
     rows, skipped = build_rows(batch, lock)
     stored = observations.append(observations.read_partitions(store), rows)
     observations.write_partitions(store, stored)
+    keys = {"source_release": "source_release_id", "basin_geometry": "geometry_version",
+            "run": "run_id", "recipe": "recipe_version"}
     for name, table in side_tables(batch, lock, stored).items():
-        write_table(Path(store) / f"{name}.csv", table)
+        observations.merge_table(Path(store) / f"{name}.csv", table, keys[name])
 
     current = observations.latest(stored)
     counts = {}
@@ -218,6 +211,7 @@ def stage(store=STORE, published=PUBLISHED):
         "contract": "ATLAS_MODULES/core/REPRODUCIBILITY.md",
         "fields": list(observations.FIELDS),
         "rows": len(stored),
+        "staged_from_this_run": len(rows),
         "current_rows": len(current),
         "by_mode": counts,
         "by_time_kind": {kind: sum(r["time_kind"] == kind for r in current)
@@ -227,9 +221,11 @@ def stage(store=STORE, published=PUBLISHED):
         "basins": len(batch["basin_ids"]),
         "basin_level": BASIN_LEVEL,
         "attributes_without_pinned_source": len(skipped),
-        "note": "Staged from a frozen run. No observation year is invented: this run holds "
-                "static values, source epochs and climatologies only. Partitioned CSV is a "
-                "staging format; the production physical design stays open until benchmarked.",
+        "note": "Counts describe the whole store. The frozen HydroATLAS run staged here "
+                "contributes no dated observation and none is invented for it: its values are "
+                "static attributes, source epochs and climatologies. Dated rows come from the "
+                "dated adapters, each with its own manifest. Partitioned CSV is a staging "
+                "format; the production physical design stays open until benchmarked.",
     }
     write_json(Path(store) / "manifest.json", summary)
     return summary

@@ -120,9 +120,8 @@
     }
   ],
   "next_batches": [
-    "Implement one complete dated monthly family in the 20 Pskem basins through the adopted contract: time_kind 'observation', real years and months, per-basin QA denominators and source IDs retained. This is the first traffic the revision path will carry.",
-    "Benchmark 100–250 representative level-12 basins across both systems at native source scales. Measure cold and warm runs, complete periods, data volume, queue delays and failures.",
-    "Replace full-grid per-basin scans with grouped reductions or Earth Engine batch exports; use complete regional topology for upstream accumulation across batch boundaries.",
+    "Run the dated monthly snow series across the benchmarked regional sample, then the full 7,445 basins, with bounded concurrency, checkpoints and a completeness ledger; carry the QA denominators and the null months through rather than gap filling them.",
+    "Reproduce one pilot attribute independently, in a second environment, against pinned inputs. Nothing in the programme has cleared reproduction gate 6 and every stage above assumes it.",
     "Expand by source × period × spatial batch with bounded concurrency, checkpoints, hashes, idempotent retries and a regional completeness ledger.",
     "Repeat the validated process for the first environmental-atlas thematic module before adding the other themes."
   ],
@@ -209,14 +208,27 @@
     "regional_current_reduction_hours_extrapolated": 17.6,
     "regional_grouped_kernel_minutes": 0.4,
     "regional_grouped_kernel_note": "Projection of 250 reductions from a full-domain synthetic arithmetic benchmark. This is not an implemented end-to-end atlas runtime, source download time or scientific validation.",
-    "baseline_interpretation": "Approximately 36 hours from the published acquisition and current-kernel projections combined. Reserve about 1–3 compute days as an initial planning allowance once regional adapters exist; this is a judgement, not a measured confidence interval or delivery promise. Queueing, retries, dense vectors and daily imagery can exceed it. Engineering and review time are excluded.",
-    "incremental_interpretation": "Monthly basin tables are reasonable, but no defensible incremental runtime has been measured. Refresh only eligible new periods/revisions. Benchmark a complete dated family on 100–250 basins before quoting an ETA; do not multiply the 20-basin warm-cache time by basin count.",
+    "baseline_interpretation": "The regional reduction is no longer the constraint: one grouped pass over the full 7,445-basin 15 arc-second frame takes 0.51 seconds, so a 250-pass run is about 2.1 minutes, against 14.3 hours for the per-basin scan it replaced. Loading and rasterising the frame costs 4.1 and 1.0 seconds once per run. Acquisition is now the dominant cost and depends on the source; the ~18.5-hour raster-download projection still stands for adapters that download rasters, while the server-side reduction path avoids that download entirely.",
+    "incremental_interpretation": "Measured on 250 representative basins across both systems: twelve months of MODIS snow reduced on the server in 16.7 seconds cold, returning 2968 values in 351 KB with no raster downloaded. Extrapolated linearly that is about 0.7 minutes for one month across all 7,445 basins and about 2.8 hours for a full twenty-year monthly series. Earth Engine does not scale linearly under quota, queueing or retry, and a repeated benchmark inherits its cache, so these are planning allowances rather than delivery times.",
     "environmental_interpretation": "No runtime estimate yet for the environmental atlas. Each theme needs input/method discovery and a pilot benchmark; HydroATLAS source timings do not transfer automatically.",
     "raster_storage_15arcsec_gb": 7.5,
     "fine_grid_multiplier_3arcsec": 25,
     "fine_grid_multiplier_1arcsec": 225,
     "storage_note": "Same footprint/band-count raw raster scaling only. Native 3 arc-second processing requires about 25× as many cells as 15 arc-seconds; 1 arc-second requires 225×. Do not upsample coarse climate data. Basin tables stay one row per basin/indicator/period.",
-    "source": "https://developers.google.com/earth-engine/guides/best_practices"
+    "source": "https://developers.google.com/earth-engine/guides/best_practices",
+    "regional_benchmark_evidence": "PUBLISHED/data/atlas/regional-benchmark.json",
+    "regional_sample_basins": 250,
+    "regional_frame_load_seconds": 4.101195199998983,
+    "regional_rasterise_seconds": 0.9801887000012357,
+    "regional_grouped_reduction_minutes_measured": 2.122344583335689,
+    "regional_scan_reduction_hours_measured": 14.322128747406392,
+    "regional_reduction_speedup": 404.8954781385114,
+    "regional_server_side_cold_seconds": 16.67574380000042,
+    "regional_server_side_rows": 3000,
+    "regional_monthly_series_hours_extrapolated": 2.7589091686889584,
+    "regional_current_reduction_note": "Superseded by measurement. The 17.6-hour figure extrapolated the per-basin scan; measuring that same scan on the real 7,445-basin frame gives 14.3 hours, and the grouped pass that replaced it gives 2.1 minutes for the same 250 reduction passes.",
+    "regional_reduction_passes": 250,
+    "regional_server_side_values": 2968
   },
   "publication_rules": [
     "Original HydroATLAS values are immutable reference evidence. Substitute availability is highlighted light green, including valid zeroes, only for the exact basin and run.",

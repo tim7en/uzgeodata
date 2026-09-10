@@ -1,0 +1,359 @@
+{
+  "run_id": "pskem-datedsnow-20260910T064047951442Z",
+  "attribute_id": "uzgeodata.dated.v1.snw_pc_s",
+  "asset": "MODIS/061/MYD10A1",
+  "years": [
+    2003,
+    2022
+  ],
+  "basins": 20,
+  "extracted_rows": 4800,
+  "new_rows": 4320,
+  "dated_rows_in_store": 4800,
+  "missing_months": 0,
+  "wall_seconds": 35.34861010000168,
+  "definition": {
+    "snow_flag": "NDSI_Snow_Cover >= 40",
+    "masking": "values above 100 excluded, not gap filled",
+    "reduction": "mean of cloud-free daily snow flags within the calendar month",
+    "grid": [
+      0.004166666666666667,
+      0,
+      70.10416666666667,
+      0,
+      -0.004166666666666667,
+      42.3125
+    ],
+    "cell_arcsec": 15.0
+  },
+  "source_images": {
+    "2003": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2004": {
+      "source_images_by_month": [
+        31,
+        29,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2005": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2006": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2007": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2008": {
+      "source_images_by_month": [
+        31,
+        29,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2009": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2010": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2011": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2012": {
+      "source_images_by_month": [
+        31,
+        29,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2013": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2014": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2015": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2016": {
+      "source_images_by_month": [
+        31,
+        29,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2017": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2018": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2019": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2020": {
+      "source_images_by_month": [
+        31,
+        29,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2021": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    },
+    "2022": {
+      "source_images_by_month": [
+        31,
+        28,
+        31,
+        14,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ]
+    }
+  },
+  "climatology_comparison": {
+    "compared": 240,
+    "years_averaged": 20,
+    "max_absolute_difference_percentage_points": 7.342135935274342,
+    "mean_absolute_difference_percentage_points": 0.8083008628636833,
+    "meaning": "Mean of dated monthly means against the pooled daily climatology for the same calendar month. Reported only; no dated value is adjusted by it."
+  },
+  "release_note": "Server-side reduction returns no local artefact to hash; the collection version and the per-month source image counts are the release fingerprint."
+}
