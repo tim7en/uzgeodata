@@ -38,7 +38,8 @@
       "evidence": [
         "PUBLISHED/data/atlas/batch-latest.json",
         "PUBLISHED/data/atlas/substitutes-index.json",
-        "PIPELINES/build_dynamic_atlas.py"
+        "PIPELINES/build_dynamic_atlas.py",
+        "PUBLISHED/data/atlas/regional-benchmark.json"
       ]
     },
     {
@@ -84,7 +85,7 @@
       "id": "temporal-resolution",
       "title": "Preserve time, resolution and research opportunities",
       "status": "in_progress",
-      "description": "The observation/revision contract is adopted and executable: ATLAS_MODULES/core/observations.py is the only way into the store, and the frozen Pskem run is staged through it as 10,260 rows carrying their source release, method, geometry and QA denominators. No observation year is invented, because this run holds none: its values are static attributes, source epochs and climatologies. Dated monthly adapters, the production physical design and revision traffic from real corrections remain to be implemented.",
+      "description": "The observation/revision contract is adopted and executable: ATLAS_MODULES/core/observations.py is the only way into the store. It now holds 1,801,860 rows, of which 1,786,800 are dated monthly snow observations covering every one of the 7445 level-12 basins from 2003 to 2022, beside the frozen HydroATLAS run's static values, source epochs and climatologies. Each value carries its source release, method, geometry and QA denominators; 11,765 basin-months are null and say why. The production physical design and revision traffic from real corrections remain open.",
       "deliverables": [
         "Append-only basin observation/revision store with source, method, geometry and run identities",
         "Distinct observation period, retrieval time and publication time",
@@ -97,7 +98,9 @@
         "ATLAS_MODULES/core/REPRODUCIBILITY.md",
         "PIPELINES/stage_pilot_observations.py",
         "TESTS/test_observation_store.py",
-        "PUBLISHED/data/atlas/observations/manifest.json"
+        "PUBLISHED/data/atlas/observations/manifest.json",
+        "PIPELINES/extract_regional_snow.py",
+        "PUBLISHED/data/atlas/observations/regional-snow-ledger.json"
       ]
     },
     {
@@ -120,8 +123,9 @@
     }
   ],
   "next_batches": [
-    "Run the dated monthly snow series across the benchmarked regional sample, then the full 7,445 basins, with bounded concurrency, checkpoints and a completeness ledger; carry the QA denominators and the null months through rather than gap filling them.",
+    "Explain the source-availability trend in the dated snow record before any snow trend is published from it: null basin-months roughly triple from 2003 to 2022 while daily source image counts stay constant, and from 2006 they reach basins of several hundred cells rather than only the smallest. Until it is explained, a change in what the sensor delivered cannot be told apart from a change in the snow.",
     "Reproduce one pilot attribute independently, in a second environment, against pinned inputs. Nothing in the programme has cleared reproduction gate 6 and every stage above assumes it.",
+    "Add a second dated family through the same path, so the store holds more than one time series and the observation contract is exercised by a variable with different masking behaviour.",
     "Expand by source × period × spatial batch with bounded concurrency, checkpoints, hashes, idempotent retries and a regional completeness ledger.",
     "Repeat the validated process for the first environmental-atlas thematic module before adding the other themes."
   ],
@@ -228,7 +232,10 @@
     "regional_monthly_series_hours_extrapolated": 2.7589091686889584,
     "regional_current_reduction_note": "Superseded by measurement. The 17.6-hour figure extrapolated the per-basin scan; measuring that same scan on the real 7,445-basin frame gives 14.3 hours, and the grouped pass that replaced it gives 2.1 minutes for the same 250 reduction passes.",
     "regional_reduction_passes": 250,
-    "regional_server_side_values": 2968
+    "regional_server_side_values": 2968,
+    "regional_monthly_series_hours_measured": 2.2492096364166665,
+    "regional_monthly_series_rows": 1786800,
+    "regional_monthly_series_note": "Measured, not extrapolated: 1,786,800 rows for 7445 basins over 2003-2022, in 2.25 hours with no failed batch and no retry. The 2.8-hour figure beside it was the linear extrapolation from the 250-basin sample, and it was about 23% high."
   },
   "publication_rules": [
     "Original HydroATLAS values are immutable reference evidence. Substitute availability is highlighted light green, including valid zeroes, only for the exact basin and run.",

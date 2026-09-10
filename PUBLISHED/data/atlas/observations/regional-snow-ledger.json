@@ -1,0 +1,643 @@
+{
+  "run_id": "regional-snow-20260910T070340280486Z",
+  "started_at": "2026-09-10T07:03:40.280+00:00",
+  "attribute_id": "uzgeodata.dated.v1.snw_pc_s",
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "years": [
+    2003,
+    2022
+  ],
+  "batch_size": 250,
+  "expected_rows": 1786800,
+  "retries": [],
+  "failures": [],
+  "by_year": {
+    "2003": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89097,
+      "null_months": 243,
+      "seconds": 390.90956430000006
+    },
+    "2004": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89068,
+      "null_months": 272,
+      "seconds": 406.12416529999973
+    },
+    "2005": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88999,
+      "null_months": 341,
+      "seconds": 365.07195160000083
+    },
+    "2006": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88922,
+      "null_months": 418,
+      "seconds": 459.41242430000057
+    },
+    "2007": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88785,
+      "null_months": 555,
+      "seconds": 396.4426394000002
+    },
+    "2008": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88860,
+      "null_months": 480,
+      "seconds": 381.4201054999994
+    },
+    "2009": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88703,
+      "null_months": 637,
+      "seconds": 368.5931004000013
+    },
+    "2010": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88794,
+      "null_months": 546,
+      "seconds": 362.83499219999976
+    },
+    "2011": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88811,
+      "null_months": 529,
+      "seconds": 369.9890598000002
+    },
+    "2012": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88598,
+      "null_months": 742,
+      "seconds": 367.76739069999894
+    },
+    "2013": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88789,
+      "null_months": 551,
+      "seconds": 386.21691140000075
+    },
+    "2014": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88633,
+      "null_months": 707,
+      "seconds": 408.7543119999991
+    },
+    "2015": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88687,
+      "null_months": 653,
+      "seconds": 419.79548910000085
+    },
+    "2016": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88745,
+      "null_months": 595,
+      "seconds": 382.99718799999755
+    },
+    "2017": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88744,
+      "null_months": 596,
+      "seconds": 378.50310759999775
+    },
+    "2018": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88718,
+      "null_months": 622,
+      "seconds": 388.30638290000206
+    },
+    "2019": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88582,
+      "null_months": 758,
+      "seconds": 432.56815970000025
+    },
+    "2020": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88472,
+      "null_months": 868,
+      "seconds": 420.9318521000023
+    },
+    "2021": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88504,
+      "null_months": 836,
+      "seconds": 377.535803499999
+    },
+    "2022": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88524,
+      "null_months": 816,
+      "seconds": 396.0884235000012
+    }
+  },
+  "finished_at": "2026-09-10T09:18:37.439+00:00",
+  "wall_seconds": 8097.154691099999,
+  "stored_rows": 1786800,
+  "complete": true,
+  "source_images": {
+    "2003": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2004": [
+      31,
+      29,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2005": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2006": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2007": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2008": [
+      31,
+      29,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2009": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2010": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2011": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2012": [
+      31,
+      29,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2013": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2014": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2015": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2016": [
+      31,
+      29,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2017": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2018": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2019": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2020": [
+      31,
+      29,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2021": [
+      31,
+      28,
+      31,
+      30,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ],
+    "2022": [
+      31,
+      28,
+      31,
+      14,
+      31,
+      30,
+      31,
+      31,
+      30,
+      31,
+      30,
+      31
+    ]
+  },
+  "basin_support": {
+    "basins": 7445,
+    "cells_min": 1,
+    "cells_max": 1757,
+    "cells_median": 835,
+    "basins_at_or_below": {
+      "1": 10,
+      "5": 56,
+      "25": 174,
+      "100": 438
+    },
+    "basins_without_a_cell": 0,
+    "meaning": "Analysis cells per basin on the 15 arc-second grid. A value from a basin with few cells is supported by few observations; every row carries its own valid and expected counts so this can be filtered on. A basin with no cell at all would yield no value rather than a zero."
+  },
+  "availability": {
+    "by_year": {
+      "2003": {
+        "null_months": 243,
+        "basins_affected": 88,
+        "median_affected_basin_cells": 22,
+        "nulls_in_basins_over_100_cells": 80,
+        "summer_share": 0.77
+      },
+      "2004": {
+        "null_months": 272,
+        "basins_affected": 88,
+        "median_affected_basin_cells": 22,
+        "nulls_in_basins_over_100_cells": 89,
+        "summer_share": 0.713
+      },
+      "2005": {
+        "null_months": 341,
+        "basins_affected": 108,
+        "median_affected_basin_cells": 42,
+        "nulls_in_basins_over_100_cells": 122,
+        "summer_share": 0.642
+      },
+      "2006": {
+        "null_months": 418,
+        "basins_affected": 149,
+        "median_affected_basin_cells": 217,
+        "nulls_in_basins_over_100_cells": 229,
+        "summer_share": 0.844
+      },
+      "2007": {
+        "null_months": 555,
+        "basins_affected": 149,
+        "median_affected_basin_cells": 419,
+        "nulls_in_basins_over_100_cells": 330,
+        "summer_share": 0.706
+      },
+      "2008": {
+        "null_months": 480,
+        "basins_affected": 117,
+        "median_affected_basin_cells": 546,
+        "nulls_in_basins_over_100_cells": 301,
+        "summer_share": 0.677
+      },
+      "2009": {
+        "null_months": 637,
+        "basins_affected": 150,
+        "median_affected_basin_cells": 502,
+        "nulls_in_basins_over_100_cells": 410,
+        "summer_share": 0.655
+      },
+      "2010": {
+        "null_months": 546,
+        "basins_affected": 164,
+        "median_affected_basin_cells": 356,
+        "nulls_in_basins_over_100_cells": 327,
+        "summer_share": 0.722
+      },
+      "2011": {
+        "null_months": 529,
+        "basins_affected": 132,
+        "median_affected_basin_cells": 495,
+        "nulls_in_basins_over_100_cells": 330,
+        "summer_share": 0.716
+      },
+      "2012": {
+        "null_months": 742,
+        "basins_affected": 205,
+        "median_affected_basin_cells": 546,
+        "nulls_in_basins_over_100_cells": 495,
+        "summer_share": 0.627
+      },
+      "2013": {
+        "null_months": 551,
+        "basins_affected": 139,
+        "median_affected_basin_cells": 495,
+        "nulls_in_basins_over_100_cells": 351,
+        "summer_share": 0.681
+      },
+      "2014": {
+        "null_months": 707,
+        "basins_affected": 158,
+        "median_affected_basin_cells": 561,
+        "nulls_in_basins_over_100_cells": 475,
+        "summer_share": 0.692
+      },
+      "2015": {
+        "null_months": 653,
+        "basins_affected": 158,
+        "median_affected_basin_cells": 459,
+        "nulls_in_basins_over_100_cells": 406,
+        "summer_share": 0.678
+      },
+      "2016": {
+        "null_months": 595,
+        "basins_affected": 150,
+        "median_affected_basin_cells": 488,
+        "nulls_in_basins_over_100_cells": 370,
+        "summer_share": 0.736
+      },
+      "2017": {
+        "null_months": 596,
+        "basins_affected": 142,
+        "median_affected_basin_cells": 356,
+        "nulls_in_basins_over_100_cells": 352,
+        "summer_share": 0.651
+      },
+      "2018": {
+        "null_months": 622,
+        "basins_affected": 159,
+        "median_affected_basin_cells": 488,
+        "nulls_in_basins_over_100_cells": 393,
+        "summer_share": 0.711
+      },
+      "2019": {
+        "null_months": 758,
+        "basins_affected": 151,
+        "median_affected_basin_cells": 666,
+        "nulls_in_basins_over_100_cells": 523,
+        "summer_share": 0.627
+      },
+      "2020": {
+        "null_months": 868,
+        "basins_affected": 165,
+        "median_affected_basin_cells": 604,
+        "nulls_in_basins_over_100_cells": 589,
+        "summer_share": 0.569
+      },
+      "2021": {
+        "null_months": 836,
+        "basins_affected": 180,
+        "median_affected_basin_cells": 546,
+        "nulls_in_basins_over_100_cells": 561,
+        "summer_share": 0.605
+      },
+      "2022": {
+        "null_months": 816,
+        "basins_affected": 184,
+        "median_affected_basin_cells": 546,
+        "nulls_in_basins_over_100_cells": 546,
+        "summer_share": 0.624
+      }
+    },
+    "meaning": "A null month is a month in which no cloud-free observation reached the basin. It is a property of the imagery, not of the snow. These counts are not stable across the record, so a trend computed from this series without accounting for them can mistake changing observation availability for changing snow cover. No cause is asserted; the counts are the finding.",
+    "source_images_are_not_the_explanation": "Daily source image counts are effectively constant across the record; see source_images."
+  }
+}

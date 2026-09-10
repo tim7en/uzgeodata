@@ -16,6 +16,7 @@ production decision: the physical design stays open until it is benchmarked.
 """
 from __future__ import annotations
 import csv
+import json
 from datetime import date
 import hashlib
 from pathlib import Path
@@ -181,15 +182,18 @@ def _validate_revision(record):
         raise ContractError(f"revision {record['revision']} cannot supersede {record['supersedes']}")
 
 
-def series_conflicts(rows):
+def series_conflicts(rows, seen=None):
     """Unit, time kind and period definition hold steady unless a version moves.
 
     A dated series varies its period by design, one row per month, so only the
     period *definition* of an undated kind is held constant here: a climatology
     that quietly changes its window is a different measurement wearing the same
     name, while January 2003 and February 2003 are simply two observations.
+
+    Pass `seen` to carry state across calls, which is how the whole store can be
+    checked one partition at a time instead of being held in memory at once.
     """
-    problems, seen = set(), {}
+    problems, seen = set(), {} if seen is None else seen
     for record in rows:
         series = tuple(record[field] for field in SERIES)
         version = (record["recipe_version"], record["geometry_version"])
@@ -223,6 +227,107 @@ def append(existing, incoming):
     if problems:
         raise ContractError("; ".join(problems))
     return result
+
+
+def append_partitioned(directory, rows):
+    """Append into only the partitions these rows belong to.
+
+    Once the store holds a dated series it is far too large to read whole on every
+    write: a full read costs gigabytes and over a minute, and every publish would
+    pay it. Grouping by partition keeps a write proportional to what it changes.
+
+    All revisions of an observation share a partition, because time kind and year
+    are part of its identity, so revision handling is unaffected. What this does not
+    see is a conflict between two partitions; `verify_partitions` checks that over
+    the whole store without holding it in memory.
+    """
+    directory = Path(directory)
+    groups = {}
+    for record in rows:
+        groups.setdefault(partition(record), []).append(record)
+    added, touched = 0, []
+    for name, group in sorted(groups.items()):
+        existing = read_partitions(directory / name)
+        merged = append(existing, group)
+        added += len(merged) - len(existing)
+        write_partitions(directory, merged)
+        touched.append(name)
+    return added, touched
+
+
+def verify_partitions(directory):
+    """Whole-store consistency, one partition at a time."""
+    seen, problems = {}, set()
+    for path in sorted(Path(directory).glob("**/part.csv")):
+        problems.update(series_conflicts(_read_file(path), seen))
+    return sorted(problems)
+
+
+SUMMARY_CACHE = ".summary-cache.json"
+
+
+def _partition_counts(path):
+    rows = _read_file(path)
+    counts = {"rows": len(rows), "current_rows": 0, "missing_values": 0,
+              "by_mode": {}, "by_time_kind": {}, "attributes": []}
+    attributes = set()
+    for record in latest(rows):
+        counts["current_rows"] += 1
+        counts["missing_values"] += record["value"] is None
+        counts["by_mode"][record["mode"]] = counts["by_mode"].get(record["mode"], 0) + 1
+        kind = record["time_kind"]
+        counts["by_time_kind"][kind] = counts["by_time_kind"].get(kind, 0) + 1
+        attributes.add(record["attribute_id"])
+    counts["attributes"] = sorted(attributes)
+    return counts
+
+
+def summarise(directory, cache=True):
+    """Counts across the store without holding it in memory.
+
+    A partition that has not changed is not read again. Publishing touches a handful
+    of partitions, and re-reading a store that holds millions of dated rows to count
+    them would cost more than writing them did. The cache is keyed on each file's
+    size and modification time, so any edit invalidates its own entry; delete the
+    cache file and nothing but time is lost.
+    """
+    directory = Path(directory)
+    cache_path = directory / SUMMARY_CACHE
+    known = {}
+    if cache and cache_path.exists():
+        try:
+            known = json.loads(cache_path.read_text(encoding="utf-8"))
+        except (ValueError, OSError):
+            known = {}
+
+    totals = {"rows": 0, "current_rows": 0, "missing_values": 0,
+              "by_mode": {}, "by_time_kind": {}, "attributes": set()}
+    fresh = {}
+    for path in sorted(directory.glob("**/part.csv")):
+        stat = path.stat()
+        key = str(path.relative_to(directory)).replace("\\", "/")
+        entry = known.get(key)
+        if not (entry and entry.get("size") == stat.st_size and entry.get("mtime") == stat.st_mtime_ns):
+            entry = {"size": stat.st_size, "mtime": stat.st_mtime_ns,
+                     "counts": _partition_counts(path)}
+        fresh[key] = entry
+        counts = entry["counts"]
+        totals["rows"] += counts["rows"]
+        totals["current_rows"] += counts["current_rows"]
+        totals["missing_values"] += counts["missing_values"]
+        for field in ("by_mode", "by_time_kind"):
+            for name, value in counts[field].items():
+                totals[field][name] = totals[field].get(name, 0) + value
+        totals["attributes"].update(counts["attributes"])
+
+    if cache:
+        try:
+            cache_path.write_text(json.dumps(fresh), encoding="utf-8")
+        except OSError:
+            pass  # A read-only checkout still summarises, it just pays full price.
+    totals["attributes"] = sorted(totals["attributes"])
+    totals["dated_observations"] = totals["by_time_kind"].get("observation", 0)
+    return totals
 
 
 def latest(rows):
@@ -304,10 +409,13 @@ def read_partitions(directory):
     """Every partition under a directory. Half-written temporaries are not partitions."""
     rows = []
     for path in sorted(Path(directory).glob("**/part.csv")):
-        with path.open(encoding="utf-8", newline="") as stream:
-            for raw in csv.DictReader(stream):
-                rows.append(_decode(raw))
+        rows.extend(_read_file(path))
     return rows
+
+
+def _read_file(path):
+    with Path(path).open(encoding="utf-8", newline="") as stream:
+        return [_decode(raw) for raw in csv.DictReader(stream)]
 
 
 def _decode(raw):

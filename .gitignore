@@ -25,6 +25,10 @@ GEODATA/BasinATLAS_Data_v10.gdb.zip
 GEODATA.zip
 earth_engine.zip
 
+# Derived counting cache for the observation store: machine-specific mtimes, and
+# rebuilt for free whenever it is missing.
+PUBLISHED/data/atlas/observations/.summary-cache.json
+
 # Python bytecode
 __pycache__/
 *.pyc

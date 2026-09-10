@@ -32,7 +32,11 @@ def make(**overrides):
 
 @pytest.fixture(scope="module")
 def staged():
-    rows = observations.read_partitions(STORE)
+    """The undated partitions only. The store also holds a dated series of millions
+    of rows, and reading it whole to check the pilot would cost gigabytes."""
+    rows = []
+    for kind in ("static", "source_epoch", "climatology"):
+        rows.extend(observations.read_partitions(STORE / f"time_kind={kind}"))
     assert rows, "the pilot observations are published"
     return rows
 
@@ -42,11 +46,26 @@ def manifest():
     return json.loads((STORE / "manifest.json").read_text(encoding="utf-8"))
 
 
-def test_the_staged_pilot_invents_no_observation_year(staged, manifest):
+@pytest.fixture(scope="module")
+def ledger():
+    return json.loads((STORE / "regional-snow-ledger.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="module")
+def totals():
+    return observations.summarise(STORE)
+
+
+@pytest.fixture(scope="module")
+def one_dated_year():
+    return observations.read_partitions(STORE / "time_kind=observation" / "year=2003")
+
+
+def test_the_staged_pilot_invents_no_observation_year(staged, manifest, totals):
     """The HydroATLAS run contributes no dated value, however many the store holds."""
     batch, _ = latest_run()
     pilot = [row for row in staged if row["run_id"] == batch["run_id"]]
-    assert manifest["rows"] == len(staged)
+    assert manifest["rows"] == totals["rows"]
     assert manifest["staged_from_this_run"] == len(pilot)
     assert all(row["year"] is None for row in pilot), "this run holds no dated observations"
     assert {row["time_kind"] for row in pilot} == {"static", "source_epoch", "climatology"}
@@ -183,6 +202,120 @@ def test_a_partition_is_replaced_atomically_not_rewritten_in_place(tmp_path):
     assert len(observations.read_partitions(tmp_path)) == len(second)
 
 
+def dated(year, month, basin, value=50.0):
+    return make(time_kind="observation", year=year, month=month, basin_id=basin,
+                valid_start=f"{year}-{month:02d}-01",
+                valid_end=f"{year}-{month + 1:02d}-01" if month < 12 else f"{year + 1}-01-01",
+                temporal_statistic="monthly_mean", recipe_version="dated@abc", value=value)
+
+
+def test_a_scoped_append_touches_only_the_partitions_it_writes(tmp_path):
+    """A store holding a dated series is too large to read whole on every publish."""
+    observations.append_partitioned(tmp_path, [make(value=1.0), dated(2003, 1, "4120380180")])
+    climatology = tmp_path / "time_kind=climatology" / "part.csv"
+    first_year = tmp_path / "time_kind=observation" / "year=2003" / "part.csv"
+    assert climatology.is_file() and first_year.is_file()
+    untouched = first_year.read_bytes()
+
+    added, touched = observations.append_partitioned(tmp_path, [dated(2004, 1, "4120380180")])
+    assert added == 1
+    assert touched == [observations.partition(dated(2004, 1, "4120380180"))]
+    assert first_year.read_bytes() == untouched, "2003 was neither read nor rewritten"
+    assert len(observations.read_partitions(tmp_path)) == 3
+
+
+def test_a_scoped_append_still_refuses_to_rewrite_a_published_row(tmp_path):
+    observations.append_partitioned(tmp_path, [dated(2003, 1, "4120380180", value=50.0)])
+    with pytest.raises(ContractError, match="already published with different content"):
+        observations.append_partitioned(tmp_path, [dated(2003, 1, "4120380180", value=99.0)])
+    # Re-staging the identical row remains a no-op.
+    added, _ = observations.append_partitioned(tmp_path, [dated(2003, 1, "4120380180", value=50.0)])
+    assert added == 0
+
+
+def test_the_whole_store_is_verified_without_being_held_in_memory(tmp_path):
+    observations.append_partitioned(tmp_path, [dated(2003, 1, "4120380180"),
+                                               dated(2004, 1, "4120380180")])
+    assert observations.verify_partitions(tmp_path) == []
+
+    # A unit that drifts between two partitions is invisible to either write alone.
+    drifted = dict(dated(2005, 1, "4120380180"))
+    drifted["unit"] = "millimetres"
+    drifted["observation_id"] = observations.observation_id(drifted)
+    observations.write_partitions(tmp_path, [drifted])
+    problems = observations.verify_partitions(tmp_path)
+    assert problems and "unit changes" in problems[0], "the cross-partition check catches it"
+
+
+def test_counts_are_summarised_a_partition_at_a_time(tmp_path):
+    observations.append_partitioned(tmp_path, [
+        make(value=1.0),
+        make(value=None, missing_reason="source masked", basin_id="4120380350"),
+        dated(2003, 1, "4120380180"), dated(2003, 2, "4120380180"), dated(2004, 1, "4120380180"),
+    ])
+    totals = observations.summarise(tmp_path)
+    assert totals["rows"] == 5 and totals["current_rows"] == 5
+    assert totals["by_time_kind"] == {"climatology": 2, "observation": 3}
+    assert totals["dated_observations"] == 3
+    assert totals["missing_values"] == 1
+    assert totals["by_mode"] == {"annual_extension": 5}
+    assert len(totals["attributes"]) == 1
+    assert totals == observations.summarise(tmp_path), "summarising changes nothing"
+    assert totals == observations.summarise(tmp_path, cache=False), "the cache agrees with a full read"
+
+
+def test_an_unchanged_partition_is_not_read_again(tmp_path, monkeypatch):
+    """Publishing touches a few partitions; counting the rest again costs more than
+    writing them did."""
+    observations.append_partitioned(tmp_path, [make(value=1.0), dated(2003, 1, "4120380180")])
+    observations.summarise(tmp_path)
+    assert (tmp_path / observations.SUMMARY_CACHE).is_file()
+
+    read = []
+    original = observations._read_file
+    monkeypatch.setattr(observations, "_read_file", lambda path: read.append(path) or original(path))
+
+    observations.summarise(tmp_path)
+    assert read == [], "nothing changed, nothing re-read"
+
+    observations.append_partitioned(tmp_path, [dated(2004, 1, "4120380180")])
+    read.clear()
+    totals = observations.summarise(tmp_path)
+    assert len(read) == 1 and "year=2004" in str(read[0]), "only the changed partition is read"
+    assert totals["rows"] == 3
+
+
+def test_a_changed_partition_invalidates_its_own_cache_entry(tmp_path):
+    observations.append_partitioned(tmp_path, [dated(2003, 1, "4120380180", value=50.0)])
+    assert observations.summarise(tmp_path)["rows"] == 1
+
+    # Rewrite the partition behind the cache's back, as a crash or a manual edit would.
+    partition = tmp_path / "time_kind=observation" / "year=2003" / "part.csv"
+    observations.write_partitions(tmp_path, [dated(2003, 1, "4120380180", value=50.0),
+                                             dated(2003, 2, "4120380180", value=60.0)])
+    assert partition.stat().st_size > 0
+    assert observations.summarise(tmp_path)["rows"] == 2, "size and mtime caught the change"
+
+
+def test_a_corrupt_cache_is_ignored_rather_than_trusted(tmp_path):
+    observations.append_partitioned(tmp_path, [dated(2003, 1, "4120380180")])
+    (tmp_path / observations.SUMMARY_CACHE).write_text("{not json", encoding="utf-8")
+    assert observations.summarise(tmp_path)["rows"] == 1
+
+
+def test_a_superseded_row_is_stored_but_not_counted_as_current(tmp_path):
+    first = dated(2003, 1, "4120380180", value=50.0)
+    observations.append_partitioned(tmp_path, [first])
+    corrected = observations.build(**{**{k: v for k, v in first.items()
+                                         if k not in ("observation_id", "revision", "supersedes")},
+                                      "value": 55.0, "revision": 2,
+                                      "supersedes": observations.row_key(first)})
+    observations.append_partitioned(tmp_path, [corrected])
+    totals = observations.summarise(tmp_path)
+    assert totals["rows"] == 2, "the superseded value is kept"
+    assert totals["current_rows"] == 1, "but only the correction is current"
+
+
 def test_the_published_store_round_trips_and_matches_its_run(staged):
     batch, lock = latest_run()
     rebuilt, _ = build_rows(batch, lock)
@@ -192,36 +325,62 @@ def test_the_published_store_round_trips_and_matches_its_run(staged):
     assert not observations.series_conflicts(staged), "sources coexist without drifting"
 
 
-def test_the_dated_snow_series_is_a_real_observation_series(staged, manifest):
-    """The first dated family: twenty basins, twenty years, twelve months each."""
-    dated = [row for row in staged if row["time_kind"] == "observation"]
-    assert len(dated) == manifest["dated_observations"] == 4800
-    assert {row["attribute_id"] for row in dated} == {"uzgeodata.dated.v1.snw_pc_s"}
-    assert {row["year"] for row in dated} == set(range(2003, 2023))
-    assert {row["month"] for row in dated} == set(range(1, 13))
-    assert {row["basin_id"] for row in dated} == set(json.loads(
-        (STORE.parent / "substitutes-index.json").read_text(encoding="utf-8"))["basin_ids"])
+def test_the_whole_store_holds_no_series_conflict():
+    """Checked across every partition, which the scoped writes cannot see alone."""
+    assert observations.verify_partitions(STORE) == []
+
+
+def test_the_dated_series_covers_the_region_for_twenty_years(manifest, totals, ledger, one_dated_year):
+    """The pilot's 20 basins and the regional 7,445, each under its own geometry."""
+    assert ledger["complete"] and not ledger["failures"]
+    assert ledger["stored_rows"] == ledger["expected_rows"] == 7445 * 20 * 12
+    assert totals["dated_observations"] == manifest["dated_observations"]
+    assert totals["dated_observations"] == ledger["expected_rows"] + 20 * 20 * 12
+    assert manifest["dated_attributes"] == ["uzgeodata.dated.v1.snw_pc_s"]
+
+    regional = [r for r in one_dated_year if r["geometry_version"] == ledger["geometry_version"]]
+    pilot = [r for r in one_dated_year if r["geometry_version"] != ledger["geometry_version"]]
+    assert len({r["basin_id"] for r in regional}) == 7445
+    assert len({r["basin_id"] for r in pilot}) == 20, "the pilot series is not overwritten"
+    assert {r["month"] for r in regional} == set(range(1, 13))
 
     # A dated month carries the month it covers, and every value its QA denominator.
-    for row in dated:
+    for row in one_dated_year:
         assert row["valid_start"][:7] == f"{row['year']:04d}-{row['month']:02d}"
         assert row["temporal_statistic"] == "monthly_mean"
         assert row["expected_count"] and row["valid_count"] <= row["expected_count"]
         assert row["value"] is None or 0 <= row["value"] <= 100
+        assert row["value"] is not None or row["missing_reason"], "a null says why"
 
-    # It does not overwrite the climatology it was derived alongside.
+
+def test_the_climatology_it_was_derived_alongside_still_stands(staged):
     climatology = {row["attribute_id"] for row in staged if row["time_kind"] == "climatology"}
     assert "uzgeodata.dated.v1.snw_pc_s" not in climatology
     assert any(a.endswith("snw_pc_s01") for a in climatology), "the January climatology still stands"
 
 
-def test_a_dated_month_is_partitioned_by_its_year(staged):
-    for year in (2003, 2012, 2022):
-        path = STORE / "time_kind=observation" / f"year={year}" / "part.csv"
-        assert path.is_file(), f"{year} has its own partition"
+def test_a_dated_month_is_partitioned_by_its_year():
+    for year in range(2003, 2023):
+        assert (STORE / "time_kind=observation" / f"year={year}" / "part.csv").is_file()
     rows = observations.read_partitions(STORE / "time_kind=observation" / "year=2003")
     assert {row["year"] for row in rows} == {2003}
-    assert len(rows) == 20 * 12
+    assert len(rows) == (7445 + 20) * 12
+
+
+def test_the_ledger_reports_the_availability_a_trend_would_confound(ledger):
+    """Null months are not stable across the record. A snow trend computed without
+    them can be a trend in what the sensor delivered."""
+    availability = ledger["availability"]["by_year"]
+    assert set(availability) == {str(year) for year in range(2003, 2023)}
+    assert availability["2022"]["null_months"] > availability["2003"]["null_months"] * 2
+    assert "not stable across the record" in ledger["availability"]["meaning"]
+
+    images = {year: sum(counts) for year, counts in ledger["source_images"].items()}
+    assert min(images.values()) > 340, "daily coverage is constant, so it is not the cause"
+
+    support = ledger["basin_support"]
+    assert support["basins"] == 7445 and support["basins_without_a_cell"] == 0
+    assert support["basins_at_or_below"]["100"] > 0, "the thin tail is published, not hidden"
 
 
 def test_qa_denominators_must_agree_with_their_coverage():

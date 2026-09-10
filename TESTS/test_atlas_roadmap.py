@@ -97,6 +97,14 @@ def test_measured_regional_figures_trace_to_the_benchmark_that_produced_them():
     assert bench['supersedes']['published_extrapolation_hours'] == runtime['regional_current_reduction_hours_extrapolated']
     assert 'Superseded by measurement' in runtime['regional_current_reduction_note']
 
+    # The regional series is measured now; the extrapolation is kept beside it.
+    ledger = json.loads((ROOT / 'PUBLISHED/data/atlas/observations/regional-snow-ledger.json')
+                        .read_text(encoding='utf-8'))
+    assert runtime['regional_monthly_series_rows'] == ledger['stored_rows']
+    assert runtime['regional_monthly_series_hours_measured'] == ledger['wall_seconds'] / 3600
+    assert runtime['regional_monthly_series_hours_extrapolated'] > 0, 'the projection is retained'
+    assert ledger['complete'] and not ledger['failures']
+
 
 def test_news_is_republished_and_missing_recipe_fails(tmp_path):
     import json

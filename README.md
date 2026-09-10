@@ -38,6 +38,14 @@ the real 7,445-basin frame rather than extrapolating one: the grouped reduction 
 405 times faster, and server-side acquisition returns basin values without
 downloading a raster.
 
+The dated series now covers the region: 1,786,800 monthly snow observations for all
+7,445 basins, 2003-2022, in 2.25 hours (`npm run atlas:regional-snow`, resumable
+from checkpoints). Read the
+[run ledger](PUBLISHED/data/atlas/observations/regional-snow-ledger.json) before
+using it. It publishes two limitations with the data: basin support is uneven,
+and source availability is not stable across the record, so a trend taken from
+this series without accounting for null months may be a trend in the imagery.
+
 Each top-level folder is named for the kind of information it holds.
 
 | Folder | What lives here |

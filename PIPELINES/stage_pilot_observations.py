@@ -194,30 +194,30 @@ def side_tables(batch, lock, rows):
 def stage(store=STORE, published=PUBLISHED):
     batch, lock = latest_run(published)
     rows, skipped = build_rows(batch, lock)
-    stored = observations.append(observations.read_partitions(store), rows)
-    observations.write_partitions(store, stored)
+    # Only the partitions this run writes are read and rewritten. The store also
+    # holds dated series far too large to load on every publish.
+    observations.append_partitioned(store, rows)
     keys = {"source_release": "source_release_id", "basin_geometry": "geometry_version",
             "run": "run_id", "recipe": "recipe_version"}
-    for name, table in side_tables(batch, lock, stored).items():
+    for name, table in side_tables(batch, lock, rows).items():
         observations.merge_table(Path(store) / f"{name}.csv", table, keys[name])
 
-    current = observations.latest(stored)
-    counts = {}
-    for record in current:
-        counts[record["mode"]] = counts.get(record["mode"], 0) + 1
+    totals = observations.summarise(store)
+    counts = totals["by_mode"]
     summary = {
         "schema_version": 1,
         "generated_from_run": batch["run_id"],
         "contract": "ATLAS_MODULES/core/REPRODUCIBILITY.md",
         "fields": list(observations.FIELDS),
-        "rows": len(stored),
+        "rows": totals["rows"],
         "staged_from_this_run": len(rows),
-        "current_rows": len(current),
+        "current_rows": totals["current_rows"],
         "by_mode": counts,
-        "by_time_kind": {kind: sum(r["time_kind"] == kind for r in current)
-                         for kind in observations.TIME_KINDS},
-        "dated_observations": sum(r["time_kind"] == "observation" for r in current),
-        "missing_values": sum(r["value"] is None for r in current),
+        "by_time_kind": {kind: totals["by_time_kind"].get(kind, 0) for kind in observations.TIME_KINDS},
+        "dated_observations": totals["dated_observations"],
+        "attribute_count": len(totals["attributes"]),
+        "dated_attributes": [a for a in totals["attributes"] if a.startswith("uzgeodata.dated.")],
+        "missing_values": totals["missing_values"],
         "basins": len(batch["basin_ids"]),
         "basin_level": BASIN_LEVEL,
         "attributes_without_pinned_source": len(skipped),

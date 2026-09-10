@@ -43,6 +43,24 @@ replaced measures 14.3 hours. Server-side acquisition over a representative
 250-basin sample across both systems returned twelve months of snow in 17 seconds
 with no raster downloaded.
 
+The regional dated run followed: 1,786,800 monthly snow observations, all 7445 level-12
+basins, 2003-2022, in 2.25 hours with no failed batch and no retry. Work is cut into
+basin batches taken a year at a time, each checkpointed before the next is
+attempted, so a rerun resumes rather than restarting, and the ledger records per
+year how many basins were expected against how many arrived.
+
+Two limitations are published with the series rather than left to be found.
+Basin support is uneven: the median basin holds 835 analysis cells, but 438 hold
+100 or fewer and ten hold a single cell, so a monthly value from the smallest
+basins rests on very few observations. Every row carries its own valid and
+expected counts, so this can be filtered on. Second, source availability is not
+stable across the record: null basin-months rise from 243 in 2003 to 816 in 2022
+while the daily source image count stays effectively constant, and from 2006 the
+nulls reach basins of several hundred cells rather than only the smallest. No
+cause is asserted here. Until one is established, a snow trend computed from this
+series without accounting for null months cannot be told apart from a trend in
+what the sensor delivered.
+
 Open `/dynamic-atlas.html` for the actual Pskem results, all 56 variable-family
 crosswalks, native and processing resolutions, periods used, live source checks,
 and the update pathway. This inventory covers BasinATLAS attributes on the 20

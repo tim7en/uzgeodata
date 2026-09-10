@@ -113,6 +113,37 @@ def support_summary(expected, thresholds=(1, 5, 25, 100)):
     }
 
 
+def availability_by_year(store, years, version):
+    """How the source's own availability moves over the record.
+
+    A month is null when no cloud-free observation reached a basin at all. That is a
+    property of the imagery, not of the snow, and it does not hold steady across a
+    twenty-year record. Publishing it per year, with the size of the basins affected,
+    is what stops a change in what the sensor delivered from being read later as a
+    change in what the snow did. No cause is asserted here; the numbers are the
+    finding, and explaining them is separate work.
+    """
+    report = {}
+    for year in years:
+        rows = [row for row in observations.read_partitions(
+            store / "time_kind=observation" / f"year={year}")
+            if row["geometry_version"] == version]
+        if not rows:
+            continue
+        cells = {row["basin_id"]: row["expected_count"] for row in rows}
+        nulls = [row for row in rows if row["value"] is None]
+        sizes = sorted(cells[row["basin_id"]] for row in nulls)
+        report[str(year)] = {
+            "null_months": len(nulls),
+            "basins_affected": len({row["basin_id"] for row in nulls}),
+            "median_affected_basin_cells": sizes[len(sizes) // 2] if sizes else 0,
+            "nulls_in_basins_over_100_cells": sum(1 for size in sizes if size > 100),
+            "summer_share": round(sum(1 for row in nulls if 6 <= row["month"] <= 9) / len(nulls), 3)
+            if nulls else 0.0,
+        }
+    return report
+
+
 def is_complete(ledger):
     """A run is complete only if nothing failed, every year has every basin, and the
     rows written match the rows expected. Any one of those failing makes it partial."""
@@ -192,9 +223,7 @@ def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT):
             collected.extend(rows)
 
         built = observation_rows(collected, version, recipe, identifier, utc_now(), utc_now())
-        partition = store / "time_kind=observation" / f"year={year}"
-        merged = observations.append(observations.read_partitions(partition), built)
-        observations.write_partitions(store, merged)
+        observations.append_partitioned(store, built)
 
         ledger["by_year"][str(year)] = summarise_year(collected, len(frame),
                                                       time.perf_counter() - year_started)
@@ -208,6 +237,16 @@ def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT):
     ledger["stored_rows"] = sum(y["rows"] for y in ledger["by_year"].values())
     ledger["complete"] = is_complete(ledger)
     ledger["basin_support"] = support_summary(expected)
+    ledger["availability"] = {
+        "by_year": availability_by_year(store, span, version),
+        "meaning": "A null month is a month in which no cloud-free observation reached the "
+                   "basin. It is a property of the imagery, not of the snow. These counts are "
+                   "not stable across the record, so a trend computed from this series without "
+                   "accounting for them can mistake changing observation availability for "
+                   "changing snow cover. No cause is asserted; the counts are the finding.",
+        "source_images_are_not_the_explanation": "Daily source image counts are effectively "
+                                                 "constant across the record; see source_images.",
+    }
     ledger["source_images"] = {str(year): dated_snow.source_images(year) for year in span}
     write_json(LEDGER, ledger)
 
