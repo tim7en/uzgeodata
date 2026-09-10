@@ -1,66 +1,2538 @@
 {
-  "generated_at": "2026-09-10T05:23:46.968811+00:00",
   "run_id": "pskem-all281-20260909T184834061745Z",
-  "download_base": "/data/atlas/runs/pskem-all281-20260909T184834061745Z/",
-  "scope": "Pskem candidate catchment: 20 complete level-12 units, outlet 4121289400. Gauge-to-reach placement still requires review.",
-  "summary": {
-    "basin_count": 20,
-    "attribute_count": 281,
-    "candidate_attributes": 34,
-    "surrogate_attributes": 196,
-    "attributes_without_any_estimate": 51,
-    "reference_records": 5620,
-    "reference_nonmissing": 5611,
-    "independently_reproduced": 0,
-    "earth_engine_attributes": 221,
-    "surrogate_nonmissing": 3920
-  },
-  "themes": [
+  "attributes": [
     {
-      "category": "Anthropogenic",
-      "attributes": 19,
-      "candidates": 0,
-      "surrogates": 10,
-      "missing": 9
-    },
-    {
+      "column": "aet_mm_s01",
+      "label": "Actual Evapotranspiration - January average, this sub-basin",
       "category": "Climate",
-      "attributes": 91,
-      "candidates": 30,
-      "surrogates": 59,
-      "missing": 2
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
     },
     {
-      "category": "Hydrology",
-      "attributes": 20,
-      "candidates": 0,
-      "surrogates": 13,
-      "missing": 7
+      "column": "aet_mm_s02",
+      "label": "Actual Evapotranspiration - February average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
     },
     {
-      "category": "Landcover",
-      "attributes": 117,
-      "candidates": 0,
-      "surrogates": 90,
-      "missing": 27
+      "column": "aet_mm_s03",
+      "label": "Actual Evapotranspiration - March average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
     },
     {
-      "category": "Physiography",
-      "attributes": 7,
-      "candidates": 4,
-      "surrogates": 2,
-      "missing": 1
+      "column": "aet_mm_s04",
+      "label": "Actual Evapotranspiration - April average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
     },
     {
+      "column": "aet_mm_s05",
+      "label": "Actual Evapotranspiration - May average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_s06",
+      "label": "Actual Evapotranspiration - June average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_s07",
+      "label": "Actual Evapotranspiration - July average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_s08",
+      "label": "Actual Evapotranspiration - August average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_s09",
+      "label": "Actual Evapotranspiration - September average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_s10",
+      "label": "Actual Evapotranspiration - October average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_s11",
+      "label": "Actual Evapotranspiration - November average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_s12",
+      "label": "Actual Evapotranspiration - December average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_syr",
+      "label": "Actual Evapotranspiration - annual average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "aet_mm_uyr",
+      "label": "Actual Evapotranspiration - annual average, the whole upstream catchment",
+      "category": "Climate",
+      "support": "u",
+      "family": "aet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "ari_ix_sav",
+      "label": "Global Aridity Index - average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "ari",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "ari_ix_uav",
+      "label": "Global Aridity Index - average, the whole upstream catchment",
+      "category": "Climate",
+      "support": "u",
+      "family": "ari",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cls_cl_smj",
+      "label": "Climate Strata - majority class, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cls",
+      "candidate_available": false,
+      "pending_reason": "The GEnS raster is distributed on request rather than from an open endpoint, and no open substitute carries the same 125-class legend."
+    },
+    {
+      "column": "cly_pc_sav",
+      "label": "Clay Fraction in Soil - average, this sub-basin",
       "category": "Soils & Geology",
-      "attributes": 27,
-      "candidates": 0,
-      "surrogates": 22,
-      "missing": 5
+      "support": "s",
+      "family": "cly",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cly_pc_uav",
+      "label": "Clay Fraction in Soil - average, the whole upstream catchment",
+      "category": "Soils & Geology",
+      "support": "u",
+      "family": "cly",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "clz_cl_smj",
+      "label": "Climate Zones - majority class, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "clz",
+      "candidate_available": false,
+      "pending_reason": "Same distribution constraint as the 125-class stratification; the 18-zone legend has no open equivalent."
+    },
+    {
+      "column": "cmi_ix_s01",
+      "label": "Climate Moisture Index - January average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s02",
+      "label": "Climate Moisture Index - February average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s03",
+      "label": "Climate Moisture Index - March average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s04",
+      "label": "Climate Moisture Index - April average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s05",
+      "label": "Climate Moisture Index - May average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s06",
+      "label": "Climate Moisture Index - June average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s07",
+      "label": "Climate Moisture Index - July average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s08",
+      "label": "Climate Moisture Index - August average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s09",
+      "label": "Climate Moisture Index - September average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s10",
+      "label": "Climate Moisture Index - October average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s11",
+      "label": "Climate Moisture Index - November average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_s12",
+      "label": "Climate Moisture Index - December average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_syr",
+      "label": "Climate Moisture Index - annual average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "cmi_ix_uyr",
+      "label": "Climate Moisture Index - annual average, the whole upstream catchment",
+      "category": "Climate",
+      "support": "u",
+      "family": "cmi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "crp_pc_sse",
+      "label": "Cropland Extent - spatial extent (percent), this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "crp",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "crp_pc_use",
+      "label": "Cropland Extent - spatial extent (percent), the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "crp",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "dis_m3_pmn",
+      "label": "Natural Discharge - annual minimum, at the sub-basin pour point",
+      "category": "Hydrology",
+      "support": "p",
+      "family": "dis",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "dis_m3_pmx",
+      "label": "Natural Discharge - annual maximum, at the sub-basin pour point",
+      "category": "Hydrology",
+      "support": "p",
+      "family": "dis",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "dis_m3_pyr",
+      "label": "Natural Discharge - annual average, at the sub-basin pour point",
+      "category": "Hydrology",
+      "support": "p",
+      "family": "dis",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "dor_pc_pva",
+      "label": "Degree of Regulation - va, at the sub-basin pour point",
+      "category": "Hydrology",
+      "support": "p",
+      "family": "dor",
+      "candidate_available": false,
+      "pending_reason": "Degree of regulation needs GRanD storage volumes together with a settled discharge field; neither is in place."
+    },
+    {
+      "column": "ele_mt_sav",
+      "label": "Elevation - average, this sub-basin",
+      "category": "Physiography",
+      "support": "s",
+      "family": "ele",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "ele_mt_smn",
+      "label": "Elevation - annual minimum, this sub-basin",
+      "category": "Physiography",
+      "support": "s",
+      "family": "ele",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "ele_mt_smx",
+      "label": "Elevation - annual maximum, this sub-basin",
+      "category": "Physiography",
+      "support": "s",
+      "family": "ele",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "ele_mt_uav",
+      "label": "Elevation - average, the whole upstream catchment",
+      "category": "Physiography",
+      "support": "u",
+      "family": "ele",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "ero_kh_sav",
+      "label": "Soil Erosion - average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "ero",
+      "candidate_available": false,
+      "pending_reason": "The ESDAC erosion grid requires a registered download and has no open substitute at this resolution."
+    },
+    {
+      "column": "ero_kh_uav",
+      "label": "Soil Erosion - average, the whole upstream catchment",
+      "category": "Soils & Geology",
+      "support": "u",
+      "family": "ero",
+      "candidate_available": false,
+      "pending_reason": "The ESDAC erosion grid requires a registered download and has no open substitute at this resolution."
+    },
+    {
+      "column": "fec_cl_smj",
+      "label": "Freshwater Ecoregions - majority class, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "fec",
+      "candidate_available": false,
+      "pending_reason": "FEOW polygons need a shapefile download; no Earth Engine copy exists."
+    },
+    {
+      "column": "fmh_cl_smj",
+      "label": "Freshwater Major Habitat Types - majority class, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "fmh",
+      "candidate_available": false,
+      "pending_reason": "Same download requirement as the freshwater ecoregion classes."
+    },
+    {
+      "column": "for_pc_sse",
+      "label": "Forest Cover Extent - spatial extent (percent), this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "for",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "for_pc_use",
+      "label": "Forest Cover Extent - spatial extent (percent), the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "for",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "gad_id_smj",
+      "label": "Global Administrative Areas - majority class, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "gad",
+      "candidate_available": false,
+      "pending_reason": "GADM v2.0 identifiers are release-specific, so a later release would not reproduce the stored identifier."
+    },
+    {
+      "column": "gdp_ud_sav",
+      "label": "Gross Domestic Product - average, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "gdp",
+      "candidate_available": false,
+      "pending_reason": "The Dryad NetCDF bundle needs a download and subsetting step that was not implemented in this pass."
+    },
+    {
+      "column": "gdp_ud_ssu",
+      "label": "Gross Domestic Product - sum, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "gdp",
+      "candidate_available": false,
+      "pending_reason": "The Dryad NetCDF bundle needs a download and subsetting step that was not implemented in this pass."
+    },
+    {
+      "column": "gdp_ud_usu",
+      "label": "Gross Domestic Product - sum, the whole upstream catchment",
+      "category": "Anthropogenic",
+      "support": "u",
+      "family": "gdp",
+      "candidate_available": false,
+      "pending_reason": "The Dryad NetCDF bundle needs a download and subsetting step that was not implemented in this pass."
+    },
+    {
+      "column": "gla_pc_sse",
+      "label": "Glacier Extent - spatial extent (percent), this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "gla",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "gla_pc_use",
+      "label": "Glacier Extent - spatial extent (percent), the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "gla",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_cl_smj",
+      "label": "Land Cover Classes - majority class, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-cl",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s01",
+      "label": "Land Cover Extent - class 1, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s02",
+      "label": "Land Cover Extent - class 2, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s03",
+      "label": "Land Cover Extent - class 3, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s04",
+      "label": "Land Cover Extent - class 4, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s05",
+      "label": "Land Cover Extent - class 5, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s06",
+      "label": "Land Cover Extent - class 6, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s07",
+      "label": "Land Cover Extent - class 7, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s08",
+      "label": "Land Cover Extent - class 8, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s09",
+      "label": "Land Cover Extent - class 9, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s10",
+      "label": "Land Cover Extent - class 10, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s11",
+      "label": "Land Cover Extent - class 11, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s12",
+      "label": "Land Cover Extent - class 12, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s13",
+      "label": "Land Cover Extent - class 13, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s14",
+      "label": "Land Cover Extent - class 14, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s15",
+      "label": "Land Cover Extent - class 15, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s16",
+      "label": "Land Cover Extent - class 16, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s17",
+      "label": "Land Cover Extent - class 17, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s18",
+      "label": "Land Cover Extent - class 18, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s19",
+      "label": "Land Cover Extent - class 19, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s20",
+      "label": "Land Cover Extent - class 20, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s21",
+      "label": "Land Cover Extent - class 21, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_s22",
+      "label": "Land Cover Extent - class 22, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u01",
+      "label": "Land Cover Extent - class 1, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u02",
+      "label": "Land Cover Extent - class 2, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u03",
+      "label": "Land Cover Extent - class 3, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u04",
+      "label": "Land Cover Extent - class 4, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u05",
+      "label": "Land Cover Extent - class 5, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u06",
+      "label": "Land Cover Extent - class 6, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u07",
+      "label": "Land Cover Extent - class 7, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u08",
+      "label": "Land Cover Extent - class 8, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u09",
+      "label": "Land Cover Extent - class 9, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u10",
+      "label": "Land Cover Extent - class 10, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u11",
+      "label": "Land Cover Extent - class 11, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u12",
+      "label": "Land Cover Extent - class 12, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u13",
+      "label": "Land Cover Extent - class 13, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u14",
+      "label": "Land Cover Extent - class 14, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u15",
+      "label": "Land Cover Extent - class 15, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u16",
+      "label": "Land Cover Extent - class 16, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u17",
+      "label": "Land Cover Extent - class 17, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u18",
+      "label": "Land Cover Extent - class 18, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u19",
+      "label": "Land Cover Extent - class 19, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u20",
+      "label": "Land Cover Extent - class 20, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u21",
+      "label": "Land Cover Extent - class 21, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "glc_pc_u22",
+      "label": "Land Cover Extent - class 22, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "glc-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "gwt_cm_sav",
+      "label": "Groundwater Table Depth - average, this sub-basin",
+      "category": "Hydrology",
+      "support": "s",
+      "family": "gwt",
+      "candidate_available": false,
+      "pending_reason": "The water-table depth grid needs a bulk download and reprojection step that was not implemented in this pass."
+    },
+    {
+      "column": "hdi_ix_sav",
+      "label": "Human Development Index - average, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "hdi",
+      "candidate_available": false,
+      "pending_reason": "Same download requirement as the gridded GDP surface."
+    },
+    {
+      "column": "hft_ix_s09",
+      "label": "Human Footprint - 2009, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "hft",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "hft_ix_s93",
+      "label": "Human Footprint - 1993, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "hft",
+      "candidate_available": false,
+      "pending_reason": "No open 1993-epoch human-pressure surface was located in this pass."
+    },
+    {
+      "column": "hft_ix_u09",
+      "label": "Human Footprint - 2009, the whole upstream catchment",
+      "category": "Anthropogenic",
+      "support": "u",
+      "family": "hft",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "hft_ix_u93",
+      "label": "Human Footprint - 1993, the whole upstream catchment",
+      "category": "Anthropogenic",
+      "support": "u",
+      "family": "hft",
+      "candidate_available": false,
+      "pending_reason": "No open 1993-epoch human-pressure surface was located in this pass."
+    },
+    {
+      "column": "inu_pc_slt",
+      "label": "Inundation Extent - lt, this sub-basin",
+      "category": "Hydrology",
+      "support": "s",
+      "family": "inu",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "inu_pc_smn",
+      "label": "Inundation Extent - annual minimum, this sub-basin",
+      "category": "Hydrology",
+      "support": "s",
+      "family": "inu",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "inu_pc_smx",
+      "label": "Inundation Extent - annual maximum, this sub-basin",
+      "category": "Hydrology",
+      "support": "s",
+      "family": "inu",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "inu_pc_ult",
+      "label": "Inundation Extent - lt, the whole upstream catchment",
+      "category": "Hydrology",
+      "support": "u",
+      "family": "inu",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "inu_pc_umn",
+      "label": "Inundation Extent - annual minimum, the whole upstream catchment",
+      "category": "Hydrology",
+      "support": "u",
+      "family": "inu",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "inu_pc_umx",
+      "label": "Inundation Extent - annual maximum, the whole upstream catchment",
+      "category": "Hydrology",
+      "support": "u",
+      "family": "inu",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "ire_pc_sse",
+      "label": "Irrigated Area Extent (Equipped) - spatial extent (percent), this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "ire",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "ire_pc_use",
+      "label": "Irrigated Area Extent (Equipped) - spatial extent (percent), the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "ire",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "kar_pc_sse",
+      "label": "Karst Area Extent - spatial extent (percent), this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "kar",
+      "candidate_available": false,
+      "pending_reason": "The carbonate outcrop map has no open programmatic endpoint and no gridded open substitute was located."
+    },
+    {
+      "column": "kar_pc_use",
+      "label": "Karst Area Extent - spatial extent (percent), the whole upstream catchment",
+      "category": "Soils & Geology",
+      "support": "u",
+      "family": "kar",
+      "candidate_available": false,
+      "pending_reason": "The carbonate outcrop map has no open programmatic endpoint and no gridded open substitute was located."
+    },
+    {
+      "column": "lit_cl_smj",
+      "label": "Lithological Classes - majority class, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "lit",
+      "candidate_available": false,
+      "pending_reason": "GLiM is a registered download and the Earth Engine community mirror is not readable by this account."
+    },
+    {
+      "column": "lka_pc_sse",
+      "label": "Limnicity (Percent Lake Area) - spatial extent (percent), this sub-basin",
+      "category": "Hydrology",
+      "support": "s",
+      "family": "lka",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "lka_pc_use",
+      "label": "Limnicity (Percent Lake Area) - spatial extent (percent), the whole upstream catchment",
+      "category": "Hydrology",
+      "support": "u",
+      "family": "lka",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "lkv_mc_usu",
+      "label": "Lake Volume - sum, the whole upstream catchment",
+      "category": "Hydrology",
+      "support": "u",
+      "family": "lkv",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "nli_ix_sav",
+      "label": "Nighttime Lights - average, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "nli",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "nli_ix_uav",
+      "label": "Nighttime Lights - average, the whole upstream catchment",
+      "category": "Anthropogenic",
+      "support": "u",
+      "family": "nli",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pac_pc_sse",
+      "label": "Protected Area Extent - spatial extent (percent), this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pac",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pac_pc_use",
+      "label": "Protected Area Extent - spatial extent (percent), the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pac",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s01",
+      "label": "Potential Evapotranspiration - January average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s02",
+      "label": "Potential Evapotranspiration - February average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s03",
+      "label": "Potential Evapotranspiration - March average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s04",
+      "label": "Potential Evapotranspiration - April average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s05",
+      "label": "Potential Evapotranspiration - May average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s06",
+      "label": "Potential Evapotranspiration - June average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s07",
+      "label": "Potential Evapotranspiration - July average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s08",
+      "label": "Potential Evapotranspiration - August average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s09",
+      "label": "Potential Evapotranspiration - September average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s10",
+      "label": "Potential Evapotranspiration - October average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s11",
+      "label": "Potential Evapotranspiration - November average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_s12",
+      "label": "Potential Evapotranspiration - December average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_syr",
+      "label": "Potential Evapotranspiration - annual average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pet_mm_uyr",
+      "label": "Potential Evapotranspiration - annual average, the whole upstream catchment",
+      "category": "Climate",
+      "support": "u",
+      "family": "pet",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_cl_smj",
+      "label": "Potential Natural Vegetation Classes - majority class, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-cl",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s01",
+      "label": "Potential Natural Vegetation Extent - class 1, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s02",
+      "label": "Potential Natural Vegetation Extent - class 2, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s03",
+      "label": "Potential Natural Vegetation Extent - class 3, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s04",
+      "label": "Potential Natural Vegetation Extent - class 4, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s05",
+      "label": "Potential Natural Vegetation Extent - class 5, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s06",
+      "label": "Potential Natural Vegetation Extent - class 6, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s07",
+      "label": "Potential Natural Vegetation Extent - class 7, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s08",
+      "label": "Potential Natural Vegetation Extent - class 8, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s09",
+      "label": "Potential Natural Vegetation Extent - class 9, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s10",
+      "label": "Potential Natural Vegetation Extent - class 10, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s11",
+      "label": "Potential Natural Vegetation Extent - class 11, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s12",
+      "label": "Potential Natural Vegetation Extent - class 12, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s13",
+      "label": "Potential Natural Vegetation Extent - class 13, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s14",
+      "label": "Potential Natural Vegetation Extent - class 14, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_s15",
+      "label": "Potential Natural Vegetation Extent - class 15, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u01",
+      "label": "Potential Natural Vegetation Extent - class 1, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u02",
+      "label": "Potential Natural Vegetation Extent - class 2, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u03",
+      "label": "Potential Natural Vegetation Extent - class 3, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u04",
+      "label": "Potential Natural Vegetation Extent - class 4, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u05",
+      "label": "Potential Natural Vegetation Extent - class 5, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u06",
+      "label": "Potential Natural Vegetation Extent - class 6, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u07",
+      "label": "Potential Natural Vegetation Extent - class 7, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u08",
+      "label": "Potential Natural Vegetation Extent - class 8, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u09",
+      "label": "Potential Natural Vegetation Extent - class 9, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u10",
+      "label": "Potential Natural Vegetation Extent - class 10, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u11",
+      "label": "Potential Natural Vegetation Extent - class 11, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u12",
+      "label": "Potential Natural Vegetation Extent - class 12, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u13",
+      "label": "Potential Natural Vegetation Extent - class 13, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u14",
+      "label": "Potential Natural Vegetation Extent - class 14, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pnv_pc_u15",
+      "label": "Potential Natural Vegetation Extent - class 15, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pnv-pc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pop_ct_ssu",
+      "label": "Population Count - sum, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "pop",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pop_ct_usu",
+      "label": "Population Count - sum, the whole upstream catchment",
+      "category": "Anthropogenic",
+      "support": "u",
+      "family": "pop",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "ppd_pk_sav",
+      "label": "Population Density - average, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "ppd",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "ppd_pk_uav",
+      "label": "Population Density - average, the whole upstream catchment",
+      "category": "Anthropogenic",
+      "support": "u",
+      "family": "ppd",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pre_mm_s01",
+      "label": "Precipitation - January average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s02",
+      "label": "Precipitation - February average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s03",
+      "label": "Precipitation - March average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s04",
+      "label": "Precipitation - April average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s05",
+      "label": "Precipitation - May average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s06",
+      "label": "Precipitation - June average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s07",
+      "label": "Precipitation - July average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s08",
+      "label": "Precipitation - August average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s09",
+      "label": "Precipitation - September average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s10",
+      "label": "Precipitation - October average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s11",
+      "label": "Precipitation - November average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_s12",
+      "label": "Precipitation - December average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_syr",
+      "label": "Precipitation - annual average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "pre_mm_uyr",
+      "label": "Precipitation - annual average, the whole upstream catchment",
+      "category": "Climate",
+      "support": "u",
+      "family": "pre",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "prm_pc_sse",
+      "label": "Permafrost Extent - spatial extent (percent), this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "prm",
+      "candidate_available": false,
+      "pending_reason": "The PZI grid requires a manual download and the Earth Engine community mirror is not readable by this account."
+    },
+    {
+      "column": "prm_pc_use",
+      "label": "Permafrost Extent - spatial extent (percent), the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "prm",
+      "candidate_available": false,
+      "pending_reason": "The PZI grid requires a manual download and the Earth Engine community mirror is not readable by this account."
+    },
+    {
+      "column": "pst_pc_sse",
+      "label": "Pasture Extent - spatial extent (percent), this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "pst",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "pst_pc_use",
+      "label": "Pasture Extent - spatial extent (percent), the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "pst",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "rdd_mk_sav",
+      "label": "Road Density - average, this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "rdd",
+      "candidate_available": false,
+      "pending_reason": "GRIP4 density grids need a bulk download, and an OpenStreetMap substitute would change both the road definition and the completeness."
+    },
+    {
+      "column": "rdd_mk_uav",
+      "label": "Road Density - average, the whole upstream catchment",
+      "category": "Anthropogenic",
+      "support": "u",
+      "family": "rdd",
+      "candidate_available": false,
+      "pending_reason": "GRIP4 density grids need a bulk download, and an OpenStreetMap substitute would change both the road definition and the completeness."
+    },
+    {
+      "column": "rev_mc_usu",
+      "label": "Reservoir Volume - sum, the whole upstream catchment",
+      "category": "Hydrology",
+      "support": "u",
+      "family": "rev",
+      "candidate_available": false,
+      "pending_reason": "GRanD requires an authenticated download, and the local dam tables in this repository are not GRanD-derived."
+    },
+    {
+      "column": "ria_ha_ssu",
+      "label": "River Area - sum, this sub-basin",
+      "category": "Hydrology",
+      "support": "s",
+      "family": "ria",
+      "candidate_available": false,
+      "pending_reason": "River surface area follows the Lehner and Grill hydraulic-geometry relations, which are not implemented here."
+    },
+    {
+      "column": "ria_ha_usu",
+      "label": "River Area - sum, the whole upstream catchment",
+      "category": "Hydrology",
+      "support": "u",
+      "family": "ria",
+      "candidate_available": false,
+      "pending_reason": "River surface area follows the Lehner and Grill hydraulic-geometry relations, which are not implemented here."
+    },
+    {
+      "column": "riv_tc_ssu",
+      "label": "River Volume - sum, this sub-basin",
+      "category": "Hydrology",
+      "support": "s",
+      "family": "riv",
+      "candidate_available": false,
+      "pending_reason": "River volume depends on the same unimplemented hydraulic-geometry relations."
+    },
+    {
+      "column": "riv_tc_usu",
+      "label": "River Volume - sum, the whole upstream catchment",
+      "category": "Hydrology",
+      "support": "u",
+      "family": "riv",
+      "candidate_available": false,
+      "pending_reason": "River volume depends on the same unimplemented hydraulic-geometry relations."
+    },
+    {
+      "column": "run_mm_syr",
+      "label": "Land Surface Runoff - annual average, this sub-basin",
+      "category": "Hydrology",
+      "support": "s",
+      "family": "run",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "sgr_dk_sav",
+      "label": "Stream Gradient - average, this sub-basin",
+      "category": "Physiography",
+      "support": "s",
+      "family": "sgr",
+      "candidate_available": false,
+      "pending_reason": "Reach-profile extraction along HydroRIVERS and the atlas gradient definition are not implemented."
+    },
+    {
+      "column": "slp_dg_sav",
+      "label": "Terrain Slope - average, this sub-basin",
+      "category": "Physiography",
+      "support": "s",
+      "family": "slp",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "slp_dg_uav",
+      "label": "Terrain Slope - average, the whole upstream catchment",
+      "category": "Physiography",
+      "support": "u",
+      "family": "slp",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "slt_pc_sav",
+      "label": "Silt Fraction in Soil - average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "slt",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "slt_pc_uav",
+      "label": "Silt Fraction in Soil - average, the whole upstream catchment",
+      "category": "Soils & Geology",
+      "support": "u",
+      "family": "slt",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snd_pc_sav",
+      "label": "Sand Fraction in Soil - average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "snd",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snd_pc_uav",
+      "label": "Sand Fraction in Soil - average, the whole upstream catchment",
+      "category": "Soils & Geology",
+      "support": "u",
+      "family": "snd",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s01",
+      "label": "Snow Cover Extent - January average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s02",
+      "label": "Snow Cover Extent - February average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s03",
+      "label": "Snow Cover Extent - March average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s04",
+      "label": "Snow Cover Extent - April average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s05",
+      "label": "Snow Cover Extent - May average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s06",
+      "label": "Snow Cover Extent - June average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s07",
+      "label": "Snow Cover Extent - July average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s08",
+      "label": "Snow Cover Extent - August average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s09",
+      "label": "Snow Cover Extent - September average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s10",
+      "label": "Snow Cover Extent - October average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s11",
+      "label": "Snow Cover Extent - November average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_s12",
+      "label": "Snow Cover Extent - December average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_smx",
+      "label": "Snow Cover Extent - annual maximum, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_syr",
+      "label": "Snow Cover Extent - annual average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "snw_pc_uyr",
+      "label": "Snow Cover Extent - annual average, the whole upstream catchment",
+      "category": "Climate",
+      "support": "u",
+      "family": "snw",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "soc_th_sav",
+      "label": "Organic Carbon Content in Soil - average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "soc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "soc_th_uav",
+      "label": "Organic Carbon Content in Soil - average, the whole upstream catchment",
+      "category": "Soils & Geology",
+      "support": "u",
+      "family": "soc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s01",
+      "label": "Soil Water Content - January average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s02",
+      "label": "Soil Water Content - February average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s03",
+      "label": "Soil Water Content - March average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s04",
+      "label": "Soil Water Content - April average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s05",
+      "label": "Soil Water Content - May average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s06",
+      "label": "Soil Water Content - June average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s07",
+      "label": "Soil Water Content - July average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s08",
+      "label": "Soil Water Content - August average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s09",
+      "label": "Soil Water Content - September average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s10",
+      "label": "Soil Water Content - October average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s11",
+      "label": "Soil Water Content - November average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_s12",
+      "label": "Soil Water Content - December average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_syr",
+      "label": "Soil Water Content - annual average, this sub-basin",
+      "category": "Soils & Geology",
+      "support": "s",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "swc_pc_uyr",
+      "label": "Soil Water Content - annual average, the whole upstream catchment",
+      "category": "Soils & Geology",
+      "support": "u",
+      "family": "swc",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "tbi_cl_smj",
+      "label": "Terrestrial Biomes - majority class, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "tbi",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "tec_cl_smj",
+      "label": "Terrestrial Ecoregions - majority class, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "tec",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "tmp_dc_s01",
+      "label": "Air Temperature - January average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s02",
+      "label": "Air Temperature - February average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s03",
+      "label": "Air Temperature - March average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s04",
+      "label": "Air Temperature - April average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s05",
+      "label": "Air Temperature - May average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s06",
+      "label": "Air Temperature - June average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s07",
+      "label": "Air Temperature - July average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s08",
+      "label": "Air Temperature - August average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s09",
+      "label": "Air Temperature - September average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s10",
+      "label": "Air Temperature - October average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s11",
+      "label": "Air Temperature - November average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_s12",
+      "label": "Air Temperature - December average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_smn",
+      "label": "Air Temperature - annual minimum, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_smx",
+      "label": "Air Temperature - annual maximum, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_syr",
+      "label": "Air Temperature - annual average, this sub-basin",
+      "category": "Climate",
+      "support": "s",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "tmp_dc_uyr",
+      "label": "Air Temperature - annual average, the whole upstream catchment",
+      "category": "Climate",
+      "support": "u",
+      "family": "tmp",
+      "candidate_available": true,
+      "pending_reason": "Carried by the original-vintage pass."
+    },
+    {
+      "column": "urb_pc_sse",
+      "label": "Urban Extent - spatial extent (percent), this sub-basin",
+      "category": "Anthropogenic",
+      "support": "s",
+      "family": "urb",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "urb_pc_use",
+      "label": "Urban Extent - spatial extent (percent), the whole upstream catchment",
+      "category": "Anthropogenic",
+      "support": "u",
+      "family": "urb",
+      "candidate_available": false,
+      "pending_reason": "No substitute produced in this run."
+    },
+    {
+      "column": "wet_cl_smj",
+      "label": "Wetland Classes - majority class, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-cl",
+      "candidate_available": false,
+      "pending_reason": "Same download requirement as the wetland class percentages."
+    },
+    {
+      "column": "wet_pc_s01",
+      "label": "Wetland Extent - class 1, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_s02",
+      "label": "Wetland Extent - class 2, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_s03",
+      "label": "Wetland Extent - class 3, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_s04",
+      "label": "Wetland Extent - class 4, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_s05",
+      "label": "Wetland Extent - class 5, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_s06",
+      "label": "Wetland Extent - class 6, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_s07",
+      "label": "Wetland Extent - class 7, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_s08",
+      "label": "Wetland Extent - class 8, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_s09",
+      "label": "Wetland Extent - class 9, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_sg1",
+      "label": "Wetland Extent - g1, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_sg2",
+      "label": "Wetland Extent - g2, this sub-basin",
+      "category": "Landcover",
+      "support": "s",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u01",
+      "label": "Wetland Extent - class 1, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u02",
+      "label": "Wetland Extent - class 2, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u03",
+      "label": "Wetland Extent - class 3, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u04",
+      "label": "Wetland Extent - class 4, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u05",
+      "label": "Wetland Extent - class 5, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u06",
+      "label": "Wetland Extent - class 6, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u07",
+      "label": "Wetland Extent - class 7, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u08",
+      "label": "Wetland Extent - class 8, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_u09",
+      "label": "Wetland Extent - class 9, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_ug1",
+      "label": "Wetland Extent - g1, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
+    },
+    {
+      "column": "wet_pc_ug2",
+      "label": "Wetland Extent - g2, the whole upstream catchment",
+      "category": "Landcover",
+      "support": "u",
+      "family": "wet-pc",
+      "candidate_available": false,
+      "pending_reason": "GLWD-3 needs a direct download; surface-water products cover open water only and cannot populate the twelve wetland classes."
     }
   ],
-  "families": [
-    {
+  "families": {
+    "aet": {
       "family": "aet",
       "label": "Actual Evapotranspiration",
       "category": "Climate",
@@ -142,7 +2614,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "ari": {
       "family": "ari",
       "label": "Global Aridity Index",
       "category": "Climate",
@@ -212,7 +2684,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "cls": {
       "family": "cls",
       "label": "Climate Strata",
       "category": "Climate",
@@ -274,7 +2746,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "cly": {
       "family": "cly",
       "label": "Clay Fraction in Soil",
       "category": "Soils & Geology",
@@ -352,7 +2824,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "clz": {
       "family": "clz",
       "label": "Climate Zones",
       "category": "Climate",
@@ -414,7 +2886,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "cmi": {
       "family": "cmi",
       "label": "Climate Moisture Index",
       "category": "Climate",
@@ -496,7 +2968,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "crp": {
       "family": "crp",
       "label": "Cropland Extent",
       "category": "Landcover",
@@ -564,7 +3036,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "dis": {
       "family": "dis",
       "label": "Natural Discharge",
       "category": "Hydrology",
@@ -635,7 +3107,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "dor": {
       "family": "dor",
       "label": "Degree of Regulation",
       "category": "Hydrology",
@@ -697,7 +3169,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "ele": {
       "family": "ele",
       "label": "Elevation",
       "category": "Physiography",
@@ -764,7 +3236,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "ero": {
       "family": "ero",
       "label": "Soil Erosion",
       "category": "Soils & Geology",
@@ -827,7 +3299,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "fec": {
       "family": "fec",
       "label": "Freshwater Ecoregions",
       "category": "Landcover",
@@ -889,7 +3361,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "fmh": {
       "family": "fmh",
       "label": "Freshwater Major Habitat Types",
       "category": "Landcover",
@@ -951,7 +3423,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "for": {
       "family": "for",
       "label": "Forest Cover Extent",
       "category": "Landcover",
@@ -1020,7 +3492,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "gad": {
       "family": "gad",
       "label": "Global Administrative Areas",
       "category": "Anthropogenic",
@@ -1082,7 +3554,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "gdp": {
       "family": "gdp",
       "label": "Gross Domestic Product",
       "category": "Anthropogenic",
@@ -1146,7 +3618,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "gla": {
       "family": "gla",
       "label": "Glacier Extent",
       "category": "Landcover",
@@ -1212,7 +3684,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "glc-cl": {
       "family": "glc-cl",
       "label": "Land Cover Classes",
       "category": "Landcover",
@@ -1276,7 +3748,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "glc-pc": {
       "family": "glc-pc",
       "label": "Land Cover Extent",
       "category": "Landcover",
@@ -1385,7 +3857,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "gwt": {
       "family": "gwt",
       "label": "Groundwater Table Depth",
       "category": "Hydrology",
@@ -1447,7 +3919,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "hdi": {
       "family": "hdi",
       "label": "Human Development Index",
       "category": "Anthropogenic",
@@ -1509,7 +3981,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "hft": {
       "family": "hft",
       "label": "Human Footprint",
       "category": "Anthropogenic",
@@ -1583,7 +4055,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "inu": {
       "family": "inu",
       "label": "Inundation Extent",
       "category": "Hydrology",
@@ -1659,7 +4131,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "ire": {
       "family": "ire",
       "label": "Irrigated Area Extent (Equipped)",
       "category": "Landcover",
@@ -1728,7 +4200,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "kar": {
       "family": "kar",
       "label": "Karst Area Extent",
       "category": "Soils & Geology",
@@ -1791,7 +4263,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "lit": {
       "family": "lit",
       "label": "Lithological Classes",
       "category": "Soils & Geology",
@@ -1853,7 +4325,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "lka": {
       "family": "lka",
       "label": "Limnicity (Percent Lake Area)",
       "category": "Hydrology",
@@ -1918,7 +4390,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "lkv": {
       "family": "lkv",
       "label": "Lake Volume",
       "category": "Hydrology",
@@ -1982,7 +4454,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "nli": {
       "family": "nli",
       "label": "Nighttime Lights",
       "category": "Anthropogenic",
@@ -2052,7 +4524,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "pac": {
       "family": "pac",
       "label": "Protected Area Extent",
       "category": "Landcover",
@@ -2118,7 +4590,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "pet": {
       "family": "pet",
       "label": "Potential Evapotranspiration",
       "category": "Climate",
@@ -2199,7 +4671,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "pnv-cl": {
       "family": "pnv-cl",
       "label": "Potential Natural Vegetation Classes",
       "category": "Landcover",
@@ -2266,7 +4738,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "pnv-pc": {
       "family": "pnv-pc",
       "label": "Potential Natural Vegetation Extent",
       "category": "Landcover",
@@ -2363,7 +4835,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "pop": {
       "family": "pop",
       "label": "Population Count",
       "category": "Anthropogenic",
@@ -2431,7 +4903,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "ppd": {
       "family": "ppd",
       "label": "Population Density",
       "category": "Anthropogenic",
@@ -2499,7 +4971,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "pre": {
       "family": "pre",
       "label": "Precipitation",
       "category": "Climate",
@@ -2576,7 +5048,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "prm": {
       "family": "prm",
       "label": "Permafrost Extent",
       "category": "Landcover",
@@ -2639,7 +5111,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "pst": {
       "family": "pst",
       "label": "Pasture Extent",
       "category": "Landcover",
@@ -2708,7 +5180,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "rdd": {
       "family": "rdd",
       "label": "Road Density",
       "category": "Anthropogenic",
@@ -2771,7 +5243,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "rev": {
       "family": "rev",
       "label": "Reservoir Volume",
       "category": "Hydrology",
@@ -2833,7 +5305,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "ria": {
       "family": "ria",
       "label": "River Area",
       "category": "Hydrology",
@@ -2896,7 +5368,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "riv": {
       "family": "riv",
       "label": "River Volume",
       "category": "Hydrology",
@@ -2959,7 +5431,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "run": {
       "family": "run",
       "label": "Land Surface Runoff",
       "category": "Hydrology",
@@ -3028,7 +5500,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "sgr": {
       "family": "sgr",
       "label": "Stream Gradient",
       "category": "Physiography",
@@ -3093,7 +5565,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "slp": {
       "family": "slp",
       "label": "Terrain Slope",
       "category": "Physiography",
@@ -3159,7 +5631,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "slt": {
       "family": "slt",
       "label": "Silt Fraction in Soil",
       "category": "Soils & Geology",
@@ -3237,7 +5709,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "snd": {
       "family": "snd",
       "label": "Sand Fraction in Soil",
       "category": "Soils & Geology",
@@ -3314,7 +5786,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "snw": {
       "family": "snw",
       "label": "Snow Cover Extent",
       "category": "Climate",
@@ -3397,7 +5869,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "soc": {
       "family": "soc",
       "label": "Organic Carbon Content in Soil",
       "category": "Soils & Geology",
@@ -3475,7 +5947,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "swc": {
       "family": "swc",
       "label": "Soil Water Content",
       "category": "Soils & Geology",
@@ -3556,7 +6028,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "tbi": {
       "family": "tbi",
       "label": "Terrestrial Biomes",
       "category": "Landcover",
@@ -3620,7 +6092,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "tec": {
       "family": "tec",
       "label": "Terrestrial Ecoregions",
       "category": "Landcover",
@@ -3685,7 +6157,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "tmp": {
       "family": "tmp",
       "label": "Air Temperature",
       "category": "Climate",
@@ -3764,7 +6236,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "urb": {
       "family": "urb",
       "label": "Urban Extent",
       "category": "Anthropogenic",
@@ -3833,7 +6305,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "wet-cl": {
       "family": "wet-cl",
       "label": "Wetland Classes",
       "category": "Landcover",
@@ -3895,7 +6367,7 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     },
-    {
+    "wet-pc": {
       "family": "wet-pc",
       "label": "Wetland Extent",
       "category": "Landcover",
@@ -3978,588 +6450,6 @@
         "meaning": "Opportunity, not an achieved improvement or a finer basin geometry."
       }
     }
-  ],
-  "availability": {
-    "checked_at": "2026-09-10T04:17:17.560660+00:00",
-    "batch_run_id": "pskem-all281-20260909T184834061745Z",
-    "scope": "Pilot bounding box; latest image first-band presence at >=1 km. Not full-period coverage, required-band QA or an attribute extraction.",
-    "sources": [
-      {
-        "asset": "CIESIN/GPWv411/GPW_Population_Density",
-        "checked_at": "2026-09-10T04:17:23.323273+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "2000-01-01T00:00:00+00:00",
-        "latest_image_date": "2020-01-01T00:00:00+00:00",
-        "bands": [
-          "population_density"
-        ],
-        "sample_band": "population_density",
-        "nominal_scale_m": 927.6624232772793,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global",
-        "checked_at": "2026-09-10T04:17:25.436887+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "2015-01-01T00:00:00+00:00",
-        "latest_image_date": "2019-01-01T00:00:00+00:00",
-        "bands": [
-          "discrete_classification",
-          "discrete_classification-proba",
-          "bare-coverfraction",
-          "urban-coverfraction",
-          "crops-coverfraction",
-          "grass-coverfraction",
-          "moss-coverfraction",
-          "water-permanent-coverfraction",
-          "water-seasonal-coverfraction",
-          "shrub-coverfraction",
-          "snow-coverfraction",
-          "tree-coverfraction",
-          "forest_type",
-          "data-density-indicator",
-          "change-confidence"
-        ],
-        "sample_band": "discrete_classification",
-        "nominal_scale_m": 100,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 12513,
-        "status": "accessible"
-      },
-      {
-        "asset": "CSP/HM/GlobalHumanModification",
-        "checked_at": "2026-09-10T04:17:28.472032+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": null,
-        "latest_image_date": null,
-        "bands": [
-          "gHM"
-        ],
-        "sample_band": "gHM",
-        "nominal_scale_m": 1002.8782954348969,
-        "probe_scale_m": 1002.8782954348969,
-        "valid_sample_pixels": 9288,
-        "status": "accessible"
-      },
-      {
-        "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
-        "checked_at": "2026-09-10T04:17:31.672745+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "1950-02-01T00:00:00+00:00",
-        "latest_image_date": "2026-08-01T00:00:00+00:00",
-        "bands": [
-          "dewpoint_temperature_2m",
-          "temperature_2m",
-          "skin_temperature",
-          "soil_temperature_level_1",
-          "soil_temperature_level_2",
-          "soil_temperature_level_3",
-          "soil_temperature_level_4",
-          "lake_bottom_temperature",
-          "lake_ice_depth",
-          "lake_ice_temperature",
-          "lake_mix_layer_depth",
-          "lake_mix_layer_temperature",
-          "lake_shape_factor",
-          "lake_total_layer_temperature",
-          "snow_albedo",
-          "snow_cover",
-          "snow_density",
-          "snow_depth",
-          "snow_depth_water_equivalent",
-          "snowfall_sum",
-          "snowmelt_sum",
-          "temperature_of_snow_layer",
-          "skin_reservoir_content",
-          "volumetric_soil_water_layer_1",
-          "volumetric_soil_water_layer_2",
-          "volumetric_soil_water_layer_3",
-          "volumetric_soil_water_layer_4",
-          "forecast_albedo",
-          "surface_latent_heat_flux_sum",
-          "surface_net_solar_radiation_sum",
-          "surface_net_thermal_radiation_sum",
-          "surface_sensible_heat_flux_sum",
-          "surface_solar_radiation_downwards_sum",
-          "surface_thermal_radiation_downwards_sum",
-          "evaporation_from_bare_soil_sum",
-          "evaporation_from_open_water_surfaces_excluding_oceans_sum",
-          "evaporation_from_the_top_of_canopy_sum",
-          "evaporation_from_vegetation_transpiration_sum",
-          "potential_evaporation_sum",
-          "runoff_sum",
-          "snow_evaporation_sum",
-          "sub_surface_runoff_sum",
-          "surface_runoff_sum",
-          "total_evaporation_sum",
-          "u_component_of_wind_10m",
-          "v_component_of_wind_10m",
-          "surface_pressure",
-          "total_precipitation_sum",
-          "leaf_area_index_high_vegetation",
-          "leaf_area_index_low_vegetation",
-          "dewpoint_temperature_2m_min",
-          "dewpoint_temperature_2m_max",
-          "temperature_2m_min",
-          "temperature_2m_max",
-          "skin_temperature_min",
-          "skin_temperature_max",
-          "soil_temperature_level_1_min",
-          "soil_temperature_level_1_max",
-          "soil_temperature_level_2_min",
-          "soil_temperature_level_2_max",
-          "soil_temperature_level_3_min",
-          "soil_temperature_level_3_max",
-          "soil_temperature_level_4_min",
-          "soil_temperature_level_4_max",
-          "lake_bottom_temperature_min",
-          "lake_bottom_temperature_max",
-          "lake_ice_depth_min",
-          "lake_ice_depth_max",
-          "lake_ice_temperature_min",
-          "lake_ice_temperature_max",
-          "lake_mix_layer_depth_min",
-          "lake_mix_layer_depth_max",
-          "lake_mix_layer_temperature_min",
-          "lake_mix_layer_temperature_max",
-          "lake_shape_factor_min",
-          "lake_shape_factor_max",
-          "lake_total_layer_temperature_min",
-          "lake_total_layer_temperature_max",
-          "snow_albedo_min",
-          "snow_albedo_max",
-          "snow_cover_min",
-          "snow_cover_max",
-          "snow_density_min",
-          "snow_density_max",
-          "snow_depth_min",
-          "snow_depth_max",
-          "snow_depth_water_equivalent_min",
-          "snow_depth_water_equivalent_max",
-          "snowfall_min",
-          "snowfall_max",
-          "snowmelt_min",
-          "snowmelt_max",
-          "temperature_of_snow_layer_min",
-          "temperature_of_snow_layer_max",
-          "skin_reservoir_content_min",
-          "skin_reservoir_content_max",
-          "volumetric_soil_water_layer_1_min",
-          "volumetric_soil_water_layer_1_max",
-          "volumetric_soil_water_layer_2_min",
-          "volumetric_soil_water_layer_2_max",
-          "volumetric_soil_water_layer_3_min",
-          "volumetric_soil_water_layer_3_max",
-          "volumetric_soil_water_layer_4_min",
-          "volumetric_soil_water_layer_4_max",
-          "forecast_albedo_min",
-          "forecast_albedo_max",
-          "surface_latent_heat_flux_min",
-          "surface_latent_heat_flux_max",
-          "surface_net_solar_radiation_min",
-          "surface_net_solar_radiation_max",
-          "surface_net_thermal_radiation_min",
-          "surface_net_thermal_radiation_max",
-          "surface_sensible_heat_flux_min",
-          "surface_sensible_heat_flux_max",
-          "surface_solar_radiation_downwards_min",
-          "surface_solar_radiation_downwards_max",
-          "surface_thermal_radiation_downwards_min",
-          "surface_thermal_radiation_downwards_max",
-          "evaporation_from_bare_soil_min",
-          "evaporation_from_bare_soil_max",
-          "evaporation_from_open_water_surfaces_excluding_oceans_min",
-          "evaporation_from_open_water_surfaces_excluding_oceans_max",
-          "evaporation_from_the_top_of_canopy_min",
-          "evaporation_from_the_top_of_canopy_max",
-          "evaporation_from_vegetation_transpiration_min",
-          "evaporation_from_vegetation_transpiration_max",
-          "potential_evaporation_min",
-          "potential_evaporation_max",
-          "runoff_min",
-          "runoff_max",
-          "snow_evaporation_min",
-          "snow_evaporation_max",
-          "sub_surface_runoff_min",
-          "sub_surface_runoff_max",
-          "surface_runoff_min",
-          "surface_runoff_max",
-          "total_evaporation_min",
-          "total_evaporation_max",
-          "u_component_of_wind_10m_min",
-          "u_component_of_wind_10m_max",
-          "v_component_of_wind_10m_min",
-          "v_component_of_wind_10m_max",
-          "surface_pressure_min",
-          "surface_pressure_max",
-          "total_precipitation_min",
-          "total_precipitation_max",
-          "leaf_area_index_high_vegetation_min",
-          "leaf_area_index_high_vegetation_max",
-          "leaf_area_index_low_vegetation_min",
-          "leaf_area_index_low_vegetation_max"
-        ],
-        "sample_band": "dewpoint_temperature_2m",
-        "nominal_scale_m": 11131.949079327358,
-        "probe_scale_m": 11131.949079327358,
-        "valid_sample_pixels": 77,
-        "status": "accessible"
-      },
-      {
-        "asset": "GLIMS/current",
-        "checked_at": "2026-09-10T04:17:36.756743+00:00",
-        "type": "TABLE",
-        "pilot_feature_count": 1164,
-        "status": "accessible"
-      },
-      {
-        "asset": "GOOGLE/DYNAMICWORLD/V1",
-        "checked_at": "2026-09-10T04:17:37.806721+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "2015-10-03T06:19:08+00:00",
-        "latest_image_date": "2026-09-05T06:27:21.061000+00:00",
-        "bands": [
-          "water",
-          "trees",
-          "grass",
-          "flooded_vegetation",
-          "crops",
-          "shrub_and_scrub",
-          "built",
-          "bare",
-          "snow_and_ice",
-          "label"
-        ],
-        "sample_band": "water",
-        "nominal_scale_m": 10,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 137,
-        "status": "accessible"
-      },
-      {
-        "asset": "IDAHO_EPSCOR/TERRACLIMATE",
-        "checked_at": "2026-09-10T04:17:42.087857+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "1958-01-01T00:00:00+00:00",
-        "latest_image_date": "2024-12-01T00:00:00+00:00",
-        "bands": [
-          "aet",
-          "def",
-          "pdsi",
-          "pet",
-          "pr",
-          "ro",
-          "soil",
-          "srad",
-          "swe",
-          "tmmn",
-          "tmmx",
-          "vap",
-          "vpd",
-          "vs"
-        ],
-        "sample_band": "aet",
-        "nominal_scale_m": 4638.312116386398,
-        "probe_scale_m": 4638.312116386398,
-        "valid_sample_pixels": 448,
-        "status": "accessible"
-      },
-      {
-        "asset": "JRC/GHSL/P2023A/GHS_BUILT_S",
-        "checked_at": "2026-09-10T04:17:46.252999+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "1975-01-01T00:00:00+00:00",
-        "latest_image_date": "2030-01-01T00:00:00+00:00",
-        "bands": [
-          "built_surface",
-          "built_surface_nres"
-        ],
-        "sample_band": "built_surface",
-        "nominal_scale_m": 100,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 7000,
-        "status": "accessible"
-      },
-      {
-        "asset": "JRC/GSW1_4/GlobalSurfaceWater",
-        "checked_at": "2026-09-10T04:17:48.015721+00:00",
-        "type": "IMAGE",
-        "bands": [
-          "occurrence",
-          "change_abs",
-          "change_norm",
-          "seasonality",
-          "recurrence",
-          "transition",
-          "max_extent"
-        ],
-        "sample_band": "occurrence",
-        "nominal_scale_m": 30.000000000000004,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 924,
-        "status": "accessible"
-      },
-      {
-        "asset": "JRC/GSW1_4/MonthlyHistory",
-        "checked_at": "2026-09-10T04:17:49.323278+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "1984-03-01T00:00:00+00:00",
-        "latest_image_date": "2021-12-01T00:00:00+00:00",
-        "bands": [
-          "water"
-        ],
-        "sample_band": "water",
-        "nominal_scale_m": 30.000000000000004,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "MODIS/061/MYD10A1",
-        "checked_at": "2026-09-10T04:17:53.270353+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "2002-07-04T00:00:00+00:00",
-        "latest_image_date": "2026-09-06T00:00:00+00:00",
-        "bands": [
-          "NDSI_Snow_Cover",
-          "NDSI_Snow_Cover_Class",
-          "NDSI_Snow_Cover_Basic_QA",
-          "NDSI_Snow_Cover_Algorithm_Flags_QA",
-          "NDSI",
-          "Snow_Albedo_Daily_Tile",
-          "Snow_Albedo_Daily_Tile_Class",
-          "orbit_pnt",
-          "granule_pnt"
-        ],
-        "sample_band": "NDSI_Snow_Cover",
-        "nominal_scale_m": 463.31271652791656,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 6938,
-        "status": "accessible"
-      },
-      {
-        "asset": "NOAA/DMSP-OLS/NIGHTTIME_LIGHTS",
-        "checked_at": "2026-09-10T04:18:02.392651+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "1992-01-01T00:00:00+00:00",
-        "latest_image_date": "2013-01-01T00:00:00+00:00",
-        "bands": [
-          "avg_vis",
-          "stable_lights",
-          "cf_cvg",
-          "avg_lights_x_pct"
-        ],
-        "sample_band": "avg_vis",
-        "nominal_scale_m": 927.6624195666301,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9490,
-        "status": "accessible"
-      },
-      {
-        "asset": "NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG",
-        "checked_at": "2026-09-10T04:18:04.070790+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "2014-01-01T00:00:00+00:00",
-        "latest_image_date": "2026-07-01T00:00:00+00:00",
-        "bands": [
-          "avg_rad",
-          "cf_cvg"
-        ],
-        "sample_band": "avg_rad",
-        "nominal_scale_m": 463.83121534928955,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01",
-        "checked_at": "2026-09-10T04:18:05.803900+00:00",
-        "type": "IMAGE",
-        "bands": [
-          "biome_type"
-        ],
-        "sample_band": "biome_type",
-        "nominal_scale_m": 927.6624232772793,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "OpenLandMap/SOL/SOL_BULKDENS-FINEEARTH_USDA-4A1H_M/v02",
-        "checked_at": "2026-09-10T04:18:07.521421+00:00",
-        "type": "IMAGE",
-        "bands": [
-          "b0",
-          "b10",
-          "b30",
-          "b60",
-          "b100",
-          "b200"
-        ],
-        "sample_band": "b0",
-        "nominal_scale_m": 231.91556871282302,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02",
-        "checked_at": "2026-09-10T04:18:08.921500+00:00",
-        "type": "IMAGE",
-        "bands": [
-          "b0",
-          "b10",
-          "b30",
-          "b60",
-          "b100",
-          "b200"
-        ],
-        "sample_band": "b0",
-        "nominal_scale_m": 231.91556871282302,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "OpenLandMap/SOL/SOL_ORGANIC-CARBON_USDA-6A1C_M/v02",
-        "checked_at": "2026-09-10T04:18:10.803619+00:00",
-        "type": "IMAGE",
-        "bands": [
-          "b0",
-          "b10",
-          "b30",
-          "b60",
-          "b100",
-          "b200"
-        ],
-        "sample_band": "b0",
-        "nominal_scale_m": 231.91556871282302,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "OpenLandMap/SOL/SOL_SAND-WFRACTION_USDA-3A1A1A_M/v02",
-        "checked_at": "2026-09-10T04:18:12.204523+00:00",
-        "type": "IMAGE",
-        "bands": [
-          "b0",
-          "b10",
-          "b30",
-          "b60",
-          "b100",
-          "b200"
-        ],
-        "sample_band": "b0",
-        "nominal_scale_m": 231.91556871282302,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "RESOLVE/ECOREGIONS/2017",
-        "checked_at": "2026-09-10T04:18:14.270128+00:00",
-        "type": "TABLE",
-        "pilot_feature_count": 2,
-        "status": "accessible"
-      },
-      {
-        "asset": "UCSB-CHG/CHIRPS/DAILY",
-        "checked_at": "2026-09-10T04:18:15.236793+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": "1981-01-01T00:00:00+00:00",
-        "latest_image_date": "2026-07-31T00:00:00+00:00",
-        "bands": [
-          "precipitation"
-        ],
-        "sample_band": "precipitation",
-        "nominal_scale_m": 5565.974539663679,
-        "probe_scale_m": 5565.974539663679,
-        "valid_sample_pixels": 299,
-        "status": "accessible"
-      },
-      {
-        "asset": "USGS/GFSAD1000_V1",
-        "checked_at": "2026-09-10T04:18:19.586389+00:00",
-        "type": "IMAGE",
-        "bands": [
-          "landcover"
-        ],
-        "sample_band": "landcover",
-        "nominal_scale_m": 993.882349974298,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      },
-      {
-        "asset": "WCMC/WDPA/current/polygons",
-        "checked_at": "2026-09-10T04:18:21.460209+00:00",
-        "type": "TABLE",
-        "pilot_feature_count": 7,
-        "status": "accessible"
-      },
-      {
-        "asset": "WORLDCLIM/V1/MONTHLY",
-        "checked_at": "2026-09-10T04:18:23.237799+00:00",
-        "type": "IMAGE_COLLECTION",
-        "first_image_date": null,
-        "latest_image_date": null,
-        "bands": [
-          "tavg",
-          "tmin",
-          "tmax",
-          "prec"
-        ],
-        "sample_band": "tavg",
-        "nominal_scale_m": 927.6624232772797,
-        "probe_scale_m": 1000,
-        "valid_sample_pixels": 9360,
-        "status": "accessible"
-      }
-    ]
   },
-  "proposals": [
-    {
-      "asset": "GOOGLE/DYNAMICWORLD/V1",
-      "name": "Dynamic World",
-      "families": "glc, for, crp, pst, urb",
-      "native": "10 m",
-      "cadence": "Per Sentinel-2 acquisition",
-      "policy": "Monthly/annual composites with probability thresholds, cloud coverage and a reviewed nine-class crosswalk.",
-      "url": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1",
-      "status": "Proposed adapter; not extracted by this atlas batch"
-    },
-    {
-      "asset": "UCSB-CHG/CHIRPS/DAILY",
-      "name": "CHIRPS daily precipitation",
-      "families": "pre",
-      "native": "0.05° (~5.6 km)",
-      "cadence": "Daily",
-      "policy": "Monthly totals; check mountain precipitation against gauges. Does not reproduce WorldClim normals.",
-      "url": "https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHG_CHIRPS_DAILY",
-      "status": "Proposed adapter; not extracted by this atlas batch"
-    },
-    {
-      "asset": "NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG",
-      "name": "VIIRS night lights",
-      "families": "nli",
-      "native": "~500 m",
-      "cadence": "Monthly",
-      "policy": "Cloud-screened radiance; cannot directly replace the DMSP/atlas index.",
-      "url": "https://developers.google.com/earth-engine/datasets/catalog/NOAA_VIIRS_DNB_MONTHLY_V1_VCMSLCFG",
-      "status": "Proposed adapter; not extracted by this atlas batch"
-    },
-    {
-      "asset": "JRC/GSW1_4/MonthlyHistory",
-      "name": "JRC monthly water history",
-      "families": "inu",
-      "native": "30 m",
-      "cadence": "Monthly historical maps, 1984–2021",
-      "policy": "Historical change analysis only; this release cannot supply present-day updates.",
-      "url": "https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_4_MonthlyHistory",
-      "status": "Proposed adapter; not extracted by this atlas batch"
-    }
-  ]
+  "download_base": "/data/atlas/runs/pskem-all281-20260909T184834061745Z/"
 }

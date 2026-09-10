@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "run_id": "pskem-all281-20260909T184834061745Z",
+  "basin_level": 12,
+  "basin_ids": [
+    "4120380180",
+    "4120380350",
+    "4120382970",
+    "4120383080",
+    "4120384960",
+    "4120384970",
+    "4120385070",
+    "4120385190",
+    "4120386210",
+    "4120386360",
+    "4121281950",
+    "4121282240",
+    "4121282310",
+    "4121283450",
+    "4121285900",
+    "4121286770",
+    "4121287290",
+    "4121287810",
+    "4121288140",
+    "4121289400"
+  ],
+  "base_url": "/data/atlas/substitutes/pskem-all281-20260909T184834061745Z/",
+  "scope": "Pskem candidate catchment: 20 complete level-12 units, outlet 4121289400. Gauge-to-reach placement still requires review.",
+  "status": "Pilot estimates; independent reproduction pending",
+  "colour_rule": "Light green means a non-null substitute exists for this exact basin and run. It does not mean newer observation, improved accuracy or validated reproduction."
+}

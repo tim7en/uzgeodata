@@ -1,6 +1,6 @@
 {
-  "version": "0.1.0",
-  "as_of": "2026-09-09",
+  "version": "0.2.0",
+  "as_of": "2026-09-10",
   "title": "From basin attributes to a living atlas",
   "phases": [
     {
@@ -44,13 +44,16 @@
     {
       "id": "geodatabase",
       "title": "Preserve the evidence",
-      "status": "planned",
+      "status": "in_progress",
       "depends_on": [
-        "reproduction"
+        "specification"
       ],
-      "description": "Store versioned basin observations, sources, runs and snapshot membership.",
+      "description": "Design versioned observations, sources, methods and runs before dated ingestion. Temporal storage is foundational to both atlas programmes.",
       "gate": "Persistent IDs, geometry versions, provenance and tested recovery of a frozen snapshot.",
-      "evidence": []
+      "evidence": [
+        "ATLAS_MODULES/implementation-plan.json",
+        "ATLAS_MODULES/hydrosheds/DYNAMIC_ATLAS.md"
+      ]
     },
     {
       "id": "edition",
@@ -71,7 +74,7 @@
       "depends_on": [
         "edition"
       ],
-      "description": "Refresh eligible sources, publish annual changes and extend thematic modules.",
+      "description": "After both thematic programmes are reviewed, refresh eligible periods and releases, report differences and monitor anomalies with provenance.",
       "gate": "Monitored updates, regression checks and revision history.",
       "evidence": []
     },

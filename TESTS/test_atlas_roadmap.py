@@ -35,6 +35,24 @@ def test_temporal_and_semantic_traps_remain_explicit():
     assert "-9999" in functions["wet-cl"]["steps"]
 
 
+def test_two_atlas_plan_preserves_evidence_and_temporal_prerequisites():
+    import json
+    plan = module.assemble()['implementation_plan']
+    assert [s['number'] for s in plan['stages']] == [1, 2, 3, 4, 5, 6]
+    assert 'Stage 5' in plan['stages'][1]['gate']
+    assert plan['stages'][2]['status'] == 'planned'
+    for stage in plan['stages']:
+        assert stage['gate'] and stage['deliverables']
+        assert all((ROOT / p).is_file() for p in stage['evidence'])
+    science = json.loads((ROOT / plan['runtime']['evidence']).read_text(encoding='utf-8'))
+    assert plan['runtime']['domain_basins'] == science['domain']['basins']
+    assert plan['runtime']['evidence_run_id'] == science['run_id']
+    assert plan['runtime']['regional_acquisition_hours_extrapolated'] == science['scale_projection']['acquisition_hours_linear']
+    assert plan['runtime']['regional_current_reduction_hours_extrapolated'] == science['scale_projection']['reduction_hours_current_kernel']
+    fields = ' '.join(plan['storage_contract']['time_fields'])
+    assert all(k in fields for k in ['period_end_exclusive', 'climatology', 'retrieved_at', 'supersedes_observation_id'])
+
+
 def test_news_is_republished_and_missing_recipe_fails(tmp_path):
     import json
     import shutil

@@ -44,8 +44,11 @@ def read(path):
 
 def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
+    content = json.dumps(data, indent=2, ensure_ascii=False) + '\n'
+    if path.exists() and path.read_text(encoding='utf-8') == content:
+        return  # Frozen basin views need no rewrite, including while the server reads them.
     temp = path.with_suffix(path.suffix + '.tmp')
-    temp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    temp.write_text(content, encoding='utf-8')
     temp.replace(path)
 
 
@@ -59,6 +62,28 @@ def period_used(record, fallback):
 def ee_date(milliseconds):
     # Windows fromtimestamp rejects pre-1970 dates (ERA5-Land/TerraClimate).
     return (datetime(1970, 1, 1, tzinfo=timezone.utc) + timedelta(milliseconds=milliseconds)).isoformat() if milliseconds is not None else None
+
+
+def resolution_opportunities(family, resolution):
+    """Research flags, not claims that a published value has improved resolution."""
+    temporal = ''
+    if family in {'tmp', 'pre', 'aet', 'pet', 'ari', 'cmi', 'swc', 'run', 'dis'}:
+        temporal = 'Dated monthly observations instead of fixed normals; method and completeness review required.'
+    elif family == 'snw':
+        temporal = 'Daily snow flags and monthly summaries with valid-day counts instead of a climatology.'
+    elif family in {'glc-cl', 'glc-pc', 'for', 'crp', 'pst', 'urb', 'inu', 'nli'}:
+        temporal = 'Evaluate dated imagery/composites with a new sensor/class crosswalk; not yet extracted for this atlas.'
+    elif family in {'gla', 'pac', 'pop', 'ppd'}:
+        temporal = 'Store successive dated inventory releases/epochs, not interpolated monthly observations.'
+    spatial = ''
+    if family in {'glc-cl', 'glc-pc', 'for', 'crp', 'pst', 'urb'}:
+        spatial = 'Evaluate 10 m Dynamic World and native class-area reduction; class equivalence and accuracy require validation.'
+    elif family in {'gla', 'pac'}:
+        spatial = 'Evaluate native vector intersections instead of 30 m painting and 15 arc-second aggregation.'
+    elif (resolution.get('native_arcsec') and resolution['native_arcsec'] < 15) or (resolution.get('native_scale_m') and resolution['native_scale_m'] < 450):
+        spatial = 'Evaluate reduction at the source native grid before basin aggregation; no claim of higher accuracy.'
+    return {'spatial': spatial, 'temporal': temporal,
+            'status': 'future_method_review', 'meaning': 'Opportunity, not an achieved improvement or a finer basin geometry.'}
 
 
 def build_inventory(batch, lock, vocabulary):
@@ -90,8 +115,36 @@ def build_inventory(batch, lock, vocabulary):
             'fidelity': plan['fidelity'], 'units': plan['units'], 'notes': plan['divergence'],
             'pending': plan.get('pending_reason') or plan.get('pending_dimensions'),
             'columns': [a['column'] for a in attrs],
+            'opportunities': resolution_opportunities(key, plan['resolution']),
         })
     return families
+
+
+def publish_basin_views(batch, families, destination=OUT):
+    """Publish a compact exact-ID view; never transfer pilot values to parent basins."""
+    by_family = {f['family']: f for f in families}
+    definitions = []
+    for a in batch['attributes']:
+        f = by_family[a['surrogate_family']]
+        definitions.append({'column': a['column'], 'label': a['label'], 'category': a['category'],
+                            'support': a['spatial_support'], 'family': f['family'],
+                            'candidate_available': bool(a.get('candidate_values')),
+                            'pending_reason': a.get('surrogate_pending_reason') or 'No substitute produced in this run.'})
+    base = f"/data/atlas/substitutes/{batch['run_id']}/"
+    directory = destination / 'substitutes' / batch['run_id']
+    write(directory / 'definitions.json', {'run_id': batch['run_id'], 'attributes': definitions,
+                                           'families': by_family, 'download_base': batch['download_base']})
+    for bid in batch['basin_ids']:
+        values = {}
+        for a in batch['attributes']:
+            s = (a.get('surrogate_values') or {}).get(bid) or {}
+            values[a['column']] = {'value': s.get('raw_value'), 'coverage': s.get('coverage_fraction'),
+                                   'reference_raw': a['reference_values'].get(bid)}
+        write(directory / f'{bid}.json', {'run_id': batch['run_id'], 'hybas_id': bid, 'basin_level': 12, 'values': values})
+    write(destination / 'substitutes-index.json', {'schema_version': 1, 'run_id': batch['run_id'],
+          'basin_level': 12, 'basin_ids': batch['basin_ids'], 'base_url': base,
+          'scope': batch['scope_note'], 'status': 'Pilot estimates; independent reproduction pending',
+          'colour_rule': 'Light green means a non-null substitute exists for this exact basin and run. It does not mean newer observation, improved accuracy or validated reproduction.'})
 
 
 def probe_assets(assets, project, bounds):
@@ -168,12 +221,14 @@ def publish(probe=False, project='ee-sabitovty'):
               'themes': themes, 'families': families, 'availability': availability,
               'proposals': [{**p, 'url': CATALOG + p['asset'].replace('/', '_'), 'status': 'Proposed adapter; not extracted by this atlas batch'} for p in PROPOSALS]}
     write(OUT / 'dynamic-atlas.json', result)
+    publish_basin_views(batch, families)
     with (OUT / 'dynamic-atlas-crosswalk.csv').open('w', encoding='utf-8', newline='') as stream:
-        fields = ['family', 'category', 'attributes', 'candidates', 'surrogates', 'missing', 'acquisition', 'assets', 'original_dataset', 'original_native', 'original_period', 'used_period', 'native_scale_m', 'native_arcsec', 'native_grid', 'processing_grid_arcsec', 'resampling', 'cadence', 'refresh_policy', 'retrieved_at', 'sha256']
+        fields = ['family', 'category', 'attributes', 'candidates', 'surrogates', 'missing', 'acquisition', 'assets', 'original_dataset', 'original_native', 'original_period', 'used_period', 'native_scale_m', 'native_arcsec', 'native_grid', 'processing_grid_arcsec', 'resampling', 'cadence', 'refresh_policy', 'retrieved_at', 'sha256', 'spatial_opportunity', 'temporal_opportunity']
         writer = csv.DictWriter(stream, fieldnames=fields)
         writer.writeheader()
         for f in families:
             row = {**f, 'original_dataset': f['original']['dataset'], 'original_period': f['original']['period'],
+                   'spatial_opportunity': f['opportunities']['spatial'], 'temporal_opportunity': f['opportunities']['temporal'],
                    **f['resolution'], 'native_grid': f['resolution']['grid']}
             writer.writerow({k: ' | '.join(row[k]) if isinstance(row[k], list) else row[k] for k in fields})
     print(json.dumps(summary, indent=2))

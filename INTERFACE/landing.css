@@ -197,6 +197,18 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-modal-kinds button.active{background:var(--l-accent-1);border-color:var(--l-accent-1);color:var(--l-bg-4)}
 .land-modal-tools>span{margin-left:auto;font:600 9px var(--mono);color:var(--l-line-1)}
 .land-modal-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin}
+.land-modal-tabs{display:flex;gap:8px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.land-modal-tabs button{background:transparent;color:var(--ink);padding:9px 12px;border:1px solid var(--line);cursor:pointer;font:600 11px var(--display)}
+.land-modal-tabs button[aria-selected=true]{border-color:var(--l-accent-1);box-shadow:inset 0 -2px var(--l-accent-1)}
+.land-sub-note{padding:12px 18px;font-size:11px;color:var(--dim)}
+.land-sub-note p{line-height:1.6;margin:5px 0}.land-sub-note a,.land-sub-table a{color:var(--l-accent-1)}
+.land-sub-note button{background:var(--l-bg-3);color:var(--ink);border:1px solid var(--line);padding:8px;cursor:pointer}
+.land-sub-key{display:inline-block;background:#dff3d9;color:#22472b;padding:3px 7px;border-radius:3px;margin-right:8px}
+.land-modal tbody td.land-sub-updated,.land-modal tbody tr:hover td.land-sub-updated{background:#dff3d9;color:#22472b}
+.land-modal tbody td.land-sub-updated strong,.land-modal tbody td.land-sub-updated small{color:#22472b}
+.land-sub-table{min-width:950px}.land-sub-table small{display:block;margin-top:4px;font-size:9px;line-height:1.5}
+.land-opportunity{display:inline-block;margin:6px 4px 0 0;border:1px dashed var(--l-line-1);padding:3px 5px;font-size:9px;color:var(--ink)}
+.land-sub-table details{margin-top:5px}.land-sub-table summary{cursor:pointer;font-size:9px}.land-sub-table details p{font-size:10px;line-height:1.5;max-width:240px}
 .land-modal table{width:100%;border-collapse:collapse}
 .land-modal thead th{position:sticky;top:0;z-index:1;background:var(--l-bg-5);text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);font:800 6.5px var(--display);letter-spacing:.15em;text-transform:uppercase;color:var(--l-line-1)}
 .land-modal tbody td{padding:8px 12px;border-bottom:1px solid var(--l-veil-3);font-size:9.5px;color:var(--dim);vertical-align:top}

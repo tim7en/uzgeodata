@@ -35,6 +35,15 @@
       "title": "All 281 original attributes captured for Pskem; 34 candidates computed",
       "summary": "20 Pskem units; 5,620 reference records, including 9 original missing values. All 30 WorldClim temperature/precipitation attributes pass numerical comparison for every basin; 4 elevation attributes need further method review. 247 attributes await source-method preparation. Full processing 177.076 seconds; independent reproduction remains pending.",
       "source": "ATLAS_MODULES/hydrosheds/PSKEM_BATCH.md"
+    },
+    {
+      "id": "regional-plan-20260910",
+      "date": "2026-09-10",
+      "kind": "implementation",
+      "phase": "geodatabase",
+      "title": "Two-atlas regional programme and basin substitute tab",
+      "summary": "Six stages cover reference joins, pilot-to-region HydroATLAS and environmental-atlas methods, research publication, temporal/resolution storage and monitoring/ontology. Temporal storage starts before new dated ingestion. Basin modal shows only exact-ID published substitutes in light green. Regional runtime remains a projection requiring a batch benchmark.",
+      "source": "ATLAS_MODULES/implementation-plan.json"
     }
   ]
 }

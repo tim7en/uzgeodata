@@ -6,7 +6,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from PIPELINES.build_dynamic_atlas import build_inventory, ee_date, period_used
+from PIPELINES.build_dynamic_atlas import build_inventory, ee_date, period_used, publish_basin_views
 
 
 @pytest.fixture(scope='module')
@@ -49,3 +49,30 @@ def test_fresh_and_offline_are_incompatible():
     from PIPELINES.update_pskem_atlas import run
     with pytest.raises(ValueError, match='cannot be combined'):
         run(offline=True, refresh_sources=True)
+
+
+def test_basin_views_preserve_exact_values_missingness_and_run(inventory, tmp_path):
+    batch, families = inventory
+    publish_basin_views(batch, families, tmp_path)
+    index = json.loads((tmp_path / 'substitutes-index.json').read_text())
+    assert set(index['basin_ids']) == set(batch['basin_ids'])
+    assert index['basin_level'] == 12
+    directory = tmp_path / 'substitutes' / batch['run_id']
+    for bid in batch['basin_ids']:
+        view = json.loads((directory / f'{bid}.json').read_text())
+        assert view['hybas_id'] == bid and view['run_id'] == batch['run_id']
+        assert len(view['values']) == 281
+        for a in batch['attributes']:
+            value = (a.get('surrogate_values') or {}).get(bid, {}).get('raw_value')
+            assert view['values'][a['column']]['value'] == value
+            assert view['values'][a['column']]['reference_raw'] == a['reference_values'][bid]
+    assert not (directory / '4120050220.json').exists(), 'No values invented for regional basin'
+
+
+def test_opportunities_are_future_flags_not_improvement_claims(inventory):
+    _, families = inventory
+    lookup = {f['family']: f for f in families}
+    assert lookup['pre']['opportunities']['temporal']
+    assert not lookup['pre']['opportunities']['spatial'], 'Coarse climate upsampling is not a spatial improvement'
+    assert lookup['gla']['opportunities']['spatial']
+    assert all(f['opportunities']['status'] == 'future_method_review' for f in families)

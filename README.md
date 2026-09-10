@@ -17,6 +17,12 @@ availability and refresh policies. Run `npm run atlas:audit` for a new live
 availability check, or `npm run atlas:publish` to rebuild from saved evidence.
 See [dynamic atlas methods](ATLAS_MODULES/hydrosheds/DYNAMIC_ATLAS.md).
 
+The [six-stage implementation plan](ATLAS_MODULES/implementation-plan.json) is
+visible at `/roadmap.html#implementation-plan`. Basin modals expose an **Updated
+substitutes** tab with light-green available values, explicit pending basins,
+and future spatial/temporal resolution flags. Regional runtime figures are
+labelled projections; dated monthly updates need a representative batch benchmark.
+
 Each top-level folder is named for the kind of information it holds.
 
 | Folder | What lives here |

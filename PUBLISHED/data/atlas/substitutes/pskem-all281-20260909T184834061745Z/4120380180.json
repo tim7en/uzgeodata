@@ -1,0 +1,1412 @@
+{
+  "run_id": "pskem-all281-20260909T184834061745Z",
+  "hybas_id": "4120380180",
+  "basin_level": 12,
+  "values": {
+    "aet_mm_s01": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 1.0
+    },
+    "aet_mm_s02": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 3.0
+    },
+    "aet_mm_s03": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 17.0
+    },
+    "aet_mm_s04": {
+      "value": 11.689531839918837,
+      "coverage": 1.0,
+      "reference_raw": 49.0
+    },
+    "aet_mm_s05": {
+      "value": 77.19074537610554,
+      "coverage": 1.0,
+      "reference_raw": 81.0
+    },
+    "aet_mm_s06": {
+      "value": 82.02443922661175,
+      "coverage": 1.0,
+      "reference_raw": 99.0
+    },
+    "aet_mm_s07": {
+      "value": 60.39020799759701,
+      "coverage": 1.0,
+      "reference_raw": 94.0
+    },
+    "aet_mm_s08": {
+      "value": 42.87876834889526,
+      "coverage": 1.0,
+      "reference_raw": 65.0
+    },
+    "aet_mm_s09": {
+      "value": 28.760788574138186,
+      "coverage": 1.0,
+      "reference_raw": 35.0
+    },
+    "aet_mm_s10": {
+      "value": 15.962513312492854,
+      "coverage": 1.0,
+      "reference_raw": 17.0
+    },
+    "aet_mm_s11": {
+      "value": 0.0008870116312060714,
+      "coverage": 1.0,
+      "reference_raw": 7.0
+    },
+    "aet_mm_s12": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 2.0
+    },
+    "aet_mm_syr": {
+      "value": 318.8978816873906,
+      "coverage": 1.0,
+      "reference_raw": 470.0
+    },
+    "aet_mm_uyr": {
+      "value": 298.21046797324,
+      "coverage": 1.0,
+      "reference_raw": 449.0
+    },
+    "ari_ix_sav": {
+      "value": 1.2420031994845084,
+      "coverage": 1.0,
+      "reference_raw": 129.0
+    },
+    "ari_ix_uav": {
+      "value": 1.4818450589852967,
+      "coverage": 1.0,
+      "reference_raw": 143.0
+    },
+    "cls_cl_smj": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 29.0
+    },
+    "cly_pc_sav": {
+      "value": 18.260559646985094,
+      "coverage": 1.0,
+      "reference_raw": 16.0
+    },
+    "cly_pc_uav": {
+      "value": 16.516500097445718,
+      "coverage": 1.0,
+      "reference_raw": 14.0
+    },
+    "clz_cl_smj": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 6.0
+    },
+    "cmi_ix_s01": {
+      "value": 1.0,
+      "coverage": 1.0,
+      "reference_raw": 97.0
+    },
+    "cmi_ix_s02": {
+      "value": 1.0,
+      "coverage": 1.0,
+      "reference_raw": 94.0
+    },
+    "cmi_ix_s03": {
+      "value": 1.0,
+      "coverage": 1.0,
+      "reference_raw": 82.0
+    },
+    "cmi_ix_s04": {
+      "value": 0.8058422555342745,
+      "coverage": 1.0,
+      "reference_raw": 57.0
+    },
+    "cmi_ix_s05": {
+      "value": 0.025888571690696006,
+      "coverage": 1.0,
+      "reference_raw": 29.0
+    },
+    "cmi_ix_s06": {
+      "value": -0.3188263837818086,
+      "coverage": 1.0,
+      "reference_raw": -47.0
+    },
+    "cmi_ix_s07": {
+      "value": -0.5951562466257438,
+      "coverage": 1.0,
+      "reference_raw": -70.0
+    },
+    "cmi_ix_s08": {
+      "value": -0.6633305877553023,
+      "coverage": 1.0,
+      "reference_raw": -80.0
+    },
+    "cmi_ix_s09": {
+      "value": -0.6468289915077265,
+      "coverage": 1.0,
+      "reference_raw": -67.0
+    },
+    "cmi_ix_s10": {
+      "value": 0.48350370204327675,
+      "coverage": 1.0,
+      "reference_raw": 48.0
+    },
+    "cmi_ix_s11": {
+      "value": 0.9996966562419667,
+      "coverage": 1.0,
+      "reference_raw": 82.0
+    },
+    "cmi_ix_s12": {
+      "value": 1.0,
+      "coverage": 1.0,
+      "reference_raw": 94.0
+    },
+    "cmi_ix_syr": {
+      "value": 0.14775503334545811,
+      "coverage": 1.0,
+      "reference_raw": 18.0
+    },
+    "cmi_ix_uyr": {
+      "value": 0.2812588543426372,
+      "coverage": 1.0,
+      "reference_raw": 27.0
+    },
+    "crp_pc_sse": {
+      "value": 0.367296237804865,
+      "coverage": 1.0,
+      "reference_raw": 6.0
+    },
+    "crp_pc_use": {
+      "value": 0.26446516588333996,
+      "coverage": 1.0,
+      "reference_raw": 3.0
+    },
+    "dis_m3_pmn": {
+      "value": 1.816776490356271,
+      "coverage": 1.0,
+      "reference_raw": 0.4860000014305115
+    },
+    "dis_m3_pmx": {
+      "value": 58.840104681483766,
+      "coverage": 1.0,
+      "reference_raw": 31.43000030517578
+    },
+    "dis_m3_pyr": {
+      "value": 14.686351932587923,
+      "coverage": 1.0,
+      "reference_raw": 8.088000297546387
+    },
+    "dor_pc_pva": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "ele_mt_sav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 3128.0
+    },
+    "ele_mt_smn": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 2170.0
+    },
+    "ele_mt_smx": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 4220.0
+    },
+    "ele_mt_uav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 3366.0
+    },
+    "ero_kh_sav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 17996.0
+    },
+    "ero_kh_uav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 23409.0
+    },
+    "fec_cl_smj": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 628.0
+    },
+    "fmh_cl_smj": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 6.0
+    },
+    "for_pc_sse": {
+      "value": 0.12103030743826537,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "for_pc_use": {
+      "value": 0.047104850582179426,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "gad_id_smj": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 243.0
+    },
+    "gdp_ud_sav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 7300.0
+    },
+    "gdp_ud_ssu": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 402913.71875
+    },
+    "gdp_ud_usu": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 889298.0
+    },
+    "gla_pc_sse": {
+      "value": 6.9436942174118075,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "gla_pc_use": {
+      "value": 8.189483096766619,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_cl_smj": {
+      "value": 13.0,
+      "coverage": 1.0,
+      "reference_raw": 13.0
+    },
+    "glc_pc_s01": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s02": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s03": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s04": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s05": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s06": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s07": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s08": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s09": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s10": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s11": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s12": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s13": {
+      "value": 73.9060743125067,
+      "coverage": 1.0,
+      "reference_raw": 46.0
+    },
+    "glc_pc_s14": {
+      "value": 0.014559164721963272,
+      "coverage": 1.0,
+      "reference_raw": 7.0
+    },
+    "glc_pc_s15": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s16": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s17": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s18": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s19": {
+      "value": 17.76210874878067,
+      "coverage": 1.0,
+      "reference_raw": 20.0
+    },
+    "glc_pc_s20": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_s21": {
+      "value": 8.317257794227999,
+      "coverage": 1.0,
+      "reference_raw": 27.0
+    },
+    "glc_pc_s22": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u01": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u02": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u03": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u04": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u05": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u06": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u07": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u08": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u09": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u10": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u11": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u12": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u13": {
+      "value": 70.35899230249797,
+      "coverage": 1.0,
+      "reference_raw": 20.0
+    },
+    "glc_pc_u14": {
+      "value": 0.017531587193081465,
+      "coverage": 1.0,
+      "reference_raw": 7.0
+    },
+    "glc_pc_u15": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u16": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u17": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u18": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 1.0
+    },
+    "glc_pc_u19": {
+      "value": 19.23827870241271,
+      "coverage": 1.0,
+      "reference_raw": 38.0
+    },
+    "glc_pc_u20": {
+      "value": 0.06520872666734732,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "glc_pc_u21": {
+      "value": 10.319988688458427,
+      "coverage": 1.0,
+      "reference_raw": 34.0
+    },
+    "glc_pc_u22": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "gwt_cm_sav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 624.0
+    },
+    "hdi_ix_sav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 699.0
+    },
+    "hft_ix_s09": {
+      "value": 0.21861901747135576,
+      "coverage": 1.0,
+      "reference_raw": 106.0
+    },
+    "hft_ix_s93": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 94.0
+    },
+    "hft_ix_u09": {
+      "value": 0.21692118879234396,
+      "coverage": 1.0,
+      "reference_raw": 95.0
+    },
+    "hft_ix_u93": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 86.0
+    },
+    "inu_pc_slt": {
+      "value": 0.029491284208169644,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "inu_pc_smn": {
+      "value": 0.033572692506668306,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "inu_pc_smx": {
+      "value": 0.059635704790400354,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "inu_pc_ult": {
+      "value": 0.1088233360007706,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "inu_pc_umn": {
+      "value": 0.11672076937329638,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "inu_pc_umx": {
+      "value": 0.1674485799276734,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "ire_pc_sse": {
+      "value": 1.478352692713833,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "ire_pc_use": {
+      "value": 0.47408352373106566,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "kar_pc_sse": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "kar_pc_use": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "lit_cl_smj": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 5.0
+    },
+    "lka_pc_sse": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "lka_pc_use": {
+      "value": 0.04225757552998523,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "lkv_mc_usu": {
+      "value": 1.5399999618530273,
+      "coverage": 1.0,
+      "reference_raw": 2.0
+    },
+    "nli_ix_sav": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "nli_ix_uav": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pac_pc_sse": {
+      "value": 99.82842568031964,
+      "coverage": 1.0,
+      "reference_raw": 99.0
+    },
+    "pac_pc_use": {
+      "value": 99.61652114677486,
+      "coverage": 1.0,
+      "reference_raw": 99.0
+    },
+    "pet_mm_s01": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 2.0
+    },
+    "pet_mm_s02": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 3.0
+    },
+    "pet_mm_s03": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 17.0
+    },
+    "pet_mm_s04": {
+      "value": 15.532217563174216,
+      "coverage": 1.0,
+      "reference_raw": 49.0
+    },
+    "pet_mm_s05": {
+      "value": 83.45215123205779,
+      "coverage": 1.0,
+      "reference_raw": 82.0
+    },
+    "pet_mm_s06": {
+      "value": 111.5142176063159,
+      "coverage": 1.0,
+      "reference_raw": 110.0
+    },
+    "pet_mm_s07": {
+      "value": 131.6147920070757,
+      "coverage": 1.0,
+      "reference_raw": 131.0
+    },
+    "pet_mm_s08": {
+      "value": 122.94913434327718,
+      "coverage": 1.0,
+      "reference_raw": 114.0
+    },
+    "pet_mm_s09": {
+      "value": 84.85751112360889,
+      "coverage": 1.0,
+      "reference_raw": 71.0
+    },
+    "pet_mm_s10": {
+      "value": 27.583132561968903,
+      "coverage": 1.0,
+      "reference_raw": 33.0
+    },
+    "pet_mm_s11": {
+      "value": 0.01821189717544044,
+      "coverage": 1.0,
+      "reference_raw": 11.0
+    },
+    "pet_mm_s12": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 4.0
+    },
+    "pet_mm_syr": {
+      "value": 577.521368334654,
+      "coverage": 1.0,
+      "reference_raw": 628.0
+    },
+    "pet_mm_uyr": {
+      "value": 500.9314568861189,
+      "coverage": 1.0,
+      "reference_raw": 580.0
+    },
+    "pnv_cl_smj": {
+      "value": 6.0,
+      "coverage": 1.0,
+      "reference_raw": 13.0
+    },
+    "pnv_pc_s01": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s02": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s03": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s04": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s05": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s06": {
+      "value": 100.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s07": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s08": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s09": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s10": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 45.0
+    },
+    "pnv_pc_s11": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s12": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s13": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 55.0
+    },
+    "pnv_pc_s14": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_s15": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u01": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u02": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u03": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u04": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u05": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u06": {
+      "value": 100.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u07": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u08": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u09": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u10": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 15.0
+    },
+    "pnv_pc_u11": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u12": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u13": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 85.0
+    },
+    "pnv_pc_u14": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pnv_pc_u15": {
+      "value": 0.0,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "pop_ct_ssu": {
+      "value": 26416.872336989778,
+      "coverage": 1.0,
+      "reference_raw": 24.31100082397461
+    },
+    "pop_ct_usu": {
+      "value": 81250.89403077512,
+      "coverage": 1.0,
+      "reference_raw": 74.74500274658203
+    },
+    "ppd_pk_sav": {
+      "value": 175.1064761684462,
+      "coverage": 1.0,
+      "reference_raw": 161.04299926757812
+    },
+    "ppd_pk_uav": {
+      "value": 172.79603541757254,
+      "coverage": 1.0,
+      "reference_raw": 158.9239959716797
+    },
+    "pre_mm_s01": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 58.0
+    },
+    "pre_mm_s02": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 57.0
+    },
+    "pre_mm_s03": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 97.0
+    },
+    "pre_mm_s04": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 115.0
+    },
+    "pre_mm_s05": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 118.0
+    },
+    "pre_mm_s06": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 56.0
+    },
+    "pre_mm_s07": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 38.0
+    },
+    "pre_mm_s08": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 22.0
+    },
+    "pre_mm_s09": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 23.0
+    },
+    "pre_mm_s10": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 65.0
+    },
+    "pre_mm_s11": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 65.0
+    },
+    "pre_mm_s12": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 69.0
+    },
+    "pre_mm_syr": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 781.0
+    },
+    "pre_mm_uyr": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 803.0
+    },
+    "prm_pc_sse": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 33.0
+    },
+    "prm_pc_use": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 48.0
+    },
+    "pst_pc_sse": {
+      "value": 62.42137960215132,
+      "coverage": 1.0,
+      "reference_raw": 76.0
+    },
+    "pst_pc_use": {
+      "value": 55.250261269085236,
+      "coverage": 1.0,
+      "reference_raw": 74.0
+    },
+    "rdd_mk_sav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 144.0
+    },
+    "rdd_mk_uav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 143.0
+    },
+    "rev_mc_usu": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "ria_ha_ssu": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 48.020999908447266
+    },
+    "ria_ha_usu": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 117.5719985961914
+    },
+    "riv_tc_ssu": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 301.77099609375
+    },
+    "riv_tc_usu": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 564.4979858398438
+    },
+    "run_mm_syr": {
+      "value": 1046.5670208764807,
+      "coverage": 1.0,
+      "reference_raw": 533.0
+    },
+    "sgr_dk_sav": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 777.0
+    },
+    "slp_dg_sav": {
+      "value": 23.25707202316999,
+      "coverage": 1.0,
+      "reference_raw": 233.0
+    },
+    "slp_dg_uav": {
+      "value": 24.34113457581759,
+      "coverage": 1.0,
+      "reference_raw": 243.0
+    },
+    "slt_pc_sav": {
+      "value": 33.76409729531599,
+      "coverage": 1.0,
+      "reference_raw": 45.0
+    },
+    "slt_pc_uav": {
+      "value": 31.761203819645804,
+      "coverage": 1.0,
+      "reference_raw": 44.0
+    },
+    "snd_pc_sav": {
+      "value": 47.975343057698915,
+      "coverage": 1.0,
+      "reference_raw": 40.0
+    },
+    "snd_pc_uav": {
+      "value": 51.72229608290847,
+      "coverage": 1.0,
+      "reference_raw": 41.0
+    },
+    "snw_pc_s01": {
+      "value": 99.15602479993102,
+      "coverage": 1.0,
+      "reference_raw": 100.0
+    },
+    "snw_pc_s02": {
+      "value": 99.79907623742173,
+      "coverage": 1.0,
+      "reference_raw": 100.0
+    },
+    "snw_pc_s03": {
+      "value": 99.88315786907515,
+      "coverage": 1.0,
+      "reference_raw": 100.0
+    },
+    "snw_pc_s04": {
+      "value": 97.43391866794735,
+      "coverage": 1.0,
+      "reference_raw": 95.0
+    },
+    "snw_pc_s05": {
+      "value": 66.66752188233413,
+      "coverage": 1.0,
+      "reference_raw": 56.0
+    },
+    "snw_pc_s06": {
+      "value": 33.47957958065641,
+      "coverage": 1.0,
+      "reference_raw": 19.0
+    },
+    "snw_pc_s07": {
+      "value": 14.99771264454789,
+      "coverage": 1.0,
+      "reference_raw": 5.0
+    },
+    "snw_pc_s08": {
+      "value": 7.923926758481319,
+      "coverage": 1.0,
+      "reference_raw": 1.0
+    },
+    "snw_pc_s09": {
+      "value": 10.198025174631955,
+      "coverage": 1.0,
+      "reference_raw": 5.0
+    },
+    "snw_pc_s10": {
+      "value": 39.76746112265582,
+      "coverage": 1.0,
+      "reference_raw": 35.0
+    },
+    "snw_pc_s11": {
+      "value": 85.18083132106374,
+      "coverage": 1.0,
+      "reference_raw": 87.0
+    },
+    "snw_pc_s12": {
+      "value": 98.51605815142236,
+      "coverage": 1.0,
+      "reference_raw": 99.0
+    },
+    "snw_pc_smx": {
+      "value": 99.99169121876186,
+      "coverage": 1.0,
+      "reference_raw": 100.0
+    },
+    "snw_pc_syr": {
+      "value": 62.75027451751407,
+      "coverage": 1.0,
+      "reference_raw": 58.0
+    },
+    "snw_pc_uyr": {
+      "value": 66.12719529878586,
+      "coverage": 1.0,
+      "reference_raw": 62.0
+    },
+    "soc_th_sav": {
+      "value": 417.5362876118677,
+      "coverage": 1.0,
+      "reference_raw": 48.0
+    },
+    "soc_th_uav": {
+      "value": 287.8549841565907,
+      "coverage": 1.0,
+      "reference_raw": 58.0
+    },
+    "swc_pc_s01": {
+      "value": 19.250749935444205,
+      "coverage": 1.0,
+      "reference_raw": 91.0
+    },
+    "swc_pc_s02": {
+      "value": 19.250749935444205,
+      "coverage": 1.0,
+      "reference_raw": 97.0
+    },
+    "swc_pc_s03": {
+      "value": 19.250749935444205,
+      "coverage": 1.0,
+      "reference_raw": 99.0
+    },
+    "swc_pc_s04": {
+      "value": 29.50078847717962,
+      "coverage": 1.0,
+      "reference_raw": 100.0
+    },
+    "swc_pc_s05": {
+      "value": 36.88122878230738,
+      "coverage": 1.0,
+      "reference_raw": 99.0
+    },
+    "swc_pc_s06": {
+      "value": 25.447610049464256,
+      "coverage": 1.0,
+      "reference_raw": 91.0
+    },
+    "swc_pc_s07": {
+      "value": 15.543710036917247,
+      "coverage": 1.0,
+      "reference_raw": 75.0
+    },
+    "swc_pc_s08": {
+      "value": 10.853083365318517,
+      "coverage": 1.0,
+      "reference_raw": 59.0
+    },
+    "swc_pc_s09": {
+      "value": 8.86913767283922,
+      "coverage": 1.0,
+      "reference_raw": 50.0
+    },
+    "swc_pc_s10": {
+      "value": 18.331066544481416,
+      "coverage": 1.0,
+      "reference_raw": 53.0
+    },
+    "swc_pc_s11": {
+      "value": 18.495804330489452,
+      "coverage": 1.0,
+      "reference_raw": 65.0
+    },
+    "swc_pc_s12": {
+      "value": 18.495804330489452,
+      "coverage": 1.0,
+      "reference_raw": 80.0
+    },
+    "swc_pc_syr": {
+      "value": 20.014206949651594,
+      "coverage": 1.0,
+      "reference_raw": 80.0
+    },
+    "swc_pc_uyr": {
+      "value": 19.518114391390775,
+      "coverage": 1.0,
+      "reference_raw": 83.0
+    },
+    "tbi_cl_smj": {
+      "value": 8.0,
+      "coverage": 1.0,
+      "reference_raw": 8.0
+    },
+    "tec_cl_smj": {
+      "value": 730.0,
+      "coverage": 1.0,
+      "reference_raw": 730.0
+    },
+    "tmp_dc_s01": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -171.0
+    },
+    "tmp_dc_s02": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -158.0
+    },
+    "tmp_dc_s03": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -96.0
+    },
+    "tmp_dc_s04": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -12.0
+    },
+    "tmp_dc_s05": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 37.0
+    },
+    "tmp_dc_s06": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 83.0
+    },
+    "tmp_dc_s07": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 114.0
+    },
+    "tmp_dc_s08": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 102.0
+    },
+    "tmp_dc_s09": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 50.0
+    },
+    "tmp_dc_s10": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -18.0
+    },
+    "tmp_dc_s11": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -84.0
+    },
+    "tmp_dc_s12": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -134.0
+    },
+    "tmp_dc_smn": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -171.0
+    },
+    "tmp_dc_smx": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 114.0
+    },
+    "tmp_dc_syr": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -24.0
+    },
+    "tmp_dc_uyr": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": -38.0
+    },
+    "urb_pc_sse": {
+      "value": 0.0006442034942279408,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "urb_pc_use": {
+      "value": 0.0010132939016952512,
+      "coverage": 1.0,
+      "reference_raw": 0.0
+    },
+    "wet_cl_smj": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 8.0
+    },
+    "wet_pc_s01": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_s02": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_s03": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_s04": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_s05": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_s06": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_s07": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_s08": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 8.0
+    },
+    "wet_pc_s09": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_sg1": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 8.0
+    },
+    "wet_pc_sg2": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 8.0
+    },
+    "wet_pc_u01": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_u02": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_u03": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_u04": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_u05": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_u06": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_u07": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_u08": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 3.0
+    },
+    "wet_pc_u09": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 0.0
+    },
+    "wet_pc_ug1": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 3.0
+    },
+    "wet_pc_ug2": {
+      "value": null,
+      "coverage": null,
+      "reference_raw": 3.0
+    }
+  }
+}

@@ -57,7 +57,10 @@ def assemble(root=ROOT):
     dictionary = read(root / "PUBLISHED/data/hydrography/attribute-dictionary.json")["columns"]
     actual = {a["column"] for a in attributes if a["id"].startswith("hydrosheds.")}
     assert actual == set(dictionary), "HydroSHEDS recipe coverage differs from project dictionary"
-    payload = {**roadmap, "modules": modules, "attributes": attributes, "functions": functions,
+    plan = read(base / "implementation-plan.json")
+    assert [stage['number'] for stage in plan['stages']] == list(range(1, 7))
+    assert all(stage['gate'] and stage['deliverables'] for stage in plan['stages'])
+    payload = {**roadmap, "implementation_plan": plan, "modules": modules, "attributes": attributes, "functions": functions,
                "updates": sorted(updates, key=lambda u: (u["date"], u["id"]), reverse=True),
                "years": list(range(2000, 2027)),
                "counts": {"specified": len(attributes), "implemented": sum(a["status"] == "implemented" for a in attributes), "reproduced": 0},
@@ -71,6 +74,7 @@ def main():
     out = ROOT / "PUBLISHED/data/atlas"
     out.mkdir(parents=True, exist_ok=True)
     (out / "roadmap.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (out / "implementation-plan.json").write_text(json.dumps(payload['implementation_plan'], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     # Portable documentation downloads; do not serve arbitrary workspace files.
     for name, source in {"methodology.md": "hydrosheds/METHODOLOGY.md",
                          "recipes.md": "hydrosheds/RECIPES.md",

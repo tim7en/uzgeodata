@@ -1,5 +1,22 @@
 # Dynamic HydroATLAS pilot
 
+The six-stage implementation programme is published at
+`/roadmap.html#implementation-plan` from `ATLAS_MODULES/implementation-plan.json`.
+It covers both HydroATLAS and the Uzbekistan environmental atlas, temporal
+storage, regional batching, accessible research publication and reviewed
+monitoring/ontology outputs. Temporal storage is a prerequisite for new dated
+ingestion, not a final-stage addition.
+
+The basin modal has an **Updated substitutes** tab, loaded on demand. Light
+green marks a populated substitute for the exact level-12 basin and run,
+including valid zeroes. It does not certify recency or accuracy. Other basin
+IDs and coarser levels show a pending state; pilot values are not transferred.
+Outlined spatial/temporal flags identify proposed research opportunities with
+their limitations. `atlas:publish` derives these views from the frozen run into
+`PUBLISHED/data/atlas/substitutes/<run_id>/`, with shared definitions and one
+value file per basin. These are display projections; the immutable scientific
+run and source lock remain the provenance authority.
+
 Open `/dynamic-atlas.html` for the actual Pskem results, all 56 variable-family
 crosswalks, native and processing resolutions, periods used, live source checks,
 and the update pathway. This inventory covers BasinATLAS attributes on the 20

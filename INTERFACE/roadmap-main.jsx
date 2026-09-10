@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import AtlasProcessing from './AtlasProcessing.jsx';
 import PskemAtlasBatch from './PskemAtlasBatch.jsx';
+import AtlasImplementationPlan from './AtlasImplementationPlan.jsx';
 import './roadmap.css';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
     {error && <p role="alert">{error}. {data ? 'Showing the last successful response.' : 'Use Refresh updates to retry.'}</p>}
     {!data && !error && <p role="status">Loading the atlas programme…</p>}
     {data && <>
+      <AtlasImplementationPlan plan={data.implementation_plan}/>
       <div className="metrics"><div><strong>{data.counts.specified}</strong><span>attribute methods specified</span></div><div><strong>{data.counts.implemented}</strong><span>recipes implemented in this module</span></div><div><strong>{data.counts.reproduced}</strong><span>independently reproduced</span></div><div><strong>2000–26</strong><span>historical planning window</span></div></div>
       <PskemAtlasBatch/>
       <p><a href="/dynamic-atlas.html">Dynamic HydroATLAS: actual results, source resolutions and refresh options →</a></p>
