@@ -164,6 +164,25 @@ def test_the_store_round_trips_through_its_partitions(tmp_path):
     assert values["4120380350"] is None and values["4120382970"] == 0.0, "a null survives as a null"
 
 
+def test_a_partition_is_replaced_atomically_not_rewritten_in_place(tmp_path):
+    """A regional run writes for hours while the portal serves the same files. A
+    reader must see the old partition or the new one, never half of either."""
+    first = observations.append([], [make(value=1.0)])
+    observations.write_partitions(tmp_path, first)
+    partition = tmp_path / "time_kind=climatology" / "part.csv"
+    original = partition.read_text(encoding="utf-8")
+
+    second = observations.append(first, [make(value=2.0, basin_id="4120380350")])
+    observations.write_partitions(tmp_path, second)
+    assert partition.read_text(encoding="utf-8") != original, "the partition was replaced"
+    assert not list(tmp_path.rglob("*.tmp")), "no temporary is left behind"
+
+    # A temporary that does survive a crash is not mistaken for data.
+    stray = partition.with_name(partition.name + ".tmp")
+    stray.write_text("observation_id,revision\nbroken,1\n", encoding="utf-8")
+    assert len(observations.read_partitions(tmp_path)) == len(second)
+
+
 def test_the_published_store_round_trips_and_matches_its_run(staged):
     batch, lock = latest_run()
     rebuilt, _ = build_rows(batch, lock)

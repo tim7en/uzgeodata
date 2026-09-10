@@ -260,11 +260,15 @@ def write_partitions(directory, rows):
     for name, group in sorted(groups.items()):
         path = directory / name / "part.csv"
         path.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("w", encoding="utf-8", newline="") as stream:
+        # Written aside and moved into place, so a reader during a long run sees the
+        # previous partition or the new one, never half of either.
+        temporary = path.with_name(path.name + ".tmp")
+        with temporary.open("w", encoding="utf-8", newline="") as stream:
             writer = csv.DictWriter(stream, fieldnames=FIELDS)
             writer.writeheader()
             for record in sorted(group, key=sort_key):
                 writer.writerow({field: _text(record[field]) for field in FIELDS})
+        temporary.replace(path)
         written.append(path)
     return written
 
@@ -297,6 +301,7 @@ def merge_table(path, rows, key):
 
 
 def read_partitions(directory):
+    """Every partition under a directory. Half-written temporaries are not partitions."""
     rows = []
     for path in sorted(Path(directory).glob("**/part.csv")):
         with path.open(encoding="utf-8", newline="") as stream:

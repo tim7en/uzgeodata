@@ -75,26 +75,37 @@ def source_images(year):
     return [int(size) for size in ee.List(sizes).getInfo()]
 
 
+def year_rows(collection, transform, year, expected):
+    """One year of monthly values for one collection of basins, in a single call.
+
+    Separated from `extract` so a regional run can hold the expected-cell denominators
+    and the basin batching itself, and pay for neither more than once.
+    """
+    table = monthly_stack(year, transform).reduceRegions(
+        collection=collection, reducer=reducer(), crs=CRS, crsTransform=transform).getInfo()
+    rows = []
+    for feature in table["features"]:
+        properties = feature["properties"]
+        basin_id = properties["hybas_id"]
+        for month in MONTHS:
+            valid = properties.get(f"m{month:02d}_count")
+            rows.append({
+                "hybas_id": basin_id, "year": year, "month": month,
+                # An absent property means every cell was masked all month.
+                "value": properties.get(f"m{month:02d}_mean"),
+                "valid_count": int(valid) if valid is not None else 0,
+                "expected_count": expected[basin_id]})
+    return rows
+
+
 def extract(features, transform, years, log=None):
     """One row per basin, year and month. A month with no cloud-free day stays null."""
     collection = feature_collection(features)
     expected = expected_cells(collection, transform)
     rows, provenance = [], {}
     for year in years:
-        table = monthly_stack(year, transform).reduceRegions(
-            collection=collection, reducer=reducer(), crs=CRS, crsTransform=transform).getInfo()
+        rows.extend(year_rows(collection, transform, year, expected))
         provenance[str(year)] = {"source_images_by_month": source_images(year)}
-        for feature in table["features"]:
-            properties = feature["properties"]
-            basin_id = properties["hybas_id"]
-            for month in MONTHS:
-                valid = properties.get(f"m{month:02d}_count")
-                rows.append({
-                    "hybas_id": basin_id, "year": year, "month": month,
-                    # An absent property means every cell was masked all month.
-                    "value": properties.get(f"m{month:02d}_mean"),
-                    "valid_count": int(valid) if valid is not None else 0,
-                    "expected_count": expected[basin_id]})
         if log:
-            log(f"snow {year}: {len(table['features'])} basins x 12 months")
+            log(f"snow {year}: {len(features)} basins x 12 months")
     return rows, provenance

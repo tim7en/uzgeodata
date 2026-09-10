@@ -61,7 +61,9 @@ def observation_rows(rows, geometry_version, recipe, identifier, recorded_at, re
             attribute_id=ATTRIBUTE, recipe_version=recipe, mode="annual_extension",
             spatial_support="s", time_kind="observation", temporal_statistic="monthly_mean",
             valid_start=start, valid_end=end, year=row["year"], month=row["month"],
-            value=row["value"], unit=UNIT if has_value else None,
+            # A null month keeps its unit: the unit describes the series, not whether
+            # this particular month happened to be observed.
+            value=row["value"], unit=UNIT,
             coverage_fraction=row["valid_count"] / row["expected_count"] if row["expected_count"] else None,
             valid_count=row["valid_count"], expected_count=row["expected_count"],
             quality_flag="open_surrogate_dated_observation",
