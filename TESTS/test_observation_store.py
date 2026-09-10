@@ -47,7 +47,14 @@ def manifest():
 
 
 @pytest.fixture(scope="module")
-def ledger():
+def ledgers():
+    """Every regional run that has published into the store."""
+    return {path.name: json.loads(path.read_text(encoding="utf-8"))
+            for path in sorted(STORE.glob("regional-*-ledger.json"))}
+
+
+@pytest.fixture(scope="module")
+def snow_ledger():
     return json.loads((STORE / "regional-snow-ledger.json").read_text(encoding="utf-8"))
 
 
@@ -330,16 +337,27 @@ def test_the_whole_store_holds_no_series_conflict():
     assert observations.verify_partitions(STORE) == []
 
 
-def test_the_dated_series_covers_the_region_for_twenty_years(manifest, totals, ledger, one_dated_year):
-    """The pilot's 20 basins and the regional 7,445, each under its own geometry."""
-    assert ledger["complete"] and not ledger["failures"]
-    assert ledger["stored_rows"] == ledger["expected_rows"] == 7445 * 20 * 12
-    assert totals["dated_observations"] == manifest["dated_observations"]
-    assert totals["dated_observations"] == ledger["expected_rows"] + 20 * 20 * 12
-    assert manifest["dated_attributes"] == ["uzgeodata.dated.v1.snw_pc_s"]
+def test_the_dated_series_covers_the_region_for_twenty_years(manifest, totals, ledgers, one_dated_year):
+    """Every dated attribute is accounted for by a run that produced it.
 
-    regional = [r for r in one_dated_year if r["geometry_version"] == ledger["geometry_version"]]
-    pilot = [r for r in one_dated_year if r["geometry_version"] != ledger["geometry_version"]]
+    Written against the ledgers present rather than against one source, so adding a
+    dated family extends the store without rewriting what this asserts.
+    """
+    assert ledgers, "a dated series is published"
+    for name, entry in ledgers.items():
+        assert entry["complete"] and not entry["failures"], name
+        assert entry["stored_rows"] == entry["expected_rows"], name
+        assert entry["basins"] == 7445 and entry["years"] == [2003, 2022], name
+
+    claimed = {a for entry in ledgers.values() for a in entry.get("attributes", [entry.get("attribute_id")])}
+    assert set(manifest["dated_attributes"]) == claimed, "no dated attribute without a run behind it"
+    assert totals["dated_observations"] == manifest["dated_observations"]
+    pilot_dated = 20 * 20 * 12  # the pilot snow series, under its own geometry
+    assert totals["dated_observations"] == sum(e["stored_rows"] for e in ledgers.values()) + pilot_dated
+
+    regional_version = next(iter(ledgers.values()))["geometry_version"]
+    regional = [r for r in one_dated_year if r["geometry_version"] == regional_version]
+    pilot = [r for r in one_dated_year if r["geometry_version"] != regional_version]
     assert len({r["basin_id"] for r in regional}) == 7445
     assert len({r["basin_id"] for r in pilot}) == 20, "the pilot series is not overwritten"
     assert {r["month"] for r in regional} == set(range(1, 13))
@@ -349,8 +367,17 @@ def test_the_dated_series_covers_the_region_for_twenty_years(manifest, totals, l
         assert row["valid_start"][:7] == f"{row['year']:04d}-{row['month']:02d}"
         assert row["temporal_statistic"] == "monthly_mean"
         assert row["expected_count"] and row["valid_count"] <= row["expected_count"]
-        assert row["value"] is None or 0 <= row["value"] <= 100
         assert row["value"] is not None or row["missing_reason"], "a null says why"
+
+
+def test_each_dated_attribute_keeps_one_unit_across_the_region(one_dated_year):
+    """Several variables now share a partition; none may borrow another's unit."""
+    units = {}
+    for row in one_dated_year:
+        units.setdefault(row["attribute_id"], set()).add(row["unit"])
+    for attribute, found in units.items():
+        assert len(found) == 1, f"{attribute} is stored in {found}"
+    assert len(units) >= 1
 
 
 def test_the_climatology_it_was_derived_alongside_still_stands(staged):
@@ -359,17 +386,18 @@ def test_the_climatology_it_was_derived_alongside_still_stands(staged):
     assert any(a.endswith("snw_pc_s01") for a in climatology), "the January climatology still stands"
 
 
-def test_a_dated_month_is_partitioned_by_its_year():
+def test_a_dated_month_is_partitioned_by_its_year(ledgers, one_dated_year):
     for year in range(2003, 2023):
         assert (STORE / "time_kind=observation" / f"year={year}" / "part.csv").is_file()
-    rows = observations.read_partitions(STORE / "time_kind=observation" / "year=2003")
-    assert {row["year"] for row in rows} == {2003}
-    assert len(rows) == (7445 + 20) * 12
+    assert {row["year"] for row in one_dated_year} == {2003}
+    regional = sum(entry["stored_rows"] // len(range(2003, 2023)) for entry in ledgers.values())
+    assert len(one_dated_year) == regional + 20 * 12, "one year of every source, plus the pilot"
 
 
-def test_the_ledger_reports_the_availability_a_trend_would_confound(ledger):
+def test_the_ledger_reports_the_availability_a_trend_would_confound(snow_ledger):
     """Null months are not stable across the record. A snow trend computed without
     them can be a trend in what the sensor delivered."""
+    ledger = snow_ledger
     availability = ledger["availability"]["by_year"]
     assert set(availability) == {str(year) for year in range(2003, 2023)}
     assert availability["2022"]["null_months"] > availability["2003"]["null_months"] * 2

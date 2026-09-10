@@ -25,6 +25,15 @@ GEODATA/BasinATLAS_Data_v10.gdb.zip
 GEODATA.zip
 earth_engine.zip
 
+# Bulk observation partitions. The store is derived data, regenerable from the run
+# checkpoints and the source catalogue, and it grows by roughly 0.75 GB per monthly
+# variable across the region: a single year partition passed GitHub's 100 MB file
+# limit as soon as a second source landed. Nothing in INTERFACE/ fetches it, so it
+# is not needed for the site to build or run. The small files beside it - the run
+# ledgers, manifests and the run/recipe/source_release/basin_geometry tables - stay
+# tracked, because those are the provenance record.
+PUBLISHED/data/atlas/observations/time_kind=*/
+
 # Derived counting cache for the observation store: machine-specific mtimes, and
 # rebuilt for free whenever it is missing.
 PUBLISHED/data/atlas/observations/.summary-cache.json
