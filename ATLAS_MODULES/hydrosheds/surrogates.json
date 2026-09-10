@@ -2314,7 +2314,7 @@
         "asset": "MODIS/061/MYD10A1",
         "name": "MODIS/Aqua daily snow cover, collection 6.1",
         "citation": "Hall & Riggs 2021",
-        "period": "2003-2024 daily; monthly climatology used",
+        "period": "Daily source; 2003-01-01 inclusive to 2023-01-01 exclusive monthly climatology used",
         "licence": "Public domain (NASA)",
         "catalogue_url": "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MYD10A1",
         "bands": [

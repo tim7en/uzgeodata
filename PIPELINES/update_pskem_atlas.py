@@ -59,7 +59,9 @@ def divergence(reference, surrogate, factor):
             "relative_mae": (sum(map(abs, errors)) / len(errors) / magnitude) if magnitude else None}
 
 
-def run(offline=False):
+def run(offline=False, refresh_sources=False):
+    if offline and refresh_sources:
+        raise ValueError('--offline and --refresh-sources cannot be combined')
     run_id = "pskem-all281-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     directory = ROOT / "WORKSPACE/atlas_runs/hydrosheds" / run_id
     published = ROOT / "PUBLISHED/data/atlas"
@@ -175,7 +177,9 @@ def run(offline=False):
                 grid_zones = zones_for(features, affine, (height, width))
                 grid_areas = np.broadcast_to(cell_areas(affine, height)[:, None], grid_zones.shape)
                 domain = sg.Domain(features, members, grid_zones, grid_areas, grid_transform, width, height,
-                                   bounds, ROOT / "GEODATA/atlas_sources/surrogates_pskem", timer, offline)
+                                   bounds, (ROOT / "GEODATA/atlas_sources/surrogates_pskem" / run_id
+                                            if refresh_sources else ROOT / "GEODATA/atlas_sources/surrogates_pskem"), timer, offline)
+                lock["surrogate_cache_policy"] = "fresh_run_namespace" if refresh_sources else "reuse_verified_cache"
                 lock["surrogate_grid"] = {"transform": grid_transform, "width": width, "height": height,
                                           "bounds": list(bounds), "cell_arcsec": 15.0}
                 timer.event(f"Prepared the shared surrogate grid: {width} by {height} cells at 15 arc-seconds")
@@ -342,7 +346,7 @@ def run(offline=False):
                        "download_base": f"/data/atlas/runs/{run_id}/"}
             write_json(directory / "batch.json", summary)
             write_json(directory / "manifest.json", {"run_id": run_id, "python": platform.python_version(),
-                       "platform": platform.platform(), "command": "python PIPELINES/update_pskem_atlas.py" + (" --offline" if offline else ""),
+                       "platform": platform.platform(), "command": "python PIPELINES/update_pskem_atlas.py" + (" --offline" if offline else "") + (" --refresh-sources" if refresh_sources else ""),
                        "mode": spec["mode"], "scientific_release": "not_eligible", "files": {
                            p.name: sha256(p) for p in directory.iterdir() if p.is_file() and p.name not in ("timing.json", "processing.jsonl")}})
         timing = timer.finish("complete_with_pending_reproduction" if not failures else "partial_source_failure")
@@ -369,4 +373,8 @@ def run(offline=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--offline", action="store_true", help="Require cached candidate source rasters")
-    run(parser.parse_args().offline)
+    parser.add_argument("--refresh-sources", action="store_true", help="Acquire surrogate sources in a new cache namespace; preserves older bytes and fixed climatology periods")
+    args = parser.parse_args()
+    if args.offline and args.refresh_sources:
+        parser.error('--offline and --refresh-sources cannot be combined')
+    run(args.offline, args.refresh_sources)

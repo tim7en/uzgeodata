@@ -12,7 +12,7 @@ const USAGE = [
     body: 'The atlas records zero glacier cover in every Pskem unit, while the current GLIMS release maps '
       + 'roughly 3.5 percent of the pilot as glacierised. The 2012 snapshot appears to lack Western Tien Shan '
       + 'coverage rather than to disagree about area. For a glacier-fed headwater study, the surrogate is the '
-      + 'usable number and the atlas value is the one to discard.',
+      + 'estimate to investigate alongside the archived atlas value; the coverage explanation still needs source review.',
   },
   {
     title: 'Refreshing epochs that have aged out',
@@ -36,8 +36,8 @@ const USAGE = [
   },
   {
     title: 'Sharpening boundary-sensitive shares',
-    body: 'Glacier, protected-area and lake shares are computed by exact geodesic polygon intersection rather than '
-      + 'by counting cell centres, and land cover, built surface and surface water are aggregated from 100 m and '
+    body: 'Glacier and protected-area polygons are painted at 30 m and aggregated to the pilot grid. Lake shares use '
+      + 'exact geodesic polygon intersection, and land cover, built surface and surface water are aggregated from 100 m and '
       + '30 m sources. For small headwater units, where a 15 arc-second cell is a large fraction of the basin, '
       + 'that is a real resolution gain over a cell-centre method.',
   },
@@ -98,6 +98,7 @@ function App() {
   }, []);
 
   return <main>
+    <p><a href="/dynamic-atlas.html">Dynamic HydroATLAS: fetched results, resolutions and update audit →</a></p>
     <nav><a href="/roadmap.html">← Atlas roadmap</a><a href="/data/atlas/surrogates.md" download>Surrogate plan ↓</a></nav>
     {error && <p role="alert">{error}</p>}
     {!data && !error && <p>Loading the surrogate record…</p>}

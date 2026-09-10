@@ -1,0 +1,363 @@
+{
+  "checked_at": "2026-09-10T04:13:21.758431+00:00",
+  "batch_run_id": "pskem-all281-20260909T184834061745Z",
+  "scope": "Pilot bounding box; latest image first-band presence at >=1 km. Not full-period coverage, required-band QA or an attribute extraction.",
+  "sources": [
+    {
+      "asset": "CIESIN/GPWv411/GPW_Population_Density",
+      "checked_at": "2026-09-10T04:13:29.620594+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "2000-01-01T00:00:00+00:00",
+      "latest_image_date": "2020-01-01T00:00:00+00:00",
+      "bands": [
+        "population_density"
+      ],
+      "sample_band": "population_density",
+      "nominal_scale_m": 927.6624232772793,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "COPERNICUS/Landcover/100m/Proba-V-C3/Global",
+      "checked_at": "2026-09-10T04:13:32.825472+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "2015-01-01T00:00:00+00:00",
+      "latest_image_date": "2019-01-01T00:00:00+00:00",
+      "bands": [
+        "discrete_classification",
+        "discrete_classification-proba",
+        "bare-coverfraction",
+        "urban-coverfraction",
+        "crops-coverfraction",
+        "grass-coverfraction",
+        "moss-coverfraction",
+        "water-permanent-coverfraction",
+        "water-seasonal-coverfraction",
+        "shrub-coverfraction",
+        "snow-coverfraction",
+        "tree-coverfraction",
+        "forest_type",
+        "data-density-indicator",
+        "change-confidence"
+      ],
+      "sample_band": "discrete_classification",
+      "nominal_scale_m": 100,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 12513,
+      "status": "accessible"
+    },
+    {
+      "asset": "CSP/HM/GlobalHumanModification",
+      "checked_at": "2026-09-10T04:13:36.372212+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": null,
+      "latest_image_date": null,
+      "bands": [
+        "gHM"
+      ],
+      "sample_band": "gHM",
+      "nominal_scale_m": 1002.8782954348969,
+      "probe_scale_m": 1002.8782954348969,
+      "valid_sample_pixels": 9288,
+      "status": "accessible"
+    },
+    {
+      "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+      "checked_at": "2026-09-10T04:13:39.070819+00:00",
+      "type": "IMAGE_COLLECTION",
+      "status": "error",
+      "error": "OSError: [Errno 22] Invalid argument"
+    },
+    {
+      "asset": "GLIMS/current",
+      "checked_at": "2026-09-10T04:13:40.535554+00:00",
+      "type": "TABLE",
+      "pilot_feature_count": 1164,
+      "status": "accessible"
+    },
+    {
+      "asset": "GOOGLE/DYNAMICWORLD/V1",
+      "checked_at": "2026-09-10T04:13:41.854233+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "2015-10-03T06:19:08+00:00",
+      "latest_image_date": "2026-09-05T06:27:21.061000+00:00",
+      "bands": [
+        "water",
+        "trees",
+        "grass",
+        "flooded_vegetation",
+        "crops",
+        "shrub_and_scrub",
+        "built",
+        "bare",
+        "snow_and_ice",
+        "label"
+      ],
+      "sample_band": "water",
+      "nominal_scale_m": 10,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 137,
+      "status": "accessible"
+    },
+    {
+      "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+      "checked_at": "2026-09-10T04:13:46.004746+00:00",
+      "type": "IMAGE_COLLECTION",
+      "status": "error",
+      "error": "OSError: [Errno 22] Invalid argument"
+    },
+    {
+      "asset": "JRC/GHSL/P2023A/GHS_BUILT_S",
+      "checked_at": "2026-09-10T04:13:46.770553+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "1975-01-01T00:00:00+00:00",
+      "latest_image_date": "2030-01-01T00:00:00+00:00",
+      "bands": [
+        "built_surface",
+        "built_surface_nres"
+      ],
+      "sample_band": "built_surface",
+      "nominal_scale_m": 100,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 7000,
+      "status": "accessible"
+    },
+    {
+      "asset": "JRC/GSW1_4/GlobalSurfaceWater",
+      "checked_at": "2026-09-10T04:13:49.620360+00:00",
+      "type": "IMAGE",
+      "bands": [
+        "occurrence",
+        "change_abs",
+        "change_norm",
+        "seasonality",
+        "recurrence",
+        "transition",
+        "max_extent"
+      ],
+      "sample_band": "occurrence",
+      "nominal_scale_m": 30.000000000000004,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 924,
+      "status": "accessible"
+    },
+    {
+      "asset": "JRC/GSW1_4/MonthlyHistory",
+      "checked_at": "2026-09-10T04:13:51.103739+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "1984-03-01T00:00:00+00:00",
+      "latest_image_date": "2021-12-01T00:00:00+00:00",
+      "bands": [
+        "water"
+      ],
+      "sample_band": "water",
+      "nominal_scale_m": 30.000000000000004,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "MODIS/061/MYD10A1",
+      "checked_at": "2026-09-10T04:13:54.369177+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "2002-07-04T00:00:00+00:00",
+      "latest_image_date": "2026-09-06T00:00:00+00:00",
+      "bands": [
+        "NDSI_Snow_Cover",
+        "NDSI_Snow_Cover_Class",
+        "NDSI_Snow_Cover_Basic_QA",
+        "NDSI_Snow_Cover_Algorithm_Flags_QA",
+        "NDSI",
+        "Snow_Albedo_Daily_Tile",
+        "Snow_Albedo_Daily_Tile_Class",
+        "orbit_pnt",
+        "granule_pnt"
+      ],
+      "sample_band": "NDSI_Snow_Cover",
+      "nominal_scale_m": 463.31271652791656,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 6938,
+      "status": "accessible"
+    },
+    {
+      "asset": "NOAA/DMSP-OLS/NIGHTTIME_LIGHTS",
+      "checked_at": "2026-09-10T04:14:02.020367+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "1992-01-01T00:00:00+00:00",
+      "latest_image_date": "2013-01-01T00:00:00+00:00",
+      "bands": [
+        "avg_vis",
+        "stable_lights",
+        "cf_cvg",
+        "avg_lights_x_pct"
+      ],
+      "sample_band": "avg_vis",
+      "nominal_scale_m": 927.6624195666301,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9490,
+      "status": "accessible"
+    },
+    {
+      "asset": "NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG",
+      "checked_at": "2026-09-10T04:14:04.752900+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "2014-01-01T00:00:00+00:00",
+      "latest_image_date": "2026-07-01T00:00:00+00:00",
+      "bands": [
+        "avg_rad",
+        "cf_cvg"
+      ],
+      "sample_band": "avg_rad",
+      "nominal_scale_m": 463.83121534928955,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "OpenLandMap/PNV/PNV_BIOME-TYPE_BIOME00K_C/v01",
+      "checked_at": "2026-09-10T04:14:06.685179+00:00",
+      "type": "IMAGE",
+      "bands": [
+        "biome_type"
+      ],
+      "sample_band": "biome_type",
+      "nominal_scale_m": 927.6624232772793,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "OpenLandMap/SOL/SOL_BULKDENS-FINEEARTH_USDA-4A1H_M/v02",
+      "checked_at": "2026-09-10T04:14:08.116290+00:00",
+      "type": "IMAGE",
+      "bands": [
+        "b0",
+        "b10",
+        "b30",
+        "b60",
+        "b100",
+        "b200"
+      ],
+      "sample_band": "b0",
+      "nominal_scale_m": 231.91556871282302,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "OpenLandMap/SOL/SOL_CLAY-WFRACTION_USDA-3A1A1A_M/v02",
+      "checked_at": "2026-09-10T04:14:09.368379+00:00",
+      "type": "IMAGE",
+      "bands": [
+        "b0",
+        "b10",
+        "b30",
+        "b60",
+        "b100",
+        "b200"
+      ],
+      "sample_band": "b0",
+      "nominal_scale_m": 231.91556871282302,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "OpenLandMap/SOL/SOL_ORGANIC-CARBON_USDA-6A1C_M/v02",
+      "checked_at": "2026-09-10T04:14:10.768087+00:00",
+      "type": "IMAGE",
+      "bands": [
+        "b0",
+        "b10",
+        "b30",
+        "b60",
+        "b100",
+        "b200"
+      ],
+      "sample_band": "b0",
+      "nominal_scale_m": 231.91556871282302,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "OpenLandMap/SOL/SOL_SAND-WFRACTION_USDA-3A1A1A_M/v02",
+      "checked_at": "2026-09-10T04:14:12.919800+00:00",
+      "type": "IMAGE",
+      "bands": [
+        "b0",
+        "b10",
+        "b30",
+        "b60",
+        "b100",
+        "b200"
+      ],
+      "sample_band": "b0",
+      "nominal_scale_m": 231.91556871282302,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "RESOLVE/ECOREGIONS/2017",
+      "checked_at": "2026-09-10T04:14:15.085576+00:00",
+      "type": "TABLE",
+      "pilot_feature_count": 2,
+      "status": "accessible"
+    },
+    {
+      "asset": "UCSB-CHG/CHIRPS/DAILY",
+      "checked_at": "2026-09-10T04:14:16.213696+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": "1981-01-01T00:00:00+00:00",
+      "latest_image_date": "2026-07-31T00:00:00+00:00",
+      "bands": [
+        "precipitation"
+      ],
+      "sample_band": "precipitation",
+      "nominal_scale_m": 5565.974539663679,
+      "probe_scale_m": 5565.974539663679,
+      "valid_sample_pixels": 299,
+      "status": "accessible"
+    },
+    {
+      "asset": "USGS/GFSAD1000_V1",
+      "checked_at": "2026-09-10T04:14:19.800931+00:00",
+      "type": "IMAGE",
+      "bands": [
+        "landcover"
+      ],
+      "sample_band": "landcover",
+      "nominal_scale_m": 993.882349974298,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    },
+    {
+      "asset": "WCMC/WDPA/current/polygons",
+      "checked_at": "2026-09-10T04:14:21.068123+00:00",
+      "type": "TABLE",
+      "pilot_feature_count": 7,
+      "status": "accessible"
+    },
+    {
+      "asset": "WORLDCLIM/V1/MONTHLY",
+      "checked_at": "2026-09-10T04:14:22.002410+00:00",
+      "type": "IMAGE_COLLECTION",
+      "first_image_date": null,
+      "latest_image_date": null,
+      "bands": [
+        "tavg",
+        "tmin",
+        "tmax",
+        "prec"
+      ],
+      "sample_band": "tavg",
+      "nominal_scale_m": 927.6624232772797,
+      "probe_scale_m": 1000,
+      "valid_sample_pixels": 9360,
+      "status": "accessible"
+    }
+  ]
+}

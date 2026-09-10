@@ -4,6 +4,11 @@
 the 20-unit Pskem pilot. `functions/surrogates.py` executes the plan and
 `PIPELINES/update_pskem_atlas.py` runs it beside the original-vintage pass.
 
+The published scientific record — coverage, method, verification, scope, usage
+and limits — is built by `PIPELINES/build_surrogate_science.py` (`npm run
+atlas:science`) into `PUBLISHED/data/atlas/surrogate-science.json` and rendered
+at `/surrogates.html`. Every figure on that page is measured or read from a run.
+
 ## What a surrogate is, and is not
 
 A surrogate is an independent estimate of the same quantity, built from an open

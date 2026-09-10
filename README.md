@@ -11,6 +11,12 @@ managed allocation network and from administrative reporting overlays. See
 
 ## Layout
 
+The Pskem Earth Engine / HydroATLAS review is at `/dynamic-atlas.html`: saved
+basin values, thematic crosswalks, native and temporal resolutions, live source
+availability and refresh policies. Run `npm run atlas:audit` for a new live
+availability check, or `npm run atlas:publish` to rebuild from saved evidence.
+See [dynamic atlas methods](ATLAS_MODULES/hydrosheds/DYNAMIC_ATLAS.md).
+
 Each top-level folder is named for the kind of information it holds.
 
 | Folder | What lives here |

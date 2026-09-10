@@ -35,6 +35,7 @@ function App() {
     {data && <>
       <div className="metrics"><div><strong>{data.counts.specified}</strong><span>attribute methods specified</span></div><div><strong>{data.counts.implemented}</strong><span>recipes implemented in this module</span></div><div><strong>{data.counts.reproduced}</strong><span>independently reproduced</span></div><div><strong>2000–26</strong><span>historical planning window</span></div></div>
       <PskemAtlasBatch/>
+      <p><a href="/dynamic-atlas.html">Dynamic HydroATLAS: actual results, source resolutions and refresh options →</a></p>
       <details><summary>Earlier single-attribute pilot runs</summary><AtlasProcessing/></details>
       <section><div className="section-heading"><h2>The roadmap</h2><span>Evidence-based gates · status as of {data.as_of}</span></div>
         <div className="phases">{data.phases.map((phase, i) => <article className={`phase ${phase.status}`} key={phase.id} id={phase.id}>

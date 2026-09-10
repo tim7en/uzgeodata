@@ -75,6 +75,7 @@ def main():
     for name, source in {"methodology.md": "hydrosheds/METHODOLOGY.md",
                          "recipes.md": "hydrosheds/RECIPES.md",
                          "surrogates.md": "hydrosheds/SURROGATES.md",
+                         "dynamic-atlas-methods.md": "hydrosheds/DYNAMIC_ATLAS.md",
                          "reproducibility.md": "core/REPRODUCIBILITY.md"}.items():
         (out / name).write_text((ROOT / "ATLAS_MODULES" / source).read_text(encoding="utf-8"), encoding="utf-8")
     stream = io.StringIO(newline="")

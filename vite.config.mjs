@@ -26,6 +26,7 @@ export default defineConfig({
         atlas: here('./INTERFACE/atlas.html'),
         roadmap: here('./INTERFACE/roadmap.html'),
         surrogates: here('./INTERFACE/surrogates.html'),
+        dynamicAtlas: here('./INTERFACE/dynamic-atlas.html'),
         hydrography: here('./INTERFACE/hydrography.html'),
         landcover: here('./INTERFACE/landcover.html'),
         climate: here('./INTERFACE/climate.html'),
