@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-09-11T03:56:50.732+00:00",
+  "stations": 319,
+  "by_archive": {
+    "national": 123,
+    "nsidc": 196
+  },
+  "by_measure": {
+    "air temperature": 181,
+    "precipitation": 233,
+    "soil temperature": 71
+  },
+  "observations": 303359,
+  "elevation_m": {
+    "min": 29.0,
+    "max": 4169.0
+  },
+  "above_1500m": 61,
+  "meaning": "A station is drawn where it is recorded. National stations reached their coordinate through a name match that one check did not contradict, which is not a verified identity; NSIDC stations carry the coordinate their source published. Every point states which applies."
+}

@@ -1,0 +1,1260 @@
+{
+  "generated_at": "2026-09-11T04:36:35.761+00:00",
+  "stations": 313,
+  "base_url": "/data/hydromet/stations/",
+  "by_station": {
+    "uz:station/meteo-38178": {
+      "key": "meteo-38178",
+      "rows": 1680
+    },
+    "uz:station/soil-akbaytal": {
+      "key": "soil-akbaytal",
+      "rows": 247
+    },
+    "uz:station/soil-aktumsuk": {
+      "key": "soil-aktumsuk",
+      "rows": 251
+    },
+    "uz:station/meteo-38595": {
+      "key": "meteo-38595",
+      "rows": 984
+    },
+    "uz:station/soil-almalyk": {
+      "key": "soil-almalyk",
+      "rows": 252
+    },
+    "uz:station/meteo-38475": {
+      "key": "meteo-38475",
+      "rows": 1440
+    },
+    "uz:station/soil-andizhan": {
+      "key": "soil-andizhan",
+      "rows": 252
+    },
+    "uz:station/soil-angren": {
+      "key": "soil-angren",
+      "rows": 252
+    },
+    "uz:station/meteo-38153": {
+      "key": "meteo-38153",
+      "rows": 1440
+    },
+    "uz:station/soil-ayakagitma": {
+      "key": "soil-ayakagitma",
+      "rows": 252
+    },
+    "uz:station/soil-bakhmal": {
+      "key": "soil-bakhmal",
+      "rows": 252
+    },
+    "uz:station/soil-baysun": {
+      "key": "soil-baysun",
+      "rows": 251
+    },
+    "uz:station/meteo-38597": {
+      "key": "meteo-38597",
+      "rows": 1008
+    },
+    "uz:station/soil-bekabad": {
+      "key": "soil-bekabad",
+      "rows": 252
+    },
+    "uz:station/meteo-38612": {
+      "key": "meteo-38612",
+      "rows": 1464
+    },
+    "uz:station/soil-boz": {
+      "key": "soil-boz",
+      "rows": 250
+    },
+    "uz:station/meteo-38683": {
+      "key": "meteo-38683",
+      "rows": 1440
+    },
+    "uz:station/soil-bukhara": {
+      "key": "soil-bukhara",
+      "rows": 252
+    },
+    "uz:station/soil-buston": {
+      "key": "soil-buston",
+      "rows": 141
+    },
+    "uz:station/soil-buzaubay": {
+      "key": "soil-buzaubay",
+      "rows": 504
+    },
+    "uz:station/soil-chimbay": {
+      "key": "soil-chimbay",
+      "rows": 252
+    },
+    "uz:station/soil-chimgan": {
+      "key": "soil-chimgan",
+      "rows": 252
+    },
+    "uz:station/meteo-38811": {
+      "key": "meteo-38811",
+      "rows": 1464
+    },
+    "uz:station/soil-chimkurgan": {
+      "key": "soil-chimkurgan",
+      "rows": 252
+    },
+    "uz:station/meteo-38695": {
+      "key": "meteo-38695",
+      "rows": 1200
+    },
+    "uz:station/meteo-38594": {
+      "key": "meteo-38594",
+      "rows": 1464
+    },
+    "uz:station/soil-dalverzin": {
+      "key": "soil-dalverzin",
+      "rows": 250
+    },
+    "uz:station/soil-dekhkanabad": {
+      "key": "soil-dekhkanabad",
+      "rows": 252
+    },
+    "uz:station/meteo-38829": {
+      "key": "meteo-38829",
+      "rows": 1704
+    },
+    "uz:station/soil-denau": {
+      "key": "soil-denau",
+      "rows": 252
+    },
+    "uz:station/meteo-38460": {
+      "key": "meteo-38460",
+      "rows": 1464
+    },
+    "uz:station/soil-dukant": {
+      "key": "soil-dukant",
+      "rows": 252
+    },
+    "uz:station/meteo-38581": {
+      "key": "meteo-38581",
+      "rows": 1152
+    },
+    "uz:station/soil-dustlik": {
+      "key": "soil-dustlik",
+      "rows": 252
+    },
+    "uz:station/soil-dzhangeldy": {
+      "key": "soil-dzhangeldy",
+      "rows": 239
+    },
+    "uz:station/soil-dzhizak": {
+      "key": "soil-dzhizak",
+      "rows": 252
+    },
+    "uz:station/meteo-38618": {
+      "key": "meteo-38618",
+      "rows": 1464
+    },
+    "uz:station/soil-fergana": {
+      "key": "soil-fergana",
+      "rows": 252
+    },
+    "uz:station/soil-gallyaaral": {
+      "key": "soil-gallyaaral",
+      "rows": 252
+    },
+    "uz:station/meteo-38815": {
+      "key": "meteo-38815",
+      "rows": 1704
+    },
+    "uz:station/soil-guzar": {
+      "key": "soil-guzar",
+      "rows": 252
+    },
+    "uz:station/meteo-38551": {
+      "key": "meteo-38551",
+      "rows": 1464
+    },
+    "uz:station/meteo-38141": {
+      "key": "meteo-38141",
+      "rows": 1416
+    },
+    "uz:station/soil-kamchik": {
+      "key": "soil-kamchik",
+      "rows": 252
+    },
+    "uz:station/soil-karakalpakiya": {
+      "key": "soil-karakalpakiya",
+      "rows": 252
+    },
+    "uz:station/meteo-38685": {
+      "key": "meteo-38685",
+      "rows": 1440
+    },
+    "uz:station/soil-karakul": {
+      "key": "soil-karakul",
+      "rows": 252
+    },
+    "uz:station/meteo-38812": {
+      "key": "meteo-38812",
+      "rows": 1440
+    },
+    "uz:station/soil-karshi": {
+      "key": "soil-karshi",
+      "rows": 252
+    },
+    "uz:station/meteo-38399": {
+      "key": "meteo-38399",
+      "rows": 1440
+    },
+    "uz:station/soil-khiva": {
+      "key": "soil-khiva",
+      "rows": 248
+    },
+    "uz:station/meteo-38606": {
+      "key": "meteo-38606",
+      "rows": 1440
+    },
+    "uz:station/soil-kokand": {
+      "key": "soil-kokand",
+      "rows": 252
+    },
+    "uz:station/soil-kokaral": {
+      "key": "soil-kokaral",
+      "rows": 252
+    },
+    "uz:station/meteo-38708": {
+      "key": "meteo-38708",
+      "rows": 1464
+    },
+    "uz:station/soil-kul": {
+      "key": "soil-kul",
+      "rows": 252
+    },
+    "uz:station/meteo-38149": {
+      "key": "meteo-38149",
+      "rows": 1680
+    },
+    "uz:station/soil-kungrad": {
+      "key": "soil-kungrad",
+      "rows": 252
+    },
+    "uz:station/soil-kurgantepa": {
+      "key": "soil-kurgantepa",
+      "rows": 252
+    },
+    "uz:station/meteo-38563": {
+      "key": "meteo-38563",
+      "rows": 1440
+    },
+    "uz:station/soil-kushrabad": {
+      "key": "soil-kushrabad",
+      "rows": 252
+    },
+    "uz:station/soil-kuva": {
+      "key": "soil-kuva",
+      "rows": 250
+    },
+    "uz:station/meteo-38427": {
+      "key": "meteo-38427",
+      "rows": 1440
+    },
+    "uz:station/soil-mashikuduk": {
+      "key": "soil-mashikuduk",
+      "rows": 251
+    },
+    "uz:station/meteo-38816": {
+      "key": "meteo-38816",
+      "rows": 1676
+    },
+    "uz:station/soil-minchukur": {
+      "key": "soil-minchukur",
+      "rows": 252
+    },
+    "uz:station/soil-mubarek": {
+      "key": "soil-mubarek",
+      "rows": 227
+    },
+    "uz:station/meteo-38146": {
+      "key": "meteo-38146",
+      "rows": 1680
+    },
+    "uz:station/soil-muynak": {
+      "key": "soil-muynak",
+      "rows": 252
+    },
+    "uz:station/meteo-38611": {
+      "key": "meteo-38611",
+      "rows": 1464
+    },
+    "uz:station/soil-namangan": {
+      "key": "soil-namangan",
+      "rows": 251
+    },
+    "uz:station/meteo-38567": {
+      "key": "meteo-38567",
+      "rows": 1440
+    },
+    "uz:station/soil-navoi": {
+      "key": "soil-navoi",
+      "rows": 251
+    },
+    "uz:station/meteo-38264": {
+      "key": "meteo-38264",
+      "rows": 1440
+    },
+    "uz:station/soil-nukus": {
+      "key": "soil-nukus",
+      "rows": 252
+    },
+    "uz:station/meteo-38694": {
+      "key": "meteo-38694",
+      "rows": 1464
+    },
+    "uz:station/soil-nurabad": {
+      "key": "soil-nurabad",
+      "rows": 251
+    },
+    "uz:station/meteo-38565": {
+      "key": "meteo-38565",
+      "rows": 1440
+    },
+    "uz:station/soil-nurata": {
+      "key": "soil-nurata",
+      "rows": 243
+    },
+    "uz:station/meteo-38339": {
+      "key": "meteo-38339",
+      "rows": 1392
+    },
+    "uz:station/soil-oygaing": {
+      "key": "soil-oygaing",
+      "rows": 237
+    },
+    "uz:station/meteo-38605": {
+      "key": "meteo-38605",
+      "rows": 1440
+    },
+    "uz:station/soil-pap": {
+      "key": "soil-pap",
+      "rows": 252
+    },
+    "uz:station/meteo-38698": {
+      "key": "meteo-38698",
+      "rows": 1440
+    },
+    "uz:station/soil-payaryk": {
+      "key": "soil-payaryk",
+      "rows": 52
+    },
+    "uz:station/soil-payshanba": {
+      "key": "soil-payshanba",
+      "rows": 228
+    },
+    "uz:station/meteo-38462": {
+      "key": "meteo-38462",
+      "rows": 1704
+    },
+    "uz:station/soil-pskem": {
+      "key": "soil-pskem",
+      "rows": 252
+    },
+    "uz:station/meteo-38696": {
+      "key": "meteo-38696",
+      "rows": 1440
+    },
+    "uz:station/soil-samarkand": {
+      "key": "soil-samarkand",
+      "rows": 252
+    },
+    "uz:station/meteo-38749": {
+      "key": "meteo-38749",
+      "rows": 1176
+    },
+    "uz:station/meteo-38742": {
+      "key": "meteo-38742",
+      "rows": 1414
+    },
+    "uz:station/soil-shakhimardan": {
+      "key": "soil-shakhimardan",
+      "rows": 252
+    },
+    "uz:station/meteo-38921": {
+      "key": "meteo-38921",
+      "rows": 1704
+    },
+    "uz:station/soil-sherabad": {
+      "key": "soil-sherabad",
+      "rows": 249
+    },
+    "uz:station/meteo-38828": {
+      "key": "meteo-38828",
+      "rows": 1704
+    },
+    "uz:station/soil-shurchi": {
+      "key": "soil-shurchi",
+      "rows": 252
+    },
+    "uz:station/meteo-38459": {
+      "key": "meteo-38459",
+      "rows": 1416
+    },
+    "uz:station/soil-sukok": {
+      "key": "soil-sukok",
+      "rows": 252
+    },
+    "uz:station/meteo-38583": {
+      "key": "meteo-38583",
+      "rows": 1440
+    },
+    "uz:station/soil-syrdarya": {
+      "key": "soil-syrdarya",
+      "rows": 252
+    },
+    "uz:station/meteo-38265": {
+      "key": "meteo-38265",
+      "rows": 1416
+    },
+    "uz:station/soil-takhiatash": {
+      "key": "soil-takhiatash",
+      "rows": 239
+    },
+    "uz:station/soil-takhtakupyr": {
+      "key": "soil-takhtakupyr",
+      "rows": 252
+    },
+    "uz:station/meteo-38413": {
+      "key": "meteo-38413",
+      "rows": 1464
+    },
+    "uz:station/soil-tamdy": {
+      "key": "soil-tamdy",
+      "rows": 249
+    },
+    "uz:station/meteo-38457": {
+      "key": "meteo-38457",
+      "rows": 1704
+    },
+    "uz:station/soil-tashkent": {
+      "key": "soil-tashkent",
+      "rows": 252
+    },
+    "uz:station/meteo-38927": {
+      "key": "meteo-38927",
+      "rows": 1704
+    },
+    "uz:station/soil-termez": {
+      "key": "soil-termez",
+      "rows": 252
+    },
+    "uz:station/meteo-38592": {
+      "key": "meteo-38592",
+      "rows": 1416
+    },
+    "uz:station/soil-tyuyabuguz": {
+      "key": "soil-tyuyabuguz",
+      "rows": 252
+    },
+    "uz:station/soil-tyuyamuyun": {
+      "key": "soil-tyuyamuyun",
+      "rows": 251
+    },
+    "uz:station/meteo-38601": {
+      "key": "meteo-38601",
+      "rows": 1128
+    },
+    "uz:station/meteo-38396": {
+      "key": "meteo-38396",
+      "rows": 1416
+    },
+    "uz:station/soil-urgench": {
+      "key": "soil-urgench",
+      "rows": 252
+    },
+    "uz:station/meteo-38589": {
+      "key": "meteo-38589",
+      "rows": 1440
+    },
+    "uz:station/soil-yangier": {
+      "key": "soil-yangier",
+      "rows": 251
+    },
+    "uz:station/soil-yangikishlak": {
+      "key": "soil-yangikishlak",
+      "rows": 252
+    },
+    "uz:station/meteo-38447": {
+      "key": "meteo-38447",
+      "rows": 1416
+    },
+    "uz:station/soil-yangiyul": {
+      "key": "soil-yangiyul",
+      "rows": 242
+    },
+    "uz:station/soil-zapadnyy-arnasay": {
+      "key": "soil-zapadnyy-arnasay",
+      "rows": 103
+    },
+    "uz:station/soil-zhaslyk": {
+      "key": "soil-zhaslyk",
+      "rows": 252
+    },
+    "uz:station/nsidc-38707": {
+      "key": "nsidc-38707",
+      "rows": 750
+    },
+    "uz:station/nsidc-agalyk": {
+      "key": "nsidc-agalyk",
+      "rows": 151
+    },
+    "uz:station/nsidc-38586": {
+      "key": "nsidc-38586",
+      "rows": 880
+    },
+    "uz:station/nsidc-akkavak": {
+      "key": "nsidc-akkavak",
+      "rows": 372
+    },
+    "uz:station/nsidc-akkurgan": {
+      "key": "nsidc-akkurgan",
+      "rows": 376
+    },
+    "uz:station/nsidc-38818": {
+      "key": "nsidc-38818",
+      "rows": 1186
+    },
+    "uz:station/nsidc-36992": {
+      "key": "nsidc-36992",
+      "rows": 1128
+    },
+    "uz:station/nsidc-aktash (uzb)": {
+      "key": "nsidc-aktash (uzb)",
+      "rows": 457
+    },
+    "uz:station/nsidc-38476": {
+      "key": "nsidc-38476",
+      "rows": 584
+    },
+    "uz:station/nsidc-ala-buka": {
+      "key": "nsidc-ala-buka",
+      "rows": 273
+    },
+    "uz:station/nsidc-38351": {
+      "key": "nsidc-38351",
+      "rows": 333
+    },
+    "uz:station/nsidc-38595": {
+      "key": "nsidc-38595",
+      "rows": 504
+    },
+    "uz:station/nsidc-altyaryk": {
+      "key": "nsidc-altyaryk",
+      "rows": 554
+    },
+    "uz:station/nsidc-38748": {
+      "key": "nsidc-38748",
+      "rows": 1490
+    },
+    "uz:station/nsidc-amankutan": {
+      "key": "nsidc-amankutan",
+      "rows": 1059
+    },
+    "uz:station/nsidc-38475": {
+      "key": "nsidc-38475",
+      "rows": 2222
+    },
+    "uz:station/nsidc-38466": {
+      "key": "nsidc-38466",
+      "rows": 1575
+    },
+    "uz:station/nsidc-38465": {
+      "key": "nsidc-38465",
+      "rows": 1256
+    },
+    "uz:station/nsidc-38719": {
+      "key": "nsidc-38719",
+      "rows": 1284
+    },
+    "uz:station/nsidc-35746": {
+      "key": "nsidc-35746",
+      "rows": 2104
+    },
+    "uz:station/nsidc-38623": {
+      "key": "nsidc-38623",
+      "rows": 292
+    },
+    "uz:station/nsidc-36969": {
+      "key": "nsidc-36969",
+      "rows": 1193
+    },
+    "uz:station/nsidc-bahmazar": {
+      "key": "nsidc-bahmazar",
+      "rows": 298
+    },
+    "uz:station/nsidc-38827": {
+      "key": "nsidc-38827",
+      "rows": 1602
+    },
+    "uz:station/nsidc-bashkizilsai": {
+      "key": "nsidc-bashkizilsai",
+      "rows": 766
+    },
+    "uz:station/nsidc-bazardzhoy": {
+      "key": "nsidc-bazardzhoy",
+      "rows": 544
+    },
+    "uz:station/nsidc-38597": {
+      "key": "nsidc-38597",
+      "rows": 840
+    },
+    "uz:station/nsidc-38337": {
+      "key": "nsidc-38337",
+      "rows": 975
+    },
+    "uz:station/nsidc-38702": {
+      "key": "nsidc-38702",
+      "rows": 1655
+    },
+    "uz:station/nsidc-brichmulla": {
+      "key": "nsidc-brichmulla",
+      "rows": 520
+    },
+    "uz:station/nsidc-38683": {
+      "key": "nsidc-38683",
+      "rows": 400
+    },
+    "uz:station/nsidc-bulakbashi": {
+      "key": "nsidc-bulakbashi",
+      "rows": 201
+    },
+    "uz:station/nsidc-38842": {
+      "key": "nsidc-38842",
+      "rows": 987
+    },
+    "uz:station/nsidc-38488": {
+      "key": "nsidc-38488",
+      "rows": 785
+    },
+    "uz:station/nsidc-chambil": {
+      "key": "nsidc-chambil",
+      "rows": 497
+    },
+    "uz:station/nsidc-38687": {
+      "key": "nsidc-38687",
+      "rows": 2422
+    },
+    "uz:station/nsidc-38915": {
+      "key": "nsidc-38915",
+      "rows": 509
+    },
+    "uz:station/nsidc-38464": {
+      "key": "nsidc-38464",
+      "rows": 2024
+    },
+    "uz:station/nsidc-38471": {
+      "key": "nsidc-38471",
+      "rows": 1464
+    },
+    "uz:station/nsidc-38262": {
+      "key": "nsidc-38262",
+      "rows": 1755
+    },
+    "uz:station/nsidc-38706": {
+      "key": "nsidc-38706",
+      "rows": 768
+    },
+    "uz:station/nsidc-38328": {
+      "key": "nsidc-38328",
+      "rows": 928
+    },
+    "uz:station/nsidc-38811": {
+      "key": "nsidc-38811",
+      "rows": 956
+    },
+    "uz:station/nsidc-chinaz": {
+      "key": "nsidc-chinaz",
+      "rows": 724
+    },
+    "uz:station/nsidc-chirakchi": {
+      "key": "nsidc-chirakchi",
+      "rows": 697
+    },
+    "uz:station/nsidc-38354": {
+      "key": "nsidc-38354",
+      "rows": 1606
+    },
+    "uz:station/nsidc-chust": {
+      "key": "nsidc-chust",
+      "rows": 642
+    },
+    "uz:station/nsidc-38594": {
+      "key": "nsidc-38594",
+      "rows": 1683
+    },
+    "uz:station/nsidc-38847": {
+      "key": "nsidc-38847",
+      "rows": 1226
+    },
+    "uz:station/nsidc-38745": {
+      "key": "nsidc-38745",
+      "rows": 2608
+    },
+    "uz:station/nsidc-dashnabad": {
+      "key": "nsidc-dashnabad",
+      "rows": 780
+    },
+    "uz:station/nsidc-38734": {
+      "key": "nsidc-38734",
+      "rows": 1538
+    },
+    "uz:station/nsidc-38819": {
+      "key": "nsidc-38819",
+      "rows": 1560
+    },
+    "uz:station/nsidc-38829": {
+      "key": "nsidc-38829",
+      "rows": 1635
+    },
+    "uz:station/nsidc-derbent": {
+      "key": "nsidc-derbent",
+      "rows": 508
+    },
+    "uz:station/nsidc-dmitrovo": {
+      "key": "nsidc-dmitrovo",
+      "rows": 199
+    },
+    "uz:station/nsidc-36963": {
+      "key": "nsidc-36963",
+      "rows": 682
+    },
+    "uz:station/nsidc-duaba": {
+      "key": "nsidc-duaba",
+      "rows": 672
+    },
+    "uz:station/nsidc-38460": {
+      "key": "nsidc-38460",
+      "rows": 1032
+    },
+    "uz:station/nsidc-durmen": {
+      "key": "nsidc-durmen",
+      "rows": 307
+    },
+    "uz:station/nsidc-38836": {
+      "key": "nsidc-38836",
+      "rows": 1706
+    },
+    "uz:station/nsidc-38613": {
+      "key": "nsidc-38613",
+      "rows": 1332
+    },
+    "uz:station/nsidc-dzhaus": {
+      "key": "nsidc-dzhaus",
+      "rows": 651
+    },
+    "uz:station/nsidc-38956": {
+      "key": "nsidc-38956",
+      "rows": 1767
+    },
+    "uz:station/nsidc-38487": {
+      "key": "nsidc-38487",
+      "rows": 1411
+    },
+    "uz:station/nsidc-38579": {
+      "key": "nsidc-38579",
+      "rows": 2767
+    },
+    "uz:station/nsidc-38844": {
+      "key": "nsidc-38844",
+      "rows": 2004
+    },
+    "uz:station/nsidc-38614": {
+      "key": "nsidc-38614",
+      "rows": 812
+    },
+    "uz:station/nsidc-38862": {
+      "key": "nsidc-38862",
+      "rows": 1448
+    },
+    "uz:station/nsidc-38618": {
+      "key": "nsidc-38618",
+      "rows": 2731
+    },
+    "uz:station/nsidc-38577": {
+      "key": "nsidc-38577",
+      "rows": 1571
+    },
+    "uz:station/nsidc-38838": {
+      "key": "nsidc-38838",
+      "rows": 1770
+    },
+    "uz:station/nsidc-38851": {
+      "key": "nsidc-38851",
+      "rows": 1424
+    },
+    "uz:station/nsidc-38627": {
+      "key": "nsidc-38627",
+      "rows": 1361
+    },
+    "uz:station/nsidc-38833": {
+      "key": "nsidc-38833",
+      "rows": 984
+    },
+    "uz:station/nsidc-38815": {
+      "key": "nsidc-38815",
+      "rows": 1732
+    },
+    "uz:station/nsidc-38853": {
+      "key": "nsidc-38853",
+      "rows": 836
+    },
+    "uz:station/nsidc-38714": {
+      "key": "nsidc-38714",
+      "rows": 291
+    },
+    "uz:station/nsidc-hazarnovo": {
+      "key": "nsidc-hazarnovo",
+      "rows": 354
+    },
+    "uz:station/nsidc-38954": {
+      "key": "nsidc-38954",
+      "rows": 2946
+    },
+    "uz:station/nsidc-38846": {
+      "key": "nsidc-38846",
+      "rows": 1028
+    },
+    "uz:station/nsidc-38867": {
+      "key": "nsidc-38867",
+      "rows": 416
+    },
+    "uz:station/nsidc-38869": {
+      "key": "nsidc-38869",
+      "rows": 1328
+    },
+    "uz:station/nsidc-38722": {
+      "key": "nsidc-38722",
+      "rows": 612
+    },
+    "uz:station/nsidc-38609": {
+      "key": "nsidc-38609",
+      "rows": 1317
+    },
+    "uz:station/nsidc-38957": {
+      "key": "nsidc-38957",
+      "rows": 1097
+    },
+    "uz:station/nsidc-38718": {
+      "key": "nsidc-38718",
+      "rows": 1584
+    },
+    "uz:station/nsidc-38724": {
+      "key": "nsidc-38724",
+      "rows": 817
+    },
+    "uz:station/nsidc-kal'": {
+      "key": "nsidc-kal'",
+      "rows": 739
+    },
+    "uz:station/nsidc-38943": {
+      "key": "nsidc-38943",
+      "rows": 2398
+    },
+    "uz:station/nsidc-38467": {
+      "key": "nsidc-38467",
+      "rows": 392
+    },
+    "uz:station/nsidc-38848": {
+      "key": "nsidc-38848",
+      "rows": 1026
+    },
+    "uz:station/nsidc-karakia": {
+      "key": "nsidc-karakia",
+      "rows": 408
+    },
+    "uz:station/nsidc-38871": {
+      "key": "nsidc-38871",
+      "rows": 1349
+    },
+    "uz:station/nsidc-38685": {
+      "key": "nsidc-38685",
+      "rows": 401
+    },
+    "uz:station/nsidc-karatash": {
+      "key": "nsidc-karatash",
+      "rows": 276
+    },
+    "uz:station/nsidc-38619": {
+      "key": "nsidc-38619",
+      "rows": 935
+    },
+    "uz:station/nsidc-38812": {
+      "key": "nsidc-38812",
+      "rows": 869
+    },
+    "uz:station/nsidc-38477": {
+      "key": "nsidc-38477",
+      "rows": 1334
+    },
+    "uz:station/nsidc-kattagan": {
+      "key": "nsidc-kattagan",
+      "rows": 582
+    },
+    "uz:station/nsidc-38692": {
+      "key": "nsidc-38692",
+      "rows": 2103
+    },
+    "uz:station/nsidc-38447": {
+      "key": "nsidc-38447",
+      "rows": 1543
+    },
+    "uz:station/nsidc-35849": {
+      "key": "nsidc-35849",
+      "rows": 2698
+    },
+    "uz:station/nsidc-kazarman": {
+      "key": "nsidc-kazarman",
+      "rows": 919
+    },
+    "uz:station/nsidc-38911": {
+      "key": "nsidc-38911",
+      "rows": 1105
+    },
+    "uz:station/nsidc-38912": {
+      "key": "nsidc-38912",
+      "rows": 12
+    },
+    "uz:station/nsidc-38913": {
+      "key": "nsidc-38913",
+      "rows": 94
+    },
+    "uz:station/nsidc-38473": {
+      "key": "nsidc-38473",
+      "rows": 1636
+    },
+    "uz:station/nsidc-38741": {
+      "key": "nsidc-38741",
+      "rows": 1345
+    },
+    "uz:station/nsidc-king-guzar": {
+      "key": "nsidc-king-guzar",
+      "rows": 658
+    },
+    "uz:station/nsidc-kirgiz": {
+      "key": "nsidc-kirgiz",
+      "rows": 352
+    },
+    "uz:station/nsidc-kirgizata": {
+      "key": "nsidc-kirgizata",
+      "rows": 654
+    },
+    "uz:station/nsidc-38468": {
+      "key": "nsidc-38468",
+      "rows": 829
+    },
+    "uz:station/nsidc-38606": {
+      "key": "nsidc-38606",
+      "rows": 1772
+    },
+    "uz:station/nsidc-38591": {
+      "key": "nsidc-38591",
+      "rows": 1517
+    },
+    "uz:station/nsidc-38840": {
+      "key": "nsidc-38840",
+      "rows": 922
+    },
+    "uz:station/nsidc-38149": {
+      "key": "nsidc-38149",
+      "rows": 1224
+    },
+    "uz:station/nsidc-38933": {
+      "key": "nsidc-38933",
+      "rows": 1561
+    },
+    "uz:station/nsidc-38563": {
+      "key": "nsidc-38563",
+      "rows": 1018
+    },
+    "uz:station/nsidc-38062": {
+      "key": "nsidc-38062",
+      "rows": 1335
+    },
+    "uz:station/nsidc-38082": {
+      "key": "nsidc-38082",
+      "rows": 1188
+    },
+    "uz:station/nsidc-38599": {
+      "key": "nsidc-38599",
+      "rows": 2401
+    },
+    "uz:station/nsidc-38854": {
+      "key": "nsidc-38854",
+      "rows": 705
+    },
+    "uz:station/nsidc-38744": {
+      "key": "nsidc-38744",
+      "rows": 717
+    },
+    "uz:station/nsidc-lyangar": {
+      "key": "nsidc-lyangar",
+      "rows": 163
+    },
+    "uz:station/nsidc-38725": {
+      "key": "nsidc-38725",
+      "rows": 1371
+    },
+    "uz:station/nsidc-madzherum": {
+      "key": "nsidc-madzherum",
+      "rows": 434
+    },
+    "uz:station/nsidc-marhamat": {
+      "key": "nsidc-marhamat",
+      "rows": 621
+    },
+    "uz:station/nsidc-38816": {
+      "key": "nsidc-38816",
+      "rows": 1172
+    },
+    "uz:station/nsidc-38697": {
+      "key": "nsidc-38697",
+      "rows": 1488
+    },
+    "uz:station/nsidc-38146": {
+      "key": "nsidc-38146",
+      "rows": 1249
+    },
+    "uz:station/nsidc-38857": {
+      "key": "nsidc-38857",
+      "rows": 465
+    },
+    "uz:station/nsidc-38878": {
+      "key": "nsidc-38878",
+      "rows": 890
+    },
+    "uz:station/nsidc-38611": {
+      "key": "nsidc-38611",
+      "rows": 2163
+    },
+    "uz:station/nsidc-36974": {
+      "key": "nsidc-36974",
+      "rows": 2686
+    },
+    "uz:station/nsidc-38612": {
+      "key": "nsidc-38612",
+      "rows": 1008
+    },
+    "uz:station/nsidc-38567": {
+      "key": "nsidc-38567",
+      "rows": 394
+    },
+    "uz:station/nsidc-nishbash": {
+      "key": "nsidc-nishbash",
+      "rows": 533
+    },
+    "uz:station/nsidc-38947": {
+      "key": "nsidc-38947",
+      "rows": 985
+    },
+    "uz:station/nsidc-38264": {
+      "key": "nsidc-38264",
+      "rows": 1376
+    },
+    "uz:station/nsidc-38339": {
+      "key": "nsidc-38339",
+      "rows": 912
+    },
+    "uz:station/nsidc-38615": {
+      "key": "nsidc-38615",
+      "rows": 2181
+    },
+    "uz:station/nsidc-paitug": {
+      "key": "nsidc-paitug",
+      "rows": 600
+    },
+    "uz:station/nsidc-38605": {
+      "key": "nsidc-38605",
+      "rows": 1237
+    },
+    "uz:station/nsidc-papan": {
+      "key": "nsidc-papan",
+      "rows": 525
+    },
+    "uz:station/nsidc-38705": {
+      "key": "nsidc-38705",
+      "rows": 1524
+    },
+    "uz:station/nsidc-38462": {
+      "key": "nsidc-38462",
+      "rows": 1678
+    },
+    "uz:station/nsidc-38804": {
+      "key": "nsidc-38804",
+      "rows": 1682
+    },
+    "uz:station/nsidc-38951": {
+      "key": "nsidc-38951",
+      "rows": 999
+    },
+    "uz:station/nsidc-samarchuk": {
+      "key": "nsidc-samarchuk",
+      "rows": 603
+    },
+    "uz:station/nsidc-38696": {
+      "key": "nsidc-38696",
+      "rows": 2585
+    },
+    "uz:station/nsidc-38716": {
+      "key": "nsidc-38716",
+      "rows": 1231
+    },
+    "uz:station/nsidc-38711": {
+      "key": "nsidc-38711",
+      "rows": 1555
+    },
+    "uz:station/nsidc-sazagan": {
+      "key": "nsidc-sazagan",
+      "rows": 648
+    },
+    "uz:station/nsidc-38708": {
+      "key": "nsidc-38708",
+      "rows": 948
+    },
+    "uz:station/nsidc-38937": {
+      "key": "nsidc-38937",
+      "rows": 1198
+    },
+    "uz:station/nsidc-38699": {
+      "key": "nsidc-38699",
+      "rows": 1722
+    },
+    "uz:station/nsidc-38715": {
+      "key": "nsidc-38715",
+      "rows": 1357
+    },
+    "uz:station/nsidc-38966": {
+      "key": "nsidc-38966",
+      "rows": 381
+    },
+    "uz:station/nsidc-38921": {
+      "key": "nsidc-38921",
+      "rows": 1689
+    },
+    "uz:station/nsidc-38828": {
+      "key": "nsidc-38828",
+      "rows": 1062
+    },
+    "uz:station/nsidc-shurchi-post": {
+      "key": "nsidc-shurchi-post",
+      "rows": 668
+    },
+    "uz:station/nsidc-soldatskoe": {
+      "key": "nsidc-soldatskoe",
+      "rows": 524
+    },
+    "uz:station/nsidc-sukok": {
+      "key": "nsidc-sukok",
+      "rows": 955
+    },
+    "uz:station/nsidc-38358": {
+      "key": "nsidc-38358",
+      "rows": 1546
+    },
+    "uz:station/nsidc-38583": {
+      "key": "nsidc-38583",
+      "rows": 405
+    },
+    "uz:station/nsidc-38265": {
+      "key": "nsidc-38265",
+      "rows": 526
+    },
+    "uz:station/nsidc-takhiatash": {
+      "key": "nsidc-takhiatash",
+      "rows": 488
+    },
+    "uz:station/nsidc-38732": {
+      "key": "nsidc-38732",
+      "rows": 978
+    },
+    "uz:station/nsidc-38457": {
+      "key": "nsidc-38457",
+      "rows": 3041
+    },
+    "uz:station/nsidc-38852": {
+      "key": "nsidc-38852",
+      "rows": 1191
+    },
+    "uz:station/nsidc-38927": {
+      "key": "nsidc-38927",
+      "rows": 2236
+    },
+    "uz:station/nsidc-36982": {
+      "key": "nsidc-36982",
+      "rows": 1722
+    },
+    "uz:station/nsidc-38143": {
+      "key": "nsidc-38143",
+      "rows": 979
+    },
+    "uz:station/nsidc-toitepa": {
+      "key": "nsidc-toitepa",
+      "rows": 284
+    },
+    "uz:station/nsidc-38198": {
+      "key": "nsidc-38198",
+      "rows": 2404
+    },
+    "uz:station/nsidc-38396": {
+      "key": "nsidc-38396",
+      "rows": 1890
+    },
+    "uz:station/nsidc-38592": {
+      "key": "nsidc-38592",
+      "rows": 732
+    },
+    "uz:station/nsidc-tyuya-ashu southern": {
+      "key": "nsidc-tyuya-ashu southern",
+      "rows": 800
+    },
+    "uz:station/nsidc-38694": {
+      "key": "nsidc-38694",
+      "rows": 1056
+    },
+    "uz:station/nsidc-38713": {
+      "key": "nsidc-38713",
+      "rows": 1379
+    },
+    "uz:station/nsidc-ustie r. maidantal": {
+      "key": "nsidc-ustie r. maidantal",
+      "rows": 497
+    },
+    "uz:station/nsidc-yangi-akchob": {
+      "key": "nsidc-yangi-akchob",
+      "rows": 618
+    },
+    "uz:station/nsidc-38712": {
+      "key": "nsidc-38712",
+      "rows": 648
+    },
+    "uz:station/nsidc-zarchob": {
+      "key": "nsidc-zarchob",
+      "rows": 761
+    },
+    "uz:station/nsidc-ustie r. dzhulaisai": {
+      "key": "nsidc-ustie r. dzhulaisai",
+      "rows": 556
+    },
+    "uz:station/nsidc-ustie r. kurbankul": {
+      "key": "nsidc-ustie r. kurbankul",
+      "rows": 606
+    },
+    "uz:station/nsidc-ustie r. obizarang": {
+      "key": "nsidc-ustie r. obizarang",
+      "rows": 286
+    },
+    "uz:station/nsidc-38469": {
+      "key": "nsidc-38469",
+      "rows": 1422
+    },
+    "uz:station/nsidc-38472": {
+      "key": "nsidc-38472",
+      "rows": 1454
+    }
+  },
+  "note": "One file per station, rows as arrays under the shared column list. CSV is produced from the same file in the browser, so the two formats cannot disagree."
+}

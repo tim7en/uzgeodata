@@ -6,6 +6,8 @@ import DamModal from './DamModal.jsx';
 import { svg } from 'leaflet';
 import LakeLayer from './LakeLayer.jsx';
 import LakeModal from './LakeModal.jsx';
+import StationLayer from './StationLayer.jsx';
+import StationModal from './StationModal.jsx';
 import BasinSubstitutes from './BasinSubstitutes.jsx';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
@@ -213,6 +215,9 @@ export default function LandingMap() {
   const [lakes, setLakes] = useState(null);
   const [showLakes, setShowLakes] = useState(true);
   const [lake, setLake] = useState(null);
+  const [stations, setStations] = useState(null);
+  const [showStations, setShowStations] = useState(false);
+  const [station, setStation] = useState(null);
   // SVG only intercepts events on its interactive paths. A marker-pane canvas
   // covers the entire map and prevents the basin canvas underneath receiving clicks.
   const damRenderer = useMemo(() => svg({ pane: 'markerPane' }), []);
@@ -264,6 +269,15 @@ export default function LandingMap() {
     json('/data/hydroclimate/water-bodies-reviewed.geojson').then(d=>{if(live)setLakes(d);}).catch(()=>{if(live)setShowLakes(false);});
     return()=>{live=false;};
   },[showLakes,lakes]);
+  // Stations are off by default: they are evidence about the products rather than
+  // part of the hydrography, and 319 marks over the basins is a lot to impose on a
+  // reader who came to look at catchments.
+  useEffect(()=>{
+    if(!showStations||stations)return;
+    let live=true;
+    json('/data/hydroclimate/meteo-stations.geojson').then(d=>{if(live)setStations(d);}).catch(()=>{if(live)setShowStations(false);});
+    return()=>{live=false;};
+  },[showStations,stations]);
   // Recomputed on every zoom change: this is what regroups the dams as the reader
   // moves in. A hundred points is small enough that the whole grid is rebuilt
   // rather than updated incrementally.
@@ -409,7 +423,7 @@ export default function LandingMap() {
     layer.on({
       mouseover: () => setHoveredId(id),
       mouseout: () => setHoveredId(current => (current === id ? null : current)),
-      click: () => { setSelected(feature); setDam(null); setLake(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
+      click: () => { setSelected(feature); setDam(null); setLake(null); setStation(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
     });
   }, []);
 
@@ -440,7 +454,8 @@ export default function LandingMap() {
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
-      {showLakes&&lakes&&<LakeLayer data={lakes} onSelect={properties=>{setLake(properties);setDam(null);setTableOpen(false);}}/>}
+      {showLakes&&lakes&&<LakeLayer data={lakes} onSelect={properties=>{setLake(properties);setDam(null);setStation(null);setTableOpen(false);}}/>}
+      {showStations&&stations&&<StationLayer data={stations} onSelect={properties=>{setStation(properties);setLake(null);setDam(null);setTableOpen(false);}}/>}
       {/* SVG markers remain above basins while allowing clicks between symbols
           to reach the basin canvas, including after a basin-level remount. */}
       {damClusters.map(cluster => {
@@ -451,7 +466,7 @@ export default function LandingMap() {
             center={[cluster.latitude, cluster.longitude]}
             pathOptions={damStyle(feature.properties, state)}
             radius={damStyle(feature.properties, state).radius}
-            eventHandlers={{ click: () => { setDam(feature.properties); setLake(null); setSelected(null); setTableOpen(false); } }}>
+            eventHandlers={{ click: () => { setDam(feature.properties); setLake(null); setStation(null); setSelected(null); setTableOpen(false); } }}>
             <Tooltip direction="top" offset={[0, -4]} opacity={1} className="land-dam-tip">
               {damLabel(feature.properties)}
             </Tooltip>
@@ -509,6 +524,14 @@ export default function LandingMap() {
               }}/>
               <Droplets size={12}/>
               <span>Dams{damStats ? ` · ${formatNumber(damStats.dams)}` : ''}</span>
+            </label>
+            <label className="land-toggle">
+              <input type="checkbox" checked={showStations} onChange={event => {
+                setShowStations(event.target.checked);
+                if (!event.target.checked) setStation(null);
+              }}/>
+              <span className="land-station-key" aria-hidden="true"/>
+              <span>Stations{stations ? ` · ${formatNumber(stations.features.length)}` : ''}</span>
             </label>
           </fieldset>
         </div>
@@ -619,6 +642,7 @@ export default function LandingMap() {
 
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
     {lake && <LakeModal lake={lake} onClose={()=>setLake(null)}/>}
+    {station && <StationModal station={station} onClose={()=>setStation(null)}/>}
   </main>;
 }
 

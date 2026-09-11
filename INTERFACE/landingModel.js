@@ -487,6 +487,43 @@ export function clusterPoints(features, zoom, positionOf, cellPixels = CLUSTER_C
   })).sort((left, right) => left.key.localeCompare(right.key));
 }
 
+/**
+ * Group stations that would otherwise draw on top of each other.
+ *
+ * Three hundred points is nothing to render, which is why they were drawn
+ * individually at first, but rendering was never the problem: at national zoom the
+ * network is dense enough that marks overlap, and an overlapped mark cannot be
+ * clicked because a neighbour intercepts the pointer. Grouping is what makes them
+ * selectable, not what makes them cheap.
+ *
+ * A group reports the least certain placement it contains, so a group is never
+ * drawn more confidently than its weakest member.
+ */
+const PLACEMENT_RANK = ['departs_from_network_relationship', 'not_checked',
+                        'consistent_with_network', 'coordinate_supplied_by_source'];
+
+export function clusterStations(features, zoom) {
+  return clusterPoints(features, zoom, feature => feature.geometry?.coordinates)
+    .map(bucket => {
+      const members = bucket.members.map(member => member.properties || {});
+      const weakest = members.reduce((worst, row) => (
+        PLACEMENT_RANK.indexOf(row.placement_status) < PLACEMENT_RANK.indexOf(worst)
+          ? row.placement_status : worst
+      ), PLACEMENT_RANK[PLACEMENT_RANK.length - 1]);
+      // The group opens the member with the longest record: the one a reader is
+      // most likely to want, and the one its label names.
+      const fullest = members.reduce((best, row) => (
+        Number(row.observations || 0) > Number(best?.observations || 0) ? row : best
+      ), members[0]);
+      return {
+        key: bucket.key, count: bucket.count,
+        longitude: bucket.longitude, latitude: bucket.latitude,
+        members, fullest, placement_status: weakest,
+        observations: members.reduce((total, row) => total + Number(row.observations || 0), 0),
+      };
+    });
+}
+
 /** Where a dam sits: a point feature, so straight from the geometry. */
 const damPosition = feature => feature.geometry?.coordinates;
 

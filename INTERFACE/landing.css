@@ -371,3 +371,24 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 @media(max-width:1100px){.land-dock{width:250px;bottom:70px}}
 @media(max-width:900px){.land-dock{position:static;width:auto;max-height:none;margin:14px;backdrop-filter:none}
   .land-layers{flex-wrap:wrap;gap:10px}}
+
+/* Meteorological stations. The mark encodes where the coordinate came from, which
+   is what a reader has to weigh before trusting the point, so the legend swatch
+   carries the same triangle rather than a generic dot. */
+.land-station-symbol{background:none;border:0}
+.land-station-key{display:inline-block;width:11px;height:11px;
+  clip-path:polygon(50% 8%,92% 88%,8% 88%);background:#ffd27f}
+.land-station-name{background:rgba(10,26,36,.82);border:0;box-shadow:none;color:#ffe9c2;
+  font:600 9px var(--display);letter-spacing:.04em;padding:1px 4px;white-space:nowrap}
+.land-station-name::before{display:none}
+.land-station-hint{background:rgba(10,26,36,.9);border:0;color:#e8f2f7;
+  font:500 9px var(--body);padding:2px 5px}
+.land-station-hint::before{display:none}
+.station-modal .dam-modal-kicker{color:#ffd27f}
+.station-modal .station-modal-warn{border-left:3px solid #ff6b4a;padding-left:12px}
+.station-modal-downloads{display:flex;gap:8px;margin:10px 0 4px}
+.station-modal-downloads button{display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  background:#16303d;color:#ffe9c2;border:1px solid #ffd27f;border-radius:3px;
+  padding:7px 13px;font:600 11px var(--display);letter-spacing:.04em}
+.station-modal-downloads button:hover{background:#1d3d4d}
+.station-modal-downloads button:focus-visible{outline:2px solid #ffd27f;outline-offset:2px}
