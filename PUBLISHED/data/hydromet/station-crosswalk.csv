@@ -1,0 +1,149 @@
+observation_station_id,observation_name,province,measures,monthly_observations,match_status,candidates,network_entity_id,network_name,longitude,latitude,elevation_m,evidence
+uz:station/meteo-38023,Karakalpakia,Karakalpakstan,air_temperature_mean|precipitation_total,1440,no_name_match,0,,,,,,
+uz:station/meteo-38141,Jaslyk,Karakalpakstan,air_temperature_mean|precipitation_total,1416,matched_by_name,1,uz:station/meteo-439575,Jaslyk,57.50767,43.972945,130,normalised station name resolved to exactly one network site
+uz:station/meteo-38146,Muynak,Karakalpakstan,air_temperature_mean|precipitation_total,1680,matched_by_name,1,uz:station/meteo-438590,Muynak,59.014247,43.76898,47,normalised station name resolved to exactly one network site
+uz:station/meteo-38149,Kungrad,Karakalpakstan,air_temperature_mean|precipitation_total,1680,matched_by_name,1,uz:station/meteo-431589,Kungrad,58.838654,43.052681,61,normalised station name resolved to exactly one network site
+uz:station/meteo-38153,Ayakagitma,Khorezm+Navoi,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-407645,Ayakagitma,64.484707,40.665039,170,normalised station name resolved to exactly one network site
+uz:station/meteo-38178,Akbaytal,Khorezm+Navoi,air_temperature_mean|precipitation_total,1680,matched_by_name,1,uz:station/meteo-432643,Akbaytal,64.280265,43.175588,192,normalised station name resolved to exactly one network site
+uz:station/meteo-38262,Chimbai,Karakalpakstan,air_temperature_mean|precipitation_total,1416,no_name_match,0,,,,,,
+uz:station/meteo-38264,Nukus,Karakalpakstan,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-425596,Nukus,59.616029,42.483112,74,normalised station name resolved to exactly one network site
+uz:station/meteo-38265,Takhiatash,Karakalpakstan,air_temperature_mean|precipitation_total,1416,matched_by_name,1,uz:station/meteo-424596,Takhiatash,59.567582,42.336139,78,normalised station name resolved to exactly one network site
+uz:station/meteo-38339,Oygaing,Tashkent,air_temperature_mean|precipitation_total,1392,matched_by_name,1,uz:station/meteo-422709,Oygaing,70.882309,42.167218,2215,normalised station name resolved to exactly one network site
+uz:station/meteo-38396,Urgench,Khorezm+Navoi,air_temperature_mean|precipitation_total,1416,matched_by_name,1,uz:station/meteo-416606,Urgench,60.63207,41.567104,101,normalised station name resolved to exactly one network site
+uz:station/meteo-38399,Khiva,Khorezm+Navoi,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-414604,Khiva,60.352947,41.37912,100,normalised station name resolved to exactly one network site
+uz:station/meteo-38403,Buzaubai,Khorezm+Navoi,air_temperature_mean|precipitation_total,1704,no_name_match,0,,,,,,
+uz:station/meteo-38407,Tuyamuyun,Khorezm+Navoi,air_temperature_mean|precipitation_total,984,no_name_match,0,,,,,,
+uz:station/meteo-38413,Tamdy,Khorezm+Navoi,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-417646,Tamdy,64.625478,41.744301,260,normalised station name resolved to exactly one network site
+uz:station/meteo-38427,Mashikuduk,Khorezm+Navoi,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-411653,Mashikuduk,65.282157,41.050146,192,normalised station name resolved to exactly one network site
+uz:station/meteo-38447,Yangiyul,Tashkent,air_temperature_mean|precipitation_total,1416,matched_by_name,1,uz:station/meteo-411690,Yangiyul,68.999247,41.083182,345,normalised station name resolved to exactly one network site
+uz:station/meteo-38457,Tashkent,Tashkent,air_temperature_mean|precipitation_total,1704,matched_by_name,1,uz:station/meteo-413694,Tashkent,69.299281,41.333185,475,normalised station name resolved to exactly one network site
+uz:station/meteo-38459,Sukok,Tashkent,air_temperature_mean|precipitation_total,1416,matched_by_name,1,uz:station/meteo-412697,Sukok,69.796983,41.247457,1188,normalised station name resolved to exactly one network site
+uz:station/meteo-38460,Dukant,Tashkent,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-411701,Dukant,70.102858,41.092965,1478,normalised station name resolved to exactly one network site
+uz:station/meteo-38462,Pskem,Tashkent,air_temperature_mean|precipitation_total,1704,matched_by_name,1,uz:station/meteo-419704,Pskem,70.378123,41.940491,1466,normalised station name resolved to exactly one network site
+uz:station/meteo-38465,Angren valley,Tashkent,air_temperature_mean|precipitation_total,1704,no_name_match,0,,,,,,
+uz:station/meteo-38475,Andijan,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-408724,Andijan,72.337578,40.778784,492,normalised station name resolved to exactly one network site
+uz:station/meteo-38551,Jangeldy,Bukhara+Samarkand,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-409633,Jangeldy,63.335566,40.845748,207,normalised station name resolved to exactly one network site
+uz:station/meteo-38562,Sentob Nurata,Khorezm+Navoi,air_temperature_mean|precipitation_total,1440,no_name_match,0,,,,,,
+uz:station/meteo-38563,Kushrabad,Bukhara+Samarkand,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-403665,Kushrabad,66.643506,40.234723,740,normalised station name resolved to exactly one network site
+uz:station/meteo-38565,Nurata,Khorezm+Navoi,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-406657,Nurata,65.694451,40.561138,487,normalised station name resolved to exactly one network site
+uz:station/meteo-38567,Navoi,Khorezm+Navoi,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-401654,Navoi,65.349174,40.133126,350,normalised station name resolved to exactly one network site
+uz:station/meteo-38570,Bashkyzylsay,Tashkent,air_temperature_mean|precipitation_total,1224,no_name_match,0,,,,,,
+uz:station/meteo-38574,Yangkishlak,Jizzak+Syrdarya,air_temperature_mean|precipitation_total,1104,no_name_match,0,,,,,,
+uz:station/meteo-38577,Galliaaral,Jizzak+Syrdarya,air_temperature_mean|precipitation_total,1440,no_name_match,0,,,,,,
+uz:station/meteo-38579,Jizzakh,Jizzak+Syrdarya,air_temperature_mean|precipitation_total,1440,no_name_match,0,,,,,,
+uz:station/meteo-38581,Dustlik,Jizzak+Syrdarya,air_temperature_mean|precipitation_total,1152,matched_by_name,1,uz:station/meteo-406681,Dustlik,68.018566,40.534434,272,normalised station name resolved to exactly one network site
+uz:station/meteo-38583,Syrdarya,Jizzak+Syrdarya,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-408687,Syrdarya,68.671569,40.831235,264,normalised station name resolved to exactly one network site
+uz:station/meteo-38589,Yangier,Jizzak+Syrdarya,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-402688,Yangier,68.832255,40.283163,304,normalised station name resolved to exactly one network site
+uz:station/meteo-38591,Cocaral,Tashkent,air_temperature_mean|precipitation_total,1416,no_name_match,0,,,,,,
+uz:station/meteo-38592,Tyuyabuguz,Tashkent,air_temperature_mean|precipitation_total,1416,matched_by_name,1,uz:station/meteo-409694,Tyuyabuguz,69.303831,40.992593,396,normalised station name resolved to exactly one network site
+uz:station/meteo-38594,Dalverzin,Tashkent,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-404693,Dalverzin,69.282265,40.400169,292,normalised station name resolved to exactly one network site
+uz:station/meteo-38595,Almalyk,Tashkent,air_temperature_mean|precipitation_total,984,matched_by_name,1,uz:station/meteo-408696,Almalyk,69.609253,40.845337,583,normalised station name resolved to exactly one network site
+uz:station/meteo-38597,Bekabad,Tashkent,air_temperature_mean|precipitation_total,1008,matched_by_name,1,uz:station/meteo-402692,Bekabad,69.265267,40.200165,322,normalised station name resolved to exactly one network site
+uz:station/meteo-38601,Ulugnar,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1128,matched_by_name,1,uz:station/meteo-408716,Ulugnar,71.582317,40.750198,393,normalised station name resolved to exactly one network site
+uz:station/meteo-38605,Pap,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-409711,Pap,71.106373,40.874883,442,normalised station name resolved to exactly one network site
+uz:station/meteo-38606,Kokand,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-local-7c708d36299b,Kokand,71.052597,40.458786,486,normalised station name resolved to exactly one network site
+uz:station/meteo-38611,Namangan,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-410716,Namangan,71.722805,41.005358,431,normalised station name resolved to exactly one network site
+uz:station/meteo-38612,Boz,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-407719,Boz,71.932327,40.683199,434,normalised station name resolved to exactly one network site
+uz:station/meteo-38618,Fergana,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-404718,Fergana,71.800101,40.410853,567,normalised station name resolved to exactly one network site
+uz:station/meteo-38683,Bukhara,Bukhara+Samarkand,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-397646,Bukhara,64.479738,39.761826,225,normalised station name resolved to exactly one network site
+uz:station/meteo-38685,Karakul,Bukhara+Samarkand,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-395639,Karakul,63.861137,39.527103,216,normalised station name resolved to exactly one network site
+uz:station/meteo-38694,Nurabad,Bukhara+Samarkand,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-396663,Nurabad,66.291587,39.6134,488,normalised station name resolved to exactly one network site
+uz:station/meteo-38695,Dagbit,Bukhara+Samarkand,air_temperature_mean|precipitation_total,1200,matched_by_name,1,uz:station/meteo-398669,Dagbit,66.916217,39.750133,648,normalised station name resolved to exactly one network site
+uz:station/meteo-38696,Samarkand,Bukhara+Samarkand,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-396670,Samarkand,66.94922,39.650131,713,normalised station name resolved to exactly one network site
+uz:station/meteo-38698,Payaryk,Bukhara+Samarkand,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-local-33a97f9d5c0c,Payaryk,66.850453,39.652058,709,normalised station name resolved to exactly one network site
+uz:station/meteo-38699,Shakhrisabz,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1704,no_name_match,0,,,,,,
+uz:station/meteo-38702,Lyalmikor,Jizzak+Syrdarya,air_temperature_mean|precipitation_total,1440,no_name_match,0,,,,,,
+uz:station/meteo-38708,Kul,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-391675,Kul,67.516242,39.100124,2301,normalised station name resolved to exactly one network site
+uz:station/meteo-38711,Bahmal,Jizzak+Syrdarya,air_temperature_mean|precipitation_total,1440,no_name_match,0,,,,,,
+uz:station/meteo-38742,Shakhimardan,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1414,matched_by_name,1,uz:station/meteo-400718,Shakhimardan,71.749333,39.950181,1918,normalised station name resolved to exactly one network site
+uz:station/meteo-38749,Sarykanda,Andijan+Namangan+Fergana,air_temperature_mean|precipitation_total,1176,matched_by_name,1,uz:station/meteo-399712,Sarykanda,71.132317,39.967176,1165,normalised station name resolved to exactly one network site
+uz:station/meteo-38811,Chimkurgan,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1464,matched_by_name,1,uz:station/meteo-388662,Chimkurgan,66.36511,38.957777,477,normalised station name resolved to exactly one network site
+uz:station/meteo-38812,Karshi,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1440,matched_by_name,1,uz:station/meteo-388657,Karshi,65.820967,38.856697,393,normalised station name resolved to exactly one network site
+uz:station/meteo-38815,Guzar,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1704,matched_by_name,1,uz:station/meteo-386663,Guzar,66.266219,38.617101,526,normalised station name resolved to exactly one network site
+uz:station/meteo-38816,Minchukur,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1676,matched_by_name,1,uz:station/meteo-387669,Minchukur,66.932235,38.633108,1912,normalised station name resolved to exactly one network site
+uz:station/meteo-38818,Acrabat,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1679,no_name_match,0,,,,,,
+uz:station/meteo-38819,Dehkanabad,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1704,no_name_match,0,,,,,,
+uz:station/meteo-38827,Boysun,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1704,no_name_match,0,,,,,,
+uz:station/meteo-38828,Shurchi,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1704,matched_by_name,1,uz:station/meteo-380678,Shurchi,67.77666,38.00328,454,normalised station name resolved to exactly one network site
+uz:station/meteo-38829,Denau,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1704,matched_by_name,1,uz:station/meteo-382679,Denau,67.90333,38.284989,526,normalised station name resolved to exactly one network site
+uz:station/meteo-38921,Sherabad,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1704,matched_by_name,1,uz:station/meteo-377670,Sherabad,67.013469,37.676909,424,normalised station name resolved to exactly one network site
+uz:station/meteo-38927,Termez,Kashkadarya+Surkhandarya,air_temperature_mean|precipitation_total,1704,matched_by_name,1,uz:station/meteo-373673,Termez,67.2973,37.247661,308,normalised station name resolved to exactly one network site
+uz:station/soil-akbaytal,Akbaytal,Navoiyskaya,soil_temperature_mean,247,matched_by_name,1,uz:station/meteo-432643,Akbaytal,64.280265,43.175588,192,normalised station name resolved to exactly one network site
+uz:station/soil-akrabad,Akrabad,Kashkadarinskaya,soil_temperature_mean,245,no_name_match,0,,,,,,
+uz:station/soil-aktumsuk,Aktumsuk,RK,soil_temperature_mean,251,matched_by_name,1,uz:station/meteo-451583,Aktumsuk,58.29894,45.133153,176,normalised station name resolved to exactly one network site
+uz:station/soil-almalyk,Almalyk,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-408696,Almalyk,69.609253,40.845337,583,normalised station name resolved to exactly one network site
+uz:station/soil-andizhan,Andizhan,Andizhanskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-408724,Andijan,72.337578,40.778784,492,normalised station name resolved to exactly one network site
+uz:station/soil-angren,Angren,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-409701,Angren,70.182278,41.000191,1147,normalised station name resolved to exactly one network site
+uz:station/soil-ayakagitma,Ayakagitma,Bukharskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-407645,Ayakagitma,64.484707,40.665039,170,normalised station name resolved to exactly one network site
+uz:station/soil-bakhmal,Bakhmal,Dzhizaksakaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-397680,Bakhmal,68.016244,39.717142,1365,normalised station name resolved to exactly one network site
+uz:station/soil-bashkizilsay,Bashkizilsay,Tashkentskaya,soil_temperature_mean,236,no_name_match,0,,,,,,
+uz:station/soil-baysun,Baysun,Surkhandarinskaya,soil_temperature_mean,251,matched_by_name,1,uz:station/meteo-382672,Baysun,67.208718,38.215559,1283,normalised station name resolved to exactly one network site
+uz:station/soil-bekabad,Bekabad,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-402692,Bekabad,69.265267,40.200165,322,normalised station name resolved to exactly one network site
+uz:station/soil-boz,Boz,Andizhanskaya,soil_temperature_mean,250,matched_by_name,1,uz:station/meteo-407719,Boz,71.932327,40.683199,434,normalised station name resolved to exactly one network site
+uz:station/soil-bukhara,Bukhara,Bukharskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-397646,Bukhara,64.479738,39.761826,225,normalised station name resolved to exactly one network site
+uz:station/soil-buston,Buston,RK,soil_temperature_mean,141,matched_by_name,1,uz:station/meteo-415605,Buston,60.939777,41.843144,93,normalised station name resolved to exactly one network site
+uz:station/soil-buzaubay,Buzaubay,Navoiyskaya,soil_temperature_mean,504,matched_by_name,1,uz:station/meteo-418625,Buzaubay,62.466108,41.750127,100,normalised station name resolved to exactly one network site
+uz:station/soil-chimbay,Chimbay,RK,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-429598,Chimbay,59.769065,42.935744,66,normalised station name resolved to exactly one network site
+uz:station/soil-chimgan,Chimgan,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-415700,Chimgan,70.016296,41.550196,1437,normalised station name resolved to exactly one network site
+uz:station/soil-chimkurgan,Chimkurgan,Kashkadarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-388662,Chimkurgan,66.36511,38.957777,477,normalised station name resolved to exactly one network site
+uz:station/soil-dagbat,Dagbat,Samarkandskaya,soil_temperature_mean,252,no_name_match,0,,,,,,
+uz:station/soil-dalverzin,Dalverzin,Tashkentskaya,soil_temperature_mean,250,matched_by_name,1,uz:station/meteo-404693,Dalverzin,69.282265,40.400169,292,normalised station name resolved to exactly one network site
+uz:station/soil-dekhkanabad,Dekhkanabad,Kashkadarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-384665,Dekhkanabad,66.499229,38.350097,855,normalised station name resolved to exactly one network site
+uz:station/soil-denau,Denau,Surkhandarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-382679,Denau,67.90333,38.284989,526,normalised station name resolved to exactly one network site
+uz:station/soil-dukant,Dukant,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-411701,Dukant,70.102858,41.092965,1478,normalised station name resolved to exactly one network site
+uz:station/soil-dustlik,Dustlik,Dzhizaksakaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-406681,Dustlik,68.018566,40.534434,272,normalised station name resolved to exactly one network site
+uz:station/soil-dzhangeldy,Dzhangeldy,Bukharskaya,soil_temperature_mean,239,matched_by_name,1,uz:station/meteo-409633,Jangeldy,63.335566,40.845748,207,normalised station name resolved to exactly one network site
+uz:station/soil-dzhizak,Dzhizak,Dzhizaksakaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-401678,Jizak,67.832233,40.11715,379,normalised station name resolved to exactly one network site
+uz:station/soil-fergana,Fergana,Ferganskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-404718,Fergana,71.800101,40.410853,567,normalised station name resolved to exactly one network site
+uz:station/soil-gallyaaral,Gallyaaral,Dzhizaksakaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-400676,Gallyaaral,67.582229,40.033145,570,normalised station name resolved to exactly one network site
+uz:station/soil-guzar,Guzar,Kashkadarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-386663,Guzar,66.266219,38.617101,526,normalised station name resolved to exactly one network site
+uz:station/soil-kamchik,Kamchik,Namanganskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-411705,Kamchik,70.499284,41.100196,2082,normalised station name resolved to exactly one network site
+uz:station/soil-karakalpakiya,Karakalpakiya,RK,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-448563,Karakalpakiya,56.197888,44.776769,121,normalised station name resolved to exactly one network site
+uz:station/soil-karakul,Karakul,Bukharskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-395639,Karakul,63.861137,39.527103,216,normalised station name resolved to exactly one network site
+uz:station/soil-karshi,Karshi,Kashkadarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-388657,Karshi,65.820967,38.856697,393,normalised station name resolved to exactly one network site
+uz:station/soil-khiva,Khiva,Khorezm,soil_temperature_mean,248,matched_by_name,1,uz:station/meteo-414604,Khiva,60.352947,41.37912,100,normalised station name resolved to exactly one network site
+uz:station/soil-kokand,Kokand,Ferganskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-local-7c708d36299b,Kokand,71.052597,40.458786,486,normalised station name resolved to exactly one network site
+uz:station/soil-kokaral,Kokaral,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-407692,Kokaral,69.019254,40.683173,293,normalised station name resolved to exactly one network site
+uz:station/soil-kul,Kul,Kashkadarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-391675,Kul,67.516242,39.100124,2301,normalised station name resolved to exactly one network site
+uz:station/soil-kungrad,Kungrad,RK,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-431589,Kungrad,58.838654,43.052681,61,normalised station name resolved to exactly one network site
+uz:station/soil-kurgantepa,Kurgantepa,Andizhanskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-407729,Kurgantepa,72.913825,40.731739,733,normalised station name resolved to exactly one network site
+uz:station/soil-kushrabad,Kushrabad,Samarkandskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-403665,Kushrabad,66.643506,40.234723,740,normalised station name resolved to exactly one network site
+uz:station/soil-kuva,Kuva,Ferganskaya,soil_temperature_mean,250,matched_by_name,1,uz:station/meteo-406721,Kuva,72.066332,40.567198,473,normalised station name resolved to exactly one network site
+uz:station/soil-lyalmikor-dzhizak,Lyalmikor-Dzhizak,Dzhizaksakaya,soil_temperature_mean,252,no_name_match,0,,,,,,
+uz:station/soil-mashikuduk,Mashikuduk,Navoiyskaya,soil_temperature_mean,251,matched_by_name,1,uz:station/meteo-411653,Mashikuduk,65.282157,41.050146,192,normalised station name resolved to exactly one network site
+uz:station/soil-minchukur,Minchukur,Kashkadarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-387669,Minchukur,66.932235,38.633108,1912,normalised station name resolved to exactly one network site
+uz:station/soil-mubarek,Mubarek,Kashkadarinskaya,soil_temperature_mean,227,matched_by_name,1,uz:station/meteo-393652,Mubarek,65.149184,39.250105,291,normalised station name resolved to exactly one network site
+uz:station/soil-muynak,Muynak,RK,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-438590,Muynak,59.014247,43.76898,47,normalised station name resolved to exactly one network site
+uz:station/soil-namangan,Namangan,Namanganskaya,soil_temperature_mean,251,matched_by_name,1,uz:station/meteo-410716,Namangan,71.722805,41.005358,431,normalised station name resolved to exactly one network site
+uz:station/soil-navoi,Navoi,Navoiyskaya,soil_temperature_mean,251,matched_by_name,1,uz:station/meteo-401654,Navoi,65.349174,40.133126,350,normalised station name resolved to exactly one network site
+uz:station/soil-nukus,Nukus,RK,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-425596,Nukus,59.616029,42.483112,74,normalised station name resolved to exactly one network site
+uz:station/soil-nurabad,Nurabad,Samarkandskaya,soil_temperature_mean,251,matched_by_name,1,uz:station/meteo-396663,Nurabad,66.291587,39.6134,488,normalised station name resolved to exactly one network site
+uz:station/soil-nurata,Nurata,Navoiyskaya,soil_temperature_mean,243,matched_by_name,1,uz:station/meteo-406657,Nurata,65.694451,40.561138,487,normalised station name resolved to exactly one network site
+uz:station/soil-oygaing,Oygaing,Tashkentskaya,soil_temperature_mean,237,matched_by_name,1,uz:station/meteo-422709,Oygaing,70.882309,42.167218,2215,normalised station name resolved to exactly one network site
+uz:station/soil-pap,Pap,Namanganskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-409711,Pap,71.106373,40.874883,442,normalised station name resolved to exactly one network site
+uz:station/soil-payaryk,Payaryk,Samarkandskaya,soil_temperature_mean,52,matched_by_name,1,uz:station/meteo-local-33a97f9d5c0c,Payaryk,66.850453,39.652058,709,normalised station name resolved to exactly one network site
+uz:station/soil-payshanba,Payshanba,Samarkandskaya,soil_temperature_mean,228,matched_by_name,1,uz:station/meteo-local-a72a2328afdc,Payshanba,66.050163,40.017481,434,normalised station name resolved to exactly one network site
+uz:station/soil-pskem,Pskem,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-419704,Pskem,70.378123,41.940491,1466,normalised station name resolved to exactly one network site
+uz:station/soil-samarkand,Samarkand,Samarkandskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-396670,Samarkand,66.94922,39.650131,713,normalised station name resolved to exactly one network site
+uz:station/soil-sarykanla,Sarykanla,Ferganskaya,soil_temperature_mean,252,no_name_match,0,,,,,,
+uz:station/soil-sentob-nurata,Sentob-Nurata,Navoiyskaya,soil_temperature_mean,249,no_name_match,0,,,,,,
+uz:station/soil-shakhimardan,Shakhimardan,Ferganskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-400718,Shakhimardan,71.749333,39.950181,1918,normalised station name resolved to exactly one network site
+uz:station/soil-shakhrisabz,Shakhrisabz,Kashkadarinskaya,soil_temperature_mean,252,no_name_match,0,,,,,,
+uz:station/soil-sherabad,Sherabad,Surkhandarinskaya,soil_temperature_mean,249,matched_by_name,1,uz:station/meteo-377670,Sherabad,67.013469,37.676909,424,normalised station name resolved to exactly one network site
+uz:station/soil-shurchi,Shurchi,Surkhandarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-380678,Shurchi,67.77666,38.00328,454,normalised station name resolved to exactly one network site
+uz:station/soil-sukok,Sukok,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-412697,Sukok,69.796983,41.247457,1188,normalised station name resolved to exactly one network site
+uz:station/soil-syrdarya,Syrdarya,Syrdarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-408687,Syrdarya,68.671569,40.831235,264,normalised station name resolved to exactly one network site
+uz:station/soil-takhiatash,Takhiatash,RK,soil_temperature_mean,239,matched_by_name,1,uz:station/meteo-424596,Takhiatash,59.567582,42.336139,78,normalised station name resolved to exactly one network site
+uz:station/soil-takhtakupyr,Takhtakupyr,RK,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-430603,Takhtakupyr,60.281734,43.023892,61,normalised station name resolved to exactly one network site
+uz:station/soil-tamdy,Tamdy,Navoiyskaya,soil_temperature_mean,249,matched_by_name,1,uz:station/meteo-417646,Tamdy,64.625478,41.744301,260,normalised station name resolved to exactly one network site
+uz:station/soil-tashkent,Tashkent,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-413694,Tashkent,69.299281,41.333185,475,normalised station name resolved to exactly one network site
+uz:station/soil-termez,Termez,Surkhandarinskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-373673,Termez,67.2973,37.247661,308,normalised station name resolved to exactly one network site
+uz:station/soil-tyuyabuguz,Tyuyabuguz,Tashkentskaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-409694,Tyuyabuguz,69.303831,40.992593,396,normalised station name resolved to exactly one network site
+uz:station/soil-tyuyamuyun,Tyuyamuyun,Khorezm,soil_temperature_mean,251,matched_by_name,1,uz:station/meteo-412614,Tyuyamuyun,61.349093,41.217104,112,normalised station name resolved to exactly one network site
+uz:station/soil-urgench,Urgench,Khorezm,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-416606,Urgench,60.63207,41.567104,101,normalised station name resolved to exactly one network site
+uz:station/soil-yangier,Yangier,Syrdarinskaya,soil_temperature_mean,251,matched_by_name,1,uz:station/meteo-402688,Yangier,68.832255,40.283163,304,normalised station name resolved to exactly one network site
+uz:station/soil-yangikishlak,Yangikishlak,Dzhizaksakaya,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-404672,Yangikishlak,67.199213,40.41715,517,normalised station name resolved to exactly one network site
+uz:station/soil-yangiyul,Yangiyul,Tashkentskaya,soil_temperature_mean,242,matched_by_name,1,uz:station/meteo-411690,Yangiyul,68.999247,41.083182,345,normalised station name resolved to exactly one network site
+uz:station/soil-yubileynaya,Yubileynaya,Andizhanskaya,soil_temperature_mean,252,no_name_match,0,,,,,,
+uz:station/soil-zapadnyy-arnasay,Zapadnyy Arnasay,Dzhizaksakaya,soil_temperature_mean,103,matched_by_name,1,uz:station/meteo-38582,Zapadnyy Arnasay,67.700209,40.745899,246,normalised station name resolved to exactly one network site
+uz:station/soil-zhaslyk,Zhaslyk,RK,soil_temperature_mean,252,matched_by_name,1,uz:station/meteo-439575,Jaslyk,57.50767,43.972945,130,normalised station name resolved to exactly one network site

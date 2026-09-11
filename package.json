@@ -119,6 +119,7 @@
     "atlas:dated-snow": "python PIPELINES/extract_dated_snow.py",
     "atlas:benchmark": "python PIPELINES/benchmark_regional_batch.py",
     "atlas:regional-snow": "python PIPELINES/extract_regional_snow.py",
+    "atlas:regional-monthly": "python PIPELINES/extract_regional_monthly.py",
     "atlas:audit": "python PIPELINES/build_dynamic_atlas.py --probe",
     "predev": "npm run atlas:publish",
     "atlas:attribute": "python PIPELINES/run_atlas_attribute.py",

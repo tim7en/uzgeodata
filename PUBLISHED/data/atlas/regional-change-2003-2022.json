@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-09-10T18:34:02.642+00:00",
+  "period": [
+    2003,
+    2022
+  ],
+  "variables": {
+    "actual evapotranspiration": {
+      "attribute_id": "uzgeodata.dated.v1.aet_mm_s",
+      "annual_figure": "total",
+      "unit_per_decade": "mm/year",
+      "basins": 7445,
+      "mean_level": 225.8031301634701,
+      "median_change_per_decade": -7.927374633424726,
+      "mean_change_per_decade": -5.248512337101101,
+      "share_rising": 0.30543989254533244,
+      "share_falling": 0.6945601074546676,
+      "change_as_share_of_level": -0.03510746121050539,
+      "spread_of_change": 15.903438404333619,
+      "caution": null
+    },
+    "potential evapotranspiration": {
+      "attribute_id": "uzgeodata.dated.v1.pet_mm_s",
+      "annual_figure": "total",
+      "unit_per_decade": "mm/year",
+      "basins": 7445,
+      "mean_level": 1134.1150909972996,
+      "median_change_per_decade": 25.845112781954466,
+      "mean_change_per_decade": 27.813187681096792,
+      "share_rising": 0.9614506380120886,
+      "share_falling": 0.03854936198791137,
+      "change_as_share_of_level": 0.022788791884628935,
+      "spread_of_change": 17.510241299274195,
+      "caution": null
+    },
+    "precipitation": {
+      "attribute_id": "uzgeodata.dated.v1.pre_mm_s",
+      "annual_figure": "total",
+      "unit_per_decade": "mm/year",
+      "basins": 7445,
+      "mean_level": 316.7150148351394,
+      "median_change_per_decade": -23.67196974290564,
+      "mean_change_per_decade": -25.633799594860793,
+      "share_rising": 0.035862995298858294,
+      "share_falling": 0.9641370047011417,
+      "change_as_share_of_level": -0.07474217714378865,
+      "spread_of_change": 17.761313157406217,
+      "caution": null
+    },
+    "runoff": {
+      "attribute_id": "uzgeodata.dated.v1.run_mm_s",
+      "annual_figure": "total",
+      "unit_per_decade": "mm/year",
+      "basins": 7445,
+      "mean_level": 154.63898143217764,
+      "median_change_per_decade": -1.2956374351660571,
+      "mean_change_per_decade": -15.941947393038426,
+      "share_rising": 0.08918737407656145,
+      "share_falling": 0.9108126259234386,
+      "change_as_share_of_level": -0.008378465915687012,
+      "spread_of_change": 26.681621562157773,
+      "caution": null
+    },
+    "soil moisture": {
+      "attribute_id": "uzgeodata.dated.v1.soil_mm_s",
+      "annual_figure": "mean",
+      "unit_per_decade": "mm",
+      "basins": 7445,
+      "mean_level": 18.84002522997906,
+      "median_change_per_decade": -2.098173000995634,
+      "mean_change_per_decade": -2.7894681331765687,
+      "share_rising": 0.04996642041638684,
+      "share_falling": 0.9500335795836131,
+      "change_as_share_of_level": -0.11136784454284757,
+      "spread_of_change": 2.6266607770745107,
+      "caution": null
+    },
+    "snow cover": {
+      "attribute_id": "uzgeodata.dated.v1.snw_pc_s",
+      "annual_figure": "mean",
+      "unit_per_decade": "percent of days",
+      "basins": 7277,
+      "mean_level": 17.931276219839933,
+      "median_change_per_decade": -1.501144043661339,
+      "mean_change_per_decade": -1.6340377071386005,
+      "share_rising": 0.12147863130410884,
+      "share_falling": 0.8785213686958911,
+      "change_as_share_of_level": -0.08371651996528885,
+      "spread_of_change": 2.116113614771991,
+      "caution": "Source availability is not stable across this record, so part of this may be a trend in the imagery rather than in the snow."
+    }
+  },
+  "limits": {
+    "length": "Twenty years. Short against this region's variability, and a description of the period rather than a climate signal.",
+    "significance": "Not tested. No confidence interval, no significance, no attribution.",
+    "completeness": "Only basin-years with all twelve months are used, so a basin missing months contributes fewer years and needs fifteen to appear at all.",
+    "support": "Basin means on a 15 arc-second grid. Basins hold between one and 1,757 cells, so the smallest rest on very little."
+  }
+}

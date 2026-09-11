@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-09-10T18:19:46.257+00:00",
+  "source": "nsidc",
+  "table": "PUBLISHED\\data\\hydromet\\nsidc-product-series.csv",
+  "years": [
+    1980,
+    2003
+  ],
+  "stations": 196,
+  "rows": 338688,
+  "values": 338688,
+  "missing": 0,
+  "products": {
+    "terraclimate": {
+      "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+      "bands": [
+        "tmmx",
+        "tmmn",
+        "pr"
+      ]
+    },
+    "era5_land": {
+      "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+      "bands": [
+        "temperature_2m",
+        "soil_temperature_level_1",
+        "total_precipitation_sum"
+      ]
+    }
+  },
+  "wall_seconds": 75.04767110000103,
+  "support": "station_grid_cell",
+  "meaning": "Product values sampled at the station's own grid cell, not a basin mean. The cell is far larger than the instrument, so a difference between the two is a difference of support as much as of accuracy."
+}

@@ -1,0 +1,412 @@
+{
+  "generated_at": "2026-09-10T18:24:33.965+00:00",
+  "window": [
+    1980,
+    2003
+  ],
+  "pairs": 123764,
+  "stations": 190,
+  "by_variable": {
+    "air_temperature_mean": {
+      "overall": {
+        "era5_land": {
+          "pairs": 25634,
+          "stations": 128,
+          "bias": -2.6900318983995724,
+          "mean_absolute_error": 3.564369656660253,
+          "root_mean_square_error": 5.22885969956376,
+          "observed_mean": 10.017137395646406,
+          "estimated_mean": 7.327105497246835,
+          "correlation": 0.9318471867502401
+        },
+        "terraclimate": {
+          "pairs": 25634,
+          "stations": 128,
+          "bias": -0.30410782554419863,
+          "mean_absolute_error": 1.9167238823437622,
+          "root_mean_square_error": 3.47614107877731,
+          "observed_mean": 10.017137395646406,
+          "estimated_mean": 9.713029570102208,
+          "correlation": 0.9541172893355979
+        }
+      },
+      "by_elevation": {
+        "era5_land": {
+          "unknown": {
+            "pairs": 188,
+            "stations": 1,
+            "bias": -5.087185075867921,
+            "mean_absolute_error": 5.087185075867921,
+            "root_mean_square_error": 5.37417525636137,
+            "observed_mean": -6.702127659574468,
+            "estimated_mean": -11.789312735442389,
+            "correlation": 0.9801813578704923
+          },
+          "500-1000 m": {
+            "pairs": 5246,
+            "stations": 24,
+            "bias": -2.4126739787576095,
+            "mean_absolute_error": 2.5805608935493387,
+            "root_mean_square_error": 3.233863656097782,
+            "observed_mean": 14.401753717117804,
+            "estimated_mean": 11.989079738360195,
+            "correlation": 0.9749107010580972
+          },
+          "1500-4000 m": {
+            "pairs": 8606,
+            "stations": 48,
+            "bias": -3.9293952818800313,
+            "mean_absolute_error": 5.167051629353185,
+            "root_mean_square_error": 6.711381416353775,
+            "observed_mean": 3.400743667208924,
+            "estimated_mean": -0.5286516146711074,
+            "correlation": 0.8713101328324577
+          },
+          "1000-1500 m": {
+            "pairs": 3661,
+            "stations": 19,
+            "bias": -5.173495295974488,
+            "mean_absolute_error": 5.4686199430482585,
+            "root_mean_square_error": 6.694473727996556,
+            "observed_mean": 11.21813712100519,
+            "estimated_mean": 6.044641825030702,
+            "correlation": 0.9064214819913231
+          },
+          "0-500 m": {
+            "pairs": 7933,
+            "stations": 36,
+            "bias": -0.32603770607927557,
+            "mean_absolute_error": 1.5614237493120804,
+            "root_mean_square_error": 3.346807362489274,
+            "observed_mean": 14.137312492121518,
+            "estimated_mean": 13.811274786042242,
+            "correlation": 0.9557500618989483
+          }
+        },
+        "terraclimate": {
+          "unknown": {
+            "pairs": 188,
+            "stations": 1,
+            "bias": -1.7422872340425535,
+            "mean_absolute_error": 1.9933510638297876,
+            "root_mean_square_error": 2.524657655325915,
+            "observed_mean": -6.702127659574468,
+            "estimated_mean": -8.444414893617022,
+            "correlation": 0.9777188362891782
+          },
+          "500-1000 m": {
+            "pairs": 5246,
+            "stations": 24,
+            "bias": -0.47457110179184075,
+            "mean_absolute_error": 1.0282691574532976,
+            "root_mean_square_error": 1.491138841236096,
+            "observed_mean": 14.401753717117804,
+            "estimated_mean": 13.927182615325963,
+            "correlation": 0.9893440612049147
+          },
+          "1500-4000 m": {
+            "pairs": 8606,
+            "stations": 48,
+            "bias": 0.5669242389030911,
+            "mean_absolute_error": 2.7151347896816174,
+            "root_mean_square_error": 3.8314328522895362,
+            "observed_mean": 3.400743667208924,
+            "estimated_mean": 3.9676679061120153,
+            "correlation": 0.9363491280565255
+          },
+          "1000-1500 m": {
+            "pairs": 3661,
+            "stations": 19,
+            "bias": -1.6153646544659925,
+            "mean_absolute_error": 2.8133979786943457,
+            "root_mean_square_error": 4.562467497910447,
+            "observed_mean": 11.21813712100519,
+            "estimated_mean": 9.602772466539198,
+            "correlation": 0.9082818053234267
+          },
+          "0-500 m": {
+            "pairs": 7933,
+            "stations": 36,
+            "bias": -0.4970944157317527,
+            "mean_absolute_error": 1.2224820370603806,
+            "root_mean_square_error": 3.448571255392145,
+            "observed_mean": 14.137312492121518,
+            "estimated_mean": 13.640218076389765,
+            "correlation": 0.950957618277645
+          }
+        }
+      },
+      "by_system": {
+        "era5_land": {
+          "amu_darya": {
+            "pairs": 12815,
+            "stations": 66,
+            "bias": -3.658269745854168,
+            "mean_absolute_error": 4.281810071066452,
+            "root_mean_square_error": 6.259908468531856,
+            "observed_mean": 10.560686695278969,
+            "estimated_mean": 6.902416949424802,
+            "correlation": 0.9220008300352269
+          },
+          "syr_darya": {
+            "pairs": 12819,
+            "stations": 62,
+            "bias": -1.7220961768042335,
+            "mean_absolute_error": 2.847153110079751,
+            "root_mean_square_error": 3.93690102835316,
+            "observed_mean": 9.473757703409003,
+            "estimated_mean": 7.751661526604769,
+            "correlation": 0.9530098778095096
+          }
+        },
+        "terraclimate": {
+          "amu_darya": {
+            "pairs": 12815,
+            "stations": 66,
+            "bias": -0.3829769801014431,
+            "mean_absolute_error": 2.1511939133827545,
+            "root_mean_square_error": 3.9142055729438794,
+            "observed_mean": 10.560686695278969,
+            "estimated_mean": 10.177709715177526,
+            "correlation": 0.9417420710106442
+          },
+          "syr_darya": {
+            "pairs": 12819,
+            "stations": 62,
+            "bias": -0.22526328106716548,
+            "mean_absolute_error": 1.6823270145877214,
+            "root_mean_square_error": 2.9744106197677427,
+            "observed_mean": 9.473757703409003,
+            "estimated_mean": 9.248494422341837,
+            "correlation": 0.9663208087043396
+          }
+        }
+      },
+      "mountain_only": {
+        "era5_land": {
+          "pairs": 8606,
+          "stations": 48,
+          "bias": -3.9293952818800313,
+          "mean_absolute_error": 5.167051629353185,
+          "root_mean_square_error": 6.711381416353775,
+          "observed_mean": 3.400743667208924,
+          "estimated_mean": -0.5286516146711074,
+          "correlation": 0.8713101328324577
+        },
+        "terraclimate": {
+          "pairs": 8606,
+          "stations": 48,
+          "bias": 0.5669242389030911,
+          "mean_absolute_error": 2.7151347896816174,
+          "root_mean_square_error": 3.8314328522895362,
+          "observed_mean": 3.400743667208924,
+          "estimated_mean": 3.9676679061120153,
+          "correlation": 0.9363491280565255
+        }
+      }
+    },
+    "precipitation_total": {
+      "overall": {
+        "era5_land": {
+          "pairs": 36248,
+          "stations": 181,
+          "bias": 23.249037254263012,
+          "mean_absolute_error": 28.726553995587896,
+          "root_mean_square_error": 45.605697895408525,
+          "observed_mean": 35.2661691679541,
+          "estimated_mean": 58.515206422217105,
+          "correlation": 0.7062047201604201
+        },
+        "terraclimate": {
+          "pairs": 36248,
+          "stations": 181,
+          "bias": -1.3879414036636504,
+          "mean_absolute_error": 11.30798112999338,
+          "root_mean_square_error": 20.555388895255177,
+          "observed_mean": 35.2661691679541,
+          "estimated_mean": 33.87822776429044,
+          "correlation": 0.8780248545415051
+        }
+      },
+      "by_elevation": {
+        "era5_land": {
+          "unknown": {
+            "pairs": 180,
+            "stations": 1,
+            "bias": -34.304075026149675,
+            "mean_absolute_error": 46.52176200688025,
+            "root_mean_square_error": 63.4195145179013,
+            "observed_mean": 93.70611111111111,
+            "estimated_mean": 59.40203608496143,
+            "correlation": 0.724342996246533
+          },
+          "500-1000 m": {
+            "pairs": 9509,
+            "stations": 45,
+            "bias": 17.592245834567745,
+            "mean_absolute_error": 21.74559587410799,
+            "root_mean_square_error": 34.080364629087576,
+            "observed_mean": 36.68895782942476,
+            "estimated_mean": 54.2812036639925,
+            "correlation": 0.804634856197797
+          },
+          "1500-4000 m": {
+            "pairs": 8567,
+            "stations": 46,
+            "bias": 42.98697905703501,
+            "mean_absolute_error": 48.32783085009842,
+            "root_mean_square_error": 64.46962701344826,
+            "observed_mean": 42.38348313295202,
+            "estimated_mean": 85.37046218998704,
+            "correlation": 0.6011298249514968
+          },
+          "1000-1500 m": {
+            "pairs": 6408,
+            "stations": 34,
+            "bias": 31.486138607864827,
+            "mean_absolute_error": 41.807967828682024,
+            "root_mean_square_error": 59.470436531264944,
+            "observed_mean": 51.23551810237203,
+            "estimated_mean": 82.72165671023686,
+            "correlation": 0.6547106950974946
+          },
+          "0-500 m": {
+            "pairs": 11584,
+            "stations": 55,
+            "bias": 9.63298899132521,
+            "mean_absolute_error": 12.447976188272715,
+            "root_mean_square_error": 21.495364330985698,
+            "observed_mean": 19.09264502762431,
+            "estimated_mean": 28.72563401894952,
+            "correlation": 0.7721752014670038
+          }
+        },
+        "terraclimate": {
+          "unknown": {
+            "pairs": 180,
+            "stations": 1,
+            "bias": -18.16722222222222,
+            "mean_absolute_error": 37.19277777777778,
+            "root_mean_square_error": 49.46430755830129,
+            "observed_mean": 93.70611111111111,
+            "estimated_mean": 75.53888888888889,
+            "correlation": 0.7788548530636212
+          },
+          "500-1000 m": {
+            "pairs": 9509,
+            "stations": 45,
+            "bias": -1.2511620569986328,
+            "mean_absolute_error": 9.572142181091598,
+            "root_mean_square_error": 16.090527008690362,
+            "observed_mean": 36.68895782942476,
+            "estimated_mean": 35.43779577242612,
+            "correlation": 0.9180457502466803
+          },
+          "1500-4000 m": {
+            "pairs": 8567,
+            "stations": 46,
+            "bias": -1.4269055678767364,
+            "mean_absolute_error": 14.994385432473445,
+            "root_mean_square_error": 23.083888737059294,
+            "observed_mean": 42.38348313295202,
+            "estimated_mean": 40.956577565075285,
+            "correlation": 0.8624566609230538
+          },
+          "1000-1500 m": {
+            "pairs": 6408,
+            "stations": 34,
+            "bias": -6.0882022471910116,
+            "mean_absolute_error": 18.643071161048688,
+            "root_mean_square_error": 31.87572598375229,
+            "observed_mean": 51.23551810237203,
+            "estimated_mean": 45.14731585518103,
+            "correlation": 0.8290277981568707
+          },
+          "0-500 m": {
+            "pairs": 11584,
+            "stations": 55,
+            "bias": 1.3893991712707183,
+            "mean_absolute_error": 5.546771408839779,
+            "root_mean_square_error": 10.74457808470077,
+            "observed_mean": 19.09264502762431,
+            "estimated_mean": 20.48204419889503,
+            "correlation": 0.8937896372162802
+          }
+        }
+      },
+      "by_system": {
+        "era5_land": {
+          "amu_darya": {
+            "pairs": 17157,
+            "stations": 87,
+            "bias": 21.18910050185113,
+            "mean_absolute_error": 27.061713757057326,
+            "root_mean_square_error": 43.49624046080089,
+            "observed_mean": 33.84260651629073,
+            "estimated_mean": 55.03170701814185,
+            "correlation": 0.738007292502907
+          },
+          "syr_darya": {
+            "pairs": 19091,
+            "stations": 94,
+            "bias": 25.100293598149175,
+            "mean_absolute_error": 30.222738793265805,
+            "root_mean_square_error": 47.4214677553178,
+            "observed_mean": 36.54551883086271,
+            "estimated_mean": 61.64581242901188,
+            "correlation": 0.6738653411228639
+          }
+        },
+        "terraclimate": {
+          "amu_darya": {
+            "pairs": 17157,
+            "stations": 87,
+            "bias": -1.5471585941598183,
+            "mean_absolute_error": 11.570076353674885,
+            "root_mean_square_error": 22.060191044265302,
+            "observed_mean": 33.84260651629073,
+            "estimated_mean": 32.29544792213091,
+            "correlation": 0.869406309789539
+          },
+          "syr_darya": {
+            "pairs": 19091,
+            "stations": 94,
+            "bias": -1.2448535959352574,
+            "mean_absolute_error": 11.072437274108218,
+            "root_mean_square_error": 19.10215796305562,
+            "observed_mean": 36.54551883086271,
+            "estimated_mean": 35.30066523492745,
+            "correlation": 0.8868956068557688
+          }
+        }
+      },
+      "mountain_only": {
+        "era5_land": {
+          "pairs": 8567,
+          "stations": 46,
+          "bias": 42.98697905703501,
+          "mean_absolute_error": 48.32783085009842,
+          "root_mean_square_error": 64.46962701344826,
+          "observed_mean": 42.38348313295202,
+          "estimated_mean": 85.37046218998704,
+          "correlation": 0.6011298249514968
+        },
+        "terraclimate": {
+          "pairs": 8567,
+          "stations": 46,
+          "bias": -1.4269055678767364,
+          "mean_absolute_error": 14.994385432473445,
+          "root_mean_square_error": 23.083888737059294,
+          "observed_mean": 42.38348313295202,
+          "estimated_mean": 40.956577565075285,
+          "correlation": 0.8624566609230538
+        }
+      }
+    }
+  },
+  "reference": {
+    "precipitation": "Corrected for gauge type and wetting, not for wind. Wind is the largest correction for snow, so these totals still understate winter precipitation at exposed sites and a wet bias measured here remains an upper bound on the product's own error.",
+    "coverage": "Stations carry their own coordinates and elevation; no name crosswalk is involved and no placement is inferred.",
+    "window": "The archive ends in 2003, so this extends the comparison upward in elevation and backward in time, not forward."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-09-10T17:59:23.307+00:00",
+  "window": [
+    2015,
+    2020
+  ],
+  "checked": 52,
+  "counts": {
+    "not_checked": 96,
+    "consistent_with_network": 49,
+    "departs_from_network_relationship": 3
+  },
+  "relationship": {
+    "intercept_c": -1.2081459091382196,
+    "slope_c_per_1000m": 2.532686118955077,
+    "explained_share": 0.5458496935957569,
+    "residual_sigma_c": 0.8870042361935037,
+    "flag_limit_c": 2.661012708580511,
+    "spread_before_c": 1.8485478569455889,
+    "spread_after_c": 1.2457488767226015
+  },
+  "flagged": [
+    {
+      "name": "Pskem",
+      "residual_c": 4.542,
+      "elevation_m": "1466"
+    },
+    {
+      "name": "Ulugnar",
+      "residual_c": -3.021,
+      "elevation_m": "393"
+    },
+    {
+      "name": "Minchukur",
+      "residual_c": -3.163,
+      "elevation_m": "1912"
+    }
+  ],
+  "status": "one_independent_check_applied",
+  "meaning": "Stations consistent with the network relationship are not verified, only left uncontradicted. Flagged stations are not shown to be wrong: a deep valley can depart from the relationship as easily as a bad match can. Both are reasons to look, and only air temperature was checked, so precipitation and soil-temperature matches rest on the name alone."
+}

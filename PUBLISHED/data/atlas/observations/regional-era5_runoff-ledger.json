@@ -1,0 +1,242 @@
+{
+  "run_id": "regional-era5_runoff-20260910T135058774673Z",
+  "started_at": "2026-09-10T13:50:58.775+00:00",
+  "source": "era5_runoff",
+  "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+  "bands": [
+    "runoff_sum"
+  ],
+  "attributes": [
+    "uzgeodata.dated.v1.run_mm_s"
+  ],
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "years": [
+    2003,
+    2022
+  ],
+  "batch_size": 250,
+  "expected_rows": 1786800,
+  "retries": [],
+  "failures": [],
+  "by_year": {
+    "2003": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 301.23192189999827,
+      "rows_per_band": 89340
+    },
+    "2004": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 306.9745616,
+      "rows_per_band": 89340
+    },
+    "2005": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 300.36252659999445,
+      "rows_per_band": 89340
+    },
+    "2006": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 292.8097422999999,
+      "rows_per_band": 89340
+    },
+    "2007": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 292.8819325000004,
+      "rows_per_band": 89340
+    },
+    "2008": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 291.48621889999777,
+      "rows_per_band": 89340
+    },
+    "2009": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 284.33919980000064,
+      "rows_per_band": 89340
+    },
+    "2010": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 304.83531049999874,
+      "rows_per_band": 89340
+    },
+    "2011": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 306.2240262999985,
+      "rows_per_band": 89340
+    },
+    "2012": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 291.3021452999965,
+      "rows_per_band": 89340
+    },
+    "2013": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 289.45962979999604,
+      "rows_per_band": 89340
+    },
+    "2014": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 285.1815994999997,
+      "rows_per_band": 89340
+    },
+    "2015": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 282.8818519999986,
+      "rows_per_band": 89340
+    },
+    "2016": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 279.36049820000335,
+      "rows_per_band": 89340
+    },
+    "2017": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 284.339486900004,
+      "rows_per_band": 89340
+    },
+    "2018": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 274.8530663999991,
+      "rows_per_band": 89340
+    },
+    "2019": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 278.17445460000454,
+      "rows_per_band": 89340
+    },
+    "2020": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 271.35040789999766,
+      "rows_per_band": 89340
+    },
+    "2021": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 272.790651000003,
+      "rows_per_band": 89340
+    },
+    "2022": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 275.5505942000018,
+      "rows_per_band": 89340
+    }
+  },
+  "finished_at": "2026-09-10T15:30:43.208+00:00",
+  "wall_seconds": 5984.4048899000045,
+  "stored_rows": 1786800,
+  "complete": true,
+  "basin_support": {
+    "basins": 7445,
+    "cells_min": 1,
+    "cells_max": 1757,
+    "cells_median": 835,
+    "basins_at_or_below": {
+      "1": 10,
+      "5": 56,
+      "25": 174,
+      "100": 438
+    },
+    "basins_without_a_cell": 0,
+    "meaning": "Analysis cells per basin on the 15 arc-second grid. A value from a basin with few cells is supported by few observations; every row carries its own valid and expected counts so this can be filtered on. A basin with no cell at all would yield no value rather than a zero."
+  }
+}

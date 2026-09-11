@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-09-10T18:23:31.616+00:00",
+  "dataset": "NSIDC G02174 Central Asia Temperature and Precipitation Data, 1879-2003, v1",
+  "citation": "Williams, M. W. and V. G. Konovalov. 2008. NSIDC. doi:10.7265/N5NK3BZ8",
+  "endpoint": "https://noaadata.apps.nsidc.org/NOAA/G02174/",
+  "files": {
+    "Precip_v1_1.txt": {
+      "sha256": "2a9353b2f58e7c56034d061a99c6bece0fdaacd9b3ecb19dcb08be5b10b258ce",
+      "bytes": 1535278
+    },
+    "Taver_v1_1.txt": {
+      "sha256": "04d6e486f368c13ea6710b7c375d1066acdae01ae09df419c0f519c6890a05b0",
+      "bytes": 1195297
+    }
+  },
+  "stations_in_delivery": 283,
+  "stations_in_domain": 196,
+  "observations_in_domain": 210099,
+  "years": [
+    1875,
+    2003
+  ],
+  "elevation_bands_in_domain": {
+    "0-500 m": 64,
+    "1000-1500 m": 35,
+    "1500-2500 m": 30,
+    "2500-5000 m": 22,
+    "500-1000 m": 45
+  },
+  "by_variable": {
+    "precipitation_total": 120026,
+    "air_temperature_mean": 90073
+  },
+  "excluded": {
+    "missing_sentinel": 21117,
+    "outside_plausible_range": 1
+  },
+  "rejected_as_implausible": [
+    {
+      "station_id": "uz:station/nsidc-38473",
+      "variable": "air_temperature_mean",
+      "year": 1998,
+      "month": 11,
+      "value": 74.0
+    }
+  ],
+  "precipitation_treatment": "corrected for gauge type and wetting, not for wind",
+  "meaning": "Precipitation here is corrected for gauge type and wetting but not for wind, and the national archive is not corrected at all. A bias computed against one is not comparable with a bias computed against the other without saying which definition of precipitation was used."
+}

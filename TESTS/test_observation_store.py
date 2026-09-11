@@ -46,11 +46,29 @@ def manifest():
     return json.loads((STORE / "manifest.json").read_text(encoding="utf-8"))
 
 
+def _is_dated(entry):
+    """A dated run publishes into the uzgeodata.dated namespace and reports per-year
+    completeness. Runs that publish an epoch snapshot are a different shape and are
+    checked elsewhere."""
+    named = entry.get("attributes") or [entry.get("attribute_id")]
+    return any((name or "").startswith("uzgeodata.dated.") for name in named)
+
+
 @pytest.fixture(scope="module")
 def ledgers():
-    """Every regional run that has published into the store."""
-    return {path.name: json.loads(path.read_text(encoding="utf-8"))
-            for path in sorted(STORE.glob("regional-*-ledger.json"))}
+    """Every regional run that has published a dated series into the store."""
+    found = {}
+    for path in sorted(STORE.glob("regional-*-ledger.json")):
+        entry = json.loads(path.read_text(encoding="utf-8"))
+        if _is_dated(entry):
+            found[path.name] = entry
+    return found
+
+
+@pytest.fixture(scope="module")
+def landcover_ledger():
+    path = STORE / "regional-landcover-ledger.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
 
 
 @pytest.fixture(scope="module")
@@ -429,3 +447,38 @@ def test_provenance_is_required_on_every_row(staged):
     published = {line.split(",")[0] for line in
                  (STORE / "source_release.csv").read_text(encoding="utf-8").splitlines()[1:]}
     assert releases <= published, "every observation points at a published source release"
+
+
+def test_the_land_cover_block_covers_the_region_on_both_supports(landcover_ledger):
+    """Fifty-one attributes from one adapter, for the basin and for everything above it."""
+    if landcover_ledger is None:
+        pytest.skip("the land-cover run has not been published")
+    assert landcover_ledger["complete"] and not landcover_ledger["failures"]
+    assert landcover_ledger["basins_extracted"] == 7445
+    assert len(landcover_ledger["attributes"]) == 51
+    assert landcover_ledger["rows"] == 51 * 7445
+    assert landcover_ledger["without_value"] == 0
+
+    published = set(landcover_ledger["attributes"])
+    assert {f"glc_pc_s{t:02d}" for t in range(1, 23)} <= published, "every class, local support"
+    assert {f"glc_pc_u{t:02d}" for t in range(1, 23)} <= published, "every class, upstream"
+    assert {"for_pc_sse", "for_pc_use", "crp_pc_sse", "glc_cl_smj"} <= published
+    assert "2015" == landcover_ledger["epoch"], "an epoch snapshot, not a current state"
+    assert "not a 2026 state" in landcover_ledger["epoch_note"]
+
+
+def test_land_cover_class_shares_account_for_the_whole_basin():
+    """Percentages that do not sum to a whole basin mean the crosswalk lost a class."""
+    rows = [r for r in observations.read_partitions(STORE / "time_kind=source_epoch")
+            if r["recipe_version"].startswith("copernicus_lc_regional")]
+    if not rows:
+        pytest.skip("the land-cover run has not been published")
+    shares = {}
+    for row in rows:
+        column = row["attribute_id"].split(".")[-1]
+        if column.startswith("glc_pc_s") and column[8:].isdigit():
+            shares.setdefault(row["basin_id"], []).append(row["value"] or 0.0)
+    assert len(shares) == 7445
+    totals = [sum(v) for v in shares.values()]
+    assert all(len(v) == 22 for v in shares.values()), "all twenty-two classes present"
+    assert min(totals) > 95 and max(totals) < 105, f"class shares span {min(totals)}..{max(totals)}"

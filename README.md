@@ -46,6 +46,12 @@ using it. It publishes two limitations with the data: basin support is uneven,
 and source availability is not stable across the record, so a trend taken from
 this series without accounting for null months may be a trend in the imagery.
 
+Five more dated variables followed from TerraClimate and ERA5-Land
+(`npm run atlas:regional-monthly <source>`), so six now cover the region for
+2003-2022: 10,725,600 dated rows in total. The store's bulk partitions are derived data,
+regenerable from the run checkpoints, and are deliberately not tracked in git; the
+ledgers and provenance tables beside them are.
+
 Each top-level folder is named for the kind of information it holds.
 
 | Folder | What lives here |

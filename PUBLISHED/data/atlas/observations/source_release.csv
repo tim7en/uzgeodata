@@ -1,10 +1,12 @@
 source_release_id,name,asset,sha256,epoch,valid_start,valid_end,retrieved_at,pinned
 basinatlas_v10@c512796abee4,BasinATLAS v10,GEODATA\BasinATLAS_Data_v10.gdb\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb,c512796abee4cca0b41ee4b8700de5c95bbbbe32a66456189596e51c63ed5e47,,,,,True
+copernicus_lc@COPERNICUS/Landcover/100m/Proba-V-C3/Global#2015,"Copernicus Global Land Cover, collection 3",COPERNICUS/Landcover/100m/Proba-V-C3/Global,,2015,2015-01-01,2016-01-01,2026-09-10T20:44:43.638+00:00,False
 copernicus_lc@d5f902169ffe,copernicus_lc,COPERNICUS/Landcover/100m/Proba-V-C3/Global,d5f902169ffeb70fcb01016864fc15505d0d274e0622e89f0136ab7964b4a543,2015,2015-01-01,2016-01-01,2026-09-09T18:27:03.698+00:00,True
 dem_terrain@unpinned,dem_terrain,EarthEnv-DEM90 v1,,,,,,False
 dmsp_lights@9b92ff7c7445,dmsp_lights,NOAA/DMSP-OLS/NIGHTTIME_LIGHTS,9b92ff7c7445d34126b019459aa368ab13b2d015b297bed2548b3c011feb8e40,F182010,,,2026-09-09T18:27:07.997+00:00,True
 ecoregions@770f933277f8,ecoregions,RESOLVE/ECOREGIONS/2017,770f933277f807139e2a345e8670203739e46c099dacbf35af185d19983c9719,,,,,True
 elevation@b9fd8644dd67,EarthEnv-DEM90_N40E070,https://de.cyverse.org/anon-files/iplant/home/shared/earthenv_dem_data/EarthEnv-DEM90/EarthEnv-DEM90_N40E070.tar.gz,b9fd8644dd67b7794193ac65094e8d51d17d85a46b54ac1977d6a99bef353e6e,,,,,True
+era5_runoff@ECMWF/ERA5_LAND/MONTHLY_AGGR,era5_runoff monthly imagery,ECMWF/ERA5_LAND/MONTHLY_AGGR,,,2003-01-01,2023-01-01,2026-09-10T15:30:43.208+00:00,False
 era5_runoff@cda064edcbb9,era5_runoff,ECMWF/ERA5_LAND/MONTHLY_AGGR,cda064edcbb9370d232b33b4ef8202253a47e7ef0eb7732edf259f7d3115f5dd,,1991-01-01,2021-01-01,2026-09-09T18:27:11.527+00:00,True
 gfsad@4f813d46997c,gfsad,USGS/GFSAD1000_V1,4f813d46997ca276bbbcefd0aee892b1ff1546d87a7821476c088b891c3b3b7b,2010,2010-01-01,2011-01-01,2026-09-09T18:27:13.617+00:00,True
 ghsl@1fefe5e4b7bf,ghsl,JRC/GHSL/P2023A/GHS_BUILT_S,1fefe5e4b7bf2c5c73791d317ceb8de7dfdfda1e3d16fa22b6611ffb72c1649e,2015,2015-01-01,2016-01-01,2026-09-09T18:27:15.854+00:00,True

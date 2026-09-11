@@ -177,7 +177,7 @@
         "id": "temporal-resolution",
         "title": "Preserve time, resolution and research opportunities",
         "status": "in_progress",
-        "description": "The observation/revision contract is adopted and executable: ATLAS_MODULES/core/observations.py is the only way into the store. It now holds 1,801,860 rows, of which 1,786,800 are dated monthly snow observations covering every one of the 7445 level-12 basins from 2003 to 2022, beside the frozen HydroATLAS run's static values, source epochs and climatologies. Each value carries its source release, method, geometry and QA denominators; 11,765 basin-months are null and say why. The production physical design and revision traffic from real corrections remain open.",
+        "description": "The observation/revision contract is adopted and executable: ATLAS_MODULES/core/observations.py is the only way into the store. It holds 10,735,860 rows, of which 10,725,600 are dated monthly observations of six variables covering every one of the 7445 level-12 basins from 2003 to 2022, beside the frozen HydroATLAS run's static values, source epochs and climatologies. Each value carries its source release, method, geometry and QA denominators; 11,814 are null and say why. The production physical design and revision traffic from real corrections remain open.",
         "deliverables": [
           "Append-only basin observation/revision store with source, method, geometry and run identities",
           "Distinct observation period, retrieval time and publication time",
@@ -186,13 +186,15 @@
         ],
         "gate": "Round-trip a frozen snapshot, append a corrected month without losing the earlier version, preserve nulls and distinguish monthly observations from monthly climatologies. Reject mixed units, changed geometry or period definitions in an unversioned series.",
         "evidence": [
-          "ATLAS_MODULES/core/observations.py",
           "ATLAS_MODULES/core/REPRODUCIBILITY.md",
-          "PIPELINES/stage_pilot_observations.py",
-          "TESTS/test_observation_store.py",
-          "PUBLISHED/data/atlas/observations/manifest.json",
+          "ATLAS_MODULES/core/observations.py",
+          "ATLAS_MODULES/hydrosheds/functions/dated_monthly.py",
+          "PIPELINES/extract_regional_monthly.py",
           "PIPELINES/extract_regional_snow.py",
-          "PUBLISHED/data/atlas/observations/regional-snow-ledger.json"
+          "PIPELINES/stage_pilot_observations.py",
+          "PUBLISHED/data/atlas/observations/manifest.json",
+          "PUBLISHED/data/atlas/observations/regional-snow-ledger.json",
+          "TESTS/test_observation_store.py"
         ]
       },
       {
@@ -216,6 +218,7 @@
     ],
     "next_batches": [
       "Explain the source-availability trend in the dated snow record before any snow trend is published from it: null basin-months roughly triple from 2003 to 2022 while daily source image counts stay constant, and from 2006 they reach basins of several hundred cells rather than only the smallest. Until it is explained, a change in what the sensor delivered cannot be told apart from a change in the snow.",
+      "Date the remaining time-varying family, surface water inundation, which needs the JRC Monthly History asset and its own method review rather than a change of parameter.",
       "Reproduce one pilot attribute independently, in a second environment, against pinned inputs. Nothing in the programme has cleared reproduction gate 6 and every stage above assumes it.",
       "Add a second dated family through the same path, so the store holds more than one time series and the observation contract is exercised by a variable with different masking behaviour.",
       "Expand by source × period × spatial batch with bounded concurrency, checkpoints, hashes, idempotent retries and a regional completeness ledger.",
@@ -327,7 +330,15 @@
       "regional_server_side_values": 2968,
       "regional_monthly_series_hours_measured": 2.2492096364166665,
       "regional_monthly_series_rows": 1786800,
-      "regional_monthly_series_note": "Measured, not extrapolated: 1,786,800 rows for 7445 basins over 2003-2022, in 2.25 hours with no failed batch and no retry. The 2.8-hour figure beside it was the linear extrapolation from the 250-basin sample, and it was about 23% high."
+      "regional_monthly_series_note": "Measured, not extrapolated: 1,786,800 rows for 7445 basins over 2003-2022, in 2.25 hours with no failed batch and no retry. The 2.8-hour figure beside it was the linear extrapolation from the 250-basin sample, and it was about 23% high.",
+      "regional_dated_sources": [
+        "era5_runoff",
+        "snow",
+        "terraclimate"
+      ],
+      "regional_dated_rows": 10720800,
+      "regional_dated_hours_measured": 5.906309286611112,
+      "regional_dated_note": "Three sources, six dated attributes, every one of the 7,445 basins for 2003-2022: 10,720,800 rows in 5.91 hours of extraction with no failed batch and no retry in any run. Band stacking is why: reducing over basin geometry costs about the same for six bands as for one, so TerraClimate delivered four variables in less time than MODIS took for one."
     },
     "publication_rules": [
       "Original HydroATLAS values are immutable reference evidence. Substitute availability is highlighted light green, including valid zeroes, only for the exact basin and run.",
@@ -7624,6 +7635,15 @@
       "source": "PUBLISHED/data/atlas/observations/regional-snow-ledger.json"
     },
     {
+      "id": "regional-dated-monthly-20260910",
+      "date": "2026-09-10",
+      "kind": "implementation",
+      "phase": "geodatabase",
+      "title": "Six dated monthly variables now cover the whole region",
+      "summary": "TerraClimate (actual and potential evapotranspiration, soil moisture, precipitation) and ERA5-Land runoff join MODIS snow as dated monthly series across all 7,445 level-12 basins for 2003-2022: 10,725,600 dated rows in 5.91 hours of extraction, with no failed batch and no retry in any of the three runs. Scale factors and unit conversions were checked before each regional run by reproducing the module's own published climatology over its exact window, agreeing to floating-point precision. One pass carries every band of a source because reducing over basin geometry costs the same for six bands as for one, so four TerraClimate variables took less time than one MODIS variable. TerraClimate and ERA5-Land returned no null months at all, carrying none of the source-availability artefact that makes the snow series unsafe to trend without correction. The store now holds 10,735,860 rows in 4.6 GB; its bulk partitions are derived data and are no longer tracked in version control.",
+      "source": "PUBLISHED/data/atlas/observations/manifest.json"
+    },
+    {
       "id": "observation-store-20260910",
       "date": "2026-09-10",
       "kind": "implementation",
@@ -7713,5 +7733,5 @@
     "reproduced": 0
   },
   "refresh_policy": "Curated updates and module changes are republished at dev start/build; browser checks every 60 seconds.",
-  "revision": "fa497797fcf4b3fdb25ad7216b2b3e2f19201be126e4af6171fdb5976d16990f"
+  "revision": "4da738887c3096d45fa49801b5006eca434bb65c4d2e60ea87981fe457024761"
 }

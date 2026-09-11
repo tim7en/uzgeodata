@@ -1,0 +1,181 @@
+{
+  "generated_at": "2026-09-10T18:50:59.594+00:00",
+  "attribute": "ele_mt_sav",
+  "run": "pskem-all281-20260909T184834061745Z",
+  "input": {
+    "archive": "F:\\uzgeodata\\GEODATA\\atlas_sources\\earthenv_dem90_v1\\EarthEnv-DEM90_N40E070.tar.gz",
+    "sha256": "b9fd8644dd67b7794193ac65094e8d51d17d85a46b54ac1977d6a99bef353e6e",
+    "verified_against_source_lock": true,
+    "native_cell_degrees": 0.000833333333333,
+    "grid": "6000x6000"
+  },
+  "method": "Independent read of the pinned archive, grid from the file header, native three arc-second resolution, unweighted mean of cells whose centre falls inside the basin. No code shared with the pilot implementation.",
+  "against_pilot_candidate": {
+    "basins": 20,
+    "bias": -0.6337330919915075,
+    "mean_absolute": 0.996247950889574,
+    "max_absolute": 8.5653208556148,
+    "root_mean_square": 2.0562931446746826
+  },
+  "against_published_atlas": {
+    "basins": 20,
+    "bias": -1.0279081412981212,
+    "mean_absolute": 1.7540628562182063,
+    "max_absolute": 18.620320855614864,
+    "root_mean_square": 4.324245585161515
+  },
+  "pilot_against_published": {
+    "basins": 20,
+    "bias": -0.3941750493066138,
+    "mean_absolute": 1.0556832372999907,
+    "max_absolute": 10.055000000000064,
+    "root_mean_square": 2.3859146952255665
+  },
+  "basins": [
+    {
+      "basin_id": "4120380180",
+      "independent": 3127.462347425772,
+      "pilot_candidate": 3127.8315522703274,
+      "published": 3128.0,
+      "cells": 23677
+    },
+    {
+      "basin_id": "4120380350",
+      "independent": 3211.2315217757987,
+      "pilot_candidate": 3211.0026644182126,
+      "published": 3211.0,
+      "cells": 29643
+    },
+    {
+      "basin_id": "4120382970",
+      "independent": 2869.6477629079986,
+      "pilot_candidate": 2869.8196909492276,
+      "published": 2870.0,
+      "cells": 22641
+    },
+    {
+      "basin_id": "4120383080",
+      "independent": 2955.995275888133,
+      "pilot_candidate": 2956.388932955618,
+      "published": 2956.0,
+      "cells": 26460
+    },
+    {
+      "basin_id": "4120384960",
+      "independent": 2686.6768163223032,
+      "pilot_candidate": 2687.31425614489,
+      "published": 2687.0,
+      "cells": 19311
+    },
+    {
+      "basin_id": "4120384970",
+      "independent": 2165.358544930668,
+      "pilot_candidate": 2166.1609009009007,
+      "published": 2164.0,
+      "cells": 5553
+    },
+    {
+      "basin_id": "4120385070",
+      "independent": 1768.3796791443851,
+      "pilot_candidate": 1776.945,
+      "published": 1787.0,
+      "cells": 187
+    },
+    {
+      "basin_id": "4120385190",
+      "independent": 2760.224330221845,
+      "pilot_candidate": 2761.346,
+      "published": 2761.0,
+      "cells": 16498
+    },
+    {
+      "basin_id": "4120386210",
+      "independent": 2635.112268789511,
+      "pilot_candidate": 2634.7325915080523,
+      "published": 2635.0,
+      "cells": 17084
+    },
+    {
+      "basin_id": "4120386360",
+      "independent": 1541.4975744975745,
+      "pilot_candidate": 1543.3910344827584,
+      "published": 1545.0,
+      "cells": 1443
+    },
+    {
+      "basin_id": "4121281950",
+      "independent": 3506.4620282431615,
+      "pilot_candidate": 3506.1989679715302,
+      "published": 3505.0,
+      "cells": 28113
+    },
+    {
+      "basin_id": "4121282240",
+      "independent": 3445.7196168338855,
+      "pilot_candidate": 3445.423200908059,
+      "published": 3446.0,
+      "cells": 22027
+    },
+    {
+      "basin_id": "4121282310",
+      "independent": 3250.1298931632955,
+      "pilot_candidate": 3250.1382048574446,
+      "published": 3250.0,
+      "cells": 23681
+    },
+    {
+      "basin_id": "4121283450",
+      "independent": 3123.7798444884893,
+      "pilot_candidate": 3123.3792564346995,
+      "published": 3122.0,
+      "cells": 26236
+    },
+    {
+      "basin_id": "4121285900",
+      "independent": 2550.863140511246,
+      "pilot_candidate": 2550.431041303084,
+      "published": 2550.0,
+      "cells": 42993
+    },
+    {
+      "basin_id": "4121286770",
+      "independent": 2185.651429469054,
+      "pilot_candidate": 2185.4860510805497,
+      "published": 2186.0,
+      "cells": 25464
+    },
+    {
+      "basin_id": "4121287290",
+      "independent": 2216.302647843341,
+      "pilot_candidate": 2217.1374959349596,
+      "published": 2218.0,
+      "cells": 15371
+    },
+    {
+      "basin_id": "4121287810",
+      "independent": 2142.6228094705443,
+      "pilot_candidate": 2144.124423748545,
+      "published": 2144.0,
+      "cells": 21456
+    },
+    {
+      "basin_id": "4121288140",
+      "independent": 2286.8131748843057,
+      "pilot_candidate": 2285.7348,
+      "published": 2286.0,
+      "cells": 17503
+    },
+    {
+      "basin_id": "4121289400",
+      "independent": 1855.5111303627255,
+      "pilot_candidate": 1855.1304331450092,
+      "published": 1855.0,
+      "cells": 26549
+    }
+  ],
+  "gate_6": {
+    "cleared": false,
+    "why": "Gate 6 requires a second operator in a second environment, a named reviewer and a recorded approval. This ran on the same machine under the same agent, so it is a second implementation and not an independent reproduction.",
+    "what_it_does_establish": "Two implementations sharing no code, reading the same pinned bytes, agree or disagree by the amounts reported here. That removes a single program's mistake as an explanation; it does not replace the reviewer."
+  }
+}

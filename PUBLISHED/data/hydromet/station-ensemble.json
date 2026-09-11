@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-09-10T18:07:22.412+00:00",
+  "variables": {
+    "air_temperature_mean": {
+      "candidates": {
+        "era5_land": {
+          "pairs": 25945,
+          "bias": -0.42927009919492176,
+          "mean_absolute_error": 3.031087269313472,
+          "root_mean_square_error": 4.893555882827402,
+          "fitted": false
+        },
+        "terraclimate": {
+          "pairs": 25945,
+          "bias": -0.010396608209673617,
+          "mean_absolute_error": 2.606114472923492,
+          "root_mean_square_error": 4.453713732686376,
+          "fitted": false
+        },
+        "plain_mean": {
+          "pairs": 25945,
+          "bias": -0.2198333537022977,
+          "mean_absolute_error": 2.7269126298672575,
+          "root_mean_square_error": 4.589303549826937,
+          "fitted": false
+        },
+        "weighted_mean_cross_validated": {
+          "pairs": 25945,
+          "bias": -0.20209702139315974,
+          "mean_absolute_error": 2.7077134622817867,
+          "root_mean_square_error": 4.569041926792773,
+          "fitted": true
+        },
+        "elevation_corrected_mean_cross_validated": {
+          "pairs": 25945,
+          "bias": -0.000689155449408675,
+          "mean_absolute_error": 2.6753354601062265,
+          "root_mean_square_error": 4.543837359052384,
+          "fitted": true
+        }
+      },
+      "best_by_rmse": "terraclimate",
+      "stations": 52,
+      "products": [
+        "era5_land",
+        "terraclimate"
+      ]
+    },
+    "precipitation_total": {
+      "candidates": {
+        "era5_land": {
+          "pairs": 25262,
+          "bias": 11.952707250921954,
+          "mean_absolute_error": 24.28554175428931,
+          "root_mean_square_error": 42.11415986516766,
+          "fitted": false
+        },
+        "terraclimate": {
+          "pairs": 25262,
+          "bias": -0.3682756709682527,
+          "mean_absolute_error": 17.458219460058586,
+          "root_mean_square_error": 28.33390504852566,
+          "fitted": false
+        },
+        "plain_mean": {
+          "pairs": 25262,
+          "bias": 5.792215789976851,
+          "mean_absolute_error": 19.861116437642472,
+          "root_mean_square_error": 32.30495415936642,
+          "fitted": false
+        },
+        "weighted_mean_cross_validated": {
+          "pairs": 25262,
+          "bias": 3.652139459579067,
+          "mean_absolute_error": 18.749271252428148,
+          "root_mean_square_error": 30.332882195473292,
+          "fitted": true
+        },
+        "elevation_corrected_mean_cross_validated": {
+          "pairs": 25262,
+          "bias": 0.009373493948026584,
+          "mean_absolute_error": 19.730410467817535,
+          "root_mean_square_error": 31.852670681448945,
+          "fitted": true
+        }
+      },
+      "best_by_rmse": "terraclimate",
+      "stations": 52,
+      "products": [
+        "era5_land",
+        "terraclimate"
+      ]
+    }
+  },
+  "method": {
+    "validation": "Leave-one-station-out. A fitted candidate is scored only on stations excluded from its own fitting, so the figures are out-of-sample.",
+    "unfitted": "Each product alone and the plain mean are fitted to nothing and are scored directly on every pair."
+  },
+  "limits": {
+    "coverage": "Thirty-six stations sit below 500 m and four above 1500 m. A mountain correction rests on those four and is only as good as they are typical.",
+    "support": "Fitted at station points. A basin mean is a different spatial support and a point correction does not transfer to it without separate work.",
+    "identity": "Stations were placed by a name crosswalk that one check did not contradict; it is not a verified identity.",
+    "soil_temperature": "Excluded: only one product estimates it, so there is nothing to combine and no ensemble to test."
+  }
+}

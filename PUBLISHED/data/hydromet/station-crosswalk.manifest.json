@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-09-10T17:52:02.735+00:00",
+  "observation_stations": 148,
+  "matched": 123,
+  "ambiguous": 0,
+  "unmatched": 25,
+  "monthly_observations": 120233,
+  "locatable_observations": 93260,
+  "locatable_share": 0.7757,
+  "locatable_by_measure": {
+    "air_temperature_mean": 37870,
+    "precipitation_total": 37844,
+    "soil_temperature_mean": 17546
+  },
+  "with_elevation": 123,
+  "status": "proposed_crosswalk_pending_review",
+  "meaning": "A name match makes a comparison possible; it does not establish that these observations were recorded at this coordinate. Ambiguous and unmatched stations are published rather than resolved by guesswork, and no station here carries a verified identity."
+}

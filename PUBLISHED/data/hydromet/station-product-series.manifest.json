@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-09-10T18:03:42.596+00:00",
+  "years": [
+    1980,
+    2021
+  ],
+  "stations": 123,
+  "rows": 371952,
+  "values": 371952,
+  "missing": 0,
+  "products": {
+    "terraclimate": {
+      "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+      "bands": [
+        "tmmx",
+        "tmmn",
+        "pr"
+      ]
+    },
+    "era5_land": {
+      "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+      "bands": [
+        "temperature_2m",
+        "soil_temperature_level_1",
+        "total_precipitation_sum"
+      ]
+    }
+  },
+  "wall_seconds": 79.33138099999633,
+  "support": "station_grid_cell",
+  "meaning": "Product values sampled at the station's own grid cell, not a basin mean. The cell is far larger than the instrument, so a difference between the two is a difference of support as much as of accuracy."
+}

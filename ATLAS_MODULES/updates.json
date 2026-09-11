@@ -71,6 +71,15 @@
       "title": "Dated monthly snow cover for all 7,445 basins, 2003-2022",
       "summary": "The regional run is complete: 1,786,800 dated observations, every year covering every basin, in 2.25 hours with no failed batch and no retry, against a 2.8-hour extrapolation. The store holds 1,801,860 rows in 0.75 GB. 11,765 basin-months are null and carry their reason; none is gap filled. Two findings are published with the data rather than left to be discovered. Basin support is uneven: the median basin holds 835 analysis cells but 438 hold 100 or fewer and ten hold one, so the smallest basins rest on very few observations. And source availability is not stable: null months roughly triple from 243 in 2003 to 816 in 2022 while daily image counts stay constant, reaching basins of several hundred cells from 2006. No cause is asserted; a snow trend computed without accounting for it could be a trend in the imagery.",
       "source": "PUBLISHED/data/atlas/observations/regional-snow-ledger.json"
+    },
+    {
+      "id": "regional-dated-monthly-20260910",
+      "date": "2026-09-10",
+      "kind": "implementation",
+      "phase": "geodatabase",
+      "title": "Six dated monthly variables now cover the whole region",
+      "summary": "TerraClimate (actual and potential evapotranspiration, soil moisture, precipitation) and ERA5-Land runoff join MODIS snow as dated monthly series across all 7,445 level-12 basins for 2003-2022: 10,725,600 dated rows in 5.91 hours of extraction, with no failed batch and no retry in any of the three runs. Scale factors and unit conversions were checked before each regional run by reproducing the module's own published climatology over its exact window, agreeing to floating-point precision. One pass carries every band of a source because reducing over basin geometry costs the same for six bands as for one, so four TerraClimate variables took less time than one MODIS variable. TerraClimate and ERA5-Land returned no null months at all, carrying none of the source-availability artefact that makes the snow series unsafe to trend without correction. The store now holds 10,735,860 rows in 4.6 GB; its bulk partitions are derived data and are no longer tracked in version control.",
+      "source": "PUBLISHED/data/atlas/observations/manifest.json"
     }
   ]
 }

@@ -20,6 +20,7 @@ import json
 from datetime import date
 import hashlib
 from pathlib import Path
+import time
 
 # Column order of the long table, as specified in REPRODUCIBILITY.md. Resolution,
 # licence and code provenance belong to the source-release and recipe tables, not
@@ -373,7 +374,7 @@ def write_partitions(directory, rows):
             writer.writeheader()
             for record in sorted(group, key=sort_key):
                 writer.writerow({field: _text(record[field]) for field in FIELDS})
-        temporary.replace(path)
+        _replace(temporary, path)
         written.append(path)
     return written
 
@@ -403,6 +404,24 @@ def merge_table(path, rows, key):
         for name in sorted(existing):
             writer.writerow({field: existing[name].get(field, "") for field in fields})
     return len(existing)
+
+
+def _replace(temporary, path, attempts=5):
+    """Move the finished partition into place, waiting out a transient lock.
+
+    On Windows a rename fails outright while anything holds the destination open,
+    including a scanner or an indexer that noticed a large file being written. The
+    data is already safely on disk in the temporary by this point, so a lock is
+    worth waiting for rather than losing the write to.
+    """
+    for attempt in range(attempts):
+        try:
+            temporary.replace(path)
+            return path
+        except OSError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(0.2 * 2 ** attempt)
 
 
 def read_partitions(directory):
