@@ -34,6 +34,13 @@ earth_engine.zip
 # tracked, because those are the provenance record.
 PUBLISHED/data/atlas/observations/time_kind=*/
 
+# Station-point product extractions. Derived: both are regenerated from Earth Engine
+# in about 75 seconds by PIPELINES/extract_station_products.py, and together they are
+# 92 MB that would otherwise sit in history forever.
+PUBLISHED/data/hydromet/station-product-series.csv
+PUBLISHED/data/hydromet/nsidc-product-series.csv
+PUBLISHED/data/hydromet/station-product-pairs.csv
+
 # Derived counting cache for the observation store: machine-specific mtimes, and
 # rebuilt for free whenever it is missing.
 PUBLISHED/data/atlas/observations/.summary-cache.json
