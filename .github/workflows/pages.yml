@@ -25,7 +25,7 @@ jobs:
         id: pages
       - run: npm run build:launch
         env:
-          SITE_BASE: /uzgeodata/
+          SITE_BASE: /
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
