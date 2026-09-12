@@ -33,6 +33,9 @@ from PIPELINES.extract_regional_snow import (
 from PIPELINES.stage_pilot_observations import BASIN_LEVEL, STORE
 
 CHECKPOINTS = ROOT / "WORKSPACE/atlas_runs/regional_means"
+# Below this a refused span is reported rather than split further: the refusal has
+# stopped being about how many basins the request carries.
+SMALLEST_SPAN = 8
 
 # Each column: (local name, upstream name, upstream rule, unit).
 # "mean" is area-weighted over the upstream area; "total" sums a per-area density
@@ -345,6 +348,67 @@ class Total:
         return dict(carried)
 
 
+def once(work, label, ledger):
+    """A single try, so a refusal that will not change on repetition is answered now."""
+    try:
+        return work(), None
+    except Exception as error:
+        message = f"{type(error).__name__}: {str(error)[:300]}"
+        ledger["retries"].append({"at": utc_now(), "target": label,
+                                  "attempt": 1, "error": message})
+        return None, message
+
+
+def oversized(message):
+    """Earth Engine refusing the request itself, rather than failing to serve it.
+
+    The basin outlines travel inside the request, and a level-12 basin in the
+    glaciated headwaters carries far more coordinates than one on the plain. A batch
+    of a hundred is therefore cheap in one place and over the limit in another, and
+    waiting will not make it smaller.
+    """
+    return "too large" in message.lower()
+
+
+def extract_span(spec, features, transform, source, index, ledger, low=0, high=None):
+    """Rows for one batch, halving the span Earth Engine refuses to accept.
+
+    Splitting only what was refused keeps the batches that already work at their
+    current size: a run that lowered the batch size everywhere would pay the extra
+    round trips over the whole region to fix the few places that need it.
+    """
+    high = len(features) if high is None else high
+    whole = low == 0 and high == len(features)
+    label = f"batch-{index:04d}" if whole else f"batch-{index:04d}-{low:03d}-{high:03d}"
+    cache = CHECKPOINTS / source / f"{label}.json"
+    if cache.exists():
+        return json.loads(cache.read_text(encoding="utf-8")), True
+
+    span = features[low:high]
+    rows, error = once(lambda: batch_rows(spec, span, transform), label, ledger)
+    if rows is None and oversized(error) and len(span) > SMALLEST_SPAN:
+        middle = low + len(span) // 2
+        ledger["splits"].append({"at": utc_now(), "target": label, "at_index": middle,
+                                 "error": error})
+        left, _ = extract_span(spec, features, transform, source, index, ledger, low, middle)
+        right, _ = extract_span(spec, features, transform, source, index, ledger, middle, high)
+        merged = {**left, **right}
+        if len(merged) == len(span):
+            # Cached under the whole span's name as well, so the next run does not pay
+            # the refusal again to discover a split it has already made. A span that
+            # lost a part stays uncached, because it is not the batch it claims to be.
+            write_json(cache, merged)
+        return merged, False
+    if rows is None:
+        # Either transient, in which case waiting is the right answer, or irreducible,
+        # in which case the failure belongs in the ledger rather than in a retry loop.
+        rows, error = with_retries(lambda: batch_rows(spec, span, transform), label, ledger)
+        if error:
+            return {}, False
+    write_json(cache, rows)
+    return rows, False
+
+
 def run(sources, batch_size=250, store=STORE, project=PROJECT):
     import ee
     ee.Initialize(project=project)
@@ -360,7 +424,7 @@ def run(sources, batch_size=250, store=STORE, project=PROJECT):
         started, at = time.perf_counter(), utc_now()
         ledger = {"run_id": identifier, "started_at": at, "source": source,
                   "asset": spec["asset"], "geometry_version": version,
-                  "basins": len(frame), "retries": [], "failures": []}
+                  "basins": len(frame), "retries": [], "failures": [], "splits": []}
 
         # Painted sources are filtered to each batch's extent, so their batches have to
         # be geographically compact -- and smaller, since the polygons come with them.
@@ -368,18 +432,11 @@ def run(sources, batch_size=250, store=STORE, project=PROJECT):
         ordered = spatially_ordered(frame) if spec.get("spatial_batches") else frame
         local, plan = {}, list(batches(ordered, size))
         for index, features in plan:
-            cache = CHECKPOINTS / source / f"batch-{index:04d}.json"
-            if cache.exists():
-                local.update(json.loads(cache.read_text(encoding="utf-8")))
-                continue
-            rows, error = with_retries(lambda f=features: batch_rows(spec, f, transform),
-                                       f"batch-{index}", ledger)
-            if error:
-                continue
-            write_json(cache, rows)
+            rows, cached = extract_span(spec, features, transform, source, index, ledger)
             local.update(rows)
-            print(f"{source} batch {index + 1}/{len(plan)}: {len(local):,} basins "
-                  f"({time.perf_counter() - started:.0f}s)", flush=True)
+            if not cached:
+                print(f"{source} batch {index + 1}/{len(plan)}: {len(local):,} basins "
+                      f"({time.perf_counter() - started:.0f}s)", flush=True)
 
         averaged = walk(local, below, areas, Weighted)
         totalled = walk(local, below, areas, Total)
@@ -414,7 +471,10 @@ def run(sources, batch_size=250, store=STORE, project=PROJECT):
                             missing_reason=None if value is not None else "no_source_value_in_basin",
                             source_release_id=f"{source}@{spec['asset']}", run_id=identifier,
                             retrieved_at=at, recorded_at=at, **period))
-        added, _ = observations.append_partitioned(store, built)
+        # A re-run that completes a partial one changes every upstream total below
+        # the basins it adds, and those totals are already published.
+        added, _ = observations.append_partitioned(
+            store, observations.as_revisions(store, built))
 
         ledger.update({"finished_at": utc_now(), "wall_seconds": time.perf_counter() - started,
                        "basins_extracted": len(local), "rows": len(built), "new_rows": added,

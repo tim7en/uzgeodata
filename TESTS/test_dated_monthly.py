@@ -34,7 +34,8 @@ def test_every_declared_band_carries_its_own_attribute_unit_and_scale():
             assert definition["attribute"].startswith("uzgeodata.dated.v1.")
             assert definition["attribute"] not in seen, "two bands claim one attribute"
             seen[definition["attribute"]] = (source, band)
-    assert len(seen) == 5, "four TerraClimate variables and one ERA5 runoff"
+    assert len(seen) == 8, ("four TerraClimate variables, ERA5 runoff, and the two "
+                            "temperature adapters that stand against each other")
 
 
 def test_each_band_becomes_its_own_series_when_they_travel_together():
@@ -48,6 +49,34 @@ def test_each_band_becomes_its_own_series_when_they_travel_together():
     assert by_value[30.0]["attribute_id"] == "uzgeodata.dated.v1.soil_mm_s"
     assert len({row["attribute_id"] for row in built}) == 4, "no band inherits another's identity"
     assert len({row["observation_id"] for row in built}) == 4, "nor another's observation"
+
+
+def test_the_two_temperature_adapters_stay_separable_in_the_store():
+    """Both are extracted; neither is named the answer by taking the other's place."""
+    terra = dated_monthly.SOURCES["terraclimate_temperature"]["bands"]
+    era5 = dated_monthly.SOURCES["era5_temperature"]["bands"]
+
+    assert set(terra) == {"tmmx", "tmmn"}, "the extremes are kept apart, not averaged in the source"
+    assert [b["attribute"] for b in terra.values()] == ["uzgeodata.dated.v1.tmx_dc_s",
+                                                        "uzgeodata.dated.v1.tmn_dc_s"]
+    assert era5["temperature_2m"]["attribute"] == "uzgeodata.dated.v1.tmp_dc_s"
+    assert {b["unit"] for b in list(terra.values()) + list(era5.values())} == {"degrees Celsius"}
+    assert regional.release_id("terraclimate_temperature") != regional.release_id("era5_temperature")
+
+
+def test_a_temperature_in_kelvin_is_converted_by_an_offset_not_a_factor():
+    """Multiplying a kelvin reading by a factor would put freezing point anywhere but zero."""
+    era5 = dated_monthly.SOURCES["era5_temperature"]["bands"]["temperature_2m"]
+    assert era5["offset"] == -273.15 and era5["scale"] == 1.0
+
+    def converted(raw, band):
+        return raw * band["scale"] + band.get("offset", 0.0)
+
+    assert converted(273.15, era5) == pytest.approx(0.0), "freezing point is zero Celsius"
+    assert converted(300.0, era5) == pytest.approx(26.85)
+    # The sources that need no zero point are unaffected by the offset arriving.
+    assert converted(125, dated_monthly.SOURCES["terraclimate"]["bands"]["aet"]) == pytest.approx(12.5)
+    assert converted(-45, dated_monthly.SOURCES["terraclimate_temperature"]["bands"]["tmmn"]) == pytest.approx(-4.5)
 
 
 def test_soil_moisture_is_published_as_millimetres_not_as_a_percentage():

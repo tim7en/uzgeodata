@@ -258,6 +258,44 @@ def test_a_scoped_append_still_refuses_to_rewrite_a_published_row(tmp_path):
     assert added == 0
 
 
+def test_a_rerun_is_stamped_as_a_revision_rather_than_refused(tmp_path):
+    """Completing a partial run changes the upstream totals it had already published."""
+    observations.append_partitioned(tmp_path, [make(value=1.0), make(value=2.0, spatial_support="u")])
+
+    # The local value is unchanged by the basins the second run adds; the upstream
+    # one is not, because it now accumulates over the basins that were missing.
+    rerun = [make(value=1.0, run_id="run-2"), make(value=2.75, spatial_support="u", run_id="run-2")]
+    stamped = observations.as_revisions(tmp_path, rerun)
+    assert [row["revision"] for row in stamped] == [1, 2]
+    assert stamped[1]["supersedes"] == observations.row_key(make(value=2.0, spatial_support="u"))
+
+    added, _ = observations.append_partitioned(tmp_path, stamped)
+    assert added == 1, "the confirmed value is a no-op; only the corrected one is added"
+    current = observations.latest(observations.read_partitions(tmp_path))
+    assert sorted(row["value"] for row in current) == [1.0, 2.75]
+    assert len(observations.read_partitions(tmp_path)) == 3, "the superseded value stays"
+
+
+def test_stamping_a_revision_leaves_an_unseen_observation_at_its_first(tmp_path):
+    observations.append_partitioned(tmp_path, [make(value=1.0)])
+    fresh = make(value=9.0, basin_id="4120380350", run_id="run-2")
+    stamped = observations.as_revisions(tmp_path, [fresh])
+    assert stamped[0]["revision"] == 1 and stamped[0]["supersedes"] is None
+    assert observations.append_partitioned(tmp_path, stamped)[0] == 1
+
+
+def test_a_third_run_supersedes_the_revision_standing_not_the_first(tmp_path):
+    observations.append_partitioned(tmp_path, [make(value=1.0)])
+    second = observations.as_revisions(tmp_path, [make(value=2.0, run_id="run-2")])
+    observations.append_partitioned(tmp_path, second)
+    third = observations.as_revisions(tmp_path, [make(value=3.0, run_id="run-3")])
+
+    assert third[0]["revision"] == 3
+    assert third[0]["supersedes"] == observations.row_key(second[0])
+    observations.append_partitioned(tmp_path, third)
+    assert [row["value"] for row in observations.latest(observations.read_partitions(tmp_path))] == [3.0]
+
+
 def test_the_whole_store_is_verified_without_being_held_in_memory(tmp_path):
     observations.append_partitioned(tmp_path, [dated(2003, 1, "4120380180"),
                                                dated(2004, 1, "4120380180")])

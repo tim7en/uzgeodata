@@ -256,6 +256,76 @@ def append_partitioned(directory, rows):
     return added, touched
 
 
+def as_revisions(directory, rows):
+    """Stamp incoming records against the revisions the store already holds.
+
+    `append` is deliberately strict: a number that disagrees with a published one is
+    a correction, and a correction is a new revision rather than a rewrite. A re-run
+    that legitimately improves a value therefore cannot simply be appended again --
+    a batch that failed the first time changes every upstream total below it, and
+    those totals are already in the store.
+
+    Only the store knows what revision an observation currently stands at, so the
+    stamping belongs here rather than in each pipeline that might re-run. Records the
+    store has never seen keep revision 1. A record whose content matches the current
+    revision is returned at that revision, so re-staging identical evidence stays the
+    no-op `append` already makes of it. Anything else supersedes what it disagrees
+    with, and the earlier value stays in the store.
+    """
+    directory = Path(directory)
+    wanted = {record["observation_id"] for record in rows}
+    current = {}
+    for name in {partition(record) for record in rows}:
+        for path in sorted((directory / name).glob("**/part.csv")):
+            for held in _iter_file(path):
+                if held["observation_id"] not in wanted:
+                    continue
+                standing = current.get(held["observation_id"])
+                if standing is None or held["revision"] > standing["revision"]:
+                    current[held["observation_id"]] = held
+
+    stamped = []
+    for record in rows:
+        standing = current.get(record["observation_id"])
+        if standing is None:
+            stamped.append(record)
+            continue
+        matched = {**record, "revision": standing["revision"],
+                   "supersedes": standing["supersedes"]}
+        if _content(matched) == _content(standing):
+            stamped.append(matched)
+        else:
+            stamped.append(validate({**record, "revision": standing["revision"] + 1,
+                                     "supersedes": row_key(standing)}))
+    return stamped
+
+
+def run_ranking(directory):
+    """How the runs in a store rank when two current values must be told apart."""
+    path = Path(directory) / "run.csv"
+    if not path.exists():
+        return {}
+    with path.open(encoding="utf-8", newline="") as stream:
+        return {row["run_id"]: (row.get("status") == "complete", row.get("started_at") or "")
+                for row in csv.DictReader(stream)}
+
+
+def outranks(candidate, held, ranking):
+    """Which of two current rows a publication should take.
+
+    The store does not choose: a re-run under a corrected method carries a new recipe
+    version, so it stands beside the earlier value as a different measurement rather
+    than superseding it, and both are current. Anything that has to publish one number
+    needs a rule, and this is the one the store can defend -- a run that finished
+    outranks one that did not, and among those, the later run. Taking whichever row
+    sorted last would publish the abandoned run's value for the basins it reached and
+    the finished run's for the rest, which is neither measurement.
+    """
+    if held is None:
+        return True
+    return ranking.get(candidate["run_id"], (False, "")) > ranking.get(held["run_id"], (False, ""))
+
+
 def verify_partitions(directory):
     """Whole-store consistency, one partition at a time."""
     seen, problems = {}, set()
@@ -426,15 +496,29 @@ def _replace(temporary, path, attempts=5):
 
 def read_partitions(directory):
     """Every partition under a directory. Half-written temporaries are not partitions."""
-    rows = []
+    return list(iter_partitions(directory))
+
+
+def iter_partitions(directory):
+    """The same partitions, a record at a time.
+
+    `read_partitions` holds a whole partition in memory, which a climatology of a few
+    hundred thousand rows can afford and a dated series of millions cannot. A reader
+    that accumulates only a summary should stream rather than load.
+    """
     for path in sorted(Path(directory).glob("**/part.csv")):
-        rows.extend(_read_file(path))
-    return rows
+        yield from _iter_file(path)
 
 
 def _read_file(path):
+    return list(_iter_file(path))
+
+
+def _iter_file(path):
+    """One partition file, a record at a time, for readers that need only a few."""
     with Path(path).open(encoding="utf-8", newline="") as stream:
-        return [_decode(raw) for raw in csv.DictReader(stream)]
+        for raw in csv.DictReader(stream):
+            yield _decode(raw)
 
 
 def _decode(raw):

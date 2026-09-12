@@ -52,6 +52,41 @@ SOURCES = {
         "climatology": ("1991-01-01", "2021-01-01"),
         "note": "Metres of monthly runoff, multiplied by 1000 to give millimetres.",
     },
+    # Two temperature adapters, deliberately. The HydroATLAS attribute is a monthly
+    # mean air temperature, and the two open sources reach it by different routes:
+    # one is downscaled to the terrain but averages the day's two extremes, the other
+    # averages every hour but at a resolution that cannot see a headwater basin. Which
+    # is the better substitute here is an empirical question about this region's
+    # topography, so both are extracted and published side by side and neither is
+    # named the answer in advance.
+    "terraclimate_temperature": {
+        "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+        "bands": {
+            "tmmx": {"scale": 0.1, "unit": "degrees Celsius",
+                     "attribute": "uzgeodata.dated.v1.tmx_dc_s",
+                     "label": "monthly maximum temperature"},
+            "tmmn": {"scale": 0.1, "unit": "degrees Celsius",
+                     "attribute": "uzgeodata.dated.v1.tmn_dc_s",
+                     "label": "monthly minimum temperature"},
+        },
+        "climatology": ("1991-01-01", "2021-01-01"),
+        "note": "TerraClimate publishes the monthly extremes, not a mean, at about four "
+                "kilometres. The daily range is kept as two dated series and any mean formed "
+                "from them is a midpoint of extremes, which is not the same measurement as a "
+                "mean of hourly values.",
+    },
+    "era5_temperature": {
+        "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "bands": {
+            "temperature_2m": {"scale": 1.0, "offset": -273.15, "unit": "degrees Celsius",
+                               "attribute": "uzgeodata.dated.v1.tmp_dc_s",
+                               "label": "mean 2 m air temperature"},
+        },
+        "climatology": ("1991-01-01", "2021-01-01"),
+        "note": "A true monthly mean of hourly 2 m air temperature, converted from kelvin. At "
+                "about eleven kilometres a level-12 headwater basin may hold a single cell, so "
+                "the lapse rate across it is represented by whatever that cell carries.",
+    },
 }
 
 
@@ -81,11 +116,14 @@ def monthly_stack(source, year, transform, bands=None):
     stack = []
     for band in (bands or spec["bands"]):
         scale = spec["bands"][band]["scale"]
+        # An offset is applied after the scale, because a unit conversion with a zero
+        # point -- kelvin to Celsius -- is not a multiplication.
+        offset = spec["bands"][band].get("offset", 0.0)
         projection = collection.first().select(band).projection()
         for month in MONTHS:
             start = ee.Date.fromYMD(year, month, 1)
             image = (collection.select(band).filterDate(start, start.advance(1, "month"))
-                     .mean().multiply(scale).rename(f"{band}_{month:02d}")
+                     .mean().multiply(scale).add(offset).rename(f"{band}_{month:02d}")
                      .setDefaultProjection(projection))
             stack.append(image.reduceResolution(ee.Reducer.mean(), maxPixels=1024)
                          .reproject(crs=CRS, crsTransform=transform))

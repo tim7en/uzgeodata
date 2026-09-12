@@ -63,20 +63,33 @@ def originals(columns):
 
 
 def substitutes():
-    """Regional substitute values and their provenance, from the store."""
-    values, meta = collections.defaultdict(dict), {}
+    """Regional substitute values and their provenance, from the store.
+
+    Two runs can both hold a current value for one basin and column -- a re-run under
+    a corrected method does not supersede the earlier value, it stands beside it --
+    and the atlas publishes one number, so the store's ranking decides which.
+    """
+    ranking = observations.run_ranking(STORE)
+    chosen = {}
     for kind in ("static", "source_epoch", "climatology"):
-        for row in observations.read_partitions(STORE / f"time_kind={kind}"):
+        for row in observations.latest(observations.read_partitions(STORE / f"time_kind={kind}")):
             if not row["geometry_version"].startswith("reg-"):
                 continue
-            column = row["attribute_id"].split(".")[-1]
-            values[row["basin_id"]][column] = (row["value"], row["valid_count"], row["expected_count"])
-            meta.setdefault(column, {
-                "unit": row["unit"], "time_kind": row["time_kind"],
-                "period": [row["valid_start"], row["valid_end"]],
-                "statistic": row["temporal_statistic"],
-                "source_release": row["source_release_id"], "method": row["recipe_version"],
-            })
+            key = (row["basin_id"], row["attribute_id"].split(".")[-1])
+            if observations.outranks(row, chosen.get(key), ranking):
+                chosen[key] = row
+
+    values, meta = collections.defaultdict(dict), {}
+    for (basin, column), row in chosen.items():
+        values[basin][column] = (row["value"], row["valid_count"], row["expected_count"])
+        # Provenance describes the value actually published, so it is taken from the
+        # row that won rather than from the first one seen.
+        meta.setdefault(column, {
+            "unit": row["unit"], "time_kind": row["time_kind"],
+            "period": [row["valid_start"], row["valid_end"]],
+            "statistic": row["temporal_statistic"],
+            "source_release": row["source_release_id"], "method": row["recipe_version"],
+        })
     return values, meta
 
 

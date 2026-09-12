@@ -1,6 +1,6 @@
 """Turn the dated regional observations into HydroATLAS-shaped substitute values.
 
-python PIPELINES/derive_regional_substitutes.py [--years 2003-2022]
+python PIPELINES/derive_regional_substitutes.py [--years 2003-2022] [--only tmp_dc]
 
 The regional extraction produced monthly observations; this computes the normals,
 annual figures and indices that HydroATLAS defines, for every basin in the domain.
@@ -30,10 +30,32 @@ BASE = "hydrosheds.basinatlas.v1."
 DEFAULT_YEARS = (2003, 2022)
 SUMMARY = STORE / "regional-substitutes-summary.json"
 
+
+def summary_path(only):
+    """A filtered derivation writes its own record rather than overwriting the full one."""
+    return SUMMARY if not only else STORE / f"regional-substitutes-{'-'.join(only)}-summary.json"
+
+
+def wanted(column, only):
+    """Whether a derived column is in scope for this run.
+
+    The recipe version is the hash of the module that derives every family, so adding
+    one family changes it for all of them, and a full re-run would republish several
+    hundred thousand unchanged values under a new version to say nothing new. Deriving
+    only what is new leaves the rest under the version that actually produced them.
+    """
+    return not only or any(column.startswith(prefix) for prefix in only)
+
 # Which source release stands behind each derived column family.
 ORIGIN = {"aet": "terraclimate", "pet": "terraclimate", "swc": "terraclimate",
           "pre": "terraclimate", "cmi": "terraclimate", "ari": "terraclimate",
           "snw": "snow", "run": "era5_runoff"}
+
+# And which dated variable's release id that is, in the store's own terms. An index
+# carries the release of the variable it is computed from: a moisture index is a
+# statement about precipitation and evapotranspiration, not a source of its own.
+RELEASE_OF = {"aet": "aet", "pet": "pet", "swc": "soil", "pre": "pre",
+              "cmi": "pre", "ari": "pre", "snw": "snw", "run": "run"}
 
 
 def units_by_family(batch):
@@ -72,7 +94,7 @@ def collect(store, years):
     return totals, geometry, runs
 
 
-def build(store=STORE, years=DEFAULT_YEARS):
+def build(store=STORE, years=DEFAULT_YEARS, only=None):
     batch, _ = latest_run()
     units = units_by_family(batch)
     span = list(range(years[0], years[1] + 1))
@@ -91,8 +113,20 @@ def build(store=STORE, years=DEFAULT_YEARS):
         grouped.setdefault(basin, {})[variable] = monthly
     for basin, basin_normals in grouped.items():
         basins.add(basin)
-        for column, (value, valid, expected) in derive.derive(basin_normals).items():
-            family = family_of(column)
+        emitted = [(column, cell, units.get(family_of(column), "unknown"),
+                    source_ids.get(RELEASE_OF.get(family_of(column), "aet"), "derived@unpinned"))
+                   for column, cell in derive.derive(basin_normals).items()]
+        # Both temperature sources produce the same column names. They stay apart in
+        # the store because the release a value came from is part of its identity, so
+        # neither has to be renamed and neither displaces the other.
+        for origin, columns_of in derive.temperature(basin_normals).items():
+            release = source_ids.get(derive.TEMPERATURE[origin][0], "derived@unpinned")
+            emitted += [(column, cell, "degrees Celsius", release)
+                        for column, cell in columns_of.items()]
+
+        for column, (value, valid, expected), unit, release in emitted:
+            if not wanted(column, only):
+                continue
             columns.add(column)
             produced += value is not None
             empty += value is None
@@ -104,21 +138,19 @@ def build(store=STORE, years=DEFAULT_YEARS):
                 temporal_statistic="monthly_climatological_mean" if month
                                    else "annual_climatological_figure",
                 valid_start=f"{span[0]:04d}-01-01", valid_end=f"{span[-1] + 1:04d}-01-01",
-                month=month, value=value, unit=units.get(family, "unknown"),
+                month=month, value=value, unit=unit,
                 valid_count=valid, expected_count=expected,
                 coverage_fraction=valid / expected if expected else None,
                 quality_flag="derived_from_dated_observations",
                 missing_reason=None if value is not None else "incomplete_dated_input_series",
-                source_release_id=source_ids.get(
-                    {"aet": "aet", "pet": "pet", "swc": "soil", "pre": "pre",
-                     "cmi": "pre", "ari": "pre", "snw": "snw", "run": "run"}.get(family, "aet"),
-                    "derived@unpinned"),
+                source_release_id=release,
                 run_id=identifier, retrieved_at=at, recorded_at=at))
 
     added, touched = observations.append_partitioned(store, rows)
     summary = {
         "run_id": identifier, "recipe_version": recipe, "generated_at": at,
         "period": [f"{span[0]:04d}-01-01", f"{span[-1] + 1:04d}-01-01"],
+        "only": sorted(only) if only else None,
         "basins": len(basins), "columns": len(columns), "rows": len(rows), "new_rows": added,
         "values": produced, "without_value": empty,
         "derived_from_runs": sorted(runs), "partitions_touched": [str(p) for p in touched],
@@ -127,7 +159,7 @@ def build(store=STORE, years=DEFAULT_YEARS):
                    "original HydroATLAS values and never in place of them. Agreement with a "
                    "published attribute would not make one a reproduction of the other.",
     }
-    write_json(SUMMARY, summary)
+    write_json(summary_path(only), summary)
     observations.merge_table(store / "run.csv", [{
         "run_id": identifier, "started_at": at, "finished_at": utc_now(),
         "wall_seconds": summary["wall_seconds"], "status": "complete",
@@ -140,8 +172,11 @@ def build(store=STORE, years=DEFAULT_YEARS):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--years", default=f"{DEFAULT_YEARS[0]}-{DEFAULT_YEARS[1]}")
-    first, _, last = parser.parse_args().years.partition("-")
-    summary = build(years=(int(first), int(last or first)))
+    parser.add_argument("--only", nargs="*", metavar="PREFIX",
+                        help="derive only the columns beginning with these prefixes")
+    arguments = parser.parse_args()
+    first, _, last = arguments.years.partition("-")
+    summary = build(years=(int(first), int(last or first)), only=arguments.only)
     print(json.dumps({k: v for k, v in summary.items() if k != "partitions_touched"},
                      indent=2, ensure_ascii=False))
 

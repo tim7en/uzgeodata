@@ -24,6 +24,18 @@ INPUTS = {
     "uzgeodata.dated.v1.pre_mm_s": "pre",
     "uzgeodata.dated.v1.run_mm_s": "run",
     "uzgeodata.dated.v1.snw_pc_s": "snw",
+    "uzgeodata.dated.v1.tmp_dc_s": "tmp",
+    "uzgeodata.dated.v1.tmx_dc_s": "tmx",
+    "uzgeodata.dated.v1.tmn_dc_s": "tmn",
+}
+
+# HydroATLAS carries one temperature family and two open sources reach it by
+# different routes, so each is derived under its own release rather than one being
+# chosen here. ERA5-Land publishes the monthly mean directly; TerraClimate publishes
+# the two extremes, whose midpoint is a different measurement and is labelled as one.
+TEMPERATURE = {
+    "era5_temperature": ("tmp",),
+    "terraclimate_temperature": ("tmx", "tmn"),
 }
 
 # Which HydroATLAS column family each variable feeds, and how the annual figure is
@@ -66,6 +78,40 @@ def normals(totals):
         out.setdefault((basin, variable), {})[month] = {
             "value": value, "valid": entry["valid"], "expected": entry["expected"]}
     return out
+
+
+def temperature(basin_normals):
+    """The tmp_dc_* columns for one basin, once for each source that can form a mean.
+
+    The annual figure is the mean of the twelve monthly normals, and the extremes are
+    the coldest and the warmest of those months. They are not the coldest night or the
+    warmest afternoon: the atlas attribute is a monthly figure, and an extreme taken
+    over a shorter period would be a larger number answering a different question.
+    """
+    results = {}
+    for origin, variables in TEMPERATURE.items():
+        if not all(basin_normals.get(variable) for variable in variables):
+            continue
+        columns, monthly = {}, []
+        for month in MONTHS:
+            entries = [basin_normals[variable].get(month, {}) for variable in variables]
+            values = [entry.get("value") for entry in entries]
+            # A midpoint needs both extremes; one of them alone is not half a mean.
+            value = None if any(v is None for v in values) else sum(values) / len(values)
+            monthly.append(value)
+            columns[f"tmp_dc_s{month:02d}"] = (
+                value, min((e.get("valid", 0) for e in entries), default=0),
+                max((e.get("expected", 0) for e in entries), default=0))
+
+        supports = [_support(basin_normals[variable]) for variable in variables]
+        low = min(support[0] for support in supports)
+        expected = max(support[1] for support in supports)
+        whole = all(value is not None for value in monthly)
+        columns["tmp_dc_syr"] = (sum(monthly) / len(MONTHS) if whole else None, low, expected)
+        columns["tmp_dc_smn"] = (min(monthly) if whole else None, low, expected)
+        columns["tmp_dc_smx"] = (max(monthly) if whole else None, low, expected)
+        results[origin] = columns
+    return results
 
 
 def moisture_index(precipitation, potential):
