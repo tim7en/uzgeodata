@@ -34,7 +34,7 @@ def make(**overrides):
 def require_local_store():
     if os.environ.get('UZGEODATA_SKIP_LOCAL_STORE') == '1':
         pytest.skip('local observation-store audit is running separately')
-    if not next(STORE.glob('**/part.csv'), None):
+    if not observations.partition_files(STORE):
         pytest.skip('raw observation partitions are not distributed in a Git checkout')
 
 
@@ -224,12 +224,12 @@ def test_a_partition_is_replaced_atomically_not_rewritten_in_place(tmp_path):
     reader must see the old partition or the new one, never half of either."""
     first = observations.append([], [make(value=1.0)])
     observations.write_partitions(tmp_path, first)
-    partition = tmp_path / "time_kind=climatology" / "part.csv"
-    original = partition.read_text(encoding="utf-8")
+    partition = tmp_path / "time_kind=climatology" / "part.parquet"
+    original = partition.read_bytes()
 
     second = observations.append(first, [make(value=2.0, basin_id="4120380350")])
     observations.write_partitions(tmp_path, second)
-    assert partition.read_text(encoding="utf-8") != original, "the partition was replaced"
+    assert partition.read_bytes() != original, "the partition was replaced"
     assert not list(tmp_path.rglob("*.tmp")), "no temporary is left behind"
 
     # A temporary that does survive a crash is not mistaken for data.
@@ -248,8 +248,8 @@ def dated(year, month, basin, value=50.0):
 def test_a_scoped_append_touches_only_the_partitions_it_writes(tmp_path):
     """A store holding a dated series is too large to read whole on every publish."""
     observations.append_partitioned(tmp_path, [make(value=1.0), dated(2003, 1, "4120380180")])
-    climatology = tmp_path / "time_kind=climatology" / "part.csv"
-    first_year = tmp_path / "time_kind=observation" / "year=2003" / "part.csv"
+    climatology = tmp_path / "time_kind=climatology" / "part.parquet"
+    first_year = tmp_path / "time_kind=observation" / "year=2003" / "part.parquet"
     assert climatology.is_file() and first_year.is_file()
     untouched = first_year.read_bytes()
 
@@ -364,7 +364,7 @@ def test_a_changed_partition_invalidates_its_own_cache_entry(tmp_path):
     assert observations.summarise(tmp_path)["rows"] == 1
 
     # Rewrite the partition behind the cache's back, as a crash or a manual edit would.
-    partition = tmp_path / "time_kind=observation" / "year=2003" / "part.csv"
+    partition = tmp_path / "time_kind=observation" / "year=2003" / "part.parquet"
     observations.write_partitions(tmp_path, [dated(2003, 1, "4120380180", value=50.0),
                                              dated(2003, 2, "4120380180", value=60.0)])
     assert partition.stat().st_size > 0
@@ -456,7 +456,8 @@ def test_the_climatology_it_was_derived_alongside_still_stands(staged):
 
 def test_a_dated_month_is_partitioned_by_its_year(ledgers, one_dated_year):
     for year in range(2003, 2023):
-        assert (STORE / "time_kind=observation" / f"year={year}" / "part.csv").is_file()
+        # Either format: the store is read through the contract, not through a suffix.
+        assert observations.partition_files(STORE / "time_kind=observation" / f"year={year}")
     assert {row["year"] for row in one_dated_year} == {2003}
     regional = sum(entry["stored_rows"] // len(range(2003, 2023)) for entry in ledgers.values())
     assert len(one_dated_year) == regional + 20 * 12, "one year of every source, plus the pilot"

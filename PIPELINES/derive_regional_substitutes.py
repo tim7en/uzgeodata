@@ -71,7 +71,7 @@ def family_of(column):
 def releases(store):
     """Map each source to the release id its dated rows already point at."""
     found = {}
-    for path in sorted((store / "time_kind=observation").glob("year=*/part.csv")):
+    for path in observations.partition_files(store / "time_kind=observation"):
         for row in observations.read_partitions(path.parent):
             variable = derive.INPUTS.get(row["attribute_id"])
             if variable:

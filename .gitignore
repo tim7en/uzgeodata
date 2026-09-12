@@ -25,13 +25,21 @@ GEODATA/BasinATLAS_Data_v10.gdb.zip
 GEODATA.zip
 earth_engine.zip
 
-# Bulk observation partitions. The store is derived data, regenerable from the run
-# checkpoints and the source catalogue, and it grows by roughly 0.75 GB per monthly
-# variable across the region: a single year partition passed GitHub's 100 MB file
-# limit as soon as a second source landed. Nothing in INTERFACE/ fetches it, so it
-# is not needed for the site to build or run. The small files beside it - the run
-# ledgers, manifests and the run/recipe/source_release/basin_geometry tables - stay
-# tracked, because those are the provenance record.
+# Bulk observation partitions. As Parquet the whole store is 442 MB and a partition
+# is about 20 MB, so the original reason for this line - a year partition passing
+# GitHub's 100 MB file limit - no longer holds. It stays excluded for a different
+# reason: Parquet is binary and does not delta-compress, so every re-extraction would
+# add another full copy to a history that is already 1.5 GB, permanently and with no
+# way to expire it. Git versions source; it is not an archive for derived data.
+#
+# That leaves the store on one disk, which is a real risk and not one this file can
+# fix: publish it as a release asset or to Zenodo, where it can be versioned and
+# cited rather than merely present. Nothing in INTERFACE/ fetches it and the launch
+# build excludes any time_kind= path, so the site neither needs nor ships it.
+#
+# The small files beside it - the run ledgers, manifests and the
+# run/recipe/source_release/basin_geometry tables - stay tracked: those are the
+# provenance record, and they are what makes the bulk regenerable.
 PUBLISHED/data/atlas/observations/time_kind=*/
 
 # Station-point product extractions. Derived: both are regenerated from Earth Engine

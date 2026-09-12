@@ -39,6 +39,13 @@ STORE = ROOT / "PUBLISHED/data/atlas/observations"
 OUT = ROOT / "PUBLISHED/data/atlas/history"
 PREFIX = "uzgeodata.dated."
 
+# Exactly the fields this pipeline touches. Reading the other sixteen costs time and
+# buys nothing, and naming them here means a field added to a read below without
+# being added here fails loudly rather than arriving silently empty.
+READS = ("observation_id", "revision", "supersedes", "basin_id", "geometry_version",
+         "attribute_id", "recipe_version", "month", "value", "temporal_statistic",
+         "source_release_id", "run_id")
+
 
 def labelled():
     """Every dated attribute the adapters publish, with what it is and its units."""
@@ -100,7 +107,18 @@ def write_compact(path, payload):
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, ensure_ascii=False, allow_nan=False,
                                     separators=(",", ":")), encoding="utf-8")
-    temporary.replace(path)
+    # On Windows the move fails outright while anything holds the destination open --
+    # an indexer or a scanner that noticed 7,445 files being rewritten is enough. The
+    # data is already safely in the temporary, so a lock is worth waiting out rather
+    # than losing a nine-minute publish to.
+    for attempt in range(5):
+        try:
+            temporary.replace(path)
+            return
+        except OSError:
+            if attempt == 4:
+                raise
+            time.sleep(0.2 * 2 ** attempt)
 
 
 def collect(store, years, known):
@@ -123,25 +141,28 @@ def collect(store, years, known):
         if not partition.exists():
             continue
         current, superseded = {}, set()
-        for path in sorted(partition.glob('**/part.csv')):
-            with path.open(encoding='utf-8', newline='') as stream:
-                for row in csv.DictReader(stream):
-                    if (row['run_id'] not in completed
-                            and year not in covered.get(row['source_release_id'], ())):
-                        continue
-                    if row['supersedes']:
-                        superseded.add(row['supersedes'])
-                    attribute = row['attribute_id']
-                    if attribute not in known or not row['geometry_version'].startswith('reg-') or not row['month']:
-                        continue
-                    # Keep only publication fields, bounded to one year.
-                    kept = {key: row[key] for key in ('observation_id', 'revision', 'basin_id',
-                        'attribute_id', 'month', 'value', 'run_id', 'source_release_id',
-                        'recipe_version', 'temporal_statistic', 'geometry_version')}
-                    kept['revision'] = int(kept['revision'])
-                    held = current.get(row['observation_id'])
-                    if held is None or kept['revision'] > held['revision']:
-                        current[row['observation_id']] = kept
+        # Read through the store's own reader rather than as text: a partition may be
+        # Parquet or CSV, and a record arrives decoded either way. Nothing below may
+        # test a value for truth -- a measured zero is a value, and a falsy check
+        # would publish it as a gap, which is the very reading this store exists to
+        # prevent.
+        for row in observations.iter_partitions(partition, columns=READS):
+            if (row['run_id'] not in completed
+                    and year not in covered.get(row['source_release_id'], ())):
+                continue
+            if row['supersedes']:
+                superseded.add(row['supersedes'])
+            attribute = row['attribute_id']
+            if (attribute not in known or row['month'] is None
+                    or not row['geometry_version'].startswith('reg-')):
+                continue
+            # Keep only publication fields, bounded to one year.
+            kept = {key: row[key] for key in ('observation_id', 'revision', 'basin_id',
+                'attribute_id', 'month', 'value', 'run_id', 'source_release_id',
+                'recipe_version', 'temporal_statistic', 'geometry_version')}
+            held = current.get(row['observation_id'])
+            if held is None or kept['revision'] > held['revision']:
+                current[row['observation_id']] = kept
         chosen = {}
         for row in current.values():
             if observations.row_key(row) in superseded:
@@ -160,7 +181,7 @@ def collect(store, years, known):
             if values is None:
                 values = series[key] = array("d", [math.nan]) * width
             position = slot[year] * 12 + int(row["month"]) - 1
-            values[position] = float(row['value']) if row['value'] else math.nan
+            values[position] = math.nan if row['value'] is None else float(row['value'])
             # What must not vary across a series is the measurement: the release it
             # came from, the method that derived it, the statistic it is, and the
             # geometry it was reduced on. Which run performed the work may vary and
