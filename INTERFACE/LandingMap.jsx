@@ -470,7 +470,9 @@ export default function LandingMap() {
         url={base.url} maxZoom={base.maxZoom}
         className={base.dim ? 'land-tiles-dim' : 'land-tiles-plain'}
         opacity={base.dim ? (theme === 'light' ? 0.78 : 0.5) : 1}/>}
-      {basins && <GeoJSON key={active.level} data={basins} smoothFactor={1.6}
+      {/* smoothFactor 0: Leaflet simplifies each polygon on its own, which pulls
+          neighbouring borders apart; the geometry is already simplified as a coverage. */}
+      {basins && <GeoJSON key={active.level} data={basins} smoothFactor={0}
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}

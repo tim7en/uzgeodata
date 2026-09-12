@@ -6,10 +6,10 @@
       "attributesBytes": 373057,
       "level": 7,
       "minZoom": 0,
-      "simplifyDegrees": 0.02,
+      "simplifyDegrees": 0.04,
       "units": 438,
       "url": "/data/hydroclimate/reference-basins-level07.geojson",
-      "sizeBytes": 564345,
+      "sizeBytes": 526811,
       "carriesAtlasAttributes": false
     },
     {
@@ -17,10 +17,10 @@
       "attributesBytes": 5541506,
       "level": 10,
       "minZoom": 7,
-      "simplifyDegrees": 0.01,
+      "simplifyDegrees": 0.02,
       "units": 6787,
       "url": "/data/hydroclimate/reference-basins-level10.geojson",
-      "sizeBytes": 5493123,
+      "sizeBytes": 5532964,
       "carriesAtlasAttributes": false
     },
     {
@@ -28,10 +28,10 @@
       "attributesBytes": 6075406,
       "level": 12,
       "minZoom": 9,
-      "simplifyDegrees": 0.006,
+      "simplifyDegrees": 0.012,
       "units": 7445,
       "url": "/data/hydroclimate/reference-basins-level12.geojson",
-      "sizeBytes": 7640672,
+      "sizeBytes": 7633369,
       "carriesAtlasAttributes": true
     }
   ],
@@ -44,7 +44,8 @@
     "attributeCount": 281,
     "catalogSource": "BasinATLAS_Data_v10.gdb/BasinATLAS_Catalog_v10.pdf",
     "geometry": "PUBLISHED/data/hydroclimate/basins-level12.geojson",
-    "localGeodatabase": "GEODATA/BasinATLAS_Data_v10.gdb reads levels 1-9 only; levels 10, 11 and 12 are empty in this copy, so attributes come from Earth Engine"
+    "localGeodatabase": "GEODATA/BasinATLAS_Data_v10.gdb reads levels 1-9 only; levels 10, 11 and 12 are empty in this copy, so attributes come from Earth Engine",
+    "displayGeometry": "GEODATA/transboundary_basins_v2/hydroatlas-levelNN-full-basins.geojson"
   },
   "counts": {
     "units": 7445,

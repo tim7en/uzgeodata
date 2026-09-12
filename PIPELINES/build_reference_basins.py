@@ -32,11 +32,16 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+from shapely import coverage_simplify
 from shapely.geometry import mapping, shape
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLISHED_DIR = ROOT / "PUBLISHED/data/hydroclimate"
 FRAME = PUBLISHED_DIR / "basins-level12.geojson"
+# Display geometry is simplified from the exact HydroATLAS polygons. The published
+# basins-levelNN files were already simplified one polygon at a time, so their
+# neighbours no longer share borders and a coverage built from them keeps the slivers.
+EXACT_DIR = ROOT / "GEODATA/transboundary_basins_v2"
 ROLES = PUBLISHED_DIR / "basin-hydrological-roles.csv"
 DICTIONARY = ROOT / "PUBLISHED/data/hydrography/attribute-dictionary.json"
 CACHE_DIR = ROOT / "WORKSPACE/reference_basin_cache"
@@ -49,10 +54,15 @@ ASSET = "WWF/HydroATLAS/v1/Basins/level{level:02d}"
 # Zoom ladder. A whole-region view does not need 7,445 polygons, and level 7 at
 # 2 km simplification is a twentieth of the weight; the finer levels load only
 # once the reader has zoomed into them.
+# Each level is simplified as one coverage, so a border two basins share is
+# simplified once and stays shared. Simplifying polygons one at a time moves each
+# side of a border independently and opens slivers between neighbours. Coverage
+# tolerances are area-based (Visvalingam-Whyatt), so they read larger than the
+# distance tolerances they replaced for a similar vertex count.
 DISPLAY_LEVELS = [
-    {"level": 7, "minZoom": 0, "simplify": 0.02},
-    {"level": 10, "minZoom": 7, "simplify": 0.01},
-    {"level": 12, "minZoom": 9, "simplify": 0.006},
+    {"level": 7, "minZoom": 0, "simplify": 0.04},
+    {"level": 10, "minZoom": 7, "simplify": 0.02},
+    {"level": 12, "minZoom": 9, "simplify": 0.012},
 ]
 PROJECT = "ee-sabitovty"
 LEVEL = 12
@@ -88,6 +98,10 @@ def read_roles(level: int = LEVEL) -> dict[int, dict]:
             for row in csv.DictReader(handle)
             if int(row["basin_level"]) == level
         }
+
+
+def exact_source(level: int) -> Path:
+    return EXACT_DIR / f"hydroatlas-level{level:02d}-full-basins.geojson"
 
 
 def attribute_cache(level: int) -> Path:
@@ -230,15 +244,14 @@ def main() -> None:
     systems = defaultdict(int)
     for entry in DISPLAY_LEVELS:
         level = entry["level"]
-        source = PUBLISHED_DIR / f"basins-level{level:02d}.geojson"
-        units = json.loads(source.read_text(encoding="utf-8"))["features"]
+        units = json.loads(exact_source(level).read_text(encoding="utf-8"))["features"]
         level_roles = read_roles(level)
+        simplified = coverage_simplify([shape(feature["geometry"]) for feature in units], entry["simplify"])
         features = []
-        for feature in units:
+        for feature, geometry in zip(units, simplified):
             props = feature["properties"]
             hybas_id = int(props["HYBAS_ID"])
             role = level_roles.get(hybas_id, {})
-            geometry = shape(feature["geometry"])
             features.append({
                 "type": "Feature",
                 "properties": {
@@ -254,7 +267,7 @@ def main() -> None:
                     "flow_position": role.get("flow_position", ""),
                     "channel_class": role.get("channel_class", ""),
                 },
-                "geometry": mapping(geometry.simplify(entry["simplify"], preserve_topology=True)),
+                "geometry": mapping(geometry),
             })
         features.sort(key=lambda item: item["properties"]["hybas_id"])
         path = PUBLISHED_DIR / f"reference-basins-level{level:02d}.geojson"
@@ -322,6 +335,7 @@ def main() -> None:
             "attributeCount": len(order),
             "catalogSource": dictionary.get("catalogSource"),
             "geometry": str(FRAME.relative_to(ROOT)).replace("\\", "/"),
+            "displayGeometry": str(exact_source(LEVEL).relative_to(ROOT)).replace("\\", "/").replace("level12", "levelNN"),
             "localGeodatabase": ("GEODATA/BasinATLAS_Data_v10.gdb reads levels 1-9 only; levels 10, "
                                  "11 and 12 are empty in this copy, so attributes come from Earth Engine"),
         },
