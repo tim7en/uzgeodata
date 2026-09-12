@@ -13,15 +13,16 @@ const here = path => fileURLToPath(new URL(path, import.meta.url));
 // reads it back as an inventory.
 // JSX is left to Vite's default esbuild transform, matching how the portal built before.
 export default defineConfig({
+  base: process.env.SITE_BASE || '/',
   root: here('./INTERFACE'),
-  publicDir: here('./PUBLISHED'),
+  publicDir: process.env.LAUNCH_BUILD ? false : here('./PUBLISHED'),
   build: {
     outDir: here('./dist'),
     emptyOutDir: true,
     rollupOptions: {
       input: {
         main: here('./INTERFACE/index.html'),
-        portal: here('./INTERFACE/portal.html'),
+        ...(process.env.LAUNCH_BUILD ? {} : { portal: here('./INTERFACE/portal.html') }),
         metadata: here('./INTERFACE/metadata.html'),
         atlas: here('./INTERFACE/atlas.html'),
         roadmap: here('./INTERFACE/roadmap.html'),
@@ -35,6 +36,9 @@ export default defineConfig({
         relationships: here('./INTERFACE/relationships.html'),
         catalogue: here('./INTERFACE/catalogue.html'),
         review: here('./INTERFACE/review.html'),
+        about: here('./INTERFACE/about.html'),
+        guide: here('./INTERFACE/guide.html'),
+        projects: here('./INTERFACE/projects.html'),
       },
     },
   },

@@ -36,7 +36,8 @@ export function yearRows(history, name) {
       mean: observed.length ? observed.reduce((a, b) => a + b, 0) / observed.length : null,
       min: observed.length ? Math.min(...observed) : null,
       max: observed.length ? Math.max(...observed) : null,
-      total: observed.length === 12 ? observed.reduce((a, b) => a + b, 0) : null,
+      total: observed.length === 12 && series.unit === 'millimetres per month'
+        ? observed.reduce((a, b) => a + b, 0) : null,
       whole: observed.length === 12,
     });
   }

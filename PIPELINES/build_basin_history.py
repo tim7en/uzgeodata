@@ -20,6 +20,7 @@ several gigabytes of Python objects.
 """
 from __future__ import annotations
 import argparse
+import csv
 from array import array
 import json
 import math
@@ -32,16 +33,21 @@ sys.path.insert(0, str(ROOT))
 from ATLAS_MODULES.core import observations
 from ATLAS_MODULES.core.runtime import utc_now, write_json
 from ATLAS_MODULES.hydrosheds.functions import dated_monthly
+from ATLAS_MODULES.hydrosheds.functions import dated_snow
 
 STORE = ROOT / "PUBLISHED/data/atlas/observations"
 OUT = ROOT / "PUBLISHED/data/atlas/history"
-INDEX = OUT / "index.json"
 PREFIX = "uzgeodata.dated."
 
 
 def labelled():
     """Every dated attribute the adapters publish, with what it is and its units."""
-    found = {}
+    found = {PREFIX + 'v1.snw_pc_s': {
+        'label': 'snow cover', 'unit': 'percent', 'source': 'snow',
+        'asset': dated_snow.ASSET, 'trend_use': 'withdrawn',
+        'limitation': 'Not for trend analysis: regional missing months increase across '
+                      '2003–2022 and the cause has not been established.',
+    }}
     for source, spec in dated_monthly.SOURCES.items():
         for band in spec["bands"].values():
             found[band["attribute"]] = {
@@ -61,11 +67,41 @@ def collect(store, years, known):
     width = len(span) * 12
     slot = {year: index for index, year in enumerate(span)}
     series, releases = {}, {}
+    # Freeze eligibility before reading: an extraction finishing during publication
+    # must not introduce half a new variable into this snapshot.
+    ranking = observations.run_ranking(store)
+    completed = {run for run, rank in ranking.items() if rank[0]}
     for year in span:
         partition = store / "time_kind=observation" / f"year={year}"
         if not partition.exists():
             continue
-        for row in observations.iter_partitions(partition):
+        current, superseded = {}, set()
+        for path in sorted(partition.glob('**/part.csv')):
+            with path.open(encoding='utf-8', newline='') as stream:
+                for row in csv.DictReader(stream):
+                    if row['run_id'] not in completed:
+                        continue
+                    if row['supersedes']:
+                        superseded.add(row['supersedes'])
+                    attribute = row['attribute_id']
+                    if attribute not in known or not row['geometry_version'].startswith('reg-') or not row['month']:
+                        continue
+                    # Keep only publication fields, bounded to one year.
+                    kept = {key: row[key] for key in ('observation_id', 'revision', 'basin_id',
+                        'attribute_id', 'month', 'value', 'run_id', 'source_release_id',
+                        'recipe_version', 'temporal_statistic', 'geometry_version')}
+                    kept['revision'] = int(kept['revision'])
+                    held = current.get(row['observation_id'])
+                    if held is None or kept['revision'] > held['revision']:
+                        current[row['observation_id']] = kept
+        chosen = {}
+        for row in current.values():
+            if observations.row_key(row) in superseded:
+                continue
+            key = (row['basin_id'], row['attribute_id'], row['month'])
+            if observations.outranks(row, chosen.get(key), ranking):
+                chosen[key] = row
+        for row in chosen.values():
             attribute = row["attribute_id"]
             if not attribute.startswith(PREFIX) or attribute not in known:
                 continue
@@ -75,13 +111,17 @@ def collect(store, years, known):
             values = series.get(key)
             if values is None:
                 values = series[key] = array("d", [math.nan]) * width
-            position = slot[row["year"]] * 12 + row["month"] - 1
-            if row["value"] is not None:
-                values[position] = row["value"]
-            releases.setdefault(attribute, {
+            position = slot[year] * 12 + int(row["month"]) - 1
+            values[position] = float(row['value']) if row['value'] else math.nan
+            metadata = {
                 "source_release": row["source_release_id"], "method": row["recipe_version"],
                 "statistic": row["temporal_statistic"],
-            })
+                "run_id": row['run_id'], "geometry_version": row['geometry_version'],
+            }
+            if attribute in releases and releases[attribute] != metadata:
+                raise ValueError(f'Mixed provenance in {attribute}; publish separate series')
+            releases[attribute] = metadata
+        print(f'Collected completed runs for {year}', flush=True)
     return series, releases
 
 
@@ -125,7 +165,7 @@ def build(store=STORE, out=OUT, years=range(2003, 2023)):
     index = {}
     for basin in basins:
         payload = basin_payload(basin, attributes, series, known, releases, span)
-        (out / f"{basin}.json").write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+        write_json(out / f"{basin}.json", payload)
         index[basin] = {name: entry["observed_months"] for name, entry in payload["series"].items()}
 
     summary = {
@@ -135,10 +175,11 @@ def build(store=STORE, out=OUT, years=range(2003, 2023)):
         "series": {attribute.split(".")[-1]: {**known[attribute], **releases.get(attribute, {})}
                    for attribute in attributes},
         "observed_months": index,
-        "reading": "One file per basin holds every monthly observation behind that basin's "
-                   "climatologies. The climatology is the average; this is what was averaged.",
+        "reading": "One file per basin holds monthly open-data estimates from completed runs. "
+                   "Their period may differ from the published climatologies. "
+                   "Snow is withdrawn from trend use pending investigation of missing months.",
     }
-    write_json(INDEX, summary)
+    write_json(out / 'index.json', summary)
     size = sum(path.stat().st_size for path in out.glob("*.json"))
     return {"basins": len(basins), "series": len(attributes),
             "months": len(span) * 12, "megabytes": round(size / 1e6, 1),

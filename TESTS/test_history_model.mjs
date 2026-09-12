@@ -115,3 +115,12 @@ test('the variables are listed from the record itself', () => {
   assert.deepEqual(seriesNames({}), []);
   assert.deepEqual(yearRows(record, 'no such series'), []);
 });
+
+test('state quantities never acquire an annual sum, even with all months present', () => {
+  for (const unit of ['degrees Celsius', 'percent', 'millimetres of soil moisture']) {
+    const record = history({ make: () => 10 });
+    record.series.pre_mm_s.unit = unit;
+    assert.equal(yearRows(record, 'pre_mm_s')[0].total, null);
+    assert.equal(yearRows(record, 'pre_mm_s')[0].mean, 10);
+  }
+});

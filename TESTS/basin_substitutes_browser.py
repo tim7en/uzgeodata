@@ -133,10 +133,23 @@ with sync_playwright() as p:
         assert dialog.locator('.land-hist-table tbody tr[data-substitute-status=empty] '
                               '.land-sub-nocompare').count() >= partial.count()
         assert dialog.get_by_role('button', name='Download this basin, all variables (CSV)').count() == 1
+        with page.expect_download() as pending:
+            dialog.get_by_role('button', name='Download this basin, all variables (CSV)').click()
+        csv_text = Path(pending.value.path()).read_text()
+        assert len(csv_text.strip().splitlines()) == 241
+        assert 'snw_pc_s' in csv_text.splitlines()[0]
+        dialog.get_by_role('button', name='snow cover', exact=True).click()
+        assert 'not for trend analysis' in dialog.locator('.land-hist-warn').first.inner_text()
+        with page.expect_download() as pending:
+            dialog.get_by_role('button', name='Download metadata & limitations').click()
+        import json
+        metadata = json.loads(Path(pending.value.path()).read_text())
+        assert metadata['series']['snw_pc_s']['trend_use'] == 'withdrawn'
         # The search box belongs to the attribute tables, not to this tab.
         assert dialog.locator('.land-modal-tools').count() == 0
         page.screenshot(path=str(out / 'basin-record-dark.png'))
     else:
+        assert not os.environ.get('ATLAS_REQUIRE_HISTORY'), 'launch requires published history'
         print('note: monthly record not published yet; its empty state was checked instead')
         assert 'level-12' in record.inner_text()
 
@@ -153,6 +166,14 @@ with sync_playwright() as p:
     page.set_viewport_size({'width': 390, 'height': 844})
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
     page.screenshot(path=str(out / 'basin-estimates-mobile.png'))
+    page.set_viewport_size({'width': 1440, 'height': 1000})
+
+    for name in ('about', 'guide', 'projects'):
+        page.goto(f'{BASE}/{name}.html', wait_until='domcontentloaded')
+        assert page.locator('h1').inner_text()
+        page.set_viewport_size({'width': 390, 'height': 844})
+        assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+        assert page.get_by_role('link', name='Basin map', exact=True).get_attribute('href').endswith('/')
     page.set_viewport_size({'width': 1440, 'height': 1000})
 
     # A coarser unit is a view of the level-12 basins, and says so rather than

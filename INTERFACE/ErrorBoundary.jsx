@@ -23,7 +23,7 @@ export default class ErrorBoundary extends React.Component {
     return <main className="land-state">
       <h1>This page stopped.</h1>
       <p>{String(this.state.failure?.message || this.state.failure)}</p>
-      <p><a href="/portal.html">Open the portal instead</a></p>
+      <p><a href="/guide.html">Get help or download basin data directly</a></p>
     </main>;
   }
 }

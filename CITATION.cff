@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "Cite this public preview and the original datasets used. Record the commit, basin ID, source release, method and access date."
+title: "UzGeoData: Amu Darya and Syr Darya basin atlas (public preview)"
+type: software
+authors:
+  - name: UzGeoData contributors
+repository-code: "https://github.com/tim7en/uzgeodata"
+abstract: "Basin explorer presenting published HydroATLAS attributes, independent open-data estimates and monthly records with provenance. Independent scientific reproduction has not been established."
+keywords:
+  - hydrology
+  - Central Asia
+  - HydroATLAS
+  - provenance

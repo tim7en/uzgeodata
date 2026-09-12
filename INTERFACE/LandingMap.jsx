@@ -34,13 +34,11 @@ const DEEPER = [
   { href: '/case-studies.html', label: 'Case studies', note: 'Runoff models and station–satellite work' },
 ];
 
-// Sections the programme will carry. They are listed now so the navigation has
-// its final shape, and marked as unbuilt rather than linked to a dead page:
-// a link that goes nowhere is worse than one that says it is not ready.
+// Public reading support is available without loading the map or a data bundle.
 const PROGRAMME = [
-  { id: 'about', label: 'About', note: 'What this system is and who maintains it' },
-  { id: 'projects', label: 'Projects', note: 'Work running on this data' },
-  { id: 'support', label: 'Support', note: 'How to get help or report a problem' },
+  { id: 'about', label: 'About & citation', note: 'Public preview, sources and reuse', href: '/about.html' },
+  { id: 'projects', label: 'Projects', note: 'Available studies and future work', href: '/projects.html' },
+  { id: 'support', label: 'Help & feedback', note: 'Read a basin in five minutes', href: '/guide.html' },
 ];
 
 // The three readings of one basin: what the atlas published, what this project
@@ -72,9 +70,10 @@ function WatchZoom({ onZoom }) {
 function FitTo({ bounds }) {
   const map = useMap();
   useEffect(() => {
+    const mobile = map.getSize().x <= 820;
     if (bounds) map.flyToBounds(bounds, {
-      paddingTopLeft: OCCLUDED_TOP_LEFT,
-      paddingBottomRight: OCCLUDED_BOTTOM_RIGHT,
+      paddingTopLeft: mobile ? [16, 16] : OCCLUDED_TOP_LEFT,
+      paddingBottomRight: mobile ? [36, 36] : OCCLUDED_BOTTOM_RIGHT,
       duration: 0.8,
     });
   }, [bounds, map]);
@@ -229,10 +228,10 @@ export default function LandingMap() {
   const [catalogue, setCatalogue] = useState(null);
   const [bounds, setBounds] = useState(null);
   const [dams, setDams] = useState(null);
-  const [showDams, setShowDams] = useState(true);
+  const [showDams, setShowDams] = useState(false);
   const [dam, setDam] = useState(null);
   const [lakes, setLakes] = useState(null);
-  const [showLakes, setShowLakes] = useState(true);
+  const [showLakes, setShowLakes] = useState(false);
   const [lake, setLake] = useState(null);
   const [stations, setStations] = useState(null);
   const [showStations, setShowStations] = useState(false);
@@ -461,7 +460,9 @@ export default function LandingMap() {
 
   const base = BASEMAPS.find(entry => entry.id === basemap) || BASEMAPS[0];
 
-  if (error) return <main className="land-state"><h1>The map could not load.</h1><p>{error}</p></main>;
+  if (error) return <main className="land-state"><h1>The map could not load.</h1><p>{error}</p>
+    <button type="button" onClick={() => window.location.reload()}>Try again</button>
+    <p><a href="/guide.html">Get help or download basin data directly</a></p></main>;
 
   return <main className="land">
     <MapContainer center={CENTRE} zoom={6} zoomControl={false} className="land-map" preferCanvas>
@@ -567,9 +568,12 @@ export default function LandingMap() {
           ? ` · selection held at level ${selected.properties.basin_level}` : ''}
       </p>}
       {basins && !selected && <div className="land-intro">
+        <p className="land-onboarding"><strong>Explore a basin in five minutes.</strong> Zoom in to level 12,
+          select a basin, then open Atlas attributes to compare estimates and download its monthly record.
+          <a href="/guide.html"> Step-by-step guide</a></p>
         <label className="land-search">
           <Search size={13}/>
-          <input value={query} onChange={event => setQuery(event.target.value)} placeholder="HYBAS or PFAF id"/>
+          <input aria-label="Search basins by HYBAS or PFAF identifier" value={query} onChange={event => setQuery(event.target.value)} placeholder="HYBAS or PFAF id"/>
         </label>
         {results.length > 0 && <div className="land-results">{results.map(feature => <button key={feature.properties.hybas_id}
           type="button" onClick={() => focus(feature)}>
@@ -598,7 +602,7 @@ export default function LandingMap() {
         <button type="button" className="land-open-table" onClick={() => { setStoreRequested(true); setTableOpen(true); }}>
           <span>
             <strong>Atlas attributes</strong>
-            <small>{groups?.groups?.reduce((total, group) => total + group.attributeCount, 0) || 281} measured values for this watershed</small>
+            <small>{groups?.groups?.reduce((total, group) => total + group.attributeCount, 0) || 281} published attributes, estimates and monthly downloads</small>
           </span>
           <ArrowUpRight size={13}/>
         </button>
@@ -611,10 +615,11 @@ export default function LandingMap() {
           <span><strong>{item.label}</strong><small>{item.note}</small></span>
           <ArrowUpRight size={13}/>
         </a>)}
-        {PROGRAMME.map(item => <span key={item.id} className="land-soon" title={item.note}>
+        <p className="land-hint">Public preview · Independent estimates; reproduction has not been established.</p>
+        {PROGRAMME.map(item => <a key={item.id} href={item.href}>
           <span><strong>{item.label}</strong><small>{item.note}</small></span>
-          <em>Soon</em>
-        </span>)}
+          <ArrowUpRight size={13}/>
+        </a>)}
       </nav>
     </aside>
 

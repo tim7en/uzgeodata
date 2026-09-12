@@ -6,6 +6,7 @@ climatologies, and refuse a changed unit, geometry or period inside an
 unversioned series.
 """
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -30,10 +31,18 @@ def make(**overrides):
     return observations.build(**{**CLIMATOLOGY, **overrides})
 
 
+def require_local_store():
+    if os.environ.get('UZGEODATA_SKIP_LOCAL_STORE') == '1':
+        pytest.skip('local observation-store audit is running separately')
+    if not next(STORE.glob('**/part.csv'), None):
+        pytest.skip('raw observation partitions are not distributed in a Git checkout')
+
+
 @pytest.fixture(scope="module")
 def staged():
     """The undated partitions only. The store also holds a dated series of millions
     of rows, and reading it whole to check the pilot would cost gigabytes."""
+    require_local_store()
     rows = []
     for kind in ("static", "source_epoch", "climatology"):
         rows.extend(observations.read_partitions(STORE / f"time_kind={kind}"))
@@ -78,11 +87,13 @@ def snow_ledger():
 
 @pytest.fixture(scope="module")
 def totals():
+    require_local_store()
     return observations.summarise(STORE)
 
 
 @pytest.fixture(scope="module")
 def one_dated_year():
+    require_local_store()
     return observations.read_partitions(STORE / "time_kind=observation" / "year=2003")
 
 
@@ -390,6 +401,7 @@ def test_the_published_store_round_trips_and_matches_its_run(staged):
 
 def test_the_whole_store_holds_no_series_conflict():
     """Checked across every partition, which the scoped writes cannot see alone."""
+    require_local_store()
     assert observations.verify_partitions(STORE) == []
 
 
@@ -507,6 +519,7 @@ def test_the_land_cover_block_covers_the_region_on_both_supports(landcover_ledge
 
 def test_land_cover_class_shares_account_for_the_whole_basin():
     """Percentages that do not sum to a whole basin mean the crosswalk lost a class."""
+    require_local_store()
     rows = [r for r in observations.read_partitions(STORE / "time_kind=source_epoch")
             if r["recipe_version"].startswith("copernicus_lc_regional")]
     if not rows:

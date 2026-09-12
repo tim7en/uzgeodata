@@ -126,7 +126,7 @@ export default function BasinHistory({ basin }) {
         <span>{observed} of {total} months observed</span>
         <span>{names.length} variables</span>
       </div>
-      <p>These are the observations the climatologies were averaged from. A month with no
+      <p>Monthly open-data estimates for this basin. Their period may differ from the climatologies. A month with no
         observation is drawn as a gap and left empty in the download, never as a zero.</p>
       <p className="land-sub-links">
         <button type="button" className="land-hist-download"
@@ -134,6 +134,10 @@ export default function BasinHistory({ basin }) {
           <Download size={11}/> Download this basin, all variables (CSV)
         </button>
         <a href={`${state.index.base_url}${basin.hybas_id}.json`} download>JSON</a>
+        <button type="button" className="land-hist-download" onClick={() => download(
+          `basin-${basin.hybas_id}-monthly-metadata.json`, JSON.stringify({ ...state.history,
+            series: Object.fromEntries(Object.entries(state.history.series).map(([key, { values, ...meta }]) => [key, meta]))
+          }, null, 2), 'application/json')}>Download metadata &amp; limitations</button>
         <a href="/dynamic-atlas.html">Methods &amp; resolutions <ArrowUpRight size={11}/></a>
       </p>
     </div>
@@ -145,6 +149,10 @@ export default function BasinHistory({ basin }) {
       </div>
     </div>
 
+    {(active === 'snw_pc_s' || series.trend_use === 'withdrawn') && <p className="land-hist-warn" role="note">
+      <AlertTriangle size={12}/><span>Snow is not for trend analysis. Regional missing months increase
+      across this record; the cause is unresolved. Values remain available for inspection.</span>
+    </p>}
     <Chart history={state.history} name={active} series={series}/>
 
     {drift?.growing && <p className="land-hist-warn">
@@ -157,7 +165,7 @@ export default function BasinHistory({ basin }) {
     <table className="land-sub-table land-hist-table">
       <thead><tr>
         <th>Year</th><th>Observed</th><th>Mean</th><th>Lowest</th><th>Highest</th>
-        <th>Annual total<br/><small>whole years only</small></th>
+        <th>Annual total<br/><small>monthly fluxes, whole years only (mm)</small></th>
       </tr></thead>
       <tbody>{rows.map(row => <tr key={row.year} data-substitute-status={row.whole ? 'estimated' : 'empty'}>
         <th scope="row">{row.year}</th>
@@ -166,7 +174,7 @@ export default function BasinHistory({ basin }) {
         <td className="land-sub-num">{formatNumber(row.min, 2)}</td>
         <td className="land-sub-num">{formatNumber(row.max, 2)}</td>
         <td className="land-sub-num">{row.total == null
-          ? <span className="land-sub-nocompare" title="Some months were not observed, so a total would be a sum of an incomplete year">—</span>
+          ? <span className="land-sub-nocompare" title="Totals require 12 observed months and a quantity in millimetres per month">—</span>
           : formatNumber(row.total, 1)}</td>
       </tr>)}</tbody>
     </table>

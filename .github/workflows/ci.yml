@@ -21,5 +21,5 @@ jobs:
       - run: npm ci
       - run: python PIPELINES/ontology/validate_ontology.py
       - run: python -m pytest TESTS -q
-      - run: node --test TESTS/test_basin_trace.mjs
-      - run: npm run build
+      - run: npm run test:ui
+      - run: npm run build:launch

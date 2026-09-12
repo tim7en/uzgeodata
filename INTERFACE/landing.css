@@ -475,3 +475,18 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-hist-download:hover{background:var(--l-tint-1)}
 .land-hist-table{min-width:640px}
 .land-modal tbody th[scope=row]{padding:8px 12px;border-bottom:1px solid var(--l-veil-3);font:600 11px var(--mono);color:var(--ink);text-align:left}
+
+/* Keep the final desktop overrides from narrowing the mobile reading panel. */
+@media(max-width:820px){
+  .land-panel,.land-panel.has-selection{width:100%;padding:20px 18px;background:none}
+  .land-head-tools{gap:8px}
+  .land-modal-tabs{flex-wrap:wrap}
+  .land-modal-scroll{overflow:auto}
+  .land-sub-links{flex-wrap:wrap}
+  .land-search input{font-size:16px}
+  .land-deeper a,.land-results button,.land-hist-download{min-height:44px}
+}
+:focus-visible{outline:2px solid var(--l-accent-1);outline-offset:3px}
+.land-onboarding{font:400 12px/1.6 var(--body);color:var(--ink);margin:0 0 14px}
+.land-onboarding strong{display:block;margin-bottom:4px}
+.land-onboarding a{color:var(--l-accent-1)}

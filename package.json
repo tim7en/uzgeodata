@@ -129,7 +129,10 @@
     "test:modal": "python TESTS/basin_substitutes_browser.py",
     "atlas:history": "python PIPELINES/build_basin_history.py",
     "atlas:coverage": "python PIPELINES/build_regional_coverage.py",
-    "atlas:api": "python PIPELINES/build_basin_api.py"
+    "atlas:api": "python PIPELINES/build_basin_api.py",
+    "build:launch": "node PIPELINES/build_launch.mjs",
+    "preview:launch": "vite preview --host 127.0.0.1 --port 4173",
+    "test:ui": "node --test TESTS/test_*.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.1",
