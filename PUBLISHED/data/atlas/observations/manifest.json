@@ -32,31 +32,34 @@
     "recorded_at",
     "provisional"
   ],
-  "rows": 11718600,
+  "rows": 17891150,
   "staged_from_this_run": 10260,
-  "current_rows": 11718600,
+  "current_rows": 17891150,
   "by_mode": {
-    "annual_extension": 11712300,
+    "annual_extension": 17884850,
     "reference_import": 5620,
     "baseline_reproduction_candidate": 680
   },
   "by_time_kind": {
-    "static": 2520,
-    "source_epoch": 382875,
-    "climatology": 607605,
-    "observation": 10725600
+    "static": 292875,
+    "source_epoch": 524975,
+    "climatology": 987300,
+    "observation": 16086000
   },
-  "dated_observations": 10725600,
-  "attribute_count": 287,
+  "dated_observations": 16086000,
+  "attribute_count": 290,
   "dated_attributes": [
     "uzgeodata.dated.v1.aet_mm_s",
     "uzgeodata.dated.v1.pet_mm_s",
     "uzgeodata.dated.v1.pre_mm_s",
     "uzgeodata.dated.v1.run_mm_s",
     "uzgeodata.dated.v1.snw_pc_s",
-    "uzgeodata.dated.v1.soil_mm_s"
+    "uzgeodata.dated.v1.soil_mm_s",
+    "uzgeodata.dated.v1.tmn_dc_s",
+    "uzgeodata.dated.v1.tmp_dc_s",
+    "uzgeodata.dated.v1.tmx_dc_s"
   ],
-  "missing_values": 11885,
+  "missing_values": 13154,
   "basins": 20,
   "basin_level": 12,
   "attributes_without_pinned_source": 83,

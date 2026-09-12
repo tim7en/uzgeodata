@@ -1,0 +1,31 @@
+{
+  "run_id": "regional-substitutes-20260912T102811191655Z",
+  "recipe_version": "derive_climatology@b33d52b911cb",
+  "generated_at": "2026-09-12T10:28:11.229+00:00",
+  "period": [
+    "2003-01-01",
+    "2023-01-01"
+  ],
+  "only": [
+    "tmp_dc"
+  ],
+  "basins": 7445,
+  "columns": 15,
+  "rows": 223350,
+  "new_rows": 223350,
+  "values": 223350,
+  "without_value": 0,
+  "derived_from_runs": [
+    "regional-era5_runoff-20260910T135058774673Z",
+    "regional-era5_temperature-20260912T064918990795Z",
+    "regional-era5_temperature-20260912T091321498969Z",
+    "regional-snow-20260910T070340280486Z",
+    "regional-terraclimate-20260910T115104441600Z",
+    "regional-terraclimate_temperature-20260912T044047232580Z"
+  ],
+  "partitions_touched": [
+    "time_kind=climatology"
+  ],
+  "wall_seconds": 338.2173071000143,
+  "meaning": "Independent open-data estimates over a stated period, published beside the original HydroATLAS values and never in place of them. Agreement with a published attribute would not make one a reproduction of the other."
+}

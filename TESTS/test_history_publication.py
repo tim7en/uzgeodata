@@ -26,7 +26,7 @@ def test_completed_run_null_revision_and_provenance(tmp_path):
     result = basin_payload('1', [attribute], series, known, releases, [2003])
     published = result['series']['pre_mm_s']
     assert published['values'][0] is None
-    assert published['run_id'] == 'done'
+    assert published['run_ids'] == ['done']
     assert published['method'] == 'method@1'
     assert published['missing_months'] == 12
 

@@ -12,8 +12,9 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import {
-  basinIsPublished, categoriesOf, comparable, difference, inStoredUnits, isUpstream,
-  payloadMatchesBasin, periodLabel, resolutionLabel, rowState, rowTotals, substituteRows, support,
+  basinIsPublished, categoriesOf, comparable, conversionFactor, difference, inStoredUnits,
+  isUpstream, payloadMatchesBasin, periodLabel, resolutionLabel, rowState, rowTotals,
+  substituteRows, support,
 } from '../INTERFACE/substitutesModel.js';
 
 const read = name => JSON.parse(readFileSync(
@@ -95,13 +96,31 @@ test('a difference is computed only where the two numbers are the same quantity'
       continue;
     }
     const converted = inStoredUnits(row);
-    assert.equal(converted, row.value * row.family.units.factor);
+    assert.equal(converted, row.value * conversionFactor(row));
     assert.ok(Math.abs(difference(row) - (converted - row.original)) < 1e-9);
   }
   // Snow is the case the rule exists for: both sides are percentages, and
   // snow-covered-day frequency is still not fractional snow cover.
   const snow = rows.find(row => row.column === 'snw_pc_s01');
   if (snow) assert.ok(snow.family?.divergence?.length, 'snow must carry its divergences');
+});
+
+test('a second adapter is converted by its own factor, not by the first one', () => {
+  // The atlas stores temperature in tenths of a degree and the regional estimate
+  // arrives in degrees, while the family still describes the pilot's surrogate,
+  // which used the atlas's own tenths. Taking the family factor here would report a
+  // basin as roughly 80 degrees out and look like a finding rather than an error.
+  const rows = substituteRows(catalogue, basin);
+  const warm = rows.find(row => row.column === 'tmp_dc_s07');
+  if (!warm?.value) return;
+
+  assert.equal(warm.meta.comparison.factor, 10, 'degrees convert into tenths by ten');
+  assert.equal(conversionFactor(warm), 10);
+  assert.equal(warm.family.units.factor, 1, 'the family still describes the pilot surrogate');
+  assert.equal(inStoredUnits(warm), warm.value * 10);
+
+  // July in these basins is warm in both, so the two agree to within a few degrees.
+  assert.ok(Math.abs(difference(warm)) < 150, 'a July difference above 15 C is a unit error');
 });
 
 test('estimates belong to the basin and the level they were computed for', () => {

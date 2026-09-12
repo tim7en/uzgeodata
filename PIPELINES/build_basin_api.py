@@ -127,6 +127,41 @@ def families(batch):
     return out
 
 
+def comparison(attribute, family, substitute):
+    """Whether the estimate and the published value subtract, and by what factor.
+
+    A family records a reviewed conversion from its own surrogate's units into the
+    units the atlas stores. That holds only while the substitute really is that
+    surrogate. A second adapter for the same attribute can measure the same quantity
+    and publish it in different units -- regional temperature arrives in degrees
+    Celsius where the pilot's surrogate was the atlas's own tenths -- and applying
+    the first adapter's factor to the second's numbers produces a difference wrong by
+    exactly the scale between them, which looks like a finding rather than an error.
+
+    The check is arithmetic rather than a comparison of unit names, which are prose
+    and vary ("people per km2", "people per square kilometre"). Converting an estimate
+    into stored units and then back into physical units must return the number it
+    started as, so the factor and the atlas's own physical factor must be reciprocal.
+    Where they are, the reviewed factor describes this substitute and is used. Where
+    they are not, the family is describing a different surrogate, and the atlas's
+    declaration of how its stored value relates to the physical quantity is what a
+    reader would convert by hand.
+    """
+    units = (family or {}).get("units") or {}
+    if not substitute or not substitute.get("unit"):
+        return None
+    physical = attribute.get("physical_factor")
+    if not units.get("convertible"):
+        return {"convertible": False, "basis": "family_declares_not_comparable"}
+
+    factor = units.get("factor")
+    if factor and physical and abs(factor * physical - 1.0) < 1e-9:
+        return {"convertible": True, "factor": factor, "basis": "family"}
+    if physical:
+        return {"convertible": True, "factor": 1.0 / physical, "basis": "atlas_physical_factor"}
+    return {"convertible": False, "basis": "no_declared_conversion"}
+
+
 def build():
     batch = json.loads(BATCH.read_text(encoding="utf-8"))
     defined = {a["column"]: a for a in batch["attributes"]}
@@ -134,11 +169,12 @@ def build():
     published = originals(columns)
     estimated, provenance = substitutes()
 
+    families_by_name = families(batch)
     catalogue = {
         "generated_at": utc_now(),
         "basin_level": 12, "basins": len(published),
         "attributes": columns,
-        "families": families(batch),
+        "families": families_by_name,
         "meta": {column: {
             "label": defined[column]["label"],
             "category": defined[column]["category"],
@@ -151,6 +187,9 @@ def build():
                          "period": defined[column]["reference_period"],
                          "catalogue": defined[column]["source_url"]},
             "substitute": provenance.get(column),
+            "comparison": comparison(defined[column],
+                                     families_by_name.get(defined[column].get("surrogate_family")),
+                                     provenance.get(column)),
         } for column in columns},
         "reading": {
             "original": "The value BasinATLAS published, imported unchanged. Its vintage is the "
@@ -163,6 +202,10 @@ def build():
             "reproduction": "No attribute in this atlas has passed independent reproduction. "
                             "Nothing here is a scientific release.",
             "support": "s is this sub-basin; u and p accumulate everything draining through it.",
+            "comparison": "A difference is shown only where the estimate and the published value "
+                          "are the same quantity and a declared conversion puts one into the "
+                          "other's units. Where no such conversion is declared, no difference is "
+                          "offered rather than a number with no meaning.",
             "resolution": "Native resolution is the grid the source measured on; the processing "
                           "grid is the one this project reduced it onto. Reducing a coarse cell "
                           "onto a fine grid moves the number, never the detail behind it.",

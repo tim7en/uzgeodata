@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-12T04:46:14.251+00:00",
+  "generated_at": "2026-09-12T10:42:24.058+00:00",
   "basin_level": 12,
   "basins": 7445,
   "pilot_basins": 20,
   "attributes": 281,
   "summary": {
-    "regional": 169,
+    "regional": 186,
     "source_gaps": 30,
     "partial": 0,
-    "pilot_only": 31,
+    "pilot_only": 14,
     "absent": 51
   },
-  "values": 1480215,
+  "values": 1606780,
   "by_category": {
     "Anthropogenic": {
       "absent": 9,
@@ -19,9 +19,8 @@
       "regional": 9
     },
     "Climate": {
-      "regional": 63,
+      "regional": 80,
       "absent": 2,
-      "pilot_only": 17,
       "source_gaps": 9
     },
     "Hydrology": {
@@ -310,7 +309,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@c1b87dc35a92"
+      "method": "upstream_annuals@71b6203ddb9d"
     },
     {
       "column": "ari_ix_sav",
@@ -348,7 +347,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@c1b87dc35a92"
+      "method": "upstream_annuals@71b6203ddb9d"
     },
     {
       "column": "cls_cl_smj",
@@ -672,7 +671,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@c1b87dc35a92"
+      "method": "upstream_annuals@71b6203ddb9d"
     },
     {
       "column": "crp_pc_sse",
@@ -2433,7 +2432,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@c1b87dc35a92"
+      "method": "upstream_annuals@71b6203ddb9d"
     },
     {
       "column": "pnv_cl_smj",
@@ -3352,10 +3351,19 @@
       "label": "Precipitation - annual average, the whole upstream catchment",
       "category": "Climate",
       "support": "u",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "millimeters",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "annual_climatological_figure",
+      "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "upstream_annuals@71b6203ddb9d"
     },
     {
       "column": "prm_pc_sse",
@@ -3893,7 +3901,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "modis_myd10a1@061",
-      "method": "upstream_annuals@c1b87dc35a92"
+      "method": "upstream_annuals@71b6203ddb9d"
     },
     {
       "column": "soc_th_sav",
@@ -4197,7 +4205,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@c1b87dc35a92"
+      "method": "upstream_annuals@71b6203ddb9d"
     },
     {
       "column": "tbi_cl_smj",
@@ -4224,160 +4232,304 @@
       "label": "Air Temperature - January average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s02",
       "label": "Air Temperature - February average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s03",
       "label": "Air Temperature - March average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s04",
       "label": "Air Temperature - April average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s05",
       "label": "Air Temperature - May average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s06",
       "label": "Air Temperature - June average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s07",
       "label": "Air Temperature - July average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s08",
       "label": "Air Temperature - August average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s09",
       "label": "Air Temperature - September average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s10",
       "label": "Air Temperature - October average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s11",
       "label": "Air Temperature - November average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_s12",
       "label": "Air Temperature - December average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "monthly_climatological_mean",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_smn",
       "label": "Air Temperature - annual minimum, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "annual_climatological_figure",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_smx",
       "label": "Air Temperature - annual maximum, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "annual_climatological_figure",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_syr",
       "label": "Air Temperature - annual average, this sub-basin",
       "category": "Climate",
       "support": "s",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "annual_climatological_figure",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "derive_climatology@b33d52b911cb"
     },
     {
       "column": "tmp_dc_uyr",
       "label": "Air Temperature - annual average, the whole upstream catchment",
       "category": "Climate",
       "support": "u",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "coverage": 0.0
+      "state": "regional",
+      "basins": 7445,
+      "basins_reached": 7445,
+      "coverage": 1.0,
+      "time_kind": "climatology",
+      "unit": "degrees Celsius",
+      "period": [
+        "2003-01-01",
+        "2023-01-01"
+      ],
+      "statistic": "annual_climatological_figure",
+      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "method": "upstream_annuals@71b6203ddb9d"
     },
     {
       "column": "urb_pc_sse",
@@ -5018,14 +5170,6 @@
       "reason": "the source held no value in 58 basins, each recorded with its reason"
     },
     {
-      "column": "pre_mm_uyr",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
       "column": "prm_pc_sse",
       "category": "Landcover",
       "state": "absent",
@@ -5232,134 +5376,6 @@
       "basins": 0,
       "basins_reached": 0,
       "reason": "no regional adapter has been run for this family"
-    },
-    {
-      "column": "tmp_dc_s01",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s02",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s03",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s04",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s05",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s06",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s07",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s08",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s09",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s10",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s11",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_s12",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_smn",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_smx",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_syr",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
-    },
-    {
-      "column": "tmp_dc_uyr",
-      "category": "Climate",
-      "state": "pilot_only",
-      "basins": 0,
-      "basins_reached": 0,
-      "reason": "Carried by the original-vintage pass."
     },
     {
       "column": "wet_cl_smj",

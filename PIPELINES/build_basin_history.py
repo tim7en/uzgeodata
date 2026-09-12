@@ -57,6 +57,52 @@ def labelled():
     return found
 
 
+def vouched_years(store):
+    """Which years a completed extraction covered, per source release.
+
+    The store records the run that *first* established a value. A later run that
+    re-derives the identical number is a no-op, so an extraction interrupted and then
+    re-run leaves the interrupted run's id on rows the completed one also covered.
+    Judging eligibility by the run id alone would drop years a finished extraction
+    does vouch for -- seven of ERA5 temperature's twenty, in the run this was written
+    for -- and publish a record full of holes the evidence does not have.
+
+    The ledger is the claim that matters: it states the span covered and whether the
+    run finished, and it is written only on completion.
+    """
+    covered = {}
+    for path in sorted(Path(store).glob("regional-*-ledger.json")):
+        try:
+            ledger = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        span = ledger.get("years")
+        if not ledger.get("complete") or not span or not ledger.get("source"):
+            continue
+        release = f"{ledger['source']}@{ledger.get('asset')}"
+        covered.setdefault(release, set()).update(range(span[0], span[1] + 1))
+    return covered
+
+
+def write_compact(path, payload):
+    """One basin's record, written without the whitespace that doubles it.
+
+    These files are arrays of numbers, and indenting them puts every value on its own
+    padded line: the same record costs 41 KB pretty-printed and 20 KB compact, which
+    across 7,445 basins is the difference between a deployable artifact and one over
+    the host's size limit. Nothing is rounded away -- only the spaces.
+
+    Written aside and moved into place, as the store's own partitions are, so a reader
+    during a long publish sees the previous file or the new one and never half of one.
+    """
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, allow_nan=False,
+                                    separators=(",", ":")), encoding="utf-8")
+    temporary.replace(path)
+
+
 def collect(store, years, known):
     """Every dated value in the window, as one fixed-width array per basin and series.
 
@@ -71,6 +117,7 @@ def collect(store, years, known):
     # must not introduce half a new variable into this snapshot.
     ranking = observations.run_ranking(store)
     completed = {run for run, rank in ranking.items() if rank[0]}
+    covered = vouched_years(store)
     for year in span:
         partition = store / "time_kind=observation" / f"year={year}"
         if not partition.exists():
@@ -79,7 +126,8 @@ def collect(store, years, known):
         for path in sorted(partition.glob('**/part.csv')):
             with path.open(encoding='utf-8', newline='') as stream:
                 for row in csv.DictReader(stream):
-                    if row['run_id'] not in completed:
+                    if (row['run_id'] not in completed
+                            and year not in covered.get(row['source_release_id'], ())):
                         continue
                     if row['supersedes']:
                         superseded.add(row['supersedes'])
@@ -113,14 +161,25 @@ def collect(store, years, known):
                 values = series[key] = array("d", [math.nan]) * width
             position = slot[year] * 12 + int(row["month"]) - 1
             values[position] = float(row['value']) if row['value'] else math.nan
-            metadata = {
+            # What must not vary across a series is the measurement: the release it
+            # came from, the method that derived it, the statistic it is, and the
+            # geometry it was reduced on. Which run performed the work may vary and
+            # says nothing about the number -- an extraction interrupted and resumed
+            # produces one series from two runs, and both are named rather than one
+            # of them being grounds to refuse the series.
+            identity = {
                 "source_release": row["source_release_id"], "method": row["recipe_version"],
                 "statistic": row["temporal_statistic"],
-                "run_id": row['run_id'], "geometry_version": row['geometry_version'],
+                "geometry_version": row["geometry_version"],
             }
-            if attribute in releases and releases[attribute] != metadata:
-                raise ValueError(f'Mixed provenance in {attribute}; publish separate series')
-            releases[attribute] = metadata
+            held = releases.get(attribute)
+            if held is None:
+                releases[attribute] = {**identity, "run_ids": [row["run_id"]]}
+            else:
+                if {key: value for key, value in held.items() if key != "run_ids"} != identity:
+                    raise ValueError(f'Mixed provenance in {attribute}; publish separate series')
+                if row["run_id"] not in held["run_ids"]:
+                    held["run_ids"] = sorted(held["run_ids"] + [row["run_id"]])
         print(f'Collected completed runs for {year}', flush=True)
     return series, releases
 
@@ -165,7 +224,7 @@ def build(store=STORE, out=OUT, years=range(2003, 2023)):
     index = {}
     for basin in basins:
         payload = basin_payload(basin, attributes, series, known, releases, span)
-        write_json(out / f"{basin}.json", payload)
+        write_compact(out / f"{basin}.json", payload)
         index[basin] = {name: entry["observed_months"] for name, entry in payload["series"].items()}
 
     summary = {

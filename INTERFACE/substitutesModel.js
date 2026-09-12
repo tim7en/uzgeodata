@@ -37,20 +37,30 @@ export function payloadMatchesBasin(catalogue, values, basin) {
 // comparable by subtraction, and a difference computed across them would be a
 // number with no meaning that looks exactly like one with meaning.
 //
-// Whether they differ is a reviewed judgement, not a string comparison: the family
-// records whether its estimate can be expressed in the units the atlas stored and
-// by what factor. "percent snow-covered days" and "percent cover" are both
-// percentages and are still not the same quantity, which is why the decision is
-// carried in the data rather than inferred from the label.
+// Whether they differ is a reviewed judgement rather than a string comparison:
+// "percent snow-covered days" and "percent cover" are both percentages and still
+// not the same quantity. The catalogue states that judgement per column, because
+// one attribute can be served by more than one adapter and a factor reviewed for
+// the first is wrong for the second -- regional temperature is published in degrees
+// Celsius where the pilot's surrogate used the atlas's own tenths. The family is
+// the fallback for columns published before they carried their own basis.
 export function comparable(row) {
+  const stated = row.meta?.comparison;
+  if (stated) return stated.convertible === true && Number.isFinite(stated.factor);
   return row.family?.units?.convertible === true && Number.isFinite(row.family.units.factor);
+}
+
+export function conversionFactor(row) {
+  const stated = row.meta?.comparison;
+  if (stated && Number.isFinite(stated.factor)) return stated.factor;
+  return row.family?.units?.factor;
 }
 
 // The estimate expressed in the units the published value is stored in. A valid
 // zero converts like any other measurement; a missing estimate stays missing.
 export function inStoredUnits(row) {
   if (row.value == null || !comparable(row)) return null;
-  return row.value * row.family.units.factor;
+  return row.value * conversionFactor(row);
 }
 
 export function difference(row) {
