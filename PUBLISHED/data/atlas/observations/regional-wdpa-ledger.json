@@ -1,0 +1,418 @@
+{
+  "run_id": "regional-wdpa-20260911T154320498740Z",
+  "started_at": "2026-09-11T15:43:20.523+00:00",
+  "source": "wdpa",
+  "asset": "WCMC/WDPA/current/polygons",
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "retries": [
+    {
+      "at": "2026-09-11T15:43:41.561+00:00",
+      "target": "batch-2",
+      "attempt": 1,
+      "error": "EEException: Object too large (104923600 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:43:50.148+00:00",
+      "target": "batch-2",
+      "attempt": 2,
+      "error": "EEException: Object too large (104923600 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:44:02.905+00:00",
+      "target": "batch-2",
+      "attempt": 3,
+      "error": "EEException: Object too large (104923600 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:46:23.691+00:00",
+      "target": "batch-19",
+      "attempt": 1,
+      "error": "EEException: Object too large (111559476 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:46:31.539+00:00",
+      "target": "batch-19",
+      "attempt": 2,
+      "error": "EEException: Object too large (111559476 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:46:44.725+00:00",
+      "target": "batch-19",
+      "attempt": 3,
+      "error": "EEException: Object too large (111559476 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:47:08.340+00:00",
+      "target": "batch-23",
+      "attempt": 1,
+      "error": "EEException: Object too large (108818880 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:47:16.007+00:00",
+      "target": "batch-23",
+      "attempt": 2,
+      "error": "EEException: Object too large (108818880 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:47:28.768+00:00",
+      "target": "batch-23",
+      "attempt": 3,
+      "error": "EEException: Object too large (108818880 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:49:10.844+00:00",
+      "target": "batch-34",
+      "attempt": 1,
+      "error": "EEException: Object too large (111848724 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:49:18.961+00:00",
+      "target": "batch-34",
+      "attempt": 2,
+      "error": "EEException: Object too large (111848724 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:49:31.652+00:00",
+      "target": "batch-34",
+      "attempt": 3,
+      "error": "EEException: Object too large (111848724 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:50:05.563+00:00",
+      "target": "batch-38",
+      "attempt": 1,
+      "error": "EEException: Object too large (106432592 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:50:13.273+00:00",
+      "target": "batch-38",
+      "attempt": 2,
+      "error": "EEException: Object too large (106432592 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:50:26.289+00:00",
+      "target": "batch-38",
+      "attempt": 3,
+      "error": "EEException: Object too large (106432592 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:51:14.645+00:00",
+      "target": "batch-44",
+      "attempt": 1,
+      "error": "EEException: Object too large (101800884 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:51:22.603+00:00",
+      "target": "batch-44",
+      "attempt": 2,
+      "error": "EEException: Object too large (101800884 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:51:35.664+00:00",
+      "target": "batch-44",
+      "attempt": 3,
+      "error": "EEException: Object too large (101800884 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:51:59.490+00:00",
+      "target": "batch-48",
+      "attempt": 1,
+      "error": "EEException: Object too large (104121160 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:52:07.073+00:00",
+      "target": "batch-48",
+      "attempt": 2,
+      "error": "EEException: Object too large (104121160 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:52:21.209+00:00",
+      "target": "batch-48",
+      "attempt": 3,
+      "error": "EEException: Object too large (104121160 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:52:34.684+00:00",
+      "target": "batch-50",
+      "attempt": 1,
+      "error": "EEException: Object too large (100494608 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:52:42.290+00:00",
+      "target": "batch-50",
+      "attempt": 2,
+      "error": "EEException: Object too large (100494608 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:52:55.415+00:00",
+      "target": "batch-50",
+      "attempt": 3,
+      "error": "EEException: Object too large (100494608 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:53:10.668+00:00",
+      "target": "batch-53",
+      "attempt": 1,
+      "error": "EEException: Object too large (143003656 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:53:18.757+00:00",
+      "target": "batch-53",
+      "attempt": 2,
+      "error": "EEException: Object too large (143003656 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:53:32.387+00:00",
+      "target": "batch-53",
+      "attempt": 3,
+      "error": "EEException: Object too large (143003656 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:53:38.220+00:00",
+      "target": "batch-55",
+      "attempt": 1,
+      "error": "EEException: Object too large (128448372 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:53:46.603+00:00",
+      "target": "batch-55",
+      "attempt": 2,
+      "error": "EEException: Object too large (128448372 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:53:59.437+00:00",
+      "target": "batch-55",
+      "attempt": 3,
+      "error": "EEException: Object too large (128448372 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:54:12.646+00:00",
+      "target": "batch-57",
+      "attempt": 1,
+      "error": "EEException: Object too large (122500820 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:54:20.719+00:00",
+      "target": "batch-57",
+      "attempt": 2,
+      "error": "EEException: Object too large (122500820 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:54:33.534+00:00",
+      "target": "batch-57",
+      "attempt": 3,
+      "error": "EEException: Object too large (122500820 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:55:35.845+00:00",
+      "target": "batch-63",
+      "attempt": 1,
+      "error": "EEException: Object too large (104814460 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:55:44.059+00:00",
+      "target": "batch-63",
+      "attempt": 2,
+      "error": "EEException: Object too large (104814460 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:55:57.277+00:00",
+      "target": "batch-63",
+      "attempt": 3,
+      "error": "EEException: Object too large (104814460 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:56:14.506+00:00",
+      "target": "batch-65",
+      "attempt": 1,
+      "error": "EEException: Object too large (119985516 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:56:23.181+00:00",
+      "target": "batch-65",
+      "attempt": 2,
+      "error": "EEException: Object too large (119985516 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:56:35.997+00:00",
+      "target": "batch-65",
+      "attempt": 3,
+      "error": "EEException: Object too large (119985516 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:56:51.375+00:00",
+      "target": "batch-67",
+      "attempt": 1,
+      "error": "EEException: Object too large (117440256 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:56:58.878+00:00",
+      "target": "batch-67",
+      "attempt": 2,
+      "error": "EEException: Object too large (117440256 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:57:12.013+00:00",
+      "target": "batch-67",
+      "attempt": 3,
+      "error": "EEException: Object too large (117440256 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:57:15.607+00:00",
+      "target": "batch-68",
+      "attempt": 1,
+      "error": "EEException: Object too large (108211040 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:57:23.506+00:00",
+      "target": "batch-68",
+      "attempt": 2,
+      "error": "EEException: Object too large (108211040 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:57:36.566+00:00",
+      "target": "batch-68",
+      "attempt": 3,
+      "error": "EEException: Object too large (108211040 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:58:00.158+00:00",
+      "target": "batch-71",
+      "attempt": 1,
+      "error": "EEException: Object too large (132237216 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:58:08.840+00:00",
+      "target": "batch-71",
+      "attempt": 2,
+      "error": "EEException: Object too large (132237216 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:58:21.639+00:00",
+      "target": "batch-71",
+      "attempt": 3,
+      "error": "EEException: Object too large (132237216 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:58:24.402+00:00",
+      "target": "batch-72",
+      "attempt": 1,
+      "error": "EEException: Object too large (104888608 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:58:32.990+00:00",
+      "target": "batch-72",
+      "attempt": 2,
+      "error": "EEException: Object too large (104888608 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:58:45.848+00:00",
+      "target": "batch-72",
+      "attempt": 3,
+      "error": "EEException: Object too large (104888608 bytes)."
+    }
+  ],
+  "failures": [
+    {
+      "at": "2026-09-11T15:44:02.905+00:00",
+      "target": "batch-2",
+      "error": "EEException: Object too large (104923600 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:46:44.725+00:00",
+      "target": "batch-19",
+      "error": "EEException: Object too large (111559476 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:47:28.768+00:00",
+      "target": "batch-23",
+      "error": "EEException: Object too large (108818880 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:49:31.652+00:00",
+      "target": "batch-34",
+      "error": "EEException: Object too large (111848724 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:50:26.289+00:00",
+      "target": "batch-38",
+      "error": "EEException: Object too large (106432592 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:51:35.664+00:00",
+      "target": "batch-44",
+      "error": "EEException: Object too large (101800884 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:52:21.209+00:00",
+      "target": "batch-48",
+      "error": "EEException: Object too large (104121160 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:52:55.415+00:00",
+      "target": "batch-50",
+      "error": "EEException: Object too large (100494608 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:53:32.387+00:00",
+      "target": "batch-53",
+      "error": "EEException: Object too large (143003656 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:53:59.437+00:00",
+      "target": "batch-55",
+      "error": "EEException: Object too large (128448372 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:54:33.534+00:00",
+      "target": "batch-57",
+      "error": "EEException: Object too large (122500820 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:55:57.277+00:00",
+      "target": "batch-63",
+      "error": "EEException: Object too large (104814460 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:56:35.997+00:00",
+      "target": "batch-65",
+      "error": "EEException: Object too large (119985516 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:57:12.014+00:00",
+      "target": "batch-67",
+      "error": "EEException: Object too large (117440256 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:57:36.566+00:00",
+      "target": "batch-68",
+      "error": "EEException: Object too large (108211040 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:58:21.639+00:00",
+      "target": "batch-71",
+      "error": "EEException: Object too large (132237216 bytes)."
+    },
+    {
+      "at": "2026-09-11T15:58:45.848+00:00",
+      "target": "batch-72",
+      "error": "EEException: Object too large (104888608 bytes)."
+    }
+  ],
+  "finished_at": "2026-09-11T15:59:23.843+00:00",
+  "wall_seconds": 963.3188452000031,
+  "basins_extracted": 5745,
+  "rows": 11490,
+  "new_rows": 11490,
+  "without_value": 0,
+  "note": "Protected areas from the current WDPA release, later than the 2014 snapshot the atlas cites.",
+  "attributes": [
+    "pac_pc_sse",
+    "pac_pc_use"
+  ],
+  "complete": false,
+  "upstream_rules": {
+    "pac_pc_sse": "mean"
+  }
+}

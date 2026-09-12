@@ -1,0 +1,34 @@
+{
+  "run_id": "regional-openlandmap_soil-20260911T113212093213Z",
+  "started_at": "2026-09-11T11:32:12.094+00:00",
+  "source": "openlandmap_soil",
+  "asset": "OpenLandMap/SOL",
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "retries": [],
+  "failures": [],
+  "finished_at": "2026-09-11T11:37:51.173+00:00",
+  "wall_seconds": 339.07957929999975,
+  "basins_extracted": 7445,
+  "rows": 59560,
+  "new_rows": 59560,
+  "without_value": 192,
+  "note": "Texture and organic-carbon stock integrated over 0-100 cm with trapezoidal depth weights, as the pilot builder does. Silt is closed as 100 minus clay minus sand rather than measured, and the carbon stock carries no coarse-fragment correction.",
+  "attributes": [
+    "cly_pc_sav",
+    "cly_pc_uav",
+    "slt_pc_sav",
+    "slt_pc_uav",
+    "snd_pc_sav",
+    "snd_pc_uav",
+    "soc_th_sav",
+    "soc_th_uav"
+  ],
+  "complete": true,
+  "upstream_rules": {
+    "cly_pc_sav": "mean",
+    "snd_pc_sav": "mean",
+    "slt_pc_sav": "mean",
+    "soc_th_sav": "mean"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "run_id": "regional-gfsad-20260911T112753166285Z",
+  "started_at": "2026-09-11T11:27:53.167+00:00",
+  "source": "gfsad",
+  "asset": "USGS/GFSAD1000_V1",
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "retries": [],
+  "failures": [],
+  "finished_at": "2026-09-11T11:32:12.077+00:00",
+  "wall_seconds": 258.91065530000196,
+  "basins_extracted": 7445,
+  "rows": 14890,
+  "new_rows": 14890,
+  "without_value": 0,
+  "note": "Irrigated cropland share from GFSAD1000 classes 1 and 2, 2010 epoch.",
+  "attributes": [
+    "ire_pc_sse",
+    "ire_pc_use"
+  ],
+  "complete": true,
+  "upstream_rules": {
+    "ire_pc_sse": "mean"
+  }
+}

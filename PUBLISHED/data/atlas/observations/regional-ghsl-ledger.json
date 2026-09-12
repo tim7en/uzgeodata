@@ -1,0 +1,25 @@
+{
+  "run_id": "regional-ghsl-20260911T070132778448Z",
+  "started_at": "2026-09-11T07:01:32.778+00:00",
+  "source": "ghsl",
+  "asset": "JRC/GHSL/P2023A/GHS_BUILT_S",
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "retries": [],
+  "failures": [],
+  "finished_at": "2026-09-11T07:08:14.094+00:00",
+  "wall_seconds": 401.3106048999907,
+  "basins_extracted": 7445,
+  "rows": 14890,
+  "new_rows": 14890,
+  "without_value": 0,
+  "note": "Built surface in square metres per 100 m cell, divided by 100 to give percent.",
+  "attributes": [
+    "urb_pc_sse",
+    "urb_pc_use"
+  ],
+  "complete": true,
+  "upstream_rules": {
+    "urb_pc_sse": "mean"
+  }
+}

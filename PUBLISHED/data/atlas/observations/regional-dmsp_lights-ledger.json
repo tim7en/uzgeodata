@@ -1,0 +1,25 @@
+{
+  "run_id": "regional-dmsp_lights-20260911T070814125893Z",
+  "started_at": "2026-09-11T07:08:14.125+00:00",
+  "source": "dmsp_lights",
+  "asset": "NOAA/DMSP-OLS/NIGHTTIME_LIGHTS",
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "retries": [],
+  "failures": [],
+  "finished_at": "2026-09-11T07:13:05.841+00:00",
+  "wall_seconds": 291.7084162999963,
+  "basins_extracted": 7445,
+  "rows": 14890,
+  "new_rows": 14890,
+  "without_value": 0,
+  "note": "DMSP-OLS stable lights for 2010 as the raw digital number; the atlas index transformation is not applied.",
+  "attributes": [
+    "nli_ix_sav",
+    "nli_ix_uav"
+  ],
+  "complete": true,
+  "upstream_rules": {
+    "nli_ix_sav": "mean"
+  }
+}

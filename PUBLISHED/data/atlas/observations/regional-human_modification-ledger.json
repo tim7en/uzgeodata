@@ -1,0 +1,25 @@
+{
+  "run_id": "regional-human_modification-20260911T071305856764Z",
+  "started_at": "2026-09-11T07:13:05.857+00:00",
+  "source": "human_modification",
+  "asset": "CSP/HM/GlobalHumanModification",
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "retries": [],
+  "failures": [],
+  "finished_at": "2026-09-11T07:17:54.222+00:00",
+  "wall_seconds": 288.3546888000128,
+  "basins_extracted": 7445,
+  "rows": 14890,
+  "new_rows": 14890,
+  "without_value": 149,
+  "note": "Global Human Modification 2016. This is not the Human Footprint index, and no 1993 surface exists, so it stands against the 2009 dimension only.",
+  "attributes": [
+    "hft_ix_s09",
+    "hft_ix_u09"
+  ],
+  "complete": true,
+  "upstream_rules": {
+    "hft_ix_s09": "mean"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "run_id": "regional-surface_water-20260911T071754238322Z",
+  "started_at": "2026-09-11T07:17:54.238+00:00",
+  "source": "surface_water",
+  "asset": "JRC/GSW1_4/GlobalSurfaceWater",
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "retries": [],
+  "failures": [],
+  "finished_at": "2026-09-11T07:43:55.642+00:00",
+  "wall_seconds": 1561.3421181000012,
+  "basins_extracted": 7445,
+  "rows": 44670,
+  "new_rows": 44670,
+  "without_value": 0,
+  "note": "Optical surface water from JRC occurrence, seasonality and maximum extent, 1984-2021. Optical products see open water, not wetland under vegetation.",
+  "attributes": [
+    "inu_pc_slt",
+    "inu_pc_smn",
+    "inu_pc_smx",
+    "inu_pc_ult",
+    "inu_pc_umn",
+    "inu_pc_umx"
+  ],
+  "complete": true,
+  "upstream_rules": {
+    "inu_pc_slt": "mean",
+    "inu_pc_smn": "mean",
+    "inu_pc_smx": "mean"
+  }
+}
