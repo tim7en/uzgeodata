@@ -231,6 +231,7 @@ export default function LandcoverExplorer() {
         <GeoJSON
           key={`${year}-${classCode}-${mode}-${selectedId}`}
           data={geometry}
+          smoothFactor={0}
           style={feature => {
             const id = String(feature.properties.HYBAS_ID);
             const selectedNow = id === selectedId;

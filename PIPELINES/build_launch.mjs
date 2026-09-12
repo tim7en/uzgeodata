@@ -116,6 +116,20 @@ async function finish(directory) {
   });
 }
 await finish(output);
+
+// Pages serves every file for ten minutes at a URL that never changes, so a reader
+// could keep last release's basin geometry after a deploy. Each page tags its data
+// requests with the release commit instead: new release, new URLs, fresh data.
+const commit = execFileSync('git', ['rev-parse', '--short=12', 'HEAD'], { encoding: 'utf8' }).trim();
+const releaseTag = `<script>(()=>{const v=${JSON.stringify(commit)},p=${JSON.stringify(`${base}data/`)},f=window.fetch.bind(window);`
+  + 'window.fetch=(r,o)=>{if(typeof r==="string"&&r.startsWith(p)&&!/[?&]v=/.test(r))'
+  + 'r+=(r.includes("?")?"&":"?")+"v="+v;return f(r,o)}})()</script>';
+for (const page of pages) {
+  const file = path.join(output, page);
+  const html = await readFile(file, 'utf8');
+  if (!html.includes('<head>')) throw Error(`No <head> to tag in ${page}`);
+  await writeFile(file, html.replace('<head>', `<head>${releaseTag}`));
+}
 if (bytes > 950e6) throw Error(`Release exceeds 950 MB budget: ${bytes}`);
 const release = {
   status: 'public_preview', generated_at: new Date().toISOString(),

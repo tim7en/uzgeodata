@@ -18,6 +18,7 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
+from shapely import coverage_simplify
 from shapely.geometry import mapping, shape
 from shapely.ops import unary_union
 
@@ -215,8 +216,12 @@ def main() -> None:
         write_json(exact_path, exact_document, compact=True)
 
         web_features = []
-        tolerance = 0.002 if level == 7 else 0.001
-        for feature in level_features:
+        # One coverage per level, so neighbours keep their shared borders; simplifying
+        # polygon by polygon opens slivers that a choropleth makes obvious.
+        # Coverage tolerances are area-based and read larger than the old distances.
+        tolerance = 0.004 if level == 7 else 0.002
+        simplified = coverage_simplify([shape(feature["geometry"]) for feature in level_features], tolerance)
+        for feature, geometry in zip(level_features, simplified):
             props = feature["properties"]
             web_features.append({
                 "type": "Feature",
@@ -229,7 +234,7 @@ def main() -> None:
                         "is_headwater_outlet_unit",
                     ]
                 },
-                "geometry": mapping(shape(feature["geometry"]).simplify(tolerance, preserve_topology=True)),
+                "geometry": mapping(geometry),
             })
         write_json(
             PUBLISHED_DIR / f"basins-level{level:02d}.geojson",

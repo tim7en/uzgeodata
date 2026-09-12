@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Iterable
 
 import requests
+from shapely import coverage_simplify
 from shapely.geometry import mapping, shape
 from shapely.ops import unary_union
 
@@ -203,8 +204,8 @@ def main() -> None:
                     "hydroclimate_stage", "basin_level", "is_outlet_unit",
                 ]
             }
-            web_geometry = mapping(shape(feature["geometry"]).simplify(0.002, preserve_topology=True))
-            web_features.append({"type": "Feature", "properties": web_props, "geometry": web_geometry})
+            # Simplified below, all units together, so neighbours keep shared borders.
+            web_features.append({"type": "Feature", "properties": web_props, "geometry": feature["geometry"]})
 
             next_down = int(row_by_id[basin_id].get("NEXT_DOWN") or 0)
             if next_down in selected_set:
@@ -268,6 +269,9 @@ def main() -> None:
         "name": "transboundary_headwater_units_level07",
         "features": sorted(web_features, key=lambda f: (f["properties"]["system_id"], int(f["properties"]["HYBAS_ID"]))),
     }
+    simplified = coverage_simplify([shape(feature["geometry"]) for feature in web_features], 0.004)
+    for feature, geometry in zip(web_features, simplified):
+        feature["geometry"] = mapping(geometry)
     systems_document = {
         "type": "FeatureCollection",
         "name": "transboundary_headwater_systems",

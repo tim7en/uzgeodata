@@ -495,13 +495,27 @@ def create_attribute_table(dataset, name: str, fields: dict, rows: list[dict]):
     layer.CommitTransaction()
 
 
+def simplify_coverage_geojson(target: Path, tolerance: float) -> None:
+    from shapely import coverage_simplify
+    from shapely.geometry import mapping, shape
+
+    document = json.loads(target.read_text(encoding="utf-8"))
+    features = document["features"]
+    simplified = coverage_simplify([shape(feature["geometry"]) for feature in features], tolerance)
+    for feature, geometry in zip(features, simplified):
+        feature["geometry"] = mapping(geometry)
+    temporary = target.with_suffix(target.suffix + ".tmp")
+    temporary.write_text(json.dumps(document, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    os.replace(temporary, target)
+
+
 def export_geojson(gpkg: Path, layer: str, target: Path, fields: list[str], simplify: float):
     target.parent.mkdir(parents=True, exist_ok=True)
     temporary = target.with_suffix(target.suffix + ".tmp")
     if temporary.exists():
         temporary.unlink()
     options = gdal.VectorTranslateOptions(
-        options=["-simplify", str(simplify)],
+        options=["-simplify", str(simplify)] if simplify else [],
         format="GeoJSON",
         layers=[layer],
         selectFields=fields,
@@ -631,7 +645,10 @@ def main(argv=None) -> int:
     boundary_geojson = public_dir / "boundary.geojson"
     export_geojson(gpkg, "rivers_uzbekistan", river_geojson, WEB_RIVER_FIELDS, 0.0015)
     export_geojson(gpkg, "lakes_uzbekistan", lake_geojson, WEB_LAKE_FIELDS, 0.0008)
-    export_geojson(gpkg, "basins_level12", basin_geojson, WEB_BASIN_FIELDS, 0.003)
+    # Basins are exported exact and simplified as one coverage: GDAL's -simplify works
+    # a polygon at a time, which opens slivers between neighbouring basins.
+    export_geojson(gpkg, "basins_level12", basin_geojson, WEB_BASIN_FIELDS, 0)
+    simplify_coverage_geojson(basin_geojson, 0.006)
     boundary_result = gdal.VectorTranslate(
         str(boundary_geojson.with_suffix(".geojson.tmp")),
         str(boundary_path),

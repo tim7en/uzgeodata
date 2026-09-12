@@ -226,6 +226,7 @@ export default function ClimateObservatory() {
         <GeoJSON
           key={`${layer.id}-${period}-${variable}-${expression}-${selectedId}`}
           data={geometry}
+          smoothFactor={0}
           style={feature => {
             const id = featureId(feature, layer);
             const selectedNow = id === selectedId;

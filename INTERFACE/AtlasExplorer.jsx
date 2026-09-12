@@ -221,7 +221,7 @@ export default function AtlasExplorer() {
       <MapContainer center={CENTRE} zoom={6} zoomControl={false} className="atlas-map" preferCanvas>
         <TileLayer attribution="&copy; OpenStreetMap contributors"
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" opacity={0.42}/>
-        {basins && store && <GeoJSON key={`${active.level}-${attribute}`} data={basins} smoothFactor={1.6}
+        {basins && store && <GeoJSON key={`${active.level}-${attribute}`} data={basins} smoothFactor={0}
           style={styleFor} onEachFeature={onEachFeature}/>}
         {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} interactive={false}
           style={feature => riverStyle(feature.properties)} smoothFactor={1.2}/>}
