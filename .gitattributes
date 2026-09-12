@@ -1,0 +1,33 @@
+# Line endings are part of a file's identity here, because the case-study packages
+# publish sha256 hashes of their own inputs and check them back. Without this, a
+# Windows checkout converts committed LF text into CRLF in the working tree, the
+# manifest records the hash of the converted bytes, and the same commit then fails
+# its own reproducibility check on Linux -- which is exactly why the integrity
+# workflow had never passed.
+#
+# Declaring LF makes the working tree match the blob on every platform, so a hash
+# taken of a file on disk is a hash of what the repository actually holds.
+* text=auto eol=lf
+
+# Binary formats must never be touched by end-of-line conversion.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.7z binary
+*.rar binary
+*.gz binary
+*.tif binary
+*.tiff binary
+*.gdb binary
+*.docx binary
+*.xlsx binary
+*.pptx binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.parquet binary

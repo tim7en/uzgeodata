@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-11T04:39:21+00:00",
+  "generatedAt": "2026-09-12T11:58:50+00:00",
   "study": {
     "id": "chirchik-pskem",
     "title": "Chirchik–Charvak: from observations to water-supply evidence",
@@ -15,36 +15,46 @@
         "path": "PUBLISHED/data/hydroclimate/pskem-station-monthly.csv",
         "role": "observation record input",
         "available": true,
-        "bytes": 338563,
-        "sha256": "76f603898a6df08d754a06b7451d4538e5f94cfc118b5ce4aff10934cedd50f4"
+        "bytes": 336261,
+        "sha256": "dd0e097ba1093c2e99068675784acb4d46d59f11beb23c427cbde928712f1f58",
+        "recordedSha256": "76f603898a6df08d754a06b7451d4538e5f94cfc118b5ce4aff10934cedd50f4",
+        "changedSinceRecorded": true
       },
       {
         "path": "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv",
         "role": "observation record input",
         "available": true,
-        "bytes": 735817,
-        "sha256": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e"
+        "bytes": 729606,
+        "sha256": "4fa791f2af9960697013c147c724cc20103dcf61293032b588946a579a173c29",
+        "recordedSha256": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e",
+        "changedSinceRecorded": true
       },
       {
         "path": "PUBLISHED/data/hydroclimate/pskem-station-basin-links.csv",
         "role": "observation record input",
         "available": true,
-        "bytes": 896,
-        "sha256": "c1634c6ed61bd8bd7bba130e6aa15f500acfb8e72833357d65428f5bde38eb4a"
+        "bytes": 891,
+        "sha256": "93b3c09f8e1eaa72069531bb9e38551f700075a753cb0459cffe579e69216f8b",
+        "recordedSha256": "c1634c6ed61bd8bd7bba130e6aa15f500acfb8e72833357d65428f5bde38eb4a",
+        "changedSinceRecorded": true
       },
       {
         "path": "PUBLISHED/data/hydroclimate/pskem-observations.manifest.json",
         "role": "observation record input",
         "available": true,
-        "bytes": 5190,
-        "sha256": "b1780fd892676fd270601320730c98f66d994e49edb4ef2237fef58dd3debd3d"
+        "bytes": 5046,
+        "sha256": "8e11671829700937cd5f3002b1bbea96bb73f864596cc603f0d6d0e9f6e85972",
+        "recordedSha256": "b1780fd892676fd270601320730c98f66d994e49edb4ef2237fef58dd3debd3d",
+        "changedSinceRecorded": true
       },
       {
         "path": "PUBLISHED/data/hydroclimate/basin-routing-level12.csv",
         "role": "observation record input",
         "available": true,
-        "bytes": 677577,
-        "sha256": "5ac04a7f060bc6c2d059c8446891933e3ebf82a2a3fe6d3205e5fb35f96f9f73"
+        "bytes": 670131,
+        "sha256": "1143d557e1eb3652c1a89df58c335ea8a4775c265591e4800c99f1c237cacffb",
+        "recordedSha256": "5ac04a7f060bc6c2d059c8446891933e3ebf82a2a3fe6d3205e5fb35f96f9f73",
+        "changedSinceRecorded": true
       },
       {
         "path": "PUBLISHED/data/hydroclimate/basins-level12.geojson",
@@ -57,36 +67,42 @@
         "path": "PUBLISHED/data/case-studies/station-product-monthly.csv",
         "role": "observation record input",
         "available": true,
-        "bytes": 300394,
-        "sha256": "4d695375ce4f66c788dbaabbd859d2247db125adea60b581e939467b5c927ef2"
+        "bytes": 299223,
+        "sha256": "c183fff27cea86e1e0eb5322480c47a1a6d263f165c655380dddc78035f8681b",
+        "recordedSha256": "4d695375ce4f66c788dbaabbd859d2247db125adea60b581e939467b5c927ef2",
+        "changedSinceRecorded": true
       },
       {
         "path": "CASE_STUDIES/chirchik-portfolio.json",
         "role": "observation record input",
         "available": true,
-        "bytes": 19769,
-        "sha256": "2796870a737ad3568bf300a8fc12b438cbb726b1fa33a42eef45958d65f93d00"
+        "bytes": 19494,
+        "sha256": "0e10571e0666903de4237702821cef6614f3183c93bf0635e7490f0e950ead5c",
+        "recordedSha256": "2796870a737ad3568bf300a8fc12b438cbb726b1fa33a42eef45958d65f93d00",
+        "changedSinceRecorded": true
       },
       {
         "path": "PIPELINES/build_chirchik_case_studies.py",
         "role": "observation record input",
         "available": true,
-        "bytes": 27037,
-        "sha256": "852d53ac66fd01cb0bec1422b830f4140df82138366598c407b59804b1608577"
+        "bytes": 26627,
+        "sha256": "938d3082859928cb58ef5c3700794ffdb86e89e1f8c7145c4fc855a6a7d5d6dd",
+        "recordedSha256": "852d53ac66fd01cb0bec1422b830f4140df82138366598c407b59804b1608577",
+        "changedSinceRecorded": true
       },
       {
         "path": "PUBLISHED/data/case-studies/sabitov-daily-forcing.csv",
         "role": "daily model input",
         "available": true,
-        "bytes": 636603,
-        "sha256": "253fbb29f3048e0b0d2739549806733d069fa03d614d5dab0cf4e89f731aa4f9"
+        "bytes": 630027,
+        "sha256": "af504f7246d49673779dd01a107c054433e94de6f236822e2a4fa8b6005342a4"
       },
       {
         "path": "PUBLISHED/data/case-studies/pskem-candidate-catchment.geojson",
         "role": "daily model input",
         "available": true,
-        "bytes": 117502,
-        "sha256": "0b22c06bb0fc9985969d24d5b117f174bf2cc1e169eb4804bf67bfff85be971b"
+        "bytes": 112641,
+        "sha256": "0aa8e23c8420beb5d6fb81a078eb6a12fd9c1ccff10a0de4e20ae4dbfca08f49"
       },
       {
         "path": "PUBLISHED/data/case-studies/model-audit/chronological-20260909/pskem-daily-model.json",
@@ -99,8 +115,8 @@
         "path": "PUBLISHED/data/case-studies/model-audit/chronological-20260909/pskem-daily-model.csv",
         "role": "chronological re-test input",
         "available": true,
-        "bytes": 535969,
-        "sha256": "bbf3accca98ac5fe6a4645ed57b6530dce071f16ddc66dd60863069a280fa472"
+        "bytes": 529393,
+        "sha256": "bb30670145587added90fa8efb4e6a5c7f167a4f01d45815a74196bc2ee95c0d"
       },
       {
         "path": "PUBLISHED/data/case-studies/pskem-daily-model.json",
@@ -113,15 +129,15 @@
         "path": "PUBLISHED/data/case-studies/elevation-profiles.csv",
         "role": "chronological re-test input",
         "available": true,
-        "bytes": 1976,
-        "sha256": "26e681cf8e769ad8921abbd9d12f4530f8cee6f6e5ccfe70a0194eff51c86156"
+        "bytes": 1960,
+        "sha256": "91b288f22ddc088178d50bcb38fa37bf3c916adb4e3774dc2df038e9f683d72b"
       },
       {
         "path": "PIPELINES/build_pskem_daily_model.py",
         "role": "chronological re-test input",
         "available": true,
-        "bytes": 28858,
-        "sha256": "ba571b92e1cc825807394a33a960617d5b8238cde1cfba93f954608278eaf29f"
+        "bytes": 28293,
+        "sha256": "3503062c79aaa1adeb8067452b42bad389a217a63ccbfad5454bdb4f54e63d3d"
       }
     ],
     "remoteAssets": [
@@ -184,18 +200,18 @@
       "produces": [
         {
           "path": "PUBLISHED/data/hydroclimate/pskem-station-monthly.csv",
-          "bytes": 338563,
-          "sha256": "76f603898a6df08d754a06b7451d4538e5f94cfc118b5ce4aff10934cedd50f4"
+          "bytes": 336261,
+          "sha256": "dd0e097ba1093c2e99068675784acb4d46d59f11beb23c427cbde928712f1f58"
         },
         {
           "path": "PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv",
-          "bytes": 735817,
-          "sha256": "59bc0a09264ef9c6260f5772d555dd66a62a0d82cd7acaedebbec5ad7688b88e"
+          "bytes": 729606,
+          "sha256": "4fa791f2af9960697013c147c724cc20103dcf61293032b588946a579a173c29"
         },
         {
           "path": "PUBLISHED/data/hydroclimate/pskem-observations.manifest.json",
-          "bytes": 5190,
-          "sha256": "b1780fd892676fd270601320730c98f66d994e49edb4ef2237fef58dd3debd3d"
+          "bytes": 5046,
+          "sha256": "8e11671829700937cd5f3002b1bbea96bb73f864596cc603f0d6d0e9f6e85972"
         }
       ]
     },
@@ -208,13 +224,13 @@
       "produces": [
         {
           "path": "PUBLISHED/data/case-studies/sabitov-daily-forcing.csv",
-          "bytes": 636603,
-          "sha256": "253fbb29f3048e0b0d2739549806733d069fa03d614d5dab0cf4e89f731aa4f9"
+          "bytes": 630027,
+          "sha256": "af504f7246d49673779dd01a107c054433e94de6f236822e2a4fa8b6005342a4"
         },
         {
           "path": "PUBLISHED/data/case-studies/sabitov-inputs.manifest.json",
-          "bytes": 2001,
-          "sha256": "0df1f30f9210d4dfb636aff1939e59aea0768e38533e4921693b143dccc7a2ee"
+          "bytes": 1943,
+          "sha256": "c3a1f365958deffc2160001452e57eea17cf7f75410990da309924c1a517c865"
         }
       ]
     },
@@ -227,13 +243,13 @@
       "produces": [
         {
           "path": "PUBLISHED/data/case-studies/chirchik.json",
-          "bytes": 1129313,
-          "sha256": "ecbb7d7574cb81be3fad12d3f0afe5f866b8ff6326b3a977d85db9ffde2a1265"
+          "bytes": 1096675,
+          "sha256": "f553162d7e86e5ecacf3a68f7959ed85df951d7dbeb2d3eceffa789202073f6e"
         },
         {
           "path": "PUBLISHED/data/case-studies/chirchik.manifest.json",
-          "bytes": 2948,
-          "sha256": "faddb709892b5d05a1106bf2c724bc59e8bb32747f729d578c3fff90d60726c1"
+          "bytes": 2857,
+          "sha256": "a6b8de66ef41dc19060431f5c275dc29f7ff7d4e4a1d4a331e2570a488ce2e90"
         }
       ]
     },
@@ -251,8 +267,8 @@
         },
         {
           "path": "PUBLISHED/data/case-studies/pskem-daily-model.csv",
-          "bytes": 536274,
-          "sha256": "9f4da3f3a75d6be552e78b2ff606709368711dec26a3f8769669db67faa3212a"
+          "bytes": 529698,
+          "sha256": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224"
         },
         {
           "path": "PUBLISHED/data/case-studies/pskem-daily-model.manifest.json",
@@ -271,7 +287,7 @@
         {
           "path": "PUBLISHED/data/case-studies/model-review.json",
           "bytes": 59573,
-          "sha256": "0717a8ddf1aba39e845441b72dbece87cd6438aba8f917a39c9d497363b2d39f"
+          "sha256": "b3c2590f86ed3202d2f1c820e840a9bd60e3714285456534e06ecab210aaf3df"
         }
       ]
     },
@@ -285,17 +301,17 @@
         {
           "path": "PUBLISHED/data/case-studies/case-study-highlights.json",
           "bytes": 9295,
-          "sha256": "b840d422ddf3e94ddfa3801f18a3feb2463ce085b5f044558bcec1017e0d2d8c"
+          "sha256": "2295c7633b0730128d5df673edbdccd46099313dda256972d26f609e103f3e87"
         },
         {
           "path": "PUBLISHED/data/case-studies/current-model.json",
           "bytes": 47119,
-          "sha256": "c75c8921defe63b8f104e96a3df8a6a96484656a717abb31c011efd87cb10660"
+          "sha256": "dd1daea99d79701759e40e8ee0b5362f0ab5ac477a7540f4095d01482600e3a8"
         },
         {
           "path": "PUBLISHED/data/case-studies/study-landing.manifest.json",
           "bytes": 689,
-          "sha256": "b0b79cd237bfefa2554b8b6759eea3bf71516dc3dde9c7309b7ad542f184adc2"
+          "sha256": "18d634fac991fa4d53b18c00745ba3bde35d3dd3776eb6fdb7248189c9cb69b2"
         }
       ]
     }
@@ -399,9 +415,9 @@
       "compared": "PUBLISHED/data/case-studies/chirchik.json",
       "reproduced": true,
       "substantiveDifferenceCount": 0,
-      "provenanceDifferenceCount": 0,
+      "provenanceDifferenceCount": 16,
       "substantiveDifferences": [],
-      "checkedAt": "2026-09-11T04:39:19+00:00",
+      "checkedAt": "2026-09-12T11:58:48+00:00",
       "command": "npm run cases:reproduce"
     },
     "method": "Two independent checks. The scores the page shows are recomputed from the published daily CSV and compared with the model's own summary. Separately, the observation stage is rebuilt into a temporary directory and diffed field by field against what is published, so a drift between the code and the artefacts shows up as a difference rather than as silence."
@@ -411,7 +427,7 @@
       "path": "TESTS/test_chirchik_case_studies.py",
       "command": "npm run test:cases",
       "purpose": "The observation record: screening, joins, climatology and benchmark.",
-      "sha256": "2a90541061b9fc84d1bad3fde33ea4d0ae74cff8aed23e271a319c8f857e6176",
+      "sha256": "95f7dd1f5a977847ea6274b81e48255b26e76dbaf174e8cecb8d6dde6a68fed8",
       "caseCount": 10,
       "cases": [
         {
@@ -460,7 +476,7 @@
       "path": "TESTS/test_chirchik_advanced.py",
       "command": "npm run test:cases",
       "purpose": "The advanced validation and environment modelling artefacts.",
-      "sha256": "dfc733563fc3c5c70e8a1f21966ac0014a1a60e73579439c0a00d1239867b8d3",
+      "sha256": "b53df2866b726ac677d94df4c846b7bef6d84a7fdb4a141380c38a925fcf2d86",
       "caseCount": 11,
       "cases": [
         {
@@ -513,7 +529,7 @@
       "path": "TESTS/test_sabitov_methods.py",
       "command": "npm run test:sabitov",
       "purpose": "The independent methodology reimplementation and its diagnostics.",
-      "sha256": "eacf2debea91d464f16ca83b9299e06301b75f75275523af24468db102b3b5e5",
+      "sha256": "6c4718f01c3977ca9f29e2210b7e21ed7dc1c4ba7842dc85809f62cd431fcbc4",
       "caseCount": 10,
       "cases": [
         {
@@ -562,7 +578,7 @@
       "path": "TESTS/test_case_study_highlights.py",
       "command": "python -m pytest TESTS/test_case_study_highlights.py",
       "purpose": "Every published finding is derived from evidence, not written by hand.",
-      "sha256": "d8a74b7a07c00900d5d0ed3bd6a72acb829234e9af29de8769d7079036bb1027",
+      "sha256": "e9d8e81e976545e97587812fa04804eb294e0d3dbdb1f598e10b43207bf6c47a",
       "caseCount": 7,
       "cases": [
         {
@@ -624,7 +640,7 @@
       "path": "TESTS/test_study_landing.py",
       "command": "python -m pytest TESTS/test_study_landing.py",
       "purpose": "The published study landing document and its recomputation checks.",
-      "sha256": "53bbb2b5099c378fd58d1cd41138d42b271b63295ad6ab05ed043d28cd3c51eb",
+      "sha256": "3b468221148b4223d7751ff79bf8cfa4321c7c5af18faa6be24fa78333f9cf45",
       "caseCount": 5,
       "cases": [
         {
@@ -721,7 +737,7 @@
       "encoding": "UTF-8 without BOM",
       "columnNaming": "snake_case with the unit in the name"
     },
-    "generatedAt": "2026-09-11T04:21:37+00:00",
+    "generatedAt": "2026-09-11T04:39:21+00:00",
     "tables": [
       {
         "file": "pskem_daily.csv",

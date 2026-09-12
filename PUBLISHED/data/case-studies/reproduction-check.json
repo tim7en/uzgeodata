@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-11T04:39:19+00:00",
+  "generatedAt": "2026-09-12T11:58:48+00:00",
   "stage": "npm run cases:build",
   "forcing": "PUBLISHED/data/case-studies/station-product-monthly.csv",
   "compared": "PUBLISHED/data/case-studies/chirchik.json",
@@ -8,7 +8,24 @@
   "reproduced": true,
   "substantiveDifferences": [],
   "substantiveDifferenceCount": 0,
-  "provenanceDifferenceCount": 0,
-  "provenanceDifferences": [],
+  "provenanceDifferenceCount": 16,
+  "provenanceDifferences": [
+    ".provenance[0].bytes",
+    ".provenance[0].sha256",
+    ".provenance[1].bytes",
+    ".provenance[1].sha256",
+    ".provenance[2].bytes",
+    ".provenance[2].sha256",
+    ".provenance[3].bytes",
+    ".provenance[3].sha256",
+    ".provenance[4].bytes",
+    ".provenance[4].sha256",
+    ".provenance[6].bytes",
+    ".provenance[6].sha256",
+    ".provenance[7].bytes",
+    ".provenance[7].sha256",
+    ".provenance[8].bytes",
+    ".provenance[8].sha256"
+  ],
   "method": "The study is rebuilt into a temporary directory from the same stored inputs and compared field by field. Generation timestamps are excluded. Provenance hashes are counted separately because they record the inputs as they are now."
 }
