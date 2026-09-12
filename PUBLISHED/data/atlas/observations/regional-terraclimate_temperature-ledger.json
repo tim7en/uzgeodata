@@ -1,0 +1,244 @@
+{
+  "run_id": "regional-terraclimate_temperature-20260912T044047232580Z",
+  "started_at": "2026-09-12T04:40:47.233+00:00",
+  "source": "terraclimate_temperature",
+  "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+  "bands": [
+    "tmmx",
+    "tmmn"
+  ],
+  "attributes": [
+    "uzgeodata.dated.v1.tmx_dc_s",
+    "uzgeodata.dated.v1.tmn_dc_s"
+  ],
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "years": [
+    2003,
+    2022
+  ],
+  "batch_size": 250,
+  "expected_rows": 3573600,
+  "retries": [],
+  "failures": [],
+  "by_year": {
+    "2003": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 308.87679569999455,
+      "rows_per_band": 89340
+    },
+    "2004": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 308.0707368000003,
+      "rows_per_band": 89340
+    },
+    "2005": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 306.23322069999995,
+      "rows_per_band": 89340
+    },
+    "2006": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 408.27791149998666,
+      "rows_per_band": 89340
+    },
+    "2007": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 399.7281231000088,
+      "rows_per_band": 89340
+    },
+    "2008": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 370.06586540001445,
+      "rows_per_band": 89340
+    },
+    "2009": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 429.6073825000203,
+      "rows_per_band": 89340
+    },
+    "2010": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 378.77316909999354,
+      "rows_per_band": 89340
+    },
+    "2011": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 384.5344677999965,
+      "rows_per_band": 89340
+    },
+    "2012": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 375.75325180002255,
+      "rows_per_band": 89340
+    },
+    "2013": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 359.5870655999752,
+      "rows_per_band": 89340
+    },
+    "2014": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 380.5600555000128,
+      "rows_per_band": 89340
+    },
+    "2015": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 352.6165920999774,
+      "rows_per_band": 89340
+    },
+    "2016": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 358.46251379998284,
+      "rows_per_band": 89340
+    },
+    "2017": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 370.7507006000087,
+      "rows_per_band": 89340
+    },
+    "2018": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 473.400129799993,
+      "rows_per_band": 89340
+    },
+    "2019": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 427.4685457999876,
+      "rows_per_band": 89340
+    },
+    "2020": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 307.6304415000195,
+      "rows_per_band": 89340
+    },
+    "2021": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 383.4744878000056,
+      "rows_per_band": 89340
+    },
+    "2022": {
+      "rows": 178680,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 178680,
+      "null_months": 0,
+      "seconds": 372.1094153000158,
+      "rows_per_band": 89340
+    }
+  },
+  "finished_at": "2026-09-12T06:48:42.704+00:00",
+  "wall_seconds": 7675.4461313000065,
+  "stored_rows": 3573600,
+  "complete": true,
+  "basin_support": {
+    "basins": 7445,
+    "cells_min": 1,
+    "cells_max": 1757,
+    "cells_median": 835,
+    "basins_at_or_below": {
+      "1": 10,
+      "5": 56,
+      "25": 174,
+      "100": 438
+    },
+    "basins_without_a_cell": 0,
+    "meaning": "Analysis cells per basin on the 15 arc-second grid. A value from a basin with few cells is supported by few observations; every row carries its own valid and expected counts so this can be filtered on. A basin with no cell at all would yield no value rather than a zero."
+  }
+}
