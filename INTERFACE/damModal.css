@@ -38,3 +38,17 @@
    the group, so it is inert. */
 .land-dam-count,.atlas-dam-count{background:none !important;border:0 !important;box-shadow:none !important;color:#fff !important;font:700 10px var(--display,'Barlow Condensed',sans-serif) !important;padding:0 !important;pointer-events:none !important}
 .land-dam-count::before,.atlas-dam-count::before{display:none !important}
+
+/* Modal type scale, matching the basin modal: body text 12-13px, labels 9-10px. */
+.dam-modal-kicker,.dam-modal-block h3{font-size:10px}
+.dam-modal-card h2{font-size:30px}
+.dam-modal-sub{font-size:12.5px}
+.dam-modal a{font-size:13px}
+.dam-modal-figures dt,.dam-modal-ids dt{font-size:9px}
+.dam-modal-figures dd{font-size:20px}
+.dam-modal-figures dd em{font-size:11px}
+.dam-modal-block p{font-size:13px}
+.dam-modal-ids code{font-size:12px}
+.dam-modal-note{font-size:11.5px}
+.dam-modal-card{width:min(620px,100%)}
+@media(max-width:600px){.dam-modal-card h2{font-size:24px}}

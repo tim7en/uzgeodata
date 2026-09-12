@@ -263,14 +263,30 @@ export function legendStops(breaks, palette = CHOROPLETH) {
   }));
 }
 
-export function overlayStyle(properties, state, value, breaks, palette = CHOROPLETH) {
+export const OVERLAY_OPACITY = { default: 0.66, min: 0.1, max: 1 };
+
+/** Clamp a reader's opacity choice, falling back to the default for anything unreadable. */
+export function overlayOpacity(value) {
+  const number = Number(value);
+  if (value === null || value === '' || !Number.isFinite(number)) return OVERLAY_OPACITY.default;
+  return Math.min(OVERLAY_OPACITY.max, Math.max(OVERLAY_OPACITY.min, number));
+}
+
+// `opacity` is the reader's setting for an ordinary basin. Hover and selection lift
+// from it rather than to a fixed value, so a faint map still shows what is picked.
+// The outline is drawn in the fill colour and fades with it, or a faint fill would
+// leave a mesh of bright borders over the base map.
+export function overlayStyle(properties, state, value, breaks, palette = CHOROPLETH, opacity = OVERLAY_OPACITY.default) {
   const base = basinStyle(properties, state);
   const fill = choroplethColor(value, breaks, palette);
+  const level = overlayOpacity(opacity);
   if (!fill) return { ...base, fillOpacity: state?.selected ? 0.3 : 0.06 };
+  const lifted = state?.selected ? level + 0.26 : state?.hovered ? level + 0.19 : level;
   return {
     ...base,
     fillColor: fill,
-    fillOpacity: state?.selected ? 0.92 : state?.hovered ? 0.85 : 0.66,
+    fillOpacity: Math.min(1, lifted),
+    opacity: state?.selected || state?.hovered ? base.opacity : Math.min(base.opacity, level),
     color: state?.selected || state?.hovered ? '#ffffff' : fill,
   };
 }

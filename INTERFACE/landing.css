@@ -490,3 +490,51 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-onboarding{font:400 12px/1.6 var(--body);color:var(--ink);margin:0 0 14px}
 .land-onboarding strong{display:block;margin-bottom:4px}
 .land-onboarding a{color:var(--l-accent-1)}
+
+/* ------------------------------------------------------------- overlay opacity */
+.land-opacity{display:block;margin-top:10px}
+.land-opacity>span{display:flex;justify-content:space-between;font:800 9.5px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--l-accent-1);margin-bottom:4px}
+.land-opacity output{font:600 11px var(--mono);letter-spacing:0;color:var(--dim)}
+.land-opacity input{width:100%;margin:0;accent-color:var(--l-accent-1);cursor:pointer}
+
+/* ----------------------------------------------------------- modal type scale
+   The basin modal kept the 6.5-11px scale the panel left behind: a table read
+   row by row at that size is squinting. Body text moves to 12-14px, labels to
+   10-11px, keeping the hierarchy, and the dialog widens to hold the longer lines. */
+.land-modal>section{width:min(1180px,100%)}
+.land-modal header span{font-size:10px}
+.land-modal header h2{font-size:30px}
+.land-modal header p{font-size:12.5px}
+.land-modal-tabs button{font-size:13.5px;padding:10px 14px}
+.land-modal-tools input{font-size:13px}
+.land-modal-kinds button,.land-sub-chips button{font-size:10px}
+.land-modal-tools>span{font-size:11px}
+.land-sub-note{font-size:13px}
+.land-sub-note h3{font-size:18px}
+.land-sub-counts span{font-size:11px}
+.land-sub-only{font-size:12px}
+.land-sub-links a{font-size:13px}
+.land-sub-table small{font-size:11px}
+.land-sub-toggle strong{font-size:13px}
+.land-sub-toggle code{font-size:11px}
+.land-sub-cat{font-size:9.5px}
+.land-modal tbody td.land-sub-num{font-size:13px}
+.land-sub-evidence h4,.land-sub-evidence dt{font-size:10px}
+.land-sub-evidence>div>p{font-size:12.5px}
+.land-sub-evidence dd,.land-sub-evidence a,.land-sub-diverge li,.land-sub-foot{font-size:12px}
+.land-sub-evidence dd code{font-size:11px}
+.land-opportunity{font-size:11px}
+.land-modal thead th{font-size:9.5px;padding:10px 12px}
+.land-modal tbody td{font-size:12px;padding:10px 12px}
+.land-modal tbody strong{font-size:13px}
+.land-modal tbody code{font-size:10.5px}
+.land-modal-value{font-size:14px}
+.land-modal-value em,.land-modal-source small{font-size:10.5px}
+.land-modal footer,.land-modal footer code{font-size:11px}
+.land-modal footer a{font-size:10px}
+.land-lake-match p{font-size:13px}
+.land-hist-figure figcaption{font-size:12px}
+.land-hist-axis{font-size:10px}
+.land-hist-warn{font-size:12.5px}
+.land-hist-download{font-size:12px}
+.land-modal tbody th[scope=row]{font-size:13px}

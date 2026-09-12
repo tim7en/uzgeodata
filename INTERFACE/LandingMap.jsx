@@ -14,8 +14,8 @@ import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
   clusterDams, damClusterBounds, damClusterStyle,
   damLabel, damLegendStops, damStyle, damTotals,
-  formatAttribute, formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
-  overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
+  OVERLAY_OPACITY, formatAttribute, formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
+  overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
 const LADDER_URL = '/data/hydroclimate/reference-basin-levels.json';
@@ -24,6 +24,7 @@ const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
 const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const CENTRE = [40.2, 70.5];
+const OPACITY_KEY = 'uzgeodata.overlayOpacity';
 // How much of each corner the fixed UI takes up, in pixels, so a fitted view
 // never lands a basin under the sidebar, the header or the zoom controls.
 const OCCLUDED_TOP_LEFT = [300, 170];
@@ -224,6 +225,14 @@ export default function LandingMap() {
   const [hoveredId, setHoveredId] = useState(null);
   const [query, setQuery] = useState('');
   const [overlay, setOverlay] = useState('');
+  // A reader who turns the colours down to read the base map under them usually
+  // wants that again next visit; storage can be unavailable, so it is a nicety only.
+  const [opacity, setOpacity] = useState(() => {
+    try { return overlayOpacity(window.localStorage.getItem(OPACITY_KEY)); } catch { return OVERLAY_OPACITY.default; }
+  });
+  useEffect(() => {
+    try { window.localStorage.setItem(OPACITY_KEY, String(opacity)); } catch { /* storage blocked */ }
+  }, [opacity]);
   const [tableOpen, setTableOpen] = useState(false);
   const [catalogue, setCatalogue] = useState(null);
   const [bounds, setBounds] = useState(null);
@@ -377,8 +386,9 @@ export default function LandingMap() {
 
   const styleFor = useCallback((properties, state) => {
     if (!overlay || !store) return basinStyle(properties, state);
-    return overlayStyle(properties, state, readAttribute(store, properties.hybas_id, overlay), overlayBreaks);
-  }, [overlay, store, overlayBreaks]);
+    return overlayStyle(properties, state, readAttribute(store, properties.hybas_id, overlay), overlayBreaks,
+      undefined, opacity);
+  }, [overlay, store, overlayBreaks, opacity]);
 
   const features = basins?.features || [];
   const byId = useMemo(() => new Map(features.map(feature => [String(feature.properties.hybas_id), feature])), [features]);
@@ -637,6 +647,11 @@ export default function LandingMap() {
           })}
         </select>
       </label>
+      {overlay && <label className="land-opacity">
+        <span>Opacity <output>{Math.round(opacity * 100)}%</output></span>
+        <input type="range" min={OVERLAY_OPACITY.min} max={OVERLAY_OPACITY.max} step="0.05" value={opacity}
+          onChange={event => setOpacity(overlayOpacity(event.target.value))}/>
+      </label>}
       {overlay && !store && <p className="land-group-note">Loading level {active.level} attributes…</p>}
       {overlay && legend.length > 0 && <div className="land-legend">
         <span>{overlayMeta?.units || ''}</span>
