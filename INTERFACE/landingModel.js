@@ -20,16 +20,29 @@ export function systemMeta(systemId) {
   return SYSTEMS[systemId] || FALLBACK_SYSTEM;
 }
 
-export function basinStyle(properties, state = {}) {
+// The reader's opacity setting applied to the river-system wash. The default keeps
+// the light wash above; below it the wash fades towards nothing, above it rises to
+// a solid colour, so the same slider means the same thing in both colourings.
+const SYSTEM_FILL_MAX = 0.62;
+const OUTLINE = 0.45;
+
+function systemFill(opacity) {
+  const setting = opacity === undefined ? 0.66 : Math.min(1, Math.max(0, Number(opacity)));
+  if (setting <= 0.66) return FILL.base * (setting / 0.66);
+  return FILL.base + (SYSTEM_FILL_MAX - FILL.base) * ((setting - 0.66) / (1 - 0.66));
+}
+
+export function basinStyle(properties, state = {}, opacity) {
   const { color } = systemMeta(properties?.system_id);
   const selected = Boolean(state.selected);
   const hovered = Boolean(state.hovered) && !selected;
+  const base = systemFill(opacity);
   return {
     color,
     weight: selected ? 1.8 : hovered ? 1.2 : 0.35,
-    opacity: selected || hovered ? 0.95 : 0.45,
+    opacity: selected || hovered ? 0.95 : Math.min(OUTLINE, Math.max(0.15, base * 3.3)),
     fillColor: color,
-    fillOpacity: selected ? FILL.selected : hovered ? FILL.hovered : FILL.base,
+    fillOpacity: selected ? Math.max(FILL.selected, base + 0.2) : hovered ? Math.max(FILL.hovered, base + 0.12) : base,
   };
 }
 

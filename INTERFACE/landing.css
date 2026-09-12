@@ -538,3 +538,30 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-hist-warn{font-size:12.5px}
 .land-hist-download{font-size:12px}
 .land-modal tbody th[scope=row]{font-size:13px}
+
+/* ------------------------------------------------------------ area of interest */
+.land-aoi{display:flex;flex-direction:column;gap:8px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.land-aoi-title,.land-aoi-rule>span{font:800 9.5px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--l-accent-1)}
+.land-aoi .land-group-note{margin:0}
+.land-aoi button{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--ink);font:600 12px var(--display);cursor:pointer}
+.land-aoi button:hover:not(:disabled){border-color:var(--l-accent-1)}
+.land-aoi button:disabled{opacity:.5;cursor:default}
+.land-aoi .land-aoi-primary{background:var(--l-accent-1);border-color:var(--l-accent-1);color:var(--l-bg-4)}
+.land-aoi-row{display:flex;gap:6px}
+.land-aoi-row button{flex:1}
+.land-aoi-rule{display:flex;flex-direction:column;gap:5px}
+.land-aoi-rule select{width:100%;background:var(--l-bg-7);border:1px solid var(--line);border-radius:4px;color:var(--ink);font:600 12px var(--display);padding:8px}
+.land-aoi-summary{display:flex;flex-direction:column;gap:2px}
+.land-aoi-summary strong{font:700 18px var(--display);color:var(--ink)}
+.land-aoi-summary small{font-size:11px;color:var(--dim)}
+.land-aoi-downloads{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.land-aoi-downloads button{width:100%;justify-content:flex-start;text-align:left;padding:7px 9px}
+.land-aoi-downloads button span{display:flex;flex-direction:column;flex:1;min-width:0}
+.land-aoi-downloads button strong{font:600 12px var(--display)}
+.land-aoi-downloads button small{font:400 10.5px var(--body);color:var(--dim)}
+.land-aoi-downloads button em{font:700 9.5px var(--mono);font-style:normal;color:var(--l-accent-1)}
+.land-aoi-error{margin:0;padding:8px 10px;border-left:3px solid #ff6b6b;background:rgba(255,107,107,.08);font-size:11.5px;line-height:1.5;color:var(--ink)}
+.land-aoi-caveat{margin:0;font-size:10.5px;line-height:1.5;color:var(--l-line-1)}
+.land-aoi .land-aoi-link{align-self:flex-start;padding:0;border:0;color:var(--l-accent-1);font:600 11px var(--body);text-decoration:underline}
+.land-aoi-drawing,.land-aoi-drawing .leaflet-interactive{cursor:crosshair !important}
+.land-dock{max-height:78vh}

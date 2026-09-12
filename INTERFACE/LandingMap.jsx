@@ -10,6 +10,8 @@ import StationLayer from './StationLayer.jsx';
 import StationModal from './StationModal.jsx';
 import BasinSubstitutes from './BasinSubstitutes.jsx';
 import BasinHistory from './BasinHistory.jsx';
+import { AoiLayer, AoiPanel } from './AoiTool.jsx';
+import { selectBasins } from './aoiModel.js';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
   clusterDams, damClusterBounds, damClusterStyle,
@@ -234,6 +236,14 @@ export default function LandingMap() {
     try { window.localStorage.setItem(OPACITY_KEY, String(opacity)); } catch { /* storage blocked */ }
   }, [opacity]);
   const [tableOpen, setTableOpen] = useState(false);
+  // Area of interest. Drawing borrows map clicks, so basin selection is held off
+  // through a ref the (stable) basin click handler can read.
+  const [aoiDrawing, setAoiDrawing] = useState(false);
+  const [aoiVertices, setAoiVertices] = useState([]);
+  const [aoiClosed, setAoiClosed] = useState(false);
+  const [aoiRule, setAoiRule] = useState('intersects');
+  const drawingRef = useRef(false);
+  useEffect(() => { drawingRef.current = aoiDrawing; }, [aoiDrawing]);
   const [catalogue, setCatalogue] = useState(null);
   const [bounds, setBounds] = useState(null);
   const [dams, setDams] = useState(null);
@@ -385,10 +395,42 @@ export default function LandingMap() {
   const legend = useMemo(() => legendStops(overlayBreaks), [overlayBreaks]);
 
   const styleFor = useCallback((properties, state) => {
-    if (!overlay || !store) return basinStyle(properties, state);
+    if (!overlay || !store) return basinStyle(properties, state, opacity);
     return overlayStyle(properties, state, readAttribute(store, properties.hybas_id, overlay), overlayBreaks,
       undefined, opacity);
   }, [overlay, store, overlayBreaks, opacity]);
+
+  // The area of interest always selects level-12 basins, whatever level is drawn,
+  // so their geometry is fetched once an area is closed.
+  const level12Entry = ladder?.levels?.find(entry => entry.level === 12);
+  useEffect(() => {
+    if (!aoiClosed || !level12Entry || levels[12]) return undefined;
+    let live = true;
+    json(level12Entry.url)
+      .then(document => live && setLevels(current => ({ ...current, 12: document })))
+      .catch(cause => live && setError(cause.message));
+    return () => { live = false; };
+  }, [aoiClosed, level12Entry, levels]);
+  const aoiSelection = useMemo(() => (aoiClosed && levels[12]
+    ? selectBasins(levels[12].features, aoiVertices, aoiRule) : []), [aoiClosed, levels, aoiVertices, aoiRule]);
+  // Vertices are mirrored in a ref as they are added: a double-click's own clicks
+  // may not have rendered by the time the double-click asks to finish.
+  const aoiVerticesRef = useRef(aoiVertices);
+  aoiVerticesRef.current = aoiVertices;
+  const addAoiVertex = useCallback(vertex => {
+    const current = aoiVerticesRef.current;
+    const last = current[current.length - 1];
+    if (last && last[0] === vertex[0] && last[1] === vertex[1]) return;
+    aoiVerticesRef.current = [...current, vertex];
+    setAoiVertices(aoiVerticesRef.current);
+  }, []);
+  const finishAoi = useCallback(() => {
+    if (aoiVerticesRef.current.length < 3) return;
+    setAoiDrawing(false);
+    setAoiClosed(true);
+  }, []);
+  const startAoi = useCallback(() => { aoiVerticesRef.current = []; setAoiVertices([]); setAoiClosed(false); setAoiDrawing(true); }, []);
+  const clearAoi = useCallback(() => { aoiVerticesRef.current = []; setAoiVertices([]); setAoiClosed(false); setAoiDrawing(false); }, []);
 
   const features = basins?.features || [];
   const byId = useMemo(() => new Map(features.map(feature => [String(feature.properties.hybas_id), feature])), [features]);
@@ -451,7 +493,8 @@ export default function LandingMap() {
     layer.on({
       mouseover: () => setHoveredId(id),
       mouseout: () => setHoveredId(current => (current === id ? null : current)),
-      click: () => { setSelected(feature); setDam(null); setLake(null); setStation(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
+      click: () => {
+        if (drawingRef.current) return; setSelected(feature); setDam(null); setLake(null); setStation(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
     });
   }, []);
 
@@ -516,6 +559,8 @@ export default function LandingMap() {
           <Tooltip permanent direction="center" className="land-dam-count">{cluster.count}</Tooltip>
         </CircleMarker>;
       })}
+      <AoiLayer drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} selection={aoiSelection}
+        onAdd={addAoiVertex} onFinish={finishAoi} onCancel={clearAoi}/>
       <FitTo bounds={bounds}/>
       <WatchZoom onZoom={setZoom}/>
       <ZoomControl position="bottomright"/>
@@ -636,7 +681,10 @@ export default function LandingMap() {
     </aside>
 
 
-    {basins && groups && <section className="land-dock" aria-label="Basin colouring and map key">
+    {basins && groups && <section className="land-dock" aria-label="Area of interest, basin colouring and map key">
+      <AoiPanel drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} rule={aoiRule}
+        selection={aoiSelection} loadingGeometry={aoiClosed && !levels[12]}
+        onStart={startAoi} onFinish={finishAoi} onCancel={clearAoi} onClear={clearAoi} onRule={setAoiRule}/>
       <label className="land-dock-select">
         <span>Colour basins by</span>
         <select value={overlay} onChange={event => setOverlay(event.target.value)}>
@@ -647,11 +695,11 @@ export default function LandingMap() {
           })}
         </select>
       </label>
-      {overlay && <label className="land-opacity">
-        <span>Opacity <output>{Math.round(opacity * 100)}%</output></span>
-        <input type="range" min={OVERLAY_OPACITY.min} max={OVERLAY_OPACITY.max} step="0.05" value={opacity}
-          onChange={event => setOpacity(overlayOpacity(event.target.value))}/>
-      </label>}
+      <label className="land-opacity">
+        <span>Basin colour opacity <output>{Math.round(opacity * 100)}%</output></span>
+        <input type="range" min={OVERLAY_OPACITY.min} max={OVERLAY_OPACITY.max} step="0.02" value={opacity}
+          aria-label="Basin colour opacity" onChange={event => setOpacity(overlayOpacity(event.target.value))}/>
+      </label>
       {overlay && !store && <p className="land-group-note">Loading level {active.level} attributes…</p>}
       {overlay && legend.length > 0 && <div className="land-legend">
         <span>{overlayMeta?.units || ''}</span>
