@@ -43,6 +43,18 @@ await writeFile(path.join(output, 'portal.html'), `<!doctype html><html lang="en
 <meta http-equiv="refresh" content="0;url=${base}"><title>UzGeoData basin map</title>
 </head><body><a href="${base}">Open the public basin map</a></body></html>`);
 
+// Source geometry republished for the internal layer-review tool: HydroSHEDS
+// BasinATLAS and HydroBASINS at every level, 166 MB of it. The preview is not the
+// place to redistribute upstream data unchanged - it is available from HydroSHEDS,
+// it is not this project's product, and a public site with a one-gigabyte ceiling
+// should spend that ceiling on what it made rather than on what it downloaded. One
+// level stays, because the ontology page draws the basin outlines it explains on.
+//
+// The review index is filtered to match further down, so the page lists what is
+// actually published rather than offering layers that answer 404.
+const REVIEW_KEEP = 'data/review/basinatlas/basinatlas_uz_lev07.geojson';
+const excluded = relative => relative.startsWith('data/review/') && relative !== REVIEW_KEEP;
+
 // Git's public-file list is the release allowlist. Raw partitions and untracked
 // downloads cannot accidentally enter the artifact. History is checked above.
 const files = new Set(execFileSync('git', ['ls-files', '-z', 'PUBLISHED'], { encoding: 'utf8', maxBuffer: 8e6 })
@@ -52,6 +64,7 @@ for (const name of await readdir(path.join(published, 'data/atlas/history'))) {
 }
 await each(files, 4, async relative => {
   if (relative.split('/').some(part => part.startsWith('time_kind=') || part.startsWith('.'))) return;
+  if (excluded(relative)) return;
   const target = path.join(output, relative);
   await mkdir(path.dirname(target), { recursive: true });
   if (/\.(?:json|geojson)$/.test(relative)) {
@@ -59,6 +72,23 @@ await each(files, 4, async relative => {
     await writeFile(target, JSON.stringify(data));
   } else await copyFile(path.join(published, relative), target);
 });
+// The review index promises 38 layers. Whatever was not published is removed from
+// it here, so the tool offers what exists instead of erroring a layer at a time.
+const reviewIndex = path.join(output, 'data/review-layers.json');
+try {
+  const index = JSON.parse(await readFile(reviewIndex, 'utf8'));
+  const before = index.layers.length;
+  index.layers = index.layers.filter(layer => !excluded(layer.url.replace(/^\//, '')));
+  index.withheld = {
+    layers: before - index.layers.length,
+    reason: 'Source geometry from HydroSHEDS, not republished in the public preview. '
+      + 'It is available unchanged from the original provider.',
+  };
+  await writeFile(reviewIndex, JSON.stringify(index));
+  console.log(`Review index: ${index.layers.length} published, ${index.withheld.layers} withheld.`);
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
 console.log('Copied reviewed public files; checking deployment paths.');
 
 // Saved catalogues as well as browser modules contain root-relative URLs.
