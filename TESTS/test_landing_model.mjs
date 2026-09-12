@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
   CHOROPLETH, HEADLINE_ATTRIBUTES, carriesAttributes, choroplethColor, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
-  legendStops, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
+  OVERLAY_OPACITY, legendStops, overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
   clusterDams, damClusterBounds, damClusterCellSize, damClusterLabel, damClusterStyle,
@@ -204,6 +204,22 @@ test('an unmeasured basin stays unfilled under an overlay', () => {
   assert.ok(measured.fillOpacity > 0.5, 'a measured basin has to read as coloured');
   assert.ok(blank.fillOpacity < 0.1, 'a basin with no value must not look like a low value');
   assert.equal(overlayStyle(properties, {selected: true}, 9, breaks).color, '#ffffff');
+});
+
+test('overlay opacity follows the reader and keeps hover and selection visible', () => {
+  const breaks = quantileBreaks([1, 5, 9, 20]);
+  const properties = {system_id: 'amu_darya'};
+  assert.equal(overlayStyle(properties, {}, 9, breaks).fillOpacity, OVERLAY_OPACITY.default);
+  const faint = overlayStyle(properties, {}, 9, breaks, undefined, 0.2);
+  assert.equal(faint.fillOpacity, 0.2);
+  assert.ok(faint.opacity <= 0.2, 'outlines fade with the fill instead of meshing over the base map');
+  assert.ok(overlayStyle(properties, {hovered: true}, 9, breaks, undefined, 0.2).fillOpacity > 0.2);
+  assert.ok(overlayStyle(properties, {selected: true}, 9, breaks, undefined, 0.2).fillOpacity > 0.4);
+  assert.equal(overlayStyle(properties, {selected: true}, 9, breaks, undefined, 1).fillOpacity, 1);
+  assert.equal(overlayOpacity('0.35'), 0.35);
+  assert.equal(overlayOpacity(5), OVERLAY_OPACITY.max);
+  assert.equal(overlayOpacity(0), OVERLAY_OPACITY.min);
+  for (const unreadable of [null, '', 'abc', undefined]) assert.equal(overlayOpacity(unreadable), OVERLAY_OPACITY.default);
 });
 
 test('every headline attribute offered on the map exists in the published groups', () => {
