@@ -9,6 +9,7 @@ import LakeModal from './LakeModal.jsx';
 import StationLayer from './StationLayer.jsx';
 import StationModal from './StationModal.jsx';
 import BasinSubstitutes from './BasinSubstitutes.jsx';
+import BasinHistory from './BasinHistory.jsx';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
   clusterDams, damClusterBounds, damClusterStyle,
@@ -41,6 +42,23 @@ const PROGRAMME = [
   { id: 'projects', label: 'Projects', note: 'Work running on this data' },
   { id: 'support', label: 'Support', note: 'How to get help or report a problem' },
 ];
+
+// The three readings of one basin: what the atlas published, what this project
+// estimates independently, and the dated record those estimates were derived from.
+const TABS = [
+  ['original', 'HydroATLAS attributes'],
+  ['substitutes', 'Independent estimates'],
+  ['history', 'Monthly record'],
+];
+
+function stepTab(current, key) {
+  const order = TABS.map(([id]) => id);
+  if (key === 'Home') return order[0];
+  if (key === 'End') return order[order.length - 1];
+  const at = order.indexOf(current);
+  const next = key === 'ArrowLeft' ? at - 1 : at + 1;
+  return order[(next + order.length) % order.length];
+}
 
 const json = url => fetch(url).then(response => response.ok
   ? response.json()
@@ -116,15 +134,15 @@ function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
       </header>
 
       <div className="land-modal-tabs" role="tablist" aria-label="Basin attribute views">
-        {[['original', 'HydroATLAS attributes'], ['substitutes', 'Updated substitutes']].map(([id, label]) => <button
+        {TABS.map(([id, label]) => <button
           key={id} type="button" role="tab" id={`basin-tab-${id}`} aria-controls={`basin-panel-${id}`}
           aria-selected={tab === id} tabIndex={tab === id ? 0 : -1} onClick={() => setTab(id)}
           onKeyDown={event => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
-            event.preventDefault(); const next = event.key === 'Home' ? 'original' : event.key === 'End' ? 'substitutes' : tab === 'original' ? 'substitutes' : 'original';
+            event.preventDefault(); const next = stepTab(tab, event.key);
             setTab(next); document.getElementById(`basin-tab-${next}`)?.focus();
           } }}>{label}</button>)}
       </div>
-      <div className="land-modal-tools">
+      {tab !== 'history' && <div className="land-modal-tools">
         <label><Search size={12}/><input value={filter} onChange={event => setFilter(event.target.value)}
           placeholder="Attribute, category or column"/></label>
         <div className="land-modal-kinds">
@@ -132,10 +150,11 @@ function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
             <button key={id} type="button" className={kind === id ? 'active' : ''} onClick={() => setKind(id)}>{label}</button>)}
         </div>
         {tab === 'original' && <span>{formatNumber(rows.length)} attributes</span>}
-      </div>
+      </div>}
 
       <div className="land-modal-scroll" role="tabpanel" id={`basin-panel-${tab}`} aria-labelledby={`basin-tab-${tab}`}>
-        {tab === 'substitutes' ? <BasinSubstitutes key={`${basin.basin_level}-${basin.hybas_id}`} basin={basin} filter={filter} kind={kind}/>
+        {tab === 'history' ? <BasinHistory key={`h-${basin.basin_level}-${basin.hybas_id}`} basin={basin}/>
+          : tab === 'substitutes' ? <BasinSubstitutes key={`${basin.basin_level}-${basin.hybas_id}`} basin={basin} filter={filter} kind={kind}/>
           : loading && !store ? <p className="land-group-note">Loading the atlas attributes…</p>
           : <table>
             <thead><tr>

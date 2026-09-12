@@ -31,7 +31,7 @@
     "test:substitutes": "node --test TESTS/test_substitutes_model.mjs",
     "test:plan": "node --test TESTS/test_atlas_plan_model.mjs",
     "test:raster": "python -m pytest TESTS/test_raster_to_geojson.py -q",
-    "test": "python -m pytest TESTS -q && node --test TESTS/test_basin_trace.mjs TESTS/test_landcover_model.mjs TESTS/test_basin_layers_model.mjs TESTS/test_landing_model.mjs TESTS/test_substitutes_model.mjs TESTS/test_atlas_plan_model.mjs TESTS/test_ontology_network_model.mjs TESTS/test_ontology_export_model.mjs && npm run build",
+    "test": "python -m pytest TESTS -q && node --test TESTS/test_basin_trace.mjs TESTS/test_landcover_model.mjs TESTS/test_basin_layers_model.mjs TESTS/test_landing_model.mjs TESTS/test_substitutes_model.mjs TESTS/test_history_model.mjs TESTS/test_atlas_plan_model.mjs TESTS/test_ontology_network_model.mjs TESTS/test_ontology_export_model.mjs && npm run build",
     "hydrography:basinatlas": "python PIPELINES/extract_uz_basinatlas.py",
     "ontology:hydroatlas": "python PIPELINES/ontology/build_hydroatlas_vocabulary.py",
     "hydrography:atlaslinks": "python PIPELINES/build_atlas_basin_links.py",
@@ -124,7 +124,12 @@
     "predev": "npm run atlas:publish",
     "atlas:attribute": "python PIPELINES/run_atlas_attribute.py",
     "atlas:pskem": "python PIPELINES/update_pskem_atlas.py",
-    "atlas:science": "python PIPELINES/build_surrogate_science.py"
+    "atlas:science": "python PIPELINES/build_surrogate_science.py",
+    "test:history": "node --test TESTS/test_history_model.mjs",
+    "test:modal": "python TESTS/basin_substitutes_browser.py",
+    "atlas:history": "python PIPELINES/build_basin_history.py",
+    "atlas:coverage": "python PIPELINES/build_regional_coverage.py",
+    "atlas:api": "python PIPELINES/build_basin_api.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.1",

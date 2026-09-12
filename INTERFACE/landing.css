@@ -43,6 +43,20 @@
   --l-veil-8:rgba(4,9,12,.8);
   --l-veil-9:rgba(4,9,12,.92);
   --l-veil-10:rgba(6,11,14,.9);
+  /* Substitutes tab. These carry meaning rather than decoration: a row with an
+     independent estimate is marked, a difference is signed, and each of the six
+     atlas themes keeps one hue so a theme can be found by colour. */
+  --sub-yes:#8fe3b0;
+  --sub-yes-ink:#042313;
+  --sub-yes-tint:rgba(143,227,176,.13);
+  --sub-up:#ffb27a;
+  --sub-down:#8fd3ff;
+  --cat-anthropogenic:#ff8fa3;
+  --cat-climate:#4cc9f0;
+  --cat-hydrology:#5ecfc4;
+  --cat-landcover:#9ae66e;
+  --cat-physiography:#d5a6ff;
+  --cat-soils-geology:#ffc971;
   color-scheme:dark;
 }
 [data-theme="light"]{
@@ -86,6 +100,17 @@
   --l-veil-8:rgba(247,249,251,.8);
   --l-veil-9:rgba(247,249,251,.92);
   --l-veil-10:rgba(245,248,250,.9);
+  --sub-yes:#1d7a4c;
+  --sub-yes-ink:#f2fbf5;
+  --sub-yes-tint:rgba(29,122,76,.11);
+  --sub-up:#a6521a;
+  --sub-down:#0d6285;
+  --cat-anthropogenic:#b3184a;
+  --cat-climate:#0c6f8d;
+  --cat-hydrology:#0f6b6b;
+  --cat-landcover:#3d7a1c;
+  --cat-physiography:#6b3fa0;
+  --cat-soils-geology:#8a5a12;
   color-scheme:light;
 }
 :root{--display:'Barlow Condensed',sans-serif;--body:'Manrope',sans-serif;--mono:ui-monospace,'SFMono-Regular',monospace;--ink:var(--l-text-3);--dim:var(--l-text-1);--line:var(--l-bg-7);--panel:var(--l-veil-10)}
@@ -201,14 +226,55 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-modal-tabs button{background:transparent;color:var(--ink);padding:9px 12px;border:1px solid var(--line);cursor:pointer;font:600 11px var(--display)}
 .land-modal-tabs button[aria-selected=true]{border-color:var(--l-accent-1);box-shadow:inset 0 -2px var(--l-accent-1)}
 .land-sub-note{padding:12px 18px;font-size:11px;color:var(--dim)}
-.land-sub-note p{line-height:1.6;margin:5px 0}.land-sub-note a,.land-sub-table a{color:var(--l-accent-1)}
+.land-sub-note p{line-height:1.6;margin:5px 0;max-width:78ch}
+.land-sub-note h3{margin:0 0 6px;font:600 15px var(--display);color:var(--ink)}
+.land-sub-note a,.land-sub-table a{color:var(--l-accent-1)}
 .land-sub-note button{background:var(--l-bg-3);color:var(--ink);border:1px solid var(--line);padding:8px;cursor:pointer}
-.land-sub-key{display:inline-block;background:#dff3d9;color:#22472b;padding:3px 7px;border-radius:3px;margin-right:8px}
-.land-modal tbody td.land-sub-updated,.land-modal tbody tr:hover td.land-sub-updated{background:#dff3d9;color:#22472b}
-.land-modal tbody td.land-sub-updated strong,.land-modal tbody td.land-sub-updated small{color:#22472b}
-.land-sub-table{min-width:950px}.land-sub-table small{display:block;margin-top:4px;font-size:9px;line-height:1.5}
+.land-sub-counts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:8px}
+.land-sub-counts span{font:700 9px var(--display);letter-spacing:.09em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--line);color:var(--dim)}
+.land-sub-counts span.land-sub-key{background:var(--sub-yes);border-color:var(--sub-yes);color:var(--sub-yes-ink)}
+.land-sub-links{display:flex;flex-wrap:wrap;gap:14px}
+.land-sub-filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:0 18px 12px}
+.land-sub-chips{display:flex;flex-wrap:wrap;gap:5px}
+.land-sub-chips button{padding:5px 9px;border:1px solid var(--line);background:transparent;color:var(--dim);font:700 8px var(--display);letter-spacing:.09em;text-transform:uppercase;cursor:pointer;border-left-width:3px}
+.land-sub-chips button:hover{color:var(--ink)}
+.land-sub-chips button.active{background:var(--l-sheen-3);color:var(--ink);border-color:currentColor;border-left-color:currentColor}
+.land-sub-only{display:flex;align-items:center;gap:6px;margin-left:auto;font-size:10px;color:var(--dim);cursor:pointer}
+.cat-anthropogenic{border-left-color:var(--cat-anthropogenic)}
+.cat-climate{border-left-color:var(--cat-climate)}
+.cat-hydrology{border-left-color:var(--cat-hydrology)}
+.cat-landcover{border-left-color:var(--cat-landcover)}
+.cat-physiography{border-left-color:var(--cat-physiography)}
+.cat-soils-geology{border-left-color:var(--cat-soils-geology)}
+.land-sub-table{min-width:980px}
+.land-sub-table small{display:block;margin-top:4px;font-size:9px;line-height:1.5;color:var(--l-line-1)}
+.land-sub-toggle{display:block;width:100%;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.land-sub-toggle strong{display:block;color:var(--ink);font-size:10.5px;line-height:1.4}
+.land-sub-toggle code{display:block;margin-top:3px;font:600 9px var(--mono);color:var(--l-line-1)}
+.land-sub-toggle:hover strong{color:var(--l-accent-1)}
+.land-sub-cat{display:inline-block;margin-top:6px;padding:2px 6px;border-left:3px solid var(--line);font:700 8px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);background:var(--l-sheen-2)}
+.land-modal tbody td.land-sub-num{font:600 11px var(--mono);white-space:nowrap;color:var(--ink)}
+.land-modal tbody td.land-sub-updated,.land-modal tbody tr:hover td.land-sub-updated{background:var(--sub-yes-tint);box-shadow:inset 2px 0 var(--sub-yes)}
+.land-sub-num .is-up{color:var(--sub-up)}
+.land-sub-num .is-down{color:var(--sub-down)}
+.land-sub-nocompare{color:var(--l-line-1);cursor:help}
+.land-modal tbody tr.is-open td{background:var(--l-tint-6)}
+.land-modal tbody tr.land-sub-detail td{padding:0;background:var(--l-sheen-1)}
+.land-sub-evidence{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-left:3px solid var(--l-accent-1)}
+.land-sub-evidence>div{background:var(--l-bg-3);padding:12px 14px}
+.land-sub-evidence h4{margin:0 0 6px;font:800 8px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--l-line-1)}
+.land-sub-evidence>div>p{margin:0 0 8px;font-size:10.5px;color:var(--ink);line-height:1.5}
+.land-sub-evidence dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0}
+.land-sub-evidence dl>div{display:contents}
+.land-sub-evidence dt{font:700 8px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--l-line-1);padding-top:1px}
+.land-sub-evidence dd{margin:0;font-size:10px;color:var(--dim);line-height:1.5;overflow-wrap:anywhere}
+.land-sub-evidence dd code{font:600 9px var(--mono)}
+.land-sub-evidence a{display:inline-flex;align-items:center;gap:4px;margin-top:9px;font-size:10px}
+.land-sub-diverge{grid-column:1/-1}
+.land-sub-diverge ul{margin:0;padding-left:16px}
+.land-sub-diverge li{font-size:10px;color:var(--dim);line-height:1.6}
+.land-sub-foot{display:flex;align-items:flex-start;gap:6px;grid-column:1/-1;margin:0;padding:10px 18px;font-size:10px;color:var(--l-line-1);line-height:1.6;background:var(--l-sheen-1)}
 .land-opportunity{display:inline-block;margin:6px 4px 0 0;border:1px dashed var(--l-line-1);padding:3px 5px;font-size:9px;color:var(--ink)}
-.land-sub-table details{margin-top:5px}.land-sub-table summary{cursor:pointer;font-size:9px}.land-sub-table details p{font-size:10px;line-height:1.5;max-width:240px}
 .land-modal table{width:100%;border-collapse:collapse}
 .land-modal thead th{position:sticky;top:0;z-index:1;background:var(--l-bg-5);text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);font:800 6.5px var(--display);letter-spacing:.15em;text-transform:uppercase;color:var(--l-line-1)}
 .land-modal tbody td{padding:8px 12px;border-bottom:1px solid var(--l-veil-3);font-size:9.5px;color:var(--dim);vertical-align:top}
@@ -392,3 +458,20 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
   padding:7px 13px;font:600 11px var(--display);letter-spacing:.04em}
 .station-modal-downloads button:hover{background:#1d3d4d}
 .station-modal-downloads button:focus-visible{outline:2px solid #ffd27f;outline-offset:2px}
+
+/* The monthly record. The line is drawn only where observations exist, so the
+   chart's own gaps are the QA statement and no styling should close them. */
+.land-hist-figure{margin:0;padding:14px 18px 4px}
+.land-hist-figure svg{width:100%;height:auto;overflow:visible}
+.land-hist-figure figcaption{margin-top:6px;font:600 10px var(--mono);color:var(--dim);min-height:14px}
+.land-hist-grid{stroke:var(--line);stroke-width:1;stroke-dasharray:2 4}
+.land-hist-axis{fill:var(--l-line-1);font:600 8px var(--mono)}
+.land-hist-line{fill:none;stroke:var(--l-accent-1);stroke-width:1.4;stroke-linejoin:round}
+.land-hist-dot{fill:var(--l-accent-1)}
+.land-hist-cursor{stroke:var(--l-line-1);stroke-width:1}
+.land-hist-marker{fill:var(--l-accent-1);stroke:var(--l-bg-3);stroke-width:1.5}
+.land-hist-warn{display:flex;align-items:flex-start;gap:8px;margin:0 18px 12px;padding:10px 12px;border:1px solid var(--l-accent-5);border-left-width:3px;background:var(--l-tint-3);font-size:10.5px;line-height:1.6;color:var(--ink)}
+.land-hist-download{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border:1px solid var(--l-accent-1);background:transparent;color:var(--l-accent-1);font:600 10px var(--body);cursor:pointer}
+.land-hist-download:hover{background:var(--l-tint-1)}
+.land-hist-table{min-width:640px}
+.land-modal tbody th[scope=row]{padding:8px 12px;border-bottom:1px solid var(--l-veil-3);font:600 11px var(--mono);color:var(--ink);text-align:left}

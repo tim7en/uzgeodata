@@ -93,6 +93,40 @@ def substitutes():
     return values, meta
 
 
+def families(batch):
+    """What each substitute family is, at the detail a reader needs to judge it.
+
+    A value without its resolution is not readable. An eleven-kilometre cell and a
+    thirty-metre one can produce the same number for a basin and mean entirely
+    different things about it, and the difference between the source's own grid and
+    the grid this project reduced it on is exactly where a reader is misled. The
+    known divergences from the published attribute travel with it for the same
+    reason: they are the reasons the two numbers are not the same measurement.
+
+    Held once per family rather than per attribute, because 281 attributes are drawn
+    from 56 families and repeating it would say the same thing five times over.
+    """
+    out = {}
+    for name, family in batch.get("surrogate_families", {}).items():
+        source, resolution = family.get("surrogate") or {}, family.get("resolution") or {}
+        out[name] = {
+            "fidelity": family.get("fidelity"),
+            "source": {"name": source.get("name"), "provider": source.get("provider"),
+                       "asset": source.get("asset"), "citation": source.get("citation"),
+                       "licence": source.get("licence"), "catalogue": source.get("catalogue_url"),
+                       "period": source.get("period"), "bands": source.get("bands")},
+            "resolution": {"native_m": resolution.get("native_scale_m"),
+                           "native_arcsec": resolution.get("native_arcsec"),
+                           "grid": resolution.get("grid"),
+                           "processing_arcsec": resolution.get("processing_grid_arcsec"),
+                           "resampling": resolution.get("resampling"),
+                           "support_change": resolution.get("support_change")},
+            "units": family.get("units"),
+            "divergence": family.get("divergence"),
+        }
+    return out
+
+
 def build():
     batch = json.loads(BATCH.read_text(encoding="utf-8"))
     defined = {a["column"]: a for a in batch["attributes"]}
@@ -104,12 +138,14 @@ def build():
         "generated_at": utc_now(),
         "basin_level": 12, "basins": len(published),
         "attributes": columns,
+        "families": families(batch),
         "meta": {column: {
             "label": defined[column]["label"],
             "category": defined[column]["category"],
             "unit": defined[column]["units"],
             "support": defined[column]["spatial_support"],
             "time_kind": defined[column]["time_kind"],
+            "family": defined[column].get("surrogate_family"),
             "original": {"dataset": defined[column]["source_dataset"],
                          "citation": defined[column]["source_citation"],
                          "period": defined[column]["reference_period"],
@@ -127,6 +163,9 @@ def build():
             "reproduction": "No attribute in this atlas has passed independent reproduction. "
                             "Nothing here is a scientific release.",
             "support": "s is this sub-basin; u and p accumulate everything draining through it.",
+            "resolution": "Native resolution is the grid the source measured on; the processing "
+                          "grid is the one this project reduced it onto. Reducing a coarse cell "
+                          "onto a fine grid moves the number, never the detail behind it.",
         },
     }
     CATALOGUE.write_text(json.dumps(catalogue, ensure_ascii=False), encoding="utf-8")

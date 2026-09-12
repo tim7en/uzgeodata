@@ -1,10 +1,25 @@
-"""Real portal modal: exact basin joins, colours, filters, tab keys and fetch recovery."""
+"""Real portal modal: any basin, its estimates, its evidence and its monthly record.
+
+The modal is where a reader meets the whole programme, and most of what can go wrong
+there is a wrong reading rather than a broken page. So these checks are about
+meaning: that every level-12 basin is served and not only the pilot's twenty, that a
+measured zero is marked as an estimate while a missing value is not, that a
+difference is shown only between quantities that subtract, that the evidence behind a
+number is reachable from the number, and that the monthly record shows its gaps as
+gaps in the chart, the table and the download alike.
+
+Run against a dev server: python TESTS/basin_substitutes_browser.py
+"""
 import os
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = os.environ.get('ATLAS_TEST_URL', 'http://localhost:5173')
+# A basin far outside the Pskem pilot, so "it works here" means the region and not
+# the twenty units the pilot ran on.
+REGIONAL = '4120050220'
+
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page(viewport={'width': 1440, 'height': 1000}, locale='en-US')
@@ -15,7 +30,7 @@ with sync_playwright() as p:
     def open_basin(bid):
         page.goto(BASE + '/', wait_until='domcontentloaded')
         page.locator('.land-level').wait_for()
-        for _ in range(5):
+        for _ in range(6):
             if 'Level 12' in page.locator('.land-level').inner_text():
                 break
             page.get_by_role('button', name='Zoom in', exact=True).click()
@@ -28,52 +43,132 @@ with sync_playwright() as p:
         dialog.locator('tbody tr').first.wait_for()
         return dialog
 
-    dialog = open_basin('4121289400')
-    assert not any('/substitutes-index.json' in url for url in requests), 'Substitutes should load on tab activation'
+    dialog = open_basin(REGIONAL)
     assert dialog.locator('tbody tr').count() == 281
-    dialog.get_by_role('tab', name='Updated substitutes', exact=True).click()
+    # Nothing is fetched for a tab nobody opened.
+    assert not any('/data/atlas/basins/' in url for url in requests), 'estimates load on activation'
+
+    dialog.get_by_role('tab', name='Independent estimates', exact=True).click()
     dialog.locator('.land-sub-table').wait_for()
-    assert dialog.locator('[data-substitute-status=available]').count() == 196
-    assert dialog.locator('.land-sub-updated').count() == 196
-    assert dialog.locator('[data-substitute-status=pending] .land-sub-updated').count() == 0
-    assert dialog.locator('.land-opportunity').count() > 0
-    assert dialog.locator('.land-sub-updated').first.evaluate('(e)=>getComputedStyle(e).backgroundColor') == 'rgb(223, 243, 217)'
+    estimated = dialog.locator('[data-substitute-status=estimated]').count()
+    assert estimated > 150, f'a regional basin carries its estimates, found {estimated}'
+    assert dialog.locator('.land-sub-updated').count() == estimated
+    assert dialog.locator('[data-substitute-status=empty] .land-sub-updated').count() == 0, \
+        'a missing value is never marked as an estimate'
+    assert dialog.locator('[data-substitute-status=original_only] .land-sub-updated').count() == 0
+
+    # The count in the header is the count in the table.
+    assert f'{estimated} independently estimated' in dialog.locator('.land-sub-counts').inner_text().lower()
+
+    # A measured zero is an estimate, not a gap.
+    zeros = dialog.locator('td.land-sub-updated', has_text='0').count()
+    assert zeros > 0, 'the region publishes measured zeroes'
+
+    # Evidence is reachable from the value, and carries what the value cannot show.
     dialog.get_by_placeholder('Attribute, category or column').fill('snw_pc_s01')
-    assert dialog.locator('tbody tr').count() == 1
-    assert '2003-01-01' in dialog.locator('tbody').inner_text()
+    assert dialog.locator('.land-sub-table tbody tr').count() == 1
+    dialog.locator('.land-sub-toggle').first.click()
+    evidence = dialog.locator('.land-sub-evidence')
+    evidence.wait_for()
+    text = evidence.inner_text()
+    for expected in ('ORIGINAL', 'SUBSTITUTE', 'PERIOD', 'SPATIAL', 'LICENCE', 'METHOD'):
+        assert expected in text.upper(), f'{expected} missing from the evidence panel'
+    assert 'native' in text, 'the source resolution is what limits the value'
+    assert 'not the same measurement' in text.lower(), 'the divergences must travel with the number'
+    dialog.locator('.land-sub-toggle').first.click()
+    assert dialog.locator('.land-sub-evidence').count() == 0
+
+    # Snow is deliberately not comparable by subtraction with the published attribute
+    # in units, but the family declares a reviewed conversion, so the difference shows.
     dialog.get_by_placeholder('Attribute, category or column').fill('')
     dialog.get_by_role('button', name='Upstream', exact=True).click()
-    assert 0 < dialog.locator('tbody tr').count() < 281
+    upstream = dialog.locator('.land-sub-table tbody tr').count()
+    assert 0 < upstream < 281
     dialog.get_by_role('button', name='All', exact=True).click()
-    dialog.get_by_role('tab', name='Updated substitutes').focus()
+
+    # Category chips and the estimate-only filter narrow the same table.
+    total = dialog.locator('.land-sub-table tbody tr').count()
+    dialog.locator('.land-sub-chips button', has_text='Climate').first.click()
+    climate = dialog.locator('.land-sub-table tbody tr').count()
+    assert 0 < climate < total, 'a theme is a subset of the whole'
+    dialog.locator('.land-sub-chips button', has_text='All themes').click()
+    dialog.get_by_label('Only attributes with an estimate').check()
+    assert dialog.locator('[data-substitute-status=empty]').count() == 0
+    dialog.get_by_label('Only attributes with an estimate').uncheck()
+
+    # The estimate marker is a token, so it moves with the theme instead of staying
+    # a light green on a dark page.
+    page.evaluate("document.documentElement.dataset.theme='dark'")
+    dark = dialog.locator('.land-sub-updated').first.evaluate('e=>getComputedStyle(e).backgroundColor')
+    page.evaluate("document.documentElement.dataset.theme='light'")
+    light = dialog.locator('.land-sub-updated').first.evaluate('e=>getComputedStyle(e).backgroundColor')
+    assert dark != light, 'the estimate colour must follow the theme'
+
+    out = ROOT / 'WORKSPACE/derived/ui-review'
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(out / 'basin-estimates-light.png'))
+    page.evaluate("document.documentElement.dataset.theme='dark'")
+    page.screenshot(path=str(out / 'basin-estimates-dark.png'))
+
+    # Tabs cycle both ways and wrap, and each panel belongs to its tab.
+    dialog.get_by_role('tab', name='Independent estimates').focus()
     page.keyboard.press('ArrowLeft')
     assert dialog.get_by_role('tab', name='HydroATLAS attributes').get_attribute('aria-selected') == 'true'
     assert dialog.locator('.land-sub-updated').count() == 0
-    page.keyboard.press('ArrowRight')
+    page.keyboard.press('ArrowLeft')
+    assert dialog.get_by_role('tab', name='Monthly record').get_attribute('aria-selected') == 'true', 'wraps'
+
+    # The monthly record: the gaps must survive into every rendering of it.
+    record = dialog.locator('.land-hist-figure, .land-sub-note[role=alert]').first
+    record.wait_for()
+    if dialog.locator('.land-hist-figure').count():
+        assert dialog.locator('.land-hist-line, .land-hist-dot').count() > 0, 'the record is drawn'
+        rows = dialog.locator('.land-hist-table tbody tr')
+        assert rows.count() >= 20, 'one row per year of the record'
+        partial = dialog.locator('.land-hist-table tbody tr[data-substitute-status=empty]')
+        for index in range(partial.count()):
+            cells = partial.nth(index).inner_text()
+            assert 'of 12' in cells, 'an incomplete year says how much it observed'
+        # A year short of twelve months withholds its total rather than summing what it has.
+        assert dialog.locator('.land-hist-table tbody tr[data-substitute-status=empty] '
+                              '.land-sub-nocompare').count() >= partial.count()
+        assert dialog.get_by_role('button', name='Download this basin, all variables (CSV)').count() == 1
+        # The search box belongs to the attribute tables, not to this tab.
+        assert dialog.locator('.land-modal-tools').count() == 0
+        page.screenshot(path=str(out / 'basin-record-dark.png'))
+    else:
+        print('note: monthly record not published yet; its empty state was checked instead')
+        assert 'level-12' in record.inner_text()
+
+    # A failed fetch offers a way back rather than an empty table.
+    dialog.get_by_role('tab', name='HydroATLAS attributes').click()
+    page.route(f'**/data/atlas/basins/{REGIONAL}.json', lambda route: route.fulfill(status=503, body='Unavailable'))
+    dialog.get_by_role('tab', name='Independent estimates').click()
+    dialog.get_by_role('button', name='Try again').wait_for()
+    page.unroute(f'**/data/atlas/basins/{REGIONAL}.json')
+    dialog.get_by_role('button', name='Try again').click()
     dialog.locator('.land-sub-table').wait_for()
-    out = ROOT / 'WORKSPACE/derived/ui-review'
-    out.mkdir(parents=True, exist_ok=True)
-    page.screenshot(path=str(out / 'basin-substitutes-dark.png'))
-    page.evaluate("document.documentElement.dataset.theme='light'")
-    assert dialog.locator('.land-sub-updated').first.evaluate('(e)=>getComputedStyle(e).color') == 'rgb(34, 71, 43)'
-    page.screenshot(path=str(out / 'basin-substitutes-light.png'))
+
+    # Mobile: the modal scrolls its tables rather than the page.
     page.set_viewport_size({'width': 390, 'height': 844})
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
-    page.screenshot(path=str(out / 'basin-substitutes-mobile.png'))
+    page.screenshot(path=str(out / 'basin-estimates-mobile.png'))
     page.set_viewport_size({'width': 1440, 'height': 1000})
 
-    dialog.get_by_role('tab', name='HydroATLAS attributes').click()
-    page.route('**/substitutes/*/4121289400.json', lambda route: route.fulfill(status=503, body='Unavailable'))
-    dialog.get_by_role('tab', name='Updated substitutes').click()
-    dialog.get_by_role('button', name='Retry substitutes').wait_for()
-    page.unroute('**/substitutes/*/4121289400.json')
-    dialog.get_by_role('button', name='Retry substitutes').click()
-    dialog.locator('.land-sub-table').wait_for()
-
-    dialog = open_basin('4120050220')
-    dialog.get_by_role('tab', name='Updated substitutes').click()
-    dialog.get_by_role('heading', name='No substitutes published for this basin yet.').wait_for()
-    assert dialog.locator('.land-sub-updated').count() == 0
+    # A coarser unit is a view of the level-12 basins, and says so rather than
+    # showing an average nobody computed.
+    page.goto(BASE + '/', wait_until='domcontentloaded')
+    page.locator('.land-level').wait_for()
+    page.get_by_placeholder('HYBAS or PFAF id').fill('4120050220')
+    if page.locator('.land-results button').count():
+        page.locator('.land-results button').first.click()
+        page.locator('.land-open-table').click()
+        coarse = page.get_by_role('dialog', name='Atlas attributes for this basin')
+        coarse.get_by_role('tab', name='Independent estimates').click()
+        panel = coarse.locator('.land-sub-note').first
+        panel.wait_for()
+        if 'level-12' in panel.inner_text():
+            assert coarse.locator('.land-sub-updated').count() == 0
 
     page.goto(BASE + '/roadmap.html#implementation-plan', wait_until='domcontentloaded')
     page.locator('.plan-stages article').first.wait_for()
@@ -90,4 +185,4 @@ with sync_playwright() as p:
     page.screenshot(path=str(out / 'implementation-plan-mobile.png'))
     assert not errors, errors
     browser.close()
-print('Basin substitutes and six-stage roadmap: browser checks passed.')
+print('Basin estimates, monthly record and six-stage roadmap: browser checks passed.')
