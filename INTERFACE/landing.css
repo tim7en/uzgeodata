@@ -565,3 +565,4 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-aoi .land-aoi-link{align-self:flex-start;padding:0;border:0;color:var(--l-accent-1);font:600 11px var(--body);text-decoration:underline}
 .land-aoi-drawing,.land-aoi-drawing .leaflet-interactive{cursor:crosshair !important}
 .land-dock{max-height:78vh}
+.land-view-button,.land-project-link{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 11px;border:1px solid var(--line);border-radius:4px;background:var(--l-bg-7);color:var(--ink);font:600 12px var(--display);text-decoration:none;cursor:pointer}.land-view-button:hover,.land-project-link:hover{border-color:var(--l-accent-1)}.land-view-button:focus-visible,.land-project-link:focus-visible{outline:2px solid var(--l-accent-1);outline-offset:3px}.land-detail>.land-view-button{margin:5px 0 14px}

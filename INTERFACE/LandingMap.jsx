@@ -12,6 +12,7 @@ import BasinSubstitutes from './BasinSubstitutes.jsx';
 import BasinHistory from './BasinHistory.jsx';
 import { AoiLayer, AoiPanel } from './AoiTool.jsx';
 import { selectBasins } from './aoiModel.js';
+import { DEFAULT_MAP_VIEW, readMapView, saveMapView, collectionBounds } from './mapViewModel.js';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
   clusterDams, damClusterBounds, damClusterStyle,
@@ -25,7 +26,6 @@ const RIVER_LADDER_URL = '/data/hydroclimate/reference-river-levels.json';
 const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
 const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
-const CENTRE = [40.2, 70.5];
 const OPACITY_KEY = 'uzgeodata.overlayOpacity';
 // How much of each corner the fixed UI takes up, in pixels, so a fitted view
 // never lands a basin under the sidebar, the header or the zoom controls.
@@ -39,6 +39,7 @@ const DEEPER = [
 
 // Public reading support is available without loading the map or a data bundle.
 const PROGRAMME = [
+  { id: 'overview', label: 'Project explorer', note: 'Purpose, use cases and future development', href: '/project.html' },
   { id: 'about', label: 'About & citation', note: 'Public preview, sources and reuse', href: '/about.html' },
   { id: 'projects', label: 'Projects', note: 'Available studies and future work', href: '/projects.html' },
   { id: 'support', label: 'Help & feedback', note: 'Read a basin in five minutes', href: '/guide.html' },
@@ -66,18 +67,32 @@ const json = url => fetch(url).then(response => response.ok
   : Promise.reject(new Error(`${response.status} while loading ${url}`)));
 
 function WatchZoom({ onZoom }) {
+  useMapEvent('moveend', event => {
+    const map = event.target;
+    const center = map.getCenter();
+    try { saveMapView(window.localStorage, [center.lat, center.lng], map.getZoom()); } catch { /* Storage may be disabled. */ }
+  });
   useMapEvent('zoomend', event => onZoom(event.target.getZoom()));
   return null;
 }
 
-function FitTo({ bounds }) {
+function FitTo({ bounds, resetVersion }) {
   const map = useMap();
+  useEffect(() => {
+    if (resetVersion === 0) return;
+    map.setView(DEFAULT_MAP_VIEW.center, DEFAULT_MAP_VIEW.zoom, { animate: false });
+    // A programmatic reset does not reliably reach the moveend listener, so the
+    // next page load would restore the pre-reset view; store it explicitly.
+    try { saveMapView(window.localStorage, DEFAULT_MAP_VIEW.center, DEFAULT_MAP_VIEW.zoom); } catch { /* Storage may be disabled. */ }
+  }, [resetVersion, map]);
   useEffect(() => {
     const mobile = map.getSize().x <= 820;
     if (bounds) map.flyToBounds(bounds, {
       paddingTopLeft: mobile ? [16, 16] : OCCLUDED_TOP_LEFT,
       paddingBottomRight: mobile ? [36, 36] : OCCLUDED_BOTTOM_RIGHT,
       duration: 0.8,
+      maxZoom: 14,
+      animate: !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
     });
   }, [bounds, map]);
   return null;
@@ -213,12 +228,16 @@ const BASEMAPS = [
 
 export default function LandingMap() {
   const theme = useTheme();
+  const [initialView] = useState(() => {
+    try { return readMapView(window.localStorage); } catch { return DEFAULT_MAP_VIEW; }
+  });
+  const [resetVersion, setResetVersion] = useState(0);
   const [basemap, setBasemap] = useState('map');
   const [ladder, setLadder] = useState(null);
   const [riverLadder, setRiverLadder] = useState(null);
   const [levels, setLevels] = useState({});
   const [riverTiers, setRiverTiers] = useState({});
-  const [zoom, setZoom] = useState(6);
+  const [zoom, setZoom] = useState(initialView.zoom);
   const [groups, setGroups] = useState(null);
   const [storeRequested, setStoreRequested] = useState(false);
   const [loadingStore, setLoadingStore] = useState(false);
@@ -435,16 +454,6 @@ export default function LandingMap() {
   const features = basins?.features || [];
   const byId = useMemo(() => new Map(features.map(feature => [String(feature.properties.hybas_id), feature])), [features]);
   const totals = useMemo(() => systemTotals(features), [features]);
-  // The static centre/zoom the map mounts with is only a placeholder: as soon as
-  // the first level of basins arrives, fit their real extent into whatever area
-  // the sidebar and header leave uncovered, once, so the country never opens
-  // partly hidden behind the panel.
-  const initialFit = useRef(false);
-  useEffect(() => {
-    if (initialFit.current || !features.length) return;
-    initialFit.current = true;
-    setBounds(collectionBounds(features));
-  }, [features]);
   const selectedId = selected ? String(selected.properties.hybas_id) : null;
   const results = useMemo(() => {
     const term = query.trim();
@@ -518,7 +527,7 @@ export default function LandingMap() {
     <p><a href="/guide.html">Get help or download basin data directly</a></p></main>;
 
   return <main className="land">
-    <MapContainer center={CENTRE} zoom={6} zoomControl={false} className="land-map" preferCanvas>
+    <MapContainer center={initialView.center} zoom={initialView.zoom} minZoom={0} maxZoom={19} zoomControl={false} className="land-map" preferCanvas>
       {base.url && <TileLayer attribution={base.attribution} key={`${base.id}-${theme}`}
         url={base.url} maxZoom={base.maxZoom}
         className={base.dim ? 'land-tiles-dim' : 'land-tiles-plain'}
@@ -561,7 +570,7 @@ export default function LandingMap() {
       })}
       <AoiLayer drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} selection={aoiSelection}
         onAdd={addAoiVertex} onFinish={finishAoi} onCancel={clearAoi}/>
-      <FitTo bounds={bounds}/>
+      <FitTo bounds={bounds} resetVersion={resetVersion}/>
       <WatchZoom onZoom={setZoom}/>
       <ZoomControl position="bottomright"/>
       <ScaleControl position="bottomright" imperial={false}/>
@@ -570,10 +579,14 @@ export default function LandingMap() {
     <header className="land-head">
       <div className="land-head-top">
         <div>
-          <span>UZGEODATA</span>
+          <a href="/" style={{ color: 'inherit', textDecoration: 'none' }} aria-label="UzGeoData home">UZGEODATA</a>
           <h1>Where the water forms</h1>
         </div>
         <div className="land-head-tools">
+          <a className="land-project-link" href="/project.html">Project explorer <ArrowUpRight size={12}/></a>
+          <button className="land-view-button" type="button" onClick={() => {
+            setBounds(null); setResetVersion(value => value + 1);
+          }} title="Return to the starting map location and zoom">Reset view</button>
           <ThemeToggle className="land-theme"/>
           <label className="land-basemap">
             <span>Basemap</span>
@@ -652,6 +665,7 @@ export default function LandingMap() {
         <button type="button" className="land-close" onClick={() => setSelected(null)} aria-label="Clear selection"><X size={14}/></button>
         <span className="land-kicker">{systemMeta(selected.properties.system_id).label} · level {selected.properties.basin_level}</span>
         <h2>HYBAS {selected.properties.hybas_id}</h2>
+        <button type="button" className="land-view-button" onClick={() => setBounds(featureBounds(selected))}>Zoom to selected basin</button>
         <dl className="land-headline">{basinHeadline(selected.properties).map(row => <div key={row.label}>
           <dt>{row.label}</dt>
           <dd>{row.value}{row.unit ? <em> {row.unit}</em> : null}</dd>
@@ -684,6 +698,7 @@ export default function LandingMap() {
     {basins && groups && <section className="land-dock" aria-label="Area of interest, basin colouring and map key">
       <AoiPanel drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} rule={aoiRule}
         selection={aoiSelection} loadingGeometry={aoiClosed && !levels[12]}
+        onFit={() => setBounds(collectionBounds(aoiSelection.map(basin => basin.feature)))}
         onStart={startAoi} onFinish={finishAoi} onCancel={clearAoi} onClear={clearAoi} onRule={setAoiRule}/>
       <label className="land-dock-select">
         <span>Colour basins by</span>
@@ -745,28 +760,8 @@ function attributeMeta(groups, column) {
   return null;
 }
 
-function coordinates(geometry) {
-  if (!geometry) return [];
-  if (geometry.type === 'Polygon') return geometry.coordinates.flat();
-  if (geometry.type === 'MultiPolygon') return geometry.coordinates.flat(2);
-  return [];
-}
-
 function featureBounds(feature) {
   return collectionBounds([feature]);
-}
-
-function collectionBounds(features) {
-  let minLat = Infinity, maxLat = -Infinity, minLon = Infinity, maxLon = -Infinity;
-  for (const feature of features) {
-    for (const [lon, lat] of coordinates(feature.geometry)) {
-      if (lat < minLat) minLat = lat;
-      if (lat > maxLat) maxLat = lat;
-      if (lon < minLon) minLon = lon;
-      if (lon > maxLon) maxLon = lon;
-    }
-  }
-  return Number.isFinite(minLat) ? [[minLat, minLon], [maxLat, maxLon]] : null;
 }
 
 export { SYSTEMS };

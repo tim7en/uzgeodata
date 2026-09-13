@@ -7,7 +7,7 @@ systems. Researchers can explore **7,445 level-12 basins**, read the 281 publish
 HydroATLAS attributes beside independent open-data estimates, and download
 **2003–2022 monthly records** with source and method provenance.
 
-[Open the public preview](https://tim7en.github.io/uzgeodata/) ·
+[Open the public preview](https://uzgeodata.uz/) ·
 [Deployment status](https://github.com/tim7en/uzgeodata/actions/workflows/pages.yml) ·
 [Report a problem](https://github.com/tim7en/uzgeodata/issues)
 
@@ -25,7 +25,7 @@ HydroATLAS attributes beside independent open-data estimates, and download
 4. Open **Monthly record**, choose a variable, and inspect the observed-month counts.
 5. Download the CSV **and metadata JSON**, retaining units, limitations and provenance.
 
-The public [guide](https://tim7en.github.io/uzgeodata/guide.html) includes direct
+The public [guide](https://uzgeodata.uz/guide.html) includes direct
 API downloads. Search uses the currently displayed basin level. Null values mean
 missing observations, not zero. Upstream attributes already account for the
 catchment above a basin and must not be added across basins.
@@ -41,9 +41,8 @@ catchment above a basin and must not be added across basins.
 | Downloads | Basin JSON, shared catalogue, monthly CSV and provenance metadata |
 | Reading support | About, source reuse terms, citation, five-minute guide and issue reporting |
 
-The launch snapshot includes snow, precipitation, evapotranspiration, soil moisture
-and runoff. Temperature acquisition is separate and can continue while the site
-builds. See the deployed `release.json` and history index for the actual snapshot.
+The saved snapshot includes snow, precipitation, evapotranspiration, soil moisture,
+runoff, and minimum, mean, and maximum temperature. See the deployed `release.json` and history index for the actual snapshot.
 The roadmap is future research scope, not a promise of completed features.
 
 ## Run the static preview
@@ -62,13 +61,25 @@ Open `http://127.0.0.1:4173`. Deploy the resulting `dist/` to a static host.
 `build:launch` does not run acquisition, regenerate the observation store or copy
 raw observation partitions. It validates all 7,445 monthly records before building.
 
-For GitHub Pages, set `SITE_BASE=/uzgeodata/` during the build. The
-[Pages workflow](.github/workflows/pages.yml) does this automatically. A domain-root
-host uses the default `/`. See [deployment, updates and rollback](docs/LAUNCH.md).
+The live custom domain `uzgeodata.uz` uses `SITE_BASE=/`, as configured in the
+[Pages workflow](.github/workflows/pages.yml). For a project-path deployment without
+the custom domain, set `SITE_BASE=/uzgeodata/`. See [deployment, updates and rollback](docs/LAUNCH.md).
 
 **Legacy development commands:** `npm run dev` and `npm run build` have publication
 hooks that require Python and local inputs. Use the launch commands above to avoid
 running those hooks during an active download.
+
+## Public pages
+
+The homepage remains the interactive basin map. `/project.html` explains the project,
+scope, and research direction with an accordion sidebar; `/examples.html` provides
+three worked research workflows and direct data downloads. About, guide, and
+projects pages cover evidence, reuse, instructions, and future development.
+
+The map no longer automatically fits the full region when data loads. It remembers
+the last location and zoom when browser storage is available. **Reset view** returns
+to the initial location; **Zoom to selected basin** and **Zoom to selected polygons**
+fit the selected geometry. Normal zoom-dependent basin detail is unchanged.
 
 ## Static data API
 

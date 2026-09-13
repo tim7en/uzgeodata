@@ -8,7 +8,7 @@ the 2003–2022 monthly record, and download values with provenance.
 
 - 7,445 basins in the Amu Darya and Syr Darya systems.
 - 281 published attribute definitions; independent estimate coverage varies.
-- Completed monthly runs only. Temperature extraction continues independently.
+- Completed monthly runs only; consult `release.json` for included temperature and other variables.
 - About, citation, source reuse terms, help, projects and responsive map/modal.
 - Public preview, not an independently reproduced scientific release.
 - Snow retained for inspection but withdrawn from trend analysis.
@@ -22,15 +22,14 @@ writes a static artifact into `dist/`. It must fail if the monthly snapshot is
 absent or incomplete. It does not silently deploy a broken history tab.
 
 `npm run preview:launch` serves the result locally. For a domain root, the default
-`SITE_BASE=/` is correct. For GitHub Pages, set `SITE_BASE=/uzgeodata/` during the
-build. This rebases both interface URLs and paths in saved data catalogues. The
+`SITE_BASE=/` is correct. The current custom-domain workflow uses `SITE_BASE=/`. For GitHub Pages without
+the custom domain, set `SITE_BASE=/uzgeodata/` during the build. This rebases both interface URLs and paths in saved data catalogues. The
 artifact includes `release.json` with commit, publication time and release scope.
 
 The Public preview workflow builds pushes to `main` (or a manual dispatch)
 and deploys through GitHub Pages. In repository Settings → Pages, select GitHub
 Actions as the publishing source. The `github-pages` environment must permit the
-launch branch. The site is expected at `https://tim7en.github.io/uzgeodata/` once
-the deployment succeeds. See [GitHub's workflow requirements](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+launch branch. The live site is `https://uzgeodata.uz/`; the GitHub project URL redirects there. See [GitHub's workflow requirements](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
 All application requests use static files. There is no production Node API,
 database or secret. An alternative static host can serve the domain-root artifact;
@@ -59,7 +58,7 @@ credentials. `atlas:api` requires local source GIS data and Python dependencies.
 
 ## Release checks
 
-Check the built artifact on desktop and mobile: choose a level-12 basin, open all
+Check `/project.html` and example links on desktop and mobile, then open the map at `/`: choose a level-12 basin, open all
 three tabs, expand evidence, download CSV and JSON, and follow About/Help links.
 Check a basin outside the Pskem pilot. Verify a missing API file returns 404.
 Check the public `release.json` commit after deployment. The browser test supports
@@ -85,6 +84,5 @@ Neither action changes the local observation store or acquisition checkpoints.
 
 ## Deferred work
 
-Independent scientific reproduction, explanation of snow null drift, temperature
-publication, more attribute families, national-atlas reimplementation and the
+Independent scientific reproduction, explanation of snow null drift, expanded source coverage, more attribute families, national-atlas reimplementation and the
 monitoring ontology are follow-up work. Do not advertise them as completed.
