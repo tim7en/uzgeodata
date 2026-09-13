@@ -1,25 +1,34 @@
 {
-  "run_id": "regional-substitutes-20260910T171345632267Z",
-  "recipe_version": "derive_climatology@a2a913915d53",
-  "generated_at": "2026-09-10T17:13:45.632+00:00",
+  "run_id": "regional-substitutes-20260913T185701842281Z",
+  "recipe_version": "derive_climatology@ea786948fb84/2003-2024",
+  "generated_at": "2026-09-13T18:57:01.858+00:00",
   "period": [
     "2003-01-01",
-    "2023-01-01"
+    "2025-01-01"
   ],
+  "only": null,
   "basins": 7445,
-  "columns": 81,
-  "rows": 603045,
-  "new_rows": 603045,
-  "values": 602974,
-  "without_value": 71,
+  "columns": 96,
+  "rows": 826395,
+  "new_rows": 826395,
+  "values": 826326,
+  "without_value": 69,
   "derived_from_runs": [
     "regional-era5_runoff-20260910T135058774673Z",
+    "regional-era5_runoff-20260913T172923712238Z",
+    "regional-era5_temperature-20260912T064918990795Z",
+    "regional-era5_temperature-20260912T091321498969Z",
+    "regional-era5_temperature-20260913T173848283162Z",
     "regional-snow-20260910T070340280486Z",
-    "regional-terraclimate-20260910T115104441600Z"
+    "regional-snow-20260913T174832998639Z",
+    "regional-terraclimate-20260910T115104441600Z",
+    "regional-terraclimate-20260913T180342767987Z",
+    "regional-terraclimate_temperature-20260912T044047232580Z",
+    "regional-terraclimate_temperature-20260913T181620348425Z"
   ],
   "partitions_touched": [
     "time_kind=climatology"
   ],
-  "wall_seconds": 205.07576520000293,
+  "wall_seconds": 581.6674248999916,
   "meaning": "Independent open-data estimates over a stated period, published beside the original HydroATLAS values and never in place of them. Agreement with a published attribute would not make one a reproduction of the other."
 }

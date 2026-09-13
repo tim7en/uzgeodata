@@ -1,6 +1,6 @@
 {
-  "run_id": "regional-terraclimate-20260910T115104441600Z",
-  "started_at": "2026-09-10T11:51:04.441+00:00",
+  "run_id": "regional-terraclimate-20260913T180342767987Z",
+  "started_at": "2026-09-13T18:03:42.767+00:00",
   "source": "terraclimate",
   "asset": "IDAHO_EPSCOR/TERRACLIMATE",
   "bands": [
@@ -18,204 +18,14 @@
   "geometry_version": "reg-166479294ef8",
   "basins": 7445,
   "years": [
-    2003,
-    2022
+    2022,
+    2024
   ],
   "batch_size": 250,
-  "expected_rows": 7147200,
+  "expected_rows": 1072080,
   "retries": [],
   "failures": [],
   "by_year": {
-    "2003": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 339.6471601999983,
-      "rows_per_band": 89340
-    },
-    "2004": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 340.3194463,
-      "rows_per_band": 89340
-    },
-    "2005": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 332.55706179999834,
-      "rows_per_band": 89340
-    },
-    "2006": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 348.4152651999975,
-      "rows_per_band": 89340
-    },
-    "2007": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 347.5148517999987,
-      "rows_per_band": 89340
-    },
-    "2008": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 334.29425499999707,
-      "rows_per_band": 89340
-    },
-    "2009": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 330.3221494999998,
-      "rows_per_band": 89340
-    },
-    "2010": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 341.18407930000103,
-      "rows_per_band": 89340
-    },
-    "2011": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 332.04157080000004,
-      "rows_per_band": 89340
-    },
-    "2012": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 353.77827479999905,
-      "rows_per_band": 89340
-    },
-    "2013": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 372.5801793999999,
-      "rows_per_band": 89340
-    },
-    "2014": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 337.5721569000016,
-      "rows_per_band": 89340
-    },
-    "2015": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 384.09235569999873,
-      "rows_per_band": 89340
-    },
-    "2016": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 339.29218160000164,
-      "rows_per_band": 89340
-    },
-    "2017": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 341.2880585000021,
-      "rows_per_band": 89340
-    },
-    "2018": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 335.0249530000001,
-      "rows_per_band": 89340
-    },
-    "2019": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 363.060708099998,
-      "rows_per_band": 89340
-    },
-    "2020": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 346.85869470000034,
-      "rows_per_band": 89340
-    },
-    "2021": {
-      "rows": 357360,
-      "basins": 7445,
-      "expected_basins": 7445,
-      "complete": true,
-      "values": 357360,
-      "null_months": 0,
-      "seconds": 345.7145088000034,
-      "rows_per_band": 89340
-    },
     "2022": {
       "rows": 357360,
       "basins": 7445,
@@ -223,13 +33,33 @@
       "complete": true,
       "values": 357360,
       "null_months": 0,
-      "seconds": 397.705844600001,
+      "seconds": 60.68955890001962,
+      "rows_per_band": 89340
+    },
+    "2023": {
+      "rows": 357360,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 357360,
+      "null_months": 0,
+      "seconds": 344.03880669997307,
+      "rows_per_band": 89340
+    },
+    "2024": {
+      "rows": 357360,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 357360,
+      "null_months": 0,
+      "seconds": 341.13299090001965,
       "rows_per_band": 89340
     }
   },
-  "finished_at": "2026-09-10T13:50:45.757+00:00",
-  "wall_seconds": 7181.153850799998,
-  "stored_rows": 7147200,
+  "finished_at": "2026-09-13T18:16:10.013+00:00",
+  "wall_seconds": 747.2370861999807,
+  "stored_rows": 1072080,
   "complete": true,
   "basin_support": {
     "basins": 7445,

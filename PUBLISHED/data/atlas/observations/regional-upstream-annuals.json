@@ -1,7 +1,7 @@
 {
-  "run_id": "upstream-annuals-20260912T103902525017Z",
-  "recipe_version": "upstream_annuals@71b6203ddb9d",
-  "generated_at": "2026-09-12T10:39:02.525+00:00",
+  "run_id": "upstream-annuals-20260913T190758633648Z",
+  "recipe_version": "upstream_annuals@f6d2e080dded/2003-2024",
+  "generated_at": "2026-09-13T19:07:58.641+00:00",
   "basins": 7445,
   "rows": 67005,
   "new_rows": 67005,
@@ -17,6 +17,6 @@
     "tmp_dc_uyr"
   ],
   "inputs_missing": [],
-  "wall_seconds": 45.45806380000431,
+  "wall_seconds": 125.82592309999745,
   "method": "Area-weighted mean over the basin and everything draining into it, accumulated through the published routing so each basin is counted once. Ratios are averaged as fields, matching the published attribute, not recomputed from upstream totals."
 }
