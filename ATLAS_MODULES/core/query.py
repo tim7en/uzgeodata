@@ -16,6 +16,11 @@ one:
 
 * a superseded revision is not current, and `current` is written at publication time
   so asking for it costs nothing;
+* one basin, one variable and one month is one value. A re-run under a corrected
+  method does not supersede the earlier row -- the contract keeps both, as two
+  measurements rather than a correction -- so a query that did not choose between
+  them would return a month twice and every sum over it would be wrong by however
+  many times the period had been re-extracted;
 * a run that never finished is not evidence, so its rows are excluded by joining the
   run table rather than by trusting the row;
 * a null is a month with no observation and never a zero, so nothing here coalesces;
@@ -39,6 +44,16 @@ def _duckdb():
         raise RuntimeError(
             "Querying the store needs duckdb: pip install duckdb") from error
     return duckdb
+
+
+def run_ranking(store):
+    """How each run ranks when two hold a current value for the same month."""
+    path = Path(store) / "run.csv"
+    if not path.exists():
+        return {}
+    with path.open(encoding="utf-8", newline="") as stream:
+        return {row["run_id"]: (row.get("status") == "complete", row.get("started_at") or "")
+                for row in csv.DictReader(stream)}
 
 
 def completed_runs(store):
@@ -105,18 +120,33 @@ def connect(store, geometry="reg-"):
              for release, years in sorted(vouched(store).items()) for year in sorted(years)]
     vouched_sql = " OR (source_release_id, year) IN (%s)" % ", ".join(pairs) if pairs else ""
 
+    # How the runs rank when two of them hold a current value for the same month: a
+    # run that finished outranks one that did not, and among those, the later one.
+    # The same rule the published atlas applies, so a query and the site cannot
+    # disagree about which number is the current one.
+    ranking = run_ranking(store)
+    rows = ", ".join(f"('{run}', {int(complete)}, '{started}')"
+                     for run, (complete, started) in sorted(ranking.items())) or "('', 0, '')"
+
     connection.execute(f"""
         CREATE VIEW dated_all AS
             SELECT * FROM read_parquet('{dated}', hive_partitioning = true);
+        CREATE TABLE runs(run_id VARCHAR, complete INTEGER, started VARCHAR);
+        INSERT INTO runs VALUES {rows};
         CREATE VIEW observations AS
             SELECT basin_id, attribute_id, year, month,
                    make_date(year, month, 1) AS month_start,
                    value, unit, spatial_support, coverage_fraction,
                    valid_count, expected_count, missing_reason,
                    source_release_id, recipe_version, run_id, geometry_version
-            FROM dated_all
+            FROM dated_all d
+            LEFT JOIN runs USING (run_id)
             WHERE current AND geometry_version LIKE '{geometry}%'
-              AND (run_id IN ({allowed}){vouched_sql});
+              AND (run_id IN ({allowed}){vouched_sql})
+            QUALIFY row_number() OVER (
+                PARTITION BY basin_id, attribute_id, spatial_support, year, month
+                ORDER BY coalesce(complete, 0) DESC, coalesce(started, '') DESC, run_id DESC
+            ) = 1;
     """)
     for kind in UNDATED:
         name = kind.split("=")[1]

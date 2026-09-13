@@ -27,7 +27,7 @@ def test_completed_run_null_revision_and_provenance(tmp_path):
     published = result['series']['pre_mm_s']
     assert published['values'][0] is None
     assert published['run_ids'] == ['done']
-    assert published['method'] == 'method@1'
+    assert published['methods'] == ['method@1'], 'the method that produced it is named'
     assert published['missing_months'] == 12
 
 

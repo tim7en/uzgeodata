@@ -90,7 +90,12 @@ def build(store=STORE):
     upstream = walk(local, below, areas, Weighted)
 
     identifier = f"upstream-annuals-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%f')}Z"
-    recipe = f"upstream_annuals@{sha256(Path(__file__))[:12]}"
+    # An upstream figure inherits the window of the local values it accumulates, so
+    # its version has to move with theirs. Otherwise extending the record republishes
+    # a longer-window figure under the shorter window's name.
+    windows = sorted({(detail["valid_start"][:4], detail["valid_end"][:4]) for detail in meta.values()})
+    window = f"{windows[0][0]}-{int(windows[-1][1]) - 1}" if windows else "unknown"
+    recipe = f"upstream_annuals@{sha256(Path(__file__))[:12]}/{window}"
     started, at = time.perf_counter(), utc_now()
 
     built, empty = [], 0

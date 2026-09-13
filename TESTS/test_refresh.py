@@ -12,8 +12,8 @@ from PIPELINES import refresh_regional_record as refresh
 
 
 def test_the_rebuild_runs_in_dependency_order():
-    labels = [label for label, _ in refresh.PUBLISH]
-    scripts = [command[0] for _, command in refresh.PUBLISH]
+    labels = [entry[0] for entry in refresh.PUBLISH]
+    scripts = [entry[1][0] for entry in refresh.PUBLISH]
     order = {name: index for index, name in enumerate(scripts)}
 
     derive = order["PIPELINES/derive_regional_substitutes.py"]
@@ -109,3 +109,35 @@ def test_a_source_with_nothing_stored_is_reported_rather_than_assumed(monkeypatc
     plan = refresh.missing_years(through="2024-12")
     assert all(entry["stored_to"] is None for entry in plan.values())
     assert all("note" in entry for entry in plan.values())
+
+
+def test_the_published_window_follows_the_store_not_a_constant(monkeypatch):
+    """Both publishers default to 2003-2022. That was right while the record ended
+    there and silently wrong the moment it did not: the store would hold 2024 and
+    every published file would agree with every other about a record two years old."""
+    monkeypatch.setattr(refresh, "stored_extent", lambda store=refresh.STORE: {
+        "uzgeodata.dated.v1.pre_mm_s": {"first": "2003-01", "last": "2024-12"},
+        "uzgeodata.dated.v1.snw_pc_s": {"first": "2003-01", "last": "2023-06"},
+    })
+    assert refresh.stored_span() == (2003, 2024), "the widest window any variable reaches"
+
+    issued = []
+    monkeypatch.setattr(refresh, "run", lambda command, dry_run=False: issued.append(command) or True)
+    outcome = refresh.publish()
+
+    assert outcome["published_span"] == "2003-2024"
+    windowed = [c for c in issued if "--years" in c]
+    assert {c[0] for c in windowed} == {"PIPELINES/derive_regional_substitutes.py",
+                                        "PIPELINES/build_basin_history.py"}
+    assert all(c[c.index("--years") + 1] == "2003-2024" for c in windowed)
+    assert not any("--years" in c for c in issued
+                   if c[0].endswith(("build_basin_api.py", "build_regional_coverage.py"))),         "a step that takes no window is not handed one"
+
+
+def test_an_empty_store_publishes_without_inventing_a_window(monkeypatch):
+    monkeypatch.setattr(refresh, "stored_extent", lambda store=refresh.STORE: {})
+    issued = []
+    monkeypatch.setattr(refresh, "run", lambda command, dry_run=False: issued.append(command) or True)
+    outcome = refresh.publish()
+    assert outcome["published_span"] is None
+    assert not any("--years" in command for command in issued)

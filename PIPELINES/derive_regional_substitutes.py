@@ -99,7 +99,12 @@ def build(store=STORE, years=DEFAULT_YEARS, only=None):
     units = units_by_family(batch)
     span = list(range(years[0], years[1] + 1))
     identifier = f"regional-substitutes-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%f')}Z"
-    recipe = f"derive_climatology@{sha256(ROOT / 'ATLAS_MODULES/hydrosheds/functions/derive_climatology.py')[:12]}"
+    # The window is part of what a normal is, so it is part of the version that names
+    # it. A mean over 2003-2024 and a mean over 2003-2022 are different measurements,
+    # and publishing the second under the first's version is the substitution the
+    # contract exists to refuse - it stopped exactly this and was right to.
+    method = sha256(ROOT / 'ATLAS_MODULES/hydrosheds/functions/derive_climatology.py')[:12]
+    recipe = f"derive_climatology@{method}/{span[0]}-{span[-1]}"
     started, at = time.perf_counter(), utc_now()
 
     totals, geometry, runs = collect(store, span)

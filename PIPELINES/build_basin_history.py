@@ -182,25 +182,40 @@ def collect(store, years, known):
                 values = series[key] = array("d", [math.nan]) * width
             position = slot[year] * 12 + int(row["month"]) - 1
             values[position] = math.nan if row['value'] is None else float(row['value'])
-            # What must not vary across a series is the measurement: the release it
-            # came from, the method that derived it, the statistic it is, and the
-            # geometry it was reduced on. Which run performed the work may vary and
-            # says nothing about the number -- an extraction interrupted and resumed
-            # produces one series from two runs, and both are named rather than one
-            # of them being grounds to refuse the series.
+            # What must not vary across a series is what was measured: the release it
+            # came from, the statistic it is, and the geometry it was reduced on. Those
+            # three decide whether two numbers belong in one line, and a series mixing
+            # them is two measurements wearing one name.
+            #
+            # How and when are different questions, and both legitimately vary. A run
+            # is a visit: an extraction interrupted and resumed writes one series from
+            # two of them. A method version is the code that produced it, and the
+            # recipe hash covers a whole module, so adding an unrelated adapter to that
+            # module changes the version of every series it contains without changing a
+            # single value. Refusing on that would make the record unpublishable every
+            # time a new variable was added.
+            #
+            # So both are recorded rather than refused. A series that names two methods
+            # is telling a reader something true and worth knowing, and the store still
+            # holds each row under the version that actually produced it.
             identity = {
-                "source_release": row["source_release_id"], "method": row["recipe_version"],
+                "source_release": row["source_release_id"],
                 "statistic": row["temporal_statistic"],
                 "geometry_version": row["geometry_version"],
             }
+            varies = ("run_ids", "methods")
             held = releases.get(attribute)
             if held is None:
-                releases[attribute] = {**identity, "run_ids": [row["run_id"]]}
+                releases[attribute] = {**identity, "methods": [row["recipe_version"]],
+                                       "run_ids": [row["run_id"]]}
             else:
-                if {key: value for key, value in held.items() if key != "run_ids"} != identity:
-                    raise ValueError(f'Mixed provenance in {attribute}; publish separate series')
-                if row["run_id"] not in held["run_ids"]:
-                    held["run_ids"] = sorted(held["run_ids"] + [row["run_id"]])
+                if {key: value for key, value in held.items() if key not in varies} != identity:
+                    raise ValueError(
+                        f'Mixed measurement in {attribute}: the release, statistic or geometry '
+                        f'changes within one series. Publish these as separate series.')
+                for field, value in (("methods", row["recipe_version"]), ("run_ids", row["run_id"])):
+                    if value not in held[field]:
+                        held[field] = sorted(held[field] + [value])
         print(f'Collected completed runs for {year}', flush=True)
     return series, releases
 

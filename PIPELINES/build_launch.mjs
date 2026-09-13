@@ -28,10 +28,15 @@ await each(Object.keys(index.by_basin), 8, async id => {
   if (String(attributes.basin_id) !== id || attributes.original.length !== catalogue.attributes.length)
     throw Error(`Invalid attributes: ${id}`);
   const record = JSON.parse(await readFile(path.join(published, `data/atlas/history/${id}.json`)));
-  if (String(record.basin_id) !== id || record.months !== 240) throw Error(`Invalid history: ${id}`);
+  // Checked against the record's own declared length rather than a constant. A
+  // literal month count was right while the record ended in 2022 and refused to
+  // publish the moment it did not, which is a check that fails as the data improves.
+  if (String(record.basin_id) !== id || record.months !== history.months)
+    throw Error(`Invalid history: ${id} has ${record.months} months, the index declares ${history.months}`);
   for (const name of Object.keys(history.series)) {
     const series = record.series[name];
-    if (!series || series.values.length !== 240 || !series.method || !series.source_release)
+    if (!series || series.values.length !== history.months
+        || !series.methods?.length || !series.source_release)
       throw Error(`Incomplete history metadata: ${id}/${name}`);
     if (name === 'snw_pc_s' && series.trend_use !== 'withdrawn') throw Error('Snow trend restriction missing');
   }
