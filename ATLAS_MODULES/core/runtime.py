@@ -20,12 +20,28 @@ def sha256(path):
     return digest.hexdigest()
 
 
-def write_json(path, value):
+def write_json(path, value, attempts=5):
+    """Write atomically, waiting out a transient lock on the destination.
+
+    The same Windows behaviour `observations._replace` already guards against: a
+    rename fails outright while anything holds the destination open, and an indexer
+    or a scanner that noticed the file is enough. By this point the content is
+    already safely on disk in the temporary, so a lock is worth waiting for rather
+    than losing a finished build to -- which is how a cube rebuild died after every
+    Parquet file had been written and only the index was left to place.
+    """
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    temporary.replace(path)
+    for attempt in range(attempts):
+        try:
+            temporary.replace(path)
+            return path
+        except OSError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(0.2 * 2 ** attempt)
 
 
 class RunTimer:

@@ -159,3 +159,82 @@ def test_products_refuse_a_concept_the_project_does_not_answer_for(tmp_path):
     store = steady(tmp_path)
     with pytest.raises(variables.Unavailable):
         products.seasonal(store, "vegetation")
+
+
+def test_an_accumulation_window_refuses_to_span_a_gap(tmp_path):
+    """A three-month window over January, February and April is not a three-month window."""
+    rows = [rain("4120000001", 2010, month, 10.0) for month in (1, 2, 4, 5, 6)]
+    store = store_with(tmp_path, rows)
+    series = query.observations(store, basins=["4120000001"],
+                               variables=["uzgeodata.dated.v1.pre_mm_s"])
+    totals = products.accumulate(series, 3)
+    assert (("4120000001", (2010, 4))) not in totals, "Jan+Feb+Apr is not a quarter"
+    assert totals[("4120000001", (2010, 6))] == pytest.approx(30.0)
+
+
+def test_an_accumulation_refuses_to_treat_a_null_as_no_rain(tmp_path):
+    rows = [rain("4120000001", 2010, 1, 10.0), rain("4120000001", 2010, 2, None),
+            rain("4120000001", 2010, 3, 10.0)]
+    store = store_with(tmp_path, rows)
+    series = query.observations(store, basins=["4120000001"],
+                               variables=["uzgeodata.dated.v1.pre_mm_s"])
+    assert products.accumulate(series, 3) == {}, "an unobserved month is not a dry one"
+
+
+def test_spi_is_withheld_where_the_record_cannot_fit_a_distribution(tmp_path):
+    rows = [rain("4120000001", year, month, 10.0 + month)
+            for year in range(2003, 2009) for month in range(1, 13)]
+    store = store_with(tmp_path, rows)
+    entries = products.spi(store, basins=["4120000001"], window=3)
+    assert entries and all(entry["spi"] is None for entry in entries)
+    assert all("too few years" in entry["withheld"] for entry in entries)
+
+
+def test_spi_is_a_gamma_fit_and_not_a_z_score(tmp_path):
+    """The distinction that matters: rainfall is skewed and bounded at zero.
+
+    Over a record of mostly modest quarters with a few very wet ones, a normal
+    assumption misreads both tails and in opposite directions. It understates the
+    droughts, because the bulk of the distribution sits below a mean that a few wet
+    years have dragged upwards, and it overstates the wet extremes, because it has no
+    long right tail to put them in. Reading the driest quarter in twenty-two years as
+    an unremarkable -0.8 is the failure that matters here.
+    """
+    pytest.importorskip("scipy")
+    import statistics as arithmetic
+
+    amounts = [12.0, 14.0, 15.0, 16.0, 18.0, 19.0, 21.0, 22.0, 24.0, 26.0,
+               28.0, 31.0, 35.0, 40.0, 48.0, 60.0, 75.0, 95.0, 130.0, 180.0, 20.0, 17.0]
+    rows = [rain("4120000001", year, month, amounts[offset] / 3)
+            for offset, year in enumerate(range(2003, 2025)) for month in range(1, 13)]
+    store = store_with(tmp_path, rows)
+
+    entries = [entry for entry in products.spi(store, basins=["4120000001"], window=3)
+               if entry["withheld"] is None]
+    assert entries, "twenty-two years is enough to fit"
+
+    totals = [entry["accumulation"] for entry in entries]
+    mean, spread = arithmetic.fmean(totals), arithmetic.pstdev(totals)
+    naive = lambda entry: (entry["accumulation"] - mean) / spread
+
+    driest = min(entries, key=lambda entry: entry["accumulation"])
+    assert driest["spi"] < -1.0, "the driest quarter of the record reads as a real shortfall"
+    assert driest["spi"] < naive(driest) - 0.25,         "a normal score would have called this drought unremarkable"
+
+    wettest = max(entries, key=lambda entry: entry["accumulation"])
+    assert wettest["spi"] > 1.5, "the wettest quarter still reads wet"
+    assert wettest["spi"] < naive(wettest) - 0.25,         "a normal score has no right tail and inflates the wet extreme instead"
+
+
+def test_spi_reports_the_baseline_it_was_fitted_on(tmp_path):
+    pytest.importorskip("scipy")
+    rows = [rain("4120000001", year, month, 5.0 + (year % 7) * 3 + month)
+            for year in range(2003, 2025) for month in range(1, 13)]
+    store = store_with(tmp_path, rows)
+    # The window has to hold the three months it accumulates over; asking for June
+    # alone yields nothing, which is the contiguity rule doing its job.
+    [entry] = products.spi(store, basins=["4120000001"], window=3,
+                           start="2015-04", end="2015-06")
+    assert entry["baseline_years"] == 22, "the fit rests on the whole record, not the window"
+    assert entry["window"] == 3 and entry["month"] == 6
+    assert "not a statement about water availability" in entry["meaning"]

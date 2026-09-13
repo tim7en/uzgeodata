@@ -1,49 +1,49 @@
 {
-  "generated_at": "2026-09-13T21:25:53.946+00:00",
+  "generated_at": "2026-09-13T22:44:14.966+00:00",
   "rows": 17063940,
   "basins": 7445,
   "months": [
     "2003-01",
     "2024-12"
   ],
-  "bytes": 108191234,
+  "bytes": 108186515,
   "base": "/data/atlas/cube/",
   "files": {
     "aet_mm_s": {
       "path": "/data/atlas/cube/variable=aet_mm_s/data_0.parquet",
-      "bytes": 12372540
+      "bytes": 12371729
     },
     "pet_mm_s": {
       "path": "/data/atlas/cube/variable=pet_mm_s/data_0.parquet",
-      "bytes": 12802480
+      "bytes": 12800981
     },
     "pre_mm_s": {
       "path": "/data/atlas/cube/variable=pre_mm_s/data_0.parquet",
-      "bytes": 9904831
+      "bytes": 9904834
     },
     "run_mm_s": {
       "path": "/data/atlas/cube/variable=run_mm_s/data_0.parquet",
-      "bytes": 13776831
+      "bytes": 13773101
     },
     "snw_pc_s": {
       "path": "/data/atlas/cube/variable=snw_pc_s/data_0.parquet",
-      "bytes": 9057612
+      "bytes": 9057506
     },
     "soil_mm_s": {
       "path": "/data/atlas/cube/variable=soil_mm_s/data_0.parquet",
-      "bytes": 10965747
+      "bytes": 10965365
     },
     "tmn_dc_s": {
       "path": "/data/atlas/cube/variable=tmn_dc_s/data_0.parquet",
-      "bytes": 14541233
+      "bytes": 14535313
     },
     "tmp_dc_s": {
       "path": "/data/atlas/cube/variable=tmp_dc_s/data_0.parquet",
-      "bytes": 10315856
+      "bytes": 10314604
     },
     "tmx_dc_s": {
       "path": "/data/atlas/cube/variable=tmx_dc_s/data_0.parquet",
-      "bytes": 14454104
+      "bytes": 14463082
     }
   },
   "query": "read_parquet('/data/atlas/cube/variable=*/*.parquet', hive_partitioning = true) reads them all; naming one variable's directory reads only that file.",
@@ -72,7 +72,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2022
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -89,7 +89,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2022
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -106,7 +106,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2022
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -124,7 +124,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2022
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -141,7 +141,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2022
+          2024
         ],
         "support": "basin, local",
         "aggregation": "frequency of snow-covered days in the month",
@@ -159,7 +159,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2022
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -176,7 +176,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2022
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -192,8 +192,8 @@
         "unit": "degrees Celsius",
         "cadence": "monthly",
         "coverage": [
-          2003,
-          2022
+          2010,
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -201,7 +201,8 @@
         "why": "A true mean of hourly values. TerraClimate publishes only the daily extremes, and their midpoint is a different measurement that happens to carry the same name.",
         "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
         "fallback_cost": "Finer at about four kilometres, but a midpoint of extremes rather than a mean of hours, and about a degree warmer across this region.",
-        "kind": "state"
+        "kind": "state",
+        "caution": "The only variable here that does not reach back to 2003: it begins in 2010, seven years short of the other eight. Anything comparing it with them over the full record is comparing different periods, and an analysis needing temperature before 2010 must use the TerraClimate extremes instead."
       },
       "uz:tmx-monthly-v1": {
         "id": "uz:tmx-monthly-v1",
@@ -211,7 +212,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2022
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -239,7 +240,7 @@
     },
     "unavailable": {
       "discharge": "No gauged or modelled discharge series is published; runoff is a land-surface flux and is not the same quantity.",
-      "drought index": "No SPI or SPEI is published. Precipitation and evapotranspiration are, and an index derived from them would be a new product with its own recipe.",
+      "drought index": "Not an observation. SPI is derived on demand from published precipitation by products.spi(), with the gamma fit stated; SPEI would additionally need a water balance and is not offered.",
       "land surface temperature": "Air temperature is published; land surface temperature is not, and the two are different measurements.",
       "ndvi": "No vegetation index is published as a regional dated series.",
       "surface water": "Published as a long-term climatology, not as a dated monthly series.",

@@ -71,7 +71,32 @@ def build(store=STORE, out=OUT, geometry="reg-"):
         SELECT count(*), count(DISTINCT basin_id), min(month_start), max(month_start)
         FROM observations
     """).fetchone()
+
+    # The registry travels inside this file, so a reader with no access to the store
+    # takes its word for what each variable covers. A declaration that has drifted from
+    # the data is worse than none: it is wrong with authority, and nothing downstream
+    # can tell. So the two are compared here and a mismatch stops the publish.
+    #
+    # This is not hypothetical. The declared span sat at 2003-2022 for two years after
+    # the record reached 2024, and ERA5 mean temperature was declared from 2003 when it
+    # begins in 2010.
+    measured = dict(connection.execute("""
+        SELECT attribute_id, [min(year), max(year)] FROM observations GROUP BY 1
+    """).fetchall())
     connection.close()
+
+    drifted = []
+    for identifier, entry in variables.VARIABLES.items():
+        actual = measured.get(entry["attribute"])
+        if actual is None:
+            drifted.append(f"{identifier} declares coverage but {entry['attribute']} "
+                           f"is not in the cube")
+        elif list(actual) != list(entry["coverage"]):
+            drifted.append(f"{identifier} declares {entry['coverage']} "
+                           f"but the cube holds {list(actual)}")
+    if drifted:
+        raise SystemExit("the registry disagrees with the data it describes:\n  "
+                         + "\n  ".join(drifted))
 
     release = json.loads((store / "manifest.json").read_text(encoding="utf-8"))
     summary = {

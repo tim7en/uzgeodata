@@ -54,8 +54,9 @@ UNAVAILABLE = {
     "land surface temperature": "Air temperature is published; land surface temperature is not, "
                                 "and the two are different measurements.",
     "vapour pressure deficit": "Not derived. It would need humidity, which is not published.",
-    "drought index": "No SPI or SPEI is published. Precipitation and evapotranspiration are, "
-                     "and an index derived from them would be a new product with its own recipe.",
+    "drought index": "Not an observation. SPI is derived on demand from published "
+                     "precipitation by products.spi(), with the gamma fit stated; SPEI would "
+                     "additionally need a water balance and is not offered.",
     "surface water": "Published as a long-term climatology, not as a dated monthly series.",
     "discharge": "No gauged or modelled discharge series is published; runoff is a land-surface "
                  "flux and is not the same quantity.",
@@ -64,7 +65,7 @@ UNAVAILABLE = {
 VARIABLES = {
     "uz:pre-monthly-v1": {
         "concept": "precipitation", "attribute": "uzgeodata.dated.v1.pre_mm_s",
-        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "why": "Downscaled to about four kilometres, which matters where a level-12 basin sits "
@@ -75,7 +76,7 @@ VARIABLES = {
     },
     "uz:aet-monthly-v1": {
         "concept": "actual evapotranspiration", "attribute": "uzgeodata.dated.v1.aet_mm_s",
-        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "why": "Published on the same grid and water balance as precipitation and potential "
@@ -84,7 +85,7 @@ VARIABLES = {
     },
     "uz:pet-monthly-v1": {
         "concept": "potential evapotranspiration", "attribute": "uzgeodata.dated.v1.pet_mm_s",
-        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "why": "Paired with actual evapotranspiration from one model, which is what makes their "
@@ -93,7 +94,7 @@ VARIABLES = {
     },
     "uz:soil-monthly-v1": {
         "concept": "soil moisture", "attribute": "uzgeodata.dated.v1.soil_mm_s",
-        "unit": "millimetres of soil moisture", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "millimetres of soil moisture", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "why": "A modelled column store in millimetres. It is published as what it is and not "
@@ -102,7 +103,7 @@ VARIABLES = {
     },
     "uz:run-monthly-v1": {
         "concept": "runoff", "attribute": "uzgeodata.dated.v1.run_mm_s",
-        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
         "why": "TerraClimate publishes no runoff. This is a land-surface flux and is not "
@@ -111,7 +112,7 @@ VARIABLES = {
     },
     "uz:snw-monthly-v1": {
         "concept": "snow cover", "attribute": "uzgeodata.dated.v1.snw_pc_s",
-        "unit": "percent", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "percent", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "frequency of snow-covered days in the month",
         "preferred": "MODIS/061/MYD10A1",
         "why": "Daily observations aggregated here, rather than the monthly product the atlas "
@@ -122,7 +123,7 @@ VARIABLES = {
     },
     "uz:tmp-monthly-v1": {
         "concept": "mean temperature", "attribute": "uzgeodata.dated.v1.tmp_dc_s",
-        "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2010, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
         "why": "A true mean of hourly values. TerraClimate publishes only the daily extremes, "
@@ -131,17 +132,21 @@ VARIABLES = {
         "fallback_cost": "Finer at about four kilometres, but a midpoint of extremes rather than "
                          "a mean of hours, and about a degree warmer across this region.",
         "kind": "state",
+        "caution": "The only variable here that does not reach back to 2003: it begins in 2010, "
+                   "seven years short of the other eight. Anything comparing it with them over "
+                   "the full record is comparing different periods, and an analysis needing "
+                   "temperature before 2010 must use the TerraClimate extremes instead.",
     },
     "uz:tmx-monthly-v1": {
         "concept": "maximum temperature", "attribute": "uzgeodata.dated.v1.tmx_dc_s",
-        "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
         "why": "The month's daily maxima. ERA5-Land publishes no daily extreme on this grid.",
     },
     "uz:tmn-monthly-v1": {
         "concept": "minimum temperature", "attribute": "uzgeodata.dated.v1.tmn_dc_s",
-        "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2022],
+        "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
         "why": "The month's daily minima, paired with the maxima from the same model.",

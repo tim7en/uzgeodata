@@ -207,3 +207,102 @@ def water_balance(store, basins=None, start=None, end=None, connection=None):
     finally:
         if own:
             connection.close()
+
+
+def accumulate(rows, window):
+    """Running sums over `window` months, keyed by the month they end in.
+
+    SPI is defined on accumulated precipitation, because a drought is a shortfall
+    sustained over a period rather than a dry month. A window that reaches back before
+    the record starts has nothing to accumulate and yields nothing, rather than a sum
+    of the months that happen to exist.
+    """
+    series = {}
+    for basin, _, month_start, value, *_ in rows:
+        series.setdefault(basin, {})[(month_start.year, month_start.month)] = value
+
+    out = {}
+    for basin, months in series.items():
+        ordered = sorted(months)
+        for index in range(window - 1, len(ordered)):
+            span = ordered[index - window + 1:index + 1]
+            values = [months[key] for key in span]
+            # Contiguity matters: a gap in the calendar is not a shorter window.
+            first, last = span[0], span[-1]
+            expected = (last[0] - first[0]) * 12 + (last[1] - first[1]) + 1
+            if expected != window or any(value is None for value in values):
+                continue
+            out[(basin, last)] = sum(values)
+    return out
+
+
+def spi(store, basins=None, window=3, start=None, end=None, baseline=(None, None),
+        connection=None):
+    """Standardised Precipitation Index, fitted rather than approximated.
+
+    A z-score of accumulated rainfall is the common shortcut and it is wrong in the
+    place it matters: precipitation is bounded at zero and strongly skewed, so a
+    normal assumption makes ordinary dry spells look extreme and extreme wet ones look
+    ordinary. SPI is defined as the gamma fit transformed to a standard normal, and
+    that is what this does -- a separate fit for each basin and each calendar month,
+    because March and August are different distributions.
+
+    Months of no rain are handled as the mixed distribution the definition requires:
+    the probability of zero is carried alongside the gamma for the positive values,
+    rather than a zero being fed to a fit that has no density there.
+
+    Returned per month with the fit behind it. Where the baseline is too short to fit,
+    the index is withheld: an SPI from six years is a number about six years.
+    """
+    import numpy
+    from scipy import stats
+
+    attribute = variables.attribute("precipitation")
+    own = connection is None
+    connection = connection or query.connect(store)
+    try:
+        window_rows = query.observations(store, basins=basins, variables=[attribute],
+                                         start=start, end=end, connection=connection)
+        reference = window_rows if (start, end) == baseline else query.observations(
+            store, basins=basins, variables=[attribute],
+            start=baseline[0], end=baseline[1], connection=connection)
+    finally:
+        if own:
+            connection.close()
+
+    totals = accumulate(window_rows, window)
+    baseline_totals = accumulate(reference, window)
+
+    samples = {}
+    for (basin, (_, month)), total in baseline_totals.items():
+        samples.setdefault((basin, month), []).append(total)
+
+    out = []
+    for (basin, (year, month)), total in sorted(totals.items()):
+        history = samples.get((basin, month), [])
+        positive = [value for value in history if value > 0]
+        if len(history) < MINIMUM_BASELINE or len(positive) < 4:
+            out.append({"basin_id": basin, "year": year, "month": month, "window": window,
+                        "accumulation": total, "spi": None, "baseline_years": len(history),
+                        "withheld": "too few years to fit a distribution"})
+            continue
+
+        # The mixed distribution: zeros are an atom, positives are gamma.
+        zero_share = (len(history) - len(positive)) / len(history)
+        shape, location, scale = stats.gamma.fit(positive, floc=0)
+        if total <= 0:
+            probability = zero_share / 2 if zero_share else 1e-6
+        else:
+            probability = zero_share + (1 - zero_share) * stats.gamma.cdf(
+                total, shape, loc=location, scale=scale)
+        probability = min(max(probability, 1e-6), 1 - 1e-6)
+        out.append({
+            "basin_id": basin, "year": year, "month": month, "window": window,
+            "accumulation": total, "spi": float(stats.norm.ppf(probability)),
+            "baseline_years": len(history), "dry_months_in_baseline": len(history) - len(positive),
+            "withheld": None,
+            "meaning": "Negative is drier than usual for this basin and calendar month; "
+                       "below -1.5 is conventionally a marked shortfall. It describes "
+                       "precipitation alone and is not a statement about water availability.",
+        })
+    return out

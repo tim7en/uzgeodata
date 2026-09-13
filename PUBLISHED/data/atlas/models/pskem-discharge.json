@@ -1,0 +1,85 @@
+{
+  "target": "uz:station/gauge-16290 monthly discharge as depth over the catchment",
+  "basins": [
+    "4120380180",
+    "4120380350",
+    "4120382970",
+    "4120383080",
+    "4120384960",
+    "4120384970",
+    "4120385070",
+    "4120385190",
+    "4120386210",
+    "4120386360",
+    "4121281950",
+    "4121282240",
+    "4121282310",
+    "4121283450",
+    "4121285900",
+    "4121286770",
+    "4121287290",
+    "4121287810",
+    "4121288140",
+    "4121289400"
+  ],
+  "concepts": [
+    "precipitation",
+    "maximum temperature",
+    "snow cover"
+  ],
+  "train": {
+    "period": [
+      "2003-01",
+      "2012-12"
+    ],
+    "months": 120,
+    "dropped_for_missing_predictors": 0
+  },
+  "evaluate": {
+    "period": [
+      "2013-01",
+      "2017-12"
+    ],
+    "months": 59,
+    "dropped_for_missing_predictors": 0
+  },
+  "coefficients": {
+    "intercept": -77.12838338628504,
+    "precipitation": 0.323995477484472,
+    "maximum temperature": 9.260003746452503,
+    "snow cover": 1.3383782695111068
+  },
+  "skill": {
+    "n": 59,
+    "bias": 13.983689043717035,
+    "mae": 28.0140031180034,
+    "rmse": 35.83421790040637,
+    "nash_sutcliffe": 0.5499786616403451,
+    "reading": "Nash-Sutcliffe is zero when the model is no better than the mean of the evaluation period and negative when it is worse. A high correlation beside a negative efficiency means the model has learned the seasonal cycle and nothing else.",
+    "skill_against_climatology": -2.4553303249669973
+  },
+  "meaning": "A linear association between monthly basin means, evaluated on months the fit did not see. It contains no routing, storage, snowmelt physics or groundwater, so it predicts without explaining and should not be read as a calibrated hydrological model.",
+  "generated_at": "2026-09-13T22:14:00.529+00:00",
+  "predictor_note": "Snow cover is published with a caution: its gaps grow towards the present at constant source coverage. It is used here as a predictor, where that bias costs the model accuracy, and not as evidence of a trend, which is what the caution forbids.",
+  "catchment": {
+    "outlet": "4121289400",
+    "basins": 20,
+    "area_km2": 2626.9,
+    "derived_from": "basin-routing-level12.csv, walked upstream"
+  },
+  "target_unit": "millimetres of depth over the catchment per month",
+  "gauge": {
+    "station_id": "uz:station/gauge-16290",
+    "label": "р. Пскем (с. Муллала)",
+    "months_available": 203,
+    "months_rejected_for_day_count": [
+      {
+        "year": 2015,
+        "month": 2,
+        "days_observed": 29,
+        "calendar_days": 28
+      }
+    ]
+  },
+  "independence": "The gauge is a hydromet record, measured by instruments this project has no part in. Nothing in the predictors was fitted to it and nothing in it was used to build the observation store."
+}
