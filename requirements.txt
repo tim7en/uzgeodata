@@ -11,5 +11,6 @@ pyogrio>=0.10,<1
 pytest>=8,<10
 rasterio>=1.4,<2
 requests>=2.32,<3
+scikit-learn>=1.5,<2
 scipy>=1.11,<2
 shapely>=2.1,<3

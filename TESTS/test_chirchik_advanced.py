@@ -5,6 +5,14 @@ import numpy as np
 import pytest
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'PIPELINES'))
+
+# These pipelines need scikit-learn, which is an optional dependency. Without this
+# guard its absence is not a skipped module but a collection error, and pytest exits
+# 2 for that exactly as it does for an interrupt -- which is how a missing optional
+# dependency masqueraded as an unexplained red build for weeks. A dependency this
+# module alone needs should cost this module alone.
+pytest.importorskip("sklearn", reason="scikit-learn is needed by the Chirchik pipelines")
+
 from analyse_chirchik_validation import monthly_snow, snow_station_bounds, ridge_forecast, climate_validation
 from model_chirchik_water import bucket, bayesian_linear, design_rows, readiness_summary, surface_months
 
