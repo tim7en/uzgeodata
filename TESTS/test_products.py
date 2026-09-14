@@ -238,3 +238,16 @@ def test_spi_reports_the_baseline_it_was_fitted_on(tmp_path):
     assert entry["baseline_years"] == 22, "the fit rests on the whole record, not the window"
     assert entry["window"] == 3 and entry["month"] == 6
     assert "not a statement about water availability" in entry["meaning"]
+
+
+def test_spi_withholds_where_the_record_has_no_spread(tmp_path):
+    """A constant record has no distribution to fit, and scipy says so unreadably."""
+    pytest.importorskip("scipy")
+    rows = [rain("4120000001", year, month, 12.0)
+            for year in range(2003, 2025) for month in range(1, 13)]
+    store = store_with(tmp_path, rows)
+    entries = products.spi(store, basins=["4120000001"], window=3)
+    assert entries, "the months are still reported"
+    assert all(entry["spi"] is None for entry in entries)
+    assert all("no spread" in entry["withheld"] for entry in entries), \
+        "withheld with a reason, rather than raising from inside a solver"

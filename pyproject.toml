@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uzgeodata"
+version = "0.1.0"
+description = "The published Amu Darya and Syr Darya basin record, queryable without a checkout."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "See DATA-LICENSING.md" }
+authors = [{ name = "Timur S" }]
+keywords = ["hydrology", "basins", "hydroatlas", "remote sensing", "central asia"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Hydrology",
+]
+
+# Deliberately small. The point of the library is that a reader can query the
+# published release without the repository, its pipelines or its GIS stack, so the
+# install must not drag in Earth Engine, rasterio or geopandas. DuckDB reads the
+# Parquet over HTTP byte ranges; everything heavier belongs to the pipelines.
+dependencies = [
+    "duckdb>=1.0,<2",
+]
+
+[project.optional-dependencies]
+# Only the derived products need a fitting library. Reading series does not.
+products = ["numpy>=1.26", "scipy>=1.11,<2"]
+
+[project.urls]
+Homepage = "https://uzgeodata.uz"
+Source = "https://github.com/tim7en/uzgeodata"
+Issues = "https://github.com/tim7en/uzgeodata/issues"
+
+[tool.setuptools]
+# The facade plus the layer implementations it delegates to. ATLAS_MODULES ships
+# because the analysis layers live there; PIPELINES does not, because extraction needs
+# credentials and a GIS stack that a reader of the published record should never be
+# asked to install.
+packages = [
+    "uzgeodata",
+    "ATLAS_MODULES",
+    "ATLAS_MODULES.core",
+]
+
+[tool.setuptools.package-data]
+"ATLAS_MODULES" = ["*.json"]

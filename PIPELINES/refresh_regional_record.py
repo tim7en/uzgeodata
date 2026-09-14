@@ -79,6 +79,14 @@ PUBLISH = [
     ("republish the per-basin API", ["PIPELINES/build_basin_api.py"], False),
     ("rebuild the coverage ledger", ["PIPELINES/build_regional_coverage.py"], False),
     ("refresh the store manifest", ["PIPELINES/stage_pilot_observations.py"], False),
+    # The cube is rebuilt before the release is cut, because the release records the
+    # digest of every file it names and a cube rebuilt afterwards would not match it.
+    ("rebuild the query cube", ["PIPELINES/build_observation_cube.py"], False),
+    # Last, and last for a reason. Cutting the release is what changes the answer to
+    # "which data", so it happens only once every artefact above it is in place and
+    # verified. A refresh that fails anywhere earlier leaves the previous release
+    # current rather than promoting a partially rebuilt one.
+    ("cut and promote the release", ["PIPELINES/publish_release.py"], False),
 ]
 
 

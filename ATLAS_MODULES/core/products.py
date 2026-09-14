@@ -287,6 +287,18 @@ def spi(store, basins=None, window=3, start=None, end=None, baseline=(None, None
                         "withheld": "too few years to fit a distribution"})
             continue
 
+        # A sample with no spread has no distribution to fit. scipy does not say that:
+        # it fails inside its solver with "f(a) and f(b) must have different signs",
+        # which names nothing a reader could act on. A basin whose accumulations are
+        # identical across the record -- a constant fill, or somewhere genuinely
+        # unvarying -- is a basin SPI cannot describe, so it is withheld with the reason
+        # rather than raising from three libraries down.
+        if len(set(positive)) < 2:
+            out.append({"basin_id": basin, "year": year, "month": month, "window": window,
+                        "accumulation": total, "spi": None, "baseline_years": len(history),
+                        "withheld": "the baseline has no spread, so no distribution fits"})
+            continue
+
         # The mixed distribution: zeros are an atom, positives are gamma.
         zero_share = (len(history) - len(positive)) / len(history)
         shape, location, scale = stats.gamma.fit(positive, floc=0)
