@@ -1,0 +1,467 @@
+{
+  "generated_at": "2026-09-14T14:29:37.313+00:00",
+  "title": "Where the region's water goes",
+  "scope": "Amu Darya and Syr Darya basins, 965,725 km2, 7,445 level-12 basins",
+  "method": {
+    "name": "Water Flow Diagram (WFD)",
+    "url": "https://www.waterflowdiagram.ch/en",
+    "applications": "https://www.waterflowdiagram.ch/en/applications",
+    "description": "A methodology for integrated water balancing that connects WASH, IWRM and the human right to water and sanitation, visualising abstraction, distribution, consumption, wastewater and losses for a municipality so stakeholders can see where water goes. Developed with case studies including Bern and St Gallen (Switzerland), Tarapoto (Peru), Agadir (Morocco), Pespire (Honduras) and Santa Maria Bulacan (Philippines).",
+    "adaptation": "This diagram follows the method's intent and departs from its scale. The published applications are municipal, where a utility can account for abstraction, delivery and non-revenue water. Nothing at that resolution is published for this region, so the diagram is drawn at basin-system scale and every flow carries how it is known rather than being rendered alike."
+  },
+  "basis_legend": {
+    "measured": {
+      "label": "Measured",
+      "colour": "#1b7f5a",
+      "meaning": "This project's observation record or plant inventory. Reproducible from the published release."
+    },
+    "administered": {
+      "label": "Administered",
+      "colour": "#2b6cb0",
+      "meaning": "Published by the bodies that allocate the water. What was allocated and diverted, not an independent measurement of what flowed."
+    },
+    "derived": {
+      "label": "Derived",
+      "colour": "#b7791f",
+      "meaning": "Arithmetic on the above, with the operation stated on the flow."
+    },
+    "unquantified": {
+      "label": "Not quantified",
+      "colour": "#9b2c2c",
+      "meaning": "A flow the method expects and no source here supplies. Drawn as a gap rather than omitted, so its absence is visible."
+    }
+  },
+  "nodes": [
+    {
+      "id": "precipitation",
+      "label": "Precipitation",
+      "note": "Area-weighted over 965,725 km2 from 2003-2024"
+    },
+    {
+      "id": "evapotranspiration",
+      "label": "Evapotranspiration",
+      "note": "Returned to atmosphere"
+    },
+    {
+      "id": "surplus",
+      "label": "Climatic surplus",
+      "note": "Precipitation less evapotranspiration"
+    },
+    {
+      "id": "amu",
+      "label": "Amu Darya diversion",
+      "note": "ICWC/BWO, 2022 hydrological year"
+    },
+    {
+      "id": "syr",
+      "label": "Syr Darya diversion",
+      "note": "ICWC/BWO, 2022 hydrological year"
+    },
+    {
+      "id": "unaccounted",
+      "label": "Not accounted for",
+      "note": "The difference between the climatic surplus and recorded diversion. It includes river outflow, wetland and delta losses, aquifer recharge, and the mismatch between two models on different grids. It is not spare water."
+    },
+    {
+      "id": "amu-tj",
+      "label": "Tajikistan",
+      "note": "Against a limit of 9.83"
+    },
+    {
+      "id": "amu-tm",
+      "label": "Turkmenistan",
+      "note": "Against a limit of 21.83"
+    },
+    {
+      "id": "amu-uz",
+      "label": "Uzbekistan",
+      "note": "Against a limit of 23.57"
+    },
+    {
+      "id": "uz-use",
+      "label": "Uzbekistan use",
+      "note": "Sectoral shares are national and are applied here to the Amu Darya diversion only"
+    },
+    {
+      "id": "sector-agriculture",
+      "label": "Agriculture",
+      "note": null
+    },
+    {
+      "id": "sector-municipal",
+      "label": "Municipal",
+      "note": null
+    },
+    {
+      "id": "sector-industry",
+      "label": "Industry",
+      "note": null
+    },
+    {
+      "id": "sector-fisheries",
+      "label": "Fisheries",
+      "note": null
+    },
+    {
+      "id": "sector-other",
+      "label": "Other",
+      "note": null
+    },
+    {
+      "id": "sector-thermal_power",
+      "label": "Thermal Power",
+      "note": null
+    },
+    {
+      "id": "wastewater",
+      "label": "Treated wastewater",
+      "note": "53 plants, 6,945,775 people served"
+    },
+    {
+      "id": "drainage",
+      "label": "Collector-drainage reuse",
+      "note": "National figure"
+    },
+    {
+      "id": "environment",
+      "label": "Returned to rivers and the delta",
+      "note": null
+    },
+    {
+      "id": "gap-losses",
+      "label": "Distribution losses",
+      "note": "Central to the method and often the largest single finding in its published applications. No baseline is published for this region: the 2023 national plan targets a 10 per cent reduction without stating what from."
+    },
+    {
+      "id": "gap-groundwater",
+      "label": "Groundwater abstraction",
+      "note": "The method separates surface from groundwater sources. National usable groundwater is given as 0.5 km3/yr against an estimated 27.6 km3/yr yield, but abstraction is not published at any scale this diagram can use."
+    },
+    {
+      "id": "gap-untreated",
+      "label": "Untreated wastewater",
+      "note": "The inventory carries 53 plants and the volume they treat. What is generated and never reaches a plant is the quantity the method most wants and no source here reports."
+    }
+  ],
+  "links": [
+    {
+      "source": "precipitation",
+      "target": "evapotranspiration",
+      "value": 219.2,
+      "unit": "km3/yr",
+      "basis": "measured",
+      "label": "Evapotranspiration",
+      "note": "TerraClimate actual evapotranspiration, 22 complete years",
+      "operation": null
+    },
+    {
+      "source": "precipitation",
+      "target": "surplus",
+      "value": 93.3,
+      "unit": "km3/yr",
+      "basis": "derived",
+      "label": "Climatic surplus",
+      "note": "Not a renewable-resource figure: it neither routes water nor accounts for storage, glacier melt or inflow from outside the domain",
+      "operation": "precipitation - evapotranspiration"
+    },
+    {
+      "source": "surplus",
+      "target": "amu",
+      "value": 44.26,
+      "unit": "km3/yr",
+      "basis": "administered",
+      "label": "Amu Darya diverted",
+      "note": "44.26 of a 55.23 limit, 80 per cent",
+      "operation": null
+    },
+    {
+      "source": "surplus",
+      "target": "syr",
+      "value": 13.83,
+      "unit": "km3/yr",
+      "basis": "administered",
+      "label": "Syr Darya diverted",
+      "note": "86 per cent of the established limit",
+      "operation": null
+    },
+    {
+      "source": "surplus",
+      "target": "unaccounted",
+      "value": 35.21,
+      "unit": "km3/yr",
+      "basis": "derived",
+      "label": "Unaccounted difference",
+      "note": "A residual, not a resource. The runoff series puts the land-surface flux at 153.7 km3/yr, well above the surplus, which is how visible the model mismatch is at this scale.",
+      "operation": "climatic surplus - recorded diversion"
+    },
+    {
+      "source": "amu",
+      "target": "amu-tj",
+      "value": 8.99,
+      "unit": "km3/yr",
+      "basis": "administered",
+      "label": "Tajikistan",
+      "note": "Against a limit of 9.83",
+      "operation": null
+    },
+    {
+      "source": "amu",
+      "target": "amu-tm",
+      "value": 18.51,
+      "unit": "km3/yr",
+      "basis": "administered",
+      "label": "Turkmenistan",
+      "note": "Against a limit of 21.83",
+      "operation": null
+    },
+    {
+      "source": "amu",
+      "target": "amu-uz",
+      "value": 16.76,
+      "unit": "km3/yr",
+      "basis": "administered",
+      "label": "Uzbekistan",
+      "note": "Against a limit of 23.57",
+      "operation": null
+    },
+    {
+      "source": "amu-uz",
+      "target": "uz-use",
+      "value": 16.76,
+      "unit": "km3/yr",
+      "basis": "administered",
+      "label": "To sectoral use",
+      "note": null,
+      "operation": null
+    },
+    {
+      "source": "uz-use",
+      "target": "sector-agriculture",
+      "value": 15.168,
+      "unit": "km3/yr",
+      "basis": "derived",
+      "label": "Agriculture",
+      "note": "National share of 90.5 per cent applied to the country's Amu Darya diversion. The share is national; the diversion is one basin. Treat the split as indicative of proportion, not as a basin measurement.",
+      "operation": "16.76 km3 x 90.5%"
+    },
+    {
+      "source": "uz-use",
+      "target": "sector-municipal",
+      "value": 0.754,
+      "unit": "km3/yr",
+      "basis": "derived",
+      "label": "Municipal",
+      "note": "National share of 4.5 per cent applied to the country's Amu Darya diversion. The share is national; the diversion is one basin. Treat the split as indicative of proportion, not as a basin measurement.",
+      "operation": "16.76 km3 x 4.5%"
+    },
+    {
+      "source": "uz-use",
+      "target": "sector-industry",
+      "value": 0.235,
+      "unit": "km3/yr",
+      "basis": "derived",
+      "label": "Industry",
+      "note": "National share of 1.4 per cent applied to the country's Amu Darya diversion. The share is national; the diversion is one basin. Treat the split as indicative of proportion, not as a basin measurement.",
+      "operation": "16.76 km3 x 1.4%"
+    },
+    {
+      "source": "uz-use",
+      "target": "sector-fisheries",
+      "value": 0.201,
+      "unit": "km3/yr",
+      "basis": "derived",
+      "label": "Fisheries",
+      "note": "National share of 1.2 per cent applied to the country's Amu Darya diversion. The share is national; the diversion is one basin. Treat the split as indicative of proportion, not as a basin measurement.",
+      "operation": "16.76 km3 x 1.2%"
+    },
+    {
+      "source": "uz-use",
+      "target": "sector-other",
+      "value": 0.168,
+      "unit": "km3/yr",
+      "basis": "derived",
+      "label": "Other",
+      "note": "National share of 1.0 per cent applied to the country's Amu Darya diversion. The share is national; the diversion is one basin. Treat the split as indicative of proportion, not as a basin measurement.",
+      "operation": "16.76 km3 x 1.0%"
+    },
+    {
+      "source": "uz-use",
+      "target": "sector-thermal_power",
+      "value": 0.084,
+      "unit": "km3/yr",
+      "basis": "derived",
+      "label": "Thermal Power",
+      "note": "National share of 0.5 per cent applied to the country's Amu Darya diversion. The share is national; the diversion is one basin. Treat the split as indicative of proportion, not as a basin measurement.",
+      "operation": "16.76 km3 x 0.5%"
+    },
+    {
+      "source": "sector-municipal",
+      "target": "wastewater",
+      "value": 0.156,
+      "unit": "km3/yr",
+      "basis": "measured",
+      "label": "Treated wastewater return",
+      "note": "428,531 m3/d across 53 plants in 43 basins, 61.7 L/person/day. The one urban flow published in volume here.",
+      "operation": null
+    },
+    {
+      "source": "sector-agriculture",
+      "target": "drainage",
+      "value": 1.6,
+      "unit": "km3/yr",
+      "basis": "administered",
+      "label": "Collector-drainage reuse",
+      "note": "Reused collector and drainage water, nationally",
+      "operation": null
+    },
+    {
+      "source": "wastewater",
+      "target": "environment",
+      "value": 0.156,
+      "unit": "km3/yr",
+      "basis": "measured",
+      "label": "Discharged to rivers",
+      "note": "Outfalls located to level-12 basins",
+      "operation": null
+    },
+    {
+      "source": "drainage",
+      "target": "environment",
+      "value": 1.6,
+      "unit": "km3/yr",
+      "basis": "administered",
+      "label": "Returned via drains",
+      "note": null,
+      "operation": null
+    },
+    {
+      "source": "uz-use",
+      "target": "gap-losses",
+      "value": null,
+      "unit": "km3/yr",
+      "basis": "unquantified",
+      "label": "Distribution losses",
+      "note": "Central to the method and often the largest single finding in its published applications. No baseline is published for this region: the 2023 national plan targets a 10 per cent reduction without stating what from.",
+      "operation": null
+    },
+    {
+      "source": "uz-use",
+      "target": "gap-groundwater",
+      "value": null,
+      "unit": "km3/yr",
+      "basis": "unquantified",
+      "label": "Groundwater abstraction",
+      "note": "The method separates surface from groundwater sources. National usable groundwater is given as 0.5 km3/yr against an estimated 27.6 km3/yr yield, but abstraction is not published at any scale this diagram can use.",
+      "operation": null
+    },
+    {
+      "source": "uz-use",
+      "target": "gap-untreated",
+      "value": null,
+      "unit": "km3/yr",
+      "basis": "unquantified",
+      "label": "Untreated wastewater",
+      "note": "The inventory carries 53 plants and the volume they treat. What is generated and never reaches a plant is the quantity the method most wants and no source here reports.",
+      "operation": null
+    }
+  ],
+  "measured": {
+    "fluxes_km3_per_year": {
+      "pre_mm_s": {
+        "km3_per_year": 312.5,
+        "years": [
+          2003,
+          2024
+        ],
+        "complete_years": 22
+      },
+      "aet_mm_s": {
+        "km3_per_year": 219.2,
+        "years": [
+          2003,
+          2024
+        ],
+        "complete_years": 22
+      },
+      "run_mm_s": {
+        "km3_per_year": 153.7,
+        "years": [
+          2003,
+          2024
+        ],
+        "complete_years": 22
+      }
+    },
+    "wastewater": {
+      "plants": 53,
+      "km3_per_year": 0.1564,
+      "m3_per_day": 428531,
+      "population_served": 6945775,
+      "litres_per_person_day": 61.7,
+      "treatment_levels": {
+        "Primary": 6,
+        "Secondary": 47
+      },
+      "basins": 43
+    }
+  },
+  "administered_year": 2022,
+  "sources": [
+    {
+      "source_id": "icwc-bwo",
+      "name": "Interstate Commission for Water Coordination, Basin Water Organizations",
+      "url": "http://www.icwc-aral.uz/bwoamu.htm",
+      "also": "http://www.icwc-aral.uz/bwosyr.htm",
+      "role": "BWO Amu Darya and BWO Syr Darya are the inter-ministerial bodies that set and record withdrawal limits and deliveries for the two basins. They are the administering authority, so their figures are what was allocated and diverted, not an independent measurement of what flowed.",
+      "retrieved_at": "2026-09-14"
+    },
+    {
+      "source_id": "cawater-yearbook-2022",
+      "name": "CAWater-Info Yearbook 2022, Section 2: Water-related situation in the Aral Sea basin",
+      "url": "https://www.cawater-info.net/yearbook/2022/02_yearbook2022_en.htm",
+      "publisher": "SIC ICWC",
+      "role": "Basin and country diversion figures for the 2022 hydrological year.",
+      "retrieved_at": "2026-09-14"
+    },
+    {
+      "source_id": "cawater-yearbook-2023-uz",
+      "name": "CAWater-Info Yearbook 2023, Section 5: Key water developments, Uzbekistan",
+      "url": "https://www.cawater-info.net/yearbook/2023/05_yearbook2023_uz_en.htm",
+      "publisher": "SIC ICWC",
+      "role": "National totals by source and the sectoral shares.",
+      "retrieved_at": "2026-09-14"
+    },
+    {
+      "source_id": "sic-icwc-analytical-2023",
+      "name": "SIC ICWC analytical report 2023",
+      "url": "http://sic.icwc-aral.uz/pdf/analytical_report_2023_en.pdf",
+      "publisher": "SIC ICWC",
+      "role": "Context for reservoir inflow and basin conditions; not the source of any figure recorded here.",
+      "retrieved_at": "2026-09-14"
+    },
+    {
+      "source_id": "uzgeodata-record",
+      "name": "UzGeoData observation record",
+      "url": "https://uzgeodata.uz/data/atlas/cube/index.json",
+      "role": "Precipitation, evapotranspiration and runoff, monthly for 7,445 level-12 basins, 2003-2024. Converted to volumes using published basin areas.",
+      "release": "see latest.json"
+    },
+    {
+      "source_id": "uzgeodata-wastewater",
+      "name": "UzGeoData wastewater plant inventory",
+      "url": "https://uzgeodata.uz/data/hydroclimate/wastewater-plants-transboundary.csv",
+      "role": "53 plants with discharge in cubic metres per day, population served, treatment level and outfall basin."
+    }
+  ],
+  "reuse": {
+    "status": "unverified",
+    "statement": "The reuse terms of the ICWC and SIC ICWC pages have not been established. The figures are reproduced here as published statistics with their source and retrieval date, which is how a citation works and is not the same as a licence. Before this diagram is presented as a product rather than a working case study, those terms need checking with SIC ICWC, and this field replaced with what they say.",
+    "checked_at": null
+  },
+  "reading": {
+    "scale": "Basin systems, not municipalities. Withdrawal here is administered by country and canal system while the record is organised by catchment, and canal delivery crosses basin divides, so a national figure cannot be honestly disaggregated to a basin.",
+    "years": "The measured fluxes are 22-year means; the administered figures are the 2022 hydrological year. They are drawn together because that is what is published, and the mismatch is stated rather than hidden by averaging one to the other.",
+    "closure": "This diagram does not close, and is not made to. Precipitation less evapotranspiration leaves a surplus larger than the recorded diversion, while the runoff series exceeds that surplus outright: two models on different grids disagree, and forcing the arrows to balance would hide exactly the thing worth seeing.",
+    "colour": "Colour is how a flow is known, not what kind of water it is. That is the division this region's data makes necessary and it is the question a reader of a Sankey usually cannot answer."
+  }
+}

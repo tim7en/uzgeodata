@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "note": "Every administered figure in regional-withdrawals.csv was transcribed by hand from a published page, because none of these bodies offer the numbers in a machine-readable form. Transcription is recorded as its own basis so a reader can tell it from an extraction that a rerun would reproduce: a typo here is not detectable by any check this project runs, and the honest response is to name the risk rather than imply a pipeline that does not exist.",
+  "method_reference": {
+    "name": "Water Flow Diagram (WFD)",
+    "url": "https://www.waterflowdiagram.ch/en",
+    "applications": "https://www.waterflowdiagram.ch/en/applications",
+    "description": "A methodology for integrated water balancing that connects WASH, IWRM and the human right to water and sanitation, visualising abstraction, distribution, consumption, wastewater and losses for a municipality so stakeholders can see where water goes. Developed with case studies including Bern and St Gallen (Switzerland), Tarapoto (Peru), Agadir (Morocco), Pespire (Honduras) and Santa Maria Bulacan (Philippines).",
+    "adaptation": "This diagram follows the method's intent and departs from its scale. The published applications are municipal, where a utility can account for abstraction, delivery and non-revenue water. Nothing at that resolution is published for this region, so the diagram is drawn at basin-system scale and every flow carries how it is known rather than being rendered alike."
+  },
+  "sources": [
+    {
+      "source_id": "icwc-bwo",
+      "name": "Interstate Commission for Water Coordination, Basin Water Organizations",
+      "url": "http://www.icwc-aral.uz/bwoamu.htm",
+      "also": "http://www.icwc-aral.uz/bwosyr.htm",
+      "role": "BWO Amu Darya and BWO Syr Darya are the inter-ministerial bodies that set and record withdrawal limits and deliveries for the two basins. They are the administering authority, so their figures are what was allocated and diverted, not an independent measurement of what flowed.",
+      "retrieved_at": "2026-09-14"
+    },
+    {
+      "source_id": "cawater-yearbook-2022",
+      "name": "CAWater-Info Yearbook 2022, Section 2: Water-related situation in the Aral Sea basin",
+      "url": "https://www.cawater-info.net/yearbook/2022/02_yearbook2022_en.htm",
+      "publisher": "SIC ICWC",
+      "role": "Basin and country diversion figures for the 2022 hydrological year.",
+      "retrieved_at": "2026-09-14"
+    },
+    {
+      "source_id": "cawater-yearbook-2023-uz",
+      "name": "CAWater-Info Yearbook 2023, Section 5: Key water developments, Uzbekistan",
+      "url": "https://www.cawater-info.net/yearbook/2023/05_yearbook2023_uz_en.htm",
+      "publisher": "SIC ICWC",
+      "role": "National totals by source and the sectoral shares.",
+      "retrieved_at": "2026-09-14"
+    },
+    {
+      "source_id": "sic-icwc-analytical-2023",
+      "name": "SIC ICWC analytical report 2023",
+      "url": "http://sic.icwc-aral.uz/pdf/analytical_report_2023_en.pdf",
+      "publisher": "SIC ICWC",
+      "role": "Context for reservoir inflow and basin conditions; not the source of any figure recorded here.",
+      "retrieved_at": "2026-09-14"
+    },
+    {
+      "source_id": "uzgeodata-record",
+      "name": "UzGeoData observation record",
+      "url": "https://uzgeodata.uz/data/atlas/cube/index.json",
+      "role": "Precipitation, evapotranspiration and runoff, monthly for 7,445 level-12 basins, 2003-2024. Converted to volumes using published basin areas.",
+      "release": "see latest.json"
+    },
+    {
+      "source_id": "uzgeodata-wastewater",
+      "name": "UzGeoData wastewater plant inventory",
+      "url": "https://uzgeodata.uz/data/hydroclimate/wastewater-plants-transboundary.csv",
+      "role": "53 plants with discharge in cubic metres per day, population served, treatment level and outfall basin."
+    }
+  ],
+  "reuse": {
+    "status": "unverified",
+    "statement": "The reuse terms of the ICWC and SIC ICWC pages have not been established. The figures are reproduced here as published statistics with their source and retrieval date, which is how a citation works and is not the same as a licence. Before this diagram is presented as a product rather than a working case study, those terms need checking with SIC ICWC, and this field replaced with what they say.",
+    "checked_at": null
+  }
+}

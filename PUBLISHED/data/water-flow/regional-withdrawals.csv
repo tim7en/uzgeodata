@@ -1,0 +1,23 @@
+figure_id,scope,component,sector,year,value,unit,basis,source_id,note
+icwc-amu-limit-2022,amu_darya,allocation_limit,all,2022,55.23,km3/yr,administered,cawater-yearbook-2022,ICWC limit for the Amu Darya basin in the 2022 hydrological year
+icwc-amu-actual-2022,amu_darya,diversion,all,2022,44.26,km3/yr,administered,cawater-yearbook-2022,Actually diverted; 80 percent of the annual limit
+icwc-amu-growing-2022,amu_darya,diversion,growing_season,2022,31.38,km3/yr,administered,cawater-yearbook-2022,Growing-season share of the same diversion; not additive with the annual figure
+icwc-amu-tj-2022,amu_darya,diversion,tajikistan,2022,8.99,km3/yr,administered,cawater-yearbook-2022,Against a limit of 9.83
+icwc-amu-tm-2022,amu_darya,diversion,turkmenistan,2022,18.51,km3/yr,administered,cawater-yearbook-2022,Against a limit of 21.83
+icwc-amu-uz-2022,amu_darya,diversion,uzbekistan,2022,16.76,km3/yr,administered,cawater-yearbook-2022,Against a limit of 23.57
+icwc-syr-actual-2022,syr_darya,diversion,all,2022,13.83,km3/yr,administered,cawater-yearbook-2022,86 percent of the established limit
+icwc-basin-limits,aral_sea_basin,allocation_limit,all,2022,59.45,km3/yr,administered,icwc-bwo,Total allocated limits across the basin in a hydrological year
+icwc-amu-delta-2022,amu_darya,delta_inflow,environment,2022,2.055,km3/yr,administered,cawater-yearbook-2022,Supply reaching the Amu Darya delta
+icwc-amu-drainage-2022,amu_darya,collector_drainage,return,2022,0.5035,km3/yr,administered,cawater-yearbook-2022,Collector-drainage water
+uz-total-use,uzbekistan,withdrawal,all,2023,52.0,km3/yr,administered,cawater-yearbook-2023-uz,Stated as 51-53 km3/yr; midpoint recorded and the range kept in the note
+uz-transboundary-share,uzbekistan,withdrawal,transboundary_origin,2023,41.0,km3/yr,administered,cawater-yearbook-2023-uz,About 80 percent of national use originates in transboundary rivers
+uz-surface,uzbekistan,withdrawal,surface_water,2023,50.9,km3/yr,administered,cawater-yearbook-2023-uz,Surface water demand
+uz-groundwater,uzbekistan,withdrawal,groundwater,2023,0.5,km3/yr,administered,cawater-yearbook-2023-uz,Usable groundwater
+uz-drainage-reuse,uzbekistan,withdrawal,drainage_reuse,2023,1.6,km3/yr,administered,cawater-yearbook-2023-uz,Reused collector and drainage water
+uz-share-agriculture,uzbekistan,sector_share,agriculture,2023,90.5,percent,administered,cawater-yearbook-2023-uz,Stated as 90-91 percent; midpoint recorded
+uz-share-municipal,uzbekistan,sector_share,municipal,2023,4.5,percent,administered,cawater-yearbook-2023-uz,
+uz-share-industry,uzbekistan,sector_share,industry,2023,1.4,percent,administered,cawater-yearbook-2023-uz,
+uz-share-fisheries,uzbekistan,sector_share,fisheries,2023,1.2,percent,administered,cawater-yearbook-2023-uz,
+uz-share-thermal,uzbekistan,sector_share,thermal_power,2023,0.5,percent,administered,cawater-yearbook-2023-uz,
+uz-share-other,uzbekistan,sector_share,other,2023,1.0,percent,administered,cawater-yearbook-2023-uz,Residual named as other sectors in the source
+uz-groundwater-potential,uzbekistan,resource,groundwater,2023,27.6,km3/yr,administered,cawater-yearbook-2023-uz,Estimated natural fresh and brackish groundwater yield; a resource not a withdrawal
