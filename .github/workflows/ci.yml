@@ -26,7 +26,23 @@ jobs:
       # run that reports only "exit code 2". Splitting it means the next failure names
       # the module it could not import instead of needing the raw log to find out.
       - name: Collect tests (import check)
-        run: python -m pytest TESTS --collect-only -q
+        run: |
+          set +e
+          output=$(python -m pytest TESTS --collect-only -q 2>&1)
+          status=$?
+          if [ $status -ne 0 ]; then
+            # Raise the failure as annotations. The job log needs repository admin to
+            # download, so a collection error that only reaches stdout is invisible to
+            # anyone without it -- which is how "exit code 2" stayed undiagnosed. The
+            # workflow-command form is readable through the public checks API.
+            printf '%s
+' "$output" | tail -n 40 | while IFS= read -r line; do
+              echo "::error::${line}"
+            done
+            exit $status
+          fi
+          printf '%s
+' "$output" | tail -n 2
       - name: Run tests
         run: python -m pytest TESTS -q
       - run: npm run test:ui
