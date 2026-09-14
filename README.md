@@ -5,7 +5,7 @@
 UzGeoData is a public-preview basin atlas for the **Amu Darya and Syr Darya**
 systems. Researchers can explore **7,445 level-12 basins**, read the 281 published
 HydroATLAS attributes beside independent open-data estimates, and download
-**2003–2022 monthly records** with source and method provenance.
+**2003–2024 monthly records** with source and method provenance.
 
 [Open the public preview](https://uzgeodata.uz/) ·
 [Deployment status](https://github.com/tim7en/uzgeodata/actions/workflows/pages.yml) ·
@@ -37,8 +37,10 @@ catchment above a basin and must not be added across basins.
 | Basin map | Amu Darya and Syr Darya, across national boundaries |
 | Published attributes | 281 HydroATLAS attribute definitions |
 | Independent estimates | Coverage varies by attribute and basin; missing estimates stay explicit |
-| Monthly record | 240 monthly positions per variable, 2003–2022, completed runs only |
+| Monthly record | 264 monthly positions per variable, 2003–2024, completed runs only |
 | Downloads | Basin JSON, shared catalogue, monthly CSV and provenance metadata |
+| Query cube | 17.7M rows as partitioned Parquet, readable over HTTP byte ranges |
+| Derived products | Normals, anomalies, seasonal figures, trends, water balance, SPI |
 | Reading support | About, source reuse terms, citation, five-minute guide and issue reporting |
 
 The saved snapshot includes snow, precipitation, evapotranspiration, soil moisture,
@@ -92,12 +94,60 @@ Paths below are relative to the site root (`/uzgeodata/` on GitHub Pages).
 | `data/atlas/basins/<HYBAS_ID>.json` | Published values and independent estimates |
 | `data/atlas/history/index.json` | Monthly variables, provenance and coverage |
 | `data/atlas/history/<HYBAS_ID>.json` | Basin monthly values and their metadata |
+| `data/atlas/cube/variable=<name>/*.parquet` | The whole dated record, one file per variable |
+| `data/atlas/cube/index.json` | Cube manifest, variable registry and reading notes |
+| `data/atlas/models/pskem-discharge.json` | The validated model result, skill included |
+| `data/atlas/analysis-layers.md` | What the derived and model layers do, and refuse |
 | `release.json` | Release commit, generation time and scope |
 
 Monthly arrays start in January of the first stated year. Nulls retain their
 positions. Annual totals are meaningful only for monthly flux quantities with all
 12 observations. Download the shared catalogue with attribute files; positional
 values are not self-describing without it.
+
+## Querying the cube
+
+The dated record ships as Parquet partitioned by variable, so a query reads the one
+file that answers it. The host serves byte ranges, which means a reader can query
+twenty-two years without downloading them:
+
+```sql
+-- DuckDB, no download: reads only the row groups the query touches
+SELECT year, month, value
+FROM read_parquet('https://uzgeodata.uz/data/atlas/cube/variable=pre_mm_s/*.parquet')
+WHERE basin_id = '4121289400' AND year >= 2020
+ORDER BY year, month;
+```
+
+The cube is a read path, not the record: it carries no revisions, run ids, coverage
+counts or missing reasons. Cite the store release named in its `index.json`. A null
+is a month with no observation and is never a zero. Local basin support only —
+upstream values cannot be summed across basins, so a cube inviting that sum would be
+a trap.
+
+## Analysis layers
+
+Layer 1 is the reference atlas, Layer 2 the observation store. Above them:
+
+**Layer 3 — derived products** (`ATLAS_MODULES/core/products.py`). Nothing is stored;
+each product is derived on demand, so a correction below propagates rather than
+leaving a stale derivative behind. A flux is summed and a state averaged, never the
+other way round. A season short of a month yields no total. An anomaly baseline comes
+from the whole record, never the window being examined. SPI is a real gamma fit per
+basin and calendar month, not a z-score of accumulated rainfall — on a skewed record
+the shortcut reads a genuine drought as unremarkable.
+
+**Layer 4 — models** (`ATLAS_MODULES/core/models.py`). A model is the first output
+here that is not a measurement, so the harness is mostly refusals: no score on the
+training period, no fewer than 24 held-out months, no filled predictors, and skill
+reported against climatology rather than only against the evaluation mean.
+
+Validated against the Pskem gauge at Mullala, an independent hydromet record:
+Nash–Sutcliffe **0.55**, and **−2.46 against climatology**. Read the second number.
+Monthly climate does not predict this river — the bare seasonal cycle does better,
+because snowmelt discharge runs on storage and lag a contemporaneous linear model
+cannot see. The result is published as it came out. See
+[analysis-layers.md](PUBLISHED/data/atlas/analysis-layers.md).
 
 ## Evidence contract
 

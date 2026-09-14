@@ -1,8 +1,33 @@
-# Layers 3 and 4: derived products, and models
+# The four layers
 
-The store below these layers holds observations. An observation can be checked against
-the thing it measured. Everything on this page cannot, so each layer is built around
-what it refuses to say rather than around what it computes.
+Each layer answers a different kind of question, and the ones above the store cannot
+be checked against the thing they describe. So each is built around what it refuses to
+say as much as what it computes.
+
+| Layer | What it holds | State |
+|---|---|---|
+| 1 — Reference | 281 HydroATLAS attribute definitions across 7,445 level-12 basins | Complete |
+| 2 — Observation | The append-only record: 9 dated variables 2003–2024, plus epoch and static sources | Dated series complete; ~9 of 20 intended variables |
+| 3 — Derived products | Normals, anomalies, seasonal figures, trends, water balance, SPI | Complete |
+| 4 — Models | A fitting harness, validated against an independent gauge | Harness complete; one validated case |
+
+---
+
+## Layer 2 — the observation record
+
+Nine dated variables, every one spanning **2003–2024 at 1,965,480 rows** (7,445 basins
+× 264 months): precipitation, actual and potential evapotranspiration, soil moisture,
+runoff, snow cover, and minimum, mean and maximum temperature. 17,689,320 rows in all.
+
+Each year names the run that produced it, and a ledger accumulates across runs rather
+than being rewritten by the latest one. A run vouches only for the years it fetched;
+the ledger above them carries the full span.
+
+**An unfinished run does not vouch for its own output.** This is worth stating because
+it was tested in earnest: 625,380 valid rows of 2003–2009 temperature sat in the store
+for two days, withheld from every query, because the run that wrote them was
+interrupted before it could enter `run.csv`. Nothing downstream saw a number it could
+not defend, and no alarm was needed for that to hold.
 
 ## Layer 3 — derived products
 
@@ -13,20 +38,20 @@ a stale derivative behind.
 | Product | What it gives | What it refuses |
 |---|---|---|
 | `normals` | The average each calendar month brings, per basin | Reports the year count behind every value, so a normal from four years cannot pass as one from twenty |
-| `anomalies` | Departure from the normal, and a standardised score | Baseline comes from the whole record, never the window examined; withheld under 10 years, and the score is withheld where the baseline has no spread |
-| `seasonal` | A season summed for a flux, averaged for a state | A flux total is withheld if any month of the season is missing — a summer short of July is not a summer |
-| `trend` | Least-squares slope per year | Counts missing years, flags a record that thins towards the present, and carries the variable's caution onto its own result |
+| `anomalies` | Departure from the normal, and a standardised score | Baseline comes from the whole record, never the window examined; withheld under 10 years, and the score withheld where the baseline has no spread |
+| `seasonal` | A season summed for a flux, averaged for a state | A flux total is withheld if any month is missing — a summer short of July is not a summer |
+| `trend` | Least-squares slope per year | Counts missing years, flags a record thinning towards the present, and carries the variable's caution onto its own result |
 | `water_balance` | Precipitation less actual evapotranspiration | Named a climatic difference, not a catchment balance: nothing routes water, accounts for storage, or closes against a gauge |
-| `spi` | Standardised Precipitation Index, 1–24 month windows | A true gamma fit per basin and calendar month, not a z-score; zeros handled as a mixed distribution; withheld under 10 years |
+| `spi` | Standardised Precipitation Index, 1–24 month windows | A real gamma fit per basin and calendar month; zeros as a mixed distribution; withheld under 10 years |
 
 **Why SPI is fitted and not approximated.** A z-score of accumulated rainfall is the
 common shortcut and it misreads both tails, because precipitation is bounded at zero
 and right-skewed. On a 22-year test record the driest quarter reads −1.11 as a gamma
 fit and only −0.76 as a z-score — a real drought rendered unremarkable — while the
-wettest reads 2.68 against an inflated 3.33. Both directions are covered by tests.
+wettest reads 2.68 against an inflated 3.33.
 
-Accumulation windows refuse to span a calendar gap, and a null month is never summed as
-a dry one.
+Accumulation windows refuse to span a calendar gap, and a null month is never summed
+as a dry one.
 
 ## Layer 4 — models
 
@@ -34,31 +59,25 @@ a dry one.
 measurement at all: it produces a number for a month nobody observed. The harness is
 therefore mostly refusals.
 
-- **Skill is never reported on the training period.** Overlapping train and evaluate
-  windows raise; there is no option to ask for it.
+- **Skill is never reported on the training period.** Overlapping windows raise; there
+  is no option to ask for it.
 - **Both periods must be explicit.** An open-ended window cannot be checked for overlap.
 - **Fewer than 24 held-out months yields no score**, the least that distinguishes skill
   from having memorised a seasonal cycle.
-- **Skill is reported against climatology**, not only against the evaluation mean. This
-  is the number that matters and it is the harder test.
-- **Missing predictors drop the month; they are never filled.** For a catchment, a month
-  missing any basin is dropped whole — a mean over the area that happened to report is
-  not a catchment mean.
+- **Skill is reported against climatology**, not only against the evaluation mean.
+- **Missing predictors drop the month; they are never filled.** For a catchment, a
+  month missing any basin is dropped whole.
 - **Basins are area-weighted**, and a basin with no area raises rather than silently
   falling out of the average.
 
 ### The validation case: the Pskem at Mullala
 
-`PIPELINES/validate_pskem_model.py`, published at `models/pskem-discharge.json`.
-
 Gauge `uz:station/gauge-16290` (р. Пскем, с. Муллала) is a hydromet record measured
-independently of everything this project produces. Walking the level-12 routing graph
-upstream from its basin gives 20 basins and 2,627 km²; monthly discharge is converted to
-millimetres of depth over that area so it stands in the same units as the fluxes
-predicting it. Predictors are area-weighted precipitation, maximum temperature and snow
-cover — supply, melt energy, and storage. Fit on 2003–2012 (120 months), scored on
-2013–2017 (59 months, one rejected because the source records a 29-day February in a
-non-leap year).
+independently of everything this project produces. Walking the routing graph upstream
+gives 20 basins and 2,627 km²; discharge is converted to millimetres of depth so it
+stands in the same units as the fluxes predicting it. Predictors are area-weighted
+precipitation, maximum temperature and snow cover — supply, melt energy, storage. Fit
+on 2003–2012 (120 months), scored on 2013–2017 (59 months).
 
 | | |
 |---|---|
@@ -67,38 +86,81 @@ non-leap year).
 | Bias | +14.0 mm/month |
 | Mean absolute error | 28.0 mm/month |
 
-**Read the second row, not the first.** An efficiency of 0.55 looks like a working
-model. Against the calendar-month means of the training period — a forecast needing no
-model at all — it is roughly three and a half times worse. A contemporaneous linear
-model on monthly climate does not predict this river, because snowmelt discharge is
-governed by storage and lag it has no access to. That is the result, and it is published
-as it came out.
+**Read the second row.** An efficiency of 0.55 looks like a working model. Against the
+calendar-month means of the training period — a forecast needing no model at all — it
+is roughly three and a half times worse. A contemporaneous linear model on monthly
+climate does not predict this river, because snowmelt discharge is governed by storage
+and lag it has no access to. Published as it came out.
 
-This is what the layer is for. Reporting the efficiency alone would have presented a
-failed model as a successful one, and nothing in the number itself would have shown it.
+Reporting the efficiency alone would have presented a failed model as a successful
+one, and nothing in that number would have shown it.
 
-### A withheld record this exposed
+---
 
-The first predictor set used ERA5 mean temperature and the harness dropped 84 of 120
-training months, because `uzgeodata.dated.v1.tmp_dc_s` appeared to start in 2010 while
-the other eight dated variables reached back to 2003.
+# What is still to do
 
-Following that up found something better than a gap. The seven missing years had been
-extracted -- 625,380 valid rows for 2003-2009 were sitting in the store -- by a run that
-was interrupted and so never entered `run.csv`. The contract withheld them exactly as it
-should: an unfinished run does not vouch for its own output, and nothing downstream saw
-a number it could not defend. Every checkpoint from that run survived, so a completed
-re-run restored the years from cache in about forty seconds each rather than re-querying
-Earth Engine. All nine dated variables now span 2003-2024 at 1,965,480 rows apiece.
+Ordered by value per unit of effort.
 
-The predictor set was changed for coverage before the second score was seen, and the
-split never moved. It has deliberately **not** been changed back now that mean
-temperature is available again: with both scores already known, swapping predictors
-would be choosing a model by its result.
+## Layer 2 — five variables in a pass already being paid for
 
-## What is still missing
+Reducing over basin geometry costs about the same for six bands as for one, measured
+at 14.1 s against 15.8 s on a 250-basin sample. TerraClimate is already fetched for
+four bands, so these ride along in the same pass rather than costing a new extraction:
 
-Layer 2 publishes 9 of roughly 20 intended variables — no NDVI, land surface
-temperature, vapour pressure deficit, or dated surface water. Layer 4 has one validated
-case; a second gauge would test whether the harness generalises, and a lagged or
-snowmelt-aware model would be the honest next attempt at actually predicting the river.
+| Band | Gives | Closes |
+|---|---|---|
+| `vpd` | Vapour pressure deficit | A concept currently registered as unavailable |
+| `def` | Climate water deficit | The supply-demand gap the crude balance only approximates |
+| `swe` | Snow water equivalent | Depth to stand beside snow-cover percentage, which is only extent |
+| `q` | TerraClimate runoff | A second runoff source to set against ERA5's |
+| `pdsi` | Palmer drought index | A published drought index beside the derived SPI |
+
+Adding a band means extending `SOURCES` in `dated_monthly.py` and registering the
+attribute; the runner and contract need no change. **Note the recipe hash moves when
+that file changes, so the existing years become a second derivation rather than a
+revision** — expected, and the reason the namespace count is a floor and not an
+equality.
+
+Needing genuinely new sources, in rough order of demand:
+
+- **NDVI / EVI** (`MODIS/061/MOD13Q1`) — the most requested absent variable.
+- **Land surface temperature** (`MODIS/061/MOD11A2`) — distinct from the air
+  temperature already published, and routinely confused with it.
+- **Dated surface water** (`JRC/GSW1_4/MonthlyHistory`) — currently a long-term
+  climatology only, so no seasonal or trend question can be asked of it.
+
+## Layer 3 — SPEI is now reachable
+
+The registry says SPEI "would additionally need a water balance and is not offered."
+That was true when written and no longer is: `pet_mm_s` is published for the full
+record, so precipitation less PET gives the climatic balance SPEI is defined on. It
+needs a log-logistic fit rather than SPI's gamma, and the registry entry should be
+corrected when it lands.
+
+Also worth having: percentile and return-period framing for extremes, which readers
+ask for more often than a raw anomaly.
+
+## Layer 4 — one case is not a harness
+
+- **A second gauge.** One validated catchment shows the harness runs; it does not show
+  it generalises. Other stations exist in `pskem-station-basin-links.csv`.
+- **A lagged or snowmelt-aware model.** The honest next attempt at actually predicting
+  the river, given that the contemporaneous one demonstrably does not.
+- **Uncertainty on the skill scores.** A Nash–Sutcliffe from 59 months has a wide
+  interval and none is printed, which is exactly the sort of omission this layer
+  criticises elsewhere.
+- **A recorded comparison of predictor sets.** Mean temperature became available again
+  after the set was chosen; swapping now, with both scores known, would be choosing a
+  model by its result. A second, separately recorded fit is the honest way to ask.
+
+## Cross-cutting
+
+- **`independently_reproduced` is still 0.** No attribute has passed independent
+  scientific reproduction, and the preview says so everywhere. This is the single
+  largest gap between what the platform is and what it claims to be for.
+- **The store exists on one disk.** 520 MB of Parquet and 3.7 GB of checkpoints are
+  not in Git and are not archived. A GitHub Release or Zenodo deposit would make the
+  record survivable; the repository is the wrong place for it.
+- **`integrity` CI is red** and has been for some time. It fails at collection on
+  Linux (exit code 2), which does not reproduce on Windows or under a simulated clean
+  checkout, so it needs the runner log to diagnose.
