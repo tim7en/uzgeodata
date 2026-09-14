@@ -374,11 +374,29 @@ def outranks(candidate, held, ranking):
     return ranking.get(candidate["run_id"], (False, "")) > ranking.get(held["run_id"], (False, ""))
 
 
+# Everything series_conflicts inspects, and nothing else. Reading the whole record to
+# compare nine fields costs the other nineteen for nothing.
+CONSISTENCY_FIELDS = ("attribute_id", "mode", "spatial_support", "recipe_version",
+                      "geometry_version", "unit", "time_kind", "valid_start", "valid_end")
+
+
 def verify_partitions(directory):
-    """Whole-store consistency, one partition at a time."""
+    """Whole-store consistency, streamed rather than held.
+
+    This used to read each partition whole. That was affordable while a year held a
+    hundred thousand rows and stopped being affordable at nine hundred thousand: a
+    partition materialised as dicts is gigabytes, and the check began failing on
+    memory rather than on evidence -- the worst way for an integrity test to fail,
+    because an exhausted allocator looks nothing like a conflict and stops the check
+    from ever reaching one.
+
+    Streaming in batches and reading only the nine fields compared keeps the cost flat
+    as the record grows. `seen` was never the problem: it is keyed on the series and
+    the versions, not the basin, so it holds hundreds of entries rather than millions.
+    """
     seen, problems = {}, set()
-    for path in partition_files(directory):
-        problems.update(series_conflicts(_read_file(path), seen))
+    problems.update(series_conflicts(
+        iter_partitions(directory, columns=CONSISTENCY_FIELDS), seen))
     return sorted(problems)
 
 

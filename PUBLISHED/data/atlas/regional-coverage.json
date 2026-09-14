@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-13T19:20:42.757+00:00",
+  "generated_at": "2026-09-14T07:59:16.491+00:00",
   "basin_level": 12,
   "basins": 7445,
   "pilot_basins": 20,
@@ -309,7 +309,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@f6d2e080dded/2003-2024"
+      "method": "upstream_annuals@0c419a2a041d/2003-2024"
     },
     {
       "column": "ari_ix_sav",
@@ -347,7 +347,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@f6d2e080dded/2003-2024"
+      "method": "upstream_annuals@0c419a2a041d/2003-2024"
     },
     {
       "column": "cls_cl_smj",
@@ -671,7 +671,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@f6d2e080dded/2003-2024"
+      "method": "upstream_annuals@0c419a2a041d/2003-2024"
     },
     {
       "column": "crp_pc_sse",
@@ -2432,7 +2432,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@f6d2e080dded/2003-2024"
+      "method": "upstream_annuals@0c419a2a041d/2003-2024"
     },
     {
       "column": "pnv_cl_smj",
@@ -3363,7 +3363,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@f6d2e080dded/2003-2024"
+      "method": "upstream_annuals@0c419a2a041d/2003-2024"
     },
     {
       "column": "prm_pc_sse",
@@ -3901,7 +3901,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "modis_myd10a1@061",
-      "method": "upstream_annuals@f6d2e080dded/2003-2024"
+      "method": "upstream_annuals@0c419a2a041d/2003-2024"
     },
     {
       "column": "soc_th_sav",
@@ -4205,7 +4205,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@f6d2e080dded/2003-2024"
+      "method": "upstream_annuals@0c419a2a041d/2003-2024"
     },
     {
       "column": "tbi_cl_smj",
@@ -4243,7 +4243,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4262,7 +4262,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4281,7 +4281,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4300,7 +4300,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4319,7 +4319,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4338,7 +4338,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4357,7 +4357,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4376,7 +4376,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4395,7 +4395,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4414,7 +4414,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4433,7 +4433,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4452,7 +4452,7 @@
         "2025-01-01"
       ],
       "statistic": "monthly_climatological_mean",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4471,7 +4471,7 @@
         "2025-01-01"
       ],
       "statistic": "annual_climatological_figure",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4490,7 +4490,7 @@
         "2025-01-01"
       ],
       "statistic": "annual_climatological_figure",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4509,7 +4509,7 @@
         "2025-01-01"
       ],
       "statistic": "annual_climatological_figure",
-      "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
+      "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "method": "derive_climatology@ea786948fb84/2003-2024"
     },
     {
@@ -4529,7 +4529,7 @@
       ],
       "statistic": "annual_climatological_figure",
       "source_release": "terraclimate_temperature@IDAHO_EPSCOR/TERRACLIMATE",
-      "method": "upstream_annuals@f6d2e080dded/2003-2024"
+      "method": "upstream_annuals@0c419a2a041d/2003-2024"
     },
     {
       "column": "urb_pc_sse",

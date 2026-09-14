@@ -30,8 +30,8 @@ from ATLAS_MODULES.core.runtime import sha256, utc_now, write_json
 from ATLAS_MODULES.hydrosheds.functions import dated_monthly
 from PIPELINES.extract_dated_snow import PROJECT, month_period
 from PIPELINES.extract_regional_snow import (
-    RETRIES, batches, geometry_version, is_complete, load_frame, regional_grid,
-    summarise_year, support_summary, with_retries)
+    RETRIES, batches, geometry_version, is_complete, load_frame, merge_ledger,
+    regional_grid, summarise_year, support_summary, with_retries)
 from PIPELINES.stage_pilot_observations import BASIN_LEVEL, STORE
 
 CHECKPOINTS = ROOT / "WORKSPACE/atlas_runs/regional_monthly"
@@ -133,6 +133,7 @@ def run(source, years=DEFAULT_YEARS, store=STORE, project=PROJECT, batch_size=25
             store, observation_rows(source, collected, version, recipe, identifier, utc_now()))
         summary = summarise_year(collected, len(frame), time.perf_counter() - year_started)
         summary["rows_per_band"] = len(collected) // len(bands) if bands else 0
+        summary["run_id"] = identifier
         ledger["by_year"][str(year)] = summary
         print(f"{year}: {summary['basins']}/{len(frame)} basins, {len(collected):,} rows, "
               f"{summary['seconds']:.0f}s [{time.perf_counter() - started:.0f}s total]", flush=True)
@@ -142,7 +143,10 @@ def run(source, years=DEFAULT_YEARS, store=STORE, project=PROJECT, batch_size=25
     ledger["stored_rows"] = sum(y["rows"] for y in ledger["by_year"].values())
     ledger["complete"] = is_complete(ledger)
     ledger["basin_support"] = support_summary(expected)
-    write_json(ledger_path(source), ledger)
+    path = ledger_path(source)
+    previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+    ledger = merge_ledger(previous, ledger)
+    write_json(path, ledger)
 
     observations.merge_table(store / "run.csv", [{
         "run_id": identifier, "started_at": ledger["started_at"], "finished_at": ledger["finished_at"],
@@ -154,7 +158,8 @@ def run(source, years=DEFAULT_YEARS, store=STORE, project=PROJECT, batch_size=25
     observations.merge_table(store / "source_release.csv", [{
         "source_release_id": release_id(source), "name": f"{source} monthly imagery",
         "asset": spec["asset"], "sha256": "", "epoch": "",
-        "valid_start": f"{span[0]:04d}-01-01", "valid_end": f"{span[-1] + 1:04d}-01-01",
+        "valid_start": f"{ledger['years'][0]:04d}-01-01",
+        "valid_end": f"{ledger['years'][1] + 1:04d}-01-01",
         "retrieved_at": ledger["finished_at"], "pinned": False}], "source_release_id")
     return ledger
 

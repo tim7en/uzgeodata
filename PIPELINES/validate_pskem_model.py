@@ -51,10 +51,17 @@ EVALUATE = ("2013-01", "2017-12")
 # measurement, which is the point of the exercise.
 #
 # The first set used ERA5 mean temperature instead of the TerraClimate maximum. It was
-# changed for coverage and not for skill: ERA5 temperature begins in 2010, which left
-# 36 of the 120 training months standing once the harness dropped every month it could
-# not fill. The split below did not move, and the score that came back after the change
-# is the score recorded, whatever it says.
+# changed for coverage and not for skill: ERA5 temperature appeared to begin in 2010,
+# which left 36 of the 120 training months standing once the harness dropped every month
+# it could not fill. The split below did not move, and the score that came back after
+# the change is the score recorded, whatever it says.
+#
+# That coverage gap has since been closed -- the missing years turned out to have been
+# extracted by a run that never finished, and a completed re-run restored 2003-2009 --
+# so mean temperature is now available for the whole span. The set is deliberately left
+# as it is. Swapping predictors back now, with both scores already known, would be
+# choosing a model by its result, which is the one thing this harness exists to prevent.
+# Anyone wanting that comparison should make it a second, separately recorded fit.
 CONCEPTS = ["precipitation", "maximum temperature", "snow cover"]
 
 

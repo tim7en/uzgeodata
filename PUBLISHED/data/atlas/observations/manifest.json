@@ -32,21 +32,21 @@
     "recorded_at",
     "provisional"
   ],
-  "rows": 22090130,
+  "rows": 22894190,
   "staged_from_this_run": 10260,
-  "current_rows": 22090130,
+  "current_rows": 22782515,
   "by_mode": {
-    "annual_extension": 22083830,
+    "annual_extension": 22776215,
     "reference_import": 5620,
     "baseline_reproduction_candidate": 680
   },
   "by_time_kind": {
     "static": 292875,
     "source_epoch": 524975,
-    "climatology": 2774100,
-    "observation": 18498180
+    "climatology": 2841105,
+    "observation": 19123560
   },
-  "dated_observations": 18498180,
+  "dated_observations": 19123560,
   "attribute_count": 290,
   "dated_attributes": [
     "uzgeodata.dated.v1.aet_mm_s",

@@ -1,54 +1,54 @@
 {
-  "generated_at": "2026-09-13T22:44:14.966+00:00",
-  "rows": 17063940,
+  "generated_at": "2026-09-14T08:07:21.361+00:00",
+  "rows": 17689320,
   "basins": 7445,
   "months": [
     "2003-01",
     "2024-12"
   ],
-  "bytes": 108186515,
+  "bytes": 112971201,
   "base": "/data/atlas/cube/",
   "files": {
     "aet_mm_s": {
       "path": "/data/atlas/cube/variable=aet_mm_s/data_0.parquet",
-      "bytes": 12371729
+      "bytes": 12373853
     },
     "pet_mm_s": {
       "path": "/data/atlas/cube/variable=pet_mm_s/data_0.parquet",
-      "bytes": 12800981
+      "bytes": 12802012
     },
     "pre_mm_s": {
       "path": "/data/atlas/cube/variable=pre_mm_s/data_0.parquet",
-      "bytes": 9904834
+      "bytes": 9903609
     },
     "run_mm_s": {
       "path": "/data/atlas/cube/variable=run_mm_s/data_0.parquet",
-      "bytes": 13773101
+      "bytes": 13783638
     },
     "snw_pc_s": {
       "path": "/data/atlas/cube/variable=snw_pc_s/data_0.parquet",
-      "bytes": 9057506
+      "bytes": 9057347
     },
     "soil_mm_s": {
       "path": "/data/atlas/cube/variable=soil_mm_s/data_0.parquet",
-      "bytes": 10965365
+      "bytes": 10965937
     },
     "tmn_dc_s": {
       "path": "/data/atlas/cube/variable=tmn_dc_s/data_0.parquet",
-      "bytes": 14535313
+      "bytes": 14529015
     },
     "tmp_dc_s": {
       "path": "/data/atlas/cube/variable=tmp_dc_s/data_0.parquet",
-      "bytes": 10314604
+      "bytes": 15087673
     },
     "tmx_dc_s": {
       "path": "/data/atlas/cube/variable=tmx_dc_s/data_0.parquet",
-      "bytes": 14463082
+      "bytes": 14468117
     }
   },
   "query": "read_parquet('/data/atlas/cube/variable=*/*.parquet', hive_partitioning = true) reads them all; naming one variable's directory reads only that file.",
   "release": {
-    "store_rows": 22090130,
+    "store_rows": 22894190,
     "generated_from_run": "pskem-all281-20260909T184834061745Z",
     "contract": "ATLAS_MODULES/core/REPRODUCIBILITY.md"
   },
@@ -192,7 +192,7 @@
         "unit": "degrees Celsius",
         "cadence": "monthly",
         "coverage": [
-          2010,
+          2003,
           2024
         ],
         "support": "basin, local",
@@ -201,8 +201,7 @@
         "why": "A true mean of hourly values. TerraClimate publishes only the daily extremes, and their midpoint is a different measurement that happens to carry the same name.",
         "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
         "fallback_cost": "Finer at about four kilometres, but a midpoint of extremes rather than a mean of hours, and about a degree warmer across this region.",
-        "kind": "state",
-        "caution": "The only variable here that does not reach back to 2003: it begins in 2010, seven years short of the other eight. Anything comparing it with them over the full record is comparing different periods, and an analysis needing temperature before 2010 must use the TerraClimate extremes instead."
+        "kind": "state"
       },
       "uz:tmx-monthly-v1": {
         "id": "uz:tmx-monthly-v1",

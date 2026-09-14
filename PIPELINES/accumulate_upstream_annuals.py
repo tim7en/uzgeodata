@@ -115,7 +115,12 @@ def build(store=STORE):
                 missing_reason=None if value is not None else "no_upstream_value_available",
                 source_release_id=detail["source"], run_id=identifier,
                 retrieved_at=at, recorded_at=at))
-    added, _ = observations.append_partitioned(store, built)
+    # Upstream totals are derived from the climatologies below them, so a correction
+    # there arrives here as changed content under an unchanged recipe. Same rule, one
+    # layer up: supersede what was published rather than be refused for disagreeing
+    # with it, and keep the superseded figure beside its replacement.
+    added, _ = observations.append_partitioned(
+        store, observations.as_revisions(store, built))
 
     summary = {
         "run_id": identifier, "recipe_version": recipe, "generated_at": at,

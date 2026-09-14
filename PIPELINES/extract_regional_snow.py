@@ -127,7 +127,7 @@ def availability_by_year(store, years, version):
     for year in years:
         rows = [row for row in observations.read_partitions(
             store / "time_kind=observation" / f"year={year}")
-            if row["geometry_version"] == version]
+            if row["geometry_version"] == version and row["attribute_id"] == ATTRIBUTE]
         if not rows:
             continue
         cells = {row["basin_id"]: row["expected_count"] for row in rows}
@@ -142,6 +142,87 @@ def availability_by_year(store, years, version):
             if nulls else 0.0,
         }
     return report
+
+
+def merge_ledger(previous, current):
+    """Carry a source's earlier years forward instead of overwriting them.
+
+    A ledger is the record of what a source has ever delivered, not of the last time
+    it was asked. Writing a fresh one per invocation looked harmless while every run
+    covered the whole span, and stopped being harmless the moment a run extended the
+    record: the 2022-2024 extension replaced ledgers covering 2003-2021, and six
+    sources silently stopped vouching for two decades of the observations they had
+    produced. The rows survived because their run ids still stood in run.csv, so
+    nothing broke loudly; the store simply lost its account of where most of it came
+    from.
+
+    Merging resolves the question the overwrite dodged. A run vouches only for the
+    years it actually fetched -- each year carries the run that produced it -- while
+    the ledger above them accumulates into the full span. A re-fetched year supersedes
+    the old entry rather than doubling it, and the run that did so is named there.
+
+    Refuses to merge across a change of geometry or of bands: those produce a
+    different measurement under the same source name, and stitching their years into
+    one span would be a claim no single run supports.
+    """
+    if not previous:
+        return current
+    for field in ("geometry_version", "bands", "asset"):
+        before, after = previous.get(field), current.get(field)
+        if before is not None and after is not None and before != after:
+            raise ValueError(
+                f"{current.get('source', 'this source')} previously recorded {field}="
+                f"{before!r} and now reports {after!r}; those are different measurements "
+                "and their years cannot be merged into one span")
+
+    merged = {**previous, **current}
+    by_year = {**previous.get("by_year", {}), **current.get("by_year", {})}
+    merged["by_year"] = dict(sorted(by_year.items(), key=lambda item: int(item[0])))
+
+    years = sorted(int(year) for year in merged["by_year"])
+    merged["years"] = [years[0], years[-1]] if years else current.get("years")
+    merged["stored_rows"] = sum(entry["rows"] for entry in merged["by_year"].values())
+
+    # Expected rows follow the span the ledger now covers, not the slice this run took,
+    # so completeness is judged against the whole record rather than the last errand.
+    per_year = current.get("expected_rows", 0) // max(len(current.get("by_year") or {}), 1)
+    merged["expected_rows"] = (per_year * len(merged["by_year"]) if per_year
+                               else previous.get("expected_rows", 0))
+
+    # Every run that contributed, oldest first, each naming the years it answered for.
+    history = list(previous.get("runs") or [])
+    if not history and previous.get("run_id"):
+        history.append({"run_id": previous["run_id"],
+                        "years": sorted(int(y) for y in previous.get("by_year", {})),
+                        "finished_at": previous.get("finished_at"),
+                        "wall_seconds": previous.get("wall_seconds")})
+    history.append({"run_id": current["run_id"],
+                    "years": sorted(int(y) for y in current.get("by_year", {})),
+                    "finished_at": current.get("finished_at"),
+                    "wall_seconds": current.get("wall_seconds")})
+    merged["runs"] = history
+    merged["failures"] = current.get("failures", [])
+
+    # Nested per-year blocks accumulate on the same rule as by_year. Without this the
+    # span would grow while the availability counts qualifying it shrank to the newest
+    # run -- a snow series claiming twenty-two years and evidencing three.
+    for field in ("source_images",):
+        combined = {**(previous.get(field) or {}), **(current.get(field) or {})}
+        if combined:
+            merged[field] = dict(sorted(combined.items(), key=lambda item: int(item[0])))
+    before, now = previous.get("availability") or {}, current.get("availability") or {}
+    if before or now:
+        years_seen = {**(before.get("by_year") or {}), **(now.get("by_year") or {})}
+        merged["availability"] = {**before, **now,
+                                  "by_year": dict(sorted(years_seen.items(),
+                                                         key=lambda item: int(item[0])))}
+    merged["complete"] = is_complete(merged)
+    merged["span_note"] = ("Years accumulate across runs; each year names the run that "
+                           "produced it in by_year, and runs lists every run that "
+                           "contributed. wall_seconds and retries describe the latest run "
+                           "only, not the whole span.")
+    return merged
+
 
 
 def is_complete(ledger):
@@ -225,8 +306,8 @@ def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT):
         built = observation_rows(collected, version, recipe, identifier, utc_now(), utc_now())
         observations.append_partitioned(store, built)
 
-        ledger["by_year"][str(year)] = summarise_year(collected, len(frame),
-                                                      time.perf_counter() - year_started)
+        ledger["by_year"][str(year)] = dict(run_id=identifier, **summarise_year(collected, len(frame),
+                                                      time.perf_counter() - year_started))
         basins_seen = ledger["by_year"][str(year)]["basins"]
         print(f"{year}: {basins_seen}/{len(frame)} basins, {len(collected):,} rows, "
               f"{ledger['by_year'][str(year)]['seconds']:.0f}s "
@@ -248,6 +329,8 @@ def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT):
                                                  "constant across the record; see source_images.",
     }
     ledger["source_images"] = {str(year): dated_snow.source_images(year) for year in span}
+    previous = json.loads(LEDGER.read_text(encoding="utf-8")) if LEDGER.exists() else None
+    ledger = merge_ledger(previous, ledger)
     write_json(LEDGER, ledger)
 
     observations.merge_table(store / "run.csv", [{

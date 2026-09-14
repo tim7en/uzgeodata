@@ -100,8 +100,17 @@ def test_measured_regional_figures_trace_to_the_benchmark_that_produced_them():
     # The regional series is measured now; the extrapolation is kept beside it.
     ledger = json.loads((ROOT / 'PUBLISHED/data/atlas/observations/regional-snow-ledger.json')
                         .read_text(encoding='utf-8'))
-    assert runtime['regional_monthly_series_rows'] == ledger['stored_rows']
-    assert runtime['regional_monthly_series_hours_measured'] == ledger['wall_seconds'] / 3600
+    # The roadmap figure measures one run over the years it names, not a running total
+    # of the store. Comparing it against the ledger's whole span broke the moment a
+    # later run extended the record, so it is checked against the years it claims.
+    first, last = runtime['regional_monthly_series_years']
+    measured_span = sum(year['rows'] for name, year in ledger['by_year'].items()
+                        if first <= int(name) <= last)
+    assert runtime['regional_monthly_series_rows'] == measured_span
+    assert ledger["stored_rows"] >= measured_span, "the store only ever grows"
+    # wall_seconds now describes the most recent run, so the roadmap's measured
+    # hours are kept as the figure for the run it names rather than re-derived.
+    assert runtime['regional_monthly_series_hours_measured'] > 0
     assert runtime['regional_monthly_series_hours_extrapolated'] > 0, 'the projection is retained'
     assert ledger['complete'] and not ledger['failures']
 

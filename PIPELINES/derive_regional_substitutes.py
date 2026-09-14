@@ -151,7 +151,13 @@ def build(store=STORE, years=DEFAULT_YEARS, only=None):
                 source_release_id=release,
                 run_id=identifier, retrieved_at=at, recorded_at=at))
 
-    added, touched = observations.append_partitioned(store, rows)
+    # Recomputing over a record that has since been completed genuinely changes the
+    # answer: restoring 2003-2009 of ERA5 temperature moves every climatology derived
+    # from it. That is a correction, and the contract's rule is that a correction is a
+    # new revision rather than a rewrite -- so the rows are stamped against what is
+    # already stored and supersede it, instead of being refused for disagreeing.
+    added, touched = observations.append_partitioned(
+        store, observations.as_revisions(store, rows))
     summary = {
         "run_id": identifier, "recipe_version": recipe, "generated_at": at,
         "period": [f"{span[0]:04d}-01-01", f"{span[-1] + 1:04d}-01-01"],

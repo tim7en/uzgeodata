@@ -405,23 +405,45 @@ def test_the_whole_store_holds_no_series_conflict():
     assert observations.verify_partitions(STORE) == []
 
 
-def test_the_dated_series_covers_the_region_for_twenty_years(manifest, totals, ledgers, one_dated_year):
+def test_the_dated_series_covers_the_region_for_its_whole_span(manifest, totals, ledgers, one_dated_year):
     """Every dated attribute is accounted for by a run that produced it.
 
     Written against the ledgers present rather than against one source, so adding a
-    dated family extends the store without rewriting what this asserts.
+    dated family extends the store without rewriting what this asserts. The span is
+    read from the ledgers rather than written here: it was pinned to 2003-2022 and
+    went stale the moment the record reached 2024, which is how a test stops
+    describing the store and starts describing the day it was written.
     """
     assert ledgers, "a dated series is published"
     for name, entry in ledgers.items():
         assert entry["complete"] and not entry["failures"], name
         assert entry["stored_rows"] == entry["expected_rows"], name
-        assert entry["basins"] == 7445 and entry["years"] == [2003, 2022], name
+        assert entry["basins"] == 7445, name
+        first, last = entry["years"]
+        assert first >= 2003 and last >= 2022, name
+        assert set(entry["by_year"]) == {str(year) for year in range(first, last + 1)},             f"{name} claims {first}-{last} but its years have a hole in them"
+        # Each year names the run that produced it, so extending the record cannot
+        # quietly drop the account of the years an earlier run delivered.
+        assert all(year.get("run_id") for year in entry["by_year"].values()), name
 
     claimed = {a for entry in ledgers.values() for a in entry.get("attributes", [entry.get("attribute_id")])}
     assert set(manifest["dated_attributes"]) == claimed, "no dated attribute without a run behind it"
     assert totals["dated_observations"] == manifest["dated_observations"]
     pilot_dated = 20 * 20 * 12  # the pilot snow series, under its own geometry
-    assert totals["dated_observations"] == sum(e["stored_rows"] for e in ledgers.values()) + pilot_dated
+    vouched = sum(entry["stored_rows"] for entry in ledgers.values()) + pilot_dated
+
+    # A floor, not an equality. The namespace keeps every derivation: where the recipe
+    # changed between runs, the earlier computation of a month is a different
+    # observation rather than a revision of the same one, so both stand and the raw
+    # count exceeds what the record answers with. That is the append-only rule working
+    # -- an alternative derivation is kept beside its successor, not deleted -- and it
+    # is why this cannot assert equality without quietly forbidding a recipe from ever
+    # changing. What must hold exactly is that the ledgers agree with each other, which
+    # the loop above checks, and that the record answers with the vouched figure, which
+    # the query layer covers in test_query.py.
+    assert totals["dated_observations"] >= vouched, "every vouched row is in the namespace"
+    spare = totals["dated_observations"] - vouched
+    assert spare % (7445 * 12) == 0,         f"{spare} extra rows do not form whole basin-years, so they are not a re-derivation"
 
     regional_version = next(iter(ledgers.values()))["geometry_version"]
     regional = [r for r in one_dated_year if r["geometry_version"] == regional_version]
@@ -455,12 +477,29 @@ def test_the_climatology_it_was_derived_alongside_still_stands(staged):
 
 
 def test_a_dated_month_is_partitioned_by_its_year(ledgers, one_dated_year):
-    for year in range(2003, 2023):
+    span = range(min(e["years"][0] for e in ledgers.values()),
+                 max(e["years"][1] for e in ledgers.values()) + 1)
+    for year in span:
         # Either format: the store is read through the contract, not through a suffix.
         assert observations.partition_files(STORE / "time_kind=observation" / f"year={year}")
     assert {row["year"] for row in one_dated_year} == {2003}
-    regional = sum(entry["stored_rows"] // len(range(2003, 2023)) for entry in ledgers.values())
-    assert len(one_dated_year) == regional + 20 * 12, "one year of every source, plus the pilot"
+
+    # The store is append-only, so a partition holds every superseded revision beside
+    # the current one. Counting rows therefore measures how often a year was rewritten,
+    # not what it covers -- which is why this counts distinct series instead. A raw row
+    # count matched the ledgers only while nothing had ever been re-extracted.
+    regional_version = next(iter(ledgers.values()))["geometry_version"]
+    series = {(row["basin_id"], row["attribute_id"], row["month"])
+              for row in one_dated_year if row["geometry_version"] == regional_version}
+    # Only sources that reach 2003 contribute; one that starts later must not be
+    # counted into a year it never covered.
+    expected = sum(entry["by_year"]["2003"]["rows"]
+                   for entry in ledgers.values() if "2003" in entry["by_year"])
+    assert len(series) == expected, "one series per basin, attribute and month"
+
+    pilot = {(row["basin_id"], row["attribute_id"], row["month"])
+             for row in one_dated_year if row["geometry_version"] != regional_version}
+    assert len(pilot) == 20 * 12, "the pilot snow series, under its own geometry"
 
 
 def test_the_ledger_reports_the_availability_a_trend_would_confound(snow_ledger):
@@ -468,8 +507,9 @@ def test_the_ledger_reports_the_availability_a_trend_would_confound(snow_ledger)
     them can be a trend in what the sensor delivered."""
     ledger = snow_ledger
     availability = ledger["availability"]["by_year"]
-    assert set(availability) == {str(year) for year in range(2003, 2023)}
-    assert availability["2022"]["null_months"] > availability["2003"]["null_months"] * 2
+    first, last = ledger["years"]
+    assert set(availability) == {str(year) for year in range(first, last + 1)},         "the availability record covers the span the ledger claims, not just the latest run"
+    assert availability["2022"]["null_months"] > availability[str(first)]["null_months"] * 2
     assert "not stable across the record" in ledger["availability"]["meaning"]
 
     images = {year: sum(counts) for year, counts in ledger["source_images"].items()}

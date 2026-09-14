@@ -5,14 +5,242 @@
   "geometry_version": "reg-166479294ef8",
   "basins": 7445,
   "years": [
-    2022,
+    2003,
     2024
   ],
   "batch_size": 250,
-  "expected_rows": 268020,
+  "expected_rows": 1965480,
   "retries": [],
   "failures": [],
   "by_year": {
+    "2003": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89097,
+      "null_months": 243,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2004": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89068,
+      "null_months": 272,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2005": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88999,
+      "null_months": 341,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2006": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88922,
+      "null_months": 418,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2007": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88785,
+      "null_months": 555,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2008": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88860,
+      "null_months": 480,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2009": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88703,
+      "null_months": 637,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2010": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88794,
+      "null_months": 546,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2011": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88811,
+      "null_months": 529,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2012": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88598,
+      "null_months": 742,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2013": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88789,
+      "null_months": 551,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2014": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88633,
+      "null_months": 707,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2015": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88687,
+      "null_months": 653,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2016": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88745,
+      "null_months": 595,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2017": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88744,
+      "null_months": 596,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2018": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88718,
+      "null_months": 622,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2019": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88582,
+      "null_months": 758,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2020": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88472,
+      "null_months": 868,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2021": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 88504,
+      "null_months": 836,
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
     "2022": {
       "rows": 89340,
       "basins": 7445,
@@ -20,7 +248,8 @@
       "complete": true,
       "values": 88524,
       "null_months": 816,
-      "seconds": 42.834119600011036
+      "seconds": 42.834119600011036,
+      "run_id": "regional-snow-20260913T174832998639Z"
     },
     "2023": {
       "rows": 89340,
@@ -29,7 +258,8 @@
       "complete": true,
       "values": 88451,
       "null_months": 889,
-      "seconds": 409.86468339996645
+      "seconds": 409.86468339996645,
+      "run_id": "regional-snow-20260913T174832998639Z"
     },
     "2024": {
       "rows": 89340,
@@ -38,12 +268,13 @@
       "complete": true,
       "values": 88597,
       "null_months": 743,
-      "seconds": 408.11503139999695
+      "seconds": 408.11503139999695,
+      "run_id": "regional-snow-20260913T174832998639Z"
     }
   },
   "finished_at": "2026-09-13T18:02:54.897+00:00",
   "wall_seconds": 861.8955628999975,
-  "stored_rows": 268020,
+  "stored_rows": 1965480,
   "complete": true,
   "basin_support": {
     "basins": 7445,
@@ -61,6 +292,158 @@
   },
   "availability": {
     "by_year": {
+      "2003": {
+        "null_months": 243,
+        "basins_affected": 88,
+        "median_affected_basin_cells": 22,
+        "nulls_in_basins_over_100_cells": 80,
+        "summer_share": 0.77,
+        "reconstructed": true
+      },
+      "2004": {
+        "null_months": 272,
+        "basins_affected": 88,
+        "median_affected_basin_cells": 22,
+        "nulls_in_basins_over_100_cells": 89,
+        "summer_share": 0.713,
+        "reconstructed": true
+      },
+      "2005": {
+        "null_months": 341,
+        "basins_affected": 108,
+        "median_affected_basin_cells": 42,
+        "nulls_in_basins_over_100_cells": 122,
+        "summer_share": 0.642,
+        "reconstructed": true
+      },
+      "2006": {
+        "null_months": 418,
+        "basins_affected": 149,
+        "median_affected_basin_cells": 217,
+        "nulls_in_basins_over_100_cells": 229,
+        "summer_share": 0.844,
+        "reconstructed": true
+      },
+      "2007": {
+        "null_months": 555,
+        "basins_affected": 149,
+        "median_affected_basin_cells": 419,
+        "nulls_in_basins_over_100_cells": 330,
+        "summer_share": 0.706,
+        "reconstructed": true
+      },
+      "2008": {
+        "null_months": 480,
+        "basins_affected": 117,
+        "median_affected_basin_cells": 546,
+        "nulls_in_basins_over_100_cells": 301,
+        "summer_share": 0.677,
+        "reconstructed": true
+      },
+      "2009": {
+        "null_months": 637,
+        "basins_affected": 150,
+        "median_affected_basin_cells": 502,
+        "nulls_in_basins_over_100_cells": 410,
+        "summer_share": 0.655,
+        "reconstructed": true
+      },
+      "2010": {
+        "null_months": 546,
+        "basins_affected": 164,
+        "median_affected_basin_cells": 356,
+        "nulls_in_basins_over_100_cells": 327,
+        "summer_share": 0.722,
+        "reconstructed": true
+      },
+      "2011": {
+        "null_months": 529,
+        "basins_affected": 132,
+        "median_affected_basin_cells": 495,
+        "nulls_in_basins_over_100_cells": 330,
+        "summer_share": 0.716,
+        "reconstructed": true
+      },
+      "2012": {
+        "null_months": 742,
+        "basins_affected": 205,
+        "median_affected_basin_cells": 546,
+        "nulls_in_basins_over_100_cells": 495,
+        "summer_share": 0.627,
+        "reconstructed": true
+      },
+      "2013": {
+        "null_months": 551,
+        "basins_affected": 139,
+        "median_affected_basin_cells": 495,
+        "nulls_in_basins_over_100_cells": 351,
+        "summer_share": 0.681,
+        "reconstructed": true
+      },
+      "2014": {
+        "null_months": 707,
+        "basins_affected": 158,
+        "median_affected_basin_cells": 561,
+        "nulls_in_basins_over_100_cells": 475,
+        "summer_share": 0.692,
+        "reconstructed": true
+      },
+      "2015": {
+        "null_months": 653,
+        "basins_affected": 158,
+        "median_affected_basin_cells": 459,
+        "nulls_in_basins_over_100_cells": 406,
+        "summer_share": 0.678,
+        "reconstructed": true
+      },
+      "2016": {
+        "null_months": 595,
+        "basins_affected": 150,
+        "median_affected_basin_cells": 488,
+        "nulls_in_basins_over_100_cells": 370,
+        "summer_share": 0.736,
+        "reconstructed": true
+      },
+      "2017": {
+        "null_months": 596,
+        "basins_affected": 142,
+        "median_affected_basin_cells": 352,
+        "nulls_in_basins_over_100_cells": 352,
+        "summer_share": 0.651,
+        "reconstructed": true
+      },
+      "2018": {
+        "null_months": 622,
+        "basins_affected": 159,
+        "median_affected_basin_cells": 473,
+        "nulls_in_basins_over_100_cells": 393,
+        "summer_share": 0.711,
+        "reconstructed": true
+      },
+      "2019": {
+        "null_months": 758,
+        "basins_affected": 151,
+        "median_affected_basin_cells": 666,
+        "nulls_in_basins_over_100_cells": 523,
+        "summer_share": 0.627,
+        "reconstructed": true
+      },
+      "2020": {
+        "null_months": 868,
+        "basins_affected": 165,
+        "median_affected_basin_cells": 604,
+        "nulls_in_basins_over_100_cells": 589,
+        "summer_share": 0.569,
+        "reconstructed": true
+      },
+      "2021": {
+        "null_months": 836,
+        "basins_affected": 180,
+        "median_affected_basin_cells": 546,
+        "nulls_in_basins_over_100_cells": 561,
+        "summer_share": 0.605,
+        "reconstructed": true
+      },
       "2022": {
         "null_months": 1632,
         "basins_affected": 184,
@@ -129,5 +512,40 @@
       30,
       31
     ]
-  }
+  },
+  "runs": [
+    {
+      "run_id": "regional-snow-20260910T070340280486Z",
+      "years": [
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021
+      ]
+    },
+    {
+      "run_id": "regional-snow-20260913T174832998639Z",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    }
+  ],
+  "span_note": "Years accumulate across runs; each year names the run that produced it. wall_seconds and retries describe the most recent run only. Years marked reconstructed were counted back from the observation store after an earlier ledger was overwritten."
 }

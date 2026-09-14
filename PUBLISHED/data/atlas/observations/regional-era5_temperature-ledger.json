@@ -1,6 +1,6 @@
 {
-  "run_id": "regional-era5_temperature-20260913T173848283162Z",
-  "started_at": "2026-09-13T17:38:48.283+00:00",
+  "run_id": "regional-era5_temperature-20260914T065902520397Z",
+  "started_at": "2026-09-14T06:59:02.536+00:00",
   "source": "era5_temperature",
   "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
   "bands": [
@@ -12,14 +12,235 @@
   "geometry_version": "reg-166479294ef8",
   "basins": 7445,
   "years": [
-    2022,
+    2003,
     2024
   ],
   "batch_size": 250,
-  "expected_rows": 268020,
+  "expected_rows": 1965480,
   "retries": [],
   "failures": [],
   "by_year": {
+    "2003": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 37.91148810001323,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260914T065902520397Z"
+    },
+    "2004": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 37.61907300003804,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260914T065902520397Z"
+    },
+    "2005": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 38.7167383999913,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260914T065902520397Z"
+    },
+    "2006": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 38.37362990004476,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260914T065902520397Z"
+    },
+    "2007": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 41.997394100006204,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260914T065902520397Z"
+    },
+    "2008": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 37.75764550000895,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260914T065902520397Z"
+    },
+    "2009": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 37.43783379998058,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260914T065902520397Z"
+    },
+    "2010": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2011": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2012": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2013": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2014": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2015": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2016": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2017": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2018": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2019": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2020": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
+    "2021": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "reconstructed": true,
+      "reconstructed_at": "2026-09-14T06:46:50.438+00:00",
+      "reconstructed_from": "counted from the observation store, which records the run that wrote every row; the original run's timings were lost with the ledger it was overwritten in"
+    },
     "2022": {
       "rows": 89340,
       "basins": 7445,
@@ -28,7 +249,9 @@
       "values": 89340,
       "null_months": 0,
       "seconds": 39.60967430000892,
-      "rows_per_band": 89340
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260913T173848283162Z",
+      "run_id_recovered_from_store": true
     },
     "2023": {
       "rows": 89340,
@@ -38,7 +261,9 @@
       "values": 89340,
       "null_months": 0,
       "seconds": 269.5707422000123,
-      "rows_per_band": 89340
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260913T173848283162Z",
+      "run_id_recovered_from_store": true
     },
     "2024": {
       "rows": 89340,
@@ -48,12 +273,14 @@
       "values": 89340,
       "null_months": 0,
       "seconds": 262.70546790002845,
-      "rows_per_band": 89340
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260913T173848283162Z",
+      "run_id_recovered_from_store": true
     }
   },
-  "finished_at": "2026-09-13T17:48:22.049+00:00",
-  "wall_seconds": 573.7608225999866,
-  "stored_rows": 268020,
+  "finished_at": "2026-09-14T07:03:33.898+00:00",
+  "wall_seconds": 271.35325749998447,
+  "stored_rows": 1965480,
   "complete": true,
   "basin_support": {
     "basins": 7445,
@@ -68,5 +295,45 @@
     },
     "basins_without_a_cell": 0,
     "meaning": "Analysis cells per basin on the 15 arc-second grid. A value from a basin with few cells is supported by few observations; every row carries its own valid and expected counts so this can be filtered on. A basin with no cell at all would yield no value rather than a zero."
-  }
+  },
+  "runs": [
+    {
+      "run_id": "regional-era5_temperature-20260914T065902520397Z",
+      "years": [
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009
+      ]
+    },
+    {
+      "run_id": "regional-era5_temperature-20260912T091321498969Z",
+      "years": [
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021
+      ]
+    },
+    {
+      "run_id": "regional-era5_temperature-20260913T173848283162Z",
+      "years": [
+        2022,
+        2023,
+        2024
+      ]
+    }
+  ],
+  "span_note": "Years accumulate across runs; each year names the run that produced it. wall_seconds and retries describe the most recent run only. Years marked reconstructed were counted back from the observation store after an earlier ledger was overwritten."
 }

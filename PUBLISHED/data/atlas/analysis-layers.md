@@ -77,13 +77,24 @@ as it came out.
 This is what the layer is for. Reporting the efficiency alone would have presented a
 failed model as a successful one, and nothing in the number itself would have shown it.
 
-### A coverage gap this exposed
+### A withheld record this exposed
 
 The first predictor set used ERA5 mean temperature and the harness dropped 84 of 120
-training months. `uzgeodata.dated.v1.tmp_dc_s` begins in 2010; the other eight dated
-variables reach back to 2003. The registry now declares that span and carries a caution
-on the variable. The predictor set was changed for coverage, before the second score was
-seen, and the split never moved.
+training months, because `uzgeodata.dated.v1.tmp_dc_s` appeared to start in 2010 while
+the other eight dated variables reached back to 2003.
+
+Following that up found something better than a gap. The seven missing years had been
+extracted -- 625,380 valid rows for 2003-2009 were sitting in the store -- by a run that
+was interrupted and so never entered `run.csv`. The contract withheld them exactly as it
+should: an unfinished run does not vouch for its own output, and nothing downstream saw
+a number it could not defend. Every checkpoint from that run survived, so a completed
+re-run restored the years from cache in about forty seconds each rather than re-querying
+Earth Engine. All nine dated variables now span 2003-2024 at 1,965,480 rows apiece.
+
+The predictor set was changed for coverage before the second score was seen, and the
+split never moved. It has deliberately **not** been changed back now that mean
+temperature is available again: with both scores already known, swapping predictors
+would be choosing a model by its result.
 
 ## What is still missing
 

@@ -123,7 +123,7 @@ VARIABLES = {
     },
     "uz:tmp-monthly-v1": {
         "concept": "mean temperature", "attribute": "uzgeodata.dated.v1.tmp_dc_s",
-        "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2010, 2024],
+        "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
         "why": "A true mean of hourly values. TerraClimate publishes only the daily extremes, "
@@ -132,10 +132,6 @@ VARIABLES = {
         "fallback_cost": "Finer at about four kilometres, but a midpoint of extremes rather than "
                          "a mean of hours, and about a degree warmer across this region.",
         "kind": "state",
-        "caution": "The only variable here that does not reach back to 2003: it begins in 2010, "
-                   "seven years short of the other eight. Anything comparing it with them over "
-                   "the full record is comparing different periods, and an analysis needing "
-                   "temperature before 2010 must use the TerraClimate extremes instead.",
     },
     "uz:tmx-monthly-v1": {
         "concept": "maximum temperature", "attribute": "uzgeodata.dated.v1.tmx_dc_s",
