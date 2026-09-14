@@ -8,7 +8,7 @@ import os from 'node:os';
 import path from 'node:path';
 import net from 'node:net';
 
-test('admin mutations require a session, same origin and an allowlisted group', { timeout: 20000 }, async t => {
+test('data updates need no sign-in but require same origin and an allowlisted group', { timeout: 20000 }, async t => {
   const reservation = net.createServer();
   reservation.listen(0, '127.0.0.1'); await once(reservation, 'listening');
   const port = reservation.address().port; await new Promise(resolve => reservation.close(resolve));
@@ -22,20 +22,16 @@ test('admin mutations require a session, same origin and an allowlisted group', 
   const base = `http://127.0.0.1:${port}`;
   const request = (url, body, extra = {}) => fetch(base + url, { method: 'POST',
     headers: { 'Content-Type': 'application/json', ...extra }, body: JSON.stringify(body) });
-  assert.equal((await fetch(base + '/api/admin/variables')).status, 401);
-  assert.equal((await request('/api/admin/variables/update', { group_id: 'regional-snow' })).status, 401);
-  assert.equal((await request('/api/admin/login', { username: 'test-admin', password: 'wrong' })).status, 401);
-  const login = await request('/api/admin/login', { username: 'test-admin', password });
-  assert.equal(login.status, 200);
-  const cookie = login.headers.get('set-cookie').split(';')[0];
-  assert.match(login.headers.get('set-cookie'), /HttpOnly; SameSite=Strict/);
-  const inventory = await fetch(base + '/api/admin/variables', { headers: { Cookie: cookie } });
+  const inventory = await fetch(base + '/api/admin/variables');
   assert.equal(inventory.status, 200);
   const data = await inventory.json(); assert.ok(data.rows.length >= 281); assert.equal(data.operations.worker, 'local');
-  assert.equal((await request('/api/admin/variables/update', { group_id: 'arbitrary-shell-command' }, { Cookie: cookie })).status, 400);
-  assert.equal((await request('/api/admin/variables/update', { group_id: 'regional-snow' }, { Cookie: cookie, Origin: 'https://other.example' })).status, 403);
+  assert.equal((await request('/api/admin/variables/update', { group_id: 'arbitrary-shell-command' })).status, 400);
+  assert.equal((await request('/api/admin/variables/update', { group_id: 'regional-snow' }, { Origin: 'https://other.example' })).status, 403);
+  assert.equal((await fetch(base + '/api/admin/variables/update', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: 'regional-snow' })).status, 415);
   const alias = await fetch(base + '/admin', { redirect: 'manual' });
   assert.equal(alias.headers.get('location'), '/admin.html');
-  await request('/api/admin/logout', {}, { Cookie: cookie });
-  assert.equal((await fetch(base + '/api/admin/variables', { headers: { Cookie: cookie } })).status, 401);
+  // The dataset repository keeps its sign-in.
+  assert.equal((await fetch(base + '/api/admin/datasets')).status, 401);
+  assert.equal((await request('/api/admin/login', { username: 'test-admin', password: 'wrong' })).status, 401);
+  assert.equal((await request('/api/admin/login', { username: 'test-admin', password })).status, 200);
 });

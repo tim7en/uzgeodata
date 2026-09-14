@@ -691,7 +691,7 @@ export default function LandingMap() {
           <span><strong>{item.label}</strong><small>{item.note}</small></span>
           <ArrowUpRight size={13}/>
         </a>)}
-        <a href="/admin.html"><span><strong>Data freshness</strong><small>Variable inventory & admin updates</small></span><ArrowUpRight size={13}/></a>
+        <a href="/admin.html"><span><strong>Data freshness</strong><small>Variable inventory & update status</small></span><ArrowUpRight size={13}/></a>
       </nav>
     </aside>
 

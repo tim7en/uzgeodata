@@ -144,10 +144,12 @@ app.get('/api/admin/requests', authenticated, async (_req, res, next) => {
   try { res.json(await readRequests()); } catch (error) { next(error); }
 });
 
-// Data operations reuse the existing admin session. No endpoint accepts a command.
+// Data operations need no sign-in for now: the server listens on 127.0.0.1 only,
+// requests must come from this origin, and no endpoint accepts a command — only an
+// allowlisted group id.
 const updateGroups = JSON.parse(await fs.readFile(path.join(root, 'ATLAS_MODULES/update-groups.json'), 'utf8')).groups;
 const dataUpdates = await new DataUpdates({ root, directory: path.join(storageRoot, 'data-updates'), groups: updateGroups }).init();
-app.get('/api/admin/variables', authenticated, async (_req, res, next) => {
+app.get('/api/admin/variables', async (_req, res, next) => {
   try {
     res.setHeader('Cache-Control', 'no-store');
     const inventory = JSON.parse(await fs.readFile(path.join(root, 'PUBLISHED/data/variable-inventory.json'), 'utf8'));
@@ -157,13 +159,13 @@ app.get('/api/admin/variables', authenticated, async (_req, res, next) => {
 function updateRequest(req, res, next) {
   if (!req.is('application/json')) return res.status(415).json({ error: 'JSON request required' });
   const origin = req.get('origin');
-  if (origin && origin !== `${req.protocol}://${req.get('host')}`) return res.status(403).json({ error: 'Use the admin page on this server' });
+  if (origin && origin !== `${req.protocol}://${req.get('host')}`) return res.status(403).json({ error: 'Use the data freshness page on this server' });
   next();
 }
-app.post('/api/admin/variables/update', authenticated, updateRequest, async (req, res, next) => {
+app.post('/api/admin/variables/update', updateRequest, async (req, res, next) => {
   try { res.status(202).json(await dataUpdates.enqueue(req.body?.group_id)); } catch (error) { next(error); }
 });
-app.put('/api/admin/variables/schedule', authenticated, updateRequest, async (req, res, next) => {
+app.put('/api/admin/variables/schedule', updateRequest, async (req, res, next) => {
   try { res.json(await dataUpdates.schedule(req.body?.group_id, req.body?.days)); } catch (error) { next(error); }
 });
 // /admin used to fall through to the public map after the landing page replaced App.

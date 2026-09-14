@@ -18,18 +18,19 @@ python -m venv .venv
 In a local `.env` file (ignored by Git), set:
 
 ```dotenv
-ADMIN_USERNAME=your-admin-name
-ADMIN_PASSWORD=choose-a-long-unique-password
 UZGEODATA_PYTHON=/absolute/path/to/uzgeodata/.venv/bin/python
 ```
 
-Replace the example credentials. Then run:
+Then run:
 
 ```sh
 npm run admin
 ```
 
-Open **http://localhost:5173/admin.html** and sign in. This command starts the
+Open **http://localhost:5173/admin.html**. Update controls need no sign-in for
+now: the server binds to localhost, rejects cross-origin requests and only runs
+allowlisted update groups. (The dataset upload API still requires
+`ADMIN_USERNAME` and `ADMIN_PASSWORD`.) This command starts the
 existing server directly and avoids the acquisition/publication hooks of
 `npm run dev`. Use `PORT` to choose another local port. The server binds to
 localhost. `COOKIE_SECURE=true` is required when operating behind HTTPS.
