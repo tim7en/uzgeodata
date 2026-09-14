@@ -35,14 +35,12 @@ jobs:
             # download, so a collection error that only reaches stdout is invisible to
             # anyone without it -- which is how "exit code 2" stayed undiagnosed. The
             # workflow-command form is readable through the public checks API.
-            printf '%s
-' "$output" | tail -n 40 | while IFS= read -r line; do
+            echo "$output" | tail -n 40 | while IFS= read -r line; do
               echo "::error::${line}"
             done
             exit $status
           fi
-          printf '%s
-' "$output" | tail -n 2
+          echo "$output" | tail -n 2
       - name: Run tests
         run: python -m pytest TESTS -q
       - run: npm run test:ui
