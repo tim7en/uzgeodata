@@ -214,6 +214,13 @@ Keep credentials, raw source deliveries and active download checkpoints out of P
 
 ## Repository map
 
+Read the [four-layer architecture](docs/ARCHITECTURE.md) and
+[admin data operations guide](docs/ADMIN.md). The variable inventory at
+`/admin.html` shows freshness, coverage dates and update options across the
+registered products. `npm run admin` starts the authenticated local update
+server without triggering the legacy publication hooks; the static public site
+shows the saved inventory only.
+
 - `INTERFACE/` — React map, evidence views and public information pages.
 - `PUBLISHED/` — reviewed browser data and public snapshots.
 - `ATLAS_MODULES/` — scientific recipes, observation contract and programme plan.

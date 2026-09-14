@@ -136,7 +136,10 @@
     "atlas:check": "python PIPELINES/refresh_regional_record.py --check",
     "atlas:extend": "python PIPELINES/refresh_regional_record.py --extend",
     "atlas:republish": "python PIPELINES/refresh_regional_record.py --publish",
-    "atlas:query": "python -c \"import sys;sys.path.insert(0,'.');from ATLAS_MODULES.core import query;[print(r) for r in query.available('PUBLISHED/data/atlas/observations')]\""
+    "atlas:query": "python -c \"import sys;sys.path.insert(0,'.');from ATLAS_MODULES.core import query;[print(r) for r in query.available('PUBLISHED/data/atlas/observations')]\"",
+    "admin": "node server.mjs",
+    "data:inventory": "python PIPELINES/build_variable_inventory.py",
+    "test:updates": "node --test TESTS/test_data_updates.mjs TESTS/test_variable_freshness.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.1",

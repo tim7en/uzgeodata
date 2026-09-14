@@ -1,5 +1,10 @@
 # План развития трансграничной гидроклиматической системы
 
+Общая архитектура проекта и четыре аналитических слоя описаны в
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Этот документ сохраняется как план
+гидроклиматической исследовательской программы. Мониторинг актуальности переменных
+и обновление данных: [docs/ADMIN.md](docs/ADMIN.md), страница `/admin.html`.
+
 **Ontology-Enabled Hydroclimatic and Water Intelligence System for Uzbekistan**
 (исследовательское название — *Source-to-Impact Hydroclimatic Knowledge
 Infrastructure for Uzbekistan*).

@@ -57,7 +57,7 @@ def test_a_failed_rebuild_stops_rather_than_continuing(monkeypatch):
         return "accumulate_upstream_annuals" not in command[0]
 
     monkeypatch.setattr(refresh, "run", fake_run)
-    outcome = refresh.publish()
+    outcome = refresh.publish(span=(2003, 2024))
     assert outcome["ok"] is False
     assert "upstream" in outcome["failed_at"]
     assert not any("build_basin_api" in name for name in attempted), \
@@ -109,6 +109,29 @@ def test_a_source_with_nothing_stored_is_reported_rather_than_assumed(monkeypatc
     plan = refresh.missing_years(through="2024-12")
     assert all(entry["stored_to"] is None for entry in plan.values())
     assert all("note" in entry for entry in plan.values())
+
+
+def test_new_months_in_the_same_year_are_fetched(monkeypatch):
+    monkeypatch.setattr(refresh, "stored_extent", lambda store=refresh.STORE: {
+        "uzgeodata.dated.v1.run_mm_s": {"last": "2026-03"}})
+    plan = refresh.missing_years(through="2026-08")
+    assert plan["era5_runoff"]["years_to_fetch"] == [2026]
+
+
+def test_extension_bypasses_stale_year_checkpoints(monkeypatch):
+    monkeypatch.setattr(refresh, "missing_years", lambda **kwargs: {
+        "era5_runoff": {"stored_to": "2026-03", "years_to_fetch": [2026]}})
+    issued = []
+    monkeypatch.setattr(refresh, "run", lambda command, dry_run=False: issued.append(command) or True)
+    monkeypatch.setattr(refresh, "publish", lambda *args: {"ok": True})
+    assert refresh.extend("2026-08")["ok"]
+    assert "--refresh-cache" in issued[0]
+
+
+def test_an_absent_source_never_becomes_a_successful_noop(monkeypatch):
+    monkeypatch.setattr(refresh, "missing_years", lambda **kwargs: {"era5_runoff": {"stored_to": None}})
+    monkeypatch.setattr(refresh, "publish", lambda *args: pytest.fail("must not publish an absent source"))
+    assert not refresh.extend("2026-08")["ok"]
 
 
 def test_the_published_window_follows_the_store_not_a_constant(monkeypatch):

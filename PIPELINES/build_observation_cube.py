@@ -83,20 +83,15 @@ def build(store=STORE, out=OUT, geometry="reg-"):
     measured = dict(connection.execute("""
         SELECT attribute_id, [min(year), max(year)] FROM observations GROUP BY 1
     """).fetchall())
+    observed_through = {attribute: stamp.strftime("%Y-%m") if stamp else None
+                        for attribute, stamp in connection.execute("""
+        SELECT attribute_id, max(month_start) FILTER (WHERE value IS NOT NULL)
+        FROM observations GROUP BY 1
+    """).fetchall()}
     connection.close()
-
-    drifted = []
-    for identifier, entry in variables.VARIABLES.items():
-        actual = measured.get(entry["attribute"])
-        if actual is None:
-            drifted.append(f"{identifier} declares coverage but {entry['attribute']} "
-                           f"is not in the cube")
-        elif list(actual) != list(entry["coverage"]):
-            drifted.append(f"{identifier} declares {entry['coverage']} "
-                           f"but the cube holds {list(actual)}")
-    if drifted:
-        raise SystemExit("the registry disagrees with the data it describes:\n  "
-                         + "\n  ".join(drifted))
+    # Coverage is measured release metadata, not a source-code constant that must
+    # be manually edited each time a new month is acquired. Missing variables still fail.
+    registry = variables.registry(coverage=measured, observed_through=observed_through)
 
     release = json.loads((store / "manifest.json").read_text(encoding="utf-8"))
     summary = {
@@ -122,7 +117,7 @@ def build(store=STORE, out=OUT, geometry="reg-"):
             "value": "null where there was no observation, never zero",
             "unit": "the physical unit of the value, as measured",
         },
-        "registry": variables.registry(),
+        "registry": registry,
         "reading": {
             "scope": "Local basin support only. Upstream values accumulate everything draining "
                      "through a basin and cannot be summed across basins, so they are not here: "

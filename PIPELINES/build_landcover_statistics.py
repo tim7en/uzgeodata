@@ -173,7 +173,7 @@ def main() -> None:
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--level", choices=sorted(SOURCES), default="admin")
     parser.add_argument("--years", nargs="*", type=int,
-                        default=list(range(2017, 2026)), help="Years to measure.")
+                        default=list(range(2017, datetime.now(timezone.utc).year)), help="Years to measure; defaults through the last complete calendar year.")
     parser.add_argument("--scale", type=int, help="Reduction scale in metres. Overrides the default.")
     parser.add_argument("--batch-size", type=int, default=BATCH_SIZE,
                         help="Polygons per Earth Engine request (default: %(default)s).")

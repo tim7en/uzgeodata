@@ -69,7 +69,7 @@ def observation_rows(source, rows, geometry, recipe, run_id, at):
     return built
 
 
-def run(source, years=DEFAULT_YEARS, store=STORE, project=PROJECT, batch_size=250):
+def run(source, years=DEFAULT_YEARS, store=STORE, project=PROJECT, batch_size=250, refresh_cache=False):
     import ee
     ee.Initialize(project=project)
     spec = dated_monthly.SOURCES[source]
@@ -116,7 +116,7 @@ def run(source, years=DEFAULT_YEARS, store=STORE, project=PROJECT, batch_size=25
             if index not in expected:
                 continue
             path = checkpoints / f"batch-{index:04d}" / f"year-{year}.json"
-            if path.exists():
+            if path.exists() and not refresh_cache:
                 collected.extend(json.loads(path.read_text(encoding="utf-8")))
                 continue
             collection = dated_monthly.feature_collection(features)
@@ -129,8 +129,8 @@ def run(source, years=DEFAULT_YEARS, store=STORE, project=PROJECT, batch_size=25
             write_json(path, rows)
             collected.extend(rows)
 
-        observations.append_partitioned(
-            store, observation_rows(source, collected, version, recipe, identifier, utc_now()))
+        incoming = observation_rows(source, collected, version, recipe, identifier, utc_now())
+        observations.append_partitioned(store, observations.as_revisions(store, incoming))
         summary = summarise_year(collected, len(frame), time.perf_counter() - year_started)
         summary["rows_per_band"] = len(collected) // len(bands) if bands else 0
         summary["run_id"] = identifier
@@ -168,10 +168,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", choices=sorted(dated_monthly.SOURCES))
     parser.add_argument("--years", default=f"{DEFAULT_YEARS[0]}-{DEFAULT_YEARS[1]}")
+    parser.add_argument("--refresh-cache", action="store_true", help="Re-query year checkpoints so newly available months become revisions")
     arguments = parser.parse_args()
     first, _, last = arguments.years.partition("-")
-    ledger = run(arguments.source, (int(first), int(last or first)))
+    ledger = run(arguments.source, (int(first), int(last or first)), refresh_cache=arguments.refresh_cache)
     print(json.dumps({k: v for k, v in ledger.items() if k != "retries"}, indent=2, ensure_ascii=False))
+    if not ledger.get("complete"):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

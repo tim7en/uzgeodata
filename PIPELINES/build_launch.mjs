@@ -64,6 +64,8 @@ const excluded = relative => relative.startsWith('data/review/') && relative !==
 // downloads cannot accidentally enter the artifact. History is checked above.
 const files = new Set(execFileSync('git', ['ls-files', '-z', 'PUBLISHED'], { encoding: 'utf8', maxBuffer: 8e6 })
   .split('\0').filter(Boolean).map(file => file.slice('PUBLISHED/'.length)));
+// Explicit public metadata output, also available in a working tree before first commit.
+files.add('data/variable-inventory.json');
 for (const name of await readdir(path.join(published, 'data/atlas/history'))) {
   if (/^(?:index|\d+)\.json$/.test(name)) files.add(`data/atlas/history/${name}`);
 }

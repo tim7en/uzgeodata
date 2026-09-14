@@ -110,8 +110,10 @@ def stored_span(store=STORE):
 def stored_extent(store=STORE):
     """The last month the store holds for each dated variable."""
     extent = {}
-    for attribute, unit, support, first, last, basins, observed, missing in query.available(store):
+    for attribute, unit, support, first, last, basins, observed, missing in query.available(store, observed_span=True):
         if support != "s":
+            continue
+        if first is None or last is None:
             continue
         extent[attribute] = {
             "first": f"{first.year}-{first.month:02d}", "last": f"{last.year}-{last.month:02d}",
@@ -167,7 +169,7 @@ def missing_years(store=STORE, through=None):
         target = wanted if wanted is not None else last_year
         plan[name] = {
             "stored_to": last,
-            "years_to_fetch": list(range(last_year, target + 1)) if target > last_year else [],
+            "years_to_fetch": list(range(last_year, target + 1)) if through and through > last else [],
         }
     return plan
 
@@ -206,6 +208,9 @@ def extend(through, only=None, dry_run=False):
     for name, entry in sorted(plan.items()):
         if only and name not in only:
             continue
+        if entry.get("stored_to") is None:
+            return {"ok": False, "failed_at": f"missing store for {name}",
+                    "note": "Restore or bootstrap this source before extending; no publication attempted."}
         years = entry.get("years_to_fetch") or []
         if not years:
             print(f"  {name}: already stored to {entry.get('stored_to')}", flush=True)
@@ -215,7 +220,7 @@ def extend(through, only=None, dry_run=False):
         command = [spec["script"]]
         if spec.get("positional"):
             command.append(spec["positional"])
-        command += ["--years", span]
+        command += ["--years", span, "--refresh-cache"]
         print(f"  {name}: fetching {span}", flush=True)
         if not run(command, dry_run):
             return {"ok": False, "failed_at": f"fetch {name}",

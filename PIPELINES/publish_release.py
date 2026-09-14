@@ -72,8 +72,9 @@ def publish(published=PUBLISHED, notes=None, promote=True):
         pass  # the first release supersedes nothing
 
     rows, span = cube_facts(published)
+    cube = json.loads((published / "cube/index.json").read_text(encoding="utf-8"))
     record = releases.cut(published, files, base=published, commit=commit_id(),
-                          span=span, rows=rows, registry=variables.registry(),
+                          span=span, rows=rows, registry=cube.get("registry") or variables.registry(),
                           supersedes=previous, notes=notes)
 
     problems = releases.check(published, record["release_id"])

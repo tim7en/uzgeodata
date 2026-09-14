@@ -31,7 +31,9 @@ and deploys through GitHub Pages. In repository Settings → Pages, select GitHu
 Actions as the publishing source. The `github-pages` environment must permit the
 launch branch. The live site is `https://uzgeodata.uz/`; the GitHub project URL redirects there. See [GitHub's workflow requirements](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
-All application requests use static files. There is no production Node API,
+Public application requests use static files. `/admin.html` displays the saved
+variable inventory; authenticated updates require the separate local admin server
+described in [ADMIN.md](ADMIN.md). There is no production Node API,
 database or secret. An alternative static host can serve the domain-root artifact;
 do not add an SPA fallback for missing `/data/` files. Those requests should be 404.
 

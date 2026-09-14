@@ -250,7 +250,7 @@ def with_retries(work, label, ledger):
     return None, "unreachable"
 
 
-def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT):
+def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT, refresh_cache=False):
     import ee
     ee.Initialize(project=project)
 
@@ -291,7 +291,7 @@ def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT):
             if index not in expected:
                 continue
             path = checkpoint_path(index, year)
-            if path.exists():
+            if path.exists() and not refresh_cache:
                 collected.extend(json.loads(path.read_text(encoding="utf-8")))
                 continue
             collection = dated_snow.feature_collection(features)
@@ -304,7 +304,7 @@ def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT):
             collected.extend(rows)
 
         built = observation_rows(collected, version, recipe, identifier, utc_now(), utc_now())
-        observations.append_partitioned(store, built)
+        observations.append_partitioned(store, observations.as_revisions(store, built))
 
         ledger["by_year"][str(year)] = dict(run_id=identifier, **summarise_year(collected, len(frame),
                                                       time.perf_counter() - year_started))
@@ -351,11 +351,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--batch", type=int, default=250)
     parser.add_argument("--years", default=f"{DEFAULT_YEARS[0]}-{DEFAULT_YEARS[1]}")
+    parser.add_argument("--refresh-cache", action="store_true", help="Re-query year checkpoints when extending or correcting observations")
     arguments = parser.parse_args()
     first, _, last = arguments.years.partition("-")
-    ledger = run(arguments.batch, (int(first), int(last or first)))
+    ledger = run(arguments.batch, (int(first), int(last or first)), refresh_cache=arguments.refresh_cache)
     print(json.dumps({k: v for k, v in ledger.items() if k not in ("retries", "source_images")},
                      indent=2, ensure_ascii=False))
+    if not ledger.get("complete"):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

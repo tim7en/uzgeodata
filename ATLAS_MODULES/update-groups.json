@@ -1,0 +1,184 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "id": "regional-terraclimate",
+      "label": "TerraClimate water balance",
+      "kind": "regional",
+      "source": "terraclimate",
+      "interval_days": 30,
+      "requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
+      "modules": [
+        "duckdb",
+        "pyarrow",
+        "pyogrio",
+        "ee"
+      ],
+      "earth_engine": true,
+      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+    },
+    {
+      "id": "regional-terraclimate_temperature",
+      "label": "TerraClimate temperature",
+      "kind": "regional",
+      "source": "terraclimate_temperature",
+      "interval_days": 30,
+      "requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
+      "modules": [
+        "duckdb",
+        "pyarrow",
+        "pyogrio",
+        "ee"
+      ],
+      "earth_engine": true,
+      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+    },
+    {
+      "id": "regional-era5_temperature",
+      "label": "ERA5-Land mean temperature",
+      "kind": "regional",
+      "source": "era5_temperature",
+      "interval_days": 30,
+      "requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
+      "modules": [
+        "duckdb",
+        "pyarrow",
+        "pyogrio",
+        "ee"
+      ],
+      "earth_engine": true,
+      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+    },
+    {
+      "id": "regional-era5_runoff",
+      "label": "ERA5-Land runoff",
+      "kind": "regional",
+      "source": "era5_runoff",
+      "interval_days": 30,
+      "requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
+      "modules": [
+        "duckdb",
+        "pyarrow",
+        "pyogrio",
+        "ee"
+      ],
+      "earth_engine": true,
+      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+    },
+    {
+      "id": "regional-snow",
+      "label": "MODIS snow cover",
+      "kind": "regional",
+      "source": "snow",
+      "interval_days": 30,
+      "requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
+      "modules": [
+        "duckdb",
+        "pyarrow",
+        "pyogrio",
+        "ee"
+      ],
+      "earth_engine": true,
+      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+    },
+    {
+      "id": "hydroclimate",
+      "label": "Regional hydroclimate",
+      "kind": "commands",
+      "commands": [
+        [
+          "PIPELINES/update_headwater_era5.py",
+          "--scope",
+          "full-basin"
+        ],
+        [
+          "PIPELINES/era5_headwater_anomaly_service.py",
+          "--scope",
+          "full-basin"
+        ],
+        [
+          "PIPELINES/update_headwater_era5.py"
+        ],
+        [
+          "PIPELINES/era5_headwater_anomaly_service.py"
+        ],
+        [
+          "PIPELINES/update_headwater_era5_elevation.py"
+        ],
+        [
+          "PIPELINES/modis_snow_headwater_service.py"
+        ],
+        [
+          "PIPELINES/build_basin_layers_web.py"
+        ]
+      ],
+      "interval_days": 30,
+      "requires": [],
+      "modules": [
+        "ee",
+        "geopandas",
+        "rasterio"
+      ],
+      "earth_engine": true,
+      "note": "Runs the existing dependency-ordered pipeline. Source credentials and local inputs must be available."
+    },
+    {
+      "id": "landcover",
+      "label": "Annual land cover",
+      "kind": "commands",
+      "commands": [
+        [
+          "PIPELINES/build_landcover_statistics.py"
+        ],
+        [
+          "PIPELINES/build_landcover_web.py"
+        ]
+      ],
+      "interval_days": 365,
+      "requires": [],
+      "modules": [
+        "ee",
+        "geopandas",
+        "rasterio"
+      ],
+      "earth_engine": true,
+      "note": "Runs the existing dependency-ordered pipeline. Source credentials and local inputs must be available."
+    },
+    {
+      "id": "pskem-model",
+      "label": "Pskem monthly model",
+      "kind": "commands",
+      "commands": [
+        [
+          "PIPELINES/validate_pskem_model.py"
+        ]
+      ],
+      "interval_days": 30,
+      "requires": [
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
+      "modules": [
+        "duckdb",
+        "numpy",
+        "scipy"
+      ],
+      "earth_engine": false,
+      "note": "Runs the existing dependency-ordered pipeline. Source credentials and local inputs must be available."
+    }
+  ]
+}

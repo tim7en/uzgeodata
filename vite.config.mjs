@@ -22,6 +22,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: here('./INTERFACE/index.html'),
+        admin: here('./INTERFACE/admin.html'),
         project: here('./INTERFACE/project.html'),
         examples: here('./INTERFACE/examples.html'),
         ...(process.env.LAUNCH_BUILD ? {} : { portal: here('./INTERFACE/portal.html') }),

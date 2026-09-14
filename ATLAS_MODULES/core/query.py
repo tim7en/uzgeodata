@@ -211,14 +211,15 @@ def observations(store, basins=None, variables=None, start=None, end=None,
             connection.close()
 
 
-def available(store, connection=None):
+def available(store, connection=None, observed_span=False):
     """What the store can answer for: each variable, its span and its coverage."""
     own = connection is None
     connection = connection or connect(store)
     try:
-        return connection.execute("""
+        span_filter = "FILTER (WHERE value IS NOT NULL)" if observed_span else ""
+        return connection.execute(f"""
             SELECT attribute_id, unit, spatial_support,
-                   min(month_start) AS first_month, max(month_start) AS last_month,
+                   min(month_start) {span_filter} AS first_month, max(month_start) {span_filter} AS last_month,
                    count(DISTINCT basin_id) AS basins,
                    count(*) FILTER (WHERE value IS NOT NULL) AS observed,
                    count(*) FILTER (WHERE value IS NULL) AS missing

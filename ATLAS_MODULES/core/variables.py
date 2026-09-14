@@ -182,14 +182,23 @@ def describe(identifier):
     return {"id": identifier, **VARIABLES[identifier]}
 
 
-def registry():
+def registry(coverage=None, observed_through=None):
     """Everything registered, with what is deliberately not, for publication."""
+    entries = {key: describe(key) for key in sorted(VARIABLES)}
+    if coverage is not None:
+        for key, entry in entries.items():
+            measured = coverage.get(entry["attribute"])
+            if measured is None:
+                raise ValueError(f"{key}: registered variable is missing from the cube")
+            entry["coverage"] = list(measured)
+            if observed_through is not None:
+                entry["observed_through"] = observed_through.get(entry["attribute"])
     return {
         "version": 1,
         "note": "One preferred product per concept, chosen once and in the open. A fallback is "
                 "named where a second source could answer, and naming it as a fallback says it "
                 "is not the preferred answer.",
-        "variables": {key: describe(key) for key in sorted(VARIABLES)},
+        "variables": entries,
         "concepts": dict(sorted(CONCEPTS.items())),
         "unavailable": dict(sorted(UNAVAILABLE.items())),
     }

@@ -5,11 +5,12 @@ import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
 import express from 'express';
 import multer from 'multer';
+import { DataUpdates } from './SERVER/dataUpdates.mjs';
 
 dotenv.config();
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const storageRoot = path.join(root, 'WORKSPACE');
+const storageRoot = process.env.UZGEODATA_WORKSPACE || path.join(root, 'WORKSPACE');
 const uploadRoot = path.join(storageRoot, 'uploads');
 const metadataFile = path.join(storageRoot, 'datasets.json');
 const requestsFile = path.join(storageRoot, 'requests.json');
@@ -143,6 +144,31 @@ app.get('/api/admin/requests', authenticated, async (_req, res, next) => {
   try { res.json(await readRequests()); } catch (error) { next(error); }
 });
 
+// Data operations reuse the existing admin session. No endpoint accepts a command.
+const updateGroups = JSON.parse(await fs.readFile(path.join(root, 'ATLAS_MODULES/update-groups.json'), 'utf8')).groups;
+const dataUpdates = await new DataUpdates({ root, directory: path.join(storageRoot, 'data-updates'), groups: updateGroups }).init();
+app.get('/api/admin/variables', authenticated, async (_req, res, next) => {
+  try {
+    res.setHeader('Cache-Control', 'no-store');
+    const inventory = JSON.parse(await fs.readFile(path.join(root, 'PUBLISHED/data/variable-inventory.json'), 'utf8'));
+    res.json({ ...inventory, operations: await dataUpdates.snapshot() });
+  } catch (error) { next(error); }
+});
+function updateRequest(req, res, next) {
+  if (!req.is('application/json')) return res.status(415).json({ error: 'JSON request required' });
+  const origin = req.get('origin');
+  if (origin && origin !== `${req.protocol}://${req.get('host')}`) return res.status(403).json({ error: 'Use the admin page on this server' });
+  next();
+}
+app.post('/api/admin/variables/update', authenticated, updateRequest, async (req, res, next) => {
+  try { res.status(202).json(await dataUpdates.enqueue(req.body?.group_id)); } catch (error) { next(error); }
+});
+app.put('/api/admin/variables/schedule', authenticated, updateRequest, async (req, res, next) => {
+  try { res.json(await dataUpdates.schedule(req.body?.group_id, req.body?.days)); } catch (error) { next(error); }
+});
+// /admin used to fall through to the public map after the landing page replaced App.
+app.get(['/admin', '/admin/variables'], (_req, res) => res.redirect('/admin.html'));
+
 app.post('/api/admin/datasets', authenticated, (req, res, next) => {
   upload.array('files', 20)(req, res, async error => {
     if (error) return next(error);
@@ -191,7 +217,7 @@ app.get('/api/admin/datasets/:id/files/:file', authenticated, async (req, res) =
 
 app.use((error, _req, res, _next) => {
   console.error(error);
-  res.status(error instanceof multer.MulterError ? 400 : 500).json({ error: error.message || 'Server error' });
+  res.status(error.status || (error instanceof multer.MulterError ? 400 : 500)).json({ error: error.message || 'Server error' });
 });
 
 // A case study is meant to be cited, so each one answers on its own path rather
