@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T15:03:08.045553+00:00",
+  "generated_at": "2026-09-14T15:38:29.506076+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224",
@@ -45,10 +45,10 @@
       "aim": "Account for the region’s water from rainfall to the Aral, and mark every flow with how it is known.",
       "image": "/data/water-flow/regional-water-flow-sensitivity.svg",
       "image_alt": "Climatic surplus by year as bars, with the recorded diversion drawn flat across them; two years rise above it.",
-      "evidence_date": "2026-09-14T14:38:17.381+00:00",
+      "evidence_date": "2026-09-14T15:29:28.816+00:00",
       "metric": 6,
       "metric_label": "Years with a thin margin",
-      "detail": "of 22 · 2 exceeded supply outright",
+      "detail": "of 22 observed · 2 exceeded supply · 3 if Uzbekistan meets its 2030 efficiency target",
       "status": "Water balance & sensitivity",
       "image_revision": "ae90d125d955"
     }

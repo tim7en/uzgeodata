@@ -126,6 +126,7 @@ def main():
     preview(DATA/'regional-study-preview.svg',network)
     flow=json.loads((ROOT/'PUBLISHED/data/water-flow/regional-water-flow-sensitivity.json')
                     .read_text(encoding='utf-8'))
+    policy=next(s for s in flow['scenarios'] if s['reduction'] and 'efficiency' in s['label'])
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -154,7 +155,12 @@ def main():
          'evidence_date':flow['generated_at'],
          'metric':len(flow['observed']['stressed_years']),
          'metric_label':'Years with a thin margin',
-         'detail':f"of 22 · {len(flow['observed']['exceeded_years'])} exceeded supply outright",
+         # The card showed a bare 6 while the study's scenario table shows 6, 3 and 2.
+         # Read alone that looks like the card had not been rebuilt. It is the observed
+         # figure and the others are conditional, so the card now says which is which
+         # rather than leaving a reader to assume it is stale.
+         'detail':f"of 22 observed · {len(flow['observed']['exceeded_years'])} exceeded supply "
+                  f"· {policy['stressed_years']} if Uzbekistan meets its 2030 efficiency target",
          'status':'Water balance & sensitivity'}]}
     for card in payload['studies']:
         card['image_revision']=hashlib.sha256((ROOT/'PUBLISHED'/card['image'].lstrip('/')).read_bytes()).hexdigest()[:12]
