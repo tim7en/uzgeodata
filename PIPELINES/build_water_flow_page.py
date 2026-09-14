@@ -67,6 +67,19 @@ def build(out=OUT):
         f'<td>{rows.get(f"icwc-shortage-{k}-2022", {}).get("value", "&mdash;")}%</td></tr>'
         for k, c in (("kg", "kyrgyzstan"), ("tj", "tajikistan"),
                      ("uz", "uzbekistan"), ("kz", "kazakhstan")))
+    targets = list(_csv.DictReader((FLOW / "national-targets.csv").open(encoding="utf-8")))
+    policy_cut = sens["policy_targets"]["uzbekistan_efficiency_implies_reduction"]
+    combined = scenarios[1]["water_freed_km3"] + 2.192
+    def _range(r):
+        if not r["target"]:
+            return "&mdash;"
+        unit = r["unit"] or ""
+        return (f'{r["baseline"]} &rarr; {r["target"]} {unit}' if r["baseline"]
+                else f'{r["target"]} {unit}')
+    target_rows = "".join(
+        f'<tr><td>{countries.get(r["country"], {}).get("label", r["country"].title())}</td>'
+        f'<td>{r["instrument_id"] or r["instrument"][:46]}</td>'
+        f'<td>{r["indicator"]}</td><td>{_range(r)}</td></tr>' for r in targets)
     country_chips = "".join(
         f'<span class="country-chip"><span class="chip" style="background:{v["colour"]}"></span>'
         f'{v["label"]}<em>{v["position"]}</em></span>' for v in countries.values())
@@ -152,6 +165,12 @@ def build(out=OUT):
 <p>Applied to agricultural withdrawal at the national sectoral share. This is arithmetic on published numbers, not a model: no efficiency mechanism is represented and no cost is estimated. The 10&nbsp;per&nbsp;cent case is the 2023 national plan&#8217;s own target, shown so a reader can see what it would and would not achieve.</p>
 <table class="wfd-table"><thead><tr><th>Scenario</th><th>Diversion</th><th>Water freed</th><th>Thin-margin years</th><th>Years exceeding supply</th></tr></thead><tbody>{scenario_rows}</tbody></table>
 <p><strong>What the arithmetic says.</strong> The national plan&#8217;s own 10&nbsp;per&nbsp;cent target, applied to agriculture, frees {scenarios[1]['water_freed_km3']} km&sup3;/yr &mdash; enough to remove both years in which diversion exceeded supply, and to cut thin-margin years from {scenarios[0]['stressed_years']} to {scenarios[1]['stressed_years']}. It does not eliminate them. Because agriculture is {agriculture_share:.0%} of use, it is the only sector where a change of this size is arithmetically available at all: eliminating <em>all</em> municipal use would free less than a fifth of what a 10&nbsp;per&nbsp;cent agricultural saving does.</p>
+
+<h3>What the states have committed to in law</h3>
+<p>The scenario above is not a round number. It is Uzbekistan&#8217;s own target, adopted in <strong>УП-6024</strong> and published on lex.uz: raise irrigation system efficiency (КПД) from <strong>0.63 to 0.73</strong> by 2030. Delivering the same water to the same fields at that efficiency requires {policy_cut:.1%} less withdrawal &mdash; which is where the {scenarios[1]['water_freed_km3']}&nbsp;km&sup3;/yr comes from.</p>
+<table class="wfd-table"><thead><tr><th>Country</th><th>Instrument</th><th>Indicator</th><th>Baseline &rarr; target</th></tr></thead><tbody>{target_rows}</tbody></table>
+<p class="notice"><strong>Only two of the five riparian states publish numeric water-saving targets.</strong> Uzbekistan states its as a delivery efficiency, which converts directly into a withdrawal figure. Kazakhstan states its as a volume &mdash; 2,192&nbsp;млн&nbsp;м&sup3;/год by 2030 &mdash; which is directly comparable with basin diversion. Tajikistan and Kyrgyzstan have adopted strategies to 2040 with no numeric water-saving target located; nothing was found for Turkmenistan. On a shared river, an absence of published targets is itself comparable information, so it is recorded rather than left blank.</p>
+<p>Taken together the two published commitments come to roughly <strong>{combined:.1f}&nbsp;km&sup3;/yr</strong> &mdash; Uzbekistan&#8217;s {scenarios[1]['water_freed_km3']} plus Kazakhstan&#8217;s 2.19. That is about {combined / observed['diversion_km3']:.0%} of what the two basins diverted in 2022, and on the arithmetic above it is the difference between a record with two years of exceedance and one with none.</p>
 
 <h3>What is deliberately not modelled</h3>
 <ul>{gaps}</ul>

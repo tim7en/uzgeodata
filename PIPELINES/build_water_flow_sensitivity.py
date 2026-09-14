@@ -17,11 +17,13 @@ So this computes two things and keeps them apart:
 diversion. No assumption enters: it is the measured record on one side and the
 administering bodies' own figure on the other. This is the finding.
 
-**Scenario arithmetic.** What a stated reduction in agricultural withdrawal would do to
-that ratio, at the national sectoral share. Clearly labelled as arithmetic on published
-numbers rather than a model of anything: no efficiency mechanism is represented, and the
-10 per cent case is the national plan's own target so that the reader can see what it
-would and would not achieve.
+**Scenario arithmetic.** What the states' own legal commitments would do to that ratio.
+An earlier draft used 10 and 20 per cent because they were tidy numbers, which made the
+analysis unfalsifiable against anything a government had actually promised. The headline
+case is now Uzbekistan's irrigation efficiency target -- 0.63 to 0.73 by 2030, adopted in
+УП-6024 -- because a delivery efficiency converts arithmetically into a withdrawal
+reduction in a way an area or a canal length does not. It is still arithmetic and not a
+model: no mechanism, cost or delivery risk is represented.
 
 What is deliberately not modelled: distribution losses, groundwater substitution and
 connection rates -- the three levers the method's own applications pull hardest. No
@@ -138,17 +140,32 @@ def build(store=STORE):
         "annual": balance,
     }
 
-    # Scenario arithmetic, and named as such.
+    # Scenario arithmetic, taken from the states' own legal instruments rather than from
+    # round numbers. An earlier draft used 10 and 20 per cent because they were tidy;
+    # that made the analysis unfalsifiable against anything a government had actually
+    # committed to. These are commitments in law, with the act cited.
+    targets = {row["target_id"]: row for row in csv.DictReader(
+        (FLOW / "national-targets.csv").open(encoding="utf-8"))}
+    efficiency = targets["uz-irrigation-efficiency"]
+    baseline_kpd, target_kpd = float(efficiency["baseline"]), float(efficiency["target"])
+    # Delivering the same water to the same fields at a higher delivery efficiency needs
+    # proportionally less withdrawn. This is the conversion the efficiency target makes
+    # possible and that an area or a length target does not.
+    policy_cut = 1 - baseline_kpd / target_kpd
+
     scenarios = []
     for cut, label, note in (
         (0.0, "As recorded", "The 2022 diversion, unchanged."),
-        (0.10, "Agricultural withdrawal down 10%",
-         "The reduction the 2023 national plan sets as a target for water losses, applied "
-         "here to agricultural withdrawal. No mechanism is represented and no cost is "
-         "estimated; this is what the arithmetic would give."),
-        (0.20, "Agricultural withdrawal down 20%",
-         "Twice the national target, shown to indicate what order of change would be "
-         "needed to clear the dry-year stress threshold rather than merely approach it."),
+        (policy_cut,
+         f"Uzbekistan meets its efficiency target (КПД {baseline_kpd}→{target_kpd})",
+         f"УП-6024 commits Uzbekistan to raising irrigation system efficiency from "
+         f"{baseline_kpd} to {target_kpd} by 2030. Delivering the same water to the same "
+         f"fields at that efficiency requires {policy_cut:.1%} less withdrawal. This is "
+         f"the state's own commitment, converted arithmetically; no mechanism, cost or "
+         f"delivery risk is represented."),
+        (0.20, "A fifth less agricultural withdrawal",
+         "Beyond any current commitment, shown to indicate what order of change would be "
+         "needed to clear the dry-year threshold rather than merely approach it."),
     ):
         saved = diversion * agriculture * cut
         adjusted = diversion - saved
@@ -172,6 +189,18 @@ def build(store=STORE):
                           "how often the margin is thin.",
         "observed": observed,
         "scenarios": scenarios,
+        "policy_targets": {
+            "note": "Taken from the states' own legal instruments. Only two of the five "
+                    "riparian states publish numeric water-saving targets, and only one "
+                    "of those two states it as a delivery efficiency, which is the form "
+                    "that converts directly into a withdrawal figure. Kazakhstan states "
+                    "its as a volume, which is directly comparable. The three remaining "
+                    "states are recorded as having strategies without located numbers, "
+                    "because an absence of published targets is itself comparable "
+                    "information about a shared river.",
+            "uzbekistan_efficiency_implies_reduction": round(policy_cut, 4),
+            "targets": list(targets.values()),
+        },
         "not_modelled": {
             "distribution_losses": "No baseline is published for this region. The method's "
                                    "own applications usually find this the largest single "
