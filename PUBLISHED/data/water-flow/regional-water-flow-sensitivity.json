@@ -1,0 +1,294 @@
+{
+  "generated_at": "2026-09-14T14:38:17.381+00:00",
+  "title": "What moves the diagram",
+  "stress_threshold": 0.8,
+  "stress_meaning": "Diversion at four fifths of the climatic surplus. Not a regulatory threshold and not a forecast; a line drawn to count how often the margin is thin.",
+  "observed": {
+    "years": [
+      2003,
+      2024
+    ],
+    "diversion_km3": 58.09,
+    "diversion_note": "The 2022 hydrological year, held constant across every year because allocation is what it is set at, not what the weather delivered. ICWC publishes limits and actuals by year; only one year is transcribed here, and extending that is the first thing worth doing.",
+    "surplus_km3": {
+      "mean": 93.3,
+      "sd": 24.7,
+      "min": {
+        "year": 2021,
+        "value": 53.6
+      },
+      "max": {
+        "year": 2003,
+        "value": 151.5
+      },
+      "range_factor": 2.83
+    },
+    "share_of_surplus": {
+      "wettest_year": 0.383,
+      "driest_year": 1.084
+    },
+    "stressed_years": [
+      2008,
+      2017,
+      2018,
+      2020,
+      2021,
+      2023
+    ],
+    "exceeded_years": [
+      2021,
+      2023
+    ],
+    "trend_km3_per_year": {
+      "precipitation": -2.16,
+      "evapotranspiration": -0.2,
+      "surplus": -1.96
+    },
+    "halves_km3": {
+      "first": 102.1,
+      "second": 84.6,
+      "change_percent": -17.2
+    },
+    "annual": [
+      {
+        "year": 2003,
+        "precipitation": 412.4,
+        "evapotranspiration": 260.9,
+        "surplus": 151.5,
+        "diversion_share": 0.383,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2004,
+        "precipitation": 335.6,
+        "evapotranspiration": 227.2,
+        "surplus": 108.5,
+        "diversion_share": 0.535,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2005,
+        "precipitation": 308.5,
+        "evapotranspiration": 218.7,
+        "surplus": 89.8,
+        "diversion_share": 0.647,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2006,
+        "precipitation": 302.2,
+        "evapotranspiration": 199.2,
+        "surplus": 103.1,
+        "diversion_share": 0.563,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2007,
+        "precipitation": 289.8,
+        "evapotranspiration": 201.3,
+        "surplus": 88.5,
+        "diversion_share": 0.656,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2008,
+        "precipitation": 253.3,
+        "evapotranspiration": 192.1,
+        "surplus": 61.2,
+        "diversion_share": 0.949,
+        "stressed": true,
+        "exceeded": false
+      },
+      {
+        "year": 2009,
+        "precipitation": 371.9,
+        "evapotranspiration": 242.1,
+        "surplus": 129.8,
+        "diversion_share": 0.448,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2010,
+        "precipitation": 304.4,
+        "evapotranspiration": 218.2,
+        "surplus": 86.2,
+        "diversion_share": 0.674,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2011,
+        "precipitation": 295.1,
+        "evapotranspiration": 189.9,
+        "surplus": 105.3,
+        "diversion_share": 0.552,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2012,
+        "precipitation": 308.3,
+        "evapotranspiration": 199.9,
+        "surplus": 108.4,
+        "diversion_share": 0.536,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2013,
+        "precipitation": 319.2,
+        "evapotranspiration": 228.3,
+        "surplus": 90.9,
+        "diversion_share": 0.639,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2014,
+        "precipitation": 312.2,
+        "evapotranspiration": 215.1,
+        "surplus": 97.0,
+        "diversion_share": 0.599,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2015,
+        "precipitation": 369.5,
+        "evapotranspiration": 245.2,
+        "surplus": 124.3,
+        "diversion_share": 0.467,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2016,
+        "precipitation": 392.0,
+        "evapotranspiration": 266.8,
+        "surplus": 125.2,
+        "diversion_share": 0.464,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2017,
+        "precipitation": 300.1,
+        "evapotranspiration": 228.2,
+        "surplus": 71.9,
+        "diversion_share": 0.808,
+        "stressed": true,
+        "exceeded": false
+      },
+      {
+        "year": 2018,
+        "precipitation": 282.4,
+        "evapotranspiration": 211.5,
+        "surplus": 70.9,
+        "diversion_share": 0.819,
+        "stressed": true,
+        "exceeded": false
+      },
+      {
+        "year": 2019,
+        "precipitation": 301.7,
+        "evapotranspiration": 221.7,
+        "surplus": 80.0,
+        "diversion_share": 0.726,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2020,
+        "precipitation": 277.0,
+        "evapotranspiration": 211.2,
+        "surplus": 65.8,
+        "diversion_share": 0.883,
+        "stressed": true,
+        "exceeded": false
+      },
+      {
+        "year": 2021,
+        "precipitation": 232.8,
+        "evapotranspiration": 179.2,
+        "surplus": 53.6,
+        "diversion_share": 1.084,
+        "stressed": true,
+        "exceeded": true
+      },
+      {
+        "year": 2022,
+        "precipitation": 309.4,
+        "evapotranspiration": 220.5,
+        "surplus": 88.9,
+        "diversion_share": 0.653,
+        "stressed": false,
+        "exceeded": false
+      },
+      {
+        "year": 2023,
+        "precipitation": 255.2,
+        "evapotranspiration": 199.1,
+        "surplus": 56.0,
+        "diversion_share": 1.037,
+        "stressed": true,
+        "exceeded": true
+      },
+      {
+        "year": 2024,
+        "precipitation": 342.6,
+        "evapotranspiration": 245.9,
+        "surplus": 96.7,
+        "diversion_share": 0.601,
+        "stressed": false,
+        "exceeded": false
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "label": "As recorded",
+      "reduction": 0.0,
+      "note": "The 2022 diversion, unchanged.",
+      "diversion_km3": 58.09,
+      "water_freed_km3": 0.0,
+      "stressed_years": 6,
+      "exceeded_years": 2,
+      "driest_year_share": 1.084,
+      "basis": "derived"
+    },
+    {
+      "label": "Agricultural withdrawal down 10%",
+      "reduction": 0.1,
+      "note": "The reduction the 2023 national plan sets as a target for water losses, applied here to agricultural withdrawal. No mechanism is represented and no cost is estimated; this is what the arithmetic would give.",
+      "diversion_km3": 52.83,
+      "water_freed_km3": 5.26,
+      "stressed_years": 4,
+      "exceeded_years": 0,
+      "driest_year_share": 0.986,
+      "basis": "derived"
+    },
+    {
+      "label": "Agricultural withdrawal down 20%",
+      "reduction": 0.2,
+      "note": "Twice the national target, shown to indicate what order of change would be needed to clear the dry-year stress threshold rather than merely approach it.",
+      "diversion_km3": 47.58,
+      "water_freed_km3": 10.51,
+      "stressed_years": 2,
+      "exceeded_years": 0,
+      "driest_year_share": 0.888,
+      "basis": "derived"
+    }
+  ],
+  "not_modelled": {
+    "distribution_losses": "No baseline is published for this region. The method's own applications usually find this the largest single lever, and it cannot be evaluated here.",
+    "groundwater_substitution": "Abstraction is not published at a usable scale, so substituting groundwater for surface water cannot be represented.",
+    "connection_rates": "Not published. The wastewater inventory gives what 53 plants treat, not what share of generated wastewater reaches them."
+  },
+  "caution": "A twenty-two year slope is a statement about this record, not an attribution to climate change. Decadal variability alone can produce a decline of this size, and nothing here separates the two. What does not depend on that question is the operational finding: in the later half of the record the margin between what arrives and what is taken is repeatedly thin, whatever is causing it."
+}
