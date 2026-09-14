@@ -31,13 +31,11 @@ jobs:
           output=$(python -m pytest TESTS --collect-only -q 2>&1)
           status=$?
           if [ $status -ne 0 ]; then
-            # Raise the failure as annotations. The job log needs repository admin to
-            # download, so a collection error that only reaches stdout is invisible to
-            # anyone without it -- which is how "exit code 2" stayed undiagnosed. The
-            # workflow-command form is readable through the public checks API.
-            echo "$output" | tail -n 40 | while IFS= read -r line; do
-              echo "::error::${line}"
-            done
+            # GitHub keeps only ten annotations per step, and a collect-only run
+            # prints hundreds of test ids before it prints why it stopped. Emitting
+            # the raw tail spent that whole budget on the listing and discarded the
+            # one line that mattered. Filter to the error lines first.
+            echo "$output" | grep -E "ERROR|Error|error|Interrupted" | tail -n 8 | while IFS= read -r line; do echo "::error::${line}"; done
             exit $status
           fi
           echo "$output" | tail -n 2
