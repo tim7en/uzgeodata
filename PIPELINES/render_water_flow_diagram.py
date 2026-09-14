@@ -52,7 +52,7 @@ def layered(links, order):
     return column
 
 
-def panel(title, subtitle, nodes, links, order, top, scale, height):
+def panel(title, subtitle, nodes, links, order, top, scale, height, by_country=False):
     """One linear panel: columns of nodes, ribbons between them."""
     column = layered(links, order)
     label = {node["id"]: node for node in nodes}
@@ -94,7 +94,12 @@ def panel(title, subtitle, nodes, links, order, top, scale, height):
         used[target]["in"] += thickness
         x0, x1 = box[source]["x"] + NODE_W, box[target]["x"]
         mid = (x0 + x1) / 2
+        # Panel B carries nothing but ICWC figures, so there colour says which country
+        # rather than how the flow is known -- the question a transboundary diagram is
+        # actually asked, and the one a provenance-only palette cannot answer.
         colour = COLOUR[link["basis"]]
+        if by_country and COUNTRY_COLOUR.get(link.get("country")):
+            colour = COUNTRY_COLOUR[link["country"]]
         dash = ' stroke-dasharray="6 4"' if value is None else ""
         reading = "not quantified" if value is None else f"{value:,.3g} km³/yr"
         tip = f"{link['label']} — {reading} ({link['basis']})"
@@ -132,65 +137,88 @@ def panel(title, subtitle, nodes, links, order, top, scale, height):
     return header + "".join(parts)
 
 
-COLOUR = {}
+COLOUR, COUNTRY_COLOUR = {}, {}
 
 
 def render(data=DATA, out=OUT):
     report = json.loads(Path(data).read_text(encoding="utf-8"))
     COLOUR.update({key: entry["colour"] for key, entry in report["basis_legend"].items()})
+    COUNTRY_COLOUR.update({key: entry["colour"]
+                           for key, entry in report.get("country_legend", {}).items()})
     nodes, links = report["nodes"], report["links"]
 
     natural = ["precipitation", "evapotranspiration", "surplus", "amu", "syr", "unaccounted"]
-    human = ["amu-uz", "uz-use", "sector-agriculture", "sector-municipal", "sector-industry",
+    rivers = ["amu", "syr", "amu-tj", "amu-tm", "amu-uz", "syr-upstream", "syr-kz",
+              "amu-delta", "north-aral", "large-aral"]
+    human = ["uz-use", "sector-agriculture", "sector-municipal", "sector-industry",
              "sector-fisheries", "sector-thermal_power", "sector-other", "wastewater",
              "drainage", "environment", "gap-losses", "gap-groundwater", "gap-untreated"]
 
-    top_links = [l for l in links if l["source"] in natural and l["target"] in natural]
-    low_links = [l for l in links if l["source"] in human and l["target"] in human]
-
-    # Each panel is linear within itself; the scales differ and both are stated.
-    top_scale = 300 / 312.5
-    low_scale = 300 / 16.76
+    def between(names):
+        return [l for l in links if l["source"] in names and l["target"] in names]
 
     body = panel(
-        "Where the water comes from, and what is taken",
+        "1 · What arrives, and what is taken from it",
         "22-year mean annual volumes over 965,725 km² (measured) against the 2022 "
-        "hydrological year of recorded diversion (administered). 1 mm of width ≈ "
-        f"{1 / top_scale:.2f} km³/yr.",
-        nodes, top_links,
+        "hydrological year of recorded diversion (administered). Colour is how the flow "
+        "is known. 1 mm of width ≈ 0.33 km³/yr.",
+        nodes, between(natural),
         [["precipitation"], ["evapotranspiration", "surplus"], ["amu", "syr", "unaccounted"]],
-        top=120, scale=top_scale, height=360)
+        top=120, scale=300 / 312.5, height=330)
 
     body += panel(
-        "Where Uzbekistan's Amu Darya water goes",
-        "Drawn at its own scale: these flows are twenty times smaller than those above. "
-        "Sector shares are national, applied to one basin's diversion — proportions, not "
-        f"basin measurements. 1 mm of width ≈ {1 / low_scale:.3f} km³/yr.",
-        nodes, low_links,
-        [["amu-uz"], ["uz-use"],
+        "2 · Who takes it, and where the rivers end",
+        "ICWC figures for 2022 throughout, so the widths are comparable. Colour is the "
+        "country. The Syr Darya total is bounded at the Shardara reservoir and therefore "
+        "excludes Kazakhstan, which lies downstream — its 2022 actual is not published. "
+        "1 mm of width ≈ 0.15 km³/yr.",
+        nodes, between(rivers),
+        [["amu", "syr"], ["amu-tj", "amu-tm", "amu-uz", "syr-upstream", "syr-kz"],
+         ["amu-delta", "north-aral"], ["large-aral"]],
+        top=620, scale=300 / 44.26, height=400, by_country=True)
+
+    body += panel(
+        "3 · Where Uzbekistan's Amu Darya water goes",
+        "Its own scale again: these flows are twenty times smaller than panel 1. Sector "
+        "shares are national, applied to one basin's diversion — proportions, not basin "
+        "measurements. 1 mm of width ≈ 0.05 km³/yr.",
+        nodes, between(human),
+        [["uz-use"],
          ["sector-agriculture", "sector-municipal", "sector-industry", "sector-fisheries",
           "sector-thermal_power", "sector-other", "gap-losses", "gap-groundwater",
           "gap-untreated"],
          ["wastewater", "drainage"], ["environment"]],
-        top=640, scale=low_scale, height=420)
+        top=1150, scale=300 / 14.7, height=420)
 
     legend, x = [], 24
+    legend.append(f'<text x="24" y="1636" font-size="12.5" font-weight="600" '
+                  f'fill="#1a202c">Panels 1 and 3 — how the flow is known</text>')
     for key, entry in report["basis_legend"].items():
         legend.append(
-            f'<rect x="{x}" y="1108" width="26" height="11" rx="2" fill="{entry["colour"]}" '
+            f'<rect x="{x}" y="1652" width="26" height="11" rx="2" fill="{entry["colour"]}" '
             f'fill-opacity="0.55"/>'
-            f'<text x="{x + 32}" y="1118" font-size="12" fill="#1a202c">'
+            f'<text x="{x + 32}" y="1662" font-size="12" fill="#1a202c">'
             f'{html.escape(entry["label"])}<title>{html.escape(entry["meaning"])}</title></text>')
         x += 40 + len(entry["label"]) * 7.6
-    legend.append(f'<text x="24" y="1142" font-size="11.5" fill="#4a5568">'
-                  f'Colour is how a flow is known, not what kind of water it is. '
+    x = 24
+    legend.append(f'<text x="24" y="1692" font-size="12.5" font-weight="600" '
+                  f'fill="#1a202c">Panel 2 — which country</text>')
+    for key, entry in report.get("country_legend", {}).items():
+        legend.append(
+            f'<rect x="{x}" y="1708" width="26" height="11" rx="2" fill="{entry["colour"]}" '
+            f'fill-opacity="0.6"/>'
+            f'<text x="{x + 32}" y="1718" font-size="12" fill="#1a202c">'
+            f'{html.escape(entry["label"])}<title>{html.escape(entry["position"])}</title></text>')
+        x += 40 + len(entry["label"]) * 7.4
+    legend.append(f'<text x="24" y="1746" font-size="11.5" fill="#4a5568">'
                   f'Dashed hairlines are flows nobody has quantified — drawn at a fixed '
-                  f'width so they are never read as small.</text>')
+                  f'width so they are never read as small. Each panel is linear within '
+                  f'itself; the three scales differ and each is stated.</text>')
 
-    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {WIDTH} 1165" '
-           f'width="{WIDTH}" height="1165" font-family="system-ui, -apple-system, '
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {WIDTH} 1770" '
+           f'width="{WIDTH}" height="1770" font-family="system-ui, -apple-system, '
            f'Segoe UI, Roboto, sans-serif">'
-           f'<rect width="{WIDTH}" height="1165" fill="#fdfdfc"/>'
+           f'<rect width="{WIDTH}" height="1770" fill="#fdfdfc"/>'
            f'<text x="24" y="42" font-size="22" font-weight="650" fill="#1a202c">'
            f'Where the region\'s water goes</text>'
            f'<text x="24" y="64" font-size="13" fill="#4a5568">'
@@ -201,7 +229,8 @@ def render(data=DATA, out=OUT):
            + body + "".join(legend) + '</svg>')
     Path(out).write_text(svg, encoding="utf-8")
     return {"svg": str(out), "bytes": len(svg.encode("utf-8")),
-            "links_drawn": len(top_links) + len(low_links), "generated_at": utc_now()}
+            "links_drawn": len(between(natural)) + len(between(rivers)) + len(between(human)),
+            "generated_at": utc_now()}
 
 
 def main():

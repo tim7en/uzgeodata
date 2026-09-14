@@ -80,6 +80,20 @@ BASIS = {
 }
 
 
+# Panel B carries nothing but ICWC figures, so colour there is free to say which
+# country rather than how it is known -- the question a transboundary diagram is
+# actually asked. Ordered upstream to downstream, which is the thing a reader needs to
+# see: Kyrgyzstan and Tajikistan generate the flow, Kazakhstan receives what is left.
+COUNTRY = {
+    "kyrgyzstan":   {"label": "Kyrgyzstan",   "colour": "#7c3aed", "position": "headwater"},
+    "tajikistan":   {"label": "Tajikistan",   "colour": "#0891b2", "position": "headwater"},
+    "uzbekistan":   {"label": "Uzbekistan",   "colour": "#16a34a", "position": "midstream"},
+    "turkmenistan": {"label": "Turkmenistan", "colour": "#ea580c", "position": "midstream"},
+    "kazakhstan":   {"label": "Kazakhstan",   "colour": "#2563eb", "position": "downstream"},
+    "terminal":     {"label": "Aral Sea",     "colour": "#64748b", "position": "terminal"},
+}
+
+
 def basin_areas(path=HYDRO / "basins-level12.geojson"):
     collection = json.loads(path.read_text(encoding="utf-8"))
     return {str(f["properties"]["HYBAS_ID"]): float(f["properties"]["SUB_AREA"])
@@ -175,11 +189,11 @@ def build(store=STORE):
         nodes.append({"id": key, "label": label, "note": note})
         return key
 
-    def link(source, target, value, basis, label, note=None, operation=None):
+    def link(source, target, value, basis, label, note=None, operation=None, country=None):
         links.append({"source": source, "target": target,
                       "value": None if value is None else round(value, 3),
                       "unit": "km3/yr", "basis": basis, "label": label,
-                      "note": note, "operation": operation})
+                      "note": note, "operation": operation, "country": country})
 
     # --- the measured natural balance -------------------------------------------
     node("precipitation", "Precipitation",
@@ -215,24 +229,68 @@ def build(store=STORE):
          "mismatch is at this scale.",
          operation="climatic surplus - recorded diversion")
 
-    # --- countries on the Amu Darya ----------------------------------------------
-    for key, label in (("tj", "Tajikistan"), ("tm", "Turkmenistan"), ("uz", "Uzbekistan")):
+    # --- countries, and where the rivers actually end ----------------------------
+    # The earlier draft drew the Syr Darya as a terminal sink, which is wrong twice
+    # over: the 13.83 km3 is withdrawal "up to entry point to the Shardara reservoir"
+    # and so excludes Kazakhstan entirely, and the river continues past it to the
+    # Northern Aral. A transboundary diagram that stops at the last upstream user
+    # describes the dispute from one bank.
+    for key, code in (("tj", "tajikistan"), ("tm", "turkmenistan"), ("uz", "uzbekistan")):
         entry = figures[f"icwc-amu-{key}-2022"]
-        node(f"amu-{key}", label, entry["note"])
-        link("amu", f"amu-{key}", number(entry), "administered", label, entry["note"])
+        node(f"amu-{key}", COUNTRY[code]["label"], entry["note"])
+        link("amu", f"amu-{key}", number(entry), "administered",
+             COUNTRY[code]["label"], entry["note"], country=code)
+
+    node("syr-upstream", "Withdrawn above Chardara",
+         "Kyrgyzstan, Tajikistan and Uzbekistan. The published 2022 total is bounded at "
+         "the Shardara reservoir and is not split by country; the country figures "
+         "available are 2026 limits, tabulated separately rather than drawn at a width "
+         "that would imply they are the same year.")
+    link("syr", "syr-upstream", number(figures["icwc-syr-above-chardara-2022"]),
+         "administered", "Withdrawn above Chardara",
+         "Excludes Kazakhstan, which lies downstream of the reservoir", country="uzbekistan")
+
+    node("syr-kz", COUNTRY["kazakhstan"]["label"],
+         "Downstream of Chardara. Its withdrawal is outside the 13.83 km3 above, and is "
+         "published as a limit rather than an actual.")
+    link("syr", "syr-kz", None, "unquantified", "Kazakhstan, downstream",
+         "The 2022 actual for Kazakhstan below Chardara is not published. Its 2026 limit "
+         "is 1.369 km3/yr. Drawn as a gap because the diagram cannot honestly give it a "
+         "width.", country="kazakhstan")
+
+    # Terminal flows: what is left of two rivers that once fed a sea.
+    north = number(figures["icwc-syr-north-aral-2022"])
+    large = number(figures["icwc-large-aral-2022"])
+    node("north-aral", "Northern Aral Sea", "Fed by the Syr Darya below Chardara")
+    node("large-aral", "Large Aral Sea",
+         "Inflow in 2022 came entirely from drainage canals, not from river discharge")
+    link("syr-kz", "north-aral", north, "administered", "To the Northern Aral",
+         "0.82 km3 in 2022, per Kazakhstan's water authorities", country="terminal")
+
+    delta = number(figures["icwc-amu-delta-2022"])
+    node("amu-delta", "Amu Darya delta")
+    link("amu-uz", "amu-delta", delta, "administered", "To the delta",
+         "2.055 km3 reached the delta in 2022", country="terminal")
+    link("amu-delta", "large-aral", large, "administered", "To the Large Aral",
+         "0.5035 km3, down from 0.65 in 2021, and sourced entirely from drainage canals "
+         "rather than river discharge", country="terminal")
 
     # --- sectors, at the only scale the shares support ---------------------------
-    node("uz-use", "Uzbekistan use", "Sectoral shares are national and are applied here "
-                                     "to the Amu Darya diversion only")
-    link("amu-uz", "uz-use", uzbek, "administered", "To sectoral use")
+    node("uz-use", "Uzbekistan sectoral use",
+         "Sectoral shares are national and are applied here to what remains of the "
+         "country's Amu Darya diversion after the delta")
+    link("amu-uz", "uz-use", round(uzbek - delta, 3), "administered", "To sectoral use",
+         "The country's Amu Darya diversion less what reached the delta")
+    remaining = uzbek - delta
     for sector, share in sorted(shares.items(), key=lambda item: -item[1]):
         pretty = sector.replace("_", " ").title()
         node(f"sector-{sector}", pretty)
-        link("uz-use", f"sector-{sector}", uzbek * share / 100, "derived", pretty,
-             f"National share of {share} per cent applied to the country's Amu Darya "
-             "diversion. The share is national; the diversion is one basin. Treat the "
-             "split as indicative of proportion, not as a basin measurement.",
-             operation=f"{uzbek} km3 x {share}%")
+        link("uz-use", f"sector-{sector}", remaining * share / 100, "derived", pretty,
+             f"National share of {share} per cent applied to what remains of the "
+             "country's Amu Darya diversion. The share is national; the diversion is one "
+             "basin. Treat the split as indicative of proportion, not as a basin "
+             "measurement.",
+             operation=f"{remaining:.3f} km3 x {share}%")
 
     # --- returns ------------------------------------------------------------------
     node("wastewater", "Treated wastewater",
@@ -277,6 +335,7 @@ def build(store=STORE):
         "scope": "Amu Darya and Syr Darya basins, 965,725 km2, 7,445 level-12 basins",
         "method": sources["method_reference"],
         "basis_legend": BASIS,
+        "country_legend": COUNTRY,
         "nodes": nodes,
         "links": links,
         "measured": {"fluxes_km3_per_year": fluxes, "wastewater": plants},

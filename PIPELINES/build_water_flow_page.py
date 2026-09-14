@@ -51,6 +51,26 @@ def build(out=OUT):
     gaps = "".join(f'<li><strong>{k.replace("_", " ").title()}.</strong> {v}</li>'
                    for k, v in sens["not_modelled"].items())
 
+    import csv as _csv
+    rows = {r["figure_id"]: r for r in _csv.DictReader(
+        (FLOW / "regional-withdrawals.csv").open(encoding="utf-8"))}
+    countries = diagram.get("country_legend", {})
+    amu_rows = "".join(
+        f'<tr><td><span class="chip" style="background:{countries[c]["colour"]}"></span>'
+        f'{countries[c]["label"]}</td><td>{rows[f"icwc-amu-{k}-2022"]["value"]}</td>'
+        f'<td>{lim}</td><td>{float(rows[f"icwc-amu-{k}-2022"]["value"]) / float(lim):.0%}</td></tr>'
+        for k, c, lim in (("tj", "tajikistan", "9.83"), ("tm", "turkmenistan", "21.83"),
+                          ("uz", "uzbekistan", "23.57")))
+    syr_rows = "".join(
+        f'<tr><td><span class="chip" style="background:{countries[c]["colour"]}"></span>'
+        f'{countries[c]["label"]}</td><td>{rows[f"icwc-syr-{k}-2026"]["value"]}</td>'
+        f'<td>{rows.get(f"icwc-shortage-{k}-2022", {}).get("value", "&mdash;")}%</td></tr>'
+        for k, c in (("kg", "kyrgyzstan"), ("tj", "tajikistan"),
+                     ("uz", "uzbekistan"), ("kz", "kazakhstan")))
+    country_chips = "".join(
+        f'<span class="country-chip"><span class="chip" style="background:{v["colour"]}"></span>'
+        f'{v["label"]}<em>{v["position"]}</em></span>' for v in countries.values())
+
     page = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#103d40"><meta name="description" content="A water flow diagram and sensitivity analysis for the Amu Darya and Syr Darya, with every flow coloured by how it is known, and a pathway of what would have to change."><title>Where the region&#8217;s water goes &middot; UzGeoData</title><link rel="stylesheet" href="/home.css">
 <style>
@@ -74,6 +94,10 @@ def build(out=OUT):
 .role{{background:#f7f9f8;border-radius:8px;padding:.9rem 1rem}}
 .role h4{{margin:0 0 .4rem}}
 .role ul{{margin:0;padding-left:1.1rem;font-size:.9rem;color:#4a5568}}
+.chip{{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:.45rem;vertical-align:baseline}}
+.country-row{{display:flex;flex-wrap:wrap;gap:.9rem;margin:1rem 0}}
+.country-chip{{display:inline-flex;align-items:baseline;gap:.15rem;font-size:.92rem}}
+.country-chip em{{color:#718096;font-size:.8rem;font-style:normal;margin-left:.35rem}}
 </style></head><body><a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="brand" href="/" aria-label="UzGeoData home"><span class="brand-icon" aria-hidden="true">&#8776;</span>UzGeoData<span class="brand-sub">BASIN ATLAS</span></a><nav aria-label="Main navigation"><a href="/project.html">Project overview</a><a href="/examples.html">Use cases</a><a href="/case-studies.html">Case studies</a><a href="/guide.html">User guide</a><a class="button small" href="/">Open basin explorer <span aria-hidden="true">&#8599;</span></a></nav></header>
 <main id="main" class="project-content">
@@ -98,6 +122,21 @@ def build(out=OUT):
 <h3>Colour is provenance, not water type</h3>
 <p>The published applications of this method colour flows by what kind of water they carry. Here colour says <strong>how a flow is known</strong>, because at this scale that is the distinction a reader most needs and least often gets from a Sankey diagram.</p>
 <div class="basis-grid">{basis_cards}</div>
+
+<h3>Who takes what, and who goes short</h3>
+<p>Panel 2 carries nothing but ICWC figures, so colour there is free to say <strong>which country</strong> rather than how the flow is known &mdash; the question a transboundary diagram is actually asked.</p>
+<p class="country-row">{country_chips}</p>
+
+<h4>Amu Darya, 2022: limit against actual</h4>
+<table class="wfd-table"><thead><tr><th>Country</th><th>Diverted (km&sup3;)</th><th>Limit (km&sup3;)</th><th>Share of limit used</th></tr></thead><tbody>{amu_rows}</tbody></table>
+
+<h4>Syr Darya: 2026 allocation, and who went short in 2022</h4>
+<p>The Syr Darya total drawn in panel 2 is bounded at the Shardara reservoir, so it <strong>excludes Kazakhstan entirely</strong> &mdash; which sits downstream and is the reason the river does not end where an upstream-only diagram would end it. Country actuals for 2022 are not published; the limits below are for 2026, agreed at the ICWC 91st session, and the shortfall column is the 2022 growing season against limit.</p>
+<table class="wfd-table"><thead><tr><th>Country</th><th>2026 limit (km&sup3;)</th><th>2022 growing-season shortfall</th></tr></thead><tbody>{syr_rows}</tbody></table>
+<p class="notice"><strong>Kyrgyzstan, the headwater state, went shortest of all &mdash; 36&nbsp;per&nbsp;cent below its limit in 2022, on a river it generates.</strong> It also holds the smallest allocation of the four, 0.317&nbsp;km&sup3;/yr against Uzbekistan&#8217;s 12.147. That asymmetry between where water comes from and where it is allocated is the central fact of Syr Darya management, and no water-balance diagram drawn from hydrology alone will show it.</p>
+
+<h4>Where the rivers end</h4>
+<p>Both terminal figures are small enough to be worth stating plainly. The Syr Darya delivered <strong>0.82&nbsp;km&sup3;</strong> to the Northern Aral in 2022. Inflow to the Large Aral was <strong>0.50&nbsp;km&sup3;</strong> &mdash; and came <em>entirely from drainage canals rather than river discharge</em>. The Amu Darya, as a river, no longer reaches it.</p>
 
 <h3>It does not close, and is not made to</h3>
 <p>{diagram['reading']['closure']}</p>
