@@ -105,7 +105,46 @@ positions. Annual totals are meaningful only for monthly flux quantities with al
 12 observations. Download the shared catalogue with attribute files; positional
 values are not self-describing without it.
 
-## Querying the cube
+## Use it as a library
+
+The published release is queryable without a checkout. Nothing is downloaded
+wholesale: the cube is Parquet, the host serves byte ranges, and a query reads the row
+groups it touches.
+
+```sh
+pip install uzgeodata          # duckdb only; add [products] for SPI and anomalies
+```
+
+```python
+import uzgeodata as uz
+
+data = uz.open()                                   # the current published release
+data.release_id                                    # 'uz-20260914T094910058Z'
+data.series("4121289400", "precipitation", start="2023-01")
+data.spi("4121289400", window=3)                   # gamma-fitted, not a z-score
+```
+
+**Always know which data answered.** Every dataset resolves to a named release and
+records it. Pin `uz.open(release="uz-...")` to keep an analysis reproducible, or omit
+it to follow the pointer — but print `data.release_id` in anything you intend to
+reproduce. Releases are immutable and name every file with its SHA-256, so a rebuild
+underneath one is detectable rather than silent, and `data.verify()` checks a local
+copy against the manifest.
+
+**Usable is not defensible.** A dataset backed by the cube answers questions and
+refuses to supply evidence:
+
+```python
+data.evidence("4121289400", "precipitation")
+# Unavailable: this dataset reads the published cube, which carries no revisions,
+# run ids, coverage counts or missing reasons. Evidence needs the observation record.
+```
+
+Returning nulls in those columns would read as "no coverage recorded" when the truth
+is "this source does not carry coverage". For evidence, open a checkout's
+`PUBLISHED/data/atlas`, which resolves to the same release and answers with provenance.
+
+## Querying the cube directly
 
 The dated record ships as Parquet partitioned by variable, so a query reads the one
 file that answers it. The host serves byte ranges, which means a reader can query

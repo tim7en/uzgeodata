@@ -158,14 +158,29 @@ class Dataset:
             from ATLAS_MODULES.core import query
 
             if self._store is None:
-                self._connection = _cube_view(duckdb.connect(), f"{self._base}/cube")
+                self._connection = _cube_view(duckdb.connect(), self._parquet())
             else:
                 self._connection = query.connect(self._store)
             return self._connection, False
         connection = duckdb.connect()
         connection.execute("INSTALL httpfs; LOAD httpfs;")
-        self._connection = _cube_view(connection, f"{self._base}/cube")
+        self._connection = _cube_view(connection, self._parquet())
         return self._connection, False
+
+    def _parquet(self):
+        """The cube files this release names, as full paths.
+
+        Taken from the manifest rather than by globbing the directory. Two reasons, and
+        the second is why it is not merely a workaround: DuckDB cannot list a directory
+        over plain HTTP at all, and a glob would in any case read whatever is in the
+        directory now -- which after a later publish is a different release's files
+        answering under a pinned id. Reading the manifest means a pinned release queries
+        exactly the bytes it vouched for.
+        """
+        names = [name for name in self._release["files"] if name.endswith(".parquet")]
+        if not names:
+            raise Unavailable(f"{self.release_id} names no cube files to query")
+        return [f"{self._base}/{name}" for name in sorted(names)]
 
     def series(self, basin, concept, start=None, end=None):
         """One basin's monthly series for a concept, oldest first.
@@ -250,7 +265,7 @@ class Dataset:
         self.close()
 
 
-def _cube_view(connection, cube):
+def _cube_view(connection, files):
     """An `observations` view over the cube, shaped like the record's.
 
     The analysis layers query a view with a fixed set of columns. The cube carries the
@@ -259,6 +274,7 @@ def _cube_view(connection, cube):
     to a caller who would read them as findings.
     """
     nulls = ", ".join(f"NULL AS {name}" for name in EVIDENCE)
+    listed = ", ".join("'" + str(path).replace("'", "''") + "'" for path in files)
     connection.execute(f"""
         CREATE OR REPLACE VIEW observations AS
         SELECT basin_id, attribute_id,
@@ -269,6 +285,6 @@ def _cube_view(connection, cube):
                -- doubles; this makes the library independent of that staying true.
                CAST(value AS DOUBLE) AS value, unit, {nulls},
                's' AS spatial_support, year, month
-        FROM read_parquet('{cube}/variable=*/*.parquet', hive_partitioning = true)
+        FROM read_parquet([{listed}])
     """)
     return connection
