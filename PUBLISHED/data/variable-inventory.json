@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-09-14T18:38:03.954903+00:00",
+  "generated_at": "2026-09-14T19:21:30.509480+00:00",
   "rows": [
     {
       "id": "reference:aet_mm_s01",
@@ -6325,8 +6325,8 @@
       "collection": "Independent estimates",
       "source": "era5_runoff@ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "unit": "millimetres per year",
-      "last_updated": null,
-      "updated_basis": "Reference acquisition date not recorded",
+      "last_updated": "2026-09-14T19:21:28.222332+00:00",
+      "updated_basis": "Successful admin update job",
       "published_at": "2026-09-14T07:55:42.455+00:00",
       "coverage_to": null,
       "interval_days": null,
@@ -8676,7 +8676,7 @@
       "unit": "millimetres per month",
       "last_updated": "2026-09-13T18:16:10.013+00:00",
       "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
       "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-terraclimate",
@@ -8693,7 +8693,7 @@
       "unit": "millimetres per month",
       "last_updated": "2026-09-13T18:16:10.013+00:00",
       "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
       "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-terraclimate",
@@ -8710,7 +8710,7 @@
       "unit": "millimetres per month",
       "last_updated": "2026-09-13T18:16:10.013+00:00",
       "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
       "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-terraclimate",
@@ -8725,10 +8725,10 @@
       "collection": "Basin observations",
       "source": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
       "unit": "millimetres per month",
-      "last_updated": "2026-09-13T17:38:39.223+00:00",
-      "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
-      "coverage_to": "2024-12",
+      "last_updated": "2026-09-14T19:21:28.222332+00:00",
+      "updated_basis": "Successful admin update job",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
+      "coverage_to": "2026-08",
       "interval_days": 30,
       "group_id": "regional-era5_runoff",
       "status": "available",
@@ -8744,7 +8744,7 @@
       "unit": "percent",
       "last_updated": "2026-09-13T18:02:54.897+00:00",
       "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
       "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-snow",
@@ -8761,7 +8761,7 @@
       "unit": "millimetres of soil moisture",
       "last_updated": "2026-09-13T18:16:10.013+00:00",
       "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
       "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-terraclimate",
@@ -8778,7 +8778,7 @@
       "unit": "degrees Celsius",
       "last_updated": "2026-09-13T18:27:40.235+00:00",
       "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
       "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-terraclimate_temperature",
@@ -8795,7 +8795,7 @@
       "unit": "degrees Celsius",
       "last_updated": "2026-09-14T07:03:33.898+00:00",
       "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
       "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-era5_temperature",
@@ -8812,7 +8812,7 @@
       "unit": "degrees Celsius",
       "last_updated": "2026-09-13T18:27:40.235+00:00",
       "updated_basis": "Completed extraction run",
-      "published_at": "2026-09-14T07:54:02.337+00:00",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
       "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-terraclimate_temperature",
@@ -14241,8 +14241,12 @@
       "kind": "regional",
       "source": "terraclimate",
       "interval_days": 30,
+      "full_requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "regional-terraclimate_temperature",
@@ -14250,8 +14254,12 @@
       "kind": "regional",
       "source": "terraclimate_temperature",
       "interval_days": 30,
+      "full_requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "regional-era5_temperature",
@@ -14259,8 +14267,12 @@
       "kind": "regional",
       "source": "era5_temperature",
       "interval_days": 30,
+      "full_requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "regional-era5_runoff",
@@ -14268,8 +14280,12 @@
       "kind": "regional",
       "source": "era5_runoff",
       "interval_days": 30,
+      "full_requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "regional-snow",
@@ -14277,8 +14293,12 @@
       "kind": "regional",
       "source": "snow",
       "interval_days": 30,
+      "full_requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "hydroclimate",

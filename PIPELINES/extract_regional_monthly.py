@@ -38,8 +38,8 @@ CHECKPOINTS = ROOT / "WORKSPACE/atlas_runs/regional_monthly"
 DEFAULT_YEARS = (2003, 2022)
 
 
-def ledger_path(source):
-    return STORE / f"regional-{source}-ledger.json"
+def ledger_path(source, store=STORE):
+    return Path(store) / f"regional-{source}-ledger.json"
 
 
 def release_id(source):
@@ -143,7 +143,7 @@ def run(source, years=DEFAULT_YEARS, store=STORE, project=PROJECT, batch_size=25
     ledger["stored_rows"] = sum(y["rows"] for y in ledger["by_year"].values())
     ledger["complete"] = is_complete(ledger)
     ledger["basin_support"] = support_summary(expected)
-    path = ledger_path(source)
+    path = ledger_path(source, store)
     previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
     ledger = merge_ledger(previous, ledger)
     write_json(path, ledger)

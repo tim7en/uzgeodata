@@ -45,7 +45,12 @@ def execute(group, root=ROOT):
         now = datetime.now(timezone.utc)
         previous = f"{now.year - (now.month == 1):04d}-{12 if now.month == 1 else now.month - 1:02d}"
         target = min(latest, previous)
-        commands = [["PIPELINES/refresh_regional_record.py", "--extend", target, "--source", group["source"]]]
+        if all((root / p).exists() for p in group.get("full_requires", [])):
+            commands = [["PIPELINES/refresh_regional_record.py", "--extend", target, "--source", group["source"]]]
+        else:
+            # Temporary: without the observation store, extend Git's published record directly.
+            emit("progress", progress=1, message="Observation store not present: appending new months to the published record")
+            commands = [["PIPELINES/update_published_record.py", group["source"], "--through", target]]
     log_dir = root / "WORKSPACE/data-updates/logs"
     log_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")

@@ -42,10 +42,23 @@ local metadata and tables and does not acquire imagery.
 
 Choose **Manage update groups**. A row's **Update group** action updates all
 products in that source group; it never secretly launches one job per attribute.
-The panel shows required local inputs. Regional atlas updates require the full
-observation store and the BasinATLAS source geodatabase, which are intentionally
-absent from ordinary Git checkouts. Restore the evidence store from your data
-backup and place the source files at the documented paths before extending it.
+The panel shows required local inputs.
+
+Regional atlas updates (TerraClimate, ERA5-Land, MODIS snow) run in one of two modes:
+
+- **Full refresh**, when the observation store partitions
+  (`PUBLISHED/data/atlas/observations/time_kind=*`) and the BasinATLAS geodatabase
+  are present. New months go into the store and every product is rebuilt from it.
+- **Append to the published record** (temporary), on an ordinary Git checkout. The
+  last published month is read from `PUBLISHED/data/atlas/cube/`, only newer months
+  are extracted into a scratch store under `WORKSPACE/data-updates/stores/`, and they
+  are appended to `history/` and `cube/`. Basin outlines come from the tracked
+  `GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson`, which
+  yields the same geometry version (`reg-166479294ef8`) and identical values.
+  Climatologies, the basin API, the coverage ledger and the release are not rebuilt;
+  each updated index lists the run under `appended`. Once the store is restored,
+  the full refresh supersedes this.
+
 Do not recreate provenance by treating the public cube as the raw record.
 
 Authenticate Earth Engine in the configured Python environment and verify the

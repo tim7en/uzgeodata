@@ -122,8 +122,13 @@ def monthly_stack(source, year, transform, bands=None):
         projection = collection.first().select(band).projection()
         for month in MONTHS:
             start = ee.Date.fromYMD(year, month, 1)
-            image = (collection.select(band).filterDate(start, start.advance(1, "month"))
-                     .mean().multiply(scale).add(offset).rename(f"{band}_{month:02d}")
+            month_images = collection.select(band).filterDate(start, start.advance(1, "month"))
+            # An unpublished month has no images, and their mean has no bands, which
+            # fails the whole year; a fully masked band stores it as unobserved instead.
+            mean = ee.Image(ee.Algorithms.If(
+                month_images.size().gt(0), month_images.mean(),
+                ee.Image.constant(0).rename(band).updateMask(ee.Image.constant(0))))
+            image = (mean.multiply(scale).add(offset).rename(f"{band}_{month:02d}")
                      .setDefaultProjection(projection))
             stack.append(image.reduceResolution(ee.Reducer.mean(), maxPixels=1024)
                          .reproject(crs=CRS, crsTransform=transform))

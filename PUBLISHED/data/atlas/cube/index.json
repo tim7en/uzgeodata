@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-14T08:07:21.361+00:00",
-  "rows": 17689320,
+  "generated_at": "2026-09-14T19:21:27.981+00:00",
+  "rows": 17838220,
   "basins": 7445,
   "months": [
     "2003-01",
-    "2024-12"
+    "2026-08"
   ],
-  "bytes": 112971201,
+  "bytes": 113971581,
   "base": "/data/atlas/cube/",
   "files": {
     "aet_mm_s": {
@@ -23,7 +23,7 @@
     },
     "run_mm_s": {
       "path": "/data/atlas/cube/variable=run_mm_s/data_0.parquet",
-      "bytes": 13783638
+      "bytes": 14784018
     },
     "snw_pc_s": {
       "path": "/data/atlas/cube/variable=snw_pc_s/data_0.parquet",
@@ -79,7 +79,8 @@
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "why": "Published on the same grid and water balance as precipitation and potential evapotranspiration, so the three can be differenced without crossing models.",
         "fallback": null,
-        "kind": "flux"
+        "kind": "flux",
+        "observed_through": "2024-12"
       },
       "uz:pet-monthly-v1": {
         "id": "uz:pet-monthly-v1",
@@ -96,7 +97,8 @@
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "why": "Paired with actual evapotranspiration from one model, which is what makes their ratio a moisture index rather than a comparison of two conventions.",
         "fallback": null,
-        "kind": "flux"
+        "kind": "flux",
+        "observed_through": "2024-12"
       },
       "uz:pre-monthly-v1": {
         "id": "uz:pre-monthly-v1",
@@ -114,7 +116,8 @@
         "why": "Downscaled to about four kilometres, which matters where a level-12 basin sits in mountain terrain and a coarse cell would average a valley with a ridge.",
         "fallback": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
         "fallback_cost": "About eleven kilometres, so a headwater basin may hold a single cell.",
-        "kind": "flux"
+        "kind": "flux",
+        "observed_through": "2024-12"
       },
       "uz:run-monthly-v1": {
         "id": "uz:run-monthly-v1",
@@ -124,14 +127,15 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2024
+          2026
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
         "why": "TerraClimate publishes no runoff. This is a land-surface flux and is not discharge: it has not been routed and no gauge has been compared to it.",
         "fallback": null,
-        "kind": "flux"
+        "kind": "flux",
+        "observed_through": "2026-08"
       },
       "uz:snw-monthly-v1": {
         "id": "uz:snw-monthly-v1",
@@ -149,7 +153,8 @@
         "why": "Daily observations aggregated here, rather than the monthly product the atlas cites, so the count of contributing days is known per basin and month.",
         "fallback": null,
         "kind": "state",
-        "caution": "Its gaps grow towards the present at constant source coverage, so the series is published for inspection and withdrawn from trend analysis."
+        "caution": "Its gaps grow towards the present at constant source coverage, so the series is published for inspection and withdrawn from trend analysis.",
+        "observed_through": "2024-12"
       },
       "uz:soil-monthly-v1": {
         "id": "uz:soil-monthly-v1",
@@ -166,7 +171,8 @@
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "why": "A modelled column store in millimetres. It is published as what it is and not relabelled as the percentage the atlas attribute holds.",
         "fallback": null,
-        "kind": "state"
+        "kind": "state",
+        "observed_through": "2024-12"
       },
       "uz:tmn-monthly-v1": {
         "id": "uz:tmn-monthly-v1",
@@ -183,7 +189,8 @@
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "fallback": null,
         "kind": "state",
-        "why": "The month's daily minima, paired with the maxima from the same model."
+        "why": "The month's daily minima, paired with the maxima from the same model.",
+        "observed_through": "2024-12"
       },
       "uz:tmp-monthly-v1": {
         "id": "uz:tmp-monthly-v1",
@@ -201,7 +208,8 @@
         "why": "A true mean of hourly values. TerraClimate publishes only the daily extremes, and their midpoint is a different measurement that happens to carry the same name.",
         "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
         "fallback_cost": "Finer at about four kilometres, but a midpoint of extremes rather than a mean of hours, and about a degree warmer across this region.",
-        "kind": "state"
+        "kind": "state",
+        "observed_through": "2024-12"
       },
       "uz:tmx-monthly-v1": {
         "id": "uz:tmx-monthly-v1",
@@ -218,7 +226,8 @@
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
         "fallback": null,
         "kind": "state",
-        "why": "The month's daily maxima. ERA5-Land publishes no daily extreme on this grid."
+        "why": "The month's daily maxima. ERA5-Land publishes no daily extreme on this grid.",
+        "observed_through": "2024-12"
       }
     },
     "concepts": {
@@ -252,5 +261,24 @@
     "evidence": "This is a read path, not the record. It carries no revisions, run ids, coverage counts or missing reasons. Cite the store release named above, not this file.",
     "nulls": "A null is a month with no observation. It is never a zero, and nothing downstream may coalesce it into one.",
     "query": "Readable in place by anything that speaks Parquet. Over a host serving byte ranges, a browser can query it without downloading it."
-  }
+  },
+  "appended": [
+    {
+      "at": "2026-09-14T19:21:19.667+00:00",
+      "source": "era5_runoff",
+      "months": [
+        "2025-01",
+        "2026-08"
+      ],
+      "run_id": "regional-era5_runoff-20260914T191111106665Z",
+      "mode": "appended from Git's published record; observation store not present",
+      "scratch_store": "WORKSPACE/data-updates/stores/era5_runoff-20260914T191107Z",
+      "not_rebuilt": [
+        "climatologies",
+        "basin API",
+        "coverage ledger",
+        "release"
+      ]
+    }
+  ]
 }

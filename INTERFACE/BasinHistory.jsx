@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, ArrowUpRight, Download } from 'lucide-react';
 import { formatNumber } from './landingModel.js';
 import {
-  dateAt, extentOf, gapDrift, pathOf, segments, seriesNames, toCsv, yearRows,
+  dateAt, extentOf, extractedLength, gapDrift, pathOf, segments, seriesNames, toCsv, yearRows,
 } from './historyModel.js';
 
 const CHART = { width: 960, height: 190, pad: 34 };
@@ -118,7 +118,7 @@ export default function BasinHistory({ basin }) {
   const series = state.history.series[active];
   if (!series) return <p className="land-group-note">This basin carries no dated observation.</p>;
   const observed = series.observed_months;
-  const total = state.history.months;
+  const total = extractedLength(state.history, series);
   return <>
     <div className="land-sub-note">
       <div className="land-sub-counts">
@@ -169,7 +169,7 @@ export default function BasinHistory({ basin }) {
       </tr></thead>
       <tbody>{rows.map(row => <tr key={row.year} data-substitute-status={row.whole ? 'estimated' : 'empty'}>
         <th scope="row">{row.year}</th>
-        <td className={row.whole ? '' : 'land-sub-nocompare'}>{row.observed} of 12</td>
+        <td className={row.whole ? '' : 'land-sub-nocompare'}>{row.observed} of {row.months.length}</td>
         <td className="land-sub-num">{formatNumber(row.mean, 2)}</td>
         <td className="land-sub-num">{formatNumber(row.min, 2)}</td>
         <td className="land-sub-num">{formatNumber(row.max, 2)}</td>

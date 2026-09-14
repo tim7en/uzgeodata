@@ -124,3 +124,22 @@ test('state quantities never acquire an annual sum, even with all months present
     assert.equal(yearRows(record, 'pre_mm_s')[0].mean, 10);
   }
 });
+
+test('months after a series was last fetched are not counted as gaps', async () => {
+  const { extractedLength } = await import('../INTERFACE/historyModel.js');
+  const record = history({ years: [2003, 2026] });
+  const series = record.series.pre_mm_s;
+  series.values = series.values.map((value, index) => (index >= 22 * 12 ? null : value));
+  series.extracted_through = '2024-12';
+  assert.equal(extractedLength(record, series), 264);
+  const rows = yearRows(record, 'pre_mm_s');
+  assert.equal(rows.length, 22, 'unfetched years are not listed as empty years');
+  assert.equal(gapDrift(record, 'pre_mm_s'), null, 'padding does not raise a drift warning');
+
+  series.extracted_through = '2026-08';
+  series.values = series.values.map((value, index) => (index < 23 * 12 + 8 ? index : null));
+  const partial = yearRows(record, 'pre_mm_s').at(-1);
+  assert.equal(partial.year, 2026);
+  assert.equal(partial.months.length, 8);
+  assert.equal(partial.whole, false, 'a part-year is never totalled');
+});

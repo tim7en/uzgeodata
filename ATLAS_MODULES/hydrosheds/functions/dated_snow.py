@@ -43,7 +43,13 @@ def monthly_stack(year, transform):
         start = ee.Date.fromYMD(year, month, 1)
         flags = (collection.filterDate(start, start.advance(1, "month"))
                  .map(lambda image: image.updateMask(image.lte(VALID_MAX)).gte(SNOW_THRESHOLD)))
-        image = (flags.mean().multiply(100).rename(f"m{month:02d}")
+        # A month the provider has not published yet has no images, and the mean of none
+        # has no bands, which fails the whole year. A fully masked band records it as a
+        # month without an observation instead.
+        mean = ee.Image(ee.Algorithms.If(
+            flags.size().gt(0), flags.mean(),
+            ee.Image.constant(0).rename(BAND).updateMask(ee.Image.constant(0))))
+        image = (mean.multiply(100).rename(f"m{month:02d}")
                  .setDefaultProjection(projection))
         bands.append(image.reduceResolution(ee.Reducer.mean(), maxPixels=1024)
                      .reproject(crs=CRS, crsTransform=transform))

@@ -38,14 +38,23 @@ from PIPELINES.stage_pilot_observations import BASIN_LEVEL, STORE
 
 CHECKPOINTS = ROOT / "WORKSPACE/atlas_runs/regional_snow"
 LEDGER = STORE / "regional-snow-ledger.json"
+BASIN_EXPORT = ROOT / "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
 DEFAULT_YEARS = (2003, 2022)
 RETRIES = 3
 
 
 def load_frame():
-    """The full level-12 frame of both systems, in a stable order."""
+    """The full level-12 frame of both systems, in a stable order.
+
+    The BasinATLAS geodatabase is 4 GB and not in Git. Without it, the tracked export of
+    the same HydroATLAS v10 level-12 units stands in; geometry_version is computed from
+    the basins either way, so a different selection cannot pass as the same frame.
+    """
     import pyogrio
-    frame = pyogrio.read_dataframe(GDB, layer=LAYER, bbox=BBOX)
+    if GDB.exists():
+        frame = pyogrio.read_dataframe(GDB, layer=LAYER, bbox=BBOX)
+    else:
+        frame = pyogrio.read_dataframe(BASIN_EXPORT)
     frame = frame[frame.MAIN_BAS.astype("int64").isin(SYSTEMS)]
     return frame.sort_values("HYBAS_ID").reset_index(drop=True)
 
@@ -329,9 +338,10 @@ def run(batch_size=250, years=DEFAULT_YEARS, store=STORE, project=PROJECT, refre
                                                  "constant across the record; see source_images.",
     }
     ledger["source_images"] = {str(year): dated_snow.source_images(year) for year in span}
-    previous = json.loads(LEDGER.read_text(encoding="utf-8")) if LEDGER.exists() else None
+    ledger_file = Path(store) / LEDGER.name
+    previous = json.loads(ledger_file.read_text(encoding="utf-8")) if ledger_file.exists() else None
     ledger = merge_ledger(previous, ledger)
-    write_json(LEDGER, ledger)
+    write_json(ledger_file, ledger)
 
     observations.merge_table(store / "run.csv", [{
         "run_id": identifier, "started_at": ledger["started_at"], "finished_at": ledger["finished_at"],

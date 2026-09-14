@@ -8,6 +8,11 @@
       "source": "terraclimate",
       "interval_days": 30,
       "requires": [
+        "PUBLISHED/data/atlas/cube/index.json",
+        "PUBLISHED/data/atlas/history/index.json",
+        "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
+      ],
+      "full_requires": [
         "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
         "PUBLISHED/data/atlas/observations/time_kind=observation"
       ],
@@ -18,7 +23,7 @@
         "ee"
       ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "regional-terraclimate_temperature",
@@ -27,6 +32,11 @@
       "source": "terraclimate_temperature",
       "interval_days": 30,
       "requires": [
+        "PUBLISHED/data/atlas/cube/index.json",
+        "PUBLISHED/data/atlas/history/index.json",
+        "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
+      ],
+      "full_requires": [
         "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
         "PUBLISHED/data/atlas/observations/time_kind=observation"
       ],
@@ -37,7 +47,7 @@
         "ee"
       ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "regional-era5_temperature",
@@ -46,6 +56,11 @@
       "source": "era5_temperature",
       "interval_days": 30,
       "requires": [
+        "PUBLISHED/data/atlas/cube/index.json",
+        "PUBLISHED/data/atlas/history/index.json",
+        "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
+      ],
+      "full_requires": [
         "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
         "PUBLISHED/data/atlas/observations/time_kind=observation"
       ],
@@ -56,7 +71,7 @@
         "ee"
       ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "regional-era5_runoff",
@@ -65,6 +80,11 @@
       "source": "era5_runoff",
       "interval_days": 30,
       "requires": [
+        "PUBLISHED/data/atlas/cube/index.json",
+        "PUBLISHED/data/atlas/history/index.json",
+        "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
+      ],
+      "full_requires": [
         "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
         "PUBLISHED/data/atlas/observations/time_kind=observation"
       ],
@@ -75,7 +95,7 @@
         "ee"
       ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "regional-snow",
@@ -84,6 +104,11 @@
       "source": "snow",
       "interval_days": 30,
       "requires": [
+        "PUBLISHED/data/atlas/cube/index.json",
+        "PUBLISHED/data/atlas/history/index.json",
+        "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
+      ],
+      "full_requires": [
         "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
         "PUBLISHED/data/atlas/observations/time_kind=observation"
       ],
@@ -94,7 +119,7 @@
         "ee"
       ],
       "earth_engine": true,
-      "note": "Updates the source group, then rebuilds dependent atlas products and cuts a release. Restore the full observation store before extending it."
+      "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
     },
     {
       "id": "hydroclimate",

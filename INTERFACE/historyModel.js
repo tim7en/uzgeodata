@@ -18,6 +18,15 @@ export function seriesNames(history) {
   return Object.keys(history?.series || {}).sort();
 }
 
+// How many months of a series have been fetched. When one source is extended past
+// the others, the rest are null beyond their `extracted_through`: those months have
+// not been looked at yet, which is not the same as looked at and found empty.
+export function extractedLength(history, series) {
+  if (!series?.extracted_through) return series?.values.length || 0;
+  const [year, month] = series.extracted_through.split('-').map(Number);
+  return Math.max(0, Math.min(series.values.length, (year - history.years[0]) * 12 + month));
+}
+
 // One year of a series, with its own completeness. A mean over eight observed
 // months is a real number about a different thing from a mean over twelve, so the
 // count travels with it and the total is withheld unless the year is whole.
@@ -25,8 +34,9 @@ export function yearRows(history, name) {
   const series = history?.series?.[name];
   if (!series) return [];
   const rows = [];
-  for (let index = 0; index * 12 < series.values.length; index += 1) {
-    const months = series.values.slice(index * 12, index * 12 + 12);
+  const length = extractedLength(history, series);
+  for (let index = 0; index * 12 < length; index += 1) {
+    const months = series.values.slice(index * 12, Math.min(index * 12 + 12, length));
     const observed = months.filter(value => value != null);
     const year = history.years[0] + index;
     rows.push({
@@ -88,7 +98,7 @@ export function gapDrift(history, name) {
   const rows = yearRows(history, name);
   if (rows.length < 4) return null;
   const half = Math.floor(rows.length / 2);
-  const missing = rows.map(row => 12 - row.observed);
+  const missing = rows.map(row => row.months.length - row.observed);
   const early = missing.slice(0, half).reduce((a, b) => a + b, 0);
   const late = missing.slice(rows.length - half).reduce((a, b) => a + b, 0);
   if (!early && !late) return null;
