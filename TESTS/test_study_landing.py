@@ -54,11 +54,21 @@ def test_cards_have_real_images_and_distinct_destinations():
     cards=directory['studies']
     destinations={r['href'] for r in cards}
     assert len(destinations)==len(cards), 'two cards cannot share a destination'
-    # The router declares the paths it knows; a card pointing anywhere else
-    # would 200 with the wrong page instead of failing visibly.
+    # A destination has to resolve, and there are two ways it legitimately can: the
+    # React router declares it, or it is a standalone page that the build emits. The
+    # earlier form allowed only the first, which made adding a static case study look
+    # like a routing error. What must not happen is a card pointing at neither, because
+    # that 200s with the wrong page instead of failing visibly.
     router=(ROOT/'INTERFACE'/'CaseStudies.jsx').read_text(encoding='utf-8')
-    known=set(re.findall(r"'(/case-studies/[a-z-]+)'", router))
-    assert destinations<=known, f'{destinations-known} is not routed'
+    routed=set(re.findall(r"'(/case-studies/[a-z-]+)'", router))
+    for href in destinations:
+        if href in routed:
+            continue
+        page=ROOT/'INTERFACE'/href.lstrip('/')
+        assert href.endswith('.html') and page.exists(),             f'{href} is neither a declared route nor a page in INTERFACE'
+        # A standalone page has to be in the multi-page build, or it ships as a 404.
+        config=(ROOT/'vite.config.mjs').read_text(encoding='utf-8')
+        assert f"INTERFACE/{href.lstrip('/')}" in config,             f'{href} exists but is not registered in the Vite build'
     for card in cards:
         assert card['aim'] and card['image_alt']
         assert (ROOT/'PUBLISHED'/card['image'].lstrip('/')).exists()

@@ -124,6 +124,8 @@ def main():
                    c=[s.get('elevation_m',0) for s in sites],cmap=LinearSegmentedColormap.from_list('terrain',['#49bcd1','#8bd9bf','#ffd596']),s=65,edgecolors='#a7dbe7',linewidths=.4)
         ax.set_aspect(1/math.cos(math.radians(41)))
     preview(DATA/'regional-study-preview.svg',network)
+    flow=json.loads((ROOT/'PUBLISHED/data/water-flow/regional-water-flow-sensitivity.json')
+                    .read_text(encoding='utf-8'))
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -140,7 +142,20 @@ def main():
          'image_alt':'Actual meteorological station locations, coloured by terrain elevation.',
          'evidence_date':regional['generated_at'],'metric':len(regional['stations']),
          'metric_label':'Meteorological locations','detail':f"{regional['period']} · {len(regional['monthly']):,} station-month records",
-         'status':'Exploratory relationships'}]}
+         'status':'Exploratory relationships'},
+        # The water flow study is a standalone page rather than a React route, so its
+        # href leaves the /case-studies/ namespace. It still belongs in the directory:
+        # a case study nobody can reach from the case-study index is published only in
+        # the sense that the bytes are on a server.
+        {'id':'water-flow','href':'/water-flow.html','title':"Where the region's water goes",
+         'region':'AMU DARYA & SYR DARYA','aim':'Account for the region’s water from rainfall to the Aral, and mark every flow with how it is known.',
+         'image':'/data/water-flow/regional-water-flow-sensitivity.svg',
+         'image_alt':'Climatic surplus by year as bars, with the recorded diversion drawn flat across them; two years rise above it.',
+         'evidence_date':flow['generated_at'],
+         'metric':len(flow['observed']['stressed_years']),
+         'metric_label':'Years with a thin margin',
+         'detail':f"of 22 · {len(flow['observed']['exceeded_years'])} exceeded supply outright",
+         'status':'Water balance & sensitivity'}]}
     for card in payload['studies']:
         card['image_revision']=hashlib.sha256((ROOT/'PUBLISHED'/card['image'].lstrip('/')).read_bytes()).hexdigest()[:12]
     write_json(DATA/'study-directory.json',payload)
