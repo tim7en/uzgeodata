@@ -41,16 +41,21 @@ def cascade(report, out):
     H = top + len(rows) * row_h + 96
     peak = max(block["significant_uncorrected"] for _, block in rows) or 1
     scale = (W - left - 260) / peak
+    tested = [block for _, block in rows if block["significant_uncorrected"] > 0
+              or block.get("basins_tested", 0) > 0]
+    lost = [block for block in tested if block["significant_after_fdr"] == 0]
 
     parts = [f'<rect width="{W}" height="{H}" fill="#fdfdfc"/>',
              f'<text x="24" y="40" font-size="19" font-weight="650" fill="{INK}">'
              f'What the corrections do to "significant"</text>',
              f'<text x="24" y="63" font-size="12.5" fill="{MUTED}">'
-             f'Basins called significant at α=0.05, of 7,445 tested, for each of the nine '
-             f'variables in the record. Left to right: no correction, corrected for serial '
-             f'persistence, then controlled for false discovery across all basins.</text>',
+             f'Basins called significant at α=0.05, of 7,445 tested, for each variable in the '
+             f'study: {len(tested)} testable at level 12, plus the two ERA5-Land variables '
+             f'withheld as unresolved (their bars stay zero). Left to right: no correction, '
+             f'corrected for serial persistence, then controlled for false discovery across '
+             f'all basins.</text>',
              f'<text x="24" y="84" font-size="12.5" fill="{DOWN}">'
-             f'For four of the nine variables the third bar is zero.</text>']
+             f'For {len(lost)} of the {len(tested)} testable variables the third bar is zero.</text>']
 
     x = left
     for colour, label in ((RAW, "uncorrected"), (AUTO, "serial correlation corrected"),
