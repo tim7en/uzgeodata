@@ -54,7 +54,7 @@ def table_variables(root, table):
     return found or {table.get("measureColumn") or "relationship": {"first": None, "last": None, "rows": 0}}
 
 
-def build(root=ROOT):
+def build(root=ROOT, *, updates=None):
     root = Path(root)
     rows = []
     groups = read(root, "ATLAS_MODULES/update-groups.json").get("groups", [])
@@ -164,7 +164,8 @@ def build(root=ROOT):
                      note="Historical held-out evaluation. Re-running does not extend the gauge record or establish forecasting skill.",
                      evidence="/data/atlas/models/pskem-discharge.json"))
     # Group success dates survive inventory rebuilds and remain separate from file mtimes.
-    updates = read(root, "PUBLISHED/data/variable-updates.json")
+    if updates is None:
+        updates = read(root, "PUBLISHED/data/variable-updates.json")
     for row in rows:
         updated = updates.get(row.get("group_id"))
         if updated:

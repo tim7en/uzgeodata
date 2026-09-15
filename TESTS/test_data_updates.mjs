@@ -70,3 +70,20 @@ test('another server cannot own the same update workspace', async t => {
   const second = new DataUpdates({ root: service.root, directory: service.directory, groups: service.groups });
   await assert.rejects(second.init({ timer: false }), /Another admin update worker/);
 });
+
+test('regional readiness reports the actual publication scope', async t => {
+  const service = await fixture(t);
+  service.groups[0] = { id: 'rain', kind: 'regional', full_requires: ['store'], requires: [] };
+  assert.equal((await service.snapshot()).groups[0].mode, 'published-append');
+  await fs.mkdir(path.join(service.root, 'store'));
+  assert.equal((await service.snapshot()).groups[0].mode, 'full-refresh');
+});
+
+test('an enabled schedule can be disabled after its inputs disappear', async t => {
+  const service = await fixture(t);
+  await service.schedule('rain', 1);
+  service.groups[0].requires = ['missing'];
+  await assert.rejects(service.schedule('rain', 7), /Required local inputs/);
+  await service.schedule('rain', 0);
+  assert.equal(service.state.schedules.rain.next_run, null);
+});

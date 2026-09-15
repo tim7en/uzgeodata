@@ -43,7 +43,10 @@ local metadata and tables and does not acquire imagery.
 
 Choose **Manage update groups**. A row's **Update group** action updates all
 products in that source group; it never secretly launches one job per attribute.
-The panel shows required local inputs.
+The panel shows required local inputs and the selected regional refresh mode.
+Input readiness does not verify Python dependencies or provider credentials; those
+are checked when execution starts. An existing schedule can be switched off even
+if its inputs have become unavailable.
 
 Regional atlas updates (TerraClimate, ERA5-Land, MODIS snow) run in one of two modes:
 
@@ -70,7 +73,10 @@ local geospatial inputs.
 
 Jobs show queued, running, succeeded, failed or interrupted states and a separate
 execution progress bar. Detailed logs remain in `WORKSPACE/data-updates/logs/`.
-Failed jobs retain their error, and source freshness is not advanced for them.
+Failed jobs retain their error. Success timestamps are saved only after pipeline
+steps and inventory generation succeed. This does not roll back pipeline outputs:
+a later failure may leave earlier files changed. The inventory/timestamp pair is
+restored on ordinary write errors, but is not a crash-atomic multi-file transaction.
 Review interrupted extraction checkpoints before retrying. Avoid running manual
 extraction commands against the same files while the admin worker is active.
 

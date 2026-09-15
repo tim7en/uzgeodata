@@ -1,6 +1,6 @@
 # UzGeoData architecture
 
-Updated 14 September 2026. This is the project-wide architecture; the
+Updated 15 September 2026. This is the project-wide architecture; the
 [hydroclimate plan](../HYDROCLIMATE_REFACTOR_PLAN.md) describes a research programme
 within it. Implementation status is distinguished from intended capabilities.
 
@@ -55,9 +55,9 @@ code edit each year.
 The cube is an efficient read projection of layer 2, not its complete evidence
 record. History JSON and the cube originate from completed runs. The public
 library can read the cube without Earth Engine credentials; detailed record
-evidence requires the observation store. The current public observation snapshot
-covers 2003–2024; the inventory must show that period separately from its 2026
-processing date.
+evidence requires the observation store. The tracked history has calendar positions for 2003–2026, including an ERA5
+runoff append through August 2026. Other variables retain their own coverage;
+the inventory must show observed periods separately from processing dates.
 
 The ontology supplies vocabulary, dataset relationships and declarations of
 measured geography. It does not yet turn an arbitrary research question into an
@@ -114,7 +114,7 @@ Additional groups cover existing hydroclimate, land-cover and Pskem model pipeli
 Products without an approved group expose metadata and existing maintenance
 instructions, not a nonfunctional “Update” button.
 
-The authenticated Node service persists a serial job queue and per-group schedules
+The localhost-only Node service persists a serial job queue and per-group schedules
 in `WORKSPACE/data-updates/state.json`. It accepts group IDs, never shell text.
 Duplicate active requests reuse the same job. Input prerequisites are checked
 before queuing; the Python worker additionally checks dependencies and provider

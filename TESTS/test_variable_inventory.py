@@ -65,3 +65,49 @@ def test_release_coverage_can_extend_without_changing_source_code():
     assert variables.VARIABLES['uz:pre-monthly-v1']['coverage'] == [2003, 2024]
     with pytest.raises(ValueError, match='missing from the cube'):
         variables.registry(coverage={})
+
+
+def test_inventory_build_failure_does_not_publish_success(tmp_path, monkeypatch):
+    write(tmp_path, 'PUBLISHED/data/variable-inventory.json', {'rows': []})
+    write(tmp_path, 'PUBLISHED/data/variable-updates.json', {'old': {'finished_at': '2024-01-01'}})
+    monkeypatch.setattr(update, 'preflight', lambda *args: None)
+    monkeypatch.setattr(update.subprocess, 'run', lambda *args, **kwargs: type('Result', (), {'returncode': 0})())
+    def fail(*args, **kwargs):
+        raise RuntimeError('Invalid inventory')
+    monkeypatch.setattr(inventory, 'build', fail)
+    with pytest.raises(RuntimeError, match='Invalid inventory'):
+        update.execute({'id': 'test', 'kind': 'commands', 'commands': [['ok.py']]}, tmp_path)
+    assert inventory.read(tmp_path, 'PUBLISHED/data/variable-inventory.json') == {'rows': []}
+    assert inventory.read(tmp_path, 'PUBLISHED/data/variable-updates.json') == {'old': {'finished_at': '2024-01-01'}}
+
+
+def test_successful_group_persists_timestamp_after_build(tmp_path, monkeypatch):
+    write(tmp_path, 'PUBLISHED/data/variable-inventory.json', {'rows': []})
+    monkeypatch.setattr(update, 'preflight', lambda *args: None)
+    monkeypatch.setattr(update.subprocess, 'run', lambda *args, **kwargs: type('Result', (), {'returncode': 0})())
+    def build(root, *, updates):
+        assert not (root / 'PUBLISHED/data/variable-updates.json').exists()
+        return {'rows': [], 'checked_updates': updates}
+    monkeypatch.setattr(inventory, 'build', build)
+    update.execute({'id': 'test', 'kind': 'commands', 'commands': [['ok.py']]}, tmp_path)
+    updates = inventory.read(tmp_path, 'PUBLISHED/data/variable-updates.json')
+    assert updates['test']['finished_at']
+    assert inventory.read(tmp_path, 'PUBLISHED/data/variable-inventory.json')['checked_updates'] == updates
+
+
+def test_success_metadata_is_restored_if_second_file_commit_fails(tmp_path, monkeypatch):
+    before = {'rows': ['previous']}
+    write(tmp_path, 'PUBLISHED/data/variable-inventory.json', before)
+    monkeypatch.setattr(update, 'preflight', lambda *args: None)
+    monkeypatch.setattr(inventory, 'build', lambda *args, **kwargs: {'rows': ['new']})
+    replace = Path.replace
+    def fail_timestamp_commit(path, target):
+        if path.name == 'variable-updates.tmp':
+            raise OSError('Write failed')
+        return replace(path, target)
+    monkeypatch.setattr(Path, 'replace', fail_timestamp_commit)
+    with pytest.raises(OSError, match='Write failed'):
+        update.execute({'id': 'test', 'kind': 'commands', 'commands': []}, tmp_path)
+    assert inventory.read(tmp_path, 'PUBLISHED/data/variable-inventory.json') == before
+    assert not (tmp_path / 'PUBLISHED/data/variable-updates.json').exists()
+    assert not list((tmp_path / 'PUBLISHED/data').glob('*.tmp'))

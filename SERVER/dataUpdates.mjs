@@ -77,7 +77,10 @@ export class DataUpdates {
     for (const relative of group.requires || []) {
       try { await fs.access(path.join(this.root, relative)); } catch { missing.push(relative); }
     }
-    return { ready: missing.length === 0, reason: missing.length ? `Required local inputs are missing: ${missing.join(', ')}. See the admin setup guide.` : null };
+    const full = group.kind === 'regional' && (group.full_requires || []).length > 0
+      && (await Promise.all(group.full_requires.map(relative => fs.access(path.join(this.root, relative)).then(() => true, () => false)))).every(Boolean);
+    const mode = group.kind === 'regional' ? (full ? 'full-refresh' : 'published-append') : 'pipeline';
+    return { mode, ready: missing.length === 0, reason: missing.length ? `Required local inputs are missing: ${missing.join(', ')}. See the admin setup guide.` : null };
   }
   async snapshot() {
     return { jobs: this.state.jobs, schedules: this.state.schedules,

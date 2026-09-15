@@ -5,7 +5,8 @@
 UzGeoData is a public-preview basin atlas for the **Amu Darya and Syr Darya**
 systems. Researchers can explore **7,445 level-12 basins**, read the 281 published
 HydroATLAS attributes beside independent open-data estimates, and download
-**2003–2024 monthly records** with source and method provenance.
+**monthly records from 2003 onward** with source and method provenance
+(coverage varies by variable).
 
 [Open the public preview](https://uzgeodata.uz/) ·
 [Deployment status](https://github.com/tim7en/uzgeodata/actions/workflows/pages.yml) ·
@@ -37,15 +38,112 @@ catchment above a basin and must not be added across basins.
 | Basin map | Amu Darya and Syr Darya, across national boundaries |
 | Published attributes | 281 HydroATLAS attribute definitions |
 | Independent estimates | Coverage varies by attribute and basin; missing estimates stay explicit |
-| Monthly record | 264 monthly positions per variable, 2003–2024, completed runs only |
+| Monthly record | 288 calendar positions, 2003–2026; actual non-null coverage varies by variable |
 | Downloads | Basin JSON, shared catalogue, monthly CSV and provenance metadata |
-| Query cube | 17.7M rows as partitioned Parquet, readable over HTTP byte ranges |
+| Query cube | 17.8M rows as partitioned Parquet, readable over HTTP byte ranges |
 | Derived products | Normals, anomalies, seasonal figures, trends, water balance, SPI |
 | Reading support | About, source reuse terms, citation, five-minute guide and issue reporting |
 
 The saved snapshot includes snow, precipitation, evapotranspiration, soil moisture,
 runoff, and minimum, mean, and maximum temperature. See the deployed `release.json` and history index for the actual snapshot.
+The tracked September 2026 snapshot includes an ERA5 runoff append through August
+2026; that does not extend every variable or rebuild the release. Calendar positions
+include nulls and must not be read as observed-month counts.
 The roadmap is future research scope, not a promise of completed features.
+
+## What the platform offers
+
+The strongest current offering is a connected basin research workflow: find a
+basin, compare environmental attributes, inspect dated records, download usable
+tables, and trace the source and method behind a result.
+
+| Offering | Available now | Boundary |
+| --- | --- | --- |
+| Research-ready data | Basin attributes, monthly CSV/JSON and Parquet, units and source metadata | These are curated projections and estimates; the full raw evidence store and source deliveries are not all shipped publicly. |
+| Research | Worked case studies, analytical recipes and model evaluations, including negative results | Evaluation is specific to its basin, inputs and period; it does not establish general forecasting skill. |
+| Ontology | Typed concepts, datasets, assertions, provenance and registered relationship tables; basin and administrative geography remain distinct | A catalogue relationship does not itself compute a new spatial statistic. |
+| Maintenance | Public inventory plus local grouped updates, schedules, progress and failure history | Acquisition needs the local worker, dependencies and source access; deployment is separate. |
+| Machine assistance | TF-IDF similarity proposals, confidence calibration, validation and curator review | This is an existing proposal workflow, not an autonomous research agent or an LLM chat service. |
+
+## Architecture: how the parts fit
+
+```mermaid
+flowchart TD
+  Sources[Provider data and source deliveries] --> Pipelines[Reviewed ingestion recipes]
+  References[Source editions] --> L1[1. Reference atlas]
+  Pipelines --> L2[2. Dated observations and provenance]
+  L2 --> L3[3. Analytical products]
+  L1 --> L4[4. Evaluated models]
+  L2 --> L4
+  L3 --> L4
+  Registry[Variable registry and typed ontology] --> Pipelines
+  Admin[Local admin queue and schedules] --> Pipelines
+  L1 --> Public[Public data projections]
+  L2 --> Public
+  L3 --> Public
+  L4 --> Public
+  Public --> Review[Review, checks and static build]
+  Review --> Site[Public map, downloads and query library]
+  Public --> Inventory[Freshness and coverage inventory]
+  Inventory --> Admin
+```
+
+`SERVER/dataUpdates.mjs` orchestrates work; Python in `PIPELINES/` performs it.
+`ATLAS_MODULES/core/` defines observation and analysis contracts. `ONTOLOGY/`
+provides semantic identity and relationships across those layers. `PUBLISHED/`
+holds public outputs and `INTERFACE/` presents them. The diagram shows the full
+path; the temporary append mode below bypasses the full-store rebuild.
+
+### How a data update happens
+
+1. Run `npm run admin` and open `http://localhost:5173/admin.html` after the
+   [one-time Python/provider setup](docs/ADMIN.md). Local update controls require
+   no sign-in. The public static page displays the saved inventory only.
+2. Choose a registered **update group** or enable its daily, weekly or 30-day
+   schedule. Related variables update together. Only allowlisted recipes run;
+   duplicate active requests share one job and groups execute serially.
+3. The server checks local inputs; the Python worker checks dependencies and
+   Earth Engine access. For regional sources it queries availability and caps
+   acquisition at the last completed month.
+4. With the observation store and BasinATLAS geodatabase, regional updates run
+   the full refresh. Without them, the temporary fallback extracts newer months
+   into a scratch store and appends **history and cube only**. Climatologies,
+   basin API, coverage ledger and release remain unchanged. The admin panel
+   identifies which mode the available inputs support.
+5. Successful pipeline steps are followed by inventory generation, then saved
+   success timestamps. Failures retain their status and private logs. Pipeline
+   outputs are not transactional: a failed later step can leave earlier outputs
+   changed, so inspect them before retrying or publishing.
+6. Review coverage, missingness, source/method metadata and the Git diff; run
+   tests and `npm run build:launch`; commit reviewed outputs and deploy through
+   the Pages workflow. An update job never publishes the live website by itself.
+
+Schedules persist in `WORKSPACE/data-updates/state.json` and run only while the
+server is online. Disabling a schedule stops future runs, not an active job.
+“Last updated” measures processing freshness; “data covers through” measures the
+observation period. A successful check does not imply new observations exist.
+The legacy authenticated dataset upload API stores files separately; an upload
+is **not** automatically a registered variable, observation or public release.
+
+### Scaling the ontology and adding AI
+
+Extend the existing contracts: register a concept and product, define units,
+spatial support, source and method, add a validated ingestion recipe, map it to an
+update group, and verify inventory coverage. Large measured relationships stay
+in typed tables rather than becoming millions of manually curated assertions.
+
+The existing `ontology:propose` and `ontology:review` commands support machine
+suggestions and review; see [the ontology workflow](ONTOLOGY/README.md). A useful
+next AI layer would resolve a question into known concepts, geography and periods,
+check coverage, call approved query/product functions, and return citations and
+missing-data explanations. Better embeddings can improve candidate matching.
+Neither proposals nor generated explanations should invent observations, change
+units, or create measured geographical relationships.
+
+Priorities for that expansion are durable release snapshots and evidence retention,
+a shared request/coverage interface, then one end-to-end question-to-analysis
+workflow with evaluated answers. These are future capabilities; the current
+platform already supplies the data, contracts and research examples to build on.
 
 ## Run the static preview
 
@@ -124,12 +222,12 @@ data.series("4121289400", "precipitation", start="2023-01")
 data.spi("4121289400", window=3)                   # gamma-fitted, not a z-score
 ```
 
-**Always know which data answered.** Every dataset resolves to a named release and
-records it. Pin `uz.open(release="uz-...")` to keep an analysis reproducible, or omit
-it to follow the pointer — but print `data.release_id` in anything you intend to
-reproduce. Releases are immutable and name every file with its SHA-256, so a rebuild
-underneath one is detectable rather than silent, and `data.verify()` checks a local
-copy against the manifest.
+**Record which data answered.** Every dataset resolves to a named release.
+Print `data.release_id` with results and retain the input files. Manifests contain
+SHA-256 hashes and `data.verify()` checks a local copy, but current manifests name
+mutable artifact paths: pinning a release ID alone does **not** preserve old bytes.
+Immutable snapshots and verification of the bytes served by the static build are
+still required for durable reproduction. See [integrity boundaries](docs/ARCHITECTURE.md#deployment-and-integrity-boundaries).
 
 **Usable is not defensible.** A dataset backed by the cube answers questions and
 refuses to supply evidence:
@@ -217,7 +315,7 @@ Keep credentials, raw source deliveries and active download checkpoints out of P
 Read the [four-layer architecture](docs/ARCHITECTURE.md) and
 [admin data operations guide](docs/ADMIN.md). The variable inventory at
 `/admin.html` shows freshness, coverage dates and update options across the
-registered products. `npm run admin` starts the authenticated local update
+registered products. `npm run admin` starts the localhost-only update
 server without triggering the legacy publication hooks; the static public site
 shows the saved inventory only.
 

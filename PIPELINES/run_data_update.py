@@ -67,15 +67,30 @@ def execute(group, root=ROOT):
     finished = datetime.now(timezone.utc).isoformat()
     updates = inventory.read(root, "PUBLISHED/data/variable-updates.json")
     updates[group["id"]] = {"finished_at": finished}
-    update_file = root / "PUBLISHED/data/variable-updates.json"
-    temporary = update_file.with_suffix(".tmp")
-    temporary.write_text(json.dumps(updates, indent=2) + "\n", encoding="utf-8")
-    temporary.replace(update_file)
-    report = inventory.build(root)
-    out = root / "PUBLISHED/data/variable-inventory.json"
-    tmp = out.with_suffix(".tmp")
-    tmp.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    tmp.replace(out)
+    # Build before publishing either success marker. An inventory failure must not
+    # leave a timestamp that a later inventory rebuild mistakes for success.
+    report = inventory.build(root, updates=updates)
+    outputs = {
+        root / "PUBLISHED/data/variable-inventory.json": report,
+        root / "PUBLISHED/data/variable-updates.json": updates,
+    }
+    previous = {path: path.read_bytes() if path.exists() else None for path in outputs}
+    try:
+        for path, payload in outputs.items():
+            temporary = path.with_suffix(".tmp")
+            temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        for path in outputs:
+            path.with_suffix(".tmp").replace(path)
+    except Exception:
+        for path, content in previous.items():
+            if content is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_bytes(content)
+        raise
+    finally:
+        for path in outputs:
+            path.with_suffix(".tmp").unlink(missing_ok=True)
 
 
 def main():
