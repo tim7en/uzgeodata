@@ -173,8 +173,10 @@ running those hooks during an active download.
 
 The homepage remains the interactive basin map. `/project.html` explains the project,
 scope, and research direction with an accordion sidebar; `/examples.html` provides
-three worked research workflows and direct data downloads. About, guide, and
-projects pages cover evidence, reuse, instructions, and future development.
+three worked research workflows and direct data downloads. `/research.html` publishes
+the research registry: the papers and datasets behind each of the four layers, with
+their verification and validation status (`PUBLISHED/data/research/publications.json`).
+About, guide, and projects pages cover evidence, reuse, instructions, and future development.
 
 The map no longer automatically fits the full region when data loads. It remembers
 the last location and zoom when browser storage is available. **Reset view** returns

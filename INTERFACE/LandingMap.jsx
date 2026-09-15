@@ -35,6 +35,7 @@ const DEEPER = [
   { href: '/dynamic-atlas.html', label: 'Dynamic HydroATLAS', note: 'Earth Engine results, resolution and updates' },
   { href: '/roadmap.html', label: 'Atlas roadmap', note: 'Methods, reproduction and basin history' },
   { href: '/case-studies.html', label: 'Case studies', note: 'Runoff models and station–satellite work' },
+  { href: '/research.html', label: 'Research foundations', note: 'Published research bound to layers 1–4' },
 ];
 
 // Public reading support is available without loading the map or a data bundle.
@@ -767,7 +768,7 @@ export default function LandingMap() {
         <p>Water systems cross borders.<br/>Understanding them should, too.</p>
       </div>
       <div><strong>Explore</strong><a href="/">Basin explorer</a><a href="/examples.html">Practical examples</a><a href="/case-studies.html">Research case studies</a></div>
-      <div><strong>Understand</strong><a href="/about.html#citation">Citation &amp; reuse</a><a href="/guide.html">Guide &amp; data access</a><a href="/roadmap.html">Research roadmap</a></div>
+      <div><strong>Understand</strong><a href="/research.html">Research foundations</a><a href="/about.html#citation">Citation &amp; reuse</a><a href="/guide.html">Guide &amp; data access</a><a href="/roadmap.html">Research roadmap</a></div>
       <div><strong>Contribute</strong><a href="https://github.com/tim7en/uzgeodata">Project on GitHub &#8599;</a><a href="https://github.com/tim7en/uzgeodata/issues">Report an issue &#8599;</a><a href="/release.json">Release metadata</a></div>
       <p className="footer-note">Independent research project &middot; Public preview &middot; Amu Darya &amp; Syr Darya</p>
     </footer>

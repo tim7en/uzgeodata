@@ -44,6 +44,7 @@ export default defineConfig({
         about: here('./INTERFACE/about.html'),
         guide: here('./INTERFACE/guide.html'),
         projects: here('./INTERFACE/projects.html'),
+        research: here('./INTERFACE/research.html'),
       },
     },
   },
