@@ -645,9 +645,6 @@ export default function LandingMap() {
           ? ` · selection held at level ${selected.properties.basin_level}` : ''}
       </p>}
       {basins && !selected && <div className="land-intro">
-        <p className="land-onboarding"><strong>Explore a basin in five minutes.</strong> Zoom in to level 12,
-          select a basin, then open Atlas attributes to compare estimates and download its monthly record.
-          <a href="/guide.html"> Step-by-step guide</a></p>
         <label className="land-search">
           <Search size={13}/>
           <input aria-label="Search basins by HYBAS or PFAF identifier" value={query} onChange={event => setQuery(event.target.value)} placeholder="HYBAS or PFAF id"/>
@@ -666,6 +663,13 @@ export default function LandingMap() {
             <small>{formatNumber(entry.units)} basins · {formatNumber(entry.areaKm2)} km²</small>
           </span>
         </button>)}</div>
+        <details className="land-group land-howto">
+          <summary>Explore a basin in five minutes</summary>
+          <div className="land-group-body">
+            <p>Zoom in to level 12, select a basin, then open Atlas attributes to compare
+              estimates and download its monthly record. <a href="/guide.html">Step-by-step guide</a></p>
+          </div>
+        </details>
       </div>}
 
       {selected && <div className="land-detail" style={{ '--system': systemMeta(selected.properties.system_id).color }}>
@@ -688,18 +692,22 @@ export default function LandingMap() {
       </div>}
 
       <nav className="land-deeper">
-        <span><Layers size={12}/> Evidence in practice</span>
-        {DEEPER.map(item => <a key={item.href} href={item.href}>
-          <span><strong>{item.label}</strong><small>{item.note}</small></span>
-          <ArrowUpRight size={13}/>
-        </a>)}
+        <details className="land-group">
+          <summary><Layers size={12}/> Research &amp; case studies</summary>
+          {DEEPER.map(item => <a key={item.href} href={item.href}>
+            <span><strong>{item.label}</strong><small>{item.note}</small></span>
+            <ArrowUpRight size={13}/>
+          </a>)}
+        </details>
+        <details className="land-group">
+          <summary><BookOpen size={12}/> About the project</summary>
+          {PROGRAMME.map(item => <a key={item.id} href={item.href}>
+            <span><strong>{item.label}</strong><small>{item.note}</small></span>
+            <ArrowUpRight size={13}/>
+          </a>)}
+          <a href="/admin.html"><span><strong>Data freshness</strong><small>Variable inventory & update status</small></span><ArrowUpRight size={13}/></a>
+        </details>
         <p className="land-hint">Public preview · Independent estimates; reproduction has not been established.</p>
-        <span><BookOpen size={12}/> About the project</span>
-        {PROGRAMME.map(item => <a key={item.id} href={item.href}>
-          <span><strong>{item.label}</strong><small>{item.note}</small></span>
-          <ArrowUpRight size={13}/>
-        </a>)}
-        <a href="/admin.html"><span><strong>Data freshness</strong><small>Variable inventory & update status</small></span><ArrowUpRight size={13}/></a>
       </nav>
     </aside>
 
