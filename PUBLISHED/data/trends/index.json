@@ -1,6 +1,7 @@
 {
-  "generated_at": "2026-09-15T12:24:34.112+00:00",
+  "generated_at": "2026-09-15T12:32:33.240+00:00",
   "title": "Hydroclimatic trends across the Amu Darya and Syr Darya",
+  "basin_level": "12",
   "alpha": 0.05,
   "method": {
     "test": "Mann-Kendall with continuity correction",
@@ -110,15 +111,15 @@
       "basins": 6016,
       "uncorrected": {
         "significant increase": 0,
-        "increase": 562,
-        "stable": 1,
+        "increase": 563,
+        "stable": 0,
         "decrease": 5214,
         "significant decrease": 239
       },
       "autocorrelation_corrected": {
         "significant increase": 0,
-        "increase": 562,
-        "stable": 1,
+        "increase": 563,
+        "stable": 0,
         "decrease": 5217,
         "significant decrease": 236
       },
@@ -187,8 +188,8 @@
         "significant increase": 12,
         "increase": 825,
         "stable": 58,
-        "decrease": 5182,
-        "significant decrease": 1185
+        "decrease": 5183,
+        "significant decrease": 1184
       },
       "fdr_controlled": {
         "significant increase": 2,
@@ -198,7 +199,7 @@
         "significant decrease": 37
       },
       "significant_uncorrected": 1220,
-      "significant_corrected": 1197,
+      "significant_corrected": 1196,
       "significant_after_fdr": 39,
       "caution": "Its gaps grow towards the present at constant source coverage, so the series is published for inspection and withdrawn from trend analysis.",
       "native_resolution_m": 500,
@@ -214,26 +215,26 @@
         "significant increase": 0,
         "increase": 175,
         "stable": 1,
-        "decrease": 2371,
-        "significant decrease": 3469
+        "decrease": 2370,
+        "significant decrease": 3470
       },
       "autocorrelation_corrected": {
         "significant increase": 0,
         "increase": 175,
         "stable": 1,
-        "decrease": 2405,
-        "significant decrease": 3435
+        "decrease": 2404,
+        "significant decrease": 3436
       },
       "fdr_controlled": {
         "significant increase": 0,
         "increase": 175,
         "stable": 1,
-        "decrease": 3052,
-        "significant decrease": 2788
+        "decrease": 3053,
+        "significant decrease": 2787
       },
-      "significant_uncorrected": 3469,
-      "significant_corrected": 3435,
-      "significant_after_fdr": 2788,
+      "significant_uncorrected": 3470,
+      "significant_corrected": 3436,
+      "significant_after_fdr": 2787,
       "caution": null,
       "native_resolution_m": 4638,
       "source_cell_km2": 21.5,
@@ -252,22 +253,22 @@
         "significant decrease": 0
       },
       "autocorrelation_corrected": {
-        "significant increase": 2467,
-        "increase": 3136,
+        "significant increase": 2468,
+        "increase": 3135,
         "stable": 0,
         "decrease": 413,
         "significant decrease": 0
       },
       "fdr_controlled": {
-        "significant increase": 1618,
-        "increase": 3985,
+        "significant increase": 1620,
+        "increase": 3983,
         "stable": 0,
         "decrease": 413,
         "significant decrease": 0
       },
       "significant_uncorrected": 2473,
-      "significant_corrected": 2467,
-      "significant_after_fdr": 1618,
+      "significant_corrected": 2468,
+      "significant_after_fdr": 1620,
       "caution": null,
       "native_resolution_m": 4638,
       "source_cell_km2": 21.5,
@@ -2153,8 +2154,8 @@
       "land_cover": "mixed or natural",
       "basins": 365,
       "significant_increase": 0,
-      "significant_decrease": 239,
-      "not_significant": 126,
+      "significant_decrease": 238,
+      "not_significant": 127,
       "median_slope": -0.250257
     },
     {
@@ -2464,9 +2465,9 @@
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
       "basins": 144,
-      "significant_increase": 50,
+      "significant_increase": 52,
       "significant_decrease": 0,
-      "not_significant": 94,
+      "not_significant": 92,
       "median_slope": 0.067886
     },
     {
@@ -3276,8 +3277,8 @@
     },
     "headline": "Controlling for multiple testing changes the answer for most variables. Of nine, only soil moisture and minimum temperature retain a substantial number of significant basins once false discovery is controlled across 7,445 simultaneous tests.",
     "survives_correction": {
-      "soil moisture": 2788,
-      "minimum temperature": 1618,
+      "soil moisture": 2787,
+      "minimum temperature": 1620,
       "runoff": 0
     },
     "does_not_survive": {

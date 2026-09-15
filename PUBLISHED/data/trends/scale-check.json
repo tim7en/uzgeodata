@@ -1,0 +1,211 @@
+{
+  "generated_at": "2026-09-15T12:33:26.367+00:00",
+  "title": "Does the answer depend on the size of the unit?",
+  "scales": {
+    "level12": {
+      "units": 7445,
+      "median_area_km2": 136,
+      "terraclimate_cells_per_unit": 6.03,
+      "era5_cells_per_unit": 1.05
+    },
+    "level7": {
+      "units": 438,
+      "median_area_km2": 1510,
+      "terraclimate_cells_per_unit": 70.2,
+      "era5_cells_per_unit": 12.2
+    }
+  },
+  "threshold": 0.05,
+  "variables": [
+    {
+      "variable": "uz:aet-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 50,
+        "share": 0.0083,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
+      "variable": "uz:pet-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
+      "variable": "uz:pre-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
+      "variable": "uz:run-monthly-v1",
+      "native_resolution_m": 11132,
+      "level12": {
+        "tested": 0,
+        "significant": 0,
+        "share": null,
+        "median_source_cells": null,
+        "withheld_unresolved": 7445
+      },
+      "level7": {
+        "tested": 364,
+        "significant": 2,
+        "share": 0.0055,
+        "median_source_cells": 15.5,
+        "withheld_unresolved": 74
+      },
+      "verdict": "one scale only",
+      "note": "Not testable at level 12: the basin is smaller than the source cell, so only the coarser scale carries a result."
+    },
+    {
+      "variable": "uz:snw-monthly-v1",
+      "native_resolution_m": 500,
+      "level12": {
+        "tested": 7262,
+        "significant": 39,
+        "share": 0.0054,
+        "median_source_cells": 545.8,
+        "withheld_unresolved": 47
+      },
+      "level7": {
+        "tested": 414,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 5840.2,
+        "withheld_unresolved": 0
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
+      "variable": "uz:soil-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 2787,
+        "share": 0.4633,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 230,
+        "share": 0.5583,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
+      "variable": "uz:tmn-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 1620,
+        "share": 0.2693,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 113,
+        "share": 0.2743,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
+      "variable": "uz:tmp-monthly-v1",
+      "native_resolution_m": 11132,
+      "level12": {
+        "tested": 0,
+        "significant": 0,
+        "share": null,
+        "median_source_cells": null,
+        "withheld_unresolved": 7445
+      },
+      "level7": {
+        "tested": 364,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 15.5,
+        "withheld_unresolved": 74
+      },
+      "verdict": "one scale only",
+      "note": "Not testable at level 12: the basin is smaller than the source cell, so only the coarser scale carries a result."
+    },
+    {
+      "variable": "uz:tmx-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    }
+  ],
+  "summary": {
+    "consistent": 7,
+    "diverging": 0,
+    "one_scale_only": 2
+  },
+  "reading": {
+    "what_this_tests": "Whether a surviving signal is a property of the record or of the polygons it was averaged over. Unit area differs by an order of magnitude between the two scales, and the number of simultaneous tests by a factor of seventeen.",
+    "what_it_cannot_do": "Agreement across scales is not independent confirmation. Both scales read the same underlying grids, so a bias in the source product appears identically in both. This tests the aggregation, not the data.",
+    "era5": "ERA5-Land is analysable only at level 7, where it holds about twelve cells per unit. Analysed there, neither runoff nor mean temperature retains a meaningful share of significant units -- which is a result, and one the level-12 analysis could not have produced honestly."
+  }
+}

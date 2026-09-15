@@ -67,6 +67,56 @@ DOMINANT = 40.0
 MINIMUM_SOURCE_CELLS = 4
 
 
+def hierarchy(path=HYDRO / "basin-hierarchy.csv"):
+    """Level-12 basin to its level-10 and level-7 parents.
+
+    The published table links 12 to 10 and 10 to 7, so the level-7 parent is reached by
+    chaining. Doing it here rather than assuming a direct link is what stops a basin
+    with no level-10 record from silently acquiring a level-7 one.
+    """
+    up = {}
+    with path.open(encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            up[(row["child_level"], row["child_hybas_id"])] = row["parent_hybas_id"]
+    parents = {}
+    for (level, child), parent in up.items():
+        if level != "12":
+            continue
+        grandparent = up.get(("10", parent))
+        parents[child] = {"10": parent, "7": grandparent}
+    return parents
+
+
+def lift(annual, level, parents, areas):
+    """Area-weighted aggregation of level-12 annual values to a coarser basin.
+
+    A parent-year is produced only when every child basin reported that year. A mean
+    over whichever children happened to report is a mean over a different area each
+    year, and a trend through that measures which basins reported as much as what they
+    measured.
+    """
+    children = {}
+    for basin in annual:
+        parent = parents.get(basin, {}).get(level)
+        if parent:
+            children.setdefault(parent, []).append(basin)
+
+    lifted, dropped = {}, 0
+    for parent, members in children.items():
+        years = [set(year for year, _ in annual[basin]) for basin in members]
+        shared = set.intersection(*years) if years else set()
+        total = sum(areas.get(basin, 0.0) for basin in members)
+        if not shared or total <= 0:
+            dropped += 1
+            continue
+        series = []
+        for year in sorted(shared):
+            value = sum(areas.get(basin, 0.0) * dict(annual[basin])[year] for basin in members)
+            series.append((year, value / total))
+        lifted[parent] = series
+    return lifted, dropped
+
+
 def source_cells(area_km2, resolution_m):
     """How many native source cells a basin of this area contains."""
     cell_km2 = (resolution_m / 1000.0) ** 2
@@ -131,7 +181,50 @@ def cover(entry):
     return "mixed or natural"
 
 
-def strata(basins):
+def reference_level7(path=HYDRO / "reference-basin-attributes-level07.json"):
+    """The same attributes, published column-wise for the coarser level."""
+    block = json.loads(path.read_text(encoding="utf-8"))
+    ids, values = block["ids"], block["values"]
+    wanted = ("ele_mt_sav", "crp_pc_sse", "ire_pc_sse", "for_pc_sse", "urb_pc_sse")
+    found = {}
+    for index, basin in enumerate(ids):
+        found[str(basin)] = {key: _number(values.get(key, [None] * len(ids))[index])
+                             for key in wanted if key in values}
+    return found
+
+
+def system_of(level7_id, path=HYDRO / "basin-membership-level07.csv"):
+    found = {}
+    with path.open(encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            if row["level"] == "7":
+                found[row["hybas_id"]] = row["system_id"]
+    return found
+
+
+def strata(basins, level="12"):
+    if level == "7":
+        atlas = reference_level7()
+        systems = system_of(None)
+        found = {}
+        for basin in basins:
+            attributes = atlas.get(basin)
+            if not attributes:
+                continue
+            elevation = attributes.get("ele_mt_sav")
+            found[basin] = {
+                "system": systems.get(basin, "unknown"),
+                # Position within a system is a level-12 routing property; at level 7 a
+                # basin is large enough to contain headwater and lowland alike, so it is
+                # not claimed here rather than being asserted from the outlet.
+                "position": "whole sub-basin",
+                "elevation_band": band(elevation) if elevation is not None else None,
+                "elevation_m": elevation,
+                "land_cover": cover(attributes),
+                "irrigated_percent": attributes.get("ire_pc_sse"),
+                "cropland_percent": attributes.get("crp_pc_sse"),
+            }
+        return found
     atlas, graph = reference(), routing()
     found = {}
     for basin in basins:
@@ -169,9 +262,11 @@ def annual_series(store=STORE, attribute=None, connection=None):
     return series, kind
 
 
-def build(store=STORE, out=OUT, alpha=0.05):
+def build(store=STORE, out=OUT, alpha=0.05, level="12"):
     out.mkdir(parents=True, exist_ok=True)
     areas = basin_area()
+    parents = hierarchy() if level != "12" else {}
+    coarse = basin_area(HYDRO / f"basins-level{int(level):02d}.geojson") if level != "12" else areas
     connection = query.connect(store)
     summary, per_variable = {}, {}
     try:
@@ -182,9 +277,12 @@ def build(store=STORE, out=OUT, alpha=0.05):
             if not series:
                 continue
             resolution = entry.get("native_resolution_m")
+            if level != "12":
+                series, _ = lift(series, level, parents, areas)
+            scale = coarse
             results, p_raw, unresolved = [], [], 0
             for basin, points in series.items():
-                cells = source_cells(areas.get(basin, 0.0), resolution) if resolution else None
+                cells = source_cells(scale.get(basin, 0.0), resolution) if resolution else None
                 if cells is not None and cells < MINIMUM_SOURCE_CELLS:
                     unresolved += 1
                     continue
@@ -226,8 +324,8 @@ def build(store=STORE, out=OUT, alpha=0.05):
                 "basins_withheld_unresolved": unresolved,
                 "basins_tested": tested,
                 "median_source_cells": round(statistics.median(
-                    [source_cells(areas[b], resolution) for b in
-                     (r["basin_id"] for r in results) if b in areas]), 1)
+                    [source_cells(coarse[b], resolution) for b in
+                     (r["basin_id"] for r in results) if b in coarse]), 1)
                     if results and resolution else None,
             })
             summary[identifier] = block
@@ -235,12 +333,13 @@ def build(store=STORE, out=OUT, alpha=0.05):
         connection.close()
 
     layout = strata([row["basin_id"] for block in per_variable.values()
-                     for row in block["results"]])
+                     for row in block["results"]], level)
     crossed = _cross(per_variable, layout, alpha)
 
     report = {
         "generated_at": utc_now(),
         "title": "Hydroclimatic trends across the Amu Darya and Syr Darya",
+        "basin_level": level,
         "alpha": alpha,
         "method": {
             "test": "Mann-Kendall with continuity correction",
@@ -422,8 +521,11 @@ def _cross(per_variable, layout, alpha):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--alpha", type=float, default=0.05)
+    parser.add_argument("--level", default="12", choices=("7", "10", "12"))
     arguments = parser.parse_args()
-    report = build(alpha=arguments.alpha)
+    out = OUT if arguments.level == "12" else OUT / f"level{arguments.level}"
+    report = build(alpha=arguments.alpha, level=arguments.level, out=out)
+    print(f"basin level {arguments.level}")
     for identifier, block in sorted(report["summary"].items()):
         print(f"{identifier:24s} {block['basins']:>5} basins  "
               f"significant: {block['significant_uncorrected']:>5} raw -> "

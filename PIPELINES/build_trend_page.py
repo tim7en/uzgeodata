@@ -25,6 +25,22 @@ def inline(name):
 
 def build(out=OUT):
     report = json.loads((TRENDS / "index.json").read_text(encoding="utf-8"))
+    scale = json.loads((TRENDS / "scale-check.json").read_text(encoding="utf-8"))
+
+    def side(entry):
+        if not entry["tested"]:
+            return "<td>not testable</td><td>&mdash;</td>"
+        return (f'<td>{entry["significant"]:,} of {entry["tested"]:,}</td>'
+                f'<td>{entry["share"]:.0%}</td>')
+
+    scale_rows = "".join(
+        f'<tr><td>{r["variable"].replace("uz:", "").replace("-monthly-v1", "")}</td>'
+        f'<td>{r["native_resolution_m"]:,} m</td>'
+        + side(r["level12"]) + side(r["level7"])
+        + f'<td class="{"zero" if r["verdict"] == "diverges" else "kept"}">'
+          f'{r["verdict"]}</td></tr>'
+        for r in scale["variables"])
+
     summary, findings, method = report["summary"], report["findings"], report["method"]
 
     def block(identifier):
@@ -121,6 +137,13 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <li><strong>Multiple testing.</strong> {method['multiple_testing']}.</li>
 <li><strong>Validation.</strong> {method['validation']}.</li>
 </ul>
+
+<h2>Does the answer depend on the size of the unit?</h2>
+<p>A trend computed per basin is a trend computed on an arbitrary polygon. Enlarge the polygons and several things change at once: each unit averages more source cells, the series smooths, and the number of simultaneous tests falls by a factor of seventeen. A result present at one size and absent at another is telling you about the polygons.</p>
+<p>So the whole study is run twice &mdash; at level 12 (7,445 units, median 136&nbsp;km&sup2;) and level 7 (438 units, median 1,510&nbsp;km&sup2;) &mdash; and compared. <strong>Seven of nine variables agree; none diverges.</strong> The two that appear at one scale only are the ERA5-Land pair, which level 12 cannot resolve at all.</p>
+<table class="t"><thead><tr><th rowspan="2">Variable</th><th rowspan="2">Native cell</th><th colspan="2">Level 12</th><th colspan="2">Level 7</th><th rowspan="2">Verdict</th></tr><tr><th>Significant</th><th>Share</th><th>Significant</th><th>Share</th></tr></thead><tbody>{scale_rows}</tbody></table>
+<p class="key"><strong>Analysed at the level where it resolves, ERA5-Land shows nothing.</strong> {scale['reading']['era5']}</p>
+<p class="muted"><strong>What this cannot do.</strong> {scale['reading']['what_it_cannot_do']}</p>
 
 <h2>Results</h2>
 <div class="fig-frame">{inline("trend-correction-cascade.svg")}</div>
