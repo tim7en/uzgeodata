@@ -526,7 +526,8 @@ export default function LandingMap() {
     <button type="button" onClick={() => window.location.reload()}>Try again</button>
     <p><a href="/guide.html">Get help or download basin data directly</a></p></main>;
 
-  return <main className="land">
+  return <>
+    <main className="land">
     <MapContainer center={initialView.center} zoom={initialView.zoom} minZoom={0} maxZoom={19} zoomControl={false} className="land-map" preferCanvas>
       {base.url && <TileLayer attribution={base.attribution} key={`${base.id}-${theme}`}
         url={base.url} maxZoom={base.maxZoom}
@@ -579,7 +580,11 @@ export default function LandingMap() {
     <header className="land-head">
       <div className="land-head-top">
         <div>
-          <a href="/" style={{ color: 'inherit', textDecoration: 'none' }} aria-label="UzGeoData home">UZGEODATA</a>
+          <a href="/" className="land-brand" aria-label="UzGeoData home">
+            <span className="land-brand-icon" aria-hidden="true">&#8776;</span>
+            <span className="land-brand-word">UZGEODATA</span>
+            <span className="land-brand-sub">BASIN ATLAS</span>
+          </a>
           <h1>Where the water forms</h1>
         </div>
         <div className="land-head-tools">
@@ -748,8 +753,24 @@ export default function LandingMap() {
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
     {lake && <LakeModal lake={lake} onClose={()=>setLake(null)}/>}
     {station && <StationModal station={station} onClose={()=>setStation(null)}/>}
-  </main>;
-}
+    </main>
+
+    <footer className="site-footer land-site-footer">
+      <div>
+        <a className="land-brand" href="/" aria-label="UzGeoData home">
+          <span className="land-brand-icon" aria-hidden="true">&#8776;</span>
+          <span className="land-brand-word">UZGEODATA</span>
+          <span className="land-brand-sub">BASIN ATLAS</span>
+        </a>
+        <p>Water systems cross borders.<br/>Understanding them should, too.</p>
+      </div>
+      <div><strong>Explore</strong><a href="/">Basin explorer</a><a href="/examples.html">Practical examples</a><a href="/case-studies.html">Research case studies</a></div>
+      <div><strong>Understand</strong><a href="/about.html#citation">Citation &amp; reuse</a><a href="/guide.html">Guide &amp; data access</a><a href="/roadmap.html">Research roadmap</a></div>
+      <div><strong>Contribute</strong><a href="https://github.com/tim7en/uzgeodata">Project on GitHub &#8599;</a><a href="https://github.com/tim7en/uzgeodata/issues">Report an issue &#8599;</a><a href="/release.json">Release metadata</a></div>
+      <p className="footer-note">Independent research project &middot; Public preview &middot; Amu Darya &amp; Syr Darya</p>
+    </footer>
+    </>;
+  }
 
 function attributeMeta(groups, column) {
   for (const group of groups?.groups || []) {
