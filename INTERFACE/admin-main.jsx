@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
+initTheme();
 import { createRoot } from 'react-dom/client';
 import { Activity, ArrowLeft, ArrowUpRight, Check, Clock, Database, Layers, LoaderCircle, RefreshCw, Search, ShieldCheck, X } from 'lucide-react';
 import { LAYERS, freshness, coverageAge, visibleRows, latestJob } from './variableFreshness.js';
 import './admin.css';
+import { initTheme } from './ThemeToggle.jsx';
 
 const BASE = import.meta.env.BASE_URL;
 async function json(url, options) {

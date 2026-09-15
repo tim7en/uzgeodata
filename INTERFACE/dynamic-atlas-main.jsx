@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './dynamic-atlas.css';
+import ThemeToggle, { initTheme } from './ThemeToggle.jsx';
+initTheme();
 
 const fmt = v => v == null || v === '' ? '—' : Number(v).toLocaleString(undefined, { maximumFractionDigits: 3 });
 const json = async url => { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw Error(`Could not load data (${r.status})`); return r.json(); };
@@ -30,7 +32,7 @@ function App() {
   const checks = Object.fromEntries((data?.availability?.sources || []).map(s => [s.asset, s]));
   const families = data?.families.filter(f => (theme === 'all' || f.category === theme) && (status === 'all' || (status === 'gaps' ? f.missing > 0 : f.acquisition === status)) && `${f.family} ${f.label} ${f.original.dataset} ${f.assets.join(' ')} ${f.columns.join(' ')}`.toLowerCase().includes(query.toLowerCase())) || [];
   return <main>
-    <nav><a href="/">UzGeoData</a><div><a href="/roadmap.html">Atlas roadmap</a><a href="/surrogates.html">Scientific methods</a></div></nav>
+    <nav><a href="/">UzGeoData</a><div style={{display:"flex",alignItems:"center",gap:24}}><a href="/roadmap.html">Atlas roadmap</a><a href="/surrogates.html">Scientific methods</a><ThemeToggle/></div></nav>
     <header><p className="eyebrow">PSKEM PILOT / EARTH ENGINE / LIVING GEODATABASE</p><h1>From a static atlas<br/>to dated basin evidence.</h1><p className="intro">What we fetched, what it substitutes, and what can change over time. A dedicated audit of the HydroATLAS pilot and its path to regular updates.</p><div className="jump"><a href="#coverage">Thematic coverage ↓</a><a href="#results">See basin values ↓</a><a href="#refresh">Update pathway ↓</a></div></header>
     {error ? <div role="alert"><p>{error}</p><button onClick={load}>Try again</button></div> : !data ? <p role="status">Loading the pilot audit…</p> : <>
       <div className="stats">{[[data.summary.basin_count, 'level-12 pilot basins'], [data.summary.attribute_count, 'original atlas attributes'], [data.summary.candidate_attributes, 'recalculated candidates'], [data.summary.surrogate_attributes, 'substitute attributes'], [data.summary.attributes_without_any_estimate, 'still without an estimate']].map(([n, label]) => <div key={label}><strong>{n}</strong><span>{label}</span></div>)}</div>

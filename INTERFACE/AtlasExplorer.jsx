@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
 import { ArrowLeft, BookOpen, Database, Droplets, Scale, Search } from 'lucide-react';
 import DamModal from './DamModal.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 import { svg } from 'leaflet';
 import {
   clusterDams, damClusterBounds, damClusterStyle,
@@ -170,7 +171,10 @@ export default function AtlasExplorer() {
 
   return <main className="atlas">
     <aside className="atlas-rail">
-      <a className="atlas-back" href="/"><ArrowLeft size={13}/> Map</a>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <a className="atlas-back" href="/"><ArrowLeft size={13}/> Map</a>
+        <ThemeToggle/>
+      </div>
       <h1>Atlas explorer</h1>
       <p className="atlas-lede">Any of the {attributes.length} BasinATLAS attributes, drawn on the reference basins.</p>
 

@@ -4,6 +4,8 @@ import AtlasExplorer from './AtlasExplorer.jsx';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import 'leaflet/dist/leaflet.css';
 import './atlas.css';
+import { initTheme } from './ThemeToggle.jsx';
+initTheme();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode><ErrorBoundary><AtlasExplorer /></ErrorBoundary></React.StrictMode>

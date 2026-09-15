@@ -7,3 +7,33 @@
 .project-layout{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1600px;margin:auto;align-items:start}.project-sidebar{position:sticky;top:0;max-height:100vh;overflow:auto;padding:28px 22px;background:#eff3ed;border-right:1px solid var(--line);min-height:100vh}.project-back{display:block;font-size:12px;font-weight:600;margin-bottom:35px;text-decoration:none}.project-sidebar .eyebrow{font-size:9px;margin-bottom:14px}.project-sidebar details{border-top:1px solid var(--line);padding:14px 0}.project-sidebar summary{font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}.project-sidebar details a{display:block;font-size:12px;text-decoration:none;padding:8px 0 3px 15px;line-height:1.5}.project-sidebar details a:hover{text-decoration:underline}.sidebar-note{font-size:10px;color:var(--muted);margin-top:25px;line-height:1.8}.project-content{min-width:0}.project-content .hero{grid-template-columns:1.25fr 1fr;min-height:430px;padding:0}.project-content .hero-copy{padding:45px 0 36px 36px}.project-content h1{font-size:clamp(33px,3.4vw,49px)}.project-content .hero-intro{font-size:14px}.project-content .hero-map{padding-right:15px}.project-content .hero-map figcaption span:last-child{display:none}.project-content .section{padding:48px 36px;scroll-margin-top:20px}.project-content .metrics{padding:25px 36px;gap:15px}.project-content .metrics strong{font-size:22px}.project-content .intro,.project-content .evidence{gap:35px}.project-content .cards{gap:14px}.project-content .card{padding:20px}.project-content .closing{margin:0 36px 40px;padding:28px;flex-wrap:wrap}.project-content .page-intro{padding:45px 36px 32px}.project-content .workflow{gap:35px}
 @media(max-width:1150px){.project-layout{grid-template-columns:225px minmax(0,1fr)}.project-content .hero{grid-template-columns:1fr}.project-content .hero-copy{padding-right:36px}.project-content .hero-map{display:none}.project-content .cards,.project-content .examples{grid-template-columns:1fr}.project-content .intro,.project-content .evidence,.project-content .workflow{grid-template-columns:1fr;gap:15px}.project-content .metrics{grid-template-columns:1fr 1fr}.project-content .metrics div:nth-child(2){border:0}.project-content .phases{grid-template-columns:1fr}}
 @media(max-width:760px){.project-layout{grid-template-columns:1fr}.project-sidebar{position:static;min-height:0;max-height:none;border-right:0;border-bottom:1px solid var(--line);padding:22px}.project-back{margin-bottom:20px}.project-sidebar .sidebar-note{display:none}.project-content .section,.project-content .page-intro{padding:35px 22px}.project-content .hero-copy{padding:35px 22px}.project-content .metrics{padding:24px 22px}.project-content .closing{margin:0 22px 30px}.project-content .hero-map{display:flex;max-height:300px}.project-content .hero-map img{max-height:260px}}
+/* Dark theme. Applied by the shared theme bootstrap: the stored choice wins,
+   then the OS preference, then the hour. Same hue family as the light design,
+   re-mapped so every page that ships home.css follows the selected theme. */
+[data-theme="dark"]{--ink:#e8f0ec;--teal:#7fcdbd;--muted:#9db3ac;--line:#283c36;color:#cfe0d8;background:#0c1412;color-scheme:dark}
+[data-theme="dark"] .skip-link{background:#122019;color:#cfe0d8}
+[data-theme="dark"] a{color:inherit}
+[data-theme="dark"] a:hover{color:#8fd8c8}
+[data-theme="dark"] :focus-visible{outline-color:#d9a04a}
+[data-theme="dark"] .button{background:#1d5a4e;color:#e8f0ec}
+[data-theme="dark"] .button:hover{background:#175247;color:#e8f0ec}
+[data-theme="dark"] .hero{background:#0a1e1a;color:#eef5f1}
+[data-theme="dark"] .hero .eyebrow{color:#9fc4b6}
+[data-theme="dark"] .hero-intro{color:#b8cdc4}
+[data-theme="dark"] .hero .button,[data-theme="dark"] .closing .button{background:#1d3a30;color:#d9ead9}
+[data-theme="dark"] .hero .button:hover{background:#24463a}
+[data-theme="dark"] .hero-caption{color:#7fa294}
+[data-theme="dark"] .hero-map figcaption{color:#7fa294}
+[data-theme="dark"] h1 em{color:#a9c9b8}
+[data-theme="dark"] .page-intro{background:#0f1a15}
+[data-theme="dark"] .page-intro h1 em{color:#7fb5a0}
+[data-theme="dark"] .tinted{background:#101c17}
+[data-theme="dark"] .project-sidebar{background:#101c17}
+[data-theme="dark"] .card{background:#122019}
+[data-theme="dark"] .example{border-top-color:#3f5c52}
+[data-theme="dark"] .development{background:#0f1a15}
+[data-theme="dark"] .phases article{border-left-color:#2e453c}
+[data-theme="dark"] .development .development-note{border-top-color:#26382f}
+[data-theme="dark"] .closing{background:#0a1e1a}
+[data-theme="dark"] .closing .eyebrow{color:#a9c9b8}
+[data-theme="dark"] .notice{background:#26200f;border-left-color:#8a6a34}

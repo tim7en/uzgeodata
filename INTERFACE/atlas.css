@@ -90,3 +90,28 @@ a{color:var(--accent)}
 .atlas-ids{display:flex;flex-wrap:wrap;gap:3px 9px;min-width:0}
 .atlas-ids b{display:inline-flex;gap:4px;align-items:baseline;font:500 8.5px var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
 .atlas-dam-card>p{overflow-wrap:anywhere}
+
+/* Light theme. This page shares the landing map's token design, so light
+   re-uses that palette's light values and re-maps the hardcoded panels that
+   assume the dark base. Applied by the shared theme bootstrap. */
+[data-theme="light"]{--ink:#141c1f;--dim:#515f64;--faint:#5a6972;--line:#d0dadf;--accent:#0c6f8d;color-scheme:light}
+[data-theme="light"] body{background:#e7ebee;color:#141c1f}
+[data-theme="light"] .atlas-map{background:#e7ebee}
+[data-theme="light"] .atlas-map .leaflet-tile{filter:grayscale(.55) brightness(1.02) contrast(.95)}
+[data-theme="light"] .atlas-map .leaflet-container{background:#e7ebee}
+[data-theme="light"] .atlas-rail,[data-theme="light"] .atlas-meta{background:rgba(251,252,252,.75)}
+[data-theme="light"] .atlas-search{background:rgba(245,248,250,.8)}
+[data-theme="light"] .atlas-list button:hover{background:rgba(15,140,179,.08)}
+[data-theme="light"] .atlas-list button.active{background:rgba(15,140,179,.14)}
+[data-theme="light"] .atlas-legend,[data-theme="light"] .atlas-hit{background:rgba(251,252,252,.92)}
+[data-theme="light"] .atlas-legend i{border-color:rgba(0,0,0,.2)}
+[data-theme="light"] .atlas-meta dl,[data-theme="light"] .atlas-dam-card dl{background:#d0dadf}
+[data-theme="light"] .atlas-meta dl>div,[data-theme="light"] .atlas-dam-card dl>div{background:#eef2f4}
+[data-theme="light"] .atlas-toggle svg{color:#b20020}
+[data-theme="light"] .atlas-sizekey i{border-color:#b20020;background:rgba(178,0,32,.78)}
+[data-theme="light"] .atlas-dam-tip{background:rgba(250,251,252,.95) !important;color:#141c1f !important}
+[data-theme="light"] .atlas-dam-card{background:rgba(251,252,252,.95);border-left-color:#b20020}
+[data-theme="light"] .atlas-dam-close:hover{color:#141c1f}
+[data-theme="light"] :focus-visible{outline:2px solid #b98a2e;outline-offset:3px}
+.theme-toggle{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:transparent;color:var(--dim);border-radius:4px;padding:5px 8px;font:600 10px var(--display);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+initTheme();
 import { createRoot } from 'react-dom/client';
 import './roadmap.css';
+import { initTheme } from './ThemeToggle.jsx';
 
 const number = (value, digits = 0) => value == null ? '—'
   : Number(value).toLocaleString(undefined, { maximumFractionDigits: digits });

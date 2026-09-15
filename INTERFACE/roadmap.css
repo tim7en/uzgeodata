@@ -6,3 +6,52 @@
 .batch-table-scroll { overflow-x: auto; max-width: 100%; }
 .batch-table-scroll table { width: 100%; border-collapse: collapse; text-align: left; }
 .batch-table-scroll th, .batch-table-scroll td { padding: .65rem; border-bottom: 1px solid #d9e1dc; }
+
+/* Light theme. The page is dark by heritage; the shared theme bootstrap now
+   applies the stored choice, so light re-maps the same greens into the site's
+   paper family instead of blinding a daytime reader with the dark palette. */
+[data-theme="light"]{color:#203a3b;background:#f6f9f4;color-scheme:light}
+[data-theme="light"] a{color:#55772e}
+[data-theme="light"] nav{border-bottom-color:#d6e1db}
+[data-theme="light"] p{color:#576c6b}
+[data-theme="light"] button,[data-theme="light"] input,[data-theme="light"] select{background:#e7efe3;color:#203a3b;border-color:#b9c9c1}
+[data-theme="light"] button:hover{background:#d9e5d4}
+[data-theme="light"] :focus-visible{outline-color:#b98a2e}
+[data-theme="light"] .refresh{color:#576c6b}
+[data-theme="light"] .metrics{border-block-color:#d6e1db}
+[data-theme="light"] .metrics strong{color:#4a6b28}
+[data-theme="light"] .metrics span{color:#576c6b}
+[data-theme="light"] .section-heading>span{color:#576c6b}
+[data-theme="light"] .phase,[data-theme="light"] .module{background:#fbfcf9;border-color:#d6e1db}
+[data-theme="light"] .phase.in_progress{border-color:#8fbf5f;background:#eef6e6}
+[data-theme="light"] .number{color:#7a8f80}
+[data-theme="light"] .badge{border-color:#a9bfa8;color:#4a6b28}
+[data-theme="light"] .phase summary{color:#4a6b28}
+[data-theme="light"] .update{border-top-color:#d6e1db}
+[data-theme="light"] .update small,[data-theme="light"] small{color:#576c6b}
+[data-theme="light"] .history,[data-theme="light"] .contract{border-color:#cfdccf;background:#eef3ec}
+[data-theme="light"] .years .selected{background:#4a6b28;color:#f2f8ee}
+[data-theme="light"] label{color:#4a5c54}
+[data-theme="light"] .attributes{border-top-color:#c9d6cb}
+[data-theme="light"] .attributes>details{border-bottom-color:#d6e1db}
+[data-theme="light"] .attributes summary:before{color:#4a6b28}
+[data-theme="light"] .attributes summary code{color:#4a6b28}
+[data-theme="light"] .ranked{color:#576c6b}
+[data-theme="light"] .ranked code{color:#4a6b28}
+[data-theme="light"] .usage{border-top-color:#d6e1db}
+[data-theme="light"] .contract ul{color:#576c6b}
+[data-theme="light"] .batch-table-scroll th{color:#4a6b28}
+[data-theme="light"] .surrogate{border-left-color:#cfdccf}
+[data-theme="light"] .surrogate ul{color:#576c6b}
+[data-theme="light"] pre{background:#eef3ee}
+[data-theme="light"] footer{color:#576c6b}
+[data-theme="light"] .processing{border-color:#cfdccf;background:#eef3ec}
+[data-theme="light"] .processing-summary strong{color:#4a6b28}
+[data-theme="light"] .processing-summary span{color:#576c6b}
+[data-theme="light"] .timing-table th,[data-theme="light"] .timing-table td{border-bottom-color:#d6e1db}
+[data-theme="light"] .processing-result{border-top-color:#cfdccf}
+[data-theme="light"] .attempts summary{color:#4a6b28}
+.theme-toggle{display:inline-flex;align-items:center;gap:6px;border:1px solid #526359;background:#1a2b25;color:#e8eee9;border-radius:6px;padding:8px 12px;font:inherit;font-size:12px;cursor:pointer}
+.theme-toggle:hover{background:#354b36}
+[data-theme="light"] .theme-toggle{border-color:#b9c9c1;background:#e7efe3;color:#203a3b}
+[data-theme="light"] .theme-toggle:hover{background:#d9e5d4}
