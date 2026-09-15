@@ -7,7 +7,7 @@ say as much as what it computes.
 | Layer | What it holds | State |
 |---|---|---|
 | 1 — Reference | 281 HydroATLAS attribute definitions across 7,445 level-12 basins | Complete |
-| 2 — Observation | The append-only record: 9 dated variables 2003–2024, plus epoch and static sources | Dated series complete; ~9 of 20 intended variables |
+| 2 — Observation | The append-only record: 14 dated variables from 2003, plus epoch and static sources | Dated series complete; 14 of ~17 planned variables — vegetation, land surface temperature and dated surface water remain |
 | 3 — Derived products | Normals, anomalies, seasonal figures, trends, water balance, SPI | Complete |
 | 4 — Models | A fitting harness, validated against an independent gauge | Harness complete; one validated case |
 
@@ -15,9 +15,26 @@ say as much as what it computes.
 
 ## Layer 2 — the observation record
 
-Nine dated variables, every one spanning **2003–2024 at 1,965,480 rows** (7,445 basins
-× 264 months): precipitation, actual and potential evapotranspiration, soil moisture,
-runoff, snow cover, and minimum, mean and maximum temperature. 17,689,320 rows in all.
+Fourteen dated variables, every one spanning at least **2003–2024 at 1,965,480 rows**
+(7,445 basins × 264 months). Sources that have been refreshed since run further, to the
+last month their provider has published.
+
+| Source | Variables | Update group |
+|---|---|---|
+| TerraClimate | precipitation, actual and potential evapotranspiration, soil moisture | `regional-terraclimate` |
+| TerraClimate | minimum and maximum temperature | `regional-terraclimate_temperature` |
+| TerraClimate | vapour pressure deficit, climate water deficit, snow water equivalent, TerraClimate runoff, Palmer drought severity index | `regional-terraclimate_moisture` |
+| ERA5-Land | mean temperature | `regional-era5_temperature` |
+| ERA5-Land | runoff | `regional-era5_runoff` |
+| MODIS (MYD10A1) | snow cover | `regional-snow` |
+
+The five `terraclimate_moisture` variables are outputs of the same water-balance model as
+TerraClimate's evapotranspiration and soil moisture: deficit is PET less AET, runoff is the
+model's surplus, SWE its snow store, and PDSI is computed from that balance. They agree
+with the other TerraClimate series by construction and are not a second opinion on them.
+Asking the registry for "runoff" still returns ERA5-Land; TerraClimate's is
+`uz:rtc-monthly-v1` and must be asked for by name. "Drought index" is refused as ambiguous
+between the derived SPI and the published PDSI.
 
 Each year names the run that produced it, and a ledger accumulates across runs rather
 than being rewritten by the latest one. A run vouches only for the years it fetched;
@@ -101,27 +118,16 @@ one, and nothing in that number would have shown it.
 
 Ordered by value per unit of effort.
 
-## Layer 2 — five variables in a pass already being paid for
+## Layer 2 — the variables that need new sources
 
-Reducing over basin geometry costs about the same for six bands as for one, measured
-at 14.1 s against 15.8 s on a 250-basin sample. TerraClimate is already fetched for
-four bands, so these ride along in the same pass rather than costing a new extraction:
+The five remaining TerraClimate bands (`vpd`, `def`, `swe`, `ro`, `pdsi`) are now
+published as the `terraclimate_moisture` source. They were added as a separate source
+rather than more bands on `terraclimate`, so the four variables already published there
+were not re-extracted under a new update group. **The recipe hash of `dated_monthly.py`
+still moved**, so the next refresh of any source in that file records a new method
+alongside the old.
 
-| Band | Gives | Closes |
-|---|---|---|
-| `vpd` | Vapour pressure deficit | A concept currently registered as unavailable |
-| `def` | Climate water deficit | The supply-demand gap the crude balance only approximates |
-| `swe` | Snow water equivalent | Depth to stand beside snow-cover percentage, which is only extent |
-| `q` | TerraClimate runoff | A second runoff source to set against ERA5's |
-| `pdsi` | Palmer drought index | A published drought index beside the derived SPI |
-
-Adding a band means extending `SOURCES` in `dated_monthly.py` and registering the
-attribute; the runner and contract need no change. **Note the recipe hash moves when
-that file changes, so the existing years become a second derivation rather than a
-revision** — expected, and the reason the namespace count is a floor and not an
-equality.
-
-Needing genuinely new sources, in rough order of demand:
+What is left needs genuinely new sources, in rough order of demand:
 
 - **NDVI / EVI** (`MODIS/061/MOD13Q1`) — the most requested absent variable.
 - **Land surface temperature** (`MODIS/061/MOD11A2`) — distinct from the air

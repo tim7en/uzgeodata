@@ -87,6 +87,36 @@ SOURCES = {
                 "about eleven kilometres a level-12 headwater basin may hold a single cell, so "
                 "the lapse rate across it is represented by whatever that cell carries.",
     },
+    # The rest of TerraClimate's water balance, as its own source rather than more bands
+    # on `terraclimate`: adding them there would give the four published variables a
+    # second extraction under a new update group for no change in their values. Scale
+    # factors are the collection's own, checked against raw values over the Pskem in
+    # January and July 2020 (VPD 0.02-2.83 kPa, SWE up to 213 mm, PDSI about -3).
+    "terraclimate_moisture": {
+        "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+        "bands": {
+            "vpd": {"scale": 0.01, "unit": "kilopascals",
+                    "attribute": "uzgeodata.dated.v1.vpd_kp_s",
+                    "label": "vapour pressure deficit"},
+            "def": {"scale": 0.1, "unit": "millimetres per month",
+                    "attribute": "uzgeodata.dated.v1.cwd_mm_s",
+                    "label": "climate water deficit"},
+            "swe": {"scale": 1.0, "unit": "millimetres of snow water equivalent",
+                    "attribute": "uzgeodata.dated.v1.swe_mm_s",
+                    "label": "snow water equivalent"},
+            "ro": {"scale": 1.0, "unit": "millimetres per month",
+                   "attribute": "uzgeodata.dated.v1.rtc_mm_s",
+                   "label": "TerraClimate runoff"},
+            "pdsi": {"scale": 0.01, "unit": "index (dimensionless)",
+                     "attribute": "uzgeodata.dated.v1.pds_ix_s",
+                     "label": "Palmer drought severity index"},
+        },
+        "climatology": ("1991-01-01", "2021-01-01"),
+        "note": "Outputs of TerraClimate's one-dimensional water balance model, not independent "
+                "measurements: deficit is PET less AET, runoff is the model's surplus, SWE its "
+                "snow store and PDSI is computed from the same balance. They agree with the "
+                "published TerraClimate variables by construction.",
+    },
 }
 
 

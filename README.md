@@ -262,29 +262,266 @@ is a month with no observation and is never a zero. Local basin support only —
 upstream values cannot be summed across basins, so a cube inviting that sum would be
 a trap.
 
-## Analysis layers
+## The four scientific layers in detail
 
-Layer 1 is the reference atlas, Layer 2 the observation store. Above them:
+The layers describe **what a result means and how it is produced**. They are not
+four map layers, four databases, or four separately deployed services. A thematic
+atlas combines products from these layers to answer questions about one subject.
+The same precipitation record can support a water atlas and an agriculture atlas
+without being acquired twice.
 
-**Layer 3 — derived products** (`ATLAS_MODULES/core/products.py`). Nothing is stored;
-each product is derived on demand, so a correction below propagates rather than
-leaving a stale derivative behind. A flux is summed and a state averaged, never the
-other way round. A season short of a month yields no total. An anomaly baseline comes
-from the whole record, never the window being examined. SPI is a real gamma fit per
-basin and calendar month, not a z-score of accumulated rainfall — on a skewed record
-the shortcut reads a genuine drought as unremarkable.
+| Layer | Main question | Typical output | Changes when |
+| --- | --- | --- | --- |
+| **1. Reference** | What characterises this place under a stated edition or baseline? | Elevation, basin area, reference land-cover fractions, climate normals | An edition, geometry, method or explicitly chosen baseline changes |
+| **2. Observations** | What was recorded or estimated here during this period? | A dated basin/month value with quality and provenance | New periods arrive or earlier observations are revised |
+| **3. Analysis** | How does the record compare, vary or change? | Anomaly, seasonal total, trend, SPI, water-balance diagnostic | The selected input release, analysis period, baseline or recipe changes |
+| **4. Models** | Can declared inputs explain or predict a target, or support a scenario? | Predictions, evaluation scores, fitted parameters, scenario results | A reviewed model version, input release, training period or scenario changes |
 
-**Layer 4 — models** (`ATLAS_MODULES/core/models.py`). A model is the first output
-here that is not a measurement, so the harness is mostly refusals: no score on the
-training period, no fewer than 24 held-out months, no filled predictors, and skill
-reported against climatology rather than only against the evaluation mean.
+### Layer 1 — reference atlas
 
-Validated against the Pskem gauge at Mullala, an independent hydromet record:
-Nash–Sutcliffe **0.55**, and **−2.46 against climatology**. Read the second number.
-Monthly climate does not predict this river — the bare seasonal cycle does better,
-because snowmelt discharge runs on storage and lag a contemporaneous linear model
-cannot see. The result is published as it came out. See
-[analysis-layers.md](PUBLISHED/data/atlas/analysis-layers.md).
+**Responsibility.** Describe the geography and its reference characteristics.
+Existing examples include the 281 HydroATLAS attribute definitions, basin geometry,
+topology, published reference values and independently calculated estimates.
+A reference may be static, tied to a source epoch, or summarised over a stated
+climatological period; “reference” does not mean “measured this year”.
+
+**Inputs and processing.** Import an identified source edition, or apply a reviewed
+recipe to source rasters/tables and versioned geometry. Preserve the distinction
+between the original published value, a reproduction candidate and an estimate
+made with another source. A new estimate does not overwrite the original simply
+because it looks more recent.
+
+**Outputs and representation.** The shared attribute catalogue defines labels,
+units and methods; per-basin JSON carries values. The interface presents basin
+profiles, maps and comparisons with source, period and spatial support visible.
+Local basin values describe that polygon; upstream values describe its catchment
+and cannot be added across nested basins.
+
+**Code and storage.** [The HydroSHEDS module](ATLAS_MODULES/hydrosheds/module.json),
+its [recipes](ATLAS_MODULES/hydrosheds/recipes.json),
+[attribute runner](PIPELINES/run_atlas_attribute.py), and
+`PUBLISHED/data/atlas/catalogue.json` plus `basins/` implement this path.
+The common observation contract also represents reference records using explicit
+time kinds; a separate physical database is not required for each layer.
+
+**Update rule.** Import a new edition or deliberately recompute a named baseline.
+Do not turn a fixed reference red simply because its publication date is old.
+A normal computed in Layer 3 can become a Layer 1 reference when frozen with its
+baseline, recipe and provenance; it then has a distinct published identity.
+
+### Layer 2 — dated observations and evidence
+
+**Responsibility.** Keep the environmental record with enough context to interpret
+and revise it. “Observation” here includes provider-modelled estimates such as
+ERA5 runoff and TerraClimate soil moisture, with their source type stated. It does
+not imply a direct field measurement or a locally validated model.
+
+**Inputs and processing.** Source files and provider collections enter approved
+extraction recipes. Those recipes resolve geography, aggregate over the intended
+area and period, convert units explicitly, and record missingness and coverage.
+Regional updates acquire completed periods. Corrections append revisions that
+supersede previous observations rather than silently replacing their evidence.
+
+**Record contract.** [observations.py](ATLAS_MODULES/core/observations.py) validates:
+
+- **Identity:** observation ID, basin ID, geometry version and attribute ID.
+- **Space and time:** spatial support, time kind, valid period and temporal statistic.
+- **Value and quality:** value, unit, valid/expected counts, coverage fraction,
+  quality flag, missing reason and provisional status.
+- **Provenance:** source release, recipe version, run ID, retrieval/recording times,
+  revision and the observation it supersedes.
+
+For example, a monthly precipitation value must identify *which basin geometry*,
+*which month*, *which source and aggregation*, and *how much valid input contributed*.
+A null remains missing; it cannot become zero rainfall. A change of unit or spatial
+support must not silently enter an existing series.
+
+**Code and storage.** The partitioned observation store under
+`PUBLISHED/data/atlas/observations/` is read through
+[query.py](ATLAS_MODULES/core/query.py), which accounts for completed runs and
+revisions. [variables.py](ATLAS_MODULES/core/variables.py) maps concepts to versioned
+products, preferred sources and explicit unavailable concepts. The store's current
+contract is basin-oriented; support for arbitrary stations, parcels and grids needs
+an explicit contract extension, not invented basin identifiers.
+
+**Public representation.** `history/` supplies browser time series and `cube/`
+supplies compact Parquet downloads/queries. These are projections: the public cube
+does not carry the full revision and evidence record. Charts must distinguish
+calendar positions from observed months and display coverage gaps.
+
+**Update rule.** Acquire, validate and retain new/revised records, then rebuild the
+necessary projections. The temporary admin append mode only extends history/cube;
+it is not a substitute for retaining the full evidence store.
+
+### Layer 3 — analytical products
+
+**Responsibility.** Calculate an interpretable result from a declared record and
+recipe: normals, anomalies, seasonal summaries, trends, water-balance diagnostics
+and gamma-fitted SPI are implemented in
+[products.py](ATLAS_MODULES/core/products.py).
+
+**Inputs and processing.** Resolve a registered variable, geography, input release,
+analysis window and reference period. Aggregation follows the variable's meaning:
+a seasonal precipitation total sums monthly fluxes, while mean temperature averages
+a state. Missing months are counted; incomplete flux seasons do not receive a full
+seasonal total. Anomalies compare against a baseline independent of the requested
+analysis window; callers can state a fixed baseline for comparable results.
+
+**Outputs and representation.** An anomaly needs its baseline, units, contributing
+sample counts and source context beside the value. A trend needs its period and
+limitations. Present these as anomaly maps, seasonal charts, comparison tables and
+downloadable analysis results, rather than labelling every coloured map a raw
+measurement. The snow series remains withdrawn from trend analysis.
+
+**Execution and update rule.** The core Python functions compute on demand from
+the selected inputs; some other application pipelines publish stored analytical
+tables and figures. Stored derivatives must be rebuilt when their inputs or recipe
+change. Planned caching should key results by release, geometry, product version,
+period, baseline and parameters so different analyses cannot share a stale result.
+A universal dependency/caching service is not implemented yet.
+
+**Boundary.** A precipitation-minus-evapotranspiration diagnostic is not a complete
+river-flow model. An association or trend does not establish its physical cause.
+
+### Layer 4 — evaluated models and scenarios
+
+**Responsibility.** Fit or simulate a target using declared inputs, and evaluate
+what the model can actually answer. This layer owns the project's modelling
+experiment; modelled provider fields can already be inputs in Layer 2.
+
+**Inputs and processing.** [models.py](ATLAS_MODULES/core/models.py) constructs
+predictors from registered concepts and receives an independently identified target
+series. The current fitting harness requires explicit, non-overlapping training
+and evaluation periods, at least 24 held-out evaluation months, and enough training
+observations. It drops months with missing predictors instead of inventing them.
+It compares predictions with a seasonal climatology learned from the training data.
+
+**Outputs and representation.** Report target, predictors, periods, coefficients,
+predictions, retained/dropped months and skill against the reference forecast.
+The Pskem monthly evaluation and specialised case-study pipelines are current
+examples. Model pages should show observed-versus-predicted charts, held-out scores
+and limitations; future scenario views must state assumptions and distinguish
+simulated futures from recorded history.
+
+The published Pskem monthly evaluation reports Nash–Sutcliffe efficiency **0.55**
+but **−2.46 against climatology**: that fitted model loses to the seasonal reference
+on its evaluation period. This is evidence about this experiment, not proof that
+monthly climate can never help predict the river. See
+[the evaluation notes](PUBLISHED/data/atlas/analysis-layers.md).
+
+**Update rule.** New observations do not automatically justify refitting or
+publishing a forecast. Select the input release and experiment, fit, evaluate and
+review the result before promotion. General model version management, uncertainty
+calibration and operational scenario/forecast serving remain planned work.
+
+### Shared application services across all four layers
+
+| Component | Current responsibility | Planned extension |
+| --- | --- | --- |
+| Ontology and variable registry | Name concepts/products, type relationships, preserve source and geography meaning | Resolve cross-atlas requests with explicit coverage and compatibility checks |
+| Python pipelines | Acquire, validate and generate data through reviewed recipes | Declare shared dependencies and rebuild affected outputs consistently |
+| Local Node admin | Queue allowlisted update groups, persist schedules and show progress/failure | Show downstream products affected by each update and release readiness |
+| Publication | Export reviewed files and build the public static site | Immutable evidence/artifact retention, served-byte checks and recoverable releases |
+| React interface | Read published data for maps, profiles, charts and evidence views | A shared atlas selector and consistent representations across themes |
+| Query library | Read published series and run supported analyses | One request contract across themes, spatial frames and cached products |
+
+**Example across the layers:** a basin's elevation and reference land cover (L1)
+provide context for its dated precipitation and snow record (L2). A seasonal
+precipitation anomaly (L3) describes that record against a baseline. A discharge
+experiment (L4) uses selected predictors and is tested against gauge observations.
+The ontology connects their meanings; the admin maintains their inputs; the website
+presents their distinct evidence and limitations.
+
+## Planned steps: more thematic atlases and representations
+
+This is a proposed implementation sequence, not a claim that these atlases are
+complete or a dated delivery commitment. It extends the
+[module contract](ATLAS_MODULES/README.md) and existing
+[scientific roadmap](ATLAS_MODULES/roadmap.json). Work is accepted through evidence,
+not by changing a roadmap status alone.
+
+### 1. Complete the shared data and release foundation
+
+- Retain immutable public artifacts and the underlying evidence; test recovery of
+  a previous release and verify the actual bytes distributed by the static build.
+- Bind concept resolution to the selected release's variable registry.
+- Declare dependencies between ingestion, public projections, analyses and models;
+  show the outputs that a full or partial admin update has refreshed.
+- Introduce a common request containing theme, concept/product, geography and its
+  version, period, baseline and input release. Return coverage or an explicit reason
+  the request cannot be answered.
+
+**Acceptance:** one source correction produces traceable affected outputs, leaves
+an older retained release readable, and cannot silently mix old/new products.
+
+### 2. Establish the shared thematic atlas presentation
+
+- Add an atlas selector while preserving the selected place and period where the
+  destination theme supports them; explain incompatible selections.
+- Give each atlas an overview, reference profiles (L1), dated records (L2), analysis
+  views (L3), and an evaluated models section (L4) only when evidence exists.
+- Reuse map legends, units, date/baseline controls, missing-data styling, comparisons,
+  evidence panels and CSV/JSON/Parquet download metadata.
+- Support explicit geography choices: basin/catchment, administrative area, station,
+  raster or parcel as appropriate. A measured basin–district crosswalk supports
+  intersection summaries; it does not make a basin mean a district observation.
+
+**Acceptance:** two themes use the same selection/evidence components and preserve
+product identity from map to chart to exported data. Unsupported views say why.
+
+### 3. Add thematic modules in dependency order
+
+Existing pages, source tables and studies are starting assets; each row below is a
+planned coherent atlas module, not a claim of complete regional coverage. Start
+with land/vegetation as the next module, prove the common workflow, then expand.
+
+| Theme | Existing starting point | Planned content across the layers | Planned representation |
+| --- | --- | --- | --- |
+| **Water and hydroclimate** — consolidate the first atlas | HydroSHEDS reference module, basin histories, river networks and Pskem studies | L1 terrain/topology; L2 climate, runoff and eligible gauge records; L3 anomalies and water balance; L4 evaluated discharge experiments | Basin/catchment map, river-network view, monthly record, evidence and model evaluation panels |
+| **Land cover and vegetation** — next module | Land-cover statistics/pages and reference attributes; no canonical regional NDVI/EVI time series yet | L1 class definitions and reference cover; L2 dated cover and quality-controlled NDVI/EVI; L3 change/seasonality; L4 separately validated classification or vegetation-response experiments | Categorical maps, year comparisons, class-area tables, vegetation curves and transition matrices |
+| **Snow, glaciers and mountain systems** | MODIS snow work, glacier inventories and elevation-band products | L1 glacier editions and elevation zones; L2 snow/glacier observations and modelled snow-water equivalent kept distinct; L3 coverage-qualified seasonal metrics; L4 evaluated melt/storage experiments | Elevation-band profiles, glacier outlines, seasonal curves and explicit coverage gaps; trend views only after the snow issue is resolved |
+| **Agriculture and land/water use** | Catalogued agricultural statistics and land-cover inputs | L1 crop/irrigation reference geography; L2 licensed production, vegetation and water-use records; L3 productivity/stress indicators; L4 evaluated demand/yield scenarios | Administrative/parcel views where supported, crop calendars, linked vegetation/water charts and scenario comparisons |
+| **Ecosystems and environmental pressure** | Environmental reference catalogue and available infrastructure/pressure layers | L1 habitat and pressure inventories; L2 selected dated condition/pressure measurements; L3 reviewed change/exposure indicators; L4 models only with suitable targets and validation | Habitat/pressure maps, time-aware overlays and transparent indicator breakdowns |
+
+Provider selection, licensing, spatial coverage and feasible resolution must be
+reviewed in each module specification before its acquisition is implemented.
+High-resolution or restricted source data may remain referenced rather than publicly
+redistributed. No new theme must implement all four layers before it can be useful.
+
+**Acceptance for each module:** a reviewed specification, one working ingestion
+path, validated units/geography/time, inventory/update integration, one complete
+map-to-evidence-to-download workflow, and a worked research example. Scientific
+reproduction and model validation require their own evidence beyond this software gate.
+
+### 4. Connect themes through the ontology and research workflows
+
+- Register shared concepts once; keep source-specific products and differing spatial
+  or temporal supports distinct. Represent measured topology in typed relationship
+  tables and curated semantic claims as attributable assertions.
+- Add cross-theme workflows, such as comparing vegetation change with precipitation
+  anomalies and reference land cover for the same supported geography and period.
+- Extend the observation/query contracts explicitly where station, parcel or grid
+  data do not fit the existing basin record; preserve geometry versions and licences.
+- Provide reusable research examples with inputs, method, result, limitations and
+  a downloadable package. Do not present associations as causal findings.
+
+**Acceptance:** one cross-atlas analysis can be repeated from retained inputs and
+its query specification, with no implicit source substitution or geographic join.
+
+### 5. Add AI assistance above the validated data services
+
+- Improve the existing ontology proposal/review workflow with evaluated matching
+  methods and curator feedback; keep measured geographical facts pipeline-owned.
+- Let a question assistant propose concepts, geography, periods and an analysis;
+  resolve ambiguities and check coverage before using approved query functions.
+- Return the actual product/release, recipe, source citations and missing-data
+  explanations with the answer. Acquisition remains an explicit approved operation.
+- Evaluate on a fixed collection of questions, including unsupported concepts,
+  incompatible units, absent periods and misleading source substitutions.
+
+**Acceptance:** answers can be traced to executable requests and retained results;
+the assistant reports unsupported requests correctly and cannot promote its own
+ontology guesses into scientific evidence.
 
 ## Evidence contract
 

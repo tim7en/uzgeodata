@@ -19,7 +19,7 @@ def test_a_concept_resolves_to_exactly_one_preferred_product():
 
 
 def test_an_unanswerable_concept_is_refused_with_its_reason():
-    for concept in ("vegetation", "ndvi", "vapour pressure deficit", "drought index"):
+    for concept in ("vegetation", "ndvi", "drought index"):
         with pytest.raises(variables.Unavailable) as raised:
             variables.resolve(concept)
         assert len(str(raised.value)) > len(concept) + 10, "the refusal explains itself"
@@ -29,6 +29,18 @@ def test_an_unanswerable_concept_is_refused_with_its_reason():
         variables.resolve("land surface temperature")
     with pytest.raises(variables.Unavailable, match="not the same quantity"):
         variables.resolve("discharge")
+
+
+def test_runoff_still_means_one_product_when_two_are_published():
+    """TerraClimate runoff is published beside ERA5-Land's; asking for runoff must not
+    start returning whichever was added last."""
+    assert variables.resolve("runoff") == "uz:run-monthly-v1"
+    assert variables.resolve("terraclimate runoff") == "uz:rtc-monthly-v1"
+    with pytest.raises(variables.Unavailable, match="palmer drought severity index"):
+        variables.resolve("drought index")
+    assert variables.resolve("pdsi") == "uz:pds-monthly-v1"
+    assert variables.VARIABLES["uz:cwd-monthly-v1"]["kind"] == "flux"
+    assert variables.VARIABLES["uz:swe-monthly-v1"]["kind"] == "state"
 
 
 def test_an_unknown_concept_lists_what_can_be_asked_for():

@@ -12,8 +12,8 @@ product, and says why that one. A fallback is listed where a second source could
 answer the same question, and naming it as a fallback is itself the statement that
 it is not the preferred answer.
 
-What it is not: a catalogue of everything available. Eight variables are registered
-because eight are published as dated regional series. A concept with no product
+What it is not: a catalogue of everything available. Fourteen variables are registered
+because fourteen are published as dated regional series. A concept with no product
 behind it is recorded as unavailable rather than quietly resolved to something
 close, because the failure that matters here is answering the wrong question
 confidently.
@@ -43,6 +43,15 @@ CONCEPTS = {
     "mean temperature": "uz:tmp-monthly-v1",
     "maximum temperature": "uz:tmx-monthly-v1",
     "minimum temperature": "uz:tmn-monthly-v1",
+    "vapour pressure deficit": "uz:vpd-monthly-v1",
+    "vpd": "uz:vpd-monthly-v1",
+    "climate water deficit": "uz:cwd-monthly-v1",
+    "water deficit": "uz:cwd-monthly-v1",
+    "snow water equivalent": "uz:swe-monthly-v1",
+    "swe": "uz:swe-monthly-v1",
+    "terraclimate runoff": "uz:rtc-monthly-v1",
+    "palmer drought severity index": "uz:pds-monthly-v1",
+    "pdsi": "uz:pds-monthly-v1",
 }
 
 # Concepts a reader will reasonably ask for and this project cannot yet answer.
@@ -53,10 +62,10 @@ UNAVAILABLE = {
     "ndvi": "No vegetation index is published as a regional dated series.",
     "land surface temperature": "Air temperature is published; land surface temperature is not, "
                                 "and the two are different measurements.",
-    "vapour pressure deficit": "Not derived. It would need humidity, which is not published.",
-    "drought index": "Not an observation. SPI is derived on demand from published "
-                     "precipitation by products.spi(), with the gamma fit stated; SPEI would "
-                     "additionally need a water balance and is not offered.",
+    "drought index": "Ambiguous: two are offered and they are not interchangeable. SPI is derived "
+                     "on demand from published precipitation by products.spi(), with the gamma "
+                     "fit stated; the Palmer index is published as TerraClimate's modelled "
+                     "series (ask for 'palmer drought severity index'). SPEI is not offered.",
     "surface water": "Published as a long-term climatology, not as a dated monthly series.",
     "discharge": "No gauged or modelled discharge series is published; runoff is a land-surface "
                  "flux and is not the same quantity.",
@@ -106,9 +115,13 @@ VARIABLES = {
         "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
-        "why": "TerraClimate publishes no runoff. This is a land-surface flux and is not "
-               "discharge: it has not been routed and no gauge has been compared to it.",
-        "fallback": None, "kind": "flux",
+        "why": "A land-surface model's runoff, kept as the answer because it was chosen first and "
+               "the record's analyses use it. It is not discharge: it has not been routed and no "
+               "gauge has been compared to it.",
+        "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
+        "fallback_cost": "Published separately as uz:rtc-monthly-v1: a bucket model's surplus rather "
+                         "than a land-surface scheme's, so the two differ in method, not only grid.",
+        "kind": "flux",
     },
     "uz:snw-monthly-v1": {
         "concept": "snow cover", "attribute": "uzgeodata.dated.v1.snw_pc_s",
@@ -146,6 +159,54 @@ VARIABLES = {
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
         "why": "The month's daily minima, paired with the maxima from the same model.",
+    },
+    # The rest of TerraClimate's water balance. All five are outputs of the model that
+    # produces aet, pet and soil, so they agree with those by construction and none is a
+    # second opinion on them.
+    "uz:vpd-monthly-v1": {
+        "concept": "vapour pressure deficit", "attribute": "uzgeodata.dated.v1.vpd_kp_s",
+        "unit": "kilopascals", "cadence": "monthly", "coverage": [2003, 2024],
+        "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
+        "why": "Published on the same four-kilometre grid as the temperatures it depends on, "
+               "rather than derived here from a humidity field this project does not hold.",
+    },
+    "uz:cwd-monthly-v1": {
+        "concept": "climate water deficit", "attribute": "uzgeodata.dated.v1.cwd_mm_s",
+        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
+        "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "flux",
+        "why": "Demand the water balance could not meet: PET less AET inside one model, with soil "
+               "storage accounted for, which the crude precipitation-less-AET balance is not.",
+    },
+    "uz:swe-monthly-v1": {
+        "concept": "snow water equivalent", "attribute": "uzgeodata.dated.v1.swe_mm_s",
+        "unit": "millimetres of snow water equivalent", "cadence": "monthly", "coverage": [2003, 2024],
+        "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
+        "why": "The water a snowpack holds, which snow cover cannot give: cover is extent only.",
+        "caution": "Modelled from temperature and precipitation, not observed. It is not a "
+                   "measurement to validate MODIS snow cover against, and in high terrain the "
+                   "four-kilometre grid smooths the pack the melt actually comes from.",
+    },
+    "uz:rtc-monthly-v1": {
+        "concept": "terraclimate runoff", "attribute": "uzgeodata.dated.v1.rtc_mm_s",
+        "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
+        "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "flux",
+        "why": "A second runoff to set against ERA5-Land's, from a different model. Asking for "
+               "'runoff' still resolves to ERA5-Land; this one has to be asked for by name.",
+    },
+    "uz:pds-monthly-v1": {
+        "concept": "palmer drought severity index", "attribute": "uzgeodata.dated.v1.pds_ix_s",
+        "unit": "index (dimensionless)", "cadence": "monthly", "coverage": [2003, 2024],
+        "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
+        "why": "A published drought index beside the SPI derived here, computed by the source "
+               "from its own water balance rather than from precipitation alone.",
+        "caution": "An index already standardised by its source. Averaging it over basins or "
+                   "months is descriptive; it is not re-standardised, and anomalies of it are "
+                   "anomalies of an anomaly.",
     },
 }
 

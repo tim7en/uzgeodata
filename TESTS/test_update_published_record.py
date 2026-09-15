@@ -88,3 +88,32 @@ def test_incomplete_extraction_publishes_nothing():
     import pytest
     with pytest.raises(RuntimeError, match="Nothing was published"):
         update.check_complete(fetched(2), [PRE], 1, "2025-01", "2025-03")
+
+
+VPD = "uzgeodata.dated.v1.vpd_kp_s"
+
+
+def test_a_variable_never_published_starts_at_the_beginning_of_the_record(tmp_path, monkeypatch):
+    history, cube = published(tmp_path)
+    assert update.published_through([PRE, VPD], cube) is None, "a missing file is not an error"
+
+    rows = [("1", VPD, 2023 + i // 12, i % 12 + 1, 0.5, "kilopascals", "new", "m@2") for i in range(24)]
+    note = {"source": "terraclimate_moisture"}
+    update.update_history(rows, [VPD], "2023-01", "2024-12", note, history)
+    payload = json.loads((history / "1.json").read_text())
+    vpd = payload["series"]["vpd_kp_s"]
+    assert vpd["values"] == [0.5] * 24 and vpd["observed_months"] == 24
+    assert vpd["label"] == "vapour pressure deficit" and vpd["source"] == "terraclimate_moisture"
+    assert vpd["source_release"] == "terraclimate_moisture@IDAHO_EPSCOR/TERRACLIMATE"
+    assert payload["series"]["pre_mm_s"]["values"] == [1.0] * 24, "existing series untouched"
+    index = json.loads((history / "index.json").read_text())
+    assert index["series"]["vpd_kp_s"]["extracted_through"] == "2024-12"
+    update.update_history(rows, [VPD], "2023-01", "2024-12", note, history)
+    assert json.loads((history / "index.json").read_text())["appended"] == [note], "one run, one note"
+
+    monkeypatch.setattr(update.variables, "registry",
+                        lambda coverage, observed_through: {"through": observed_through})
+    update.update_cube(rows, [VPD], "2023-01", note, cube)
+    assert len(pq.read_table(cube / "variable=vpd_kp_s/data_0.parquet")) == 24
+    index = json.loads((cube / "index.json").read_text())
+    assert index["registry"]["through"][VPD] == "2024-12" and index["rows"] == 72

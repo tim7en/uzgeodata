@@ -62,6 +62,8 @@ def build(root=ROOT, *, updates=None):
     history = read(root, "PUBLISHED/data/atlas/history/index.json")
     cube = read(root, "PUBLISHED/data/atlas/cube/index.json")
     registry = cube.get("registry") or variables.registry()
+    # A variable registered but not yet published stays visible as missing, with its update group.
+    registry = {**registry, "variables": {**variables.registry()["variables"], **registry.get("variables", {})}}
     currency = read(root, "PUBLISHED/data/data-currency.json")
     currency_by_id = {t["id"]: t for t in currency.get("tables", [])}
     from PIPELINES.build_data_currency import SOURCES
@@ -102,13 +104,14 @@ def build(root=ROOT, *, updates=None):
     for id, spec in registry.get("variables", {}).items():
         code = spec["attribute"].split(".")[-1]
         path, ledger = ledgers.get(spec["attribute"], (None, {}))
-        source = ledger.get("source") or ("snow" if code == "snw_pc_s" else None)
+        series = history.get("series", {}).get(code, {})
+        # A source appended without the store keeps its ledger in WORKSPACE; the history says which it is.
+        source = ledger.get("source") or series.get("source") or ("snow" if code == "snw_pc_s" else None)
         # Snow's ledger predates the shared source/attribute fields.
         if code == "snw_pc_s" and not ledger:
             path = root / "PUBLISHED/data/atlas/observations/regional-snow-ledger.json"
             ledger = read(root, str(path.relative_to(root)))
             source = "snow"
-        series = history.get("series", {}).get(code, {})
         coverage = spec.get("coverage", [])
         last = spec.get("observed_through") if "observed_through" in spec else (series.get("last_month") or (f"{coverage[-1]}-12" if coverage else None))
         rows.append(dict(id=id, label=spec["concept"].capitalize(), layer=2, collection="Basin observations",

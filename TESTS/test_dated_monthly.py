@@ -34,8 +34,9 @@ def test_every_declared_band_carries_its_own_attribute_unit_and_scale():
             assert definition["attribute"].startswith("uzgeodata.dated.v1.")
             assert definition["attribute"] not in seen, "two bands claim one attribute"
             seen[definition["attribute"]] = (source, band)
-    assert len(seen) == 8, ("four TerraClimate variables, ERA5 runoff, and the two "
-                            "temperature adapters that stand against each other")
+    assert len(seen) == 13, ("four TerraClimate variables, ERA5 runoff, the two temperature "
+                             "adapters that stand against each other, and five more of "
+                             "TerraClimate's water balance")
 
 
 def test_each_band_becomes_its_own_series_when_they_travel_together():
@@ -140,3 +141,21 @@ def test_the_contract_still_refuses_a_value_without_its_unit():
             regional.observation_rows("terraclimate", rows, "geom-1", "r@1", "run-1", "2026-01-01T00:00:00Z")
     finally:
         dated_monthly.SOURCES["terraclimate"]["bands"]["aet"] = broken
+
+
+def test_the_rest_of_the_terraclimate_balance_is_a_source_of_its_own():
+    """Adding bands to `terraclimate` would re-extract the four published variables under
+    a new group; a separate source leaves them and their update schedule alone."""
+    moisture = dated_monthly.SOURCES["terraclimate_moisture"]
+    assert moisture["asset"] == dated_monthly.SOURCES["terraclimate"]["asset"]
+    assert set(moisture["bands"]) == {"vpd", "def", "swe", "ro", "pdsi"}
+    assert not set(moisture["bands"]) & set(dated_monthly.SOURCES["terraclimate"]["bands"])
+    # The collection's own scale factors, against raw values seen over the Pskem in 2020.
+    scaled = lambda band, raw: raw * moisture["bands"][band]["scale"]
+    assert scaled("vpd", 283) == pytest.approx(2.83) and moisture["bands"]["vpd"]["unit"] == "kilopascals"
+    assert scaled("def", 2033) == pytest.approx(203.3)
+    assert scaled("swe", 213) == 213 and scaled("ro", 16) == 16
+    assert scaled("pdsi", -306) == pytest.approx(-3.06)
+    built = regional.observation_rows("terraclimate_moisture", [extracted("ro", 16.0)],
+                                      "geom-1", "recipe@1", "run-1", "2026-01-01T00:00:00Z")
+    assert built[0]["attribute_id"] == "uzgeodata.dated.v1.rtc_mm_s", "not confused with ERA5's run_mm_s"
