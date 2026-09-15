@@ -85,14 +85,18 @@ def build(out=OUT):
 <style>
 .fig{{width:100%;height:auto;display:block}}
 .fig-frame{{overflow-x:auto;background:#fdfdfc;border:1px solid #dfe3e0;border-radius:10px;padding:8px;margin:1.4rem 0}}
-.t{{width:100%;border-collapse:collapse;margin:1.1rem 0;font-size:.93rem}}
-.t th,.t td{{text-align:left;padding:.55rem .7rem;border-bottom:1px solid #e2e8e5;vertical-align:top}}
-.t th{{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:#4a5568}}
+.t-wrap{{overflow-x:auto;margin:1.1rem 0;border:1px solid #d0dcd6;border-radius:6px}}
+.t{{width:100%;border-collapse:collapse;font-size:.93rem;margin:0}}
+.t th,.t td{{text-align:left;padding:.6rem .8rem;border-bottom:1px solid #d0dcd6;vertical-align:top}}
+.t thead th{{background:#eaf0ec;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:#2d4a42;border-bottom:2px solid #b8ccc4}}
+.t thead tr+tr th{{border-top:1px solid #c8d6cf}}
+.t tbody tr:nth-child(even){{background:#f6f9f6}}
+.t tbody tr:hover{{background:#eef4f0}}
 .t td.zero{{color:#9b2c2c;font-weight:650}}
 .t td.kept{{color:#1b4d7e;font-weight:650}}
 .muted{{color:#4a5568;font-size:.85rem}}
-.warn{{border-left:4px solid #9b2c2c;background:#fdf6f6;padding:.95rem 1.15rem;border-radius:0 8px 8px 0;margin:1.3rem 0}}
-.key{{border-left:4px solid #1b4d7e;background:#f5f8fb;padding:.95rem 1.15rem;border-radius:0 8px 8px 0;margin:1.3rem 0}}
+.warn{{display:block;width:auto;border-left:4px solid #9b2c2c;background:#fdf6f6;padding:.95rem 1.15rem;border-radius:0 8px 8px 0;margin:1.3rem 0}}
+.key{{display:block;width:auto;border-left:4px solid #1b4d7e;background:#f5f8fb;padding:.95rem 1.15rem;border-radius:0 8px 8px 0;margin:1.3rem 0}}
 .stat-row{{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:1.3rem 0}}
 .stat{{background:#f7f9f8;border-radius:8px;padding:.8rem .9rem}}
 .stat b{{display:block;font-size:1.5rem;color:#103d40;line-height:1.2}}
@@ -120,11 +124,11 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 
 <h2>Resolution: what a basin mean can and cannot be</h2>
 <p>{findings['resolution']['why_it_was_not_obvious']}</p>
-<table class="t"><thead><tr><th>Product</th><th>Cell size</th><th>Source cells per basin, region-wide</th><th>Verdict at level 12</th></tr></thead><tbody>
+<div class="t-wrap"><table class="t"><thead><tr><th>Product</th><th>Cell size</th><th>Source cells per basin, region-wide</th><th>Verdict at level 12</th></tr></thead><tbody>
 <tr><td>MODIS MYD10A1</td><td>500 m &middot; 0.25 km&sup2;</td><td>518.9</td><td class="kept">resolved</td></tr>
 <tr><td>TerraClimate</td><td>4.6 km &middot; 21.5 km&sup2;</td><td>6.03</td><td class="kept">resolved</td></tr>
 <tr><td>ERA5-Land</td><td>11.1 km &middot; 123.2 km&sup2;</td><td>1.05</td><td class="zero">withheld</td></tr>
-</tbody></table>
+</tbody></table></div>
 <p>{findings['resolution']['what_survives']}</p>
 <p class="muted"><strong>The remaining caveat.</strong> {findings['resolution']['the_remaining_caveat']}</p>
 
@@ -147,20 +151,20 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <h2>Does the answer depend on the size of the unit?</h2>
 <p>A trend computed per basin is a trend computed on an arbitrary polygon. Enlarge the polygons and several things change at once: each unit averages more source cells, the series smooths, and the number of simultaneous tests falls by a factor of seventeen. A result present at one size and absent at another is telling you about the polygons.</p>
 <p>So the whole study is run twice &mdash; at level 12 (7,445 units, median 136&nbsp;km&sup2;) and level 7 (438 units, median 1,510&nbsp;km&sup2;) &mdash; and compared. <strong>Seven of nine variables agree; none diverges.</strong> The two that appear at one scale only are the ERA5-Land pair, which level 12 cannot resolve at all.</p>
-<table class="t"><thead><tr><th rowspan="2">Variable</th><th rowspan="2">Native cell</th><th colspan="2">Level 12</th><th colspan="2">Level 7</th><th rowspan="2">Verdict</th></tr><tr><th>Significant</th><th>Share</th><th>Significant</th><th>Share</th></tr></thead><tbody>{scale_rows}</tbody></table>
+<div class="t-wrap"><table class="t"><thead><tr><th rowspan="2">Variable</th><th rowspan="2">Native cell</th><th colspan="2">Level 12</th><th colspan="2">Level 7</th><th rowspan="2">Verdict</th></tr><tr><th>Significant</th><th>Share</th><th>Significant</th><th>Share</th></tr></thead><tbody>{scale_rows}</tbody></table></div>
 <p class="key"><strong>Analysed at the level where it resolves, ERA5-Land shows nothing.</strong> {scale['reading']['era5']}</p>
 <p class="muted"><strong>What this cannot do.</strong> {scale['reading']['what_it_cannot_do']}</p>
 
 <h2>Results</h2>
 <div class="fig-frame">{inline("trend-correction-cascade.svg")}</div>
 
-<table class="t"><thead><tr><th>Variable</th><th>Basins</th><th>Significant, uncorrected</th><th>After serial correction</th><th>After false discovery control</th></tr></thead><tbody>{rows}</tbody></table>
+<div class="t-wrap"><table class="t"><thead><tr><th>Variable</th><th>Basins</th><th>Significant, uncorrected</th><th>After serial correction</th><th>After false discovery control</th></tr></thead><tbody>{rows}</tbody></table></div>
 
 <div class="key"><strong>Precipitation is the clearest case.</strong> {findings['precipitation']}</div>
 
 <h3>The fluxes do not trend. The stores do.</h3>
 <p>{findings['drivers_do_not_trend_but_states_do']['observation']}</p>
-<table class="t"><thead><tr><th>Role in the water balance</th><th>Variable</th><th>Significant after correction</th></tr></thead><tbody>
+<div class="t-wrap"><table class="t"><thead><tr><th>Role in the water balance</th><th>Variable</th><th>Significant after correction</th></tr></thead><tbody>
 <tr><td>water in</td><td>precipitation</td><td class="zero">{block("uz:pre-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
 <tr><td>evaporative demand</td><td>potential evapotranspiration</td><td class="zero">{block("uz:pet-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
 <tr><td>water out</td><td>actual evapotranspiration</td><td>{block("uz:aet-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
@@ -168,7 +172,7 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <tr><td>demand less supply</td><td>climatic water deficit</td><td class="zero">{block("uz:cwd-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
 <tr><td><strong>store</strong></td><td><strong>soil moisture</strong></td><td class="kept">{block("uz:soil-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
 <tr><td><strong>store</strong></td><td><strong>Palmer drought severity index</strong></td><td class="kept">{block("uz:pds-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
-</tbody></table>
+</tbody></table></div>
 <div class="warn"><strong>This is the study&#8217;s most consequential result.</strong> {findings['drivers_do_not_trend_but_states_do']['why_it_matters']}</div>
 <p><strong>Three readings, which this analysis cannot separate:</strong></p>
 <ol>{"".join(f"<li>{r}</li>" for r in findings['drivers_do_not_trend_but_states_do']['three_readings'])}</ol>
@@ -180,7 +184,7 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <h3>Where the surviving signal sits</h3>
 <div class="fig-frame">{inline("trend-strata-soil.svg")}</div>
 <p>Modelled soil moisture declines most consistently in middle and lower cropland. In irrigated basins specifically:</p>
-<table class="t"><thead><tr><th>System</th><th>Position</th><th>Elevation</th><th>Basins</th><th>Significant decrease</th><th>Share</th><th>Median slope (mm/yr)</th></tr></thead><tbody>{irrigated_rows}</tbody></table>
+<div class="t-wrap"><table class="t"><thead><tr><th>System</th><th>Position</th><th>Elevation</th><th>Basins</th><th>Significant decrease</th><th>Share</th><th>Median slope (mm/yr)</th></tr></thead><tbody>{irrigated_rows}</tbody></table></div>
 
 <div class="fig-frame">{inline("trend-strata-tmn.svg")}</div>
 <p>Minimum temperature rises across {tmn.get('significant_after_fdr', 0):,} basins with no significant decrease anywhere, at median Sen slopes of roughly +0.04 to +0.07&nbsp;&deg;C per year.</p>
