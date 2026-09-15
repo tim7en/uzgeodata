@@ -23,6 +23,12 @@ def inline(name):
     return (TRENDS / name).read_text(encoding="utf-8").replace("<svg ", '<svg class="fig" ', 1)
 
 
+def inline_map(name):
+    """A map inlined into the page. Level 7 only -- level 12 is 1.6 MB and is linked."""
+    return (TRENDS / "maps" / name).read_text(encoding="utf-8").replace(
+        "<svg ", '<svg class="fig" ', 1)
+
+
 def build(out=OUT):
     report = json.loads((TRENDS / "index.json").read_text(encoding="utf-8"))
     scale = json.loads((TRENDS / "scale-check.json").read_text(encoding="utf-8"))
@@ -161,6 +167,26 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 
 <div class="fig-frame">{inline("trend-strata-tmn.svg")}</div>
 <p>Minimum temperature rises across {tmn.get('significant_after_fdr', 0):,} basins with no significant decrease anywhere, at median Sen slopes of roughly +0.04 to +0.07&nbsp;&deg;C per year.</p>
+
+<h2>Maps</h2>
+<p>The counts say how much; the maps say where, and whether the signal forms a pattern or is scattered. Colour is the <strong>corrected</strong> verdict, so these agree with the tables above rather than with the more dramatic picture an uncorrected test would support.</p>
+<p>Basins too small to hold four native source cells are drawn in their own neutral fill rather than left blank &mdash; a white gap on a choropleth reads as &ldquo;no trend&rdquo; when the truth is &ldquo;no answer&rdquo;.</p>
+
+<h3>Soil moisture &mdash; the signal that survives</h3>
+<div class="fig-frame">{inline_map("trend-map-soil-level7.svg")}</div>
+
+<h3>Minimum temperature</h3>
+<div class="fig-frame">{inline_map("trend-map-tmn-level7.svg")}</div>
+
+<h3>Precipitation &mdash; the signal that does not</h3>
+<p>The same region, the same test, the same correction. Nothing survives, and the map is the clearest statement of that.</p>
+<div class="fig-frame">{inline_map("trend-map-pre-level7.svg")}</div>
+
+<h3>ERA5-Land runoff at level 12 &mdash; a map with no answer on it</h3>
+<p>Every basin withheld, because at 123&nbsp;km&sup2; per cell against a 136&nbsp;km&sup2; median basin the product cannot resolve the unit. A blank choropleth is usually an omission; this one is the result.</p>
+<div class="resource-links"><a href="/data/trends/maps/trend-map-run-level7.svg">Runoff at level 7, where it does resolve &#8599;</a><a href="/data/trends/maps/trend-map-soil-level12.svg">Soil moisture at level 12, 7,445 basins &#8599;</a></div>
+
+<p class="muted">All nine variables are mapped at level 7: <a href="/data/trends/maps/trend-map-aet-level7.svg">aet</a> &middot; <a href="/data/trends/maps/trend-map-pet-level7.svg">pet</a> &middot; <a href="/data/trends/maps/trend-map-pre-level7.svg">pre</a> &middot; <a href="/data/trends/maps/trend-map-run-level7.svg">run</a> &middot; <a href="/data/trends/maps/trend-map-snw-level7.svg">snw</a> &middot; <a href="/data/trends/maps/trend-map-soil-level7.svg">soil</a> &middot; <a href="/data/trends/maps/trend-map-tmn-level7.svg">tmn</a> &middot; <a href="/data/trends/maps/trend-map-tmp-level7.svg">tmp</a> &middot; <a href="/data/trends/maps/trend-map-tmx-level7.svg">tmx</a>. Outlines are simplified for drawing at a stated tolerance; the values are not.</p>
 
 <h2>The limitation that decides what this means</h2>
 <div class="warn"><strong>Soil moisture here is modelled, not observed.</strong> {findings['the_caveat_that_matters']}</div>
