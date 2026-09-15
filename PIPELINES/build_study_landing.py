@@ -124,10 +124,7 @@ def main():
                    c=[s.get('elevation_m',0) for s in sites],cmap=LinearSegmentedColormap.from_list('terrain',['#49bcd1','#8bd9bf','#ffd596']),s=65,edgecolors='#a7dbe7',linewidths=.4)
         ax.set_aspect(1/math.cos(math.radians(41)))
     preview(DATA/'regional-study-preview.svg',network)
-    flow=json.loads((ROOT/'PUBLISHED/data/water-flow/regional-water-flow-sensitivity.json')
-                    .read_text(encoding='utf-8'))
-    policy=next(s for s in flow['scenarios'] if s['reduction'] and 'efficiency' in s['label'])
-    trend=json.loads((ROOT/'PUBLISHED/data/trends/index.json').read_text(encoding='utf-8'))
+    from build_water_flow_diagram import study_card as water_flow_card
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -149,20 +146,7 @@ def main():
         # href leaves the /case-studies/ namespace. It still belongs in the directory:
         # a case study nobody can reach from the case-study index is published only in
         # the sense that the bytes are on a server.
-        {'id':'water-flow','href':'/water-flow.html','title':"Where the region's water goes",
-         'region':'AMU DARYA & SYR DARYA','aim':'Account for the region’s water from rainfall to the Aral, and mark every flow with how it is known.',
-         'image':'/data/water-flow/regional-water-flow-sensitivity.svg',
-         'image_alt':'Climatic surplus by year as bars, with the recorded diversion drawn flat across them; two years rise above it.',
-         'evidence_date':flow['generated_at'],
-         'metric':len(flow['observed']['stressed_years']),
-         'metric_label':'Years with a thin margin',
-         # The card showed a bare 6 while the study's scenario table shows 6, 3 and 2.
-         # Read alone that looks like the card had not been rebuilt. It is the observed
-         # figure and the others are conditional, so the card now says which is which
-         # rather than leaving a reader to assume it is stale.
-         'detail':f"of 22 observed · {len(flow['observed']['exceeded_years'])} exceeded supply "
-                  f"· {policy['stressed_years']} if Uzbekistan meets its 2030 efficiency target",
-         'status':'Water balance & sensitivity'},
+        water_flow_card(),
         {'id':'trends','href':'/trends.html','title':'What survives testing properly',
          'region':'AMU DARYA & SYR DARYA','aim':'Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.',
          'image':'/data/trends/trend-correction-cascade.svg',

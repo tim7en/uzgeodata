@@ -1,230 +1,112 @@
-"""Assemble the case-study page from the data, so the prose cannot drift from it.
-
-Every figure quoted in the page is read from the published JSON rather than typed into
-the HTML. A page that states 93.3 km3/yr in prose while the diagram beside it is rebuilt
-to something else is the ordinary way a case study stops being true, and it happens
-without anyone editing the sentence.
-"""
+"""Generate the reviewed case study from its source-linked data and figures."""
 from __future__ import annotations
-import argparse
+import html
 import json
 from pathlib import Path
 import sys
-
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
-
-FLOW = ROOT / "PUBLISHED/data/water-flow"
-OUT = ROOT / "INTERFACE/water-flow.html"
-
-
-def inline(name, klass):
-    svg = (FLOW / name).read_text(encoding="utf-8")
-    return svg.replace("<svg ", f'<svg class="{klass}" ', 1)
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+FLOW=ROOT/'PUBLISHED/data/water-flow'
+OUT=ROOT/'INTERFACE/water-flow.html'
 
 
 def build(out=OUT):
-    diagram = json.loads((FLOW / "regional-water-flow.json").read_text(encoding="utf-8"))
-    sens = json.loads((FLOW / "regional-water-flow-sensitivity.json").read_text(encoding="utf-8"))
-    observed, method = sens["observed"], diagram["method"]
-    surplus, share = observed["surplus_km3"], observed["share_of_surplus"]
-    scenarios = sens["scenarios"]
-    # Looked up by name, not by position: an index into the link list silently points
-    # at a different flow the moment the diagram gains one.
-    links = {(l["source"], l["target"]): l for l in diagram["links"]}
-    agriculture_share = (links[("uz-use", "sector-agriculture")]["value"]
-                         / links[("amu-uz", "uz-use")]["value"])
-    exceeded = " and ".join(str(y) for y in observed["exceeded_years"])
-    stressed = ", ".join(str(y) for y in observed["stressed_years"])
-
-    basis_cards = "".join(
-        f'<div class="basis-card" style="--c:{v["colour"]}"><strong>{v["label"]}</strong>'
-        f'<span>{v["meaning"]}</span></div>' for v in diagram["basis_legend"].values())
-    sources = "".join(
-        f'<li><a href="{s["url"]}">{s["name"]}</a>'
-        f'{" — " + s["role"] if s.get("role") else ""}</li>' for s in diagram["sources"])
-    scenario_rows = "".join(
-        f'<tr><td><strong>{s["label"]}</strong><br><span class="muted">{s["note"]}</span></td>'
-        f'<td>{s["diversion_km3"]} km³/yr</td><td>{s["water_freed_km3"]} km³/yr</td>'
-        f'<td>{s["stressed_years"]} of 22</td><td>{s["exceeded_years"]}</td></tr>'
-        for s in scenarios)
-    gaps = "".join(f'<li><strong>{k.replace("_", " ").title()}.</strong> {v}</li>'
-                   for k, v in sens["not_modelled"].items())
-
-    import csv as _csv
-    rows = {r["figure_id"]: r for r in _csv.DictReader(
-        (FLOW / "regional-withdrawals.csv").open(encoding="utf-8"))}
-    countries = diagram.get("country_legend", {})
-    amu_rows = "".join(
-        f'<tr><td><span class="chip" style="background:{countries[c]["colour"]}"></span>'
-        f'{countries[c]["label"]}</td><td>{rows[f"icwc-amu-{k}-2022"]["value"]}</td>'
-        f'<td>{lim}</td><td>{float(rows[f"icwc-amu-{k}-2022"]["value"]) / float(lim):.0%}</td></tr>'
-        for k, c, lim in (("tj", "tajikistan", "9.83"), ("tm", "turkmenistan", "21.83"),
-                          ("uz", "uzbekistan", "23.57")))
-    syr_rows = "".join(
-        f'<tr><td><span class="chip" style="background:{countries[c]["colour"]}"></span>'
-        f'{countries[c]["label"]}</td><td>{rows[f"icwc-syr-{k}-2026"]["value"]}</td>'
-        f'<td>{rows.get(f"icwc-shortage-{k}-2022", {}).get("value", "&mdash;")}%</td></tr>'
-        for k, c in (("kg", "kyrgyzstan"), ("tj", "tajikistan"),
-                     ("uz", "uzbekistan"), ("kz", "kazakhstan")))
-    targets = list(_csv.DictReader((FLOW / "national-targets.csv").open(encoding="utf-8")))
-    policy_cut = sens["policy_targets"]["uzbekistan_efficiency_implies_reduction"]
-    combined = scenarios[1]["water_freed_km3"] + 2.192
-    def _range(r):
-        if not r["target"]:
-            return "&mdash;"
-        unit = r["unit"] or ""
-        return (f'{r["baseline"]} &rarr; {r["target"]} {unit}' if r["baseline"]
-                else f'{r["target"]} {unit}')
-    target_rows = "".join(
-        f'<tr><td>{countries.get(r["country"], {}).get("label", r["country"].title())}</td>'
-        f'<td>{r["instrument_id"] or r["instrument"][:46]}</td>'
-        f'<td>{r["indicator"]}</td><td>{_range(r)}</td></tr>' for r in targets)
-    country_chips = "".join(
-        f'<span class="country-chip"><span class="chip" style="background:{v["colour"]}"></span>'
-        f'{v["label"]}<em>{v["position"]}</em></span>' for v in countries.values())
-
-    page = f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#103d40"><meta name="description" content="A water flow diagram and sensitivity analysis for the Amu Darya and Syr Darya, with every flow coloured by how it is known, and a pathway of what would have to change."><title>Where the region&#8217;s water goes &middot; UzGeoData</title><link rel="stylesheet" href="/home.css">
+    d=json.loads((FLOW/'regional-water-flow.json').read_text())
+    m=json.loads((FLOW/'regional-water-flow-sensitivity.json').read_text())
+    sources={s['source_id']:s for s in d['sources']}
+    esc=html.escape
+    def cite(id):
+        s=sources[id]
+        return f'<a href="{esc(s["url"],quote=True)}">{esc(s["name"])}</a>'
+    def figure(file,alt,caption):
+        return f'<figure><a href="/data/water-flow/{file}"><img src="/data/water-flow/{file}" alt="{esc(alt)}" loading="lazy"/></a><figcaption>{caption} <a href="/data/water-flow/{file}">Open full-size SVG</a></figcaption></figure>'
+    def table(head,rows,caption):
+        return '<div class="table-scroll"><table><caption>'+caption+'</caption><thead><tr>'+''.join('<th scope="col">'+c+'</th>' for c in head)+'</tr></thead><tbody>'+''.join('<tr>'+''.join('<td>'+str(c)+'</td>' for c in r)+'</tr>' for r in rows)+'</tbody></table></div>'
+    accounts=table(['Year','Country','Actual withdrawal','Limit','Limit used','Source'],[
+       [r['year'],r['country'].title(),f"{r['withdrawal_km3']:.2f}",f"{r['limit_km3']:.2f}",f"{r['limit_utilisation_percent']:.1f}%",cite(f"cawater-yearbook-{r['year']}")] for r in d['country_withdrawals']], 'Amu Darya allocations: km³ per calendar year. Limit utilisation is calculated as actual ÷ limit.')
+    totals=table(['Year','Amu reported withdrawal','Syr withdrawal above Shardara'],[[r['year'],f"{r['amu_withdrawal_km3']:.2f}",f"{r['syr_above_shardara_km3']:.2f}"] for r in d['reported_totals']], 'Reported withdrawals (km³/year). Boundaries differ; no combined regional water-stress denominator is inferred.')
+    reservoirs=table(['Year','Reservoir','Inflow','Release','Inflow − release'],[[r['year'],r['reservoir'].title(),f"{r['inflow_km3']:.2f}",f"{r['release_km3']:.2f}",f"{r['inflow_minus_release_km3']:+.2f}"] for r in d['reservoir_accounts']], 'Reservoir accounts (km³/year), SIC ICWC yearbooks §2.1. The residual omits other water-balance terms.')
+    env=table(['Year','Northern Aral','Amu delta, mixed delivery','Large Aral, collector drainage'],[[year]+[f"{next(r['volume_km3'] for r in d['environmental_deliveries'] if r['year']==year and r['scope']==scope):.4f}" for scope in ['northern_aral','amu_delta','large_aral']] for year in d['years']], 'Separate delivery records (km³/year), yearbooks §2.1–2.2.1. Additional display decimals do not imply measurement precision.')
+    modeltable=table(['Product','Mean km³/year','Evidence type'],[[esc(m['variables'][v]['label']),f'{value:.2f}','Gridded model/estimate'] for v,value in m['means_km3'].items()]+[['TerraClimate P − AET',f"{m['means_km3']['pre_mm_s']-m['means_km3']['aet_mm_s']:.2f}",'Calculated difference']],f"Common complete years: {len(m['matched_years'])}. Spatial domain: {m['domain']['basins']:,} non-overlapping local basins.")
+    missing=', '.join(esc(v['label']) for v in m['variables'].values() if v['status']!='available')
+    optional=f'<p>Unavailable in this snapshot: {missing}. No replacement values are invented.</p>' if missing else '<p>Both runoff products are present in this snapshot and compared on identical years and basin areas. Their difference is a diagnostic of product disagreement, not evidence that either is correct.</p>'
+    bibliography=''.join(f'<li id="source-{esc(s["source_id"])}">{cite(s["source_id"])}. {esc(s["role"])} <small>Accessed {esc(s["retrieved_at"])}.</small></li>' for s in d['sources'])
+    download_names=[('regional-withdrawals.csv','Reported figures and row-level citations · CSV'),('regional-water-flow.json','Country, reservoir and delivery accounts · JSON'),('regional-model-annual.csv','Model annual totals and coverage · CSV'),('regional-water-flow-sensitivity.json','Model diagnostics, assumptions and input hashes · JSON'),('regional-water-flow-map.json','Map source hashes and landmark positions · JSON'),('sources.json','Source register · JSON')]
+    downloads=''.join(f'<a href="/data/water-flow/{name}" download>{label} ↗</a>' for name,label in download_names)
+    page=f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Source-audited Amu Darya and Syr Darya withdrawals, reservoir flows and Aral deliveries, with TerraClimate and ERA5-Land model diagnostics."><title>Water withdrawals and downstream deliveries · UzGeoData</title><link rel="stylesheet" href="/home.css">
 <style>
-.wfd{{width:100%;height:auto;display:block}}
-.wfd-frame{{overflow-x:auto;background:#fdfdfc;border:1px solid #dfe3e0;border-radius:10px;padding:8px;margin:1.5rem 0}}
-.basis-grid{{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:1.25rem 0}}
-.basis-card{{border-left:4px solid var(--c);padding:.6rem .85rem;background:#f7f9f8;border-radius:0 6px 6px 0}}
-.basis-card strong{{display:block;margin-bottom:.2rem}}
-.basis-card span{{font-size:.88rem;color:#4a5568}}
-.figure-row{{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));margin:1.25rem 0}}
-.figure{{background:#f7f9f8;border-radius:8px;padding:.8rem .9rem}}
-.figure b{{display:block;font-size:1.5rem;color:#103d40;line-height:1.2}}
-.figure span{{font-size:.84rem;color:#4a5568}}
-.figure.alarm b{{color:#9b2c2c}}
-.wfd-table{{width:100%;border-collapse:collapse;margin:1.1rem 0;font-size:.92rem}}
-.wfd-table th,.wfd-table td{{text-align:left;padding:.6rem .7rem;border-bottom:1px solid #e2e8e5;vertical-align:top}}
-.wfd-table th{{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:#4a5568}}
-.muted{{color:#4a5568;font-size:.86rem}}
-.finding{{border-left:4px solid #9b2c2c;background:#fdf6f6;padding:.9rem 1.1rem;border-radius:0 8px 8px 0;margin:1.2rem 0}}
-.role-grid{{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:1.2rem 0}}
-.role{{background:#f7f9f8;border-radius:8px;padding:.9rem 1rem}}
-.role h4{{margin:0 0 .4rem}}
-.role ul{{margin:0;padding-left:1.1rem;font-size:.9rem;color:#4a5568}}
-.chip{{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:.45rem;vertical-align:baseline}}
-.country-row{{display:flex;flex-wrap:wrap;gap:.9rem;margin:1rem 0}}
-.country-chip{{display:inline-flex;align-items:baseline;gap:.15rem;font-size:.92rem}}
-.country-chip em{{color:#718096;font-size:.8rem;font-style:normal;margin-left:.35rem}}
+.wf-study{{max-width:1120px;margin:auto;padding:0 24px 64px;color:#243c40}}.wf-study h1{{font-size:clamp(34px,5vw,64px);line-height:1.08;letter-spacing:-.04em;margin:18px 0}}.wf-study h2{{font-size:30px;line-height:1.2;margin:0 0 20px}}.wf-study h3{{font-size:21px;margin-top:28px}}.wf-study p,.wf-study li{{line-height:1.75}}.wf-study a{{color:#126575;text-decoration:underline;text-underline-offset:3px}}.wf-study section{{padding:42px 0;border-bottom:1px solid #d8e2df;scroll-margin-top:25px}}.wf-study .lead{{font-size:20px;max-width:900px}}.wf-study .eyebrow{{letter-spacing:.12em;font-size:12px;font-weight:700;color:#176957}}.wf-study .notice{{border-left:4px solid #b58135;background:#faf5e9;padding:18px 22px}}.wf-study .summary{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0}}.wf-study .summary article{{background:#f0f5f3;padding:22px;border-radius:8px}}.wf-study .summary strong{{display:block;font-size:25px;color:#116a57}}.wf-study .summary span{{display:block;font-size:13px;margin-top:8px}}.wf-study .toc{{display:flex;flex-wrap:wrap;gap:14px 22px;font-size:14px;margin-top:28px}}.wf-study figure{{margin:26px 0}}.wf-study figure img{{width:100%;height:auto;display:block;background:#fcfcfa;border:1px solid #dce5e1;border-radius:8px}}.wf-study figcaption{{font-size:13px;line-height:1.6;margin-top:10px;color:#526669}}.wf-study .table-scroll{{overflow:auto;margin:24px 0}}.wf-study table{{border-collapse:collapse;width:100%;font-size:14px;min-width:620px}}.wf-study caption{{text-align:left;font-size:13px;padding:0 0 12px;color:#526669}}.wf-study th,.wf-study td{{padding:12px;text-align:left;border-bottom:1px solid #dce5e1;vertical-align:top}}.wf-study th{{background:#f0f5f3;font-weight:600}}.wf-study small{{font-size:12px;color:#526669}}.wf-study .equation{{background:#f0f5f3;padding:18px;font:16px/1.7 monospace;overflow-wrap:anywhere}}.wf-study .downloads{{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}}.wf-study .downloads a{{padding:16px;background:#f0f5f3;border-radius:6px}}.wf-study details{{border:1px solid #dce5e1;padding:18px;margin:20px 0;border-radius:8px}}.wf-study summary{{cursor:pointer;font-weight:600}}@media(max-width:680px){{.wf-study{{padding:0 16px 40px}}.wf-study .summary,.wf-study .downloads{{grid-template-columns:1fr}}.wf-study h2{{font-size:26px}}.wf-study figure{{margin-inline:-6px}}.site-header nav{{flex-wrap:wrap}}}}
 </style></head><body><a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="brand" href="/" aria-label="UzGeoData home"><span class="brand-icon" aria-hidden="true">&#8776;</span>UzGeoData<span class="brand-sub">BASIN ATLAS</span></a><nav aria-label="Main navigation"><a href="/project.html">Project overview</a><a href="/examples.html">Use cases</a><a href="/case-studies.html">Case studies</a><a href="/guide.html">User guide</a><a class="button small" href="/">Open basin explorer <span aria-hidden="true">&#8599;</span></a></nav></header>
-<main id="main" class="project-content">
-
-<section class="page-intro"><p class="eyebrow">CASE STUDY &middot; REGIONAL WATER BALANCE</p>
-<h1>Where the region&#8217;s water goes<br><em>and how much of that we actually know.</em></h1>
-<p class="lead">A water flow diagram for the Amu Darya and Syr Darya, adapted from the <a href="{method['url']}">Water Flow Diagram method</a>. Its published applications are municipal, where one utility can account for what it abstracted, delivered and lost. Nothing at that resolution is published for this region &mdash; so this is drawn at basin-system scale, every flow states how it is known, and the analysis that follows is built on the part that is measured.</p></section>
-
-<section class="section"><div>
-<div class="figure-row">
-<div class="figure"><b>{surplus['mean']}</b><span>km&sup3;/yr mean climatic surplus<br>22-year measured mean</span></div>
-<div class="figure"><b>{observed['diversion_km3']}</b><span>km&sup3;/yr diverted in 2022<br>ICWC record</span></div>
-<div class="figure alarm"><b>{share['driest_year']:.0%}</b><span>of the surplus taken in the driest year<br>2021</span></div>
-<div class="figure alarm"><b>{len(observed['stressed_years'])} of 22</b><span>years with a thin margin<br>diversion &ge; 80% of surplus</span></div>
-</div>
-
-<div class="finding"><strong>The headline finding.</strong> Averaged over twenty-two years the region looks comfortable: it diverts about {observed['diversion_km3'] / surplus['mean']:.0%} of what precipitation less evapotranspiration generates. But the surplus varies by a factor of {surplus['range_factor']} between years while allocation does not vary at all &mdash; and in <strong>{exceeded}</strong> the recorded diversion <strong>exceeded the surplus outright</strong>. Water was still delivered, which means it came from storage, snow and glacier melt, groundwater, or inflow from outside the accounting domain. A mean year is the one condition under which this system has room.</div>
-
-<h2>The diagram</h2>
-<div class="wfd-frame">{inline("regional-water-flow.svg", "wfd")}</div>
-
-<h3>Colour is provenance, not water type</h3>
-<p>The published applications of this method colour flows by what kind of water they carry. Here colour says <strong>how a flow is known</strong>, because at this scale that is the distinction a reader most needs and least often gets from a Sankey diagram.</p>
-<div class="basis-grid">{basis_cards}</div>
-
-<h3>Who takes what, and who goes short</h3>
-<p>Panel 2 carries nothing but ICWC figures, so colour there is free to say <strong>which country</strong> rather than how the flow is known &mdash; the question a transboundary diagram is actually asked.</p>
-<p class="country-row">{country_chips}</p>
-
-<h4>Amu Darya, 2022: limit against actual</h4>
-<table class="wfd-table"><thead><tr><th>Country</th><th>Diverted (km&sup3;)</th><th>Limit (km&sup3;)</th><th>Share of limit used</th></tr></thead><tbody>{amu_rows}</tbody></table>
-
-<h4>Syr Darya: 2026 allocation, and who went short in 2022</h4>
-<p>The Syr Darya total drawn in panel 2 is bounded at the Shardara reservoir, so it <strong>excludes Kazakhstan entirely</strong> &mdash; which sits downstream and is the reason the river does not end where an upstream-only diagram would end it. Country actuals for 2022 are not published; the limits below are for 2026, agreed at the ICWC 91st session, and the shortfall column is the 2022 growing season against limit.</p>
-<table class="wfd-table"><thead><tr><th>Country</th><th>2026 limit (km&sup3;)</th><th>2022 growing-season shortfall</th></tr></thead><tbody>{syr_rows}</tbody></table>
-<p class="notice"><strong>Kyrgyzstan, the headwater state, went shortest of all &mdash; 36&nbsp;per&nbsp;cent below its limit in 2022, on a river it generates.</strong> It also holds the smallest allocation of the four, 0.317&nbsp;km&sup3;/yr against Uzbekistan&#8217;s 12.147. That asymmetry between where water comes from and where it is allocated is the central fact of Syr Darya management, and no water-balance diagram drawn from hydrology alone will show it.</p>
-
-<h4>Where the rivers end</h4>
-<p>Both terminal figures are small enough to be worth stating plainly. The Syr Darya delivered <strong>0.82&nbsp;km&sup3;</strong> to the Northern Aral in 2022. Inflow to the Large Aral was <strong>0.50&nbsp;km&sup3;</strong> &mdash; and came <em>entirely from drainage canals rather than river discharge</em>. The Amu Darya, as a river, no longer reaches it.</p>
-
-<h3>It does not close, and is not made to</h3>
-<p>{diagram['reading']['closure']}</p>
-<p>{diagram['reading']['scale']}</p>
-
-<h2>Sensitivity: what actually moves this system</h2>
-<p>The method&#8217;s published applications vary loss rates, connection rates and treatment capacity, because a utility has measured all of those. Almost none of it is measured here, so varying it would be varying assumptions and calling the spread a result. What <em>is</em> measured is the supply side &mdash; and that is where the sensitivity turns out to live.</p>
-<div class="wfd-frame">{inline("regional-water-flow-sensitivity.svg", "wfd")}</div>
-<p>Surplus ranges from <strong>{surplus['min']['value']} km&sup3;/yr ({surplus['min']['year']})</strong> to <strong>{surplus['max']['value']} km&sup3;/yr ({surplus['max']['year']})</strong>, a factor of {surplus['range_factor']}. Diversion is {share['wettest_year']:.0%} of the surplus in the wettest year and {share['driest_year']:.0%} in the driest. Thin-margin years: {stressed}.</p>
-<p class="notice">{sens['caution']}</p>
-
-<h3>Scenario arithmetic</h3>
-<p>Applied to agricultural withdrawal at the national sectoral share. This is arithmetic on published numbers, not a model: no efficiency mechanism is represented and no cost is estimated. The 10&nbsp;per&nbsp;cent case is the 2023 national plan&#8217;s own target, shown so a reader can see what it would and would not achieve.</p>
-<table class="wfd-table"><thead><tr><th>Scenario</th><th>Diversion</th><th>Water freed</th><th>Thin-margin years</th><th>Years exceeding supply</th></tr></thead><tbody>{scenario_rows}</tbody></table>
-<p><strong>What the arithmetic says.</strong> The national plan&#8217;s own 10&nbsp;per&nbsp;cent target, applied to agriculture, frees {scenarios[1]['water_freed_km3']} km&sup3;/yr &mdash; enough to remove both years in which diversion exceeded supply, and to cut thin-margin years from {scenarios[0]['stressed_years']} to {scenarios[1]['stressed_years']}. It does not eliminate them. Because agriculture is {agriculture_share:.0%} of use, it is the only sector where a change of this size is arithmetically available at all: eliminating <em>all</em> municipal use would free less than a fifth of what a 10&nbsp;per&nbsp;cent agricultural saving does.</p>
-
-<h3>What the states have committed to in law</h3>
-<p>The scenario above is not a round number. It is Uzbekistan&#8217;s own target, adopted in <strong>УП-6024</strong> and published on lex.uz: raise irrigation system efficiency (КПД) from <strong>0.63 to 0.73</strong> by 2030. Delivering the same water to the same fields at that efficiency requires {policy_cut:.1%} less withdrawal &mdash; which is where the {scenarios[1]['water_freed_km3']}&nbsp;km&sup3;/yr comes from.</p>
-<table class="wfd-table"><thead><tr><th>Country</th><th>Instrument</th><th>Indicator</th><th>Baseline &rarr; target</th></tr></thead><tbody>{target_rows}</tbody></table>
-<p class="notice"><strong>Only two of the five riparian states publish numeric water-saving targets.</strong> Uzbekistan states its as a delivery efficiency, which converts directly into a withdrawal figure. Kazakhstan states its as a volume &mdash; 2,192&nbsp;млн&nbsp;м&sup3;/год by 2030 &mdash; which is directly comparable with basin diversion. Tajikistan and Kyrgyzstan have adopted strategies to 2040 with no numeric water-saving target located; nothing was found for Turkmenistan. On a shared river, an absence of published targets is itself comparable information, so it is recorded rather than left blank.</p>
-<p>Taken together the two published commitments come to roughly <strong>{combined:.1f}&nbsp;km&sup3;/yr</strong> &mdash; Uzbekistan&#8217;s {scenarios[1]['water_freed_km3']} plus Kazakhstan&#8217;s 2.19. That is about {combined / observed['diversion_km3']:.0%} of what the two basins diverted in 2022, and on the arithmetic above it is the difference between a record with two years of exceedance and one with none.</p>
-
-<h3>What is deliberately not modelled</h3>
-<ul>{gaps}</ul>
-
-<h2>What would have to change</h2>
-<div class="wfd-frame">{inline("regional-water-flow-pathway.svg", "wfd")}</div>
-
-<div class="role-grid">
-<div class="role"><h4>For government bodies</h4><ul>
-<li><strong>ICWC / BWO Amu Darya &amp; Syr Darya</strong> &mdash; publish diversion by basin and sector, not only by country. This is the precondition for almost everything else.</li>
-<li><strong>Ministry of Water Resources</strong> &mdash; establish a distribution-loss baseline. A 10&nbsp;per&nbsp;cent reduction target cannot be evaluated against nothing.</li>
-<li><strong>State Committee on Geology</strong> &mdash; report groundwater abstraction, so a surface-water saving can be distinguished from a groundwater cost.</li>
-<li><strong>Uzsuvtaminot and vodokanals</strong> &mdash; publish wastewater generated alongside wastewater treated.</li>
-</ul></div>
-<div class="role"><h4>For academic partners</h4><ul>
-<li><strong>Digitise the ICWC series.</strong> One transcribed year is drawn here against twenty-two measured ones. The yearbooks hold annual limits and actuals; a machine-readable series is a contained, high-value piece of work.</li>
-<li><strong>Reconcile the products against gauges.</strong> Runoff and the climatic surplus disagree by more than the entire municipal sector. Uzhydromet records exist; this is answerable.</li>
-<li><strong>Attribute the decline.</strong> The surplus falls {abs(observed['trend_km3_per_year']['surplus']):.2f} km&sup3;/yr per year across this record. Whether that is decadal variability or a trend needs a longer record than 22 years.</li>
-<li><strong>Reproduce an attribute independently.</strong> Nothing in this atlas has passed independent reproduction; that gate is open to anyone.</li>
-</ul></div>
-</div>
-
-<h2>What data would close the gaps</h2>
-<table class="wfd-table"><thead><tr><th>Needed</th><th>Why it matters</th><th>Likely holder</th></tr></thead><tbody>
-<tr><td>Diversion by basin and sector, annual</td><td>Turns every derived flow in the diagram into an administered one, and lets the sensitivity run per catchment rather than per region</td><td>ICWC, BWO Amu Darya &amp; Syr Darya</td></tr>
-<tr><td>Distribution-loss baseline</td><td>The largest single lever in the method&#8217;s own applications, and currently unquantifiable here</td><td>Ministry of Water Resources, vodokanals</td></tr>
-<tr><td>Groundwater abstraction</td><td>Separates a genuine saving from a substitution between sources</td><td>State Committee on Geology</td></tr>
-<tr><td>Wastewater generated, not only treated</td><td>Converts a treatment statistic into a sanitation one</td><td>Uzsuvtaminot, vodokanals</td></tr>
-<tr><td>Canal network and inter-basin transfers</td><td>The structural reason basin-scale accounting fails here</td><td>Ministry of Water Resources</td></tr>
-<tr><td>Gauged discharge, current and continuous</td><td>The only way to decide which model is closer where they disagree</td><td>Uzhydromet</td></tr>
-<tr><td>Reservoir operation records</td><td>Explains how supply continues in years when diversion exceeds surplus</td><td>Reservoir operators, BWOs</td></tr>
-</tbody></table>
-
-<h2>Sources and limits</h2>
-<ul>{sources}</ul>
-<p class="notice"><strong>Reuse not yet established.</strong> {diagram['reuse']['statement']}</p>
-<p><strong>Method reference.</strong> {method['description']} &mdash; <a href="{method['applications']}">published applications</a>.</p>
-<p class="muted">Administered figures were transcribed by hand from published pages and are recorded under their own provenance class, because a transcription error there is not detectable by any automated check this project runs.</p>
-
-<div class="resource-links"><a href="/data/water-flow/regional-water-flow.json">Diagram data &#8599;</a><a href="/data/water-flow/regional-water-flow-sensitivity.json">Sensitivity data &#8599;</a><a href="/data/water-flow/regional-withdrawals.csv">Administered figures &#8599;</a><a href="/data/water-flow/regional-water-flow.svg">Diagram SVG &#8599;</a></div>
-</div></section>
-
-<section class="closing"><div><p class="eyebrow">GO DEEPER</p><h2>The record behind the measured arms.</h2><p>Precipitation and evapotranspiration come from 22 years of monthly observations across 7,445 basins, queryable without a checkout.</p></div><a class="button" href="/guide.html">Data access &amp; guide &#8599;</a></section>
-</main>
-<footer class="site-footer"><div><a class="brand" href="/">UzGeoData</a><p>Water systems cross borders.<br>Understanding them should, too.</p></div><div><strong>Explore</strong><a href="/">Basin explorer</a><a href="/examples.html">Practical examples</a><a href="/case-studies.html">Research case studies</a></div><div><strong>Understand</strong><a href="/about.html#citation">Citation &amp; reuse</a><a href="/guide.html">Guide &amp; data access</a><a href="/roadmap.html">Research roadmap</a></div><div><strong>Contribute</strong><a href="https://github.com/tim7en/uzgeodata">Project on GitHub &#8599;</a><a href="https://github.com/tim7en/uzgeodata/issues">Report an issue &#8599;</a><a href="release.json">Release metadata</a></div><p class="footer-note">Independent research project &middot; Public preview &middot; Amu Darya &amp; Syr Darya</p></footer></body></html>"""
-    Path(out).write_text(page, encoding="utf-8")
-    return {"page": str(out), "bytes": len(page.encode("utf-8"))}
+<header class="site-header"><a class="brand" href="/">UzGeoData</a><nav aria-label="Main navigation"><a href="/case-studies.html">All case studies</a><a href="/guide.html">Data guide</a><a href="/">Basin explorer ↗</a></nav></header>
+<main id="main" class="wf-study">
+<section><p class="eyebrow">REGIONAL WATER ACCOUNTING · SOURCE REVIEW {d['reviewed_at']}</p>
+<h1>Water withdrawals.<br>Downstream deliveries.<br>What the evidence supports.</h1>
+<p class="lead">A study of the Amu Darya and Syr Darya that distinguishes reported withdrawals, reservoir flows and environmental deliveries from modelled land-water estimates.</p>
+<p class="notice"><strong>Evidence status:</strong> descriptive accounting checked against cited primary reports. This study is not an independently validated national water balance or a discharge forecast. Reported numbers are traceable; uncertainty and missing flows remain explicit.</p>
+<div class="summary"><article><strong>{len(d['years'])} reporting years</strong><span>2022–2024 · January–December</span></article><article><strong>{len(m['matched_years'])} common years</strong><span>Model comparison · 2003–2024</span></article><article><strong>{m['domain']['basins']:,} basins</strong><span>Model domain · {m['domain']['area_km2']:,.1f} km²</span></article></div>
+<nav class="toc" aria-label="Study sections"><a href="#geography">Geography</a><a href="#accounts">Country accounts</a><a href="#reservoirs">Reservoirs</a><a href="#aral">Aral deliveries</a><a href="#models">Model comparison</a><a href="#validation">Discharge modelling</a><a href="#savings">Water savings</a><a href="#evidence">Sources &amp; downloads</a></nav></section>
+<section id="geography"><p class="eyebrow">01 / SPATIAL CONTEXT</p><h2>Follow the reporting boundary before the number</h2>
+{figure('regional-water-flow-map.svg','Mapped Amu Darya and Syr Darya basin systems, river network and selected reservoir landmarks.','Figure 1. Real published geometries, simplified for display. Country borders and water transfers are not inferred from basin boundaries. The same map appears on the case-study directory card.')}
+<p>The two rivers cross political borders and managed water can cross catchment divides through canals. Afghanistan is an Amu Darya riparian, but its abstraction is outside the three-country table transcribed here. Missing entries for Afghanistan, Kyrgyzstan or Kazakhstan must not be read as zero water use.</p>
+<p>The model domain is the project’s mapped basin union. The ICWC accounts describe specific river reaches and water-management systems. Equal units do not make those spatial supports equivalent. A regional rainfall total cannot be split into national inflows using country withdrawal shares.</p></section>
+<section id="accounts"><p class="eyebrow">02 / REPORTED WITHDRAWALS</p><h2>Country withdrawals are not country inflows and outflows</h2>
+<p>The yearbooks distinguish hydrological-year quota setting from their calendar-year reporting. This study uses the latter. The Amu Darya country withdrawals reconcile with each reported annual total. Limits are shown as separate markers, not extra water. Sources: {cite('cawater-yearbook-2022')}, {cite('cawater-yearbook-2023')}, {cite('cawater-yearbook-2024')}.</p>
+{figure('regional-water-flow.svg','Three zero-based country withdrawal charts for 2022, 2023 and 2024, with allocation limits marked separately.','Figure 2. Identical horizontal scales; bar length encodes withdrawal only. Exact source values are in the table below.')}
+{accounts}{totals}
+<p>The Syr Darya figures cover withdrawal upstream of the entry to Shardara reservoir. A country breakdown is not supplied in this transcription. Kazakhstan’s downstream withdrawals are outside that total, but this does not imply that all Kazakhstan abstractions are downstream. The aggregate is not coloured as if it belonged solely to Uzbekistan.</p>
+<h3>The balance a national flow diagram would actually need</h3>
+<p class="equation">ΔS = P + Q_in + G_in + T_in − ET − Q_out − G_out − T_out</p>
+<p>All terms must share a boundary and period: storage change (ΔS), precipitation (P), evaporation/transpiration (ET), river flows (Q), groundwater exchanges (G), and managed transfers (T). Withdrawals and return flows inside that boundary are internal transfers; subtracting withdrawals again after counting their evaporation can double-count water. A country diagram additionally needs cross-border gauges, canals, return flows and reservoir storage.</p>
+<p>No complete country inflow/outflow dataset is assembled here. Those quantities are null in the downloadable accounts. The former connected diagram has been replaced because a plausible-looking link was implying a physical balance the source data did not establish.</p></section>
+<section id="reservoirs"><p class="eyebrow">03 / MATCHED INFLOW AND RELEASE</p><h2>Use actual reservoir accounts where available</h2>
+{reservoirs}
+<p>These paired figures refer to the same named reservoir and year. A release greater than inflow can reflect storage drawdown; it is not automatically a data error. Conversely, inflow minus release is not a fully observed storage change because precipitation, evaporation, seepage and reporting differences also enter the balance. The yearbooks are the source for these records; they are not independent gauges validated by this project.</p></section>
+<section id="aral"><p class="eyebrow">04 / DOWNSTREAM OUTCOMES</p><h2>The delta and the sea are different destinations</h2>
+{figure('regional-water-flow-deliveries.svg','Reported annual delivery volumes at the Northern Aral, Amu delta and Large Aral for 2022–2024.','Figure 3. Separate observed reporting destinations. Bars are not stacked because the observations do not define a complete additive partition.')}
+{env}
+<p>The delta series includes mixed river, canal and drainage deliveries. The cited records identify the South Karakalpak collecting drain as the Large Aral supply route in these years, bypassing the delta. Consequently, the study does not draw a delta-to-sea arrow for that drainage, or deduct delta deliveries from Uzbekistan’s country withdrawal. Detailed source locations are retained in every CSV row.</p></section>
+<section id="models"><p class="eyebrow">05 / MODEL DIAGNOSTICS</p><h2>TerraClimate is already the precipitation input</h2>
+<p>The published precipitation and actual evapotranspiration series use TerraClimate. ERA5-Land supplies a separate runoff estimate. TerraClimate runoff is treated as another product with its own identity; replacing precipitation and replacing runoff are different modelling decisions.</p>
+{figure('regional-water-flow-sensitivity.svg','Annual TerraClimate precipitation and evapotranspiration, followed by separate P minus AET and runoff comparisons on the same domain.','Figure 4. Gridded estimates, not measured national water supply. Lines use the downloadable annual totals. Missing domain-years are withheld; zero is a real zero only.')}
+{modeltable}{optional}
+<h3>Reproducible calculation and completeness</h3>
+<p class="equation">Annual volume (km³) = Σ_basins [Σ_12 months depth (mm) × local basin area (km²) × 10⁻⁶]</p>
+<p>The calculation uses the files named by the cube manifest and a fixed 2003–2024 window. Each basin/variable/year must contain 12 distinct finite monthly values. A regional total is withheld unless every domain basin is complete. Duplicates, incompatible units and unknown basin IDs fail the build. Means use the common set of complete years; intermediate arithmetic is not rounded.</p>
+<p>These checks establish numerical support, not measurement accuracy. The compact cube lacks pixel-level coverage, detailed revisions and gauge validation. The downloads retain the cube, geometry and partition SHA-256 hashes used for this calculation.</p>
+<h3>What the model difference means</h3>
+<p>TerraClimate uses a simplified climatic water-balance model; its runoff is not routed discharge. Its published validation discusses mountain precipitation biases and limitations of the bucket model. Agreement between its P − AET and runoff is partly shared model structure, not independent confirmation. {cite('terraclimate-paper')}.</p>
+<p>Its provider cautions about inherited temporal variability and fixed land-cover assumptions. Finer grid spacing alone does not establish more accurate precipitation or discharge in these headwaters. {cite('terraclimate-provider')}. Band units and scaling are documented in {cite('terraclimate-ee')}; the reanalysis runoff definition is documented by {cite('era5-provider')}.</p>
+<p class="notice">P − AET is a land-water diagnostic. It is not a measured volume available for diversion. This revision removes historical “stress” and “supply exceeded” counts that compared it with a constant 2022 withdrawal, and removes an unsupported regional balance residual.</p></section>
+<section id="validation"><p class="eyebrow">06 / DISCHARGE MODEL DESIGN</p><h2>Test TerraClimate fairly before selecting a winner</h2>
+<p>A global comparison of precipitation forcings found strong geographical variation in discharge performance; no single product won everywhere. That evidence supports local testing, not automatic replacement. {cite('precipitation-evaluation')}. Work on the Naryn demonstrates why snow/glacier processes and gauge evaluation matter in Central Asian headwaters. {cite('naryn-model')}.</p>
+<ol><li><strong>Define the target.</strong> Choose a gauge and delineate its contributing catchment. Distinguish observed regulated flow from reconstructed natural flow. Convert discharge to monthly volume using actual elapsed seconds and retain missing-day counts.</li>
+<li><strong>Match the comparison.</strong> Extract TerraClimate and alternative precipitation over exactly the same geometry and period. Record source versions, gauge elevation, units and any bias correction. Keep corrections fitted on training data only.</li>
+<li><strong>Separate forcing from model structure.</strong> Run the same snow/soil/storage/routing model with each precipitation forcing. Compare provider runoff products in a separate experiment. Include reservoirs, abstractions and returns for managed downstream gauges; precipitation alone cannot represent them.</li>
+<li><strong>Validate out of sample.</strong> Use chronological training and held-out evaluation, with wet/dry and snowmelt seasons represented. Compare NSE, KGE, volume bias, seasonal timing and low-flow errors against a training-derived seasonal climatology. Evaluate uncertainty and sensitivity across plausible parameters and forcing products.</li>
+<li><strong>Promote only supported results.</strong> Publish paired observations/predictions, excluded periods, parameters, input hashes and the decision criterion. A locally better forcing does not automatically transfer to every basin.</li></ol>
+<p>The repository’s <a href="/case-studies/chirchik">Pskem/Chirchik study</a> provides an existing modelling and evaluation context. This accounting review does not retrain that model or claim that TerraClimate has passed a new gauge benchmark.</p></section>
+<section id="savings"><p class="eyebrow">07 / WATER-SAVING CLAIMS</p><h2>Distinguish reduced withdrawal from real basin savings</h2>
+<p>FAO distinguishes withdrawal reductions from real savings in consumption and non-recoverable flows. If reduced canal seepage previously returned downstream, improved delivery efficiency can reduce return flow as well as withdrawal. {cite('fao-real-savings')}.</p>
+{figure('regional-water-flow-pathway.svg','Hypothetical efficiency example showing identical gross withdrawal reductions but different downstream gains as return-flow recoverability changes.','Figure 5. Dimensionless illustration, not a calibrated scenario. Recoverable fractions are selected examples, not measured bounds.')}
+<p class="equation">Gross reduction = W₀ × (1 − η₀ / η₁)<br>Illustrative net gain = gross reduction × (1 − recoverable fraction)</p>
+<p>The illustration holds delivered demand fixed and uses efficiencies of 0.63 and 0.73. Its units are per 100 initially withdrawn, not km³ per year. It assumes no expansion or rebound and does not predict an environmental delivery. National targets from different jurisdictions and reporting scales are not summed into a basin forecast.</p></section>
+<section id="evidence"><p class="eyebrow">08 / EVIDENCE AND REPRODUCTION</p><h2>Sources, downloadable numbers and review trail</h2>
+<div class="downloads">{downloads}</div>
+<h3>Source register</h3><ol>{bibliography}</ol>
+<details><summary>What changed in this scientific review</summary><ul>
+<li>Corrected calendar-year labels and expanded reported accounting to 2022–2024.</li>
+<li>Removed invented connections between modelled climatic balance, country withdrawals, sectoral allocations, wastewater and environmental flows.</li>
+<li>Corrected the collector-drainage route and removed misleading single-country colouring of the Syr Darya aggregate.</li>
+<li>Rebuilt annual model totals with non-null, duplicate-month and full-domain coverage checks.</li>
+<li>Removed extrapolated historical shortage counts and multi-country policy savings; added explicit return-flow arithmetic.</li>
+<li>Added the geographic overview, matching data tables, source locators and executable regression checks.</li></ul></details>
+<h3>Limits and next evidence</h3><p>Source summaries do not provide comparable uncertainty intervals for these figures. Country withdrawals omit parts of the wider regional system; model fields omit managed routing. A closed accounting study needs matched border gauges and canal transfers, reservoir storage, return-flow quantity and quality, groundwater abstraction and consumptive use. Future extensions should add those records before constructing a national flow balance.</p>
+<p>Reported statistics are cited with their publishers; no blanket upstream reuse licence is asserted. Code and input hashes enable computational checks, while independent scientific validation requires external measurements and review.</p>
+<p><small>Built {d['generated_at']}. Model diagnostics built {m['generated_at']}. Rebuild from the repository with <code>npm run cases:water-flow</code>. Review details: <a href="https://github.com/tim7en/uzgeodata/blob/main/docs/WATER_FLOW_REVIEW.md">method and validation notes</a>.</small></p></section>
+</main><footer class="site-footer"><a href="/case-studies.html">All research case studies</a><a href="/">Explore the basin atlas</a><a href="/guide.html">Data access and citation</a></footer></body></html>'''
+    Path(out).write_text(page,encoding='utf-8')
+    return {'page':str(out),'bytes':len(page.encode())}
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
-    print(json.dumps(build(), indent=2))
-
-
-if __name__ == "__main__":
-    main()
+if __name__=='__main__':print(build())

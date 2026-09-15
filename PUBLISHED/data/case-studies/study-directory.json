@@ -40,17 +40,17 @@
     {
       "id": "water-flow",
       "href": "/water-flow.html",
-      "title": "Where the region's water goes",
+      "title": "Water withdrawals and downstream deliveries",
       "region": "AMU DARYA & SYR DARYA",
-      "aim": "Account for the region’s water from rainfall to the Aral, and mark every flow with how it is known.",
-      "image": "/data/water-flow/regional-water-flow-sensitivity.svg",
-      "image_alt": "Climatic surplus by year as bars, with the recorded diversion drawn flat across them; two years rise above it.",
-      "evidence_date": "2026-09-14T15:29:28.816+00:00",
-      "metric": 6,
-      "metric_label": "Years with a thin margin",
-      "detail": "of 22 observed · 2 exceeded supply · 3 if Uzbekistan meets its 2030 efficiency target",
-      "status": "Water balance & sensitivity",
-      "image_revision": "ae90d125d955"
+      "aim": "Locate the rivers, compare reported country withdrawals and trace reservoir and Aral delivery records to their sources.",
+      "image": "/data/water-flow/regional-water-flow-map.svg",
+      "image_alt": "Geographic overview of the Amu Darya and Syr Darya basin systems with the river network and selected dams.",
+      "image_revision": "30c9969f1848",
+      "evidence_date": "2026-09-15T18:38:03.388+00:00",
+      "metric": 3,
+      "metric_label": "Calendar years of reported accounts",
+      "detail": "2022–2024 · model diagnostics kept separate · no inferred country outflows",
+      "status": "Source-audited water accounting"
     },
     {
       "id": "trends",
@@ -67,5 +67,6 @@
       "status": "Trend analysis",
       "image_revision": "3610661d73cc"
     }
-  ]
+  ],
+  "water_flow_updated_at": "2026-09-15T18:38:03.388+00:00"
 }

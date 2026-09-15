@@ -1,510 +1,1106 @@
 {
-  "generated_at": "2026-09-14T15:29:28.816+00:00",
-  "title": "What moves the diagram",
-  "stress_threshold": 0.8,
-  "stress_meaning": "Diversion at four fifths of the climatic surplus. Not a regulatory threshold and not a forecast; a line drawn to count how often the margin is thin.",
-  "observed": {
-    "years": [
-      2003,
-      2024
-    ],
-    "diversion_km3": 58.09,
-    "diversion_note": "The 2022 hydrological year, held constant across every year because allocation is what it is set at, not what the weather delivered. ICWC publishes limits and actuals by year; only one year is transcribed here, and extending that is the first thing worth doing.",
-    "surplus_km3": {
-      "mean": 93.3,
-      "sd": 24.7,
-      "min": {
-        "year": 2021,
-        "value": 53.6
-      },
-      "max": {
-        "year": 2003,
-        "value": 151.5
-      },
-      "range_factor": 2.83
-    },
-    "share_of_surplus": {
-      "wettest_year": 0.383,
-      "driest_year": 1.084
-    },
-    "stressed_years": [
-      2008,
-      2017,
-      2018,
-      2020,
-      2021,
-      2023
-    ],
-    "exceeded_years": [
-      2021,
-      2023
-    ],
-    "trend_km3_per_year": {
-      "precipitation": -2.16,
-      "evapotranspiration": -0.2,
-      "surplus": -1.96
-    },
-    "halves_km3": {
-      "first": 102.1,
-      "second": 84.6,
-      "change_percent": -17.2
-    },
-    "annual": [
-      {
-        "year": 2003,
-        "precipitation": 412.4,
-        "evapotranspiration": 260.9,
-        "surplus": 151.5,
-        "diversion_share": 0.383,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2004,
-        "precipitation": 335.6,
-        "evapotranspiration": 227.2,
-        "surplus": 108.5,
-        "diversion_share": 0.535,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2005,
-        "precipitation": 308.5,
-        "evapotranspiration": 218.7,
-        "surplus": 89.8,
-        "diversion_share": 0.647,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2006,
-        "precipitation": 302.2,
-        "evapotranspiration": 199.2,
-        "surplus": 103.1,
-        "diversion_share": 0.563,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2007,
-        "precipitation": 289.8,
-        "evapotranspiration": 201.3,
-        "surplus": 88.5,
-        "diversion_share": 0.656,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2008,
-        "precipitation": 253.3,
-        "evapotranspiration": 192.1,
-        "surplus": 61.2,
-        "diversion_share": 0.949,
-        "stressed": true,
-        "exceeded": false
-      },
-      {
-        "year": 2009,
-        "precipitation": 371.9,
-        "evapotranspiration": 242.1,
-        "surplus": 129.8,
-        "diversion_share": 0.448,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2010,
-        "precipitation": 304.4,
-        "evapotranspiration": 218.2,
-        "surplus": 86.2,
-        "diversion_share": 0.674,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2011,
-        "precipitation": 295.1,
-        "evapotranspiration": 189.9,
-        "surplus": 105.3,
-        "diversion_share": 0.552,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2012,
-        "precipitation": 308.3,
-        "evapotranspiration": 199.9,
-        "surplus": 108.4,
-        "diversion_share": 0.536,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2013,
-        "precipitation": 319.2,
-        "evapotranspiration": 228.3,
-        "surplus": 90.9,
-        "diversion_share": 0.639,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2014,
-        "precipitation": 312.2,
-        "evapotranspiration": 215.1,
-        "surplus": 97.0,
-        "diversion_share": 0.599,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2015,
-        "precipitation": 369.5,
-        "evapotranspiration": 245.2,
-        "surplus": 124.3,
-        "diversion_share": 0.467,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2016,
-        "precipitation": 392.0,
-        "evapotranspiration": 266.8,
-        "surplus": 125.2,
-        "diversion_share": 0.464,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2017,
-        "precipitation": 300.1,
-        "evapotranspiration": 228.2,
-        "surplus": 71.9,
-        "diversion_share": 0.808,
-        "stressed": true,
-        "exceeded": false
-      },
-      {
-        "year": 2018,
-        "precipitation": 282.4,
-        "evapotranspiration": 211.5,
-        "surplus": 70.9,
-        "diversion_share": 0.819,
-        "stressed": true,
-        "exceeded": false
-      },
-      {
-        "year": 2019,
-        "precipitation": 301.7,
-        "evapotranspiration": 221.7,
-        "surplus": 80.0,
-        "diversion_share": 0.726,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2020,
-        "precipitation": 277.0,
-        "evapotranspiration": 211.2,
-        "surplus": 65.8,
-        "diversion_share": 0.883,
-        "stressed": true,
-        "exceeded": false
-      },
-      {
-        "year": 2021,
-        "precipitation": 232.8,
-        "evapotranspiration": 179.2,
-        "surplus": 53.6,
-        "diversion_share": 1.084,
-        "stressed": true,
-        "exceeded": true
-      },
-      {
-        "year": 2022,
-        "precipitation": 309.4,
-        "evapotranspiration": 220.5,
-        "surplus": 88.9,
-        "diversion_share": 0.653,
-        "stressed": false,
-        "exceeded": false
-      },
-      {
-        "year": 2023,
-        "precipitation": 255.2,
-        "evapotranspiration": 199.1,
-        "surplus": 56.0,
-        "diversion_share": 1.037,
-        "stressed": true,
-        "exceeded": true
-      },
-      {
-        "year": 2024,
-        "precipitation": 342.6,
-        "evapotranspiration": 245.9,
-        "surplus": 96.7,
-        "diversion_share": 0.601,
-        "stressed": false,
-        "exceeded": false
-      }
-    ]
+  "schema_version": 2,
+  "generated_at": "2026-09-15T18:38:05.533+00:00",
+  "title": "Modelled land-water diagnostics",
+  "basis": "modelled",
+  "period": [
+    2003,
+    2024
+  ],
+  "matched_years": [
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "domain": {
+    "basins": 7445,
+    "area_km2": 965724.8,
+    "geometry": "PUBLISHED/data/hydroclimate/basins-level12.geojson",
+    "geometry_sha256": "9ce2e5fa1416719043d927fa51fc9c42be7f84eacb3dd8f0f088a3a88e21d84f"
   },
-  "scenarios": [
+  "source_cube_index_sha256": "c886835971f7b9039fde12292f94ba1fa3c2959570dea54247fc6c26bd470ca2",
+  "input_hashes": {
+    "variable=pre_mm_s/data_0.parquet": "edc87ed74c2dcab3f0f8908f8532c08ff43d35d8d1ae12a4d6bc5c4aa520bc51",
+    "variable=aet_mm_s/data_0.parquet": "b31ed505a1bce5a2f90c6ffe734bcbfc4f86310270a2d64e3eeb6f24f83a5e6c",
+    "variable=run_mm_s/data_0.parquet": "c86eefc28509348f3d5448e23a6eea8bdad7b34dc19f5737cb6ea4d8788cd759",
+    "variable=rtc_mm_s/data_0.parquet": "a9887bac4923d0f41c691d2e912d202cf2782af82acea1065553272e77cd8a66"
+  },
+  "source_cube_release": {
+    "store_rows": 22894190,
+    "generated_from_run": "pskem-all281-20260909T184834061745Z",
+    "contract": "ATLAS_MODULES/core/REPRODUCIBILITY.md"
+  },
+  "variables": {
+    "pre_mm_s": {
+      "label": "TerraClimate precipitation",
+      "source_id": "terraclimate-ee",
+      "status": "available"
+    },
+    "aet_mm_s": {
+      "label": "TerraClimate actual evapotranspiration",
+      "source_id": "terraclimate-ee",
+      "status": "available"
+    },
+    "run_mm_s": {
+      "label": "ERA5-Land runoff",
+      "source_id": "era5-provider",
+      "status": "available"
+    },
+    "rtc_mm_s": {
+      "label": "TerraClimate runoff",
+      "source_id": "terraclimate-ee",
+      "status": "available"
+    }
+  },
+  "annual_coverage": [
     {
-      "label": "As recorded",
-      "reduction": 0.0,
-      "note": "The 2022 diversion, unchanged.",
-      "diversion_km3": 58.09,
-      "water_freed_km3": 0.0,
-      "stressed_years": 6,
-      "exceeded_years": 2,
-      "driest_year_share": 1.084,
-      "basis": "derived"
+      "year": 2003,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 412.4133144095185,
+      "status": "complete"
     },
     {
-      "label": "Uzbekistan meets its efficiency target (КПД 0.63→0.73)",
-      "reduction": 0.136986301369863,
-      "note": "УП-6024 commits Uzbekistan to raising irrigation system efficiency from 0.63 to 0.73 by 2030. Delivering the same water to the same fields at that efficiency requires 13.7% less withdrawal. This is the state's own commitment, converted arithmetically; no mechanism, cost or delivery risk is represented.",
-      "diversion_km3": 50.89,
-      "water_freed_km3": 7.2,
-      "stressed_years": 3,
-      "exceeded_years": 0,
-      "driest_year_share": 0.949,
-      "basis": "derived"
+      "year": 2003,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 260.89173335591767,
+      "status": "complete"
     },
     {
-      "label": "A fifth less agricultural withdrawal",
-      "reduction": 0.2,
-      "note": "Beyond any current commitment, shown to indicate what order of change would be needed to clear the dry-year threshold rather than merely approach it.",
-      "diversion_km3": 47.58,
-      "water_freed_km3": 10.51,
-      "stressed_years": 2,
-      "exceeded_years": 0,
-      "driest_year_share": 0.888,
-      "basis": "derived"
+      "year": 2003,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999999,
+      "volume_km3": 193.89731954265895,
+      "status": "complete"
+    },
+    {
+      "year": 2003,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 151.7021128989213,
+      "status": "complete"
+    },
+    {
+      "year": 2004,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 335.63311037156745,
+      "status": "complete"
+    },
+    {
+      "year": 2004,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 227.15141758210711,
+      "status": "complete"
+    },
+    {
+      "year": 2004,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 168.84559007891986,
+      "status": "complete"
+    },
+    {
+      "year": 2004,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 101.32711078879083,
+      "status": "complete"
+    },
+    {
+      "year": 2005,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 308.5176586309329,
+      "status": "complete"
+    },
+    {
+      "year": 2005,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 218.6956151586468,
+      "status": "complete"
+    },
+    {
+      "year": 2005,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 176.0483764348516,
+      "status": "complete"
+    },
+    {
+      "year": 2005,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 127.37673136995464,
+      "status": "complete"
+    },
+    {
+      "year": 2006,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 302.2417823604792,
+      "status": "complete"
+    },
+    {
+      "year": 2006,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 199.17660203424595,
+      "status": "complete"
+    },
+    {
+      "year": 2006,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 141.922962199082,
+      "status": "complete"
+    },
+    {
+      "year": 2006,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 75.36718857182763,
+      "status": "complete"
+    },
+    {
+      "year": 2007,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 289.7849429567782,
+      "status": "complete"
+    },
+    {
+      "year": 2007,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 201.28415524454394,
+      "status": "complete"
+    },
+    {
+      "year": 2007,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 137.04108087308617,
+      "status": "complete"
+    },
+    {
+      "year": 2007,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 99.89029581409751,
+      "status": "complete"
+    },
+    {
+      "year": 2008,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 253.3342770205949,
+      "status": "complete"
+    },
+    {
+      "year": 2008,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 192.11173054129912,
+      "status": "complete"
+    },
+    {
+      "year": 2008,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999999,
+      "volume_km3": 108.8352468281415,
+      "status": "complete"
+    },
+    {
+      "year": 2008,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999999,
+      "volume_km3": 59.08762927366433,
+      "status": "complete"
+    },
+    {
+      "year": 2009,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 371.854755460173,
+      "status": "complete"
+    },
+    {
+      "year": 2009,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 242.09796249624367,
+      "status": "complete"
+    },
+    {
+      "year": 2009,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 185.80416987886267,
+      "status": "complete"
+    },
+    {
+      "year": 2009,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 129.56587957770537,
+      "status": "complete"
+    },
+    {
+      "year": 2010,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 304.3909035136245,
+      "status": "complete"
+    },
+    {
+      "year": 2010,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 218.15158738952857,
+      "status": "complete"
+    },
+    {
+      "year": 2010,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 218.9958041008643,
+      "status": "complete"
+    },
+    {
+      "year": 2010,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 115.03714313220829,
+      "status": "complete"
+    },
+    {
+      "year": 2011,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 295.14702551701237,
+      "status": "complete"
+    },
+    {
+      "year": 2011,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 189.8544223817282,
+      "status": "complete"
+    },
+    {
+      "year": 2011,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 118.06188267406482,
+      "status": "complete"
+    },
+    {
+      "year": 2011,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 57.3113036879462,
+      "status": "complete"
+    },
+    {
+      "year": 2012,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 308.3035671685543,
+      "status": "complete"
+    },
+    {
+      "year": 2012,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 199.92715609826087,
+      "status": "complete"
+    },
+    {
+      "year": 2012,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999999,
+      "volume_km3": 171.13531955711056,
+      "status": "complete"
+    },
+    {
+      "year": 2012,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 123.73258016949717,
+      "status": "complete"
+    },
+    {
+      "year": 2013,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 319.18607713722804,
+      "status": "complete"
+    },
+    {
+      "year": 2013,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 228.28126803730402,
+      "status": "complete"
+    },
+    {
+      "year": 2013,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 138.4918298776044,
+      "status": "complete"
+    },
+    {
+      "year": 2013,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 97.28861603774237,
+      "status": "complete"
+    },
+    {
+      "year": 2014,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 312.16034724728354,
+      "status": "complete"
+    },
+    {
+      "year": 2014,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 215.12939013115215,
+      "status": "complete"
+    },
+    {
+      "year": 2014,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000007,
+      "volume_km3": 131.13616009847811,
+      "status": "complete"
+    },
+    {
+      "year": 2014,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 87.29121917137812,
+      "status": "complete"
+    },
+    {
+      "year": 2015,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 369.4966020004054,
+      "status": "complete"
+    },
+    {
+      "year": 2015,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 245.15292784283838,
+      "status": "complete"
+    },
+    {
+      "year": 2015,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 165.8127576859456,
+      "status": "complete"
+    },
+    {
+      "year": 2015,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 129.72077504872001,
+      "status": "complete"
+    },
+    {
+      "year": 2016,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 392.03058536802956,
+      "status": "complete"
+    },
+    {
+      "year": 2016,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 266.8422812973316,
+      "status": "complete"
+    },
+    {
+      "year": 2016,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999999,
+      "volume_km3": 168.69438890942902,
+      "status": "complete"
+    },
+    {
+      "year": 2016,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 99.3896916358873,
+      "status": "complete"
+    },
+    {
+      "year": 2017,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 300.0637327364074,
+      "status": "complete"
+    },
+    {
+      "year": 2017,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 228.199688012947,
+      "status": "complete"
+    },
+    {
+      "year": 2017,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 192.9436298791036,
+      "status": "complete"
+    },
+    {
+      "year": 2017,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 115.82179755472956,
+      "status": "complete"
+    },
+    {
+      "year": 2018,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 282.4052740215782,
+      "status": "complete"
+    },
+    {
+      "year": 2018,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 211.5371831457396,
+      "status": "complete"
+    },
+    {
+      "year": 2018,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000007,
+      "volume_km3": 135.6031564816853,
+      "status": "complete"
+    },
+    {
+      "year": 2018,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 61.8341574464514,
+      "status": "complete"
+    },
+    {
+      "year": 2019,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 301.7357216072527,
+      "status": "complete"
+    },
+    {
+      "year": 2019,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 221.6956664778961,
+      "status": "complete"
+    },
+    {
+      "year": 2019,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000007,
+      "volume_km3": 160.16767195786304,
+      "status": "complete"
+    },
+    {
+      "year": 2019,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 83.93191593262486,
+      "status": "complete"
+    },
+    {
+      "year": 2020,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 276.96483685944577,
+      "status": "complete"
+    },
+    {
+      "year": 2020,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 211.18519662460432,
+      "status": "complete"
+    },
+    {
+      "year": 2020,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999999,
+      "volume_km3": 127.98110419446888,
+      "status": "complete"
+    },
+    {
+      "year": 2020,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 58.34947731408346,
+      "status": "complete"
+    },
+    {
+      "year": 2021,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 232.76609296369634,
+      "status": "complete"
+    },
+    {
+      "year": 2021,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 179.16363431133556,
+      "status": "complete"
+    },
+    {
+      "year": 2021,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 128.0597703261757,
+      "status": "complete"
+    },
+    {
+      "year": 2021,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 68.78923356988622,
+      "status": "complete"
+    },
+    {
+      "year": 2022,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 309.3867832002314,
+      "status": "complete"
+    },
+    {
+      "year": 2022,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0,
+      "volume_km3": 220.4586985818576,
+      "status": "complete"
+    },
+    {
+      "year": 2022,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 125.53225868071377,
+      "status": "complete"
+    },
+    {
+      "year": 2022,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 90.75138658432058,
+      "status": "complete"
+    },
+    {
+      "year": 2023,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 255.1697067305412,
+      "status": "complete"
+    },
+    {
+      "year": 2023,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 199.12622976476283,
+      "status": "complete"
+    },
+    {
+      "year": 2023,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 132.9058594943147,
+      "status": "complete"
+    },
+    {
+      "year": 2023,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000002,
+      "volume_km3": 75.66563599721657,
+      "status": "complete"
+    },
+    {
+      "year": 2024,
+      "variable": "pre_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 342.61371650904425,
+      "status": "complete"
+    },
+    {
+      "year": 2024,
+      "variable": "aet_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 0.9999999999999999,
+      "volume_km3": 245.87245182750212,
+      "status": "complete"
+    },
+    {
+      "year": 2024,
+      "variable": "run_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 153.80858562095284,
+      "status": "complete"
+    },
+    {
+      "year": 2024,
+      "variable": "rtc_mm_s",
+      "complete_basins": 7445,
+      "total_basins": 7445,
+      "coverage_area_fraction": 1.0000000000000004,
+      "volume_km3": 84.99611035381065,
+      "status": "complete"
     }
   ],
-  "policy_targets": {
-    "note": "Taken from the states' own legal instruments. Only two of the five riparian states publish numeric water-saving targets, and only one of those two states it as a delivery efficiency, which is the form that converts directly into a withdrawal figure. Kazakhstan states its as a volume, which is directly comparable. The three remaining states are recorded as having strategies without located numbers, because an absence of published targets is itself comparable information about a shared river.",
-    "uzbekistan_efficiency_implies_reduction": 0.137,
-    "targets": [
+  "annual": [
+    {
+      "year": 2003,
+      "pre_mm_s": 412.4133144095185,
+      "aet_mm_s": 260.89173335591767,
+      "run_mm_s": 193.89731954265895,
+      "rtc_mm_s": 151.7021128989213,
+      "p_minus_aet_km3": 151.5215810536008
+    },
+    {
+      "year": 2004,
+      "pre_mm_s": 335.63311037156745,
+      "aet_mm_s": 227.15141758210711,
+      "run_mm_s": 168.84559007891986,
+      "rtc_mm_s": 101.32711078879083,
+      "p_minus_aet_km3": 108.48169278946034
+    },
+    {
+      "year": 2005,
+      "pre_mm_s": 308.5176586309329,
+      "aet_mm_s": 218.6956151586468,
+      "run_mm_s": 176.0483764348516,
+      "rtc_mm_s": 127.37673136995464,
+      "p_minus_aet_km3": 89.82204347228608
+    },
+    {
+      "year": 2006,
+      "pre_mm_s": 302.2417823604792,
+      "aet_mm_s": 199.17660203424595,
+      "run_mm_s": 141.922962199082,
+      "rtc_mm_s": 75.36718857182763,
+      "p_minus_aet_km3": 103.06518032623325
+    },
+    {
+      "year": 2007,
+      "pre_mm_s": 289.7849429567782,
+      "aet_mm_s": 201.28415524454394,
+      "run_mm_s": 137.04108087308617,
+      "rtc_mm_s": 99.89029581409751,
+      "p_minus_aet_km3": 88.50078771223426
+    },
+    {
+      "year": 2008,
+      "pre_mm_s": 253.3342770205949,
+      "aet_mm_s": 192.11173054129912,
+      "run_mm_s": 108.8352468281415,
+      "rtc_mm_s": 59.08762927366433,
+      "p_minus_aet_km3": 61.22254647929577
+    },
+    {
+      "year": 2009,
+      "pre_mm_s": 371.854755460173,
+      "aet_mm_s": 242.09796249624367,
+      "run_mm_s": 185.80416987886267,
+      "rtc_mm_s": 129.56587957770537,
+      "p_minus_aet_km3": 129.75679296392934
+    },
+    {
+      "year": 2010,
+      "pre_mm_s": 304.3909035136245,
+      "aet_mm_s": 218.15158738952857,
+      "run_mm_s": 218.9958041008643,
+      "rtc_mm_s": 115.03714313220829,
+      "p_minus_aet_km3": 86.23931612409592
+    },
+    {
+      "year": 2011,
+      "pre_mm_s": 295.14702551701237,
+      "aet_mm_s": 189.8544223817282,
+      "run_mm_s": 118.06188267406482,
+      "rtc_mm_s": 57.3113036879462,
+      "p_minus_aet_km3": 105.29260313528417
+    },
+    {
+      "year": 2012,
+      "pre_mm_s": 308.3035671685543,
+      "aet_mm_s": 199.92715609826087,
+      "run_mm_s": 171.13531955711056,
+      "rtc_mm_s": 123.73258016949717,
+      "p_minus_aet_km3": 108.37641107029344
+    },
+    {
+      "year": 2013,
+      "pre_mm_s": 319.18607713722804,
+      "aet_mm_s": 228.28126803730402,
+      "run_mm_s": 138.4918298776044,
+      "rtc_mm_s": 97.28861603774237,
+      "p_minus_aet_km3": 90.90480909992402
+    },
+    {
+      "year": 2014,
+      "pre_mm_s": 312.16034724728354,
+      "aet_mm_s": 215.12939013115215,
+      "run_mm_s": 131.13616009847811,
+      "rtc_mm_s": 87.29121917137812,
+      "p_minus_aet_km3": 97.03095711613139
+    },
+    {
+      "year": 2015,
+      "pre_mm_s": 369.4966020004054,
+      "aet_mm_s": 245.15292784283838,
+      "run_mm_s": 165.8127576859456,
+      "rtc_mm_s": 129.72077504872001,
+      "p_minus_aet_km3": 124.34367415756702
+    },
+    {
+      "year": 2016,
+      "pre_mm_s": 392.03058536802956,
+      "aet_mm_s": 266.8422812973316,
+      "run_mm_s": 168.69438890942902,
+      "rtc_mm_s": 99.3896916358873,
+      "p_minus_aet_km3": 125.18830407069794
+    },
+    {
+      "year": 2017,
+      "pre_mm_s": 300.0637327364074,
+      "aet_mm_s": 228.199688012947,
+      "run_mm_s": 192.9436298791036,
+      "rtc_mm_s": 115.82179755472956,
+      "p_minus_aet_km3": 71.86404472346041
+    },
+    {
+      "year": 2018,
+      "pre_mm_s": 282.4052740215782,
+      "aet_mm_s": 211.5371831457396,
+      "run_mm_s": 135.6031564816853,
+      "rtc_mm_s": 61.8341574464514,
+      "p_minus_aet_km3": 70.86809087583859
+    },
+    {
+      "year": 2019,
+      "pre_mm_s": 301.7357216072527,
+      "aet_mm_s": 221.6956664778961,
+      "run_mm_s": 160.16767195786304,
+      "rtc_mm_s": 83.93191593262486,
+      "p_minus_aet_km3": 80.04005512935657
+    },
+    {
+      "year": 2020,
+      "pre_mm_s": 276.96483685944577,
+      "aet_mm_s": 211.18519662460432,
+      "run_mm_s": 127.98110419446888,
+      "rtc_mm_s": 58.34947731408346,
+      "p_minus_aet_km3": 65.77964023484145
+    },
+    {
+      "year": 2021,
+      "pre_mm_s": 232.76609296369634,
+      "aet_mm_s": 179.16363431133556,
+      "run_mm_s": 128.0597703261757,
+      "rtc_mm_s": 68.78923356988622,
+      "p_minus_aet_km3": 53.60245865236078
+    },
+    {
+      "year": 2022,
+      "pre_mm_s": 309.3867832002314,
+      "aet_mm_s": 220.4586985818576,
+      "run_mm_s": 125.53225868071377,
+      "rtc_mm_s": 90.75138658432058,
+      "p_minus_aet_km3": 88.92808461837379
+    },
+    {
+      "year": 2023,
+      "pre_mm_s": 255.1697067305412,
+      "aet_mm_s": 199.12622976476283,
+      "run_mm_s": 132.9058594943147,
+      "rtc_mm_s": 75.66563599721657,
+      "p_minus_aet_km3": 56.04347696577838
+    },
+    {
+      "year": 2024,
+      "pre_mm_s": 342.61371650904425,
+      "aet_mm_s": 245.87245182750212,
+      "run_mm_s": 153.80858562095284,
+      "rtc_mm_s": 84.99611035381065,
+      "p_minus_aet_km3": 96.74126468154213
+    }
+  ],
+  "means_km3": {
+    "pre_mm_s": 312.5273097177445,
+    "aet_mm_s": 219.1812271971724,
+    "run_mm_s": 153.71476933519898,
+    "rtc_mm_s": 95.19218145143019
+  },
+  "methodology": {
+    "volume": "sum over non-overlapping local basins: sum of 12 monthly depths (mm) × basin area (km2) × 1e-6 = km3/year",
+    "completeness": "Exactly 12 distinct finite values per basin/variable/year; all domain basins required. Null annual totals are withheld.",
+    "comparison": "Means use common complete years. P minus AET uses two TerraClimate outputs. ERA5 runoff is a separate model diagnostic, not a closure term.",
+    "evidence_limit": "The published cube lacks within-basin pixel/day coverage and revisions; complete monthly values do not certify source accuracy or full pixel coverage.",
+    "uncertainty": "No confidence interval or local gauge validation established. Inter-product differences are not error bars."
+  },
+  "efficiency_example": {
+    "status": "Illustrative dimensional arithmetic, not a policy forecast",
+    "unit": "units per 100 units initially withdrawn",
+    "source_ids": [
+      "fao-real-savings"
+    ],
+    "assumptions": [
+      "Fixed delivered demand",
+      "No irrigated-area expansion or rebound",
+      "Recoverability is hypothetical, not measured",
+      "No national or multi-country volume extrapolation"
+    ],
+    "cases": [
       {
-        "target_id": "uz-irrigation-efficiency",
-        "country": "uzbekistan",
-        "instrument": "Концепция развития водного хозяйства Республики Узбекистан на 2020-2030 годы",
-        "instrument_id": "УП-6024",
-        "adopted": "2020-07-10",
-        "horizon": "2030",
-        "indicator": "Irrigation system efficiency (КПД)",
-        "baseline": "0.63",
-        "target": "0.73",
-        "unit": "ratio",
-        "source_id": "lex-uz-6024",
-        "note": "The only target in the region expressed as a delivery efficiency, which makes it directly convertible to a withdrawal reduction"
+        "baseline_withdrawal_units": 100,
+        "initial_efficiency": 0.63,
+        "target_efficiency": 0.73,
+        "recoverable_fraction": 0,
+        "gross_withdrawal_reduction_units": 13.698630136986301,
+        "reduced_return_flow_units": 0.0,
+        "net_downstream_gain_units": 13.698630136986301
       },
       {
-        "target_id": "uz-low-supply-land",
-        "country": "uzbekistan",
-        "instrument": "Концепция развития водного хозяйства Республики Узбекистан на 2020-2030 годы",
-        "instrument_id": "УП-6024",
-        "adopted": "2020-07-10",
-        "horizon": "2030",
-        "indicator": "Irrigated land with low water supply",
-        "baseline": "560",
-        "target": "190",
-        "unit": "thousand hectares",
-        "source_id": "lex-uz-6024",
-        "note": "A 66 per cent reduction"
+        "baseline_withdrawal_units": 100,
+        "initial_efficiency": 0.63,
+        "target_efficiency": 0.73,
+        "recoverable_fraction": 0.5,
+        "gross_withdrawal_reduction_units": 13.698630136986301,
+        "reduced_return_flow_units": 6.8493150684931505,
+        "net_downstream_gain_units": 6.8493150684931505
       },
       {
-        "target_id": "uz-saline-land",
-        "country": "uzbekistan",
-        "instrument": "Концепция развития водного хозяйства Республики Узбекистан на 2020-2030 годы",
-        "instrument_id": "УП-6024",
-        "adopted": "2020-07-10",
-        "horizon": "2030",
-        "indicator": "Saline irrigated land reduced by",
-        "baseline": "",
-        "target": "226",
-        "unit": "thousand hectares",
-        "source_id": "lex-uz-6024",
-        "note": "Stated as a reduction rather than an end state"
-      },
-      {
-        "target_id": "uz-pump-energy",
-        "country": "uzbekistan",
-        "instrument": "Концепция развития водного хозяйства Республики Узбекистан на 2020-2030 годы",
-        "instrument_id": "УП-6024",
-        "adopted": "2020-07-10",
-        "horizon": "2030",
-        "indicator": "Annual pump station electricity consumption",
-        "baseline": "",
-        "target": "-25",
-        "unit": "percent",
-        "source_id": "lex-uz-6024",
-        "note": "Energy rather than water; pumping is a large share of delivery cost in this region"
-      },
-      {
-        "target_id": "uz-water-saving-area",
-        "country": "uzbekistan",
-        "instrument": "Стратегия «Узбекистан-2030»",
-        "instrument_id": "uzbekistan-2030",
-        "adopted": "2023-09-11",
-        "horizon": "2030",
-        "indicator": "Area under water-saving irrigation technology",
-        "baseline": "",
-        "target": "2000",
-        "unit": "thousand hectares",
-        "source_id": "uzbekistan-2030-strategy",
-        "note": ""
-      },
-      {
-        "target_id": "uz-drip-area",
-        "country": "uzbekistan",
-        "instrument": "Стратегия «Узбекистан-2030»",
-        "instrument_id": "uzbekistan-2030",
-        "adopted": "2023-09-11",
-        "horizon": "2030",
-        "indicator": "Area under drip irrigation",
-        "baseline": "",
-        "target": "600",
-        "unit": "thousand hectares",
-        "source_id": "uzbekistan-2030-strategy",
-        "note": "A subset of the 2 million hectare target"
-      },
-      {
-        "target_id": "uz-supply-losses",
-        "country": "uzbekistan",
-        "instrument": "National water plan reported in the 2023 yearbook",
-        "instrument_id": "",
-        "adopted": "2023",
-        "horizon": "2030",
-        "indicator": "Natural losses in the water supply system",
-        "baseline": "",
-        "target": "-10",
-        "unit": "percent",
-        "source_id": "cawater-yearbook-2023-uz",
-        "note": "No baseline is published against which this could be evaluated"
-      },
-      {
-        "target_id": "kz-irrigation-saving",
-        "country": "kazakhstan",
-        "instrument": "Концепция развития системы управления водными ресурсами Республики Казахстан на 2024-2030 годы",
-        "instrument_id": "ПП РК №66",
-        "adopted": "2024-02-05",
-        "horizon": "2030",
-        "indicator": "Irrigation water saved annually",
-        "baseline": "",
-        "target": "2192",
-        "unit": "million m3 per year",
-        "source_id": "adilet-kz-66",
-        "note": "The only target in the region stated as a volume, which makes it directly comparable with basin diversion"
-      },
-      {
-        "target_id": "kz-canal-lining",
-        "country": "kazakhstan",
-        "instrument": "Концепция развития системы управления водными ресурсами Республики Казахстан на 2024-2030 годы",
-        "instrument_id": "ПП РК №66",
-        "adopted": "2024-02-05",
-        "horizon": "2030",
-        "indicator": "Share of irrigation canals with concrete lining",
-        "baseline": "18",
-        "target": "50",
-        "unit": "percent",
-        "source_id": "adilet-kz-66",
-        "note": "From about 8 thousand km to 14.5 thousand km"
-      },
-      {
-        "target_id": "kz-canal-modernised",
-        "country": "kazakhstan",
-        "instrument": "Концепция развития системы управления водными ресурсами Республики Казахстан на 2024-2030 годы",
-        "instrument_id": "ПП РК №66",
-        "adopted": "2024-02-05",
-        "horizon": "2030",
-        "indicator": "Irrigation canals modernised",
-        "baseline": "",
-        "target": "14500",
-        "unit": "km",
-        "source_id": "adilet-kz-66",
-        "note": ""
-      },
-      {
-        "target_id": "kz-industrial-reuse",
-        "country": "kazakhstan",
-        "instrument": "Новый Водный кодекс",
-        "instrument_id": "water-code-2024",
-        "adopted": "2024",
-        "horizon": "2030",
-        "indicator": "Share of industrial water reused",
-        "baseline": "",
-        "target": "28",
-        "unit": "percent",
-        "source_id": "adilet-kz-66",
-        "note": "Phased transition of large industry to recirculating supply"
-      },
-      {
-        "target_id": "kz-water-saving-area",
-        "country": "kazakhstan",
-        "instrument": "Концепция развития системы управления водными ресурсами Республики Казахстан на 2024-2030 годы",
-        "instrument_id": "ПП РК №66",
-        "adopted": "2024-02-05",
-        "horizon": "2030",
-        "indicator": "Irrigated area under water-saving technology",
-        "baseline": "",
-        "target": "1300",
-        "unit": "thousand hectares",
-        "source_id": "adilet-kz-66",
-        "note": ""
-      },
-      {
-        "target_id": "tj-strategy",
-        "country": "tajikistan",
-        "instrument": "Национальная водная стратегия Республики Таджикистан до 2040 года",
-        "instrument_id": "",
-        "adopted": "",
-        "horizon": "2040",
-        "indicator": "Strategy adopted; no public numeric water-saving target located",
-        "baseline": "",
-        "target": "",
-        "unit": "",
-        "source_id": "tj-kg-strategies",
-        "note": "Recorded as present without numbers rather than omitted: the absence of published targets is itself comparable information"
-      },
-      {
-        "target_id": "kg-strategy",
-        "country": "kyrgyzstan",
-        "instrument": "Национальная водная стратегия Кыргызской Республики до 2040 года",
-        "instrument_id": "",
-        "adopted": "",
-        "horizon": "2040",
-        "indicator": "Strategy adopted; no public numeric water-saving target located",
-        "baseline": "",
-        "target": "",
-        "unit": "",
-        "source_id": "tj-kg-strategies",
-        "note": "Published by the Ministry of Natural Resources"
-      },
-      {
-        "target_id": "tm-strategy",
-        "country": "turkmenistan",
-        "instrument": "No national water strategy with published numeric targets located",
-        "instrument_id": "",
-        "adopted": "",
-        "horizon": "",
-        "indicator": "No target located",
-        "baseline": "",
-        "target": "",
-        "unit": "",
-        "source_id": "",
-        "note": "Searched in Russian and English; absence here means not found in public sources, not that none exists"
+        "baseline_withdrawal_units": 100,
+        "initial_efficiency": 0.63,
+        "target_efficiency": 0.73,
+        "recoverable_fraction": 1,
+        "gross_withdrawal_reduction_units": 13.698630136986301,
+        "reduced_return_flow_units": 13.698630136986301,
+        "net_downstream_gain_units": 0.0
       }
     ]
   },
-  "not_modelled": {
-    "distribution_losses": "No baseline is published for this region. The method's own applications usually find this the largest single lever, and it cannot be evaluated here.",
-    "groundwater_substitution": "Abstraction is not published at a usable scale, so substituting groundwater for surface water cannot be represented.",
-    "connection_rates": "Not published. The wastewater inventory gives what 53 plants treat, not what share of generated wastewater reaches them."
-  },
-  "caution": "A twenty-two year slope is a statement about this record, not an attribution to climate change. Decadal variability alone can produce a decline of this size, and nothing here separates the two. What does not depend on that question is the operational finding: in the later half of the record the margin between what arrives and what is taken is repeatedly thin, whatever is causing it."
+  "withdrawn_claims": [
+    "Historical shortage/exceedance counts based on a constant 2022 withdrawal and modelled P minus AET.",
+    "Regional km3 savings inferred from Uzbekistan efficiency and sector shares.",
+    "Causal climate-trend attribution or a validated regional discharge forecast."
+  ]
 }

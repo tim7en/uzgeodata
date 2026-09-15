@@ -1,100 +1,84 @@
 {
-  "version": 1,
-  "note": "Every administered figure in regional-withdrawals.csv was transcribed by hand from a published page, because none of these bodies offer the numbers in a machine-readable form. Transcription is recorded as its own basis so a reader can tell it from an extraction that a rerun would reproduce: a typo here is not detectable by any check this project runs, and the honest response is to name the risk rather than imply a pipeline that does not exist.",
-  "method_reference": {
-    "name": "Water Flow Diagram (WFD)",
-    "url": "https://www.waterflowdiagram.ch/en",
-    "applications": "https://www.waterflowdiagram.ch/en/applications",
-    "description": "A methodology for integrated water balancing that connects WASH, IWRM and the human right to water and sanitation, visualising abstraction, distribution, consumption, wastewater and losses for a municipality so stakeholders can see where water goes. Developed with case studies including Bern and St Gallen (Switzerland), Tarapoto (Peru), Agadir (Morocco), Pespire (Honduras) and Santa Maria Bulacan (Philippines).",
-    "adaptation": "This diagram follows the method's intent and departs from its scale. The published applications are municipal, where a utility can account for abstraction, delivery and non-revenue water. Nothing at that resolution is published for this region, so the diagram is drawn at basin-system scale and every flow carries how it is known rather than being rendered alike."
-  },
+  "version": 2,
+  "reviewed_at": "2026-09-15",
+  "note": "Numerical rows manually checked against primary yearbook sections. Source precision and reporting boundaries are retained. Automated checks verify internal arithmetic, not independent measurement accuracy.",
   "sources": [
     {
-      "source_id": "icwc-bwo",
-      "name": "Interstate Commission for Water Coordination, Basin Water Organizations",
-      "url": "http://www.icwc-aral.uz/bwoamu.htm",
-      "also": "http://www.icwc-aral.uz/bwosyr.htm",
-      "role": "BWO Amu Darya and BWO Syr Darya are the inter-ministerial bodies that set and record withdrawal limits and deliveries for the two basins. They are the administering authority, so their figures are what was allocated and diverted, not an independent measurement of what flowed.",
-      "retrieved_at": "2026-09-14"
-    },
-    {
       "source_id": "cawater-yearbook-2022",
-      "name": "CAWater-Info Yearbook 2022, Section 2: Water-related situation in the Aral Sea basin",
+      "name": "SIC ICWC Water Yearbook 2022, section 2",
       "url": "https://www.cawater-info.net/yearbook/2022/02_yearbook2022_en.htm",
-      "publisher": "SIC ICWC",
-      "role": "Basin and country diversion figures for the 2022 hydrological year.",
-      "retrieved_at": "2026-09-14"
+      "publisher": "SIC ICWC; underlying BWO and national authority reports",
+      "retrieved_at": "2026-09-15",
+      "role": "Calendar-year withdrawal, reservoir and environmental delivery statistics; definitions retained per row."
     },
     {
-      "source_id": "cawater-yearbook-2023-uz",
-      "name": "CAWater-Info Yearbook 2023, Section 5: Key water developments, Uzbekistan",
-      "url": "https://www.cawater-info.net/yearbook/2023/05_yearbook2023_uz_en.htm",
-      "publisher": "SIC ICWC",
-      "role": "National totals by source and the sectoral shares.",
-      "retrieved_at": "2026-09-14"
+      "source_id": "cawater-yearbook-2023",
+      "name": "SIC ICWC Water Yearbook 2023, section 2",
+      "url": "https://www.cawater-info.net/yearbook/2023/02_yearbook2023_en.htm",
+      "publisher": "SIC ICWC; underlying BWO and national authority reports",
+      "retrieved_at": "2026-09-15",
+      "role": "Calendar-year withdrawal, reservoir and environmental delivery statistics; definitions retained per row."
     },
     {
-      "source_id": "sic-icwc-analytical-2023",
-      "name": "SIC ICWC analytical report 2023",
-      "url": "http://sic.icwc-aral.uz/pdf/analytical_report_2023_en.pdf",
-      "publisher": "SIC ICWC",
-      "role": "Context for reservoir inflow and basin conditions; not the source of any figure recorded here.",
-      "retrieved_at": "2026-09-14"
+      "source_id": "cawater-yearbook-2024",
+      "name": "SIC ICWC Water Yearbook 2024, section 2",
+      "url": "https://www.cawater-info.net/yearbook/2024/02_yearbook2024_en.htm",
+      "publisher": "SIC ICWC; underlying BWO and national authority reports",
+      "retrieved_at": "2026-09-15",
+      "role": "Calendar-year withdrawal, reservoir and environmental delivery statistics; definitions retained per row."
     },
     {
-      "source_id": "uzgeodata-record",
-      "name": "UzGeoData observation record",
-      "url": "https://uzgeodata.uz/data/atlas/cube/index.json",
-      "role": "Precipitation, evapotranspiration and runoff, monthly for 7,445 level-12 basins, 2003-2024. Converted to volumes using published basin areas.",
-      "release": "see latest.json"
+      "source_id": "terraclimate-paper",
+      "name": "Abatzoglou et al. (2018), TerraClimate",
+      "url": "https://doi.org/10.1038/sdata2017191",
+      "retrieved_at": "2026-09-15",
+      "role": "Original product methods and validation; global results do not validate these catchments."
     },
     {
-      "source_id": "uzgeodata-wastewater",
-      "name": "UzGeoData wastewater plant inventory",
-      "url": "https://uzgeodata.uz/data/hydroclimate/wastewater-plants-transboundary.csv",
-      "role": "53 plants with discharge in cubic metres per day, population served, treatment level and outfall basin."
+      "source_id": "terraclimate-provider",
+      "name": "Climatology Lab: TerraClimate limitations",
+      "url": "https://www.climatologylab.org/terraclimate.html",
+      "retrieved_at": "2026-09-15",
+      "role": "Static land cover, simple water balance and inherited temporal-resolution limitations."
     },
     {
-      "source_id": "icwc-91st-session",
-      "name": "ICWC 91st session, Ashgabat, November 2025 — Syr Darya allocations for 2026",
-      "url": "https://timesca.com/central-asian-countries-agree-on-2026-water-allocations-from-amu-darya-and-syr-darya/",
-      "role": "Country allocation limits for the Syr Darya by growing and non-growing season. These are limits for 2026, not actuals for 2022, and are drawn as such: the two are not interchangeable and the diagram says which it is showing.",
-      "retrieved_at": "2026-09-14"
+      "source_id": "terraclimate-ee",
+      "name": "Earth Engine TerraClimate product catalogue",
+      "url": "https://developers.google.com/earth-engine/datasets/catalog/IDAHO_EPSCOR_TERRACLIMATE",
+      "retrieved_at": "2026-09-15",
+      "role": "Band definitions and scaling; precipitation pr, actual evapotranspiration aet, runoff ro."
     },
     {
-      "source_id": "lex-uz-6024",
-      "name": "УП-6024 «Об утверждении концепции развития водного хозяйства Республики Узбекистан на 2020–2030 годы» (10.07.2020)",
-      "url": "https://lex.uz/ru/docs/4892946",
-      "publisher": "lex.uz — национальная база данных законодательства Республики Узбекистан",
-      "role": "The binding instrument behind Uzbekistan's irrigation efficiency, land and pump-energy targets. lex.uz is the official legal database, so these are commitments in law rather than plans in a report.",
-      "retrieved_at": "2026-09-14"
+      "source_id": "era5-provider",
+      "name": "Copernicus ERA5-Land monthly data",
+      "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means?tab=overview",
+      "retrieved_at": "2026-09-15",
+      "role": "Land-surface reanalysis runoff definition; not routed river discharge."
     },
     {
-      "source_id": "uzbekistan-2030-strategy",
-      "name": "Стратегия «Узбекистан-2030» — водосберегающие технологии",
-      "url": "https://strategy.uz/index.php?lang=ru&news=2041",
-      "role": "Area targets for water-saving and drip irrigation to 2030.",
-      "retrieved_at": "2026-09-14"
+      "source_id": "precipitation-evaluation",
+      "name": "Gebrechorkos et al. (2024), Global-scale evaluation of precipitation datasets for hydrological modelling",
+      "url": "https://doi.org/10.5194/hess-28-3099-2024",
+      "retrieved_at": "2026-09-15",
+      "role": "Multi-product gauge evaluation finds spatially variable performance, not a universally best forcing."
     },
     {
-      "source_id": "adilet-kz-66",
-      "name": "Постановление Правительства РК №66 «Об утверждении Концепции развития системы управления водными ресурсами Республики Казахстан на 2024–2030 годы» (05.02.2024)",
-      "url": "https://adilet.zan.kz/rus/docs/P2400000066",
-      "publisher": "ИПС «Әділет» — информационно-правовая система нормативных правовых актов РК",
-      "role": "Kazakhstan's volume saving target, canal lining and reuse targets. Adilet is the official legal information system.",
-      "retrieved_at": "2026-09-14"
+      "source_id": "naryn-model",
+      "name": "A snow and glacier hydrological model for large catchments: Naryn River (2023)",
+      "url": "https://doi.org/10.5194/hess-27-453-2023",
+      "retrieved_at": "2026-09-15",
+      "role": "Regional example combining forcing, snow/glacier processes and discharge evaluation."
     },
     {
-      "source_id": "tj-kg-strategies",
-      "name": "Национальные водные стратегии Таджикистана и Кыргызстана до 2040 года",
-      "url": "https://mnr.gov.kg/storage/npa/files/10/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%B2%D0%BE%D0%B4%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%B5%D0%B3%D0%B8%D1%8F_%D0%9A%D0%A0_%D0%B4%D0%BE_2040_%D0%B3%D0%BE%D0%B4%D0%B0-64883a3ee3f27.pdf",
-      "role": "Both states have adopted strategies to 2040. No public numeric water-saving target was located in either for this comparison, which is recorded rather than filled in.",
-      "retrieved_at": "2026-09-14"
+      "source_id": "fao-real-savings",
+      "name": "FAO: Guidance on realizing real water savings with crop water productivity interventions",
+      "url": "https://www.fao.org/family-farming/detail/en/c/1447785/",
+      "retrieved_at": "2026-09-15",
+      "role": "Distinguishes reduced withdrawals from reduced consumption and non-recoverable flows."
     }
   ],
   "reuse": {
-    "status": "unverified",
-    "statement": "The reuse terms of the ICWC and SIC ICWC pages have not been established. The figures are reproduced here as published statistics with their source and retrieval date, which is how a citation works and is not the same as a licence. Before this diagram is presented as a product rather than a working case study, those terms need checking with SIC ICWC, and this field replaced with what they say.",
-    "checked_at": null
+    "status": "source-specific",
+    "statement": "Cite SIC ICWC/BWOs for reported statistics and the named providers for model products. No blanket licence for upstream data is asserted."
   }
 }
