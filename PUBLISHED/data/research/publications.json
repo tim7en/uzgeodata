@@ -1,7 +1,7 @@
 {
   "version": 1,
   "generated_at": "2026-09-15",
-  "note": "Research and data foundations of the public preview, bound to the four scientific layers. Listing a method's paper means the project implements or ingests that method or dataset; it does not mean the project's implementation has passed independent scientific reproduction. Roles: method-source (we implement the method), input-data (we ingest the dataset), reported-record (transcribed management accounting), validation-target (external evidence we compare against, planned or active), regional-context (framing evidence). Status: in-use, method-implemented, reported-record, planned-integration.",
+  "note": "Research and data foundations of the public preview, bound to the four scientific layers. Listing a method's paper means the project implements or ingests that method or dataset; it does not mean the project's implementation has passed independent scientific reproduction. Roles: method-source (we implement the method), input-data (we ingest the dataset), reported-record (transcribed management accounting), validation-target (external evidence we compare against, planned or active), regional-context (framing evidence). Status: in-use, method-implemented, reported-record, planned-integration. Central Asia-focused entries are drawn from the hydrosolutions publications programme (hydrosolutions.ch/about#publications); their citations were verified against publisher records on integration.",
   "layers": {
     "1": "Reference atlas: what characterises this place under a stated edition or baseline",
     "2": "Dated observations and evidence: what was recorded or estimated here during this period",
@@ -17,11 +17,17 @@
       "title": "New global hydrography derived from spaceborne elevation data",
       "venue": "Eos, Transactions American Geophysical Union, 89(10), 93-94",
       "url": "https://doi.org/10.1029/2008EO100001",
-      "layers": [1],
+      "layers": [
+        1
+      ],
       "role": "method-source",
       "status": "method-implemented",
       "use": "HydroSHEDS hydrography underpins the basin geometry, routing topology and the 15 arc-second reduction lattice for every raster-to-basin aggregation in the atlas.",
-      "used_by": ["basin geometry", "attribute recipes", "catalogue.json"]
+      "used_by": [
+        "basin geometry",
+        "attribute recipes",
+        "catalogue.json"
+      ]
     },
     {
       "id": "lehner-grill-2013-hydrobasins",
@@ -31,11 +37,16 @@
       "title": "Global river hydrography and network routing: baseline data and new approaches (HydroBASINS)",
       "venue": "Hydrological Processes, 27(15), 2171-2186",
       "url": "https://doi.org/10.1002/hyp.9740",
-      "layers": [1],
+      "layers": [
+        1
+      ],
       "role": "method-source",
       "status": "method-implemented",
       "use": "Pfafstetter basin hierarchies define the 7,445 level-12 units and the level-7 comparison frame of the trends study.",
-      "used_by": ["basin geometry", "trends.html"]
+      "used_by": [
+        "basin geometry",
+        "trends.html"
+      ]
     },
     {
       "id": "linke-2019-hydroatlas",
@@ -45,11 +56,36 @@
       "title": "Global hydro-environmental sub-basin and river reach characteristics at high spatial resolution (HydroATLAS)",
       "venue": "Scientific Data, 6, 283",
       "url": "https://doi.org/10.1038/s41597-019-0300-6",
-      "layers": [1],
+      "layers": [
+        1
+      ],
       "role": "validation-target",
       "status": "planned-integration",
       "use": "The 281 published attribute definitions are the reproduction baseline: independent recipes are re-run against pinned inputs and compared family by family. No attribute has passed that gate yet.",
-      "used_by": ["catalogue.json", "independent estimates", "roadmap: reproduction"]
+      "used_by": [
+        "catalogue.json",
+        "independent estimates",
+        "roadmap: reproduction"
+      ]
+    },
+    {
+      "id": "ragettli-2018-irrigated-area",
+      "type": "journal-article",
+      "authors": "Ragettli, S., Herberz, T., Siegfried, T.",
+      "year": 2018,
+      "title": "An Unsupervised Classification Algorithm for Multi-Temporal Irrigated Area Mapping in Central Asia",
+      "venue": "Remote Sensing, 10(11), 1823",
+      "url": "https://doi.org/10.3390/rs10111823",
+      "layers": [
+        1
+      ],
+      "role": "verification-reference",
+      "status": "planned-integration",
+      "use": "Regionally derived irrigated-area mapping: an independent check on the irrigated and cropland shares used as strata in the trends study and as reference cover in the planned agriculture module.",
+      "used_by": [
+        "trends strata",
+        "planned agriculture module"
+      ]
     },
     {
       "id": "abatzoglou-2018-terraclimate",
@@ -59,11 +95,18 @@
       "title": "TerraClimate, a high-resolution global dataset of monthly climate and climatic water balance from 1958-2015",
       "venue": "Scientific Data, 5, 170191",
       "url": "https://doi.org/10.1038/sdata.2018.191",
-      "layers": [2],
+      "layers": [
+        2
+      ],
       "role": "input-data",
       "status": "in-use",
       "use": "Monthly precipitation, evapotranspiration, soil moisture, runoff, snow-water equivalent, deficit index, temperatures and vapour-pressure deficit, area-reduced to basins with the resolution gate. Its water-balance model structure is inherited by every TerraClimate-derived series.",
-      "used_by": ["history series", "cube", "trends.html", "water-flow.html"]
+      "used_by": [
+        "history series",
+        "cube",
+        "trends.html",
+        "water-flow.html"
+      ]
     },
     {
       "id": "munoz-sabater-2021-era5land",
@@ -73,11 +116,16 @@
       "title": "ERA5-Land: a state-of-the-art global reanalysis dataset for land surface applications",
       "venue": "Earth System Science Data, 13, 4349-4383",
       "url": "https://doi.org/10.5194/essd-13-4349-2021",
-      "layers": [2],
+      "layers": [
+        2
+      ],
       "role": "input-data",
       "status": "in-use",
       "use": "Runoff and mean temperature, withheld at level 12 (1.05 cells per median basin) and analysed at level 7 only, where they show no surviving trend.",
-      "used_by": ["history series", "trends.html (level 7)"]
+      "used_by": [
+        "history series",
+        "trends.html (level 7)"
+      ]
     },
     {
       "id": "hall-riggs-modis-snow",
@@ -87,11 +135,16 @@
       "title": "MODIS/Aqua Snow Cover Daily L3 Global 500m SIN Grid (MYD10A1), version 61",
       "venue": "NASA NSIDC DAAC",
       "url": "https://doi.org/10.5067/MODIS/MYD10A1.061",
-      "layers": [2],
+      "layers": [
+        2
+      ],
       "role": "input-data",
       "status": "in-use",
       "use": "Observed snow cover, the one non-modelled series in the record. Withdrawn from trend use: missing months increase across the record and the cause is unresolved.",
-      "used_by": ["history series (snw)", "trends.html (reported, not promoted)"]
+      "used_by": [
+        "history series (snw)",
+        "trends.html (reported, not promoted)"
+      ]
     },
     {
       "id": "sic-icwc-yearbooks",
@@ -101,11 +154,73 @@
       "title": "Water Yearbooks of the Aral Sea basin, 2022-2024, section 2 (withdrawals, reservoirs, environmental deliveries)",
       "venue": "SIC ICWC, Tashkent",
       "url": "https://www.cawater-info.net/yearbook/2024/02_yearbook2024_en.htm",
-      "layers": [2],
+      "layers": [
+        2
+      ],
       "role": "reported-record",
       "status": "reported-record",
       "use": "Calendar-year country withdrawals, limits, reservoir inflow/release pairs and Aral/delta deliveries, with row-level citations. Management accounting at reach and country support, not gauges.",
-      "used_by": ["water-flow.html", "water-flow sources register"]
+      "used_by": [
+        "water-flow.html",
+        "water-flow sources register"
+      ]
+    },
+    {
+      "id": "ragettli-2025-oases-water-use",
+      "type": "journal-article",
+      "authors": "Ragettli, S., Kreiner, A., Yakovlev, A., Anarbekov, O., Al-Zu'bi, M., Urazkeldiyev, A., Siegfried, T.",
+      "year": 2025,
+      "title": "Unraveling agricultural water use in three Central Asian irrigation oases using remote sensing",
+      "venue": "Journal of Hydrology: Regional Studies, 59, 102414",
+      "url": "https://doi.org/10.1016/j.ejrh.2025.102414",
+      "layers": [
+        2
+      ],
+      "role": "validation-target",
+      "status": "planned-integration",
+      "use": "Remote-sensing quantification of agricultural water use in the Bukhara, Samarkand and Kashkadarya oases of Uzbekistan, 2017-2022. Exactly the class of external evidence the canal-withdrawal gap calls for: observed consumptive use in the irrigated alluvium against which the managed term missing from our gridded record can be bounded.",
+      "used_by": [
+        "planned managed-water layer",
+        "water-flow.html limitations"
+      ]
+    },
+    {
+      "id": "marti-2023-ca-discharge",
+      "type": "dataset",
+      "authors": "Marti, B., et al.",
+      "year": 2023,
+      "title": "CA-discharge: Geo-located discharge time series for mountainous rivers in Central Asia",
+      "venue": "Scientific Data, 10, 579 (295 gauge locations compiled from national hydrometeorological yearbooks; monthly, 10-day and daily series)",
+      "url": "https://doi.org/10.1038/s41597-023-02474-8",
+      "layers": [
+        2
+      ],
+      "role": "validation-target",
+      "status": "planned-integration",
+      "use": "The region's compiled gauge-discharge record: the designated held-out target for the Pskem/Chirchik model line beyond its current station records, and the anchor series for testing precipitation forcings region-wide.",
+      "used_by": [
+        "discharge modelling protocol",
+        "planned regional forcing tests"
+      ]
+    },
+    {
+      "id": "de-keyser-2023-nexus-datasets",
+      "type": "journal-article",
+      "authors": "De Keyser, J., et al.",
+      "year": 2023,
+      "title": "Integrating Open-Source Datasets to Analyze the Transboundary Water-Food-Energy-Climate Nexus in Central Asia",
+      "venue": "Water, 15(19), 3482",
+      "url": "https://doi.org/10.3390/w15193482",
+      "layers": [
+        2
+      ],
+      "role": "verification-reference",
+      "status": "planned-integration",
+      "use": "A compiled inventory of open datasets for the region; a cross-check that this project's coverage ledger has not missed an open source, and a partner catalogue for the thematic-atlas modules.",
+      "used_by": [
+        "catalogue coverage review",
+        "data-groups.json"
+      ]
     },
     {
       "id": "mann-1945",
@@ -115,11 +230,16 @@
       "title": "Nonparametric tests against trend",
       "venue": "Econometrica, 13(3), 245-259",
       "url": null,
-      "layers": [3],
+      "layers": [
+        3
+      ],
       "role": "method-source",
       "status": "method-implemented",
       "use": "The rank trend test behind every basin verdict; verified against scipy.stats.kendalltau to 1e-9.",
-      "used_by": ["trends study", "TESTS/test_trends.py"]
+      "used_by": [
+        "trends study",
+        "TESTS/test_trends.py"
+      ]
     },
     {
       "id": "sen-1968",
@@ -129,11 +249,16 @@
       "title": "Estimates of the regression coefficient based on Kendall's tau",
       "venue": "Journal of the American Statistical Association, 63(324), 1379-1389",
       "url": null,
-      "layers": [3],
+      "layers": [
+        3
+      ],
       "role": "method-source",
       "status": "method-implemented",
       "use": "Median-of-pairwise-slopes magnitude estimate reported beside every verdict; verified against scipy.stats.theilslopes.",
-      "used_by": ["trends study", "TESTS/test_trends.py"]
+      "used_by": [
+        "trends study",
+        "TESTS/test_trends.py"
+      ]
     },
     {
       "id": "hamed-rao-1998",
@@ -143,11 +268,15 @@
       "title": "A modified Mann-Kendall trend test for autocorrelated data",
       "venue": "Journal of Hydrology, 204(1-4), 182-196",
       "url": null,
-      "layers": [3],
+      "layers": [
+        3
+      ],
       "role": "method-source",
       "status": "method-implemented",
       "use": "Variance inflation for serial persistence, applied by default with the uncorrected verdict retained beside it.",
-      "used_by": ["trends study"]
+      "used_by": [
+        "trends study"
+      ]
     },
     {
       "id": "benjamini-hochberg-1995",
@@ -157,11 +286,15 @@
       "title": "Controlling the false discovery rate: a practical and powerful approach to multiple testing",
       "venue": "Journal of the Royal Statistical Society B, 57(1), 289-300",
       "url": null,
-      "layers": [3],
+      "layers": [
+        3
+      ],
       "role": "method-source",
       "status": "method-implemented",
       "use": "Family control within each variable across thousands of simultaneous basin tests; removes every significant basin for five of twelve testable variables.",
-      "used_by": ["trends study"]
+      "used_by": [
+        "trends study"
+      ]
     },
     {
       "id": "gebrechorkos-2024-precip-eval",
@@ -171,11 +304,15 @@
       "title": "Global-scale evaluation of precipitation datasets for hydrological modelling",
       "venue": "Scientific Data",
       "url": null,
-      "layers": [4],
+      "layers": [
+        4
+      ],
       "role": "verification-reference",
       "status": "planned-integration",
       "use": "Evidence that no precipitation product wins everywhere, which sets the project's rule: forcings are tested locally against gauges before any replaces TerraClimate.",
-      "used_by": ["water-flow.html model design protocol"]
+      "used_by": [
+        "water-flow.html model design protocol"
+      ]
     },
     {
       "id": "naryn-2023-snow-glacier",
@@ -185,11 +322,15 @@
       "title": "A snow and glacier hydrological model for large catchments: Naryn River",
       "venue": "as cited on the water-flow study; full locator retained there",
       "url": null,
-      "layers": [4],
+      "layers": [
+        4
+      ],
       "role": "regional-context",
       "status": "planned-integration",
       "use": "Regional evidence that snow and glacier process fidelity plus gauge evaluation decide Central Asian headwater model skill.",
-      "used_by": ["water-flow.html model design protocol"]
+      "used_by": [
+        "water-flow.html model design protocol"
+      ]
     },
     {
       "id": "fao-2019-water-savings",
@@ -199,26 +340,93 @@
       "title": "Guidance on realizing real water savings with crop water productivity interventions",
       "venue": "FAO, Rome",
       "url": "https://www.fao.org/3/ca4682en/ca4682en.pdf",
-      "layers": [4],
+      "layers": [
+        4
+      ],
       "role": "regional-context",
       "status": "in-use",
       "use": "Frames why reduced withdrawal is not reduced consumption; governs the water-savings arithmetic the study refuses to over-read.",
-      "used_by": ["water-flow.html savings section"]
+      "used_by": [
+        "water-flow.html savings section"
+      ]
+    },
+    {
+      "id": "siegfried-2024-water-pulse",
+      "type": "journal-article",
+      "authors": "Siegfried, T., et al.",
+      "year": 2024,
+      "title": "Unveiling the future water pulse of Central Asia: a comprehensive 21st century hydrological forecast from stochastic water balance modeling",
+      "venue": "Climatic Change, 177, 141 (an English and a Russian version are published)",
+      "url": "https://doi.org/10.1007/s10584-024-03799-y",
+      "layers": [
+        4
+      ],
+      "role": "regional-context",
+      "status": "planned-integration",
+      "use": "Stochastic water-balance forecasting for the two systems' century scale; the scenario framing against which this project's descriptive record and any future scenario layer should be positioned.",
+      "used_by": [
+        "roadmap: scenarios",
+        "paper-01 next steps"
+      ]
+    },
+    {
+      "id": "marti-siegfried-2023-riverscentralasia",
+      "type": "software",
+      "authors": "Marti, B., Siegfried, T.",
+      "year": 2023,
+      "title": "riversCentralAsia: An R package to support data pre- and postprocessing for hydrological modelling with RS MINERVE",
+      "venue": "Journal of Open Source Software, 8(82), 4805",
+      "url": "https://doi.org/10.21105/joss.04805",
+      "layers": [
+        3,
+        4
+      ],
+      "role": "method-source",
+      "status": "planned-integration",
+      "use": "Open-source regional tooling for hydrometeorological data preparation and model pre/post-processing; a candidate cross-check for this project's Python aggregation and model workflows rather than a replacement of them.",
+      "used_by": [
+        "model workflow review"
+      ]
+    },
+    {
+      "id": "marti-2023-hess-course",
+      "type": "journal-article",
+      "authors": "Marti, B., Zhumabaev, Y., Siegfried, T.",
+      "year": 2023,
+      "title": "A comprehensive open-source course for teaching applied hydrological modelling in Central Asia",
+      "venue": "Hydrology and Earth System Sciences, 27, 319-330",
+      "url": "https://doi.org/10.5194/hess-27-319-2023",
+      "layers": [
+        4
+      ],
+      "role": "regional-context",
+      "status": "planned-integration",
+      "use": "Regional modelling curriculum: capacity-building context and a source of reviewed exercises this project's five-minute guide and case-study workflows can point readers toward.",
+      "used_by": [
+        "guide.html",
+        "case-studies.html"
+      ]
+    },
+    {
+      "id": "zhumabaev-2024-badam-sayram",
+      "type": "journal-article",
+      "authors": "Zhumabaev, Y., et al.",
+      "year": 2024,
+      "title": "Water Tales from Turkistan: Challenges and Opportunities for the Badam-Sayram Water System under a Changing Climate",
+      "venue": "Central Asian Journal of Water Research",
+      "url": null,
+      "layers": [
+        4
+      ],
+      "role": "regional-context",
+      "status": "planned-integration",
+      "use": "A sub-basin climate-adaptation case for a Syr Darya tributary system; regional framing for how basin-scale records connect to local water-management decisions.",
+      "used_by": [
+        "case-studies context"
+      ]
     }
   ],
   "planned_validation_targets": [
-    {
-      "id": "ca-discharge",
-      "name": "CA-discharge: compiled observed discharge for Central Asian rivers",
-      "note": "Gauge discharge compilation for the region; the natural held-out target for the Pskem/Chirchik line of models beyond their current station records.",
-      "citation_status": "citation-to-complete-on-integration"
-    },
-    {
-      "id": "riverscentralasia",
-      "name": "riversCentralAsia R package and teaching materials (hydro-solutions)",
-      "note": "Regional hydrological analysis tooling and data; candidate cross-check for basin aggregation and model workflows.",
-      "citation_status": "citation-to-complete-on-integration"
-    },
     {
       "id": "national-hydromet-archives",
       "name": "National hydrometeorological station archives",
