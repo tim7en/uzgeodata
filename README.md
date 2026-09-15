@@ -550,7 +550,10 @@ Keep credentials, raw source deliveries and active download checkpoints out of P
 ## Repository map
 
 Read the [four-layer architecture](docs/ARCHITECTURE.md) and
-[admin data operations guide](docs/ADMIN.md). The variable inventory at
+[admin data operations guide](docs/ADMIN.md). Draft research papers built on the
+published release live in [docs/papers/](docs/papers/); the first draft analyses
+basin-scale trends and water-balance diagnostics across both systems. The
+variable inventory at
 `/admin.html` shows freshness, coverage dates and update options across the
 registered products. `npm run admin` starts the localhost-only update
 server without triggering the legacy publication hooks; the static public site
