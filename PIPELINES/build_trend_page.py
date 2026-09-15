@@ -95,8 +95,8 @@ def build(out=OUT):
 .t td.zero{{color:#9b2c2c;font-weight:650}}
 .t td.kept{{color:#1b4d7e;font-weight:650}}
 .muted{{color:#4a5568;font-size:.85rem}}
-.warn{{display:block;width:auto;border-left:4px solid #9b2c2c;background:#fdf6f6;padding:.95rem 1.15rem;border-radius:0 8px 8px 0;margin:1.3rem 0}}
-.key{{display:block;width:auto;border-left:4px solid #1b4d7e;background:#f5f8fb;padding:.95rem 1.15rem;border-radius:0 8px 8px 0;margin:1.3rem 0}}
+.warn-box{{display:block;width:auto;border-left:4px solid #9b2c2c;background:#fdf6f6;padding:.95rem 1.15rem;border-radius:0 8px 8px 0;margin:1.3rem 0}}
+.key-box{{display:block;width:auto;border-left:4px solid #1b4d7e;background:#f5f8fb;padding:.95rem 1.15rem;border-radius:0 8px 8px 0;margin:1.3rem 0}}
 .stat-row{{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:1.3rem 0}}
 .stat{{background:#f7f9f8;border-radius:8px;padding:.8rem .9rem}}
 .stat b{{display:block;font-size:1.5rem;color:#103d40;line-height:1.2}}
@@ -120,7 +120,7 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <div class="stat alarm"><b>2</b><span>variables withheld<br>basin smaller than source cell</span></div>
 </div>
 
-<div class="warn"><strong>Two variables are withheld entirely at this basin level.</strong> {findings['resolution']['finding']}</div>
+<div class="warn-box"><strong>Two variables are withheld entirely at this basin level.</strong> {findings['resolution']['finding']}</div>
 
 <h2>Resolution: what a basin mean can and cannot be</h2>
 <p>{findings['resolution']['why_it_was_not_obvious']}</p>
@@ -152,7 +152,7 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <p>A trend computed per basin is a trend computed on an arbitrary polygon. Enlarge the polygons and several things change at once: each unit averages more source cells, the series smooths, and the number of simultaneous tests falls by a factor of seventeen. A result present at one size and absent at another is telling you about the polygons.</p>
 <p>So the whole study is run twice &mdash; at level 12 (7,445 units, median 136&nbsp;km&sup2;) and level 7 (438 units, median 1,510&nbsp;km&sup2;) &mdash; and compared. <strong>Seven of nine variables agree; none diverges.</strong> The two that appear at one scale only are the ERA5-Land pair, which level 12 cannot resolve at all.</p>
 <div class="t-wrap"><table class="t"><thead><tr><th rowspan="2">Variable</th><th rowspan="2">Native cell</th><th colspan="2">Level 12</th><th colspan="2">Level 7</th><th rowspan="2">Verdict</th></tr><tr><th>Significant</th><th>Share</th><th>Significant</th><th>Share</th></tr></thead><tbody>{scale_rows}</tbody></table></div>
-<p class="key"><strong>Analysed at the level where it resolves, ERA5-Land shows nothing.</strong> {scale['reading']['era5']}</p>
+<p class="key-box"><strong>Analysed at the level where it resolves, ERA5-Land shows nothing.</strong> {scale['reading']['era5']}</p>
 <p class="muted"><strong>What this cannot do.</strong> {scale['reading']['what_it_cannot_do']}</p>
 
 <h2>Results</h2>
@@ -160,7 +160,7 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 
 <div class="t-wrap"><table class="t"><thead><tr><th>Variable</th><th>Basins</th><th>Significant, uncorrected</th><th>After serial correction</th><th>After false discovery control</th></tr></thead><tbody>{rows}</tbody></table></div>
 
-<div class="key"><strong>Precipitation is the clearest case.</strong> {findings['precipitation']}</div>
+<div class="key-box"><strong>Precipitation is the clearest case.</strong> {findings['precipitation']}</div>
 
 <h3>The fluxes do not trend. The stores do.</h3>
 <p>{findings['drivers_do_not_trend_but_states_do']['observation']}</p>
@@ -173,7 +173,7 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <tr><td><strong>store</strong></td><td><strong>soil moisture</strong></td><td class="kept">{block("uz:soil-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
 <tr><td><strong>store</strong></td><td><strong>Palmer drought severity index</strong></td><td class="kept">{block("uz:pds-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
 </tbody></table></div>
-<div class="warn"><strong>This is the study&#8217;s most consequential result.</strong> {findings['drivers_do_not_trend_but_states_do']['why_it_matters']}</div>
+<div class="warn-box"><strong>This is the study&#8217;s most consequential result.</strong> {findings['drivers_do_not_trend_but_states_do']['why_it_matters']}</div>
 <p><strong>Three readings, which this analysis cannot separate:</strong></p>
 <ol>{"".join(f"<li>{r}</li>" for r in findings['drivers_do_not_trend_but_states_do']['three_readings'])}</ol>
 <p>{findings['drivers_do_not_trend_but_states_do']['not_separable_here']}</p>
@@ -210,7 +210,7 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <p class="muted">All nine variables are mapped at level 7: <a href="/data/trends/maps/trend-map-aet-level7.svg">aet</a> &middot; <a href="/data/trends/maps/trend-map-pet-level7.svg">pet</a> &middot; <a href="/data/trends/maps/trend-map-pre-level7.svg">pre</a> &middot; <a href="/data/trends/maps/trend-map-run-level7.svg">run</a> &middot; <a href="/data/trends/maps/trend-map-snw-level7.svg">snw</a> &middot; <a href="/data/trends/maps/trend-map-soil-level7.svg">soil</a> &middot; <a href="/data/trends/maps/trend-map-tmn-level7.svg">tmn</a> &middot; <a href="/data/trends/maps/trend-map-tmp-level7.svg">tmp</a> &middot; <a href="/data/trends/maps/trend-map-tmx-level7.svg">tmx</a>. Outlines are simplified for drawing at a stated tolerance; the values are not.</p>
 
 <h2>The limitation that decides what this means</h2>
-<div class="warn"><strong>Soil moisture here is modelled, not observed.</strong> {findings['the_caveat_that_matters']}</div>
+<div class="warn-box"><strong>Soil moisture here is modelled, not observed.</strong> {findings['the_caveat_that_matters']}</div>
 <p><strong>What would test it.</strong> {findings['what_would_test_it']}</p>
 
 <h3>Other limits, stated rather than buried</h3>
