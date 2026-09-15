@@ -127,6 +127,7 @@ def main():
     flow=json.loads((ROOT/'PUBLISHED/data/water-flow/regional-water-flow-sensitivity.json')
                     .read_text(encoding='utf-8'))
     policy=next(s for s in flow['scenarios'] if s['reduction'] and 'efficiency' in s['label'])
+    trend=json.loads((ROOT/'PUBLISHED/data/trends/index.json').read_text(encoding='utf-8'))
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -161,7 +162,16 @@ def main():
          # rather than leaving a reader to assume it is stale.
          'detail':f"of 22 observed · {len(flow['observed']['exceeded_years'])} exceeded supply "
                   f"· {policy['stressed_years']} if Uzbekistan meets its 2030 efficiency target",
-         'status':'Water balance & sensitivity'}]}
+         'status':'Water balance & sensitivity'},
+        {'id':'trends','href':'/trends.html','title':'What survives testing properly',
+         'region':'AMU DARYA & SYR DARYA','aim':'Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.',
+         'image':'/data/trends/trend-correction-cascade.svg',
+         'image_alt':'Significant basin counts per variable before correction, after correcting for serial persistence, and after false discovery control.',
+         'evidence_date':trend['generated_at'],
+         'metric':trend['summary']['uz:soil-monthly-v1']['significant_after_fdr'],
+         'metric_label':'Basins surviving both corrections',
+         'detail':f"of 7,445 · soil moisture · four of nine variables retain none",
+         'status':'Trend analysis'}]}
     for card in payload['studies']:
         card['image_revision']=hashlib.sha256((ROOT/'PUBLISHED'/card['image'].lstrip('/')).read_bytes()).hexdigest()[:12]
     write_json(DATA/'study-directory.json',payload)

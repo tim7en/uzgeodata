@@ -36,6 +36,7 @@ export default defineConfig({
         climate: here('./INTERFACE/climate.html'),
         caseStudies: here('./INTERFACE/case-studies.html'),
         waterFlow: here('./INTERFACE/water-flow.html'),
+        trends: here('./INTERFACE/trends.html'),
         ontology: here('./INTERFACE/ontology.html'),
         relationships: here('./INTERFACE/relationships.html'),
         catalogue: here('./INTERFACE/catalogue.html'),
