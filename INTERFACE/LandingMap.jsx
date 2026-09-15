@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ThemeToggle, { useTheme } from './ThemeToggle.jsx';
 import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
-import { ArrowUpRight, Droplets, Layers, Search, X } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Droplets, Layers, Search, X } from 'lucide-react';
 import DamModal from './DamModal.jsx';
 import { svg } from 'leaflet';
 import LakeLayer from './LakeLayer.jsx';
@@ -39,10 +39,11 @@ const DEEPER = [
 
 // Public reading support is available without loading the map or a data bundle.
 const PROGRAMME = [
-  { id: 'overview', label: 'Project explorer', note: 'Purpose, use cases and future development', href: '/project.html' },
+  { id: 'overview', label: 'Project overview', note: 'Purpose, coverage and research direction', href: '/project.html' },
+  { id: 'usecases', label: 'Use cases', note: 'Practical workflows and direct downloads', href: '/examples.html' },
   { id: 'about', label: 'About & citation', note: 'Public preview, sources and reuse', href: '/about.html' },
+  { id: 'support', label: 'User guide', note: 'Read a basin in five minutes', href: '/guide.html' },
   { id: 'projects', label: 'Projects', note: 'Available studies and future work', href: '/projects.html' },
-  { id: 'support', label: 'Help & feedback', note: 'Read a basin in five minutes', href: '/guide.html' },
 ];
 
 // The three readings of one basin: what the atlas published, what this project
@@ -692,6 +693,7 @@ export default function LandingMap() {
           <ArrowUpRight size={13}/>
         </a>)}
         <p className="land-hint">Public preview · Independent estimates; reproduction has not been established.</p>
+        <span><BookOpen size={12}/> About the project</span>
         {PROGRAMME.map(item => <a key={item.id} href={item.href}>
           <span><strong>{item.label}</strong><small>{item.note}</small></span>
           <ArrowUpRight size={13}/>
