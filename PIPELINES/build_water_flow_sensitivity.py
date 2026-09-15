@@ -81,6 +81,7 @@ def build(cube=CUBE,out=OUT):
         paths.append(str(path));available.append(variable);hashes[str(relative)]=digest(path)
     if not {'pre_mm_s','aet_mm_s','run_mm_s'}<=set(available):raise ValueError('Required diagnostics unavailable')
     con=duckdb.connect()
+    con.execute('SET threads=1')
     try:
         con.from_parquet(paths,hive_partitioning=True).create_view('records')
         annual=annual_totals(con,areas,2003,2024,available)
@@ -114,7 +115,7 @@ def build(cube=CUBE,out=OUT):
     write_json(out,report)
     csvpath=Path(out).with_name('regional-model-annual.csv')
     with csvpath.open('w',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=list(annual[0]));w.writeheader();w.writerows(annual)
+        w=csv.DictWriter(f,fieldnames=list(annual[0]),lineterminator='\n');w.writeheader();w.writerows(annual)
     return report
 
 

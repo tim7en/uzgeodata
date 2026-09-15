@@ -35,7 +35,7 @@ def render():
         for i,r in enumerate(rows):
             ax.barh(i,r['withdrawal_km3'],height=.46,color=COLOURS[r['country']])
             ax.plot(r['limit_km3'],i,'|',markersize=22,markeredgewidth=2.2,color='#253743')
-            ax.text(r['withdrawal_km3']+.3,i+.03,f"{r['withdrawal_km3']:.2f}",fontsize=10,va='center')
+            ax.text(r['withdrawal_km3']-.45,i+.03,f"{r['withdrawal_km3']:.2f}",fontsize=10,va='center',ha='right',color='white',fontweight='bold')
         ax.set(yticks=range(3),yticklabels=[r['country'].title() for r in rows],xlim=(0,27),xlabel='Withdrawal (km³/year)',title=str(year))
         ax.grid(axis='x',alpha=.15);ax.set_axisbelow(True)
     axes[0].invert_yaxis()

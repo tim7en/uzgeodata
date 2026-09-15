@@ -125,6 +125,7 @@ def main():
         ax.set_aspect(1/math.cos(math.radians(41)))
     preview(DATA/'regional-study-preview.svg',network)
     from build_water_flow_diagram import study_card as water_flow_card
+    trend=json.loads((ROOT/'PUBLISHED/data/trends/index.json').read_text(encoding='utf-8'))
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
