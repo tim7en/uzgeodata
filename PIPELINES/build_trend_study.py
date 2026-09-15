@@ -33,6 +33,7 @@ import argparse
 import csv
 import json
 from pathlib import Path
+import statistics
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,12 +54,36 @@ ELEVATION = [(0, 500, "lowland"), (500, 1500, "foothill"),
 # basin is mixed and saying it is cropland would be a claim the data does not make.
 DOMINANT = 40.0
 
+# A basin must contain at least this many native source cells for its value to be a
+# measurement of the basin rather than a reading of one grid cell that happens to
+# overlap it. Four is not a deep principle; it is the point below which a "basin mean"
+# is arithmetic over fewer numbers than a basin has sides.
+#
+# This gate exists because the reduction hides the problem. Every product is resampled
+# onto the 15 arc-second HydroSHEDS lattice before reduction, so expected_count is
+# identical for a 4 km product and an 11 km one -- around 835 cells for a median basin
+# in both cases. That QA number describes the lattice, not the evidence, and reading it
+# as sampling density is exactly the mistake this prevents.
+MINIMUM_SOURCE_CELLS = 4
+
+
+def source_cells(area_km2, resolution_m):
+    """How many native source cells a basin of this area contains."""
+    cell_km2 = (resolution_m / 1000.0) ** 2
+    return area_km2 / cell_km2 if cell_km2 else None
+
 
 def band(metres):
     for low, high, name in ELEVATION:
         if low <= metres < high:
             return name
     return None
+
+
+def basin_area(path=HYDRO / "basins-level12.geojson"):
+    collection = json.loads(path.read_text(encoding="utf-8"))
+    return {str(f["properties"]["HYBAS_ID"]): float(f["properties"]["SUB_AREA"])
+            for f in collection["features"]}
 
 
 def reference(path=HYDRO / "reference-basin-attributes.csv"):
@@ -146,6 +171,7 @@ def annual_series(store=STORE, attribute=None, connection=None):
 
 def build(store=STORE, out=OUT, alpha=0.05):
     out.mkdir(parents=True, exist_ok=True)
+    areas = basin_area()
     connection = query.connect(store)
     summary, per_variable = {}, {}
     try:
@@ -155,8 +181,13 @@ def build(store=STORE, out=OUT, alpha=0.05):
             series, kind = annual_series(store, attribute, connection)
             if not series:
                 continue
-            results, p_raw = [], []
+            resolution = entry.get("native_resolution_m")
+            results, p_raw, unresolved = [], [], 0
             for basin, points in series.items():
+                cells = source_cells(areas.get(basin, 0.0), resolution) if resolution else None
+                if cells is not None and cells < MINIMUM_SOURCE_CELLS:
+                    unresolved += 1
+                    continue
                 values = [value for _, value in sorted(points)]
                 corrected = trends.mann_kendall(values, correct_autocorrelation=True,
                                                 alpha=alpha)
@@ -180,12 +211,26 @@ def build(store=STORE, out=OUT, alpha=0.05):
                 row["q"] = q
                 row["trend_fdr"] = (trends.classify(0.0 if keep else 1.0, row["slope"], alpha)
                                     if row["slope"] else "stable")
+            tested = len(results)
             per_variable[identifier] = {
                 "attribute": attribute, "concept": entry["concept"], "kind": kind,
-                "unit": entry["unit"], "basins": len(results),
+                "unit": entry["unit"], "basins": tested,
+                "native_resolution_m": resolution,
+                "basins_withheld_unresolved": unresolved,
                 "results": results,
             }
-            summary[identifier] = _counts(results, entry)
+            block = _counts(results, entry)
+            block.update({
+                "native_resolution_m": resolution,
+                "source_cell_km2": round((resolution / 1000.0) ** 2, 1) if resolution else None,
+                "basins_withheld_unresolved": unresolved,
+                "basins_tested": tested,
+                "median_source_cells": round(statistics.median(
+                    [source_cells(areas[b], resolution) for b in
+                     (r["basin_id"] for r in results) if b in areas]), 1)
+                    if results and resolution else None,
+            })
+            summary[identifier] = block
     finally:
         connection.close()
 
@@ -229,6 +274,10 @@ def build(store=STORE, out=OUT, alpha=0.05):
             "scope": "These are trends in this record over 2003-2024, not attributions "
                      "to a cause. A 22-year slope cannot separate a trend from decadal "
                      "variability, and nothing here attempts to.",
+            "resolution": "A basin smaller than its source grid cell is not a "
+                          "measurement of the basin. Variables are gated on holding at "
+                          "least four native source cells, which withdraws ERA5-Land "
+                          "entirely at this basin level.",
             "snow": "The snow series is withdrawn from trend use in this release: its "
                     "gaps grow towards the present at constant source coverage, so a "
                     "trend through it is partly a trend in the observation record.",
@@ -246,6 +295,34 @@ def _findings(summary):
         return summary.get(identifier, {}).get("significant_after_fdr", 0)
 
     return {
+        "resolution": {
+            "finding": "Two variables cannot be analysed at this basin level at all. "
+                       "ERA5-Land has a 0.1 degree grid, about 123 km2 per cell, against "
+                       "a median level-12 basin of 136 km2: across the whole region there "
+                       "are 1.05 ERA5 cells per basin, so basins and cells are "
+                       "interchangeable and neighbouring basins read the same number. "
+                       "Runoff and mean temperature are withheld entirely rather than "
+                       "reported at a resolution they do not have.",
+            "cells_per_basin_across_region": {"TerraClimate": 6.03, "ERA5-Land": 1.05,
+                                              "MODIS MYD10A1": 518.9},
+            "why_it_was_not_obvious": "Every product is resampled onto the 15 arc-second "
+                "HydroSHEDS lattice before reduction, so the stored expected_count is "
+                "about 835 cells for a median basin whether the source is 4 km or 11 km. "
+                "That number describes the lattice and not the evidence, and reading it "
+                "as sampling density is the mistake the gate now prevents.",
+            "what_survives": "TerraClimate at about 6 cells per basin is resolved enough "
+                "for a basin mean to be a statement about the basin, and MODIS at 500 m "
+                "comfortably so. Basins holding fewer than four source cells are withheld "
+                "for every variable, which removes 19 per cent of them from the "
+                "TerraClimate analyses.",
+            "the_remaining_caveat": "Resolving the basin is not the same as the basins "
+                "being independent of each other. A climate field is spatially "
+                "correlated, so adjacent basins share signal even with distinct cells, "
+                "and the count of significant basins is therefore not a count of "
+                "independent findings. False discovery control remains valid under this "
+                "kind of positive dependence, but the basin count should be read as "
+                "extent, not as evidential weight.",
+        },
         "headline": "Controlling for multiple testing changes the answer for most "
                     "variables. Of nine, only soil moisture and minimum temperature "
                     "retain a substantial number of significant basins once false "

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T12:06:10.300+00:00",
+  "generated_at": "2026-09-15T12:24:34.112+00:00",
   "title": "Hydroclimatic trends across the Amu Darya and Syr Darya",
   "alpha": 0.05,
   "method": {
@@ -39,264 +39,309 @@
   "summary": {
     "uz:aet-monthly-v1": {
       "unit": "millimetres per month",
-      "basins": 7445,
+      "basins": 6016,
       "uncorrected": {
-        "significant increase": 704,
-        "increase": 2008,
+        "significant increase": 649,
+        "increase": 1691,
         "stable": 0,
-        "decrease": 4526,
-        "significant decrease": 207
+        "decrease": 3510,
+        "significant decrease": 166
       },
       "autocorrelation_corrected": {
-        "significant increase": 692,
-        "increase": 2020,
+        "significant increase": 640,
+        "increase": 1700,
         "stable": 0,
-        "decrease": 4526,
-        "significant decrease": 207
+        "decrease": 3510,
+        "significant decrease": 166
       },
       "fdr_controlled": {
-        "significant increase": 31,
-        "increase": 2681,
+        "significant increase": 50,
+        "increase": 2290,
         "stable": 0,
-        "decrease": 4733,
+        "decrease": 3676,
         "significant decrease": 0
       },
-      "significant_uncorrected": 911,
-      "significant_corrected": 899,
-      "significant_after_fdr": 31,
-      "caution": null
+      "significant_uncorrected": 815,
+      "significant_corrected": 806,
+      "significant_after_fdr": 50,
+      "caution": null,
+      "native_resolution_m": 4638,
+      "source_cell_km2": 21.5,
+      "basins_withheld_unresolved": 1429,
+      "basins_tested": 6016,
+      "median_source_cells": 6.8
     },
     "uz:pet-monthly-v1": {
       "unit": "millimetres per month",
-      "basins": 7445,
+      "basins": 6016,
       "uncorrected": {
-        "significant increase": 1984,
-        "increase": 4991,
+        "significant increase": 1557,
+        "increase": 4113,
         "stable": 0,
-        "decrease": 470,
+        "decrease": 346,
         "significant decrease": 0
       },
       "autocorrelation_corrected": {
-        "significant increase": 1978,
-        "increase": 4997,
+        "significant increase": 1552,
+        "increase": 4118,
         "stable": 0,
-        "decrease": 470,
+        "decrease": 346,
         "significant decrease": 0
       },
       "fdr_controlled": {
         "significant increase": 0,
-        "increase": 6975,
+        "increase": 5670,
         "stable": 0,
-        "decrease": 470,
+        "decrease": 346,
         "significant decrease": 0
       },
-      "significant_uncorrected": 1984,
-      "significant_corrected": 1978,
+      "significant_uncorrected": 1557,
+      "significant_corrected": 1552,
       "significant_after_fdr": 0,
-      "caution": null
+      "caution": null,
+      "native_resolution_m": 4638,
+      "source_cell_km2": 21.5,
+      "basins_withheld_unresolved": 1429,
+      "basins_tested": 6016,
+      "median_source_cells": 6.8
     },
     "uz:pre-monthly-v1": {
       "unit": "millimetres per month",
-      "basins": 7445,
+      "basins": 6016,
       "uncorrected": {
         "significant increase": 0,
-        "increase": 658,
+        "increase": 562,
         "stable": 1,
-        "decrease": 6503,
-        "significant decrease": 283
+        "decrease": 5214,
+        "significant decrease": 239
       },
       "autocorrelation_corrected": {
         "significant increase": 0,
-        "increase": 658,
+        "increase": 562,
         "stable": 1,
-        "decrease": 6509,
-        "significant decrease": 277
+        "decrease": 5217,
+        "significant decrease": 236
       },
       "fdr_controlled": {
         "significant increase": 0,
-        "increase": 658,
+        "increase": 562,
         "stable": 1,
-        "decrease": 6786,
+        "decrease": 5453,
         "significant decrease": 0
       },
-      "significant_uncorrected": 283,
-      "significant_corrected": 277,
+      "significant_uncorrected": 239,
+      "significant_corrected": 236,
       "significant_after_fdr": 0,
-      "caution": null
+      "caution": null,
+      "native_resolution_m": 4638,
+      "source_cell_km2": 21.5,
+      "basins_withheld_unresolved": 1429,
+      "basins_tested": 6016,
+      "median_source_cells": 6.8
     },
     "uz:run-monthly-v1": {
       "unit": "millimetres per month",
-      "basins": 7333,
+      "basins": 0,
       "uncorrected": {
-        "significant increase": 152,
-        "increase": 475,
+        "significant increase": 0,
+        "increase": 0,
         "stable": 0,
-        "decrease": 5239,
-        "significant decrease": 1467
+        "decrease": 0,
+        "significant decrease": 0
       },
       "autocorrelation_corrected": {
-        "significant increase": 144,
-        "increase": 483,
+        "significant increase": 0,
+        "increase": 0,
         "stable": 0,
-        "decrease": 5271,
-        "significant decrease": 1435
+        "decrease": 0,
+        "significant decrease": 0
       },
       "fdr_controlled": {
-        "significant increase": 20,
-        "increase": 607,
+        "significant increase": 0,
+        "increase": 0,
         "stable": 0,
-        "decrease": 6639,
-        "significant decrease": 67
+        "decrease": 0,
+        "significant decrease": 0
       },
-      "significant_uncorrected": 1619,
-      "significant_corrected": 1579,
-      "significant_after_fdr": 87,
-      "caution": null
+      "significant_uncorrected": 0,
+      "significant_corrected": 0,
+      "significant_after_fdr": 0,
+      "caution": null,
+      "native_resolution_m": 11132,
+      "source_cell_km2": 123.9,
+      "basins_withheld_unresolved": 7445,
+      "basins_tested": 0,
+      "median_source_cells": null
     },
     "uz:snw-monthly-v1": {
       "unit": "percent",
-      "basins": 7308,
+      "basins": 7262,
       "uncorrected": {
         "significant increase": 12,
-        "increase": 830,
-        "stable": 67,
-        "decrease": 5185,
-        "significant decrease": 1214
+        "increase": 825,
+        "stable": 58,
+        "decrease": 5159,
+        "significant decrease": 1208
       },
       "autocorrelation_corrected": {
         "significant increase": 12,
-        "increase": 830,
-        "stable": 67,
-        "decrease": 5209,
-        "significant decrease": 1190
+        "increase": 825,
+        "stable": 58,
+        "decrease": 5182,
+        "significant decrease": 1185
       },
       "fdr_controlled": {
         "significant increase": 2,
-        "increase": 839,
-        "stable": 68,
-        "decrease": 6362,
+        "increase": 834,
+        "stable": 59,
+        "decrease": 6330,
         "significant decrease": 37
       },
-      "significant_uncorrected": 1226,
-      "significant_corrected": 1202,
+      "significant_uncorrected": 1220,
+      "significant_corrected": 1197,
       "significant_after_fdr": 39,
-      "caution": "Its gaps grow towards the present at constant source coverage, so the series is published for inspection and withdrawn from trend analysis."
+      "caution": "Its gaps grow towards the present at constant source coverage, so the series is published for inspection and withdrawn from trend analysis.",
+      "native_resolution_m": 500,
+      "source_cell_km2": 0.2,
+      "basins_withheld_unresolved": 47,
+      "basins_tested": 7262,
+      "median_source_cells": 545.8
     },
     "uz:soil-monthly-v1": {
       "unit": "millimetres of soil moisture",
-      "basins": 7445,
+      "basins": 6016,
       "uncorrected": {
         "significant increase": 0,
-        "increase": 191,
+        "increase": 175,
         "stable": 1,
-        "decrease": 2851,
-        "significant decrease": 4402
+        "decrease": 2371,
+        "significant decrease": 3469
       },
       "autocorrelation_corrected": {
         "significant increase": 0,
-        "increase": 191,
+        "increase": 175,
         "stable": 1,
-        "decrease": 2891,
-        "significant decrease": 4362
+        "decrease": 2405,
+        "significant decrease": 3435
       },
       "fdr_controlled": {
         "significant increase": 0,
-        "increase": 191,
+        "increase": 175,
         "stable": 1,
-        "decrease": 3588,
-        "significant decrease": 3665
+        "decrease": 3052,
+        "significant decrease": 2788
       },
-      "significant_uncorrected": 4402,
-      "significant_corrected": 4362,
-      "significant_after_fdr": 3665,
-      "caution": null
+      "significant_uncorrected": 3469,
+      "significant_corrected": 3435,
+      "significant_after_fdr": 2788,
+      "caution": null,
+      "native_resolution_m": 4638,
+      "source_cell_km2": 21.5,
+      "basins_withheld_unresolved": 1429,
+      "basins_tested": 6016,
+      "median_source_cells": 6.8
     },
     "uz:tmn-monthly-v1": {
       "unit": "degrees Celsius",
-      "basins": 7445,
+      "basins": 6016,
       "uncorrected": {
-        "significant increase": 3093,
-        "increase": 3842,
+        "significant increase": 2473,
+        "increase": 3130,
         "stable": 0,
-        "decrease": 510,
+        "decrease": 413,
         "significant decrease": 0
       },
       "autocorrelation_corrected": {
-        "significant increase": 3087,
-        "increase": 3848,
+        "significant increase": 2467,
+        "increase": 3136,
         "stable": 0,
-        "decrease": 510,
+        "decrease": 413,
         "significant decrease": 0
       },
       "fdr_controlled": {
-        "significant increase": 2043,
-        "increase": 4892,
+        "significant increase": 1618,
+        "increase": 3985,
         "stable": 0,
-        "decrease": 510,
+        "decrease": 413,
         "significant decrease": 0
       },
-      "significant_uncorrected": 3093,
-      "significant_corrected": 3087,
-      "significant_after_fdr": 2043,
-      "caution": null
+      "significant_uncorrected": 2473,
+      "significant_corrected": 2467,
+      "significant_after_fdr": 1618,
+      "caution": null,
+      "native_resolution_m": 4638,
+      "source_cell_km2": 21.5,
+      "basins_withheld_unresolved": 1429,
+      "basins_tested": 6016,
+      "median_source_cells": 6.8
     },
     "uz:tmp-monthly-v1": {
       "unit": "degrees Celsius",
-      "basins": 7445,
+      "basins": 0,
       "uncorrected": {
-        "significant increase": 2432,
-        "increase": 4974,
+        "significant increase": 0,
+        "increase": 0,
         "stable": 0,
-        "decrease": 39,
+        "decrease": 0,
         "significant decrease": 0
       },
       "autocorrelation_corrected": {
-        "significant increase": 2339,
-        "increase": 5067,
+        "significant increase": 0,
+        "increase": 0,
         "stable": 0,
-        "decrease": 39,
+        "decrease": 0,
         "significant decrease": 0
       },
       "fdr_controlled": {
         "significant increase": 0,
-        "increase": 7406,
+        "increase": 0,
         "stable": 0,
-        "decrease": 39,
+        "decrease": 0,
         "significant decrease": 0
       },
-      "significant_uncorrected": 2432,
-      "significant_corrected": 2339,
+      "significant_uncorrected": 0,
+      "significant_corrected": 0,
       "significant_after_fdr": 0,
-      "caution": null
+      "caution": null,
+      "native_resolution_m": 11132,
+      "source_cell_km2": 123.9,
+      "basins_withheld_unresolved": 7445,
+      "basins_tested": 0,
+      "median_source_cells": null
     },
     "uz:tmx-monthly-v1": {
       "unit": "degrees Celsius",
-      "basins": 7445,
+      "basins": 6016,
       "uncorrected": {
-        "significant increase": 3555,
-        "increase": 3890,
+        "significant increase": 2844,
+        "increase": 3172,
         "stable": 0,
         "decrease": 0,
         "significant decrease": 0
       },
       "autocorrelation_corrected": {
-        "significant increase": 3241,
-        "increase": 4204,
+        "significant increase": 2596,
+        "increase": 3420,
         "stable": 0,
         "decrease": 0,
         "significant decrease": 0
       },
       "fdr_controlled": {
         "significant increase": 0,
-        "increase": 7445,
+        "increase": 6016,
         "stable": 0,
         "decrease": 0,
         "significant decrease": 0
       },
-      "significant_uncorrected": 3555,
-      "significant_corrected": 3241,
+      "significant_uncorrected": 2844,
+      "significant_corrected": 2596,
       "significant_after_fdr": 0,
-      "caution": null
+      "caution": null,
+      "native_resolution_m": 4638,
+      "source_cell_km2": 21.5,
+      "basins_withheld_unresolved": 1429,
+      "basins_tested": 6016,
+      "median_source_cells": 6.8
     }
   },
   "cross_tabulation": [
@@ -306,11 +351,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 12,
+      "basins": 7,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 12,
-      "median_slope": -0.380487
+      "not_significant": 7,
+      "median_slope": -1.149961
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -318,11 +363,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 184,
+      "basins": 144,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 184,
-      "median_slope": 0.69761
+      "not_significant": 144,
+      "median_slope": 0.376654
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -330,23 +375,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 19,
+      "basins": 17,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 19,
-      "median_slope": 0.227762
-    },
-    {
-      "variable": "uz:aet-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.187662
+      "not_significant": 17,
+      "median_slope": 0.293432
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -354,11 +387,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 896,
-      "significant_increase": 29,
+      "basins": 759,
+      "significant_increase": 47,
       "significant_decrease": 0,
-      "not_significant": 867,
-      "median_slope": 0.72272
+      "not_significant": 712,
+      "median_slope": 0.836819
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -366,11 +399,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 20,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": -2.216397
+      "not_significant": 20,
+      "median_slope": -1.980492
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -378,11 +411,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 39,
+      "basins": 27,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 39,
-      "median_slope": -1.705161
+      "not_significant": 27,
+      "median_slope": -1.680655
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -402,11 +435,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 327,
+      "basins": 246,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 327,
-      "median_slope": 1.160002
+      "not_significant": 246,
+      "median_slope": 1.345941
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -414,11 +447,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 65,
+      "basins": 42,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 65,
-      "median_slope": -0.074389
+      "not_significant": 42,
+      "median_slope": -0.017588
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -426,11 +459,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 436,
+      "basins": 365,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 436,
-      "median_slope": -0.229284
+      "not_significant": 365,
+      "median_slope": -0.265235
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -438,23 +471,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 42,
+      "basins": 37,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 42,
-      "median_slope": 0.658229
-    },
-    {
-      "variable": "uz:aet-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 1.510073
+      "not_significant": 37,
+      "median_slope": 0.441398
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -462,11 +483,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 125,
-      "significant_increase": 0,
+      "basins": 118,
+      "significant_increase": 1,
       "significant_decrease": 0,
-      "not_significant": 125,
-      "median_slope": 2.649607
+      "not_significant": 117,
+      "median_slope": 2.655981
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -474,11 +495,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 247,
+      "basins": 184,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 247,
-      "median_slope": -1.803721
+      "not_significant": 184,
+      "median_slope": -1.719185
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -486,11 +507,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 2139,
+      "basins": 1716,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2139,
-      "median_slope": -1.323591
+      "not_significant": 1716,
+      "median_slope": -1.298804
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -498,23 +519,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 60,
+      "basins": 47,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 60,
-      "median_slope": -1.2938
-    },
-    {
-      "variable": "uz:aet-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -1.982548
+      "not_significant": 47,
+      "median_slope": -1.289296
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -522,11 +531,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 283,
+      "basins": 242,
       "significant_increase": 1,
       "significant_decrease": 0,
-      "not_significant": 282,
-      "median_slope": 2.44421
+      "not_significant": 241,
+      "median_slope": 2.464733
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -542,27 +551,15 @@
     },
     {
       "variable": "uz:aet-monthly-v1",
-      "system": "amu_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -1.395238
-    },
-    {
-      "variable": "uz:aet-monthly-v1",
       "system": "syr_darya",
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 22,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": -1.852151
+      "not_significant": 22,
+      "median_slope": -1.789052
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -570,11 +567,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 91,
+      "basins": 63,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 91,
-      "median_slope": -1.343326
+      "not_significant": 63,
+      "median_slope": -1.477588
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -582,10 +579,10 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 2,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2,
+      "not_significant": 1,
       "median_slope": -0.941454
     },
     {
@@ -594,10 +591,10 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 3,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 3,
+      "not_significant": 1,
       "median_slope": -1.00142
     },
     {
@@ -606,11 +603,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 205,
+      "basins": 195,
       "significant_increase": 1,
       "significant_decrease": 0,
-      "not_significant": 204,
-      "median_slope": 1.053716
+      "not_significant": 194,
+      "median_slope": 1.066664
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -618,35 +615,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 15,
+      "basins": 9,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 15,
-      "median_slope": -0.826417
-    },
-    {
-      "variable": "uz:aet-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "forest",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.624336
-    },
-    {
-      "variable": "uz:aet-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "irrigated cropland",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.774162
+      "not_significant": 9,
+      "median_slope": -0.907259
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -654,11 +627,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 347,
+      "basins": 284,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 347,
-      "median_slope": -0.298039
+      "not_significant": 284,
+      "median_slope": -0.199986
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -666,11 +639,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 37,
+      "basins": 34,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 37,
-      "median_slope": -0.852799
+      "not_significant": 34,
+      "median_slope": -0.802956
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -678,11 +651,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 291,
+      "basins": 260,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 291,
-      "median_slope": 0.107676
+      "not_significant": 260,
+      "median_slope": 0.056108
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -702,11 +675,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 9,
+      "basins": 2,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 9,
-      "median_slope": -0.121538
+      "not_significant": 2,
+      "median_slope": -0.407916
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -714,11 +687,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 55,
+      "basins": 54,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 55,
-      "median_slope": 2.29943
+      "not_significant": 54,
+      "median_slope": 2.315694
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -726,11 +699,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 251,
+      "basins": 164,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 251,
-      "median_slope": -0.874796
+      "not_significant": 164,
+      "median_slope": -0.84629
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -738,11 +711,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 979,
+      "basins": 770,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 979,
-      "median_slope": -0.308591
+      "not_significant": 770,
+      "median_slope": -0.273236
     },
     {
       "variable": "uz:aet-monthly-v1",
@@ -750,10 +723,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 7,
+      "basins": 5,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 7,
+      "not_significant": 5,
       "median_slope": -1.089048
     },
     {
@@ -774,23 +747,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 193,
+      "basins": 169,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 193,
-      "median_slope": 1.538326
-    },
-    {
-      "variable": "uz:aet-monthly-v1",
-      "system": "syr_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.514286
+      "not_significant": 169,
+      "median_slope": 1.553989
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -798,11 +759,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 12,
+      "basins": 7,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 12,
-      "median_slope": 3.06
+      "not_significant": 7,
+      "median_slope": 4.703597
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -810,11 +771,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 184,
+      "basins": 144,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 184,
-      "median_slope": 4.821179
+      "not_significant": 144,
+      "median_slope": 4.896154
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -822,23 +783,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 19,
+      "basins": 17,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 19,
-      "median_slope": 4.208181
-    },
-    {
-      "variable": "uz:pet-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 2.888889
+      "not_significant": 17,
+      "median_slope": 4.639738
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -846,11 +795,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 896,
+      "basins": 759,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 896,
-      "median_slope": 1.051861
+      "not_significant": 759,
+      "median_slope": 1.151631
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -858,11 +807,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 20,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": 6.034539
+      "not_significant": 20,
+      "median_slope": 6.325733
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -870,11 +819,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 39,
+      "basins": 27,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 39,
-      "median_slope": 6.86262
+      "not_significant": 27,
+      "median_slope": 6.858152
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -894,11 +843,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 327,
+      "basins": 246,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 327,
-      "median_slope": 2.706781
+      "not_significant": 246,
+      "median_slope": 3.006935
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -906,11 +855,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 65,
+      "basins": 42,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 65,
-      "median_slope": 4.859662
+      "not_significant": 42,
+      "median_slope": 5.126367
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -918,11 +867,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 436,
+      "basins": 365,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 436,
-      "median_slope": 4.094657
+      "not_significant": 365,
+      "median_slope": 4.312577
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -930,23 +879,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 42,
+      "basins": 37,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 42,
-      "median_slope": 4.462992
-    },
-    {
-      "variable": "uz:pet-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 5.666764
+      "not_significant": 37,
+      "median_slope": 4.791222
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -954,11 +891,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 125,
+      "basins": 118,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 125,
-      "median_slope": 1.785847
+      "not_significant": 118,
+      "median_slope": 1.824756
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -966,11 +903,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 247,
+      "basins": 184,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 247,
-      "median_slope": 5.465979
+      "not_significant": 184,
+      "median_slope": 5.250626
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -978,11 +915,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 2139,
+      "basins": 1716,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2139,
-      "median_slope": 2.354919
+      "not_significant": 1716,
+      "median_slope": 2.320829
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -990,23 +927,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 60,
+      "basins": 47,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 60,
-      "median_slope": 3.298813
-    },
-    {
-      "variable": "uz:pet-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 5.603167
+      "not_significant": 47,
+      "median_slope": 3.278485
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1014,11 +939,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 283,
+      "basins": 242,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 283,
-      "median_slope": 2.266542
+      "not_significant": 242,
+      "median_slope": 2.307587
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1034,27 +959,15 @@
     },
     {
       "variable": "uz:pet-monthly-v1",
-      "system": "amu_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.31
-    },
-    {
-      "variable": "uz:pet-monthly-v1",
       "system": "syr_darya",
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 22,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": 2.667776
+      "not_significant": 22,
+      "median_slope": 2.515641
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1062,11 +975,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 91,
+      "basins": 63,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 91,
-      "median_slope": 2.17947
+      "not_significant": 63,
+      "median_slope": 2.340164
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1074,11 +987,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 2,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 3.172197
+      "not_significant": 1,
+      "median_slope": 2.843608
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1086,10 +999,10 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 3,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 3,
+      "not_significant": 1,
       "median_slope": 2.74736
     },
     {
@@ -1098,11 +1011,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 205,
+      "basins": 195,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 205,
-      "median_slope": 0.070594
+      "not_significant": 195,
+      "median_slope": 0.10835
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1110,10 +1023,10 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 15,
+      "basins": 9,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 15,
+      "not_significant": 9,
       "median_slope": 2.8736
     },
     {
@@ -1121,36 +1034,12 @@
       "system": "syr_darya",
       "position": "headwater",
       "elevation_band": "montane",
-      "land_cover": "forest",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.393418
-    },
-    {
-      "variable": "uz:pet-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "irrigated cropland",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.211905
-    },
-    {
-      "variable": "uz:pet-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 347,
+      "basins": 284,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 347,
-      "median_slope": 0.110824
+      "not_significant": 284,
+      "median_slope": 0.187114
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1158,11 +1047,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 37,
+      "basins": 34,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 37,
-      "median_slope": 2.030615
+      "not_significant": 34,
+      "median_slope": 2.241541
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1170,11 +1059,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 291,
+      "basins": 260,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 291,
-      "median_slope": 3.046667
+      "not_significant": 260,
+      "median_slope": 3.030263
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1194,10 +1083,10 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 9,
+      "basins": 2,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 9,
+      "not_significant": 2,
       "median_slope": 3.303818
     },
     {
@@ -1206,11 +1095,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 55,
+      "basins": 54,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 55,
-      "median_slope": 0.721555
+      "not_significant": 54,
+      "median_slope": 0.728478
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1218,11 +1107,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 251,
+      "basins": 164,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 251,
-      "median_slope": 3.295272
+      "not_significant": 164,
+      "median_slope": 3.328638
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1230,11 +1119,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 979,
+      "basins": 770,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 979,
-      "median_slope": 2.663271
+      "not_significant": 770,
+      "median_slope": 2.64179
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1242,11 +1131,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 7,
+      "basins": 5,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 7,
-      "median_slope": 4.544063
+      "not_significant": 5,
+      "median_slope": 4.562749
     },
     {
       "variable": "uz:pet-monthly-v1",
@@ -1266,23 +1155,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 193,
+      "basins": 169,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 193,
-      "median_slope": 1.178599
-    },
-    {
-      "variable": "uz:pet-monthly-v1",
-      "system": "syr_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 2.885714
+      "not_significant": 169,
+      "median_slope": 1.230148
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1290,11 +1167,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 12,
+      "basins": 7,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 12,
-      "median_slope": -2.583823
+      "not_significant": 7,
+      "median_slope": -2.988612
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1302,11 +1179,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 184,
+      "basins": 144,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 184,
-      "median_slope": -3.90361
+      "not_significant": 144,
+      "median_slope": -3.953207
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1314,23 +1191,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 19,
+      "basins": 17,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 19,
+      "not_significant": 17,
       "median_slope": -3.829416
-    },
-    {
-      "variable": "uz:pre-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": -8.047619
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1338,11 +1203,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 896,
+      "basins": 759,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 896,
-      "median_slope": -3.203756
+      "not_significant": 759,
+      "median_slope": -3.445624
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1350,11 +1215,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 20,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": -2.431598
+      "not_significant": 20,
+      "median_slope": -2.453744
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1362,11 +1227,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 39,
+      "basins": 27,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 39,
-      "median_slope": -1.933333
+      "not_significant": 27,
+      "median_slope": -1.841799
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1386,11 +1251,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 327,
+      "basins": 246,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 327,
-      "median_slope": -3.665209
+      "not_significant": 246,
+      "median_slope": -3.64375
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1398,11 +1263,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 65,
+      "basins": 42,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 65,
-      "median_slope": -3.204721
+      "not_significant": 42,
+      "median_slope": -2.845687
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1410,11 +1275,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 436,
+      "basins": 365,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 436,
-      "median_slope": -2.883816
+      "not_significant": 365,
+      "median_slope": -2.890233
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1422,23 +1287,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 42,
+      "basins": 37,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 42,
-      "median_slope": -1.576844
-    },
-    {
-      "variable": "uz:pre-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -4.801134
+      "not_significant": 37,
+      "median_slope": -1.847804
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1446,11 +1299,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 125,
+      "basins": 118,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 125,
-      "median_slope": 0.078815
+      "not_significant": 118,
+      "median_slope": 0.047456
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1458,11 +1311,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 247,
+      "basins": 184,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 247,
-      "median_slope": -2.203782
+      "not_significant": 184,
+      "median_slope": -2.048092
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1470,11 +1323,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 2139,
+      "basins": 1716,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2139,
-      "median_slope": -1.5
+      "not_significant": 1716,
+      "median_slope": -1.477173
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1482,23 +1335,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 60,
+      "basins": 47,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 60,
-      "median_slope": -1.42005
-    },
-    {
-      "variable": "uz:pre-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -1.710852
+      "not_significant": 47,
+      "median_slope": -1.375804
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1506,11 +1347,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 283,
+      "basins": 242,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 283,
-      "median_slope": -0.448185
+      "not_significant": 242,
+      "median_slope": -0.492295
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1526,27 +1367,15 @@
     },
     {
       "variable": "uz:pre-monthly-v1",
-      "system": "amu_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -1.25
-    },
-    {
-      "variable": "uz:pre-monthly-v1",
       "system": "syr_darya",
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 22,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": -1.836383
+      "not_significant": 22,
+      "median_slope": -1.860972
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1554,11 +1383,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 91,
+      "basins": 63,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 91,
-      "median_slope": -2.233888
+      "not_significant": 63,
+      "median_slope": -2.290505
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1566,11 +1395,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 2,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": -1.812655
+      "not_significant": 1,
+      "median_slope": -1.915591
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1578,11 +1407,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 3,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 3,
-      "median_slope": -1.866667
+      "not_significant": 1,
+      "median_slope": -1.319005
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1590,11 +1419,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 205,
+      "basins": 195,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 205,
-      "median_slope": -1.66036
+      "not_significant": 195,
+      "median_slope": -1.693946
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1602,35 +1431,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 15,
+      "basins": 9,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 15,
-      "median_slope": -1.213406
-    },
-    {
-      "variable": "uz:pre-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "forest",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.936473
-    },
-    {
-      "variable": "uz:pre-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "irrigated cropland",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.508876
+      "not_significant": 9,
+      "median_slope": -1.259964
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1638,11 +1443,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 347,
+      "basins": 284,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 347,
-      "median_slope": -2.212644
+      "not_significant": 284,
+      "median_slope": -2.229273
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1650,11 +1455,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 37,
+      "basins": 34,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 37,
-      "median_slope": -1.464982
+      "not_significant": 34,
+      "median_slope": -1.423252
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1662,11 +1467,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 291,
+      "basins": 260,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 291,
-      "median_slope": -1.807824
+      "not_significant": 260,
+      "median_slope": -1.796442
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1686,11 +1491,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 9,
+      "basins": 2,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 9,
-      "median_slope": -2.460764
+      "not_significant": 2,
+      "median_slope": -1.746688
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1698,11 +1503,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 55,
+      "basins": 54,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 55,
-      "median_slope": -2.273706
+      "not_significant": 54,
+      "median_slope": -2.044761
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1710,11 +1515,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 251,
+      "basins": 164,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 251,
-      "median_slope": -2.021629
+      "not_significant": 164,
+      "median_slope": -2.060433
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1722,11 +1527,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 979,
+      "basins": 770,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 979,
-      "median_slope": -1.094972
+      "not_significant": 770,
+      "median_slope": -0.934903
     },
     {
       "variable": "uz:pre-monthly-v1",
@@ -1734,10 +1539,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 7,
+      "basins": 5,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 7,
+      "not_significant": 5,
       "median_slope": -2.354845
     },
     {
@@ -1758,503 +1563,23 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 193,
+      "basins": 169,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 193,
-      "median_slope": -2.091932
+      "not_significant": 169,
+      "median_slope": -2.136243
     },
     {
-      "variable": "uz:pre-monthly-v1",
-      "system": "syr_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.452381
-    },
-    {
-      "variable": "uz:run-monthly-v1",
+      "variable": "uz:snw-monthly-v1",
       "system": "amu_darya",
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 12,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 12,
-      "median_slope": -0.727704
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "mixed or natural",
-      "basins": 184,
-      "significant_increase": 0,
-      "significant_decrease": 1,
-      "not_significant": 183,
-      "median_slope": -1.654774
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "rainfed cropland",
-      "basins": 19,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 19,
-      "median_slope": -0.323355
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": -7.565637
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "high mountain",
-      "land_cover": "mixed or natural",
-      "basins": 896,
-      "significant_increase": 0,
-      "significant_decrease": 8,
-      "not_significant": 888,
-      "median_slope": -2.429466
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "lowland",
-      "land_cover": "irrigated cropland",
-      "basins": 33,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": -0.076025
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 39,
-      "significant_increase": 0,
-      "significant_decrease": 1,
-      "not_significant": 38,
-      "median_slope": -0.054027
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "lowland",
-      "land_cover": "rainfed cropland",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": -0.046647
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "mixed or natural",
-      "basins": 327,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 327,
-      "median_slope": -5.166098
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "irrigated cropland",
-      "basins": 65,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 65,
-      "median_slope": -0.875332
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "mixed or natural",
-      "basins": 436,
-      "significant_increase": 0,
-      "significant_decrease": 10,
-      "not_significant": 426,
-      "median_slope": -0.237029
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "rainfed cropland",
-      "basins": 42,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 42,
-      "median_slope": -0.976074
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -7.858835
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "high mountain",
-      "land_cover": "mixed or natural",
-      "basins": 125,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 125,
-      "median_slope": -3.150535
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "irrigated cropland",
-      "basins": 247,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 247,
-      "median_slope": -0.019352
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 2040,
-      "significant_increase": 18,
-      "significant_decrease": 23,
-      "not_significant": 1999,
-      "median_slope": -0.009986
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "rainfed cropland",
-      "basins": 60,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 60,
-      "median_slope": -0.006268
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.081342
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "montane",
-      "land_cover": "mixed or natural",
-      "basins": 283,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 283,
-      "median_slope": -2.22003
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "montane",
-      "land_cover": "rainfed cropland",
-      "basins": 3,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 3,
-      "median_slope": -4.74325
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "irrigated cropland",
-      "basins": 33,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": -0.290682
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "mixed or natural",
-      "basins": 91,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 91,
-      "median_slope": -3.475573
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "rainfed cropland",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": -1.850911
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 3,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 3,
-      "median_slope": -1.794949
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "high mountain",
-      "land_cover": "mixed or natural",
-      "basins": 205,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 205,
-      "median_slope": -1.086118
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "lowland",
-      "land_cover": "irrigated cropland",
-      "basins": 15,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 15,
-      "median_slope": -0.03756
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "forest",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -4.758325
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "irrigated cropland",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -1.341569
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "mixed or natural",
-      "basins": 347,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 347,
-      "median_slope": -3.075185
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "irrigated cropland",
-      "basins": 37,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 37,
-      "median_slope": -0.666649
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "mixed or natural",
-      "basins": 291,
-      "significant_increase": 0,
-      "significant_decrease": 13,
-      "not_significant": 278,
-      "median_slope": -1.753256
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "rainfed cropland",
-      "basins": 5,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 5,
-      "median_slope": -1.840018
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
       "basins": 9,
       "significant_increase": 0,
       "significant_decrease": 0,
       "not_significant": 9,
-      "median_slope": -2.952136
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "high mountain",
-      "land_cover": "mixed or natural",
-      "basins": 55,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 55,
-      "median_slope": -3.443954
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "irrigated cropland",
-      "basins": 251,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 251,
-      "median_slope": -0.079507
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 968,
-      "significant_increase": 2,
-      "significant_decrease": 11,
-      "not_significant": 955,
-      "median_slope": -0.026851
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "rainfed cropland",
-      "basins": 7,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 7,
-      "median_slope": -0.376218
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": -0.002623
-    },
-    {
-      "variable": "uz:run-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "montane",
-      "land_cover": "mixed or natural",
-      "basins": 193,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 193,
-      "median_slope": -3.760946
-    },
-    {
-      "variable": "uz:snw-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "irrigated cropland",
-      "basins": 12,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 12,
-      "median_slope": 0.0
+      "median_slope": -0.012747
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2262,10 +1587,10 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 184,
+      "basins": 182,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 184,
+      "not_significant": 182,
       "median_slope": -0.084063
     },
     {
@@ -2286,11 +1611,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 2,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": -0.509985
+      "not_significant": 1,
+      "median_slope": -0.517285
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2298,11 +1623,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 896,
+      "basins": 890,
       "significant_increase": 1,
       "significant_decrease": 0,
-      "not_significant": 895,
-      "median_slope": -0.22742
+      "not_significant": 889,
+      "median_slope": -0.227406
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2346,11 +1671,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 327,
+      "basins": 325,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 327,
-      "median_slope": -0.229908
+      "not_significant": 325,
+      "median_slope": -0.230026
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2370,11 +1695,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 436,
+      "basins": 435,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 436,
-      "median_slope": -0.054785
+      "not_significant": 435,
+      "median_slope": -0.055745
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2382,11 +1707,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 42,
+      "basins": 41,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 42,
-      "median_slope": -0.147244
+      "not_significant": 41,
+      "median_slope": -0.153331
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2418,10 +1743,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 247,
+      "basins": 244,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 247,
+      "not_significant": 244,
       "median_slope": -0.003965
     },
     {
@@ -2430,11 +1755,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 2029,
+      "basins": 2018,
       "significant_increase": 1,
       "significant_decrease": 32,
-      "not_significant": 1996,
-      "median_slope": -0.045361
+      "not_significant": 1985,
+      "median_slope": -0.045581
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2442,10 +1767,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 60,
+      "basins": 59,
       "significant_increase": 0,
       "significant_decrease": 1,
-      "not_significant": 59,
+      "not_significant": 58,
       "median_slope": -0.099576
     },
     {
@@ -2466,10 +1791,10 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 283,
+      "basins": 282,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 283,
+      "not_significant": 282,
       "median_slope": -0.294947
     },
     {
@@ -2586,10 +1911,10 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 347,
+      "basins": 345,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 347,
+      "not_significant": 345,
       "median_slope": -0.203902
     },
     {
@@ -2610,11 +1935,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 291,
+      "basins": 288,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 291,
-      "median_slope": -0.126612
+      "not_significant": 288,
+      "median_slope": -0.125992
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2634,11 +1959,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 9,
+      "basins": 7,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 9,
-      "median_slope": -0.223894
+      "not_significant": 7,
+      "median_slope": -0.202738
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2658,11 +1983,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 251,
+      "basins": 249,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 251,
-      "median_slope": -0.062422
+      "not_significant": 249,
+      "median_slope": -0.06106
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2670,11 +1995,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 954,
+      "basins": 949,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 954,
-      "median_slope": -0.158314
+      "not_significant": 949,
+      "median_slope": -0.158554
     },
     {
       "variable": "uz:snw-monthly-v1",
@@ -2718,11 +2043,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 12,
+      "basins": 7,
       "significant_increase": 0,
-      "significant_decrease": 12,
+      "significant_decrease": 7,
       "not_significant": 0,
-      "median_slope": -0.291964
+      "median_slope": -0.659342
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2730,11 +2055,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 184,
+      "basins": 144,
       "significant_increase": 0,
-      "significant_decrease": 106,
-      "not_significant": 78,
-      "median_slope": -0.435794
+      "significant_decrease": 82,
+      "not_significant": 62,
+      "median_slope": -0.433171
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2742,9 +2067,9 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 19,
+      "basins": 17,
       "significant_increase": 0,
-      "significant_decrease": 12,
+      "significant_decrease": 10,
       "not_significant": 7,
       "median_slope": -0.276778
     },
@@ -2752,25 +2077,13 @@
       "variable": "uz:soil-monthly-v1",
       "system": "amu_darya",
       "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": -0.489583
-    },
-    {
-      "variable": "uz:soil-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 896,
+      "basins": 759,
       "significant_increase": 0,
-      "significant_decrease": 577,
-      "not_significant": 319,
-      "median_slope": -0.301105
+      "significant_decrease": 478,
+      "not_significant": 281,
+      "median_slope": -0.311818
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2778,11 +2091,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 20,
       "significant_increase": 0,
-      "significant_decrease": 33,
+      "significant_decrease": 20,
       "not_significant": 0,
-      "median_slope": -0.515778
+      "median_slope": -0.481131
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2790,11 +2103,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 39,
+      "basins": 27,
       "significant_increase": 0,
-      "significant_decrease": 39,
+      "significant_decrease": 27,
       "not_significant": 0,
-      "median_slope": -0.415636
+      "median_slope": -0.414936
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2814,11 +2127,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 327,
+      "basins": 246,
       "significant_increase": 0,
-      "significant_decrease": 24,
-      "not_significant": 303,
-      "median_slope": -0.2515
+      "significant_decrease": 10,
+      "not_significant": 236,
+      "median_slope": -0.24296
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2826,11 +2139,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 65,
+      "basins": 42,
       "significant_increase": 0,
-      "significant_decrease": 48,
-      "not_significant": 17,
-      "median_slope": -0.553337
+      "significant_decrease": 34,
+      "not_significant": 8,
+      "median_slope": -0.622282
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2838,11 +2151,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 436,
+      "basins": 365,
       "significant_increase": 0,
-      "significant_decrease": 299,
-      "not_significant": 137,
-      "median_slope": -0.239611
+      "significant_decrease": 239,
+      "not_significant": 126,
+      "median_slope": -0.250257
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2850,23 +2163,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 42,
+      "basins": 37,
       "significant_increase": 0,
-      "significant_decrease": 38,
-      "not_significant": 4,
-      "median_slope": -0.472389
-    },
-    {
-      "variable": "uz:soil-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 1,
-      "not_significant": 0,
-      "median_slope": -0.878618
+      "significant_decrease": 34,
+      "not_significant": 3,
+      "median_slope": -0.55903
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2874,11 +2175,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 125,
+      "basins": 118,
       "significant_increase": 0,
       "significant_decrease": 5,
-      "not_significant": 120,
-      "median_slope": -0.048799
+      "not_significant": 113,
+      "median_slope": -0.047011
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2886,11 +2187,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 247,
+      "basins": 184,
       "significant_increase": 0,
-      "significant_decrease": 217,
-      "not_significant": 30,
-      "median_slope": -0.241304
+      "significant_decrease": 163,
+      "not_significant": 21,
+      "median_slope": -0.223599
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2898,11 +2199,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 2139,
+      "basins": 1716,
       "significant_increase": 0,
-      "significant_decrease": 1232,
-      "not_significant": 907,
-      "median_slope": -0.145759
+      "significant_decrease": 915,
+      "not_significant": 801,
+      "median_slope": -0.144716
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2910,23 +2211,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 60,
+      "basins": 47,
       "significant_increase": 0,
-      "significant_decrease": 48,
-      "not_significant": 12,
-      "median_slope": -0.275991
-    },
-    {
-      "variable": "uz:soil-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 1,
-      "not_significant": 0,
-      "median_slope": -0.222264
+      "significant_decrease": 36,
+      "not_significant": 11,
+      "median_slope": -0.286991
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2934,11 +2223,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 283,
+      "basins": 242,
       "significant_increase": 0,
-      "significant_decrease": 61,
-      "not_significant": 222,
-      "median_slope": -0.163987
+      "significant_decrease": 44,
+      "not_significant": 198,
+      "median_slope": -0.165646
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2954,27 +2243,15 @@
     },
     {
       "variable": "uz:soil-monthly-v1",
-      "system": "amu_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 1,
-      "not_significant": 0,
-      "median_slope": -0.15816
-    },
-    {
-      "variable": "uz:soil-monthly-v1",
       "system": "syr_darya",
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 22,
       "significant_increase": 0,
-      "significant_decrease": 32,
+      "significant_decrease": 21,
       "not_significant": 1,
-      "median_slope": -0.736602
+      "median_slope": -0.687219
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2982,11 +2259,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 91,
+      "basins": 63,
       "significant_increase": 0,
-      "significant_decrease": 18,
-      "not_significant": 73,
-      "median_slope": -0.562045
+      "significant_decrease": 16,
+      "not_significant": 47,
+      "median_slope": -0.600164
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -2994,10 +2271,10 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 2,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2,
+      "not_significant": 1,
       "median_slope": -0.602998
     },
     {
@@ -3006,10 +2283,10 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 3,
+      "basins": 1,
       "significant_increase": 0,
-      "significant_decrease": 2,
-      "not_significant": 1,
+      "significant_decrease": 1,
+      "not_significant": 0,
       "median_slope": -0.420256
     },
     {
@@ -3018,11 +2295,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 205,
+      "basins": 195,
       "significant_increase": 0,
-      "significant_decrease": 105,
-      "not_significant": 100,
-      "median_slope": -0.327911
+      "significant_decrease": 99,
+      "not_significant": 96,
+      "median_slope": -0.33654
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -3030,35 +2307,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 15,
+      "basins": 9,
       "significant_increase": 0,
-      "significant_decrease": 15,
+      "significant_decrease": 9,
       "not_significant": 0,
-      "median_slope": -0.319695
-    },
-    {
-      "variable": "uz:soil-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "forest",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.364154
-    },
-    {
-      "variable": "uz:soil-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "irrigated cropland",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 1,
-      "not_significant": 0,
-      "median_slope": -0.238067
+      "median_slope": -0.381905
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -3066,11 +2319,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 347,
+      "basins": 284,
       "significant_increase": 0,
-      "significant_decrease": 134,
-      "not_significant": 213,
-      "median_slope": -0.337518
+      "significant_decrease": 104,
+      "not_significant": 180,
+      "median_slope": -0.334358
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -3078,11 +2331,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 37,
+      "basins": 34,
       "significant_increase": 0,
-      "significant_decrease": 31,
+      "significant_decrease": 28,
       "not_significant": 6,
-      "median_slope": -0.340465
+      "median_slope": -0.336271
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -3090,11 +2343,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 291,
+      "basins": 260,
       "significant_increase": 0,
-      "significant_decrease": 129,
-      "not_significant": 162,
-      "median_slope": -0.2421
+      "significant_decrease": 113,
+      "not_significant": 147,
+      "median_slope": -0.240715
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -3114,11 +2367,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 9,
+      "basins": 2,
       "significant_increase": 0,
-      "significant_decrease": 3,
-      "not_significant": 6,
-      "median_slope": -0.37082
+      "significant_decrease": 1,
+      "not_significant": 1,
+      "median_slope": -0.124311
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -3126,9 +2379,9 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 55,
+      "basins": 54,
       "significant_increase": 0,
-      "significant_decrease": 15,
+      "significant_decrease": 14,
       "not_significant": 40,
       "median_slope": -0.219504
     },
@@ -3138,10 +2391,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 251,
+      "basins": 164,
       "significant_increase": 0,
-      "significant_decrease": 187,
-      "not_significant": 64,
+      "significant_decrease": 111,
+      "not_significant": 53,
       "median_slope": -0.36729
     },
     {
@@ -3150,11 +2403,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 979,
+      "basins": 770,
       "significant_increase": 0,
-      "significant_decrease": 175,
-      "not_significant": 804,
-      "median_slope": -0.070368
+      "significant_decrease": 118,
+      "not_significant": 652,
+      "median_slope": -0.065749
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -3162,11 +2415,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 7,
+      "basins": 5,
       "significant_increase": 0,
-      "significant_decrease": 7,
+      "significant_decrease": 5,
       "not_significant": 0,
-      "median_slope": -0.800134
+      "median_slope": -0.816337
     },
     {
       "variable": "uz:soil-monthly-v1",
@@ -3186,23 +2439,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 193,
+      "basins": 169,
       "significant_increase": 0,
-      "significant_decrease": 51,
-      "not_significant": 142,
-      "median_slope": -0.322502
-    },
-    {
-      "variable": "uz:soil-monthly-v1",
-      "system": "syr_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": -0.104048
+      "significant_decrease": 38,
+      "not_significant": 131,
+      "median_slope": -0.304385
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3210,11 +2451,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 12,
-      "significant_increase": 8,
+      "basins": 7,
+      "significant_increase": 3,
       "significant_decrease": 0,
       "not_significant": 4,
-      "median_slope": 0.060271
+      "median_slope": 0.06977
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3222,11 +2463,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 184,
-      "significant_increase": 70,
+      "basins": 144,
+      "significant_increase": 50,
       "significant_decrease": 0,
-      "not_significant": 114,
-      "median_slope": 0.066821
+      "not_significant": 94,
+      "median_slope": 0.067886
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3234,23 +2475,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 19,
-      "significant_increase": 6,
+      "basins": 17,
+      "significant_increase": 5,
       "significant_decrease": 0,
-      "not_significant": 13,
-      "median_slope": 0.064907
-    },
-    {
-      "variable": "uz:tmn-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.025772
+      "not_significant": 12,
+      "median_slope": 0.06804
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3258,11 +2487,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 896,
-      "significant_increase": 142,
+      "basins": 759,
+      "significant_increase": 131,
       "significant_decrease": 0,
-      "not_significant": 754,
-      "median_slope": 0.014274
+      "not_significant": 628,
+      "median_slope": 0.01459
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3270,11 +2499,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 33,
-      "significant_increase": 25,
+      "basins": 20,
+      "significant_increase": 13,
       "significant_decrease": 0,
-      "not_significant": 8,
-      "median_slope": 0.068933
+      "not_significant": 7,
+      "median_slope": 0.069443
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3282,11 +2511,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 39,
-      "significant_increase": 30,
+      "basins": 27,
+      "significant_increase": 20,
       "significant_decrease": 0,
-      "not_significant": 9,
-      "median_slope": 0.066279
+      "not_significant": 7,
+      "median_slope": 0.06537
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3306,11 +2535,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 327,
-      "significant_increase": 159,
+      "basins": 246,
+      "significant_increase": 124,
       "significant_decrease": 0,
-      "not_significant": 168,
-      "median_slope": 0.04391
+      "not_significant": 122,
+      "median_slope": 0.048765
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3318,11 +2547,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 65,
-      "significant_increase": 26,
+      "basins": 42,
+      "significant_increase": 21,
       "significant_decrease": 0,
-      "not_significant": 39,
-      "median_slope": 0.05529
+      "not_significant": 21,
+      "median_slope": 0.058799
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3330,11 +2559,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 436,
-      "significant_increase": 336,
+      "basins": 365,
+      "significant_increase": 278,
       "significant_decrease": 0,
-      "not_significant": 100,
-      "median_slope": 0.055696
+      "not_significant": 87,
+      "median_slope": 0.056732
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3342,23 +2571,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 42,
-      "significant_increase": 35,
+      "basins": 37,
+      "significant_increase": 30,
       "significant_decrease": 0,
       "not_significant": 7,
-      "median_slope": 0.056653
-    },
-    {
-      "variable": "uz:tmn-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.076171
+      "median_slope": 0.058581
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3366,11 +2583,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 125,
-      "significant_increase": 46,
+      "basins": 118,
+      "significant_increase": 41,
       "significant_decrease": 0,
-      "not_significant": 79,
-      "median_slope": 0.04336
+      "not_significant": 77,
+      "median_slope": 0.043254
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3378,10 +2595,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 247,
-      "significant_increase": 158,
+      "basins": 184,
+      "significant_increase": 114,
       "significant_decrease": 0,
-      "not_significant": 89,
+      "not_significant": 70,
       "median_slope": 0.061651
     },
     {
@@ -3390,11 +2607,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 2139,
-      "significant_increase": 725,
+      "basins": 1716,
+      "significant_increase": 563,
       "significant_decrease": 0,
-      "not_significant": 1414,
-      "median_slope": 0.052773
+      "not_significant": 1153,
+      "median_slope": 0.052539
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3402,23 +2619,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 60,
-      "significant_increase": 6,
+      "basins": 47,
+      "significant_increase": 2,
       "significant_decrease": 0,
-      "not_significant": 54,
-      "median_slope": 0.055193
-    },
-    {
-      "variable": "uz:tmn-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.045419
+      "not_significant": 45,
+      "median_slope": 0.053868
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3426,11 +2631,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 283,
-      "significant_increase": 177,
+      "basins": 242,
+      "significant_increase": 151,
       "significant_decrease": 0,
-      "not_significant": 106,
-      "median_slope": 0.051956
+      "not_significant": 91,
+      "median_slope": 0.052362
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3446,27 +2651,15 @@
     },
     {
       "variable": "uz:tmn-monthly-v1",
-      "system": "amu_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.036667
-    },
-    {
-      "variable": "uz:tmn-monthly-v1",
       "system": "syr_darya",
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 22,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": 0.017372
+      "not_significant": 22,
+      "median_slope": 0.014986
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3474,11 +2667,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 91,
+      "basins": 63,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 91,
-      "median_slope": 0.009588
+      "not_significant": 63,
+      "median_slope": 0.013439
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3486,11 +2679,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 2,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.028681
+      "not_significant": 1,
+      "median_slope": 0.027224
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3498,10 +2691,10 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 3,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 3,
+      "not_significant": 1,
       "median_slope": 0.025352
     },
     {
@@ -3510,11 +2703,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 205,
+      "basins": 195,
       "significant_increase": 5,
       "significant_decrease": 0,
-      "not_significant": 200,
-      "median_slope": 0.002191
+      "not_significant": 190,
+      "median_slope": 0.002426
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3522,35 +2715,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 15,
+      "basins": 9,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 15,
-      "median_slope": 0.020867
-    },
-    {
-      "variable": "uz:tmn-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "forest",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.005072
-    },
-    {
-      "variable": "uz:tmn-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "irrigated cropland",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.005896
+      "not_significant": 9,
+      "median_slope": 0.02051
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3558,11 +2727,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 347,
-      "significant_increase": 1,
+      "basins": 284,
+      "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 346,
-      "median_slope": -0.003923
+      "not_significant": 284,
+      "median_slope": -0.003654
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3570,11 +2739,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 37,
+      "basins": 34,
       "significant_increase": 2,
       "significant_decrease": 0,
-      "not_significant": 35,
-      "median_slope": 0.021651
+      "not_significant": 32,
+      "median_slope": 0.022413
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3582,11 +2751,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 291,
-      "significant_increase": 30,
+      "basins": 260,
+      "significant_increase": 25,
       "significant_decrease": 0,
-      "not_significant": 261,
-      "median_slope": 0.039339
+      "not_significant": 235,
+      "median_slope": 0.039253
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3606,11 +2775,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 9,
+      "basins": 2,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 9,
-      "median_slope": 0.036111
+      "not_significant": 2,
+      "median_slope": 0.0534
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3618,10 +2787,10 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 55,
+      "basins": 54,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 55,
+      "not_significant": 54,
       "median_slope": 0.014753
     },
     {
@@ -3630,10 +2799,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 251,
-      "significant_increase": 32,
+      "basins": 164,
+      "significant_increase": 19,
       "significant_decrease": 0,
-      "not_significant": 219,
+      "not_significant": 145,
       "median_slope": 0.039339
     },
     {
@@ -3642,11 +2811,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 979,
-      "significant_increase": 2,
+      "basins": 770,
+      "significant_increase": 1,
       "significant_decrease": 0,
-      "not_significant": 977,
-      "median_slope": 0.044729
+      "not_significant": 769,
+      "median_slope": 0.045
     },
     {
       "variable": "uz:tmn-monthly-v1",
@@ -3654,10 +2823,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 7,
-      "significant_increase": 5,
+      "basins": 5,
+      "significant_increase": 4,
       "significant_decrease": 0,
-      "not_significant": 2,
+      "not_significant": 1,
       "median_slope": 0.058943
     },
     {
@@ -3678,527 +2847,23 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 193,
-      "significant_increase": 10,
+      "basins": 169,
+      "significant_increase": 9,
       "significant_decrease": 0,
-      "not_significant": 183,
-      "median_slope": 0.019208
+      "not_significant": 160,
+      "median_slope": 0.02022
     },
     {
-      "variable": "uz:tmn-monthly-v1",
-      "system": "syr_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.049603
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
+      "variable": "uz:tmx-monthly-v1",
       "system": "amu_darya",
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 12,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 12,
-      "median_slope": 0.039401
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "mixed or natural",
-      "basins": 184,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 184,
-      "median_slope": 0.058821
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "rainfed cropland",
-      "basins": 19,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 19,
-      "median_slope": 0.050117
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.028673
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "high mountain",
-      "land_cover": "mixed or natural",
-      "basins": 896,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 896,
-      "median_slope": 0.028712
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "lowland",
-      "land_cover": "irrigated cropland",
-      "basins": 33,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": 0.09054
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 39,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 39,
-      "median_slope": 0.078588
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "lowland",
-      "land_cover": "rainfed cropland",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.090656
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "mixed or natural",
-      "basins": 327,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 327,
-      "median_slope": 0.037178
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "irrigated cropland",
-      "basins": 65,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 65,
-      "median_slope": 0.058521
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "mixed or natural",
-      "basins": 436,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 436,
-      "median_slope": 0.047615
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "rainfed cropland",
-      "basins": 42,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 42,
-      "median_slope": 0.0509
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.067024
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "high mountain",
-      "land_cover": "mixed or natural",
-      "basins": 125,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 125,
-      "median_slope": 0.034706
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "irrigated cropland",
-      "basins": 247,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 247,
-      "median_slope": 0.057067
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 2139,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2139,
-      "median_slope": 0.041999
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "rainfed cropland",
-      "basins": 60,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 60,
-      "median_slope": 0.053883
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.047209
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "montane",
-      "land_cover": "mixed or natural",
-      "basins": 283,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 283,
-      "median_slope": 0.04785
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "montane",
-      "land_cover": "rainfed cropland",
-      "basins": 3,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 3,
-      "median_slope": 0.051289
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "amu_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.024927
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "irrigated cropland",
-      "basins": 33,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": 0.029434
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "mixed or natural",
-      "basins": 91,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 91,
-      "median_slope": 0.025318
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "rainfed cropland",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.029806
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 3,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 3,
-      "median_slope": 0.030789
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "high mountain",
-      "land_cover": "mixed or natural",
-      "basins": 205,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 205,
-      "median_slope": 0.033723
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "lowland",
-      "land_cover": "irrigated cropland",
-      "basins": 15,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 15,
-      "median_slope": 0.032016
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "forest",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.003259
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "irrigated cropland",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.040047
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "mixed or natural",
-      "basins": 347,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 347,
-      "median_slope": 0.022969
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "irrigated cropland",
-      "basins": 37,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 37,
-      "median_slope": 0.033601
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "mixed or natural",
-      "basins": 291,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 291,
-      "median_slope": 0.041329
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "rainfed cropland",
-      "basins": 5,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 5,
-      "median_slope": 0.055584
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 9,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 9,
-      "median_slope": 0.053274
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "high mountain",
-      "land_cover": "mixed or natural",
-      "basins": 55,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 55,
-      "median_slope": 0.023613
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "irrigated cropland",
-      "basins": 251,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 251,
-      "median_slope": 0.043634
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 979,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 979,
-      "median_slope": 0.038501
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "rainfed cropland",
       "basins": 7,
       "significant_increase": 0,
       "significant_decrease": 0,
       "not_significant": 7,
-      "median_slope": 0.05368
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.044982
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "middle or lower",
-      "elevation_band": "montane",
-      "land_cover": "mixed or natural",
-      "basins": 193,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 193,
-      "median_slope": 0.035385
-    },
-    {
-      "variable": "uz:tmp-monthly-v1",
-      "system": "syr_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.047033
-    },
-    {
-      "variable": "uz:tmx-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "irrigated cropland",
-      "basins": 12,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 12,
-      "median_slope": 0.064465
+      "median_slope": 0.086831
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4206,11 +2871,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 184,
+      "basins": 144,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 184,
-      "median_slope": 0.082316
+      "not_significant": 144,
+      "median_slope": 0.083197
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4218,23 +2883,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 19,
+      "basins": 17,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 19,
-      "median_slope": 0.076355
-    },
-    {
-      "variable": "uz:tmx-monthly-v1",
-      "system": "amu_darya",
-      "position": "headwater",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 2,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.036296
+      "not_significant": 17,
+      "median_slope": 0.078905
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4242,11 +2895,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 896,
+      "basins": 759,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 896,
-      "median_slope": 0.041707
+      "not_significant": 759,
+      "median_slope": 0.042163
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4254,11 +2907,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 20,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": 0.086343
+      "not_significant": 20,
+      "median_slope": 0.086867
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4266,11 +2919,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 39,
+      "basins": 27,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 39,
-      "median_slope": 0.077618
+      "not_significant": 27,
+      "median_slope": 0.075111
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4290,11 +2943,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 327,
+      "basins": 246,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 327,
-      "median_slope": 0.054245
+      "not_significant": 246,
+      "median_slope": 0.055295
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4302,11 +2955,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 65,
+      "basins": 42,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 65,
-      "median_slope": 0.058161
+      "not_significant": 42,
+      "median_slope": 0.062087
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4314,11 +2967,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 436,
+      "basins": 365,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 436,
-      "median_slope": 0.053241
+      "not_significant": 365,
+      "median_slope": 0.056207
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4326,23 +2979,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 42,
+      "basins": 37,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 42,
-      "median_slope": 0.058783
-    },
-    {
-      "variable": "uz:tmx-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "foothill",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.075102
+      "not_significant": 37,
+      "median_slope": 0.060632
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4350,11 +2991,11 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 125,
+      "basins": 118,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 125,
-      "median_slope": 0.043533
+      "not_significant": 118,
+      "median_slope": 0.043409
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4362,11 +3003,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 247,
+      "basins": 184,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 247,
-      "median_slope": 0.060069
+      "not_significant": 184,
+      "median_slope": 0.060096
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4374,11 +3015,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 2139,
+      "basins": 1716,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2139,
-      "median_slope": 0.050232
+      "not_significant": 1716,
+      "median_slope": 0.050065
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4386,23 +3027,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 60,
+      "basins": 47,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 60,
-      "median_slope": 0.0541
-    },
-    {
-      "variable": "uz:tmx-monthly-v1",
-      "system": "amu_darya",
-      "position": "middle or lower",
-      "elevation_band": "lowland",
-      "land_cover": "urban",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.043371
+      "not_significant": 47,
+      "median_slope": 0.05233
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4410,11 +3039,11 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 283,
+      "basins": 242,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 283,
-      "median_slope": 0.047696
+      "not_significant": 242,
+      "median_slope": 0.047914
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4430,27 +3059,15 @@
     },
     {
       "variable": "uz:tmx-monthly-v1",
-      "system": "amu_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.036806
-    },
-    {
-      "variable": "uz:tmx-monthly-v1",
       "system": "syr_darya",
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 33,
+      "basins": 22,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 33,
-      "median_slope": 0.033056
+      "not_significant": 22,
+      "median_slope": 0.029887
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4458,11 +3075,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 91,
+      "basins": 63,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 91,
-      "median_slope": 0.031202
+      "not_significant": 63,
+      "median_slope": 0.03546
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4470,11 +3087,11 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "rainfed cropland",
-      "basins": 2,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 2,
-      "median_slope": 0.045768
+      "not_significant": 1,
+      "median_slope": 0.041355
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4482,10 +3099,10 @@
       "position": "headwater",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 3,
+      "basins": 1,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 3,
+      "not_significant": 1,
       "median_slope": 0.03711
     },
     {
@@ -4494,11 +3111,11 @@
       "position": "headwater",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 205,
+      "basins": 195,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 205,
-      "median_slope": 0.033906
+      "not_significant": 195,
+      "median_slope": 0.035203
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4506,35 +3123,11 @@
       "position": "headwater",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 15,
+      "basins": 9,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 15,
-      "median_slope": 0.035194
-    },
-    {
-      "variable": "uz:tmx-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "forest",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.025885
-    },
-    {
-      "variable": "uz:tmx-monthly-v1",
-      "system": "syr_darya",
-      "position": "headwater",
-      "elevation_band": "montane",
-      "land_cover": "irrigated cropland",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.041957
+      "not_significant": 9,
+      "median_slope": 0.035483
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4542,11 +3135,11 @@
       "position": "headwater",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 347,
+      "basins": 284,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 347,
-      "median_slope": 0.02315
+      "not_significant": 284,
+      "median_slope": 0.022973
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4554,11 +3147,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "irrigated cropland",
-      "basins": 37,
+      "basins": 34,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 37,
-      "median_slope": 0.030357
+      "not_significant": 34,
+      "median_slope": 0.030654
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4566,10 +3159,10 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "mixed or natural",
-      "basins": 291,
+      "basins": 260,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 291,
+      "not_significant": 260,
       "median_slope": 0.044051
     },
     {
@@ -4590,11 +3183,11 @@
       "position": "middle or lower",
       "elevation_band": "foothill",
       "land_cover": "urban",
-      "basins": 9,
+      "basins": 2,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 9,
-      "median_slope": 0.037006
+      "not_significant": 2,
+      "median_slope": 0.050242
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4602,10 +3195,10 @@
       "position": "middle or lower",
       "elevation_band": "high mountain",
       "land_cover": "mixed or natural",
-      "basins": 55,
+      "basins": 54,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 55,
+      "not_significant": 54,
       "median_slope": 0.029694
     },
     {
@@ -4614,11 +3207,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "irrigated cropland",
-      "basins": 251,
+      "basins": 164,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 251,
-      "median_slope": 0.040452
+      "not_significant": 164,
+      "median_slope": 0.040907
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4626,11 +3219,11 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "mixed or natural",
-      "basins": 979,
+      "basins": 770,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 979,
-      "median_slope": 0.046604
+      "not_significant": 770,
+      "median_slope": 0.046639
     },
     {
       "variable": "uz:tmx-monthly-v1",
@@ -4638,10 +3231,10 @@
       "position": "middle or lower",
       "elevation_band": "lowland",
       "land_cover": "rainfed cropland",
-      "basins": 7,
+      "basins": 5,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 7,
+      "not_significant": 5,
       "median_slope": 0.062332
     },
     {
@@ -4662,31 +3255,30 @@
       "position": "middle or lower",
       "elevation_band": "montane",
       "land_cover": "mixed or natural",
-      "basins": 193,
+      "basins": 169,
       "significant_increase": 0,
       "significant_decrease": 0,
-      "not_significant": 193,
-      "median_slope": 0.026407
-    },
-    {
-      "variable": "uz:tmx-monthly-v1",
-      "system": "syr_darya",
-      "position": "terminal",
-      "elevation_band": "lowland",
-      "land_cover": "mixed or natural",
-      "basins": 1,
-      "significant_increase": 0,
-      "significant_decrease": 0,
-      "not_significant": 1,
-      "median_slope": 0.043016
+      "not_significant": 169,
+      "median_slope": 0.027539
     }
   ],
   "findings": {
+    "resolution": {
+      "finding": "Two variables cannot be analysed at this basin level at all. ERA5-Land has a 0.1 degree grid, about 123 km2 per cell, against a median level-12 basin of 136 km2: across the whole region there are 1.05 ERA5 cells per basin, so basins and cells are interchangeable and neighbouring basins read the same number. Runoff and mean temperature are withheld entirely rather than reported at a resolution they do not have.",
+      "cells_per_basin_across_region": {
+        "TerraClimate": 6.03,
+        "ERA5-Land": 1.05,
+        "MODIS MYD10A1": 518.9
+      },
+      "why_it_was_not_obvious": "Every product is resampled onto the 15 arc-second HydroSHEDS lattice before reduction, so the stored expected_count is about 835 cells for a median basin whether the source is 4 km or 11 km. That number describes the lattice and not the evidence, and reading it as sampling density is the mistake the gate now prevents.",
+      "what_survives": "TerraClimate at about 6 cells per basin is resolved enough for a basin mean to be a statement about the basin, and MODIS at 500 m comfortably so. Basins holding fewer than four source cells are withheld for every variable, which removes 19 per cent of them from the TerraClimate analyses.",
+      "the_remaining_caveat": "Resolving the basin is not the same as the basins being independent of each other. A climate field is spatially correlated, so adjacent basins share signal even with distinct cells, and the count of significant basins is therefore not a count of independent findings. False discovery control remains valid under this kind of positive dependence, but the basin count should be read as extent, not as evidential weight."
+    },
     "headline": "Controlling for multiple testing changes the answer for most variables. Of nine, only soil moisture and minimum temperature retain a substantial number of significant basins once false discovery is controlled across 7,445 simultaneous tests.",
     "survives_correction": {
-      "soil moisture": 3665,
-      "minimum temperature": 2043,
-      "runoff": 87
+      "soil moisture": 2788,
+      "minimum temperature": 1618,
+      "runoff": 0
     },
     "does_not_survive": {
       "precipitation": 0,
@@ -4702,6 +3294,7 @@
   "reading": {
     "significance": "Three verdicts are published for every basin: uncorrected, corrected for serial correlation, and corrected again for false discovery across the basins. They differ, and the difference is the point.",
     "scope": "These are trends in this record over 2003-2024, not attributions to a cause. A 22-year slope cannot separate a trend from decadal variability, and nothing here attempts to.",
+    "resolution": "A basin smaller than its source grid cell is not a measurement of the basin. Variables are gated on holding at least four native source cells, which withdraws ERA5-Land entirely at this basin level.",
     "snow": "The snow series is withdrawn from trend use in this release: its gaps grow towards the present at constant source coverage, so a trend through it is partly a trend in the observation record."
   }
 }

@@ -77,6 +77,7 @@ VARIABLES = {
         "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "why": "Downscaled to about four kilometres, which matters where a level-12 basin sits "
                "in mountain terrain and a coarse cell would average a valley with a ridge.",
         "fallback": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
@@ -88,6 +89,7 @@ VARIABLES = {
         "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "why": "Published on the same grid and water balance as precipitation and potential "
                "evapotranspiration, so the three can be differenced without crossing models.",
         "fallback": None, "kind": "flux",
@@ -97,6 +99,7 @@ VARIABLES = {
         "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "why": "Paired with actual evapotranspiration from one model, which is what makes their "
                "ratio a moisture index rather than a comparison of two conventions.",
         "fallback": None, "kind": "flux",
@@ -106,6 +109,7 @@ VARIABLES = {
         "unit": "millimetres of soil moisture", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "why": "A modelled column store in millimetres. It is published as what it is and not "
                "relabelled as the percentage the atlas attribute holds.",
         "fallback": None, "kind": "state",
@@ -115,6 +119,7 @@ VARIABLES = {
         "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "native_resolution_m": 11132,
         "why": "A land-surface model's runoff, kept as the answer because it was chosen first and "
                "the record's analyses use it. It is not discharge: it has not been routed and no "
                "gauge has been compared to it.",
@@ -128,6 +133,7 @@ VARIABLES = {
         "unit": "percent", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "frequency of snow-covered days in the month",
         "preferred": "MODIS/061/MYD10A1",
+        "native_resolution_m": 500,
         "why": "Daily observations aggregated here, rather than the monthly product the atlas "
                "cites, so the count of contributing days is known per basin and month.",
         "fallback": None, "kind": "state",
@@ -139,6 +145,7 @@ VARIABLES = {
         "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "native_resolution_m": 11132,
         "why": "A true mean of hourly values. TerraClimate publishes only the daily extremes, "
                "and their midpoint is a different measurement that happens to carry the same name.",
         "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
@@ -150,14 +157,16 @@ VARIABLES = {
         "concept": "maximum temperature", "attribute": "uzgeodata.dated.v1.tmx_dc_s",
         "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
-        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638, "fallback": None, "kind": "state",
         "why": "The month's daily maxima. ERA5-Land publishes no daily extreme on this grid.",
     },
     "uz:tmn-monthly-v1": {
         "concept": "minimum temperature", "attribute": "uzgeodata.dated.v1.tmn_dc_s",
         "unit": "degrees Celsius", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
-        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638, "fallback": None, "kind": "state",
         "why": "The month's daily minima, paired with the maxima from the same model.",
     },
     # The rest of TerraClimate's water balance. All five are outputs of the model that
@@ -167,7 +176,8 @@ VARIABLES = {
         "concept": "vapour pressure deficit", "attribute": "uzgeodata.dated.v1.vpd_kp_s",
         "unit": "kilopascals", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
-        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638, "fallback": None, "kind": "state",
         "why": "Published on the same four-kilometre grid as the temperatures it depends on, "
                "rather than derived here from a humidity field this project does not hold.",
     },
@@ -175,7 +185,8 @@ VARIABLES = {
         "concept": "climate water deficit", "attribute": "uzgeodata.dated.v1.cwd_mm_s",
         "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
-        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "flux",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638, "fallback": None, "kind": "flux",
         "why": "Demand the water balance could not meet: PET less AET inside one model, with soil "
                "storage accounted for, which the crude precipitation-less-AET balance is not.",
     },
@@ -183,7 +194,8 @@ VARIABLES = {
         "concept": "snow water equivalent", "attribute": "uzgeodata.dated.v1.swe_mm_s",
         "unit": "millimetres of snow water equivalent", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
-        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638, "fallback": None, "kind": "state",
         "why": "The water a snowpack holds, which snow cover cannot give: cover is extent only.",
         "caution": "Modelled from temperature and precipitation, not observed. It is not a "
                    "measurement to validate MODIS snow cover against, and in high terrain the "
@@ -193,7 +205,8 @@ VARIABLES = {
         "concept": "terraclimate runoff", "attribute": "uzgeodata.dated.v1.rtc_mm_s",
         "unit": "millimetres per month", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
-        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "flux",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638, "fallback": None, "kind": "flux",
         "why": "A second runoff to set against ERA5-Land's, from a different model. Asking for "
                "'runoff' still resolves to ERA5-Land; this one has to be asked for by name.",
     },
@@ -201,7 +214,8 @@ VARIABLES = {
         "concept": "palmer drought severity index", "attribute": "uzgeodata.dated.v1.pds_ix_s",
         "unit": "index (dimensionless)", "cadence": "monthly", "coverage": [2003, 2024],
         "support": "basin, local", "aggregation": "area-weighted mean of the monthly field",
-        "preferred": "IDAHO_EPSCOR/TERRACLIMATE", "fallback": None, "kind": "state",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638, "fallback": None, "kind": "state",
         "why": "A published drought index beside the SPI derived here, computed by the source "
                "from its own water balance rather than from precipitation alone.",
         "caution": "An index already standardised by its source. Averaging it over basins or "

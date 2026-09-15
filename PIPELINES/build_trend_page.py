@@ -83,23 +83,35 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 
 <section class="page-intro"><p class="eyebrow">CASE STUDY &middot; TREND ANALYSIS</p>
 <h1>Hydroclimatic trends across two basins<br><em>and what survives testing them properly.</em></h1>
-<p class="lead">Mann&ndash;Kendall and Sen&#8217;s slope for nine variables across <strong>7,445 level-12 basins</strong> of the Amu Darya and Syr Darya, 2003&ndash;2024, stratified by system, position, elevation and land cover. The result is mostly about the corrections: of nine variables, four have <strong>no basin at all</strong> with a trend that survives control for multiple testing.</p></section>
+<p class="lead">Mann&ndash;Kendall and Sen&#8217;s slope across level-12 basins of the Amu Darya and Syr Darya, 2003&ndash;2024, stratified by system, position, elevation and land cover. The result is mostly about the corrections: of nine variables, four have <strong>no basin at all</strong> with a trend that survives control for multiple testing.</p></section>
 
 <section class="section"><div>
 
 <div class="stat-row">
-<div class="stat"><b>7,445</b><span>basins tested<br>level-12, both systems</span></div>
+<div class="stat"><b>6,016</b><span>basins tested<br>after the resolution gate</span></div>
 <div class="stat"><b>22</b><span>complete years<br>2003&ndash;2024</span></div>
 <div class="stat"><b>{soil.get('significant_after_fdr', 0):,}</b><span>basins, soil moisture<br>survive both corrections</span></div>
-<div class="stat alarm"><b>0</b><span>basins, precipitation<br>survive both corrections</span></div>
+<div class="stat alarm"><b>2</b><span>variables withheld<br>basin smaller than source cell</span></div>
 </div>
+
+<div class="warn"><strong>Two variables are withheld entirely at this basin level.</strong> {findings['resolution']['finding']}</div>
+
+<h2>Resolution: what a basin mean can and cannot be</h2>
+<p>{findings['resolution']['why_it_was_not_obvious']}</p>
+<table class="t"><thead><tr><th>Product</th><th>Cell size</th><th>Source cells per basin, region-wide</th><th>Verdict at level 12</th></tr></thead><tbody>
+<tr><td>MODIS MYD10A1</td><td>500 m &middot; 0.25 km&sup2;</td><td>518.9</td><td class="kept">resolved</td></tr>
+<tr><td>TerraClimate</td><td>4.6 km &middot; 21.5 km&sup2;</td><td>6.03</td><td class="kept">resolved</td></tr>
+<tr><td>ERA5-Land</td><td>11.1 km &middot; 123.2 km&sup2;</td><td>1.05</td><td class="zero">withheld</td></tr>
+</tbody></table>
+<p>{findings['resolution']['what_survives']}</p>
+<p class="muted"><strong>The remaining caveat.</strong> {findings['resolution']['the_remaining_caveat']}</p>
 
 <h2>The question</h2>
 <p>Trend maps for Central Asia are not scarce. What is scarce is one where a reader can see how much of the result is method. Testing thousands of basins simultaneously, on series that persist from year to year, produces significance whether or not anything is happening &mdash; and the size of that effect is rarely reported alongside the map it distorts.</p>
 <p>So this computes the same trend three times for every basin and publishes all three: uncorrected, corrected for serial persistence, and controlled for false discovery across the whole family of tests.</p>
 
 <h2>Data</h2>
-<p>The published observation record: nine dated variables, monthly, 2003&ndash;2024, area-reduced to every level-12 basin in both systems. Annual values are flux sums or state means, and <strong>a year short of a month is dropped rather than scaled</strong> &mdash; which is why the basin counts differ slightly between variables. Strata come from the published reference atlas rather than being invented here: system and headwater position from the routing graph, elevation from <code>ele_mt_sav</code>, land cover from the cropland, irrigated, forest and urban shares.</p>
+<p>The published observation record: nine dated variables, monthly, 2003&ndash;2024, area-reduced to level-12 basins in both systems, <strong>gated on resolution</strong> as above &mdash; a basin must contain at least four native source cells to be tested at all. Annual values are flux sums or state means, and <strong>a year short of a month is dropped rather than scaled</strong> &mdash; which is why the basin counts differ slightly between variables. Strata come from the published reference atlas rather than being invented here: system and headwater position from the routing graph, elevation from <code>ele_mt_sav</code>, land cover from the cropland, irrigated, forest and urban shares.</p>
 
 <h2>Method</h2>
 <ul>
