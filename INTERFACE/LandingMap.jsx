@@ -589,7 +589,7 @@ export default function LandingMap() {
           <h1>Where the water forms</h1>
         </div>
         <div className="land-head-tools">
-          <a className="land-project-link" href="/project.html">Project explorer <ArrowUpRight size={12}/></a>
+          <a className="land-project-link" href="/project.html">Project overview <ArrowUpRight size={12}/></a>
           <button className="land-view-button" type="button" onClick={() => {
             setBounds(null); setResetVersion(value => value + 1);
           }} title="Return to the starting map location and zoom">Reset view</button>
