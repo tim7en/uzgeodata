@@ -27,7 +27,7 @@ function App() {
   const rows = data?.attributes.filter(a => (category === 'all' || a.category === category)
     && `${a.column} ${a.label} ${a.variable}`.toLowerCase().includes(query.toLowerCase())) || [];
   return <main>
-    <nav><a href="/">UzGeoData / Basins</a><div style={{display:"flex",alignItems:"center",gap:20}}><a href="/atlas.html">Atlas explorer ↗</a><ThemeToggle/></div></nav>
+    <nav><a href="/">&#8592; UzGeoData</a><div style={{display:"flex",alignItems:"center",gap:20}}><a href="/atlas.html">Atlas explorer ↗</a><ThemeToggle/></div></nav>
     <header className="hero"><p className="eyebrow">THE ATLAS PROGRAMME · AMU DARYA + SYR DARYA</p>
       <h1>From basin attributes<br/>to a living atlas.</h1>
       <p>A shared roadmap for source methods, reproducible science and basin history. Starting with HydroSHEDS.</p>

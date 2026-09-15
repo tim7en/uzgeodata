@@ -1,4 +1,4 @@
-:root{font-family:Arial,Helvetica,sans-serif;color:#203a3b;background:#fbfcf9;line-height:1.75}*{box-sizing:border-box}body{margin:0}main,nav,footer{max-width:950px;margin:auto;padding:30px}nav{display:flex;gap:24px;flex-wrap:wrap;border-bottom:1px solid #d6e1db;font-size:14px}nav a{text-decoration:none}nav a:first-child{font-weight:700}a{color:#12655d;text-underline-offset:4px}h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.12;letter-spacing:-1.7px;font-weight:500;color:#103d40}h2{margin-top:2.4rem;line-height:1.3;font-weight:500;color:#103d40}p,li{max-width:74ch}li{margin-bottom:18px}code{overflow-wrap:anywhere}.notice{padding:16px 20px;border-left:3px solid #ba8a43;background:#f2eadd}.action{display:inline-block;background:#12655d;color:white;padding:12px 20px;border-radius:3px;font-weight:600;text-decoration:none}footer{border-top:1px solid #d6e1db;font-size:.9rem;color:#576c6b}:focus-visible{outline:3px solid #ba8a43;outline-offset:4px}.skip-link{position:absolute;top:-100px;left:16px;background:white;padding:12px}.skip-link:focus{top:12px}blockquote{border-left:3px solid #9ab7a8;margin-left:0;padding-left:20px} @media(max-width:600px){main,nav,footer{padding:22px}nav{gap:16px}ol,ul{padding-left:22px}}
+:root{font-family:Arial,Helvetica,sans-serif;color:#203a3b;background:#fbfcf9;line-height:1.75}*{box-sizing:border-box}body{margin:0}main,nav,footer{max-width:950px;margin:auto;padding:30px}nav.info-legacy{display:flex;gap:24px;flex-wrap:wrap;border-bottom:1px solid #d6e1db;font-size:14px}nav.info-legacy a{text-decoration:none}nav.info-legacy a:first-child{font-weight:700}a{color:#12655d;text-underline-offset:4px}h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.12;letter-spacing:-1.7px;font-weight:500;color:#103d40}h2{margin-top:2.4rem;line-height:1.3;font-weight:500;color:#103d40}p,li{max-width:74ch}li{margin-bottom:18px}code{overflow-wrap:anywhere}.notice{padding:16px 20px;border-left:3px solid #ba8a43;background:#f2eadd}.action{display:inline-block;background:#12655d;color:white;padding:12px 20px;border-radius:3px;font-weight:600;text-decoration:none}footer{border-top:1px solid #d6e1db;font-size:.9rem;color:#576c6b}:focus-visible{outline:3px solid #ba8a43;outline-offset:4px}.skip-link{position:absolute;top:-100px;left:16px;background:white;padding:12px}.skip-link:focus{top:12px}blockquote{border-left:3px solid #9ab7a8;margin-left:0;padding-left:20px} @media(max-width:600px){main,nav,footer{padding:22px}nav{gap:16px}ol,ul{padding-left:22px}}
 /* Dark theme, applied by the shared theme bootstrap (see home.css). */
 [data-theme="dark"]{color:#cfe0d8;background:#0c1412;color-scheme:dark}
 [data-theme="dark"] nav{border-bottom-color:#283c36}
@@ -11,3 +11,30 @@
 [data-theme="dark"] blockquote{border-left-color:#3f5c52}
 [data-theme="dark"] .skip-link{background:#122019;color:#cfe0d8}
 [data-theme="dark"] .action{background:#1d5a4e;color:#e8f0ec}
+/* Shared site chrome — same header and footer as the home.css pages, so every
+   information page carries the canonical navigation. */
+[data-theme="dark"] .site-header{border-bottom-color:#283c36}
+.site-header{max-width:1440px;margin:auto;padding:24px 30px;display:flex;justify-content:space-between;align-items:center;gap:28px;border-bottom:1px solid #d6e1db}
+.brand{display:flex;align-items:center;gap:10px;font-size:23px;letter-spacing:-1px;font-weight:750;text-decoration:none;color:#103d40}
+[data-theme="dark"] .brand{color:#e8f0ec}
+.brand-icon{font-size:39px;line-height:1;color:#12655d}
+[data-theme="dark"] .brand-icon{color:#7fcdbd}
+.brand-sub{font-size:9px;letter-spacing:2px;font-weight:600;border-left:1px solid #d6e1db;padding-left:14px;margin-left:8px;max-width:70px;line-height:1.6}
+[data-theme="dark"] .brand-sub{border-left-color:#283c36}
+.site-header nav{display:flex;gap:27px;align-items:center;font-size:13px;font-weight:600;flex-wrap:wrap}
+.site-header nav>a{text-decoration:none}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:#12655d;color:white;padding:11px 16px;font-size:12px;font-weight:600;border-radius:3px}
+.button:hover{background:#0c4945;color:white}
+[data-theme="dark"] .button{background:#1d5a4e;color:#e8f0ec}
+[data-theme="dark"] .button:hover{background:#175247}
+.site-footer{padding:42px 30px 20px;border-top:1px solid #d6e1db;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:30px;font-size:12px;color:#576c6b}
+[data-theme="dark"] .site-footer{border-top-color:#283c36;color:#9db3ac}
+.site-footer>div{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.site-footer strong{color:#103d40;margin-bottom:10px}
+[data-theme="dark"] .site-footer strong{color:#e8f0ec}
+.site-footer a:not(.brand){text-decoration:none}
+.site-footer .brand{margin-bottom:4px}
+.footer-note{grid-column:1/-1;border-top:1px solid #d6e1db;padding-top:20px;margin-top:12px;font-size:10px;letter-spacing:.4px}
+[data-theme="dark"] .footer-note{border-top-color:#283c36}
+@media(max-width:760px){.site-header{flex-direction:column;align-items:flex-start}.site-footer{grid-template-columns:1fr 1fr}}
+.site-footer p{max-width:none}
