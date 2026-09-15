@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T12:24:55.531650+00:00",
+  "generated_at": "2026-09-15T15:41:13.347741+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224",
@@ -60,12 +60,12 @@
       "aim": "Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.",
       "image": "/data/trends/trend-correction-cascade.svg",
       "image_alt": "Significant basin counts per variable before correction, after correcting for serial persistence, and after false discovery control.",
-      "evidence_date": "2026-09-15T12:24:34.112+00:00",
+      "evidence_date": "2026-09-15T15:36:20.760+00:00",
       "metric": 2788,
       "metric_label": "Basins surviving both corrections",
       "detail": "of 7,445 · soil moisture · four of nine variables retain none",
       "status": "Trend analysis",
-      "image_revision": "b43811e0832f"
+      "image_revision": "3610661d73cc"
     }
   ]
 }

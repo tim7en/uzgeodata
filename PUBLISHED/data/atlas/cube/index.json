@@ -1,49 +1,69 @@
 {
-  "generated_at": "2026-09-14T19:21:27.981+00:00",
-  "rows": 17838220,
+  "generated_at": "2026-09-15T15:41:11.856+00:00",
+  "rows": 27516720,
   "basins": 7445,
   "months": [
     "2003-01",
-    "2026-08"
+    "2024-12"
   ],
-  "bytes": 113971581,
+  "bytes": 162605761,
   "base": "/data/atlas/cube/",
   "files": {
     "aet_mm_s": {
       "path": "/data/atlas/cube/variable=aet_mm_s/data_0.parquet",
-      "bytes": 12373853
+      "bytes": 12374831
+    },
+    "cwd_mm_s": {
+      "path": "/data/atlas/cube/variable=cwd_mm_s/data_0.parquet",
+      "bytes": 10325904
+    },
+    "pds_ix_s": {
+      "path": "/data/atlas/cube/variable=pds_ix_s/data_0.parquet",
+      "bytes": 15041682
     },
     "pet_mm_s": {
       "path": "/data/atlas/cube/variable=pet_mm_s/data_0.parquet",
-      "bytes": 12802012
+      "bytes": 12805709
     },
     "pre_mm_s": {
       "path": "/data/atlas/cube/variable=pre_mm_s/data_0.parquet",
-      "bytes": 9903609
+      "bytes": 9912906
+    },
+    "rtc_mm_s": {
+      "path": "/data/atlas/cube/variable=rtc_mm_s/data_0.parquet",
+      "bytes": 5067141
     },
     "run_mm_s": {
       "path": "/data/atlas/cube/variable=run_mm_s/data_0.parquet",
-      "bytes": 14784018
+      "bytes": 13776087
     },
     "snw_pc_s": {
       "path": "/data/atlas/cube/variable=snw_pc_s/data_0.parquet",
-      "bytes": 9057347
+      "bytes": 9058745
     },
     "soil_mm_s": {
       "path": "/data/atlas/cube/variable=soil_mm_s/data_0.parquet",
-      "bytes": 10965937
+      "bytes": 10971789
+    },
+    "swe_mm_s": {
+      "path": "/data/atlas/cube/variable=swe_mm_s/data_0.parquet",
+      "bytes": 5021034
     },
     "tmn_dc_s": {
       "path": "/data/atlas/cube/variable=tmn_dc_s/data_0.parquet",
-      "bytes": 14529015
+      "bytes": 14522398
     },
     "tmp_dc_s": {
       "path": "/data/atlas/cube/variable=tmp_dc_s/data_0.parquet",
-      "bytes": 15087673
+      "bytes": 15086661
     },
     "tmx_dc_s": {
       "path": "/data/atlas/cube/variable=tmx_dc_s/data_0.parquet",
-      "bytes": 14468117
+      "bytes": 14453632
+    },
+    "vpd_kp_s": {
+      "path": "/data/atlas/cube/variable=vpd_kp_s/data_0.parquet",
+      "bytes": 14187242
     }
   },
   "query": "read_parquet('/data/atlas/cube/variable=*/*.parquet', hive_partitioning = true) reads them all; naming one variable's directory reads only that file.",
@@ -77,9 +97,49 @@
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "why": "Published on the same grid and water balance as precipitation and potential evapotranspiration, so the three can be differenced without crossing models.",
         "fallback": null,
         "kind": "flux",
+        "observed_through": "2024-12"
+      },
+      "uz:cwd-monthly-v1": {
+        "id": "uz:cwd-monthly-v1",
+        "concept": "climate water deficit",
+        "attribute": "uzgeodata.dated.v1.cwd_mm_s",
+        "unit": "millimetres per month",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2024
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "flux",
+        "why": "Demand the water balance could not meet: PET less AET inside one model, with soil storage accounted for, which the crude precipitation-less-AET balance is not.",
+        "observed_through": "2024-12"
+      },
+      "uz:pds-monthly-v1": {
+        "id": "uz:pds-monthly-v1",
+        "concept": "palmer drought severity index",
+        "attribute": "uzgeodata.dated.v1.pds_ix_s",
+        "unit": "index (dimensionless)",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2024
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "state",
+        "why": "A published drought index beside the SPI derived here, computed by the source from its own water balance rather than from precipitation alone.",
+        "caution": "An index already standardised by its source. Averaging it over basins or months is descriptive; it is not re-standardised, and anomalies of it are anomalies of an anomaly.",
         "observed_through": "2024-12"
       },
       "uz:pet-monthly-v1": {
@@ -95,6 +155,7 @@
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "why": "Paired with actual evapotranspiration from one model, which is what makes their ratio a moisture index rather than a comparison of two conventions.",
         "fallback": null,
         "kind": "flux",
@@ -113,10 +174,30 @@
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "why": "Downscaled to about four kilometres, which matters where a level-12 basin sits in mountain terrain and a coarse cell would average a valley with a ridge.",
         "fallback": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
         "fallback_cost": "About eleven kilometres, so a headwater basin may hold a single cell.",
         "kind": "flux",
+        "observed_through": "2024-12"
+      },
+      "uz:rtc-monthly-v1": {
+        "id": "uz:rtc-monthly-v1",
+        "concept": "terraclimate runoff",
+        "attribute": "uzgeodata.dated.v1.rtc_mm_s",
+        "unit": "millimetres per month",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2024
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "flux",
+        "why": "A second runoff to set against ERA5-Land's, from a different model. Asking for 'runoff' still resolves to ERA5-Land; this one has to be asked for by name.",
         "observed_through": "2024-12"
       },
       "uz:run-monthly-v1": {
@@ -127,15 +208,17 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2026
+          2024
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
-        "why": "TerraClimate publishes no runoff. This is a land-surface flux and is not discharge: it has not been routed and no gauge has been compared to it.",
-        "fallback": null,
+        "native_resolution_m": 11132,
+        "why": "A land-surface model's runoff, kept as the answer because it was chosen first and the record's analyses use it. It is not discharge: it has not been routed and no gauge has been compared to it.",
+        "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
+        "fallback_cost": "Published separately as uz:rtc-monthly-v1: a bucket model's surplus rather than a land-surface scheme's, so the two differ in method, not only grid.",
         "kind": "flux",
-        "observed_through": "2026-08"
+        "observed_through": "2024-12"
       },
       "uz:snw-monthly-v1": {
         "id": "uz:snw-monthly-v1",
@@ -150,6 +233,7 @@
         "support": "basin, local",
         "aggregation": "frequency of snow-covered days in the month",
         "preferred": "MODIS/061/MYD10A1",
+        "native_resolution_m": 500,
         "why": "Daily observations aggregated here, rather than the monthly product the atlas cites, so the count of contributing days is known per basin and month.",
         "fallback": null,
         "kind": "state",
@@ -169,9 +253,30 @@
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "why": "A modelled column store in millimetres. It is published as what it is and not relabelled as the percentage the atlas attribute holds.",
         "fallback": null,
         "kind": "state",
+        "observed_through": "2024-12"
+      },
+      "uz:swe-monthly-v1": {
+        "id": "uz:swe-monthly-v1",
+        "concept": "snow water equivalent",
+        "attribute": "uzgeodata.dated.v1.swe_mm_s",
+        "unit": "millimetres of snow water equivalent",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2024
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "state",
+        "why": "The water a snowpack holds, which snow cover cannot give: cover is extent only.",
+        "caution": "Modelled from temperature and precipitation, not observed. It is not a measurement to validate MODIS snow cover against, and in high terrain the four-kilometre grid smooths the pack the melt actually comes from.",
         "observed_through": "2024-12"
       },
       "uz:tmn-monthly-v1": {
@@ -187,6 +292,7 @@
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "fallback": null,
         "kind": "state",
         "why": "The month's daily minima, paired with the maxima from the same model.",
@@ -205,6 +311,7 @@
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "native_resolution_m": 11132,
         "why": "A true mean of hourly values. TerraClimate publishes only the daily extremes, and their midpoint is a different measurement that happens to carry the same name.",
         "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
         "fallback_cost": "Finer at about four kilometres, but a midpoint of extremes rather than a mean of hours, and about a degree warmer across this region.",
@@ -224,18 +331,41 @@
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
         "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
         "fallback": null,
         "kind": "state",
         "why": "The month's daily maxima. ERA5-Land publishes no daily extreme on this grid.",
+        "observed_through": "2024-12"
+      },
+      "uz:vpd-monthly-v1": {
+        "id": "uz:vpd-monthly-v1",
+        "concept": "vapour pressure deficit",
+        "attribute": "uzgeodata.dated.v1.vpd_kp_s",
+        "unit": "kilopascals",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2024
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "IDAHO_EPSCOR/TERRACLIMATE",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "state",
+        "why": "Published on the same four-kilometre grid as the temperatures it depends on, rather than derived here from a humidity field this project does not hold.",
         "observed_through": "2024-12"
       }
     },
     "concepts": {
       "actual evapotranspiration": "uz:aet-monthly-v1",
+      "climate water deficit": "uz:cwd-monthly-v1",
       "evapotranspiration": "uz:aet-monthly-v1",
       "maximum temperature": "uz:tmx-monthly-v1",
       "mean temperature": "uz:tmp-monthly-v1",
       "minimum temperature": "uz:tmn-monthly-v1",
+      "palmer drought severity index": "uz:pds-monthly-v1",
+      "pdsi": "uz:pds-monthly-v1",
       "potential evapotranspiration": "uz:pet-monthly-v1",
       "precipitation": "uz:pre-monthly-v1",
       "rainfall": "uz:pre-monthly-v1",
@@ -243,16 +373,21 @@
       "runoff": "uz:run-monthly-v1",
       "snow": "uz:snw-monthly-v1",
       "snow cover": "uz:snw-monthly-v1",
+      "snow water equivalent": "uz:swe-monthly-v1",
       "soil moisture": "uz:soil-monthly-v1",
-      "temperature": "uz:tmp-monthly-v1"
+      "swe": "uz:swe-monthly-v1",
+      "temperature": "uz:tmp-monthly-v1",
+      "terraclimate runoff": "uz:rtc-monthly-v1",
+      "vapour pressure deficit": "uz:vpd-monthly-v1",
+      "vpd": "uz:vpd-monthly-v1",
+      "water deficit": "uz:cwd-monthly-v1"
     },
     "unavailable": {
       "discharge": "No gauged or modelled discharge series is published; runoff is a land-surface flux and is not the same quantity.",
-      "drought index": "Not an observation. SPI is derived on demand from published precipitation by products.spi(), with the gamma fit stated; SPEI would additionally need a water balance and is not offered.",
+      "drought index": "Ambiguous: two are offered and they are not interchangeable. SPI is derived on demand from published precipitation by products.spi(), with the gamma fit stated; the Palmer index is published as TerraClimate's modelled series (ask for 'palmer drought severity index'). SPEI is not offered.",
       "land surface temperature": "Air temperature is published; land surface temperature is not, and the two are different measurements.",
       "ndvi": "No vegetation index is published as a regional dated series.",
       "surface water": "Published as a long-term climatology, not as a dated monthly series.",
-      "vapour pressure deficit": "Not derived. It would need humidity, which is not published.",
       "vegetation": "No NDVI or EVI series is published. Nothing here substitutes for it."
     }
   },
@@ -261,24 +396,5 @@
     "evidence": "This is a read path, not the record. It carries no revisions, run ids, coverage counts or missing reasons. Cite the store release named above, not this file.",
     "nulls": "A null is a month with no observation. It is never a zero, and nothing downstream may coalesce it into one.",
     "query": "Readable in place by anything that speaks Parquet. Over a host serving byte ranges, a browser can query it without downloading it."
-  },
-  "appended": [
-    {
-      "at": "2026-09-14T19:21:19.667+00:00",
-      "source": "era5_runoff",
-      "months": [
-        "2025-01",
-        "2026-08"
-      ],
-      "run_id": "regional-era5_runoff-20260914T191111106665Z",
-      "mode": "appended from Git's published record; observation store not present",
-      "scratch_store": "WORKSPACE/data-updates/stores/era5_runoff-20260914T191107Z",
-      "not_rebuilt": [
-        "climatologies",
-        "basin API",
-        "coverage ledger",
-        "release"
-      ]
-    }
-  ]
+  }
 }

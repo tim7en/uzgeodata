@@ -1,10 +1,1 @@
-{
-  "attribute": "uzgeodata.dated.v1.run_mm_s",
-  "concept": "runoff",
-  "kind": "flux",
-  "unit": "millimetres per month",
-  "basins": 0,
-  "native_resolution_m": 11132,
-  "basins_withheld_unresolved": 7445,
-  "results": []
-}
+{"attribute":"uzgeodata.dated.v1.run_mm_s","concept":"runoff","kind":"flux","unit":"millimetres per month","basins":0,"native_resolution_m":11132,"basins_withheld_unresolved":7445,"results_withheld":{"reason":"Per-basin rows at level 12 are derivable from the published cube and are not shipped, to stay inside the site's size budget. Level-7 rows are shipped in full.","rows":0,"reproduce":"uz.open() then ATLAS_MODULES.core.trends.mann_kendall on the annual series; see the study page."}}

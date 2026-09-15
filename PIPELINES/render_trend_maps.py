@@ -119,7 +119,7 @@ def render(level, variable, verdicts, withheld, out, tolerance=0.01, width=1180)
             if len(reduced) < 3:
                 continue
             points = [place(x, y) for x, y in reduced]
-            segments.append("M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in points) + "Z")
+            segments.append("M" + "L".join(f"{x:.0f},{y:.0f}" for x, y in points) + "Z")
         if segments:
             paths.append(f'<path d="{"".join(segments)}" fill="{fill}" stroke="#ffffff" '
                          f'stroke-width="0.25"><title>{html.escape(basin + ": " + str(verdict))}'

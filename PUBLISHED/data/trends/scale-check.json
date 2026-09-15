@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T12:33:26.367+00:00",
+  "generated_at": "2026-09-15T15:54:42.496+00:00",
   "title": "Does the answer depend on the size of the unit?",
   "scales": {
     "level12": {
@@ -38,6 +38,46 @@
       "note": null
     },
     {
+      "variable": "uz:cwd-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
+      "variable": "uz:pds-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 1157,
+        "share": 0.1923,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 109,
+        "share": 0.2646,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
       "variable": "uz:pet-monthly-v1",
       "native_resolution_m": 4638,
       "level12": {
@@ -59,6 +99,26 @@
     },
     {
       "variable": "uz:pre-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 0,
+        "share": 0.0,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
+    },
+    {
+      "variable": "uz:rtc-monthly-v1",
       "native_resolution_m": 4638,
       "level12": {
         "tested": 6016,
@@ -122,15 +182,15 @@
       "native_resolution_m": 4638,
       "level12": {
         "tested": 6016,
-        "significant": 2787,
-        "share": 0.4633,
+        "significant": 2789,
+        "share": 0.4636,
         "median_source_cells": 6.8,
         "withheld_unresolved": 1429
       },
       "level7": {
         "tested": 412,
-        "significant": 230,
-        "share": 0.5583,
+        "significant": 223,
+        "share": 0.5413,
         "median_source_cells": 77.8,
         "withheld_unresolved": 26
       },
@@ -138,12 +198,32 @@
       "note": null
     },
     {
+      "variable": "uz:swe-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 193,
+        "share": 0.0321,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 42,
+        "share": 0.1019,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "diverges",
+      "note": "Present at one scale and absent at the other. The polygons are doing work the data is not."
+    },
+    {
       "variable": "uz:tmn-monthly-v1",
       "native_resolution_m": 4638,
       "level12": {
         "tested": 6016,
-        "significant": 1620,
-        "share": 0.2693,
+        "significant": 1619,
+        "share": 0.2691,
         "median_source_cells": 6.8,
         "withheld_unresolved": 1429
       },
@@ -196,11 +276,31 @@
       },
       "verdict": "consistent",
       "note": null
+    },
+    {
+      "variable": "uz:vpd-monthly-v1",
+      "native_resolution_m": 4638,
+      "level12": {
+        "tested": 6016,
+        "significant": 1401,
+        "share": 0.2329,
+        "median_source_cells": 6.8,
+        "withheld_unresolved": 1429
+      },
+      "level7": {
+        "tested": 412,
+        "significant": 109,
+        "share": 0.2646,
+        "median_source_cells": 77.8,
+        "withheld_unresolved": 26
+      },
+      "verdict": "consistent",
+      "note": null
     }
   ],
   "summary": {
-    "consistent": 7,
-    "diverging": 0,
+    "consistent": 11,
+    "diverging": 1,
     "one_scale_only": 2
   },
   "reading": {

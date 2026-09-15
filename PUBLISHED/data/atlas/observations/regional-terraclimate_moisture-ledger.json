@@ -1,0 +1,292 @@
+{
+  "run_id": "regional-terraclimate_moisture-20260915T123828402948Z",
+  "started_at": "2026-09-15T12:38:28.402+00:00",
+  "source": "terraclimate_moisture",
+  "asset": "IDAHO_EPSCOR/TERRACLIMATE",
+  "bands": [
+    "vpd",
+    "def",
+    "swe",
+    "ro",
+    "pdsi"
+  ],
+  "attributes": [
+    "uzgeodata.dated.v1.vpd_kp_s",
+    "uzgeodata.dated.v1.cwd_mm_s",
+    "uzgeodata.dated.v1.swe_mm_s",
+    "uzgeodata.dated.v1.rtc_mm_s",
+    "uzgeodata.dated.v1.pds_ix_s"
+  ],
+  "geometry_version": "reg-166479294ef8",
+  "basins": 7445,
+  "years": [
+    2003,
+    2024
+  ],
+  "batch_size": 250,
+  "expected_rows": 9827400,
+  "retries": [],
+  "failures": [],
+  "by_year": {
+    "2003": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 409.95360150001943,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2004": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 396.1725628999993,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2005": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 463.8374068000121,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2006": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 410.7160941999755,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2007": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 510.4466857999796,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2008": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 425.20822749997023,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2009": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 679.498360299971,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2010": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 478.5432650000439,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2011": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 443.80130760004977,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2012": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 438.33756319998065,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2013": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 416.76690069999313,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2014": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 439.4424222999951,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2015": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 425.25051909999456,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2016": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 442.563114199962,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2017": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 431.2684027000214,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2018": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 409.84328130003996,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2019": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 383.243372500001,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2020": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 407.80106369999703,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2021": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 403.2480499999947,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2022": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 501.0481056999997,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2023": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 607.9601653999998,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    },
+    "2024": {
+      "rows": 446700,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 446700,
+      "null_months": 0,
+      "seconds": 523.4016041999566,
+      "rows_per_band": 89340,
+      "run_id": "regional-terraclimate_moisture-20260915T123828402948Z"
+    }
+  },
+  "finished_at": "2026-09-15T15:30:07.646+00:00",
+  "wall_seconds": 10299.166509700008,
+  "stored_rows": 9827400,
+  "complete": true,
+  "basin_support": {
+    "basins": 7445,
+    "cells_min": 1,
+    "cells_max": 1757,
+    "cells_median": 835,
+    "basins_at_or_below": {
+      "1": 10,
+      "5": 56,
+      "25": 174,
+      "100": 438
+    },
+    "basins_without_a_cell": 0,
+    "meaning": "Analysis cells per basin on the 15 arc-second grid. A value from a basin with few cells is supported by few observations; every row carries its own valid and expected counts so this can be filtered on. A basin with no cell at all would yield no value rather than a zero."
+  }
+}

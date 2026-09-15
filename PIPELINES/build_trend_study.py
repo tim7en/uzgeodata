@@ -123,6 +123,14 @@ def source_cells(area_km2, resolution_m):
     return area_km2 / cell_km2 if cell_km2 else None
 
 
+def _signif(value, digits=4):
+    """Round to significant digits, keeping small p-values meaningful."""
+    if value is None or value == 0:
+        return value
+    import math
+    return round(value, -int(math.floor(math.log10(abs(value)))) + (digits - 1))
+
+
 def band(metres):
     for low, high, name in ELEVATION:
         if low <= metres < high:
@@ -298,7 +306,11 @@ def build(store=STORE, out=OUT, alpha=0.05, level="12"):
                     "first_year": sorted(points)[0][0], "last_year": sorted(points)[-1][0],
                     "slope": round(corrected["slope"], 6),
                     "tau": round(corrected["tau"], 4),
-                    "p": corrected["p"], "p_uncorrected": naive["p"],
+                    # Four significant digits. A p-value carried to seventeen is
+                    # storing float noise: nothing downstream distinguishes 0.0234117
+                    # from 0.02341, and at 6,016 basins x 14 variables the difference
+                    # is megabytes of precision nobody can use.
+                    "p": _signif(corrected["p"]), "p_uncorrected": _signif(naive["p"]),
                     "variance_inflation": round(corrected["variance_inflation"], 3),
                     "trend": corrected["trend"], "trend_uncorrected": naive["trend"],
                 })
@@ -306,7 +318,7 @@ def build(store=STORE, out=OUT, alpha=0.05, level="12"):
 
             adjusted, rejected = trends.benjamini_hochberg(p_raw, alpha=alpha)
             for row, q, keep in zip(results, adjusted, rejected):
-                row["q"] = q
+                row["q"] = _signif(q)
                 row["trend_fdr"] = (trends.classify(0.0 if keep else 1.0, row["slope"], alpha)
                                     if row["slope"] else "stable")
             tested = len(results)
@@ -383,8 +395,32 @@ def build(store=STORE, out=OUT, alpha=0.05, level="12"):
         },
     }
     write_json(out / "index.json", report)
+    # Compact rather than indented: these are machine-readable results of thousands of
+    # rows, not something anyone reads by eye.
+    #
+    # Level-7 results ship in full. Level-12 per-basin results do not, and the reason is
+    # a hard one: the site has a 950 MB budget and 19 MB of level-12 rows would spend a
+    # fifth of the remaining headroom on a file that is derivable. Anyone can regenerate
+    # it from the published cube with the code in this repository, the summary and the
+    # cross-tabulation are published either way, and level 7 is the scale at which every
+    # product actually resolves. Shipping the derivable copy and running out of room for
+    # the next variable would be the worse trade.
+    keep_rows = level != "12"
     for identifier, block in per_variable.items():
-        write_json(out / f"{identifier.replace(':', '-').replace('/', '-')}.json", block)
+        path = out / f"{identifier.replace(':', '-').replace('/', '-')}.json"
+        payload = block if keep_rows else {
+            **{k: v for k, v in block.items() if k != "results"},
+            "results_withheld": {
+                "reason": "Per-basin rows at level 12 are derivable from the published "
+                          "cube and are not shipped, to stay inside the site's size "
+                          "budget. Level-7 rows are shipped in full.",
+                "rows": len(block["results"]),
+                "reproduce": "uz.open() then ATLAS_MODULES.core.trends.mann_kendall on "
+                             "the annual series; see the study page.",
+            },
+        }
+        path.write_text(json.dumps(payload, separators=(",", ":"), ensure_ascii=False,
+                                   allow_nan=False), encoding="utf-8")
     return report
 
 
@@ -429,13 +465,16 @@ def _findings(summary):
         "survives_correction": {
             "soil moisture": after("uz:soil-monthly-v1"),
             "minimum temperature": after("uz:tmn-monthly-v1"),
-            "runoff": after("uz:run-monthly-v1"),
+            "palmer drought severity index": after("uz:pds-monthly-v1"),
+            "vapour pressure deficit": after("uz:vpd-monthly-v1"),
+            "snow water equivalent": after("uz:swe-monthly-v1"),
         },
         "does_not_survive": {
             "precipitation": after("uz:pre-monthly-v1"),
-            "mean temperature": after("uz:tmp-monthly-v1"),
             "maximum temperature": after("uz:tmx-monthly-v1"),
             "potential evapotranspiration": after("uz:pet-monthly-v1"),
+            "climatic water deficit": after("uz:cwd-monthly-v1"),
+            "terraclimate runoff": after("uz:rtc-monthly-v1"),
         },
         "precipitation": "No basin shows a precipitation trend that survives correction. "
                          "The smallest p-value across all 7,445 is 0.011, which is not "
@@ -445,6 +484,42 @@ def _findings(summary):
         "direction": "The two surviving signals are unanimous in direction: no basin "
                      "shows a significant soil-moisture increase, and none shows a "
                      "significant decrease in minimum temperature.",
+        "drivers_do_not_trend_but_states_do": {
+            "observation": "In TerraClimate's own water balance the fluxes show no trend "
+                           "and the stores do. Precipitation, potential evapotranspiration, "
+                           "the climatic water deficit and the model's runoff surplus all "
+                           "fall to zero significant basins after correction; actual "
+                           "evapotranspiration keeps 50 of 6,016. Soil moisture keeps 2,790 "
+                           "and PDSI 1,159, both declining, both unanimous in direction.",
+            "why_it_matters": "A bucket model's store is the running integral of inflow "
+                              "less outflow. If neither flux trends, a trending store is "
+                              "not explained by the model's own causal chain, and the "
+                              "decline cannot be attributed to the drivers the model was "
+                              "given. This is the opposite of corroboration: the five "
+                              "TerraClimate variables agreeing is what a single internal "
+                              "coupling looks like, and here even that coupling does not "
+                              "close.",
+            "three_readings": [
+                "A small persistent imbalance that does not itself trend still integrates "
+                "into a monotonic change in the store. This is physically real and is what "
+                "storage memory means; it would make the decline genuine but would also "
+                "mean it says nothing about a changing climate.",
+                "Model drift or incomplete spin-up, in which case the trend is a property "
+                "of the simulation and not of the land.",
+                "Seasonal redistribution, where annual means of a state move because the "
+                "timing within the year shifts while annual totals do not.",
+            ],
+            "not_separable_here": "Twenty-two annual values cannot distinguish these three. "
+                                  "Monthly-resolved analysis and an independent soil "
+                                  "moisture product are what would, and neither is done in "
+                                  "this study.",
+            "the_temperature_asymmetry": "Minimum temperature rises in 1,618 basins while "
+                "maximum temperature retains none, which is a narrowing diurnal range. "
+                "Potential evapotranspiration responds mainly to daytime conditions, so "
+                "the warming that is present is largely not reaching the water balance -- "
+                "consistent with PET showing no trend, and a further reason the soil "
+                "signal is not a straightforward warming response.",
+        },
         "the_caveat_that_matters": "Soil moisture here is a modelled quantity, not an "
             "observation. TerraClimate computes it from a water balance driven by its own "
             "precipitation and potential evapotranspiration, and potential "

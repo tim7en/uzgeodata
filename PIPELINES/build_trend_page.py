@@ -105,12 +105,12 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 
 <section class="page-intro"><p class="eyebrow">CASE STUDY &middot; TREND ANALYSIS</p>
 <h1>Hydroclimatic trends across two basins<br><em>and what survives testing them properly.</em></h1>
-<p class="lead">Mann&ndash;Kendall and Sen&#8217;s slope across level-12 basins of the Amu Darya and Syr Darya, 2003&ndash;2024, stratified by system, position, elevation and land cover. The result is mostly about the corrections: of nine variables, four have <strong>no basin at all</strong> with a trend that survives control for multiple testing.</p></section>
+<p class="lead">Mann&ndash;Kendall and Sen&#8217;s slope for <strong>fourteen variables</strong> across level-12 and level-7 basins of the Amu Darya and Syr Darya, 2003&ndash;2024, stratified by system, position, elevation and land cover. Two results carry the study: most apparent trends do not survive correction for multiple testing, and in the water-balance model that supplies most of these variables, <strong>the fluxes show no trend while the stores do</strong>.</p></section>
 
 <section class="section"><div>
 
 <div class="stat-row">
-<div class="stat"><b>6,016</b><span>basins tested<br>after the resolution gate</span></div>
+<div class="stat"><b>14</b><span>variables tested<br>at two basin levels</span></div>
 <div class="stat"><b>22</b><span>complete years<br>2003&ndash;2024</span></div>
 <div class="stat"><b>{soil.get('significant_after_fdr', 0):,}</b><span>basins, soil moisture<br>survive both corrections</span></div>
 <div class="stat alarm"><b>2</b><span>variables withheld<br>basin smaller than source cell</span></div>
@@ -157,6 +157,23 @@ code{{background:#f1f5f4;padding:.1rem .3rem;border-radius:3px;font-size:.88em}}
 <table class="t"><thead><tr><th>Variable</th><th>Basins</th><th>Significant, uncorrected</th><th>After serial correction</th><th>After false discovery control</th></tr></thead><tbody>{rows}</tbody></table>
 
 <div class="key"><strong>Precipitation is the clearest case.</strong> {findings['precipitation']}</div>
+
+<h3>The fluxes do not trend. The stores do.</h3>
+<p>{findings['drivers_do_not_trend_but_states_do']['observation']}</p>
+<table class="t"><thead><tr><th>Role in the water balance</th><th>Variable</th><th>Significant after correction</th></tr></thead><tbody>
+<tr><td>water in</td><td>precipitation</td><td class="zero">{block("uz:pre-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
+<tr><td>evaporative demand</td><td>potential evapotranspiration</td><td class="zero">{block("uz:pet-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
+<tr><td>water out</td><td>actual evapotranspiration</td><td>{block("uz:aet-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
+<tr><td>model surplus</td><td>TerraClimate runoff</td><td class="zero">{block("uz:rtc-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
+<tr><td>demand less supply</td><td>climatic water deficit</td><td class="zero">{block("uz:cwd-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
+<tr><td><strong>store</strong></td><td><strong>soil moisture</strong></td><td class="kept">{block("uz:soil-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
+<tr><td><strong>store</strong></td><td><strong>Palmer drought severity index</strong></td><td class="kept">{block("uz:pds-monthly-v1").get("significant_after_fdr", 0):,}</td></tr>
+</tbody></table>
+<div class="warn"><strong>This is the study&#8217;s most consequential result.</strong> {findings['drivers_do_not_trend_but_states_do']['why_it_matters']}</div>
+<p><strong>Three readings, which this analysis cannot separate:</strong></p>
+<ol>{"".join(f"<li>{r}</li>" for r in findings['drivers_do_not_trend_but_states_do']['three_readings'])}</ol>
+<p>{findings['drivers_do_not_trend_but_states_do']['not_separable_here']}</p>
+<p class="muted"><strong>A supporting asymmetry.</strong> {findings['drivers_do_not_trend_but_states_do']['the_temperature_asymmetry']}</p>
 
 <p>{findings['direction']}</p>
 
