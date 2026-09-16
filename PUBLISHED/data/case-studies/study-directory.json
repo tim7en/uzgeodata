@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-15T15:41:13.347741+00:00",
+  "generated_at": "2026-09-16T18:23:07.671738+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224",
     "regional-station-study.json": "f1c0f711f7256c3c04183c7cc3cef4de9ea17ee03cf4b5784b4da3d2d7d83902",
-    "model-review.json": "b3c2590f86ed3202d2f1c820e840a9bd60e3714285456534e06ecab210aaf3df"
+    "model-review.json": "6d354e8f0166f10fc6dc12281ef91e21c31dcd8b2f9cdd5690914e9bfa2c75ec"
   },
   "studies": [
     {
@@ -15,12 +15,12 @@
       "aim": "Test how elevation, snowfall and soil-water storage shape seasonal river flow.",
       "image": "/data/case-studies/chirchik-study-preview.svg",
       "image_alt": "Observed and simulated monthly runoff in held-out years, arranged consecutively as a study preview.",
-      "evidence_date": "2026-09-12T11:58:46.329951+00:00",
+      "evidence_date": "2026-09-16T18:23:07.029269+00:00",
       "metric": 0.7595,
       "metric_label": "Monthly NSE · chronological test",
       "detail": "84 held-out months · seasonal-volume uncertainty remains",
       "status": "Chronological model re-evaluation",
-      "image_revision": "123b37c3492f"
+      "image_revision": "385ea05ed43a"
     },
     {
       "id": "regional",
@@ -35,7 +35,7 @@
       "metric_label": "Meteorological locations",
       "detail": "2015–2020 · 6,192 station-month records",
       "status": "Exploratory relationships",
-      "image_revision": "ddf77eee22c2"
+      "image_revision": "fe4e086e7278"
     },
     {
       "id": "water-flow",
@@ -57,16 +57,15 @@
       "href": "/trends.html",
       "title": "What survives testing properly",
       "region": "AMU DARYA & SYR DARYA",
-      "aim": "Mann–Kendall and Sen’s slope for nine variables across level-12 basins, corrected for persistence and for testing thousands of basins at once.",
+      "aim": "Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.",
       "image": "/data/trends/trend-correction-cascade.svg",
       "image_alt": "Significant basin counts per variable before correction, after correcting for serial persistence, and after false discovery control.",
-      "evidence_date": "2026-09-15T15:36:20.760+00:00",
-      "metric": 2788,
+      "evidence_date": "2026-09-15T15:54:12.595+00:00",
+      "metric": 2789,
       "metric_label": "Basins surviving both corrections",
       "detail": "of 7,445 · soil moisture · four of nine variables retain none",
       "status": "Trend analysis",
-      "image_revision": "3610661d73cc"
+      "image_revision": "62c679bedbf9"
     }
-  ],
-  "water_flow_updated_at": "2026-09-15T18:58:04.026+00:00"
+  ]
 }

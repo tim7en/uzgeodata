@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "record_url": "https://doi.org/10.5281/zenodo.8147591",
+  "license": "cc-by-4.0",
+  "attribution": "Marti, Beatrice; Siegfried, Tobias; Yakovlev, Andrey; Zhumabaev, Aidar; Karger, Dirk; Wakil, Abdul Wakil; Ragettli, Silvan (2023), CA-discharge data set, scripts and raw data, 10.5281/zenodo.8147591.",
+  "files": [
+    {
+      "name": "CA-discharge.gpkg",
+      "bytes": 24576000,
+      "checksum": "md5:e0ba6664aaec3e0b27138abdfd4ba263",
+      "downloaded_for_integration": true,
+      "reason": "compact integration source"
+    },
+    {
+      "name": "CA-data-paper-raw-data.zip",
+      "bytes": 11808484926,
+      "checksum": "md5:6e1893acb1ea41baaa62c616e3c6bdea",
+      "downloaded_for_integration": false,
+      "reason": "not mirrored; optional reproducibility archive"
+    },
+    {
+      "name": "CA-data-paper-scripts.zip",
+      "bytes": 228239992,
+      "checksum": "md5:d8e23140c274126db6bbc43d4208222b",
+      "downloaded_for_integration": false,
+      "reason": "not mirrored; optional reproducibility archive"
+    }
+  ],
+  "outputs": [
+    "ca-discharge-summary.json",
+    "ca-discharge-stations.geojson",
+    "ca-discharge-pskem-comparison.csv"
+  ]
+}

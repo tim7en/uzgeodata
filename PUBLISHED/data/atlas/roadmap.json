@@ -131,7 +131,8 @@
           "PUBLISHED/data/atlas/batch-latest.json",
           "PUBLISHED/data/atlas/substitutes-index.json",
           "PIPELINES/build_dynamic_atlas.py",
-          "PUBLISHED/data/atlas/regional-benchmark.json"
+          "PUBLISHED/data/atlas/regional-benchmark.json",
+          "PUBLISHED/data/atlas/regional-coverage.json"
         ]
       },
       {
@@ -7742,5 +7743,5 @@
     "reproduced": 0
   },
   "refresh_policy": "Curated updates and module changes are republished at dev start/build; browser checks every 60 seconds.",
-  "revision": "4da738887c3096d45fa49801b5006eca434bb65c4d2e60ea87981fe457024761"
+  "revision": "50a2b7931514b2203d0b3ac62d9676d6ef1864624ea363129f5958466445c27e"
 }

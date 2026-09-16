@@ -39,7 +39,8 @@
         "PUBLISHED/data/atlas/batch-latest.json",
         "PUBLISHED/data/atlas/substitutes-index.json",
         "PIPELINES/build_dynamic_atlas.py",
-        "PUBLISHED/data/atlas/regional-benchmark.json"
+        "PUBLISHED/data/atlas/regional-benchmark.json",
+        "PUBLISHED/data/atlas/regional-coverage.json"
       ]
     },
     {
@@ -246,7 +247,16 @@
     ],
     "regional_dated_rows": 10720800,
     "regional_dated_hours_measured": 5.906309286611112,
-    "regional_dated_note": "Three sources, six dated attributes, every one of the 7,445 basins for 2003-2022: 10,720,800 rows in 5.91 hours of extraction with no failed batch and no retry in any run. Band stacking is why: reducing over basin geometry costs about the same for six bands as for one, so TerraClimate delivered four variables in less time than MODIS took for one."
+    "regional_dated_note": "Three sources, six dated attributes, every one of the 7,445 basins for 2003-2022: 10,720,800 rows in 5.91 hours of extraction with no failed batch and no retry in any run. Band stacking is why: reducing over basin geometry costs about the same for six bands as for one, so TerraClimate delivered four variables in less time than MODIS took for one.",
+    "regional_monthly_series_years": [
+      2003,
+      2022
+    ],
+    "regional_dated_years": [
+      2003,
+      2022
+    ],
+    "regional_monthly_series_scope": "A measurement of one extraction run over the years named, not a running total of the store. The record has since been extended to 2024 by later runs; this figure stays as measured, and the ledger's by_year is where the current total lives."
   },
   "publication_rules": [
     "Original HydroATLAS values are immutable reference evidence. Substitute availability is highlighted light green, including valid zeroes, only for the exact basin and run.",

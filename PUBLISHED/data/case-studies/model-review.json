@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-12T11:58:46.329951+00:00",
+  "generated_at": "2026-09-16T18:23:07.029269+00:00",
   "candidate_generated_at": "2026-09-09T10:25:49+00:00",
   "run_directory": "/data/case-studies/model-audit/chronological-20260909/",
   "decision": "Preserve the published stratified reference. Foreground the stricter chronological test; do not tune further against its exposed holdout.",
@@ -2154,7 +2154,7 @@
       "simulatedMcm": 2452.2,
       "period": "calibration",
       "label": "2002",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2164,7 +2164,7 @@
       "simulatedMcm": 2471.7,
       "period": "calibration",
       "label": "2003",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2174,7 +2174,7 @@
       "simulatedMcm": 1758.4,
       "period": "calibration",
       "label": "2004",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2184,7 +2184,7 @@
       "simulatedMcm": 2179.2,
       "period": "calibration",
       "label": "2005",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2194,7 +2194,7 @@
       "simulatedMcm": 1651.4,
       "period": "calibration",
       "label": "2006",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2204,7 +2204,7 @@
       "simulatedMcm": 2087.0,
       "period": "calibration",
       "label": "2007",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2214,7 +2214,7 @@
       "simulatedMcm": 1511.9,
       "period": "calibration",
       "label": "2008",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2224,7 +2224,7 @@
       "simulatedMcm": 1933.6,
       "period": "calibration",
       "label": "2009",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2234,7 +2234,7 @@
       "simulatedMcm": 2554.8,
       "period": "calibration",
       "label": "2010",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2244,7 +2244,7 @@
       "simulatedMcm": 1669.9,
       "period": "validation",
       "label": "2011",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2254,7 +2254,7 @@
       "simulatedMcm": 2038.5,
       "period": "validation",
       "label": "2012",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2264,7 +2264,7 @@
       "simulatedMcm": 1659.1,
       "period": "validation",
       "label": "2013",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2274,7 +2274,7 @@
       "simulatedMcm": 1832.5,
       "period": "validation",
       "label": "2014",
-      "benchmark": 2127.7043846322267,
+      "benchmark": 2127.704384632222,
       "valid_days": 183,
       "expected_days": 183
     },
@@ -2284,7 +2284,7 @@
       "simulatedMcm": 1839.6,
       "period": "validation",
       "label": "2015",
-      "benchmark": 2112.253673462011,
+      "benchmark": 2112.253673462007,
       "valid_days": 182,
       "expected_days": 183
     },
@@ -2294,7 +2294,7 @@
       "simulatedMcm": 2128.1,
       "period": "validation",
       "label": "2016",
-      "benchmark": 2096.802962291796,
+      "benchmark": 2096.802962291792,
       "valid_days": 181,
       "expected_days": 183
     },
@@ -2304,7 +2304,7 @@
       "simulatedMcm": 2632.3,
       "period": "validation",
       "label": "2017",
-      "benchmark": 2099.333663738715,
+      "benchmark": 2099.3336637387106,
       "valid_days": 180,
       "expected_days": 183
     }

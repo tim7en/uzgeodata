@@ -190,6 +190,20 @@ GROUPS = [
         "note": "The workbooks are printouts, not data: one block per variable, Roman month numerals, totals mixed in with observations. Every station already existed in the graph, so this maps rather than mints. A dash means zero in the precipitation blocks and missing everywhere else, which the build proves against the printed annual totals.",
     },
     {
+        "code": "CADISCHARGE",
+        "title": "Central Asian mountain-river discharge archive",
+        "what": "A regional gauge registry, basin attributes, quality flags and daily, 10-day or monthly discharge series. Public derivatives expose the station index, provenance manifest and the Pskem overlap check.",
+        "source": "CA-discharge v1.0 (Marti et al. 2023), Zenodo 10.5281/zenodo.8147591",
+        "held": ["GEODATA/ca-discharge-2023/CA-discharge.gpkg",
+                 "GEODATA/ca-discharge-2023/zenodo-record.json"],
+        "web": ["PUBLISHED/data/research/ca-discharge-summary.json",
+                "PUBLISHED/data/research/ca-discharge-stations.geojson",
+                "PUBLISHED/data/research/ca-discharge-pskem-comparison.csv",
+                "PUBLISHED/data/research/ca-discharge-source-manifest.json"],
+        "rebuild": "npm run research:ca-discharge",
+        "note": "CC BY 4.0. The source warning excludes gl_dmdt_km3a and gl_dmdtda_mma from every public derivative. The 11.8 GB raw archive is optional and is not mirrored.",
+    },
+    {
         "code": "BASINATLAS",
         "title": "Basin environmental attributes",
         "what": "281 documented hydro-environmental attributes per level-12 basin: hydrology, climate, land cover, soils, anthropogenic pressure.",
@@ -431,6 +445,8 @@ def main() -> None:
         "REACHCOND": f"{csv_count('PUBLISHED/data/hydroclimate/reach-connectivity.csv') or 0} reaches scored",
         "PSKEMOBS": f"{csv_count('PUBLISHED/data/hydroclimate/pskem-station-monthly.csv') or 0} monthly values, "
                     f"{csv_count('PUBLISHED/data/hydroclimate/pskem-discharge-daily.csv') or 0} daily discharge",
+        "CADISCHARGE": f"{gpkg_count('GEODATA/ca-discharge-2023/CA-discharge.gpkg', 'gauges') or 297} gauges, "
+                       f"{gpkg_count('GEODATA/ca-discharge-2023/CA-discharge.gpkg', 'discharge_time_series') or 244632:,} observations",
         "BASINATLAS": f"{basin_attributes['attributes']:,} attributes x "
                       f"{len(basin_attributes['ids']):,} matched basins",
         "ENVATLAS": "134 packages catalogued",

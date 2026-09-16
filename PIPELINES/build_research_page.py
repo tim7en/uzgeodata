@@ -67,6 +67,7 @@ ROLE_LABELS = {
 
 STATUS_LABELS = {
     "in-use": "in use",
+    "integrated": "integrated",
     "method-implemented": "method implemented",
     "reported-record": "reported record",
     "planned-integration": "planned integration",

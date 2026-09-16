@@ -1,0 +1,145 @@
+{
+  "version": "1.0",
+  "status": "integrated",
+  "source": {
+    "title": "CA-discharge data set, scripts and raw data",
+    "doi": "10.5281/zenodo.8147591",
+    "record_id": 8147591,
+    "dataset_version": "1.0",
+    "publication_date": "2023-03-17",
+    "metadata_updated_at": "2025-08-27T15:08:47.513722+00:00",
+    "license": "cc-by-4.0",
+    "creators": [
+      "Marti, Beatrice",
+      "Siegfried, Tobias",
+      "Yakovlev, Andrey",
+      "Zhumabaev, Aidar",
+      "Karger, Dirk",
+      "Wakil, Abdul Wakil",
+      "Ragettli, Silvan"
+    ],
+    "article_doi": "10.1038/s41597-023-02474-8",
+    "gpkg_md5": "e0ba6664aaec3e0b27138abdfd4ba263",
+    "gpkg_sha256": "03e2ff19002d6f5c53663495f1419b8ce9ed451bda669e55bafb3c521bf15e2a",
+    "gpkg_bytes": 24576000
+  },
+  "counts": {
+    "gauge_rows": 297,
+    "gauge_points_published": 297,
+    "gauges_with_time_series": 136,
+    "discharge_observations": 244632
+  },
+  "temporal_coverage": {
+    "first": "1910-01-25",
+    "last": "2021-06-25"
+  },
+  "resolutions": [
+    {
+      "resolution": "none",
+      "gauges": 161
+    },
+    {
+      "resolution": "decade",
+      "gauges": 77
+    },
+    {
+      "resolution": "month",
+      "gauges": 56
+    },
+    {
+      "resolution": "day",
+      "gauges": 3
+    }
+  ],
+  "countries": [
+    {
+      "country": "KYG",
+      "gauges": 117,
+      "with_time_series": 45
+    },
+    {
+      "country": "TAJ",
+      "gauges": 78,
+      "with_time_series": 11
+    },
+    {
+      "country": "AFG",
+      "gauges": 53,
+      "with_time_series": 53
+    },
+    {
+      "country": "UZB",
+      "gauges": 40,
+      "with_time_series": 23
+    },
+    {
+      "country": "KAZ",
+      "gauges": 6,
+      "with_time_series": 1
+    },
+    {
+      "country": "unassigned",
+      "gauges": 3,
+      "with_time_series": 3
+    }
+  ],
+  "article_package_difference": "The version 1.0 GeoPackage contains 297 gauge rows and 136 time-series flags; the article abstract reports 295 locations and 135 series. Portal counts describe the downloaded file, while the article counts remain cited as published.",
+  "excluded_attributes": [
+    "gl_dmdt_km3a",
+    "gl_dmdtda_mma"
+  ],
+  "excluded_attribute_reason": "The Zenodo publisher warns that these glacier thinning fields do not account for ice density. They are not exported or used.",
+  "crosswalks": [
+    {
+      "ca_code": "16290",
+      "ca_name": "Pskem - Mullala",
+      "uzgeodata_station": "uz:station/gauge-16290",
+      "uzgeodata_name": "Pskem (Mullala)",
+      "match_basis": [
+        "same numeric gauge code",
+        "same river and locality name"
+      ],
+      "ca_coordinate": [
+        70.171235,
+        41.750603
+      ],
+      "uzgeodata_coordinate": [
+        70.2,
+        41.766666666666666
+      ],
+      "coordinate_separation_km": 2.98,
+      "review": "Accepted identity crosswalk; retain both source coordinates and do not average them."
+    }
+  ],
+  "pskem_consistency": {
+    "paired_dekads": 555,
+    "period_start": "2001-01-05",
+    "period_end": "2016-05-25",
+    "bias_ca_minus_local_cms": -0.407,
+    "mae_cms": 2.18,
+    "rmse_cms": 3.96,
+    "pearson_r": 0.9982,
+    "invalid_local_calendar_rows_excluded": [
+      "2015-02-29"
+    ],
+    "interpretation": "Consistency check only. Both records ultimately come from hydrometeorological yearbooks/workbooks and are not independent validation datasets.",
+    "quality_flags": {
+      "CODE": "16290",
+      "qual_normq": 1,
+      "qual_regime": 1.0,
+      "qual_duplicates": 1,
+      "qual_outliergap": 1,
+      "qual_maxmin": 1,
+      "qual_consistency": 0.0,
+      "qual_module": 1,
+      "qual_area": 1,
+      "qual_order": 1.0,
+      "qual_wb": 1
+    }
+  },
+  "research_use": [
+    "Extend the historical context of the Pskem–Mullala gauge back to 1932 at 10-day resolution.",
+    "Use the regional station registry to identify candidate validation gauges across Central Asia.",
+    "Keep this source distinct from satellite-derived or modelled runoff and retain its quality flags."
+  ]
+}

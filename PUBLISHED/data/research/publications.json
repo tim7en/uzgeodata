@@ -1,7 +1,7 @@
 {
   "version": 1,
   "generated_at": "2026-09-15",
-  "note": "Research and data foundations of the public preview, bound to the four scientific layers. Listing a method's paper means the project implements or ingests that method or dataset; it does not mean the project's implementation has passed independent scientific reproduction. Roles: method-source (we implement the method), input-data (we ingest the dataset), reported-record (transcribed management accounting), validation-target (external evidence we compare against, planned or active), regional-context (framing evidence). Status: in-use, method-implemented, reported-record, planned-integration. Central Asia-focused entries are drawn from the hydrosolutions publications programme (hydrosolutions.ch/about#publications); their citations were verified against publisher records on integration.",
+  "note": "Research and data foundations of the public preview, bound to the four scientific layers. Listing a method's paper means the project implements or ingests that method or dataset; it does not mean the project's implementation has passed independent scientific reproduction. Roles: method-source (we implement the method), input-data (we ingest the dataset), reported-record (transcribed management accounting), validation-target (external evidence we compare against, planned or active), regional-context (framing evidence). Status: in-use, integrated, method-implemented, reported-record, planned-integration. Central Asia-focused entries are drawn from the hydrosolutions publications programme (hydrosolutions.ch/about#publications); their citations were verified against publisher records on integration.",
   "layers": {
     "1": "Reference atlas: what characterises this place under a stated edition or baseline",
     "2": "Dated observations and evidence: what was recorded or estimated here during this period",
@@ -190,17 +190,18 @@
       "authors": "Marti, B., et al.",
       "year": 2023,
       "title": "CA-discharge: Geo-located discharge time series for mountainous rivers in Central Asia",
-      "venue": "Scientific Data, 10, 579 (295 gauge locations compiled from national hydrometeorological yearbooks; monthly, 10-day and daily series)",
+      "venue": "Scientific Data, 10, 579; dataset version 1.0 on Zenodo",
       "url": "https://doi.org/10.1038/s41597-023-02474-8",
       "layers": [
         2
       ],
-      "role": "validation-target",
-      "status": "planned-integration",
-      "use": "The region's compiled gauge-discharge record: the designated held-out target for the Pskem/Chirchik model line beyond its current station records, and the anchor series for testing precipitation forcings region-wide.",
+      "role": "input-data",
+      "status": "integrated",
+      "use": "The compact GeoPackage is checksum-pinned and imported as a 297-gauge station index, source manifest and quality-aware research summary. Gauge 16290 is crosswalked to Pskem–Mullala; 555 overlapping 10-day observations are compared with the local daily record as a provenance consistency check (r = 0.9982), not as independent validation. The complete time-series package remains in versioned research storage rather than the website artifact.",
       "used_by": [
-        "discharge modelling protocol",
-        "planned regional forcing tests"
+        "data-lineage.html",
+        "regional gauge inventory",
+        "Pskem provenance consistency check"
       ]
     },
     {

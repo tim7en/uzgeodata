@@ -1,13 +1,264 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-12T11:58:48+00:00",
+  "generatedAt": "2026-09-16T18:23:08+00:00",
   "stage": "npm run cases:build",
   "forcing": "PUBLISHED/data/case-studies/station-product-monthly.csv",
   "compared": "PUBLISHED/data/case-studies/chirchik.json",
-  "rebuildSeconds": 1.4,
-  "reproduced": true,
-  "substantiveDifferences": [],
-  "substantiveDifferenceCount": 0,
+  "rebuildSeconds": 0.6,
+  "reproduced": false,
+  "substantiveDifferences": [
+    {
+      "path": ".benchmark.raw_sensitivity_scores.alpha",
+      "published": "1.234478928814318",
+      "rebuilt": "1.2344789288143174"
+    },
+    {
+      "path": ".benchmark.raw_sensitivity_scores.kge",
+      "published": "0.6609718655719292",
+      "rebuilt": "0.6609718655719297"
+    },
+    {
+      "path": ".benchmark.raw_sensitivity_scores.nse",
+      "published": "0.7456086737177043",
+      "rebuilt": "0.7456086737177045"
+    },
+    {
+      "path": ".benchmark.raw_sensitivity_scores.r",
+      "published": "0.958018209409896",
+      "rebuilt": "0.9580182094098962"
+    },
+    {
+      "path": ".benchmark.scores.alpha",
+      "published": "1.2312964520011813",
+      "rebuilt": "1.2312964520011809"
+    },
+    {
+      "path": ".benchmark.scores.kge",
+      "published": "0.6646960641375398",
+      "rebuilt": "0.66469606413754"
+    },
+    {
+      "path": ".benchmark.scores.nse",
+      "published": "0.7473095346411923",
+      "rebuilt": "0.7473095346411924"
+    },
+    {
+      "path": ".benchmark.scores.r",
+      "published": "0.9572087538627625",
+      "rebuilt": "0.9572087538627623"
+    },
+    {
+      "path": ".benchmark.uncertainty.intervals.kge[0]",
+      "published": "0.45044640839464656",
+      "rebuilt": "0.45044640839464667"
+    },
+    {
+      "path": ".benchmark.uncertainty.intervals.kge[1]",
+      "published": "0.8545606340094243",
+      "rebuilt": "0.8545606340094244"
+    },
+    {
+      "path": ".benchmark.uncertainty.intervals.nse[1]",
+      "published": "0.8876709392093936",
+      "rebuilt": "0.8876709392093937"
+    },
+    {
+      "path": ".catchment.area_km2",
+      "published": "2626.8999999999996",
+      "rebuilt": "2626.9"
+    },
+    {
+      "path": ".discharge_annual[3].volume_mcm",
+      "published": "2626.0934399999996",
+      "rebuilt": "2626.09344"
+    },
+    {
+      "path": ".discharge_annual[6].volume_mcm",
+      "published": "2349.0777600000006",
+      "rebuilt": "2349.07776"
+    },
+    {
+      "path": ".discharge_annual[7].volume_mcm",
+      "published": "1958.2991999999997",
+      "rebuilt": "1958.2992"
+    },
+    {
+      "path": ".discharge_annual[9].volume_mcm",
+      "published": "2924.1043200000004",
+      "rebuilt": "2924.10432"
+    },
+    {
+      "path": ".discharge_annual[11].volume_mcm",
+      "published": "2152.1980799999997",
+      "rebuilt": "2152.19808"
+    },
+    {
+      "path": ".discharge_monthly[1].observed_volume_mcm",
+      "published": "59.95295999999998",
+      "rebuilt": "59.95296"
+    },
+    {
+      "path": ".discharge_monthly[3].observed_volume_mcm",
+      "published": "205.60608000000002",
+      "rebuilt": "205.60607999999996"
+    },
+    {
+      "path": ".discharge_monthly[8].observed_volume_mcm",
+      "published": "150.25824000000006",
+      "rebuilt": "150.25824"
+    },
+    {
+      "path": ".discharge_monthly[10].observed_volume_mcm",
+      "published": "107.88768000000003",
+      "rebuilt": "107.88768"
+    },
+    {
+      "path": ".discharge_monthly[12].observed_volume_mcm",
+      "published": "75.34944000000002",
+      "rebuilt": "75.34944"
+    },
+    {
+      "path": ".discharge_monthly[20].observed_volume_mcm",
+      "published": "199.43712000000005",
+      "rebuilt": "199.43712000000002"
+    },
+    {
+      "path": ".discharge_monthly[21].observed_volume_mcm",
+      "published": "140.59008000000003",
+      "rebuilt": "140.59008"
+    },
+    {
+      "path": ".discharge_monthly[23].observed_volume_mcm",
+      "published": "70.20864000000002",
+      "rebuilt": "70.20864"
+    },
+    {
+      "path": ".discharge_monthly[24].observed_volume_mcm",
+      "published": "64.15199999999997",
+      "rebuilt": "64.152"
+    },
+    {
+      "path": ".discharge_monthly[25].observed_volume_mcm",
+      "published": "56.42783999999998",
+      "rebuilt": "56.42784"
+    },
+    {
+      "path": ".discharge_monthly[26].observed_volume_mcm",
+      "published": "82.41696000000002",
+      "rebuilt": "82.41696"
+    },
+    {
+      "path": ".discharge_monthly[27].observed_volume_mcm",
+      "published": "210.72096000000005",
+      "rebuilt": "210.72096"
+    },
+    {
+      "path": ".discharge_monthly[33].observed_volume_mcm",
+      "published": "98.34911999999997",
+      "rebuilt": "98.34912"
+    },
+    {
+      "path": ".discharge_monthly[34].observed_volume_mcm",
+      "published": "85.18175999999997",
+      "rebuilt": "85.18176"
+    },
+    {
+      "path": ".discharge_monthly[36].observed_volume_mcm",
+      "published": "62.363520000000015",
+      "rebuilt": "62.363519999999994"
+    },
+    {
+      "path": ".discharge_monthly[39].observed_volume_mcm",
+      "published": "241.34975999999997",
+      "rebuilt": "241.34976"
+    },
+    {
+      "path": ".discharge_monthly[44].observed_volume_mcm",
+      "published": "174.68352000000007",
+      "rebuilt": "174.68352"
+    },
+    {
+      "path": ".discharge_monthly[45].observed_volume_mcm",
+      "published": "111.96575999999997",
+      "rebuilt": "111.96576000000002"
+    },
+    {
+      "path": ".discharge_monthly[46].observed_volume_mcm",
+      "published": "87.08255999999997",
+      "rebuilt": "87.08256"
+    },
+    {
+      "path": ".discharge_monthly[47].observed_volume_mcm",
+      "published": "80.30015999999999",
+      "rebuilt": "80.30016"
+    },
+    {
+      "path": ".discharge_monthly[48].observed_volume_mcm",
+      "published": "69.86303999999997",
+      "rebuilt": "69.86304"
+    },
+    {
+      "path": ".discharge_monthly[49].observed_volume_mcm",
+      "published": "60.11711999999998",
+      "rebuilt": "60.11711999999999"
+    },
+    {
+      "path": ".discharge_monthly[50].observed_volume_mcm",
+      "published": "153.74880000000002",
+      "rebuilt": "153.7488"
+    },
+    {
+      "path": ".discharge_monthly[55].observed_volume_mcm",
+      "published": "254.38751999999994",
+      "rebuilt": "254.38752000000002"
+    },
+    {
+      "path": ".discharge_monthly[58].observed_volume_mcm",
+      "published": "60.96383999999999",
+      "rebuilt": "60.96384"
+    },
+    {
+      "path": ".discharge_monthly[59].observed_volume_mcm",
+      "published": "54.907199999999996",
+      "rebuilt": "54.9072"
+    },
+    {
+      "path": ".discharge_monthly[62].observed_volume_mcm",
+      "published": "77.81183999999999",
+      "rebuilt": "77.81184"
+    },
+    {
+      "path": ".discharge_monthly[63].observed_volume_mcm",
+      "published": "178.51104000000004",
+      "rebuilt": "178.51104"
+    },
+    {
+      "path": ".discharge_monthly[67].observed_volume_mcm",
+      "published": "255.54528000000002",
+      "rebuilt": "255.54527999999996"
+    },
+    {
+      "path": ".discharge_monthly[69].observed_volume_mcm",
+      "published": "106.93727999999999",
+      "rebuilt": "106.93728"
+    },
+    {
+      "path": ".discharge_monthly[70].observed_volume_mcm",
+      "published": "104.40575999999997",
+      "rebuilt": "104.40576000000001"
+    },
+    {
+      "path": ".discharge_monthly[71].observed_volume_mcm",
+      "published": "75.33215999999999",
+      "rebuilt": "75.33216"
+    },
+    {
+      "path": ".discharge_monthly[72].observed_volume_mcm",
+      "published": "64.29024000000003",
+      "rebuilt": "64.29024"
+    }
+  ],
+  "substantiveDifferenceCount": 228,
   "provenanceDifferenceCount": 16,
   "provenanceDifferences": [
     ".provenance[0].bytes",

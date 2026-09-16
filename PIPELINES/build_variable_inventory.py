@@ -154,6 +154,22 @@ def build(root=ROOT, *, updates=None):
                 source=dataset["label"], note="Catalogue product. An acquisition date and refresh recipe have not yet been registered.",
                 evidence="/catalogue.html")
 
+    ca_discharge = read(root, "PUBLISHED/data/research/ca-discharge-summary.json")
+    if ca_discharge:
+        counts = ca_discharge.get("counts", {})
+        add("research:ca-discharge", "Observed river discharge", 2, "CA-discharge v1.0",
+            source="10.5281/zenodo.8147591", unit="m³/s",
+            coverage_to=ca_discharge.get("temporal_coverage", {}).get("last"),
+            coverage_label=(f"{ca_discharge.get('temporal_coverage', {}).get('first')} → "
+                            f"{ca_discharge.get('temporal_coverage', {}).get('last')}"),
+            published_at=ca_discharge.get("source", {}).get("publication_date"),
+            group_id=None, status="archival",
+            evidence="/data/research/ca-discharge-summary.json",
+            note=(f"Versioned regional research archive: {counts.get('gauge_rows', 0)} gauges, "
+                  f"{counts.get('gauges_with_time_series', 0)} with series and "
+                  f"{counts.get('discharge_observations', 0):,} observations. "
+                  "Quality flags are retained; this is distinct from modelled runoff."))
+
     for name in ("normals", "anomalies", "seasonal", "trend", "water_balance", "spi"):
         add(f"derived:{name}", name.replace("_", " ").capitalize(), 3, "Analytical products",
             source="Basin observation cube", note="Computed on demand from the selected release; no separate cached update timestamp.",
