@@ -607,6 +607,10 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-lang{display:inline-flex}
 @media(min-width:821px){
   .land-panel{transition:transform .3s ease, visibility 0s linear 0s;visibility:visible}
+  /* Treat the visible rail as one continuous hover target. Without this, its
+     transparent spacing belongs to the map and crossing an accordion gap can
+     fire mouseleave before the pointer reaches a newly revealed link. */
+  .land-panel:not(.uz-closed){pointer-events:auto}
   .land-panel.uz-closed{transform:translateX(-103%);visibility:hidden;transition:transform .3s ease, visibility 0s linear .3s}
   .land-panel-tab{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:590;width:24px;height:64px;border:1px solid var(--line);border-left:0;border-radius:0 8px 8px 0;background:var(--l-bg-1);color:var(--dim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;opacity:.7;transition:opacity .2s,color .2s}
   .land-panel-tab:hover{opacity:1;color:var(--ink)}

@@ -28,6 +28,7 @@ const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
 const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const OPACITY_KEY = 'uzgeodata.overlayOpacity';
+const PANEL_CLOSE_DELAY = 650;
 // How much of each corner the fixed UI takes up, in pixels, so a fitted view
 // never lands a basin under the sidebar, the header or the zoom controls.
 const OCCLUDED_TOP_LEFT = [300, 170];
@@ -247,6 +248,7 @@ export default function LandingMap() {
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
   const [peek, setPeek] = useState(false);
+  const panelCloseTimer = useRef(null);
   const [stickyOpen, setStickyOpen] = useState(() => {
     try { return localStorage.getItem('uzgeodata-panel') === 'open'; } catch { return false; }
   });
@@ -255,13 +257,29 @@ export default function LandingMap() {
     setStickyOpen(value);
     try { localStorage.setItem('uzgeodata-panel', value ? 'open' : 'closed'); } catch { /* storage blocked */ }
   };
-  // A touch of the left edge slides the panel out; leaving it lets it fall
-  // closed again unless the reader pinned it.
-  useEffect(() => {
-    const onMove = event => { if (event.clientX <= 6) setPeek(true); };
-    document.addEventListener('mousemove', onMove, { passive: true });
-    return () => document.removeEventListener('mousemove', onMove);
+  const keepPanelOpen = useCallback(() => {
+    if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
+    panelCloseTimer.current = null;
+    setPeek(true);
   }, []);
+  const schedulePanelClose = useCallback(() => {
+    if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
+    panelCloseTimer.current = window.setTimeout(() => {
+      panelCloseTimer.current = null;
+      setPeek(false);
+    }, PANEL_CLOSE_DELAY);
+  }, []);
+  // A touch of the left edge slides the panel out; leaving it lets it fall
+  // closed again unless the reader pinned it. A short grace period lets the
+  // pointer cross accordion gaps without dismissing the panel mid-navigation.
+  useEffect(() => {
+    const onMove = event => { if (event.clientX <= 6) keepPanelOpen(); };
+    document.addEventListener('mousemove', onMove, { passive: true });
+    return () => {
+      document.removeEventListener('mousemove', onMove);
+      if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
+    };
+  }, [keepPanelOpen]);
   useEffect(() => {
     const host = document.getElementById('uz-lang-host');
     if (host && !host.firstChild) mountSelect(host);
@@ -658,7 +676,9 @@ export default function LandingMap() {
       <p>Amu Darya and Syr Darya as they drain, not as borders cut them. Pick any sub-basin to read it.</p>
     </header>
 
-    <aside onMouseLeave={() => setPeek(false)}
+    <aside onMouseEnter={keepPanelOpen} onMouseLeave={schedulePanelClose}
+      onFocusCapture={keepPanelOpen}
+      onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) schedulePanelClose(); }}
       className={`land-panel ${selected ? 'has-selection' : ''} ${panelOpen ? '' : 'uz-closed'}`}>
       {!basins && <p className="land-loading">Loading the reference basins…</p>}
       {basins && <p className="land-level">
@@ -736,7 +756,8 @@ export default function LandingMap() {
     <button type="button" className="land-panel-tab" aria-label="Toggle basins panel"
       aria-expanded={panelOpen}
       onClick={() => setSticky(!panelOpen)}
-      onMouseEnter={() => setPeek(true)}>
+      onMouseEnter={keepPanelOpen}
+      onMouseLeave={schedulePanelClose}>
       <span aria-hidden="true">{panelOpen ? '\u2039' : '\u203a'}</span>
     </button>
 
