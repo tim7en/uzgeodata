@@ -1,0 +1,71 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-09-16",
+  "purpose": "Curated classifications that cannot be inferred safely from the generated variable inventory or Earth Engine audit.",
+  "classification": [
+    {
+      "id": "continuous_collection",
+      "label": "Continuing collection",
+      "meaning": "The provider adds dated observations. UzGeoData can fetch missing periods and append a versioned result after quality checks."
+    },
+    {
+      "id": "versioned_release",
+      "label": "Versioned release",
+      "meaning": "The provider publishes a fixed edition. Updates mean reviewing and importing a new edition, not polling for another month."
+    },
+    {
+      "id": "fixed_reference",
+      "label": "Fixed reference",
+      "meaning": "A climatology, geometry or historical snapshot whose date is part of its scientific definition."
+    },
+    {
+      "id": "local_snapshot",
+      "label": "Local snapshot",
+      "meaning": "The public record stops at the last supplied local file. Extending it requires a new delivery and a controlled append."
+    },
+    {
+      "id": "derived_product",
+      "label": "Derived product",
+      "meaning": "UzGeoData recomputes this output after one or more upstream inputs pass validation."
+    }
+  ],
+  "local_snapshots": [
+    {
+      "id": "pskem-station-workbooks",
+      "title": "Pskem, Oygaing and Tashkent station workbooks",
+      "provider": "Local hydrometeorological delivery",
+      "classification": "local_snapshot",
+      "coverage": "Pskem 2010–2024; Oygaing 2020–2022; Tashkent 2010–2019",
+      "state": "imported",
+      "update_policy": "Append a newly supplied workbook only after schema, duplicate, missing-month and station-metadata checks.",
+      "variables": ["precipitation", "air temperature", "Pskem discharge"]
+    },
+    {
+      "id": "chirchik-remote-window",
+      "title": "Chirchik–Charvak case-study remote inputs",
+      "provider": "Earth Engine extraction saved for the case study",
+      "classification": "fixed_reference",
+      "coverage": "2000–2024 extraction window",
+      "state": "published snapshot",
+      "update_policy": "Extend the extraction window as a new case-study run; do not silently change the evidence used by the published analysis.",
+      "variables": ["snow", "climate forcing", "surface-water extent"]
+    }
+  ],
+  "external_sources": [
+    {
+      "id": "ca-discharge-2023",
+      "title": "CA-discharge: Geo-Located Discharge Time Series for Mountainous Rivers in Central Asia",
+      "provider": "Scientific Data / Zenodo",
+      "classification": "versioned_release",
+      "coverage": "295 gauge locations; time series for 135 gauges; record periods vary by station",
+      "state": "candidate — not imported into the public observation store",
+      "update_policy": "Import the Zenodo release into versioned raw storage, retain its station identifiers and quality flags, then review future repository releases manually.",
+      "variables": ["daily discharge", "10-day discharge", "monthly discharge", "basin characteristics"],
+      "roles": ["station crosswalk", "regional validation", "runoff-model training candidate"],
+      "storage_note": "The published archive contains station time series and basin averages; third-party rasters are referenced rather than redistributed.",
+      "article_url": "https://www.nature.com/articles/s41597-023-02474-8",
+      "data_url": "https://doi.org/10.5281/zenodo.8147591",
+      "doi": "10.1038/s41597-023-02474-8"
+    }
+  ]
+}

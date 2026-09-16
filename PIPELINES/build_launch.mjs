@@ -66,6 +66,7 @@ const files = new Set(execFileSync('git', ['ls-files', '-z', 'PUBLISHED'], { enc
   .split('\0').filter(Boolean).map(file => file.slice('PUBLISHED/'.length)));
 // Explicit public metadata output, also available in a working tree before first commit.
 files.add('data/variable-inventory.json');
+files.add('data/source-registry.json');
 for (const name of await readdir(path.join(published, 'data/atlas/history'))) {
   if (/^(?:index|\d+)\.json$/.test(name)) files.add(`data/atlas/history/${name}`);
 }

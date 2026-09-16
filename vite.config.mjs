@@ -31,6 +31,7 @@ export default defineConfig({
         roadmap: here('./INTERFACE/roadmap.html'),
         surrogates: here('./INTERFACE/surrogates.html'),
         dynamicAtlas: here('./INTERFACE/dynamic-atlas.html'),
+        dataLineage: here('./INTERFACE/data-lineage.html'),
         hydrography: here('./INTERFACE/hydrography.html'),
         landcover: here('./INTERFACE/landcover.html'),
         climate: here('./INTERFACE/climate.html'),

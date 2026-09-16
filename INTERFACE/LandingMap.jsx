@@ -34,6 +34,7 @@ const PANEL_CLOSE_DELAY = 650;
 const OCCLUDED_TOP_LEFT = [300, 170];
 const OCCLUDED_BOTTOM_RIGHT = [40, 110];
 const DEEPER = [
+  { href: '/data-lineage.html', label: 'Data lineage & updates', note: 'Source tree, coverage gaps and refresh classes' },
   { href: '/dynamic-atlas.html', label: 'Dynamic HydroATLAS', note: 'Earth Engine results, resolution and updates' },
   { href: '/roadmap.html', label: 'Atlas roadmap', note: 'Methods, reproduction and basin history' },
   { href: '/case-studies.html', label: 'Case studies', note: 'Runoff models and station–satellite work' },
