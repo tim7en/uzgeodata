@@ -616,3 +616,15 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
   .land-panel-tab:hover{opacity:1;color:var(--ink)}
 }
 @media(max-width:820px){.land-panel-tab{display:none}.land-panel.uz-closed{transform:none;visibility:visible}}
+
+/* Collapsible header: the same contract as the reading panel. Collapsed, a
+   small brand tab stays at the top-left; touching the top edge or the tab
+   slides the full header down, and a tab click pins it across visits. */
+@media(min-width:821px){
+  .land-head{transition:transform .3s ease, visibility 0s linear 0s;visibility:visible}
+  .land-head.uz-closed{transform:translateY(-110%);visibility:hidden;transition:transform .3s ease, visibility 0s linear .3s}
+  .land-head-tab{position:fixed;top:10px;left:18px;z-index:490;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid var(--line);border-radius:4px;background:var(--l-bg-7);color:var(--ink);cursor:pointer;font:700 15px var(--display);letter-spacing:.06em;opacity:.8;transition:opacity .2s,color .2s}
+  .land-head-tab:hover{opacity:1;color:var(--l-accent-1)}
+  .land-head-tab .uz-chev{font-size:8px;color:var(--dim)}
+}
+@media(max-width:820px){.land-head-tab{display:none}.land-head.uz-closed{transform:none;visibility:visible}}

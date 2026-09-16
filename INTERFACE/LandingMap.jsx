@@ -258,6 +258,26 @@ export default function LandingMap() {
     setStickyOpen(value);
     try { localStorage.setItem('uzgeodata-panel', value ? 'open' : 'closed'); } catch { /* storage blocked */ }
   };
+  // The header obeys the same contract as the reading panel: the map owns the
+  // screen, a touch of the top edge or the brand tab summons the header, and a
+  // click on the tab pins it open across visits.
+  const [headPeek, setHeadPeek] = useState(false);
+  const [headSticky, setHeadSticky] = useState(() => {
+    try { return localStorage.getItem('uzgeodata-head') === 'open'; } catch { return false; }
+  });
+  const headOpen = headSticky || headPeek;
+  const setHeadStickyValue = value => {
+    setHeadSticky(value);
+    try { localStorage.setItem('uzgeodata-head', value ? 'open' : 'closed'); } catch { /* storage blocked */ }
+  };
+  useEffect(() => {
+    const onMove = event => {
+      if (event.clientY <= 6) setHeadPeek(true);
+      else if (event.clientY > 380) setHeadPeek(false);
+    };
+    document.addEventListener('mousemove', onMove, { passive: true });
+    return () => document.removeEventListener('mousemove', onMove);
+  }, []);
   const keepPanelOpen = useCallback(() => {
     if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
     panelCloseTimer.current = null;
@@ -619,7 +639,7 @@ export default function LandingMap() {
       <ScaleControl position="bottomright" imperial={false}/>
     </MapContainer>
 
-    <header className="land-head">
+    <header className={`land-head ${headOpen ? '' : 'uz-closed'}`}>
       <div className="land-head-top">
         <div>
           <a href="/" className="land-brand" aria-label="UzGeoData home">
@@ -676,6 +696,13 @@ export default function LandingMap() {
       </div>
       <p>Amu Darya and Syr Darya as they drain, not as borders cut them. Pick any sub-basin to read it.</p>
     </header>
+    <button type="button" className="land-head-tab" aria-label="Toggle map header"
+      aria-expanded={headOpen}
+      onClick={() => setHeadStickyValue(!headSticky)}
+      onMouseEnter={() => setHeadPeek(true)}>
+      <span aria-hidden="true">&#8776;</span>
+      <span className="uz-chev" aria-hidden="true">&#9662;</span>
+    </button>
 
     <aside onMouseEnter={keepPanelOpen} onMouseLeave={schedulePanelClose}
       onFocusCapture={keepPanelOpen}
