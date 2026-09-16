@@ -655,15 +655,20 @@ export default function LandingMap() {
             setBounds(null); setResetVersion(value => value + 1);
           }} title="Return to the starting map location and zoom">Reset view</button>
           <ThemeToggle className="land-theme"/>
-          <span id="uz-lang-host" className="land-lang"/>
-          <label className="land-basemap">
+        </div>
+      </div>
+      <p>Amu Darya and Syr Darya as they drain, not as borders cut them. Pick any sub-basin to read it.</p>
+    </header>
+
+    <section className="land-mapctrl" aria-label="Map display controls">
+      <label className="land-basemap">
             <span>Basemap</span>
             <select value={basemap} onChange={event => setBasemap(event.target.value)}
               aria-label="Basemap">
               {BASEMAPS.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}
             </select>
           </label>
-          {/* Water bodies and barriers are map layers, so they are switched on
+      {/* Water bodies and barriers are map layers, so they are switched on
               the map rather than from a reading panel down the side. */}
           <fieldset className="land-layers">
             <legend>Layers</legend>
@@ -692,10 +697,8 @@ export default function LandingMap() {
               <span>Stations{stations ? ` · ${formatNumber(stations.features.length)}` : ''}</span>
             </label>
           </fieldset>
-        </div>
-      </div>
-      <p>Amu Darya and Syr Darya as they drain, not as borders cut them. Pick any sub-basin to read it.</p>
-    </header>
+      <span id="uz-lang-host" className="land-lang"/>
+    </section>
     <button type="button" className="land-head-tab" aria-label="Toggle map header"
       aria-expanded={headOpen}
       onClick={() => setHeadStickyValue(!headSticky)}
