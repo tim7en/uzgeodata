@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-  LANGS, TRANSLATE_ELEMENT_URL, isSupported, normalizeBrowserLang, resolveLang,
+  LANGS, TRANSLATE_ELEMENT_URL, isSupported, normalizeBrowserLang, resolveActiveLang, resolveLang,
 } from '../INTERFACE/lang.js';
 
 test('the language list is unique, English-first, and covers the regional audience', () => {
@@ -39,6 +39,13 @@ test('browser tags are normalized to the registry ids', () => {
 test('isSupported agrees with the registry', () => {
   for (const [id] of LANGS) assert.ok(isSupported(id));
   assert.equal(isSupported('qq'), false);
+});
+
+test('an explicit saved language overrides stale Google translation cookies', () => {
+  assert.equal(resolveActiveLang('en', 'ru'), 'en');
+  assert.equal(resolveActiveLang('uz', 'ru'), 'uz');
+  assert.equal(resolveActiveLang(null, 'ru'), 'ru');
+  assert.equal(resolveActiveLang(null, 'qq'), 'en');
 });
 
 test('translation loads from the active Google Translate Element endpoint', () => {

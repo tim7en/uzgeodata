@@ -76,16 +76,37 @@ export function cookieLang() {
   return match ? match[1] : null;
 }
 
-/** The language currently applied to the page, cookie first (set by Google or us). */
+/** A saved explicit choice must beat a stale cookie left by Google's widget. */
+export function resolveActiveLang(stored, cookie) {
+  if (stored && isSupported(stored)) return stored;
+  return cookie && isSupported(cookie) ? cookie : 'en';
+}
+
+/** The language currently applied to the page. */
 export function activeLang() {
-  return cookieLang() || storedLang() || 'en';
+  return resolveActiveLang(storedLang(), cookieLang());
+}
+
+function clearGoogtrans() {
+  const expired = 'expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  document.cookie = `googtrans=;path=/;${expired}`;
+
+  // Translate Element may promote its cookie to the current domain. Clear
+  // every valid parent candidate as well as the host-only cookie above.
+  const hostname = document.location?.hostname || '';
+  if (!hostname || hostname === 'localhost' || hostname.includes(':') || /^\d+(\.\d+){3}$/.test(hostname)) return;
+  const labels = hostname.split('.');
+  for (let index = 0; index < labels.length - 1; index += 1) {
+    document.cookie = `googtrans=;path=/;domain=.${labels.slice(index).join('.')};${expired}`;
+  }
 }
 
 function setGoogtrans(lang) {
+  clearGoogtrans();
   if (lang === 'en') {
-    document.cookie = 'googtrans=;path=/;max-age=0';
+    return;
   } else {
-    document.cookie = `googtrans=/en/${lang};path=/`;
+    document.cookie = `googtrans=/en/${lang};path=/;SameSite=Lax`;
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import AtlasProcessing from './AtlasProcessing.jsx';
 import PskemAtlasBatch from './PskemAtlasBatch.jsx';
@@ -11,6 +11,8 @@ initTheme();
 initLang();
 
 function App() {
+  const navRef = useRef(null);
+  const langHostRef = useRef(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [query, setQuery] = useState('');
@@ -27,10 +29,14 @@ function App() {
     } catch (e) { setError(e.message); }
   }
   useEffect(() => { refresh(); const timer = setInterval(refresh, 60000); return () => clearInterval(timer); }, []);
+  useEffect(() => {
+    autoHideHeader(navRef.current);
+    if (langHostRef.current && !langHostRef.current.firstChild) mountSelect(langHostRef.current);
+  }, []);
   const rows = data?.attributes.filter(a => (category === 'all' || a.category === category)
     && `${a.column} ${a.label} ${a.variable}`.toLowerCase().includes(query.toLowerCase())) || [];
   return <main>
-    <nav><a href="/">&#8592; UzGeoData</a><div style={{display:"flex",alignItems:"center",gap:20}}><a href="/atlas.html">Atlas explorer ↗</a><ThemeToggle/></div></nav>
+    <nav ref={navRef}><a href="/">&#8592; UzGeoData</a><div style={{display:"flex",alignItems:"center",gap:20}}><a href="/atlas.html">Atlas explorer ↗</a><ThemeToggle/><span ref={langHostRef} style={{display:'inline-flex'}}/></div></nav>
     <header className="hero"><p className="eyebrow">THE ATLAS PROGRAMME · AMU DARYA + SYR DARYA</p>
       <h1>From basin attributes<br/>to a living atlas.</h1>
       <p>A shared roadmap for source methods, reproducible science and basin history. Starting with HydroSHEDS.</p>
@@ -68,10 +74,3 @@ function App() {
   </main>;
 }
 createRoot(document.getElementById('root')).render(<App/>);
-requestAnimationFrame(() => {
-  autoHideHeader(document.querySelector('main nav'));
-  const host = document.createElement('span');
-  host.style.display = 'inline-flex';
-  const nav = document.querySelector('main nav');
-  if (nav) { nav.appendChild(host); mountSelect(host); }
-});
