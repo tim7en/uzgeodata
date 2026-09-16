@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ThemeToggle, { useTheme } from './ThemeToggle.jsx';
 import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
 import { ArrowUpRight, BookOpen, Droplets, Layers, Search, X } from 'lucide-react';
+import { mountSelect } from './lang.js';
 import DamModal from './DamModal.jsx';
 import { svg } from 'leaflet';
 import LakeLayer from './LakeLayer.jsx';
@@ -245,6 +246,26 @@ export default function LandingMap() {
   const [loadingStore, setLoadingStore] = useState(false);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
+  const [peek, setPeek] = useState(false);
+  const [stickyOpen, setStickyOpen] = useState(() => {
+    try { return localStorage.getItem('uzgeodata-panel') === 'open'; } catch { return false; }
+  });
+  const panelOpen = stickyOpen || peek || !!selected;
+  const setSticky = value => {
+    setStickyOpen(value);
+    try { localStorage.setItem('uzgeodata-panel', value ? 'open' : 'closed'); } catch { /* storage blocked */ }
+  };
+  // A touch of the left edge slides the panel out; leaving it lets it fall
+  // closed again unless the reader pinned it.
+  useEffect(() => {
+    const onMove = event => { if (event.clientX <= 6) setPeek(true); };
+    document.addEventListener('mousemove', onMove, { passive: true });
+    return () => document.removeEventListener('mousemove', onMove);
+  }, []);
+  useEffect(() => {
+    const host = document.getElementById('uz-lang-host');
+    if (host && !host.firstChild) mountSelect(host);
+  }, []);
   const [hoveredId, setHoveredId] = useState(null);
   const [query, setQuery] = useState('');
   const [overlay, setOverlay] = useState('');
@@ -595,6 +616,7 @@ export default function LandingMap() {
             setBounds(null); setResetVersion(value => value + 1);
           }} title="Return to the starting map location and zoom">Reset view</button>
           <ThemeToggle className="land-theme"/>
+          <span id="uz-lang-host" className="land-lang"/>
           <label className="land-basemap">
             <span>Basemap</span>
             <select value={basemap} onChange={event => setBasemap(event.target.value)}
@@ -636,7 +658,8 @@ export default function LandingMap() {
       <p>Amu Darya and Syr Darya as they drain, not as borders cut them. Pick any sub-basin to read it.</p>
     </header>
 
-    <aside className={`land-panel ${selected ? 'has-selection' : ''}`}>
+    <aside onMouseLeave={() => setPeek(false)}
+      className={`land-panel ${selected ? 'has-selection' : ''} ${panelOpen ? '' : 'uz-closed'}`}>
       {!basins && <p className="land-loading">Loading the reference basins…</p>}
       {basins && <p className="land-level">
         Level {active.level} · {formatNumber(features.length)} basins
@@ -710,6 +733,12 @@ export default function LandingMap() {
         <p className="land-hint">Public preview · Independent estimates; reproduction has not been established.</p>
       </nav>
     </aside>
+    <button type="button" className="land-panel-tab" aria-label="Toggle basins panel"
+      aria-expanded={panelOpen}
+      onClick={() => setSticky(!panelOpen)}
+      onMouseEnter={() => setPeek(true)}>
+      <span aria-hidden="true">{panelOpen ? '\u2039' : '\u203a'}</span>
+    </button>
 
 
     {basins && groups && <section className="land-dock" aria-label="Area of interest, basin colouring and map key">

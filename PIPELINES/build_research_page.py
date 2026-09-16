@@ -185,7 +185,8 @@ def build() -> dict:
 <p>External evidence the research programme intends to compare against. Citations are completed at integration time rather than asserted in advance.</p>
 {planned}</section>
 </main>
-{FOOTER}</body></html>
+{FOOTER}
+<script type="module" src="/site-boot.js"></script></body></html>
 """
     OUT.write_text(html, encoding="utf-8")
     return {"page": str(OUT), "bytes": OUT.stat().st_size}

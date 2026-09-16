@@ -3,6 +3,7 @@ import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, 
 import { ArrowLeft, BookOpen, Database, Droplets, Scale, Search } from 'lucide-react';
 import DamModal from './DamModal.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
+import { initLang, mountSelect } from './lang.js';
 import { svg } from 'leaflet';
 import {
   clusterDams, damClusterBounds, damClusterStyle,
@@ -167,13 +168,22 @@ export default function AtlasExplorer() {
 
   if (error) return <main className="atlas-state"><h1>The atlas could not load.</h1><p>{error}</p></main>;
 
+  useEffect(() => {
+    initLang();
+    const host = document.getElementById('uz-lang-host');
+    if (host && !host.firstChild) mountSelect(host);
+  }, []);
+
   const reading = hit ? formatAttribute(readAttribute(store, hit.hybas_id, attribute), meta?.units) : null;
 
   return <main className="atlas">
     <aside className="atlas-rail">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <a className="atlas-back" href="/"><ArrowLeft size={13}/> Map</a>
-        <ThemeToggle/>
+        <span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
+          <ThemeToggle/>
+          <span id="uz-lang-host"/>
+        </span>
       </div>
       <h1>Atlas explorer</h1>
       <p className="atlas-lede">Any of the {attributes.length} BasinATLAS attributes, drawn on the reference basins.</p>

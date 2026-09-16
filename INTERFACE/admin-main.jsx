@@ -1,10 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
-initTheme();
 import { createRoot } from 'react-dom/client';
 import { Activity, ArrowLeft, ArrowUpRight, Check, Clock, Database, Layers, LoaderCircle, RefreshCw, Search, ShieldCheck, X } from 'lucide-react';
 import { LAYERS, freshness, coverageAge, visibleRows, latestJob } from './variableFreshness.js';
 import './admin.css';
 import { initTheme } from './ThemeToggle.jsx';
+import { initLang, mountSelect } from './lang.js';
+import { autoHideHeader } from './chrome.js';
+
+initTheme();
+initLang();
 
 const BASE = import.meta.env.BASE_URL;
 async function json(url, options) {
@@ -113,3 +117,12 @@ function Admin() {
 }
 
 createRoot(document.getElementById('root')).render(<Admin/>);
+requestAnimationFrame(() => {
+  autoHideHeader(document.querySelector('.admin-topbar'));
+  const tools = document.querySelector('.admin-topbar > div');
+  if (tools) {
+    const host = document.createElement('span');
+    tools.insertBefore(host, tools.firstChild);
+    mountSelect(host);
+  }
+});

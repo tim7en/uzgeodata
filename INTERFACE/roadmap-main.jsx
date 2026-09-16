@@ -5,7 +5,10 @@ import PskemAtlasBatch from './PskemAtlasBatch.jsx';
 import AtlasImplementationPlan from './AtlasImplementationPlan.jsx';
 import './roadmap.css';
 import ThemeToggle, { initTheme } from './ThemeToggle.jsx';
+import { initLang, mountSelect } from './lang.js';
+import { autoHideHeader } from './chrome.js';
 initTheme();
+initLang();
 
 function App() {
   const [data, setData] = useState(null);
@@ -65,3 +68,10 @@ function App() {
   </main>;
 }
 createRoot(document.getElementById('root')).render(<App/>);
+requestAnimationFrame(() => {
+  autoHideHeader(document.querySelector('main nav'));
+  const host = document.createElement('span');
+  host.style.display = 'inline-flex';
+  const nav = document.querySelector('main nav');
+  if (nav) { nav.appendChild(host); mountSelect(host); }
+});
