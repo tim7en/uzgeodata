@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-  LANGS, TRANSLATE_ELEMENT_URL, isSupported, normalizeBrowserLang, resolveActiveLang, resolveLang,
+  LANGS, TRANSLATE_ELEMENT_URL, isSupported, languageLabel, normalizeBrowserLang,
+  resolveActiveLang, resolveLang, translationProgressCopy,
 } from '../INTERFACE/lang.js';
 
 test('the language list is unique, English-first, and covers the regional audience', () => {
@@ -46,6 +47,16 @@ test('an explicit saved language overrides stale Google translation cookies', ()
   assert.equal(resolveActiveLang('uz', 'ru'), 'uz');
   assert.equal(resolveActiveLang(null, 'ru'), 'ru');
   assert.equal(resolveActiveLang(null, 'qq'), 'en');
+});
+
+test('translation progress distinguishes translated pages from restored English', () => {
+  assert.deepEqual(translationProgressCopy('en'), {
+    title: 'Restoring original', detail: 'Loading the authoritative English page…',
+  });
+  assert.deepEqual(translationProgressCopy('ru'), {
+    title: 'Switching language', detail: 'Translating this page to Русский…',
+  });
+  assert.equal(languageLabel('uz'), 'Oʻzbekcha');
 });
 
 test('translation loads from the active Google Translate Element endpoint', () => {
