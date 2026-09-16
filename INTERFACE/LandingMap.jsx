@@ -9,6 +9,7 @@ import LakeLayer from './LakeLayer.jsx';
 import LakeModal from './LakeModal.jsx';
 import StationLayer from './StationLayer.jsx';
 import StationModal from './StationModal.jsx';
+import GaugeModal from './GaugeModal.jsx';
 import BasinSubstitutes from './BasinSubstitutes.jsx';
 import BasinHistory from './BasinHistory.jsx';
 import { AoiLayer, AoiPanel } from './AoiTool.jsx';
@@ -388,12 +389,26 @@ export default function LandingMap() {
     return()=>{live=false;};
   },[showLakes,lakes]);
   // Stations are off by default: they are evidence about the products rather than
-  // part of the hydrography, and 319 marks over the basins is a lot to impose on a
-  // reader who came to look at catchments.
+  // part of the hydrography, and combined meteorological stations and discharge gauges
+  // is a lot to impose on a reader who came to look at catchments.
   useEffect(()=>{
     if(!showStations||stations)return;
     let live=true;
-    json('/data/hydroclimate/meteo-stations.geojson').then(d=>{if(live)setStations(d);}).catch(()=>{if(live)setShowStations(false);});
+    Promise.all([
+      json('/data/hydroclimate/meteo-stations.geojson'),
+      json('/data/research/ca-discharge-stations.geojson')
+    ]).then(([meteo, gauges]) => {
+      if(!live)return;
+      // Merge both layers into one GeoJSON FeatureCollection
+      const merged = {
+        type: 'FeatureCollection',
+        features: [
+          ...meteo.features.map(f => ({...f, properties: {...f.properties, station_type: 'meteo'}})),
+          ...gauges.features.map(f => ({...f, properties: {...f.properties, station_type: 'gauge'}}})
+        ]
+      };
+      setStations(merged);
+    }).catch(()=>{if(live)setShowStations(false);});
     return()=>{live=false;};
   },[showStations,stations]);
   // Recomputed on every zoom change: this is what regroups the dams as the reader
@@ -694,7 +709,7 @@ export default function LandingMap() {
                 if (!event.target.checked) setStation(null);
               }}/>
               <span className="land-station-key" aria-hidden="true"/>
-              <span>Stations{stations ? ` · ${formatNumber(stations.features.length)}` : ''}</span>
+              <span>Observations{stations ? ` · ${formatNumber(stations.features.length)} stations & gauges` : ''}</span>
             </label>
           </fieldset>
       <span id="uz-lang-host" className="land-lang"/>

@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-16T18:23:08+00:00",
+  "generatedAt": "2026-09-16T18:30:35+00:00",
   "stage": "npm run cases:build",
   "forcing": "PUBLISHED/data/case-studies/station-product-monthly.csv",
   "compared": "PUBLISHED/data/case-studies/chirchik.json",
-  "rebuildSeconds": 0.6,
+  "rebuildSeconds": 0.4,
   "reproduced": false,
   "substantiveDifferences": [
     {

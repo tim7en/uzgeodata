@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Download, X } from 'lucide-react';
+import { Download, ExternalLink, X } from 'lucide-react';
 import { formatNumber } from './landingModel.js';
 import { downloadName, recordSummary, toCsv } from './stationModel.js';
+import GaugeModal from './GaugeModal.jsx';
 import './damModal.css';
 
 const PLACEMENT_LABEL = {
@@ -12,11 +13,16 @@ const PLACEMENT_LABEL = {
 };
 
 /**
- * One station. The figures are secondary here: what a reader most needs is whether
- * this point is where the observations were actually recorded, so placement leads and
- * is stated in full rather than reduced to a badge.
+ * Station or gauge modal dispatcher.
+ * 
+ * Meteorological stations show air/precipitation records with placement metadata.
+ * Discharge gauges show river discharge with basin characteristics.
+ * The modal type is detected from the station/gauge properties.
  */
 export default function StationModal({ station, onClose }) {
+  // Detect if this is a CA-discharge gauge (has 'code' and 'river' properties)
+  const isGauge = station && (station.code || (station.properties?.code));
+  if (isGauge) return <GaugeModal gauge={isGauge ? station : station.properties} onClose={onClose}/>;
   const [record, setRecord] = useState(null);
   const [failed, setFailed] = useState(false);
 

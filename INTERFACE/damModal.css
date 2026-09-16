@@ -51,4 +51,16 @@
 .dam-modal-ids code{font-size:12px}
 .dam-modal-note{font-size:11.5px}
 .dam-modal-card{width:min(620px,100%)}
+
+/* Station and gauge modal styling */
+.station-modal .dam-modal-card{border-top-color:#66c5e8}
+.station-modal .dam-modal-kicker{color:#66c5e8}
+.gauge-modal .dam-modal-card{border-top-color:#4a90e2}
+.gauge-modal .dam-modal-kicker{color:#4a90e2}
+.station-modal-downloads{display:flex;gap:10px;margin:10px 0}
+.station-modal-downloads button,.gauge-modal-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;background:#1d2a31;border:1px solid #2d3a41;border-radius:3px;color:#66c5e8;font-size:12px;font-weight:600;text-decoration:none;cursor:pointer;transition:background 0.2s}
+.station-modal-downloads button:hover,.gauge-modal-links a:hover{background:#2d3a41}
+.gauge-modal-links{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.station-modal-warn{border-left:3px solid #ff6b4a;background:rgba(255,107,74,0.08)}
+
 @media(max-width:600px){.dam-modal-card h2{font-size:24px}}

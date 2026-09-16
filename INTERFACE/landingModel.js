@@ -529,15 +529,17 @@ export function clusterPoints(features, zoom, positionOf, cellPixels = CLUSTER_C
  * drawn more confidently than its weakest member.
  */
 const PLACEMENT_RANK = ['departs_from_network_relationship', 'not_checked',
-                        'consistent_with_network', 'coordinate_supplied_by_source'];
+                        'consistent_with_network', 'coordinate_supplied_by_source', 'gauge'];
 
 export function clusterStations(features, zoom) {
   return clusterPoints(features, zoom, feature => feature.geometry?.coordinates)
     .map(bucket => {
       const members = bucket.members.map(member => member.properties || {});
-      const weakest = members.reduce((worst, row) => (
-        PLACEMENT_RANK.indexOf(row.placement_status) < PLACEMENT_RANK.indexOf(worst)
-          ? row.placement_status : worst
+      // For gauges (CA-discharge), use 'gauge' as the status; for meteo stations use placement_status
+      const statuses = members.map(row => row.station_type === 'gauge' ? 'gauge' : (row.placement_status || 'not_checked'));
+      const weakest = statuses.reduce((worst, status) => (
+        PLACEMENT_RANK.indexOf(status) < PLACEMENT_RANK.indexOf(worst)
+          ? status : worst
       ), PLACEMENT_RANK[PLACEMENT_RANK.length - 1]);
       // The group opens the member with the longest record: the one a reader is
       // most likely to want, and the one its label names.
