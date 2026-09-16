@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowRight, Check, Database, Download, ExternalLink, GitBranch, HardDrive, RefreshCw, Satellite, Search } from 'lucide-react';
+import { Check, ExternalLink, HardDrive, Search } from 'lucide-react';
 import './data-lineage.css';
 import ThemeToggle, { initTheme } from './ThemeToggle.jsx';
 import LanguageSelect from './LanguageSelect.jsx';
@@ -21,17 +21,108 @@ const labels = {
 };
 const cadence = days => days ? (days < 45 ? 'Monthly' : days < 370 ? 'Annual' : `Every ${days} days`) : 'On demand';
 
+function NodeIcon({ kind }) {
+  if (kind === 'satellite') return <><rect x="-7" y="-5" width="14" height="10" rx="2"/><path d="M-8 0h-10M8 0h10M-18-6v12M18-6v12M-13-6v12M13-6v12M-3-8l4-5"/></>;
+  if (kind === 'station') return <><path d="M0-13L-9 11M0-13l9 24M-6 3H6M-8 9H8M0-13v24"/><circle cx="0" cy="-14" r="2.5"/></>;
+  if (kind === 'water') return <><path d="M-14-4c5-5 9 5 14 0s9 5 14 0M-14 3c5-5 9 5 14 0s9 5 14 0M-14 10c5-5 9 5 14 0s9 5 14 0"/></>;
+  if (kind === 'land') return <><path d="M-15 10L-4-5 3 3 9-8 16 10z"/><path d="M-8 10l5-8 4 5"/></>;
+  if (kind === 'vegetation') return <><path d="M-2 12C-2-4 5-12 14-13c0 11-5 19-16 19M-3 13C-4 1-9-6-15-8c-1 9 3 15 12 15M-2 12l10-18"/></>;
+  if (kind === 'ice') return <><path d="M-16 11L-3-12 4-2 9-9 17 11z"/><path d="M-9 0l6-12 4 6 3 4 5-7"/></>;
+  if (kind === 'lake') return <><ellipse cx="0" cy="2" rx="16" ry="8"/><path d="M-12 1c5-3 8 3 13 0s8 3 12 0"/></>;
+  if (kind === 'gauge') return <><path d="M-14 8c5-5 9 5 14 0s9 5 14 0M-9-10v13M9-10v13M-9-10H9M0-10V3"/><circle cx="0" cy="-4" r="3"/></>;
+  if (kind === 'atlas') return <><ellipse cx="0" cy="-8" rx="13" ry="5"/><path d="M-13-8v16c0 3 6 5 13 5s13-2 13-5V-8M-13 0c0 3 6 5 13 5S13 3 13 0"/></>;
+  if (kind === 'model') return <><circle cx="0" cy="0" r="5"/><circle cx="0" cy="0" r="13"/><path d="M-18 0h10M8 0h10M0-18v10M0 8v10"/></>;
+  return <circle cx="0" cy="0" r="10"/>;
+}
+
+function TaxonomyNode({ x, y, label, detail, branch, kind, tier = 'leaf', selected, onSelect }) {
+  const activate = () => onSelect(branch);
+  return <g className={`taxonomy-node taxonomy-${tier} branch-${branch} ${selected === branch ? 'active' : ''}`} transform={`translate(${x} ${y})`}
+    role="button" tabIndex="0" aria-label={`${label}. Show ${branch.replaceAll('_', ' ')} sources`}
+    onClick={activate} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(); } }}>
+    <circle className="node-halo" r={tier === 'major' ? 27 : 21}/><g className="node-icon"><NodeIcon kind={kind}/></g>
+    <text className="node-label" x={tier === 'major' ? 38 : 30} y={detail ? -3 : 4}>{label}</text>
+    {detail && <text className="node-detail" x={tier === 'major' ? 38 : 30} y="14">{detail}</text>}
+  </g>;
+}
+
 function LineageTree({ lineage, selected, onSelect }) {
-  const icons = { earth_engine: Satellite, local: HardDrive, downloads: Download, external: Database, derived: RefreshCw };
-  return <div className="tree-shell">
-    <div className="tree-root"><GitBranch/><span><small>LINEAGE ROOT</small><strong>UzGeoData evidence</strong></span></div>
-    <ul className="tree-branches" aria-label="Data lineage branches">{lineage.branches.map(branch => {
-      const Icon = icons[branch.id];
-      return <li key={branch.id}><button className={selected === branch.id ? 'selected' : ''} onClick={() => onSelect(branch.id)} aria-pressed={selected === branch.id}>
-        <Icon/><span><strong>{branch.label}</strong><small>{branch.items.length} sources · {branch.note}</small></span><ArrowRight/>
-      </button></li>;
-    })}</ul>
-  </div>;
+  const choose = id => { onSelect(id); document.querySelector('.registry-toolbar')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+  const count = id => lineage.branches.find(branch => branch.id === id)?.items.length || 0;
+  return <figure className="taxonomy-figure">
+    <figcaption><span>UZGEODATA DATA ECOSYSTEM</span><strong>Observation systems branch into environmental evidence and derived basin products.</strong></figcaption>
+    <div className="taxonomy-scroll">
+      <svg className="taxonomy-tree" viewBox="0 0 1100 770" role="img" aria-labelledby="taxonomy-title taxonomy-desc">
+        <title id="taxonomy-title">UzGeoData scientific data source tree</title>
+        <desc id="taxonomy-desc">A branching taxonomy from the UzGeoData evidence root to satellite and gridded observations, ground observations, reference atlases, research datasets and recomputed outputs. Leaves include water, land, vegetation, glaciers, lakes, climate and discharge.</desc>
+        <g className="taxonomy-structure">
+          <path className="trunk" d="M96 617C165 617 173 555 214 500C258 441 252 337 320 286"/>
+          <path className="edge earth_engine" d="M214 500C248 401 249 226 334 154"/>
+          <path className="edge local" d="M214 500C266 500 288 496 342 496"/>
+          <path className="edge downloads" d="M153 586C247 620 285 655 356 661"/>
+          <path className="edge derived" d="M138 610C259 704 397 726 553 720"/>
+
+          <path className="edge earth_engine thin" d="M355 154C445 154 451 81 530 79"/>
+          <path className="edge earth_engine thin" d="M355 154C445 154 457 203 530 203"/>
+          <path className="edge earth_engine thin" d="M355 154C426 154 453 333 530 333"/>
+          <path className="edge earth_engine twig" d="M552 79C643 79 659 43 750 43M552 79C642 79 665 84 750 84M552 79C643 79 659 125 750 125"/>
+          <path className="edge earth_engine twig" d="M552 203C647 203 661 176 750 176M552 203C647 203 661 217 750 217M552 203C647 203 661 258 750 258"/>
+          <path className="edge earth_engine twig" d="M552 333C641 333 665 309 750 309M552 333C645 333 663 350 750 350M552 333C644 333 663 391 750 391"/>
+
+          <path className="edge local thin" d="M364 496C445 496 458 457 532 457M364 496C448 496 459 520 532 520M364 496C439 496 459 583 532 583"/>
+          <path className="edge local twig" d="M554 457C657 457 674 441 782 441M554 457C658 457 675 477 782 477"/>
+          <path className="edge local twig" d="M554 520C660 520 674 513 782 513M554 520C659 520 674 549 782 549"/>
+          <path className="edge external twig" d="M554 583C650 583 675 585 782 585"/>
+
+          <path className="edge downloads thin" d="M378 661C468 661 482 637 558 637M378 661C468 661 482 678 558 678"/>
+          <path className="edge downloads twig" d="M580 637C665 637 688 622 782 622M580 678C666 678 689 662 782 662"/>
+          <path className="edge derived thin" d="M575 720C663 720 683 705 782 705M575 720C665 720 684 741 782 741"/>
+        </g>
+
+        <TaxonomyNode x={96} y={617} label="UzGeoData" detail="evidence root" branch="earth_engine" kind="model" tier="root" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={334} y={154} label="Satellite & gridded" detail={`${count('earth_engine')} assessed sources`} branch="earth_engine" kind="satellite" tier="major" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={530} y={79} label="Climate & water balance" detail="models + reanalysis" branch="earth_engine" kind="water" tier="domain" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={530} y={203} label="Land & ecosystems" detail="surface observation" branch="earth_engine" kind="vegetation" tier="domain" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={530} y={333} label="Cryosphere & surface water" detail="optical inventories" branch="earth_engine" kind="ice" tier="domain" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={43} label="Precipitation · ET" detail="TerraClimate / CHIRPS" branch="earth_engine" kind="water" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={84} label="Temperature · drought" detail="ERA5-Land / TerraClimate" branch="earth_engine" kind="land" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={125} label="Runoff · soil water" detail="modelled basin state" branch="earth_engine" kind="water" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={176} label="Land cover" detail="Copernicus / Dynamic World" branch="earth_engine" kind="land" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={217} label="Vegetation · biomes" detail="ecoregions + potential cover" branch="earth_engine" kind="vegetation" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={258} label="Soils · human footprint" detail="OpenLandMap / GHSL" branch="earth_engine" kind="land" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={309} label="Snow cover · SWE" detail="MODIS + modelled pack" branch="earth_engine" kind="ice" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={350} label="Glaciers" detail="GLIMS inventories" branch="earth_engine" kind="ice" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={750} y={391} label="Lakes · surface water" detail="JRC / HydroLAKES" branch="earth_engine" kind="lake" selected={selected} onSelect={choose}/>
+
+        <TaxonomyNode x={342} y={496} label="Ground observations" detail={`${count('local')} local/provider sources`} branch="local" kind="station" tier="major" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={532} y={457} label="Hydrological gauges" detail="river + reservoir records" branch="local" kind="gauge" tier="domain" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={532} y={520} label="Weather stations" detail="point observations" branch="local" kind="station" tier="domain" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={532} y={583} label="Research archives" detail="published station datasets" branch="external" kind="atlas" tier="domain" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={441} label="Discharge" detail="daily + monthly flow" branch="local" kind="water" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={477} label="Water level · storage" detail="gauge or operator delivery" branch="local" kind="lake" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={513} label="Rain · air temperature" detail="Pskem / Oygaing / Tashkent" branch="local" kind="station" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={549} label="Field inventories" detail="glaciers · lakes · dams" branch="local" kind="ice" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={585} label="CA-discharge" detail="295 gauges · import candidate" branch="external" kind="gauge" selected={selected} onSelect={choose}/>
+
+        <TaxonomyNode x={356} y={661} label="Reference sources" detail={`${count('downloads')} download candidates`} branch="downloads" kind="atlas" tier="major" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={558} y={637} label="Hydrography" detail="basins · rivers · lakes" branch="downloads" kind="water" tier="domain" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={558} y={678} label="Terrain & land" detail="elevation · soils · ecology" branch="downloads" kind="land" tier="domain" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={622} label="Basin topology" detail="HydroSHEDS / BasinATLAS" branch="downloads" kind="water" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={662} label="Static reference layers" detail="fixed or versioned editions" branch="downloads" kind="atlas" selected={selected} onSelect={choose}/>
+
+        <TaxonomyNode x={553} y={720} label="Recomputed products" detail={`${count('derived')} update groups`} branch="derived" kind="model" tier="major" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={705} label="Basin time series" detail="observations · anomalies" branch="derived" kind="water" selected={selected} onSelect={choose}/>
+        <TaxonomyNode x={782} y={741} label="Indicators · case studies" detail="versioned analytical outputs" branch="derived" kind="model" selected={selected} onSelect={choose}/>
+      </svg>
+    </div>
+    <div className="taxonomy-legend" aria-label="Source tree legend">
+      <button className={selected === 'earth_engine' ? 'active' : ''} onClick={() => choose('earth_engine')}><i className="earth_engine"/>Satellite & gridded</button>
+      <button className={selected === 'local' ? 'active' : ''} onClick={() => choose('local')}><i className="local"/>Ground observations</button>
+      <button className={selected === 'downloads' ? 'active' : ''} onClick={() => choose('downloads')}><i className="downloads"/>Reference sources</button>
+      <button className={selected === 'external' ? 'active' : ''} onClick={() => choose('external')}><i className="external"/>Research datasets</button>
+      <button className={selected === 'derived' ? 'active' : ''} onClick={() => choose('derived')}><i className="derived"/>Recomputed outputs</button>
+    </div>
+  </figure>;
 }
 
 function SourceCard({ item }) {
@@ -75,7 +166,7 @@ function App() {
     {error ? <div className="error" role="alert"><p>Could not assemble the registry: {error}</p><button onClick={load}>Retry</button></div> : !bundle ? <p role="status">Classifying sources and building lineage…</p> : <>
       <section className="cutoff"><div><p className="eyebrow">WHY DOES 2024 APPEAR?</p><h2>It means three different things.</h2></div><div className="cutoff-grid"><article><strong>1</strong><h3>Provider limit</h3><p>The live audit finds TerraClimate ending at December 2024. Here, 2024 really is the latest catalogue period currently observed.</p></article><article><strong>2</strong><h3>Saved extraction window</h3><p>MODIS snow has 2026 imagery, but some published records and the case-study run stop in 2024. Those can be extended and recomputed.</p></article><article><strong>3</strong><h3>Local delivery</h3><p>Pskem station workbooks end in 2024. Earth Engine cannot extend a local gauge record; a new provider delivery is required.</p></article></div></section>
       <div className="metrics"><div><strong>{bundle.lineage.counts.sources}</strong><span>classified source or process nodes</span></div><div><strong>{bundle.lineage.counts.continuing}</strong><span>continuing Earth Engine collections</span></div><div><strong>{bundle.lineage.counts.sourceNewer}</strong><span>sources newer than our dated record</span></div><div><strong>{bundle.lineage.counts.updateGroups}</strong><span>existing recomputation groups</span></div></div>
-      <section id="tree"><div className="section-head"><div><p className="eyebrow">01 / THE SOURCE TREE</p><h2>From upstream evidence to published variables.</h2></div><p>Select a branch to inspect its sources. Each leaf states whether it is a continuing collection, a fixed or versioned reference, a local snapshot, or a product we recompute.</p></div>
+      <section id="tree"><div className="section-head"><div><p className="eyebrow">01 / THE SOURCE TREE</p><h2>From observation systems to environmental evidence.</h2></div><p>Read the tree from its root to the major observation limbs, environmental domains and measured variables. Select any limb or leaf to filter the detailed source registry below.</p></div>
         <LineageTree lineage={bundle.lineage} selected={branchId} onSelect={id => { setBranchId(id); setQuery(''); setClassification('all'); }}/>
         <div className="registry-toolbar"><label><Search size={16}/>Search this branch<input value={query} onChange={event => setQuery(event.target.value)} placeholder="source, variable, asset…"/></label><label>Temporal class<select value={classification} onChange={event => setClassification(event.target.value)}><option value="all">All classes</option>{bundle.registry.classification.map(item => <option value={item.id} key={item.id}>{item.label}</option>)}</select></label></div>
         <p className="result-count" aria-live="polite">{visible.length} of {branch.items.length} nodes in {branch.label}</p>

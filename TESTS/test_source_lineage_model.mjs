@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { buildLineage, compareCoverage, filterItems } from '../INTERFACE/sourceLineageModel.js';
 
 const dynamic = {
@@ -39,4 +40,13 @@ test('branch search includes variable names and respects temporal classification
   assert.equal(filterItems(model.earthEngine, 'precipitation', 'all').length, 1);
   assert.equal(filterItems(model.earthEngine, '', 'fixed_reference').length, 0);
   assert.equal(filterItems(model.earthEngine, '', 'versioned_release').length, 1);
+});
+
+test('the page includes a scientific taxonomy for satellite, ground and environmental domains', async () => {
+  const page = await readFile(new URL('../INTERFACE/data-lineage-main.jsx', import.meta.url), 'utf8');
+  for (const label of ['Satellite & gridded', 'Ground observations', 'Land & ecosystems', 'Vegetation · biomes', 'Glaciers', 'Lakes · surface water', 'CA-discharge']) {
+    assert.match(page, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+  assert.match(page, /<svg className="taxonomy-tree"/);
+  assert.match(page, /role="button" tabIndex="0"/);
 });
