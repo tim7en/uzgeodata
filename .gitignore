@@ -70,3 +70,8 @@ earth_engine/earth_engine/FFR_v1/
 earth_engine/earth_engine/GDW_v1_0/
 earth_engine/earth_engine/HydroWASTE_v10/
 earth_engine/_source_archives/
+
+# Fitted model binaries. Pickles are reproducible from the training pipelines
+# (npm run discharge:*) and grow with every rerun; commit the JSON/CSV results
+# and the recipes, not the artefacts.
+PUBLISHED/data/case-studies/*.pkl

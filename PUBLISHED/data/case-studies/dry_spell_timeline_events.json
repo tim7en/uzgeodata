@@ -1,0 +1,173 @@
+{
+  "title": "Dry Spell Events - Central Asia Basin",
+  "description": "Timed progression of major dry spell events across basins with forecasting demonstrations",
+  "total_events": 113,
+  "time_period": "1948-2020",
+  "events": [
+    {
+      "event_number": 1,
+      "gauge": "16175",
+      "start_year_month": "1961-01",
+      "duration_months": 5,
+      "severity": "MAJOR",
+      "monthly_progression": [
+        {
+          "month_in_event": 1,
+          "calendar": "1961-01",
+          "stress_index": 0.748,
+          "discharge_m3s": 1.7,
+          "precip_3m_mm": 0.3,
+          "alert_status": "HIGH"
+        },
+        {
+          "month_in_event": 2,
+          "calendar": "1961-02",
+          "stress_index": 0.779,
+          "discharge_m3s": 1.57,
+          "precip_3m_mm": 0.4,
+          "alert_status": "HIGH"
+        },
+        {
+          "month_in_event": 3,
+          "calendar": "1961-03",
+          "stress_index": 0.78,
+          "discharge_m3s": 1.53,
+          "precip_3m_mm": 0.5,
+          "alert_status": "HIGH"
+        },
+        {
+          "month_in_event": 4,
+          "calendar": "1961-04",
+          "stress_index": 0.777,
+          "discharge_m3s": 1.35,
+          "precip_3m_mm": 0.4,
+          "alert_status": "HIGH"
+        },
+        {
+          "month_in_event": 5,
+          "calendar": "1961-05",
+          "stress_index": 0.783,
+          "discharge_m3s": 1.46,
+          "precip_3m_mm": 0.6,
+          "alert_status": "HIGH"
+        }
+      ]
+    },
+    {
+      "event_number": 2,
+      "gauge": "16175",
+      "start_year_month": "1964-04",
+      "duration_months": 2,
+      "severity": "MODERATE",
+      "monthly_progression": [
+        {
+          "month_in_event": 1,
+          "calendar": "1964-04",
+          "stress_index": 0.977,
+          "discharge_m3s": 1.56,
+          "precip_3m_mm": 11.1,
+          "alert_status": "CRITICAL"
+        },
+        {
+          "month_in_event": 2,
+          "calendar": "1964-05",
+          "stress_index": 0.977,
+          "discharge_m3s": 1.71,
+          "precip_3m_mm": 14.0,
+          "alert_status": "CRITICAL"
+        }
+      ]
+    },
+    {
+      "event_number": 3,
+      "gauge": "16175",
+      "start_year_month": "1965-10",
+      "duration_months": 4,
+      "severity": "MAJOR",
+      "monthly_progression": [
+        {
+          "month_in_event": 1,
+          "calendar": "1965-10",
+          "stress_index": 0.644,
+          "discharge_m3s": 1.79,
+          "precip_3m_mm": 0.4,
+          "alert_status": "HIGH"
+        },
+        {
+          "month_in_event": 2,
+          "calendar": "1965-11",
+          "stress_index": 0.696,
+          "discharge_m3s": 1.73,
+          "precip_3m_mm": 0.3,
+          "alert_status": "HIGH"
+        },
+        {
+          "month_in_event": 3,
+          "calendar": "1965-12",
+          "stress_index": 0.777,
+          "discharge_m3s": 1.67,
+          "precip_3m_mm": 0.7,
+          "alert_status": "HIGH"
+        },
+        {
+          "month_in_event": 4,
+          "calendar": "1966-01",
+          "stress_index": 0.777,
+          "discharge_m3s": 1.71,
+          "precip_3m_mm": 1.2,
+          "alert_status": "HIGH"
+        }
+      ]
+    },
+    {
+      "event_number": 4,
+      "gauge": "16175",
+      "start_year_month": "1966-04",
+      "duration_months": 2,
+      "severity": "MODERATE",
+      "monthly_progression": [
+        {
+          "month_in_event": 1,
+          "calendar": "1966-04",
+          "stress_index": 0.823,
+          "discharge_m3s": 1.42,
+          "precip_3m_mm": 4.2,
+          "alert_status": "CRITICAL"
+        },
+        {
+          "month_in_event": 2,
+          "calendar": "1966-05",
+          "stress_index": 0.977,
+          "discharge_m3s": 1.58,
+          "precip_3m_mm": 4.4,
+          "alert_status": "CRITICAL"
+        }
+      ]
+    },
+    {
+      "event_number": 5,
+      "gauge": "16175",
+      "start_year_month": "1969-01",
+      "duration_months": 2,
+      "severity": "MODERATE",
+      "monthly_progression": [
+        {
+          "month_in_event": 1,
+          "calendar": "1969-01",
+          "stress_index": 0.637,
+          "discharge_m3s": 1.85,
+          "precip_3m_mm": 2.5,
+          "alert_status": "HIGH"
+        },
+        {
+          "month_in_event": 2,
+          "calendar": "1969-02",
+          "stress_index": 0.713,
+          "discharge_m3s": 1.72,
+          "precip_3m_mm": 2.2,
+          "alert_status": "HIGH"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "title": "Central Asia Dry Spell Spatial Distribution",
+  "description": "Geographic distribution of dry spell frequency and severity across basin network",
+  "coordinate_system": "CA-Discharge GeoPackage centroids",
+  "basins": [
+    {
+      "gauge_code": "16175",
+      "location": "Upper Basin (Headwaters)",
+      "region": "Pamir/Hindu Kush",
+      "basin_tier": 1,
+      "severity": "HIGH",
+      "color": "\ud83d\udd34",
+      "dry_spell_metrics": {
+        "count": 81,
+        "percentage": "9.3%",
+        "interpretation": "81 months out of 873 total"
+      },
+      "stress_metrics": {
+        "mean_stress": "0.604",
+        "max_stress": "0.977",
+        "interpretation": "0=normal, 1=severe"
+      },
+      "discharge_metrics": {
+        "mean_m3s": "2.5",
+        "min_m3s": "1.1",
+        "range": "1.4 m\u00b3/s between normal and minimum"
+      },
+      "data_period": "1948-2020",
+      "data_quality": "EXCELLENT"
+    },
+    {
+      "gauge_code": "16390",
+      "location": "Middle Basin",
+      "region": "Central Valley",
+      "basin_tier": 2,
+      "severity": "MODERATE",
+      "color": "\ud83d\udfe0",
+      "dry_spell_metrics": {
+        "count": 20,
+        "percentage": "4.1%",
+        "interpretation": "20 months out of 492 total"
+      },
+      "stress_metrics": {
+        "mean_stress": "0.694",
+        "max_stress": "0.988",
+        "interpretation": "0=normal, 1=severe"
+      },
+      "discharge_metrics": {
+        "mean_m3s": "9.2",
+        "min_m3s": "0.4",
+        "range": "8.8 m\u00b3/s between normal and minimum"
+      },
+      "data_period": "1980-2020",
+      "data_quality": "EXCELLENT"
+    },
+    {
+      "gauge_code": "12-0.000-1M",
+      "location": "Tributary (West)",
+      "region": "Tributary",
+      "basin_tier": 3,
+      "severity": "LOW",
+      "color": "\ud83d\udfe1",
+      "dry_spell_metrics": {
+        "count": 5,
+        "percentage": "2.9%",
+        "interpretation": "5 months out of 174 total"
+      },
+      "stress_metrics": {
+        "mean_stress": "0.547",
+        "max_stress": "0.984",
+        "interpretation": "0=normal, 1=severe"
+      },
+      "discharge_metrics": {
+        "mean_m3s": "49.9",
+        "min_m3s": "19.8",
+        "range": "30.1 m\u00b3/s between normal and minimum"
+      },
+      "data_period": "1964-1978",
+      "data_quality": "GOOD"
+    },
+    {
+      "gauge_code": "13-0.000-1M",
+      "location": "Tributary (East)",
+      "region": "Tributary",
+      "basin_tier": 3,
+      "severity": "MINIMAL",
+      "color": "\ud83d\udfe2",
+      "dry_spell_metrics": {
+        "count": 2,
+        "percentage": "1.7%",
+        "interpretation": "2 months out of 115 total"
+      },
+      "stress_metrics": {
+        "mean_stress": "0.524",
+        "max_stress": "0.990",
+        "interpretation": "0=normal, 1=severe"
+      },
+      "discharge_metrics": {
+        "mean_m3s": "2.6",
+        "min_m3s": "0.7",
+        "range": "1.9 m\u00b3/s between normal and minimum"
+      },
+      "data_period": "1969-1978",
+      "data_quality": "GOOD"
+    },
+    {
+      "gauge_code": "14-0.000-1M",
+      "location": "Tributary (Central)",
+      "region": "Tributary",
+      "basin_tier": 3,
+      "severity": "LOW",
+      "color": "\ud83d\udfe1",
+      "dry_spell_metrics": {
+        "count": 4,
+        "percentage": "2.6%",
+        "interpretation": "4 months out of 156 total"
+      },
+      "stress_metrics": {
+        "mean_stress": "0.549",
+        "max_stress": "0.994",
+        "interpretation": "0=normal, 1=severe"
+      },
+      "discharge_metrics": {
+        "mean_m3s": "106.1",
+        "min_m3s": "4.4",
+        "range": "101.7 m\u00b3/s between normal and minimum"
+      },
+      "data_period": "1966-1978",
+      "data_quality": "GOOD"
+    },
+    {
+      "gauge_code": "13-0.000-2M",
+      "location": "Lower Basin",
+      "region": "Terminal",
+      "basin_tier": 4,
+      "severity": "MINIMAL",
+      "color": "\ud83d\udfe2",
+      "dry_spell_metrics": {
+        "count": 1,
+        "percentage": "0.6%",
+        "interpretation": "1 months out of 172 total"
+      },
+      "stress_metrics": {
+        "mean_stress": "0.522",
+        "max_stress": "0.991",
+        "interpretation": "0=normal, 1=severe"
+      },
+      "discharge_metrics": {
+        "mean_m3s": "2.0",
+        "min_m3s": "0.6",
+        "range": "1.4 m\u00b3/s between normal and minimum"
+      },
+      "data_period": "1964-1978",
+      "data_quality": "GOOD"
+    }
+  ]
+}

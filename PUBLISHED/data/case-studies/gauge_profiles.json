@@ -1,0 +1,1332 @@
+{
+  "10-0.000-3M": {
+    "gauge_code": "10-0.000-3M",
+    "skill": {
+      "r2": 0.31496400948371184,
+      "mae_m3s": 2.4835613117701576,
+      "interval_coverage_pct": 91.42857142857144
+    },
+    "characteristics": {
+      "median_discharge_m3s": 2.43,
+      "prediction_interval_width_m3s": 7.882131679060249,
+      "n_training_records": 137
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.5134647277360638
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.305223207574064
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.1813120646898721
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "10-0.000-4M": {
+    "gauge_code": "10-0.000-4M",
+    "skill": {
+      "r2": 0.34368749279172073,
+      "mae_m3s": 0.8576957102560319,
+      "interval_coverage_pct": 25.0
+    },
+    "characteristics": {
+      "median_discharge_m3s": 1.675,
+      "prediction_interval_width_m3s": 0.7778821502785058,
+      "n_training_records": 64
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.3997909747796411
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.3776449847372755
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.2225640404830834
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "10-0.000-6M": {
+    "gauge_code": "10-0.000-6M",
+    "skill": {
+      "r2": -1.1489527387517442,
+      "mae_m3s": 1.189743981719593,
+      "interval_coverage_pct": 93.5483870967742
+    },
+    "characteristics": {
+      "median_discharge_m3s": 4.19,
+      "prediction_interval_width_m3s": 4.408426364613179,
+      "n_training_records": 122
+    },
+    "top_predictors": [
+      {
+        "feature": "month_sin",
+        "importance": 0.4352214274362645
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.335440134724204
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.2293384378395314
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "10-1.1L0-7A": {
+    "gauge_code": "10-1.1L0-7A",
+    "skill": {
+      "r2": -1.1710249992641342,
+      "mae_m3s": 0.8243908907607218,
+      "interval_coverage_pct": 91.30434782608695
+    },
+    "characteristics": {
+      "median_discharge_m3s": 0.01,
+      "prediction_interval_width_m3s": 2.554456197920909,
+      "n_training_records": 91
+    },
+    "top_predictors": [
+      {
+        "feature": "month_sin",
+        "importance": 0.3535837515934347
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.3416948530301634
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.3047213953764019
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "11-0.000-4M": {
+    "gauge_code": "11-0.000-4M",
+    "skill": {
+      "r2": -3.1493558013475944,
+      "mae_m3s": 5.027633186473803,
+      "interval_coverage_pct": 76.47058823529412
+    },
+    "characteristics": {
+      "median_discharge_m3s": 7.765000000000001,
+      "prediction_interval_width_m3s": 10.016854749037073,
+      "n_training_records": 134
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.5723116239213755
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.235393979891662
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.1922943961869624
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "12-0.000-1M": {
+    "gauge_code": "12-0.000-1M",
+    "skill": {
+      "r2": 0.46797702352194415,
+      "mae_m3s": 13.102432604353597,
+      "interval_coverage_pct": 88.57142857142857
+    },
+    "characteristics": {
+      "median_discharge_m3s": 36.2,
+      "prediction_interval_width_m3s": 52.86795505651065,
+      "n_training_records": 139
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.4819680134935854
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.3241891879208686
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.1938427985855461
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "12-0.000-9M": {
+    "gauge_code": "12-0.000-9M",
+    "skill": {
+      "r2": 0.37034193198270104,
+      "mae_m3s": 1.6228681348238838,
+      "interval_coverage_pct": 70.83333333333334
+    },
+    "characteristics": {
+      "median_discharge_m3s": 4.244999999999999,
+      "prediction_interval_width_m3s": 6.124638586157268,
+      "n_training_records": 92
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.4723908961439705
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.3127351868748259
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.2148739169812036
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "12-1.R00-1A": {
+    "gauge_code": "12-1.R00-1A",
+    "skill": {
+      "r2": -2.3297653350802063,
+      "mae_m3s": 1.0298562804692235,
+      "interval_coverage_pct": 62.5
+    },
+    "characteristics": {
+      "median_discharge_m3s": 1.645,
+      "prediction_interval_width_m3s": 1.84177784569704,
+      "n_training_records": 92
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.3554981197358118
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.3394192911051197
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.3050825891590684
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "13-0.000-1M": {
+    "gauge_code": "13-0.000-1M",
+    "skill": {
+      "r2": -7.826881714176938,
+      "mae_m3s": 2.0068883810774794,
+      "interval_coverage_pct": 82.6086956521739
+    },
+    "characteristics": {
+      "median_discharge_m3s": 2.0,
+      "prediction_interval_width_m3s": 3.183635750965556,
+      "n_training_records": 92
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.4329997836566284
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.3330048872679172
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.2339953290754544
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "13-0.000-2M": {
+    "gauge_code": "13-0.000-2M",
+    "skill": {
+      "r2": 0.14608922896411336,
+      "mae_m3s": 0.7232783536532256,
+      "interval_coverage_pct": 54.285714285714285
+    },
+    "characteristics": {
+      "median_discharge_m3s": 1.66,
+      "prediction_interval_width_m3s": 1.1515404528088131,
+      "n_training_records": 137
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.501724893729476
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.2610655170933696
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.2372095891771543
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-0.000-1M": {
+    "gauge_code": "14-0.000-1M",
+    "skill": {
+      "r2": 0.836329956766722,
+      "mae_m3s": 19.675170963920163,
+      "interval_coverage_pct": 81.25
+    },
+    "characteristics": {
+      "median_discharge_m3s": 75.4,
+      "prediction_interval_width_m3s": 166.54909317420834,
+      "n_training_records": 124
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.6421541016931152
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2807378358226714
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0771080624842134
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-0.000-2M": {
+    "gauge_code": "14-0.000-2M",
+    "skill": {
+      "r2": 0.4326688308751828,
+      "mae_m3s": 14.55637824918782,
+      "interval_coverage_pct": 88.23529411764706
+    },
+    "characteristics": {
+      "median_discharge_m3s": 33.65,
+      "prediction_interval_width_m3s": 106.76941487519976,
+      "n_training_records": 135
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.7141530486540101
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2539426433005566
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0319043080454334
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-0.000-3M": {
+    "gauge_code": "14-0.000-3M",
+    "skill": {
+      "r2": 0.6172211137981782,
+      "mae_m3s": 13.361086934146051,
+      "interval_coverage_pct": 88.57142857142857
+    },
+    "characteristics": {
+      "median_discharge_m3s": 39.7,
+      "prediction_interval_width_m3s": 110.24162970748776,
+      "n_training_records": 138
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.7384258462887359
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2274395952743568
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0341345584369073
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-0.000-4M": {
+    "gauge_code": "14-0.000-4M",
+    "skill": {
+      "r2": 0.7742408462925943,
+      "mae_m3s": 9.971830826580796,
+      "interval_coverage_pct": 52.0
+    },
+    "characteristics": {
+      "median_discharge_m3s": 31.5,
+      "prediction_interval_width_m3s": 66.52112574725082,
+      "n_training_records": 100
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.6771885552821776
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2831721431084006
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0396393016094217
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-0.000-6M": {
+    "gauge_code": "14-0.000-6M",
+    "skill": {
+      "r2": 0.7427288408228263,
+      "mae_m3s": 5.925687138410094,
+      "interval_coverage_pct": 66.66666666666666
+    },
+    "characteristics": {
+      "median_discharge_m3s": 19.3,
+      "prediction_interval_width_m3s": 30.70276310591248,
+      "n_training_records": 105
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.7634757087548806
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.1995443942509767
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0369798969941427
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-0.000-8M": {
+    "gauge_code": "14-0.000-8M",
+    "skill": {
+      "r2": -1.3524988622096377,
+      "mae_m3s": 1.3870824850779866,
+      "interval_coverage_pct": 85.71428571428571
+    },
+    "characteristics": {
+      "median_discharge_m3s": 9.67,
+      "prediction_interval_width_m3s": 3.256223754449111,
+      "n_training_records": 82
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.558857664186283
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.3261586136248522
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.1149837221888647
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-1.1L0-1A": {
+    "gauge_code": "14-1.1L0-1A",
+    "skill": {
+      "r2": 0.6677373534451926,
+      "mae_m3s": 7.606865933040399,
+      "interval_coverage_pct": 79.41176470588235
+    },
+    "characteristics": {
+      "median_discharge_m3s": 13.3,
+      "prediction_interval_width_m3s": 31.817953827286956,
+      "n_training_records": 135
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.7036438136800205
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2395136953605936
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0568424909593859
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-1.R00-2A": {
+    "gauge_code": "14-1.R00-2A",
+    "skill": {
+      "r2": 0.8544062184157897,
+      "mae_m3s": 15.134350128186004,
+      "interval_coverage_pct": 74.28571428571429
+    },
+    "characteristics": {
+      "median_discharge_m3s": 37.5,
+      "prediction_interval_width_m3s": 75.6973298600111,
+      "n_training_records": 140
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.6660602592503551
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2282636191016397
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.1056761216480052
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-1.R00-5A": {
+    "gauge_code": "14-1.R00-5A",
+    "skill": {
+      "r2": 0.757306165441469,
+      "mae_m3s": 11.108309030211212,
+      "interval_coverage_pct": 86.20689655172413
+    },
+    "characteristics": {
+      "median_discharge_m3s": 20.5,
+      "prediction_interval_width_m3s": 55.93891615542266,
+      "n_training_records": 113
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.68368490676773
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.1592653868966222
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.1570497063356477
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-5.R00-1A": {
+    "gauge_code": "14-5.R00-1A",
+    "skill": {
+      "r2": 0.8275324854538527,
+      "mae_m3s": 6.0641646912911,
+      "interval_coverage_pct": 79.41176470588235
+    },
+    "characteristics": {
+      "median_discharge_m3s": 18.2,
+      "prediction_interval_width_m3s": 61.44980300346491,
+      "n_training_records": 134
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.751148987957981
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2032083358674513
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0456426761745676
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "14-9.R00-1A": {
+    "gauge_code": "14-9.R00-1A",
+    "skill": {
+      "r2": 0.8052845754784179,
+      "mae_m3s": 1.878491688611179,
+      "interval_coverage_pct": 75.0
+    },
+    "characteristics": {
+      "median_discharge_m3s": 4.67,
+      "prediction_interval_width_m3s": 10.337082743094625,
+      "n_training_records": 96
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.6985879143747482
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2618523550607396
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0395597305645121
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "15-0.000-1M": {
+    "gauge_code": "15-0.000-1M",
+    "skill": {
+      "r2": 0.8442471439273118,
+      "mae_m3s": 50.30481563328129,
+      "interval_coverage_pct": 77.14285714285715
+    },
+    "characteristics": {
+      "median_discharge_m3s": 133.0,
+      "prediction_interval_width_m3s": 217.2632089534449,
+      "n_training_records": 138
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.5982265864882382
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.2687485249964043
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.1330248885153575
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "15-10.R00-2A": {
+    "gauge_code": "15-10.R00-2A",
+    "skill": {
+      "r2": 0.8138564799776798,
+      "mae_m3s": 7.930505726913535,
+      "interval_coverage_pct": 73.91304347826086
+    },
+    "characteristics": {
+      "median_discharge_m3s": 15.8,
+      "prediction_interval_width_m3s": 48.55210099924378,
+      "n_training_records": 90
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.458705300858798
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.4522971959890951
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.0889975031521066
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "16076": {
+    "gauge_code": "16076",
+    "skill": {
+      "r2": 0.8059498542966509,
+      "mae_m3s": 4.040510207014223,
+      "interval_coverage_pct": 75.80645161290323
+    },
+    "characteristics": {
+      "median_discharge_m3s": 12.15,
+      "prediction_interval_width_m3s": 13.836110326421778,
+      "n_training_records": 246
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.6838348915284059
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.216421384142656
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0997437243289379
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "16175": {
+    "gauge_code": "16175",
+    "skill": {
+      "r2": 0.10320629653754843,
+      "mae_m3s": 0.6737786050498031,
+      "interval_coverage_pct": 88.57142857142857
+    },
+    "characteristics": {
+      "median_discharge_m3s": 2.43,
+      "prediction_interval_width_m3s": 1.603044767154787,
+      "n_training_records": 698
+    },
+    "top_predictors": [
+      {
+        "feature": "month_sin",
+        "importance": 0.4387134836838281
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.3172227055393499
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.2349872163234999
+      },
+      {
+        "feature": "n_stations_contributing",
+        "importance": 0.009076594453322
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      }
+    ]
+  },
+  "16390": {
+    "gauge_code": "16390",
+    "skill": {
+      "r2": 0.7900662164070599,
+      "mae_m3s": 1.7324511862936949,
+      "interval_coverage_pct": 64.64646464646465
+    },
+    "characteristics": {
+      "median_discharge_m3s": 5.9,
+      "prediction_interval_width_m3s": 9.52274490271385,
+      "n_training_records": 393
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.6700301196829146
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2400518309499587
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.0899180493671268
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-0.000-1M": {
+    "gauge_code": "8-0.000-1M",
+    "skill": {
+      "r2": -29.780566955966,
+      "mae_m3s": 46.82355196167954,
+      "interval_coverage_pct": 82.6086956521739
+    },
+    "characteristics": {
+      "median_discharge_m3s": 9.76,
+      "prediction_interval_width_m3s": 108.3773713060164,
+      "n_training_records": 91
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.4811296635320696
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.3135056242936053
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.205364712174325
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-0.000-3S": {
+    "gauge_code": "8-0.000-3S",
+    "skill": {
+      "r2": -0.00042025385295230144,
+      "mae_m3s": 48.203045594172,
+      "interval_coverage_pct": 80.76923076923077
+    },
+    "characteristics": {
+      "median_discharge_m3s": 8.385,
+      "prediction_interval_width_m3s": 74.71697476546015,
+      "n_training_records": 104
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.3947083316590298
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.3548783012692559
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2504133670717143
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-0.000-4M": {
+    "gauge_code": "8-0.000-4M",
+    "skill": {
+      "r2": -2.836570125519175,
+      "mae_m3s": 34.226564663319216,
+      "interval_coverage_pct": 70.0
+    },
+    "characteristics": {
+      "median_discharge_m3s": 15.1,
+      "prediction_interval_width_m3s": 111.66228181366252,
+      "n_training_records": 119
+    },
+    "top_predictors": [
+      {
+        "feature": "month_cos",
+        "importance": 0.3591556960445485
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.3340809510040965
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.3067633529513549
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-0.000-5M": {
+    "gauge_code": "8-0.000-5M",
+    "skill": {
+      "r2": 0.34912422261813114,
+      "mae_m3s": 21.017568261868032,
+      "interval_coverage_pct": 87.17948717948718
+    },
+    "characteristics": {
+      "median_discharge_m3s": 9.78,
+      "prediction_interval_width_m3s": 94.30072154962996,
+      "n_training_records": 153
+    },
+    "top_predictors": [
+      {
+        "feature": "month_sin",
+        "importance": 0.4128858091191664
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.3157721386553335
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2713420522255
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-0.000-7M": {
+    "gauge_code": "8-0.000-7M",
+    "skill": {
+      "r2": 0.3018709672449801,
+      "mae_m3s": 18.614702475468643,
+      "interval_coverage_pct": 92.3076923076923
+    },
+    "characteristics": {
+      "median_discharge_m3s": 6.6,
+      "prediction_interval_width_m3s": 84.51457422205239,
+      "n_training_records": 153
+    },
+    "top_predictors": [
+      {
+        "feature": "month_sin",
+        "importance": 0.4311947349581873
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.3193167363477275
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2494885286940851
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-0.000-9M": {
+    "gauge_code": "8-0.000-9M",
+    "skill": {
+      "r2": -1.3073456529747691,
+      "mae_m3s": 23.963354155202477,
+      "interval_coverage_pct": 77.27272727272727
+    },
+    "characteristics": {
+      "median_discharge_m3s": 4.35,
+      "prediction_interval_width_m3s": 68.63425243476021,
+      "n_training_records": 87
+    },
+    "top_predictors": [
+      {
+        "feature": "month_sin",
+        "importance": 0.4139209320055555
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.3484383085184846
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.2376407594759597
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-1.R00-9T": {
+    "gauge_code": "8-1.R00-9T",
+    "skill": {
+      "r2": -2.945451604433401,
+      "mae_m3s": 0.4962513645342729,
+      "interval_coverage_pct": 91.30434782608695
+    },
+    "characteristics": {
+      "median_discharge_m3s": 0.07,
+      "prediction_interval_width_m3s": 1.0250565812219314,
+      "n_training_records": 88
+    },
+    "top_predictors": [
+      {
+        "feature": "month_sin",
+        "importance": 0.5039426475683584
+      },
+      {
+        "feature": "year_normalized",
+        "importance": 0.3757090673124251
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.1203482851192165
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-3.L00-1A": {
+    "gauge_code": "8-3.L00-1A",
+    "skill": {
+      "r2": -0.9291471446163884,
+      "mae_m3s": 6.832244416084907,
+      "interval_coverage_pct": 85.36585365853658
+    },
+    "characteristics": {
+      "median_discharge_m3s": 5.18,
+      "prediction_interval_width_m3s": 18.299382656890035,
+      "n_training_records": 160
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.4418200439808306
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.3170092895707121
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.2411706664484572
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "8-3.L00-6A": {
+    "gauge_code": "8-3.L00-6A",
+    "skill": {
+      "r2": -1.1363227407878336,
+      "mae_m3s": 1.9010408736973012,
+      "interval_coverage_pct": 89.74358974358975
+    },
+    "characteristics": {
+      "median_discharge_m3s": 1.09,
+      "prediction_interval_width_m3s": 5.2067712114450035,
+      "n_training_records": 152
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.421902210005956
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.3104675966957914
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.2676301932982525
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "9-0.000-1M": {
+    "gauge_code": "9-0.000-1M",
+    "skill": {
+      "r2": -5.981736914180217,
+      "mae_m3s": 30.019171731769553,
+      "interval_coverage_pct": 69.56521739130434
+    },
+    "characteristics": {
+      "median_discharge_m3s": 41.3,
+      "prediction_interval_width_m3s": 69.48327566830883,
+      "n_training_records": 91
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.4543906028180315
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.2796361966203103
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.2659732005616582
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "9-0.000-5M": {
+    "gauge_code": "9-0.000-5M",
+    "skill": {
+      "r2": -2.327846441831669,
+      "mae_m3s": 18.56003406365314,
+      "interval_coverage_pct": 87.09677419354838
+    },
+    "characteristics": {
+      "median_discharge_m3s": 37.0,
+      "prediction_interval_width_m3s": 51.08314396337852,
+      "n_training_records": 121
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.4889281059738954
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.3050114476712207
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.2060604463548839
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  },
+  "9-5.L00-1A": {
+    "gauge_code": "9-5.L00-1A",
+    "skill": {
+      "r2": -8.07678348524245,
+      "mae_m3s": 0.3696936839559007,
+      "interval_coverage_pct": 91.30434782608695
+    },
+    "characteristics": {
+      "median_discharge_m3s": 0.18,
+      "prediction_interval_width_m3s": 0.8723589544580586,
+      "n_training_records": 90
+    },
+    "top_predictors": [
+      {
+        "feature": "year_normalized",
+        "importance": 0.4456978136555286
+      },
+      {
+        "feature": "month_sin",
+        "importance": 0.291122844015676
+      },
+      {
+        "feature": "month_cos",
+        "importance": 0.2631793423287952
+      },
+      {
+        "feature": "basin_area_km2",
+        "importance": 0.0
+      },
+      {
+        "feature": "basin_elevation_m",
+        "importance": 0.0
+      }
+    ]
+  }
+}
