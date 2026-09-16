@@ -299,6 +299,12 @@ def main():
                        help='Output directory')
     parser.add_argument('--min-feature-coverage', type=float, default=0.9,
                        help='Minimum network-wide non-null coverage for a shared feature')
+    parser.add_argument('--gauge-independent', action='store_true',
+                       help='Drop every discharge-derived feature (lags, quantiles, baseflow, '
+                            'seasonal flows, basin_mean_q) so the model uses only climate forcing, '
+                            'static basin attributes and temporal terms. This is the transfer '
+                            'experiment for basins without gauges; results also land in '
+                            'gauge_independent_summary.json for the case-study page.')
     
     args = parser.parse_args()
     
@@ -311,9 +317,45 @@ def main():
     
     # Load data
     df, features = load_data(args.data, args.min_feature_coverage)
-    
+
+    if args.gauge_independent:
+        # Discharge-derived columns describe the answer, not the forcing: at an
+        # ungauged basin none of them exists. Dropping them is what makes the
+        # experiment a transfer test rather than a persistence nowcast.
+        dropped = [f for f in features if any(
+            k in f.lower() for k in ('q_', 'discharge', '_flow', 'baseflow', 'runoff_coef'))]
+        # Categorical text columns are also beyond a purely numeric transfer model.
+        dropped += [f for f in features if f not in dropped
+                    and df[f].dtype == object]
+        features = [f for f in features if f not in dropped]
+        print(f"Gauge-independent mode: dropped {len(dropped)} discharge-derived features")
+        for f in dropped:
+            print(f"  - {f}")
+
     # Train gauge-specific ensembles
     gauge_models = train_all_gauges(df, features)
+
+    if args.gauge_independent:
+        summary = {
+            "experiment": "gauge_independent",
+            "note": ("No discharge-derived feature was used: climate forcing, static basin "
+                     "attributes and temporal terms only. Chronological 80/20 holdout per gauge. "
+                     "This is the transfer baseline for basins without discharge observations."),
+            "features": features,
+            "gauges": {code: {
+                "r2": r["error_stats"]["r2"],
+                "rmse": r["error_stats"]["rmse"],
+                "n_train": r["n_train"],
+                "n_validation": r["n_validation"],
+            } for code, r in sorted(gauge_models.items())},
+        }
+        positive = sum(1 for g in summary["gauges"].values() if g["r2"] > 0)
+        summary["counts"] = {"gauges_trained": len(summary["gauges"]),
+                             "positive_r2": positive,
+                             "median_r2": sorted(g["r2"] for g in summary["gauges"].values())[len(summary["gauges"]) // 2]}
+        with (args.output_dir / "gauge_independent_summary.json").open('w') as f:
+            json.dump(summary, f, indent=2)
+        print(f"Gauge-independent summary: {positive}/{len(summary['gauges'])} gauges with positive R2")
     
     # Extract variable importance
     importance_df = extract_variable_importance(gauge_models, features)

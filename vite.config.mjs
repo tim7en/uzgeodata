@@ -46,6 +46,7 @@ export default defineConfig({
         guide: here('./INTERFACE/guide.html'),
         projects: here('./INTERFACE/projects.html'),
         research: here('./INTERFACE/research.html'),
+        drySpell: here('./INTERFACE/dry-spell.html'),
       },
     },
   },

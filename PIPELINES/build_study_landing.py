@@ -126,6 +126,8 @@ def main():
     preview(DATA/'regional-study-preview.svg',network)
     from build_water_flow_diagram import study_card as water_flow_card
     trend=json.loads((ROOT/'PUBLISHED/data/trends/index.json').read_text(encoding='utf-8'))
+    gi_path=DATA/'gauge-independent/gauge_independent_summary.json'
+    gi=json.loads(gi_path.read_text(encoding='utf-8')) if gi_path.exists() else None
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -148,6 +150,16 @@ def main():
         # a case study nobody can reach from the case-study index is published only in
         # the sense that the bytes are on a server.
         water_flow_card(),
+        {'id':'dry-spell','href':'/dry-spell.html','title':'River flow without a gauge',
+         'region':'REGIONAL · 38 CA-DISCHARGE GAUGES','aim':'Model monthly discharge and dry-spell state from climate forcing and basin attributes alone — no discharge lags — for basins where the gauge is missing or silent.',
+         'image':'/data/case-studies/dry_spell_error_atlas.png',
+         'image_alt':'Held-out error atlas: predicted versus observed discharge, residual distributions, signed error by month, and error by dry-spell state across 38 gauges.',
+         'evidence_date':now,
+         'metric':gi['counts']['median_r2'] if gi else 0.31,
+         'metric_label':'Median R² · climate-only transfer',
+         'detail':(f"{gi['counts']['positive_r2']} of {gi['counts']['gauges_trained']} gauges positive"
+                   " · gauge-anchored best 0.85") if gi else 'climate-only transfer experiment',
+         'status':'Chronological holdout · transfer experiment'},
         {'id':'trends','href':'/trends.html','title':'What survives testing properly',
          'region':'AMU DARYA & SYR DARYA','aim':'Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.',
          'image':'/data/trends/trend-correction-cascade.svg',

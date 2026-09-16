@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-16T18:30:34.363321+00:00",
+  "generated_at": "2026-09-16T23:08:26.542119+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224",
     "regional-station-study.json": "f1c0f711f7256c3c04183c7cc3cef4de9ea17ee03cf4b5784b4da3d2d7d83902",
-    "model-review.json": "aa330e4e7d5e458e6725550051ef8099a9d0cf41a699c95216b9fd417b0783f8"
+    "model-review.json": "af7041296b92df04951464df591c612ba0a16dcbf6f6f1844cf0a336872fb0fd"
   },
   "studies": [
     {
@@ -15,7 +15,7 @@
       "aim": "Test how elevation, snowfall and soil-water storage shape seasonal river flow.",
       "image": "/data/case-studies/chirchik-study-preview.svg",
       "image_alt": "Observed and simulated monthly runoff in held-out years, arranged consecutively as a study preview.",
-      "evidence_date": "2026-09-16T18:30:33.994218+00:00",
+      "evidence_date": "2026-09-16T23:04:40.364531+00:00",
       "metric": 0.7595,
       "metric_label": "Monthly NSE · chronological test",
       "detail": "84 held-out months · seasonal-volume uncertainty remains",
@@ -51,6 +51,21 @@
       "metric_label": "Calendar years of reported accounts",
       "detail": "2022–2024 · model diagnostics kept separate · no inferred country outflows",
       "status": "Source-audited water accounting"
+    },
+    {
+      "id": "dry-spell",
+      "href": "/dry-spell.html",
+      "title": "River flow without a gauge",
+      "region": "REGIONAL · 38 CA-DISCHARGE GAUGES",
+      "aim": "Model monthly discharge and dry-spell state from climate forcing and basin attributes alone — no discharge lags — for basins where the gauge is missing or silent.",
+      "image": "/data/case-studies/dry_spell_error_atlas.png",
+      "image_alt": "Held-out error atlas: predicted versus observed discharge, residual distributions, signed error by month, and error by dry-spell state across 38 gauges.",
+      "evidence_date": "2026-09-16T23:08:26.542119+00:00",
+      "metric": 0.3146224032473953,
+      "metric_label": "Median R² · climate-only transfer",
+      "detail": "22 of 38 gauges positive · gauge-anchored best 0.85",
+      "status": "Chronological holdout · transfer experiment",
+      "image_revision": "be5206e07714"
     },
     {
       "id": "trends",

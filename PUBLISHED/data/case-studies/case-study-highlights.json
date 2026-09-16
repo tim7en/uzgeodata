@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-16T18:30:35+00:00",
+  "generatedAt": "2026-09-16T23:04:41+00:00",
   "study": {
     "id": "chirchik",
     "label": "Chirchik and Pskem",
@@ -153,6 +153,10 @@
   ],
   "figures": [
     "/data/case-studies/charvak-water-verification.png",
+    "/data/case-studies/dry_spell_basin_context_map.png",
+    "/data/case-studies/dry_spell_error_atlas.png",
+    "/data/case-studies/dry_spell_gauge_error_map.png",
+    "/data/case-studies/gauge_network_inventory_map.png",
     "/data/case-studies/pskem-climate-validation.png",
     "/data/case-studies/pskem-daily-hydrograph.png",
     "/data/case-studies/pskem-elevation-overview.png",
@@ -178,7 +182,7 @@
   ],
   "counts": {
     "findings": 8,
-    "figures": 23,
+    "figures": 27,
     "reports": 6
   },
   "qualityNotes": [
