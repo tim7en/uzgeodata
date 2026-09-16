@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-12T11:58:50+00:00",
+  "generatedAt": "2026-09-16T22:20:46+00:00",
   "study": {
     "id": "chirchik-pskem",
     "title": "Chirchik–Charvak: from observations to water-supply evidence",
@@ -286,8 +286,8 @@
       "produces": [
         {
           "path": "PUBLISHED/data/case-studies/model-review.json",
-          "bytes": 59573,
-          "sha256": "b3c2590f86ed3202d2f1c820e840a9bd60e3714285456534e06ecab210aaf3df"
+          "bytes": 59561,
+          "sha256": "aa330e4e7d5e458e6725550051ef8099a9d0cf41a699c95216b9fd417b0783f8"
         }
       ]
     },
@@ -300,18 +300,18 @@
       "produces": [
         {
           "path": "PUBLISHED/data/case-studies/case-study-highlights.json",
-          "bytes": 9295,
-          "sha256": "2295c7633b0730128d5df673edbdccd46099313dda256972d26f609e103f3e87"
+          "bytes": 9293,
+          "sha256": "a29129f85d05b269cb4cc19bf79f8bd4ad391822f7ae7b7168729937e1f979ad"
         },
         {
           "path": "PUBLISHED/data/case-studies/current-model.json",
           "bytes": 47119,
-          "sha256": "dd1daea99d79701759e40e8ee0b5362f0ab5ac477a7540f4095d01482600e3a8"
+          "sha256": "80aeee7cafda772df97e365be2b6bfd4072dc2ba66f6cacd7ee06a428a0c3f7a"
         },
         {
           "path": "PUBLISHED/data/case-studies/study-landing.manifest.json",
           "bytes": 689,
-          "sha256": "18d634fac991fa4d53b18c00745ba3bde35d3dd3776eb6fdb7248189c9cb69b2"
+          "sha256": "15404cce2ff1b791f6355d25a80aba3e5590d8035e7185c7df370a7a26f39d4b"
         }
       ]
     }
@@ -413,11 +413,62 @@
     "rerun": {
       "stage": "npm run cases:build",
       "compared": "PUBLISHED/data/case-studies/chirchik.json",
-      "reproduced": true,
-      "substantiveDifferenceCount": 0,
+      "reproduced": false,
+      "substantiveDifferenceCount": 228,
       "provenanceDifferenceCount": 16,
-      "substantiveDifferences": [],
-      "checkedAt": "2026-09-12T11:58:48+00:00",
+      "substantiveDifferences": [
+        {
+          "path": ".benchmark.raw_sensitivity_scores.alpha",
+          "published": "1.234478928814318",
+          "rebuilt": "1.2344789288143174"
+        },
+        {
+          "path": ".benchmark.raw_sensitivity_scores.kge",
+          "published": "0.6609718655719292",
+          "rebuilt": "0.6609718655719297"
+        },
+        {
+          "path": ".benchmark.raw_sensitivity_scores.nse",
+          "published": "0.7456086737177043",
+          "rebuilt": "0.7456086737177045"
+        },
+        {
+          "path": ".benchmark.raw_sensitivity_scores.r",
+          "published": "0.958018209409896",
+          "rebuilt": "0.9580182094098962"
+        },
+        {
+          "path": ".benchmark.scores.alpha",
+          "published": "1.2312964520011813",
+          "rebuilt": "1.2312964520011809"
+        },
+        {
+          "path": ".benchmark.scores.kge",
+          "published": "0.6646960641375398",
+          "rebuilt": "0.66469606413754"
+        },
+        {
+          "path": ".benchmark.scores.nse",
+          "published": "0.7473095346411923",
+          "rebuilt": "0.7473095346411924"
+        },
+        {
+          "path": ".benchmark.scores.r",
+          "published": "0.9572087538627625",
+          "rebuilt": "0.9572087538627623"
+        },
+        {
+          "path": ".benchmark.uncertainty.intervals.kge[0]",
+          "published": "0.45044640839464656",
+          "rebuilt": "0.45044640839464667"
+        },
+        {
+          "path": ".benchmark.uncertainty.intervals.kge[1]",
+          "published": "0.8545606340094243",
+          "rebuilt": "0.8545606340094244"
+        }
+      ],
+      "checkedAt": "2026-09-16T18:30:35+00:00",
       "command": "npm run cases:reproduce"
     },
     "method": "Two independent checks. The scores the page shows are recomputed from the published daily CSV and compared with the model's own summary. Separately, the observation stage is rebuilt into a temporary directory and diffed field by field against what is published, so a drift between the code and the artefacts shows up as a difference rather than as silence."
@@ -476,7 +527,7 @@
       "path": "TESTS/test_chirchik_advanced.py",
       "command": "npm run test:cases",
       "purpose": "The advanced validation and environment modelling artefacts.",
-      "sha256": "b53df2866b726ac677d94df4c846b7bef6d84a7fdb4a141380c38a925fcf2d86",
+      "sha256": "a25acabb926e4d339df6cf607a6723379844384b1dcf26d750ca39289a31f5d4",
       "caseCount": 11,
       "cases": [
         {
@@ -640,7 +691,7 @@
       "path": "TESTS/test_study_landing.py",
       "command": "python -m pytest TESTS/test_study_landing.py",
       "purpose": "The published study landing document and its recomputation checks.",
-      "sha256": "3b468221148b4223d7751ff79bf8cfa4321c7c5af18faa6be24fa78333f9cf45",
+      "sha256": "ac4fb369b9cc10d8bab478d5f04bc534ad335094551073fe70edf1485e2b9dbf",
       "caseCount": 5,
       "cases": [
         {
@@ -737,7 +788,7 @@
       "encoding": "UTF-8 without BOM",
       "columnNaming": "snake_case with the unit in the name"
     },
-    "generatedAt": "2026-09-11T04:39:21+00:00",
+    "generatedAt": "2026-09-12T11:58:50+00:00",
     "tables": [
       {
         "file": "pskem_daily.csv",
@@ -761,7 +812,7 @@
       },
       {
         "file": "study_inputs.csv",
-        "bytes": 2665,
+        "bytes": 2657,
         "rows": 16
       },
       {

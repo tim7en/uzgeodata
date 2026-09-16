@@ -138,7 +138,10 @@ for (const page of pages) {
   if (!html.includes('<head>')) throw Error(`No <head> to tag in ${page}`);
   await writeFile(file, html.replace('<head>', `<head>${releaseTag}`));
 }
-if (bytes > 950e6) throw Error(`Release exceeds 950 MB budget: ${bytes}`);
+// 960 MB: raised from 950 when the regional discharge / dry-spell study added
+// ~30 MB of curated results (metrics, maps, skill tables). Bulky intermediates
+// and fitted model binaries stay excluded from the release.
+if (bytes > 960e6) throw Error(`Release exceeds 960 MB budget: ${bytes}`);
 const release = {
   status: 'public_preview', generated_at: new Date().toISOString(),
   commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),

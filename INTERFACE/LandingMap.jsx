@@ -404,7 +404,7 @@ export default function LandingMap() {
         type: 'FeatureCollection',
         features: [
           ...meteo.features.map(f => ({...f, properties: {...f.properties, station_type: 'meteo'}})),
-          ...gauges.features.map(f => ({...f, properties: {...f.properties, station_type: 'gauge'}}})
+          ...gauges.features.map(f => ({...f, properties: {...f.properties, station_type: 'gauge'}}))
         ]
       };
       setStations(merged);
