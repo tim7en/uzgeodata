@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-09-14T19:21:30.509480+00:00",
+  "generated_at": "2026-09-16T11:21:20.643504+00:00",
   "rows": [
     {
       "id": "reference:aet_mm_s01",
@@ -8685,6 +8685,40 @@
       "evidence": "/data/atlas/observations/regional-terraclimate-ledger.json"
     },
     {
+      "id": "uz:cwd-monthly-v1",
+      "label": "Climate water deficit",
+      "layer": 2,
+      "collection": "Basin observations",
+      "source": "IDAHO_EPSCOR/TERRACLIMATE",
+      "unit": "millimetres per month",
+      "last_updated": "2026-09-15T15:30:07.646+00:00",
+      "updated_basis": "Completed extraction run",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
+      "coverage_to": "2024-12",
+      "interval_days": 30,
+      "group_id": "regional-terraclimate_moisture",
+      "status": "missing",
+      "note": "Demand the water balance could not meet: PET less AET inside one model, with soil storage accounted for, which the crude precipitation-less-AET balance is not.",
+      "evidence": "/data/atlas/observations/regional-terraclimate_moisture-ledger.json"
+    },
+    {
+      "id": "uz:pds-monthly-v1",
+      "label": "Palmer drought severity index",
+      "layer": 2,
+      "collection": "Basin observations",
+      "source": "IDAHO_EPSCOR/TERRACLIMATE",
+      "unit": "index (dimensionless)",
+      "last_updated": "2026-09-15T15:30:07.646+00:00",
+      "updated_basis": "Completed extraction run",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
+      "coverage_to": "2024-12",
+      "interval_days": 30,
+      "group_id": "regional-terraclimate_moisture",
+      "status": "missing",
+      "note": "An index already standardised by its source. Averaging it over basins or months is descriptive; it is not re-standardised, and anomalies of it are anomalies of an anomaly.",
+      "evidence": "/data/atlas/observations/regional-terraclimate_moisture-ledger.json"
+    },
+    {
       "id": "uz:pet-monthly-v1",
       "label": "Potential evapotranspiration",
       "layer": 2,
@@ -8719,6 +8753,23 @@
       "evidence": "/data/atlas/observations/regional-terraclimate-ledger.json"
     },
     {
+      "id": "uz:rtc-monthly-v1",
+      "label": "Terraclimate runoff",
+      "layer": 2,
+      "collection": "Basin observations",
+      "source": "IDAHO_EPSCOR/TERRACLIMATE",
+      "unit": "millimetres per month",
+      "last_updated": "2026-09-15T15:30:07.646+00:00",
+      "updated_basis": "Completed extraction run",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
+      "coverage_to": "2024-12",
+      "interval_days": 30,
+      "group_id": "regional-terraclimate_moisture",
+      "status": "missing",
+      "note": "A second runoff to set against ERA5-Land's, from a different model. Asking for 'runoff' still resolves to ERA5-Land; this one has to be asked for by name.",
+      "evidence": "/data/atlas/observations/regional-terraclimate_moisture-ledger.json"
+    },
+    {
       "id": "uz:run-monthly-v1",
       "label": "Runoff",
       "layer": 2,
@@ -8728,11 +8779,11 @@
       "last_updated": "2026-09-14T19:21:28.222332+00:00",
       "updated_basis": "Successful admin update job",
       "published_at": "2026-09-14T19:21:27.251+00:00",
-      "coverage_to": "2026-08",
+      "coverage_to": "2024-12",
       "interval_days": 30,
       "group_id": "regional-era5_runoff",
       "status": "available",
-      "note": "TerraClimate publishes no runoff. This is a land-surface flux and is not discharge: it has not been routed and no gauge has been compared to it.",
+      "note": "A land-surface model's runoff, kept as the answer because it was chosen first and the record's analyses use it. It is not discharge: it has not been routed and no gauge has been compared to it.",
       "evidence": "/data/atlas/observations/regional-era5_runoff-ledger.json"
     },
     {
@@ -8768,6 +8819,23 @@
       "status": "available",
       "note": "A modelled column store in millimetres. It is published as what it is and not relabelled as the percentage the atlas attribute holds.",
       "evidence": "/data/atlas/observations/regional-terraclimate-ledger.json"
+    },
+    {
+      "id": "uz:swe-monthly-v1",
+      "label": "Snow water equivalent",
+      "layer": 2,
+      "collection": "Basin observations",
+      "source": "IDAHO_EPSCOR/TERRACLIMATE",
+      "unit": "millimetres of snow water equivalent",
+      "last_updated": "2026-09-15T15:30:07.646+00:00",
+      "updated_basis": "Completed extraction run",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
+      "coverage_to": "2024-12",
+      "interval_days": 30,
+      "group_id": "regional-terraclimate_moisture",
+      "status": "missing",
+      "note": "Modelled from temperature and precipitation, not observed. It is not a measurement to validate MODIS snow cover against, and in high terrain the four-kilometre grid smooths the pack the melt actually comes from.",
+      "evidence": "/data/atlas/observations/regional-terraclimate_moisture-ledger.json"
     },
     {
       "id": "uz:tmn-monthly-v1",
@@ -8819,6 +8887,23 @@
       "status": "available",
       "note": "The month's daily maxima. ERA5-Land publishes no daily extreme on this grid.",
       "evidence": "/data/atlas/observations/regional-terraclimate_temperature-ledger.json"
+    },
+    {
+      "id": "uz:vpd-monthly-v1",
+      "label": "Vapour pressure deficit",
+      "layer": 2,
+      "collection": "Basin observations",
+      "source": "IDAHO_EPSCOR/TERRACLIMATE",
+      "unit": "kilopascals",
+      "last_updated": "2026-09-15T15:30:07.646+00:00",
+      "updated_basis": "Completed extraction run",
+      "published_at": "2026-09-14T19:21:27.251+00:00",
+      "coverage_to": "2024-12",
+      "interval_days": 30,
+      "group_id": "regional-terraclimate_moisture",
+      "status": "missing",
+      "note": "Published on the same four-kilometre grid as the temperatures it depends on, rather than derived here from a humidity field this project does not hold.",
+      "evidence": "/data/atlas/observations/regional-terraclimate_moisture-ledger.json"
     },
     {
       "id": "table:transboundary-river-downstream:relationship",
@@ -14230,7 +14315,7 @@
   ],
   "counts": {
     "1": 768,
-    "2": 51,
+    "2": 56,
     "3": 29,
     "4": 1
   },
@@ -14260,6 +14345,19 @@
       ],
       "earth_engine": true,
       "note": "Fetches months newer than the published record from Earth Engine. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only, leaving climatologies and the release as last published."
+    },
+    {
+      "id": "regional-terraclimate_moisture",
+      "label": "TerraClimate moisture & drought",
+      "kind": "regional",
+      "source": "terraclimate_moisture",
+      "interval_days": 30,
+      "full_requires": [
+        "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+        "PUBLISHED/data/atlas/observations/time_kind=observation"
+      ],
+      "earth_engine": true,
+      "note": "Vapour pressure deficit, climate water deficit, snow water equivalent, TerraClimate runoff and the Palmer drought index. The first run fetches the whole record from 2003; later runs fetch only newer months. With the full observation store and BasinATLAS geodatabase present it runs the complete refresh; without them it appends to the published history and cube only."
     },
     {
       "id": "regional-era5_temperature",
