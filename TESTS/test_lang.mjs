@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { LANGS, isSupported, normalizeBrowserLang, resolveLang } from '../INTERFACE/lang.js';
+import {
+  LANGS, TRANSLATE_ELEMENT_URL, isSupported, normalizeBrowserLang, resolveLang,
+} from '../INTERFACE/lang.js';
 
 test('the language list is unique, English-first, and covers the regional audience', () => {
   const ids = LANGS.map(([id]) => id);
@@ -37,4 +39,11 @@ test('browser tags are normalized to the registry ids', () => {
 test('isSupported agrees with the registry', () => {
   for (const [id] of LANGS) assert.ok(isSupported(id));
   assert.equal(isSupported('qq'), false);
+});
+
+test('translation loads from the active Google Translate Element endpoint', () => {
+  const url = new URL(TRANSLATE_ELEMENT_URL);
+  assert.equal(url.hostname, 'translate.google.com');
+  assert.equal(url.pathname, '/translate_a/element.js');
+  assert.equal(url.searchParams.get('cb'), 'uzGTInit');
 });

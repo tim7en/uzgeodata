@@ -14,6 +14,7 @@
  */
 export const LANG_KEY = 'uzgeodata-lang';
 export const PAGE_LANGUAGE = 'en';
+export const TRANSLATE_ELEMENT_URL = 'https://translate.google.com/translate_a/element.js?cb=uzGTInit';
 
 // Curated for the audience: English plus the Central Asian languages and a
 // few widely used ones. The list is what the switcher offers.
@@ -105,11 +106,14 @@ export function applyLang(lang) {
 export function loadTranslateElement() {
   if (document.getElementById('uz-gt-script')) return;
   window.uzGTInit = () => {
-    if (!window.google || !google.translate) return;
+    if (!window.google?.translate) {
+      ensureTranslationError();
+      return;
+    }
     const host = document.getElementById('uz-gt-host');
     if (!host) return;
-    new google.translate.TranslateElement(
-      { pageLanguage: PAGE_LANGUAGE, autoDisplay: false, layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+    new window.google.translate.TranslateElement(
+      { pageLanguage: PAGE_LANGUAGE, autoDisplay: false, layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE },
       'uz-gt-host',
     );
     ensureMtNote(activeLang());
@@ -121,8 +125,9 @@ export function loadTranslateElement() {
   document.body.appendChild(host);
   const script = document.createElement('script');
   script.id = 'uz-gt-script';
-  script.src = 'https://translate.googleapis.com/element.js?cb=uzGTInit';
+  script.src = TRANSLATE_ELEMENT_URL;
   script.async = true;
+  script.addEventListener('error', ensureTranslationError, { once: true });
   document.body.appendChild(script);
 }
 
@@ -148,7 +153,7 @@ export function ensureMtNote(lang) {
   if (document.getElementById('uz-mt-note')) return;
   const note = document.createElement('div');
   note.id = 'uz-mt-note';
-  note.className = 'notranslate';
+  note.className = 'uz-mt-note notranslate';
   note.setAttribute('translate', 'no');
   note.innerHTML = '';
   const text = document.createElement('span');
@@ -161,6 +166,23 @@ export function ensureMtNote(lang) {
     sessionStorage.setItem('uz-mt-hide', '1');
     note.remove();
   });
+  note.append(text, dismiss);
+  (document.body || document.documentElement).appendChild(note);
+}
+
+function ensureTranslationError() {
+  if (document.getElementById('uz-mt-error')) return;
+  const note = document.createElement('div');
+  note.id = 'uz-mt-error';
+  note.className = 'uz-mt-note notranslate';
+  note.setAttribute('translate', 'no');
+  const text = document.createElement('span');
+  text.textContent = 'Translation could not load. Check your connection or content blocker, then reload the page.';
+  const dismiss = document.createElement('button');
+  dismiss.type = 'button';
+  dismiss.setAttribute('aria-label', 'Hide translation error');
+  dismiss.textContent = '×';
+  dismiss.addEventListener('click', () => note.remove());
   note.append(text, dismiss);
   (document.body || document.documentElement).appendChild(note);
 }
