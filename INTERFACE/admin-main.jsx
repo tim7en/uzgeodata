@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Activity, ArrowLeft, ArrowUpRight, Check, Clock, Database, Layers, LoaderCircle, RefreshCw, Search, ShieldCheck, X } from 'lucide-react';
 import { LAYERS, freshness, coverageAge, visibleRows, latestJob } from './variableFreshness.js';
 import './admin.css';
 import { initTheme } from './ThemeToggle.jsx';
-import { initLang, mountSelect } from './lang.js';
+import LanguageSelect from './LanguageSelect.jsx';
+import { initLang } from './lang.js';
 import { autoHideHeader } from './chrome.js';
 
 initTheme();
@@ -32,6 +33,7 @@ function Freshness({ row, now }) {
 }
 
 function Admin() {
+  const headerRef = useRef(null);
   const [data, setData] = useState(null), [server, setServer] = useState(false);
   const [error, setError] = useState(''), [notice, setNotice] = useState(''), [busy, setBusy] = useState('');
   const [now, setNow] = useState(Date.now()), [query, setQuery] = useState(''), [layer, setLayer] = useState('all');
@@ -47,6 +49,7 @@ function Admin() {
     // The static site has no server: fall back to the published snapshot.
     json('/api/admin/variables').then(result => { setServer(true); setData(result); setNow(Date.now()); }).catch(() => { setServer(false); load(false); });
   }, []);
+  useEffect(() => autoHideHeader(headerRef.current), []);
   useEffect(() => { const timer = setInterval(() => { setNow(Date.now()); if (server) load(true); }, 5000); return () => clearInterval(timer); }, [server]);
   useEffect(() => setPage(0), [query, layer, status, collection]);
   const rows = data?.rows || [], operations = data?.operations;
@@ -70,8 +73,8 @@ function Admin() {
   }
 
   return <div className="admin-page">
-    <header className="admin-topbar"><a className="admin-brand" href={BASE}><span className="brand-icon"><Layers size={21}/></span>UZGEODATA <span className="admin-badge">ADMIN</span></a>
-      <div><a href={BASE}><ArrowLeft size={14}/> Back to map</a></div></header>
+    <header ref={headerRef} className="admin-topbar"><a className="admin-brand" href={BASE}><span className="brand-icon"><Layers size={21}/></span>UZGEODATA <span className="admin-badge">ADMIN</span></a>
+      <div><LanguageSelect/><a href={BASE}><ArrowLeft size={14}/> Back to map</a></div></header>
     <main>
       <div className="admin-heading"><div><p className="eyebrow">DATA OPERATIONS</p><h1>Know how current<br/>your data is.</h1><p className="heading-description">Every registered variable, its latest update, and the next action.<br/>One place to maintain the environmental record.</p></div>
         <div className="inventory-stamp"><span className={`connection-dot ${server ? 'connected' : ''}`}/><b>{server ? 'Update server connected' : 'Published snapshot'}</b><p>Inventory generated<br/>{stamp(data?.generated_at)}</p><button className="secondary" onClick={() => load()}><RefreshCw size={14}/> Refresh status</button></div></div>
@@ -117,12 +120,3 @@ function Admin() {
 }
 
 createRoot(document.getElementById('root')).render(<Admin/>);
-requestAnimationFrame(() => {
-  autoHideHeader(document.querySelector('.admin-topbar'));
-  const tools = document.querySelector('.admin-topbar > div');
-  if (tools) {
-    const host = document.createElement('span');
-    tools.insertBefore(host, tools.firstChild);
-    mountSelect(host);
-  }
-});

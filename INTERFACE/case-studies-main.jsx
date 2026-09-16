@@ -5,7 +5,7 @@ import { initTheme } from './ThemeToggle.jsx';
 import CaseStudies from './CaseStudies.jsx';
 import 'leaflet/dist/leaflet.css';
 import './case-studies.css';
-import { initLang, mountSelect } from './lang.js';
+import { initLang } from './lang.js';
 import { autoHideHeader } from './chrome.js';
 
 initTheme();
@@ -16,11 +16,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 );
 requestAnimationFrame(() => {
   autoHideHeader(document.querySelector('.cs-header'));
-  const nav = document.querySelector('.cs-header nav');
-  if (nav) {
-    const host = document.createElement('span');
-    host.style.display = 'inline-flex';
-    nav.appendChild(host);
-    mountSelect(host);
-  }
 });

@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import StudyDirectory from './features/case-studies/StudyDirectory.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
+import LanguageSelect from './LanguageSelect.jsx';
 const ChirchikStudy = lazy(() => import('./ChirchikStudy.jsx'));
 const RegionalStudy = lazy(() => import('./features/case-studies/RegionalStationStudy.jsx'));
 
@@ -71,7 +72,7 @@ export default function CaseStudies() {
       ? <div className="cs-app">
         <header className="cs-header">
           <a className="cs-logo" href="/">UZGEODATA</a>
-          <nav><a href="/case-studies.html">All case studies</a><a href="/case-studies/chirchik">Chirchik / Pskem</a><ThemeToggle/></nav>
+          <nav><a href="/case-studies.html">All case studies</a><a href="/case-studies/chirchik">Chirchik / Pskem</a><ThemeToggle/><LanguageSelect/></nav>
         </header>
         <main><RegionalStudy/></main>
       </div>

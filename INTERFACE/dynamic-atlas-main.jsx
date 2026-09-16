@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './dynamic-atlas.css';
 import ThemeToggle, { initTheme } from './ThemeToggle.jsx';
-import { initLang, mountSelect } from './lang.js';
+import LanguageSelect from './LanguageSelect.jsx';
+import { initLang } from './lang.js';
 import { autoHideHeader } from './chrome.js';
 initTheme();
 initLang();
@@ -29,13 +30,15 @@ function Results({ data }) {
 }
 
 function App() {
+  const navRef = useRef(null);
   const [data, setData] = useState(null), [error, setError] = useState(''), [query, setQuery] = useState(''), [theme, setTheme] = useState('all'), [status, setStatus] = useState('all');
   const load = () => { setError(''); json('/data/atlas/dynamic-atlas.json').then(setData).catch(e => setError(e.message)); };
   useEffect(load, []);
+  useEffect(() => autoHideHeader(navRef.current), []);
   const checks = Object.fromEntries((data?.availability?.sources || []).map(s => [s.asset, s]));
   const families = data?.families.filter(f => (theme === 'all' || f.category === theme) && (status === 'all' || (status === 'gaps' ? f.missing > 0 : f.acquisition === status)) && `${f.family} ${f.label} ${f.original.dataset} ${f.assets.join(' ')} ${f.columns.join(' ')}`.toLowerCase().includes(query.toLowerCase())) || [];
   return <main>
-    <nav><a href="/">&#8592; UzGeoData</a><div style={{display:"flex",alignItems:"center",gap:24}}><a href="/roadmap.html">Atlas roadmap</a><a href="/surrogates.html">Scientific methods</a><ThemeToggle/></div></nav>
+    <nav ref={navRef}><a href="/">&#8592; UzGeoData</a><div style={{display:"flex",alignItems:"center",gap:24}}><a href="/roadmap.html">Atlas roadmap</a><a href="/surrogates.html">Scientific methods</a><ThemeToggle/><LanguageSelect style={{display:'inline-flex'}}/></div></nav>
     <header><p className="eyebrow">PSKEM PILOT / EARTH ENGINE / LIVING GEODATABASE</p><h1>From a static atlas<br/>to dated basin evidence.</h1><p className="intro">What we fetched, what it substitutes, and what can change over time. A dedicated audit of the HydroATLAS pilot and its path to regular updates.</p><div className="jump"><a href="#coverage">Thematic coverage ↓</a><a href="#results">See basin values ↓</a><a href="#refresh">Update pathway ↓</a></div></header>
     {error ? <div role="alert"><p>{error}</p><button onClick={load}>Try again</button></div> : !data ? <p role="status">Loading the pilot audit…</p> : <>
       <div className="stats">{[[data.summary.basin_count, 'level-12 pilot basins'], [data.summary.attribute_count, 'original atlas attributes'], [data.summary.candidate_attributes, 'recalculated candidates'], [data.summary.surrogate_attributes, 'substitute attributes'], [data.summary.attributes_without_any_estimate, 'still without an estimate']].map(([n, label]) => <div key={label}><strong>{n}</strong><span>{label}</span></div>)}</div>
@@ -66,13 +69,3 @@ function App() {
   </main>;
 }
 createRoot(document.getElementById('root')).render(<App/>);
-requestAnimationFrame(() => {
-  autoHideHeader(document.querySelector('main nav'));
-  const nav = document.querySelector('main nav');
-  if (nav) {
-    const host = document.createElement('span');
-    host.style.display = 'inline-flex';
-    nav.appendChild(host);
-    mountSelect(host);
-  }
-});
