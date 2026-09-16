@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-09-16T22:20:46+00:00",
+  "generatedAt": "2026-09-16T23:12:40+00:00",
   "study": {
     "id": "chirchik-pskem",
     "title": "Chirchik–Charvak: from observations to water-supply evidence",
@@ -287,7 +287,7 @@
         {
           "path": "PUBLISHED/data/case-studies/model-review.json",
           "bytes": 59561,
-          "sha256": "aa330e4e7d5e458e6725550051ef8099a9d0cf41a699c95216b9fd417b0783f8"
+          "sha256": "af7041296b92df04951464df591c612ba0a16dcbf6f6f1844cf0a336872fb0fd"
         }
       ]
     },
@@ -300,18 +300,18 @@
       "produces": [
         {
           "path": "PUBLISHED/data/case-studies/case-study-highlights.json",
-          "bytes": 9293,
-          "sha256": "a29129f85d05b269cb4cc19bf79f8bd4ad391822f7ae7b7168729937e1f979ad"
+          "bytes": 9517,
+          "sha256": "b8bea39aa29a0c0dd12d5a20c2a844563934b942b20652242302b38d02958e85"
         },
         {
           "path": "PUBLISHED/data/case-studies/current-model.json",
           "bytes": 47119,
-          "sha256": "80aeee7cafda772df97e365be2b6bfd4072dc2ba66f6cacd7ee06a428a0c3f7a"
+          "sha256": "05749b72e75f5e70d95a8c8f77d94fff0ba6e46298f129b937c910ec1b487902"
         },
         {
           "path": "PUBLISHED/data/case-studies/study-landing.manifest.json",
           "bytes": 689,
-          "sha256": "15404cce2ff1b791f6355d25a80aba3e5590d8035e7185c7df370a7a26f39d4b"
+          "sha256": "6fd207a66b5f1f796bbbc48db1a82f97045b6aa2ed1b4435caba3bc69e6ceb9c"
         }
       ]
     }
@@ -468,7 +468,7 @@
           "rebuilt": "0.8545606340094244"
         }
       ],
-      "checkedAt": "2026-09-16T18:30:35+00:00",
+      "checkedAt": "2026-09-16T23:04:41+00:00",
       "command": "npm run cases:reproduce"
     },
     "method": "Two independent checks. The scores the page shows are recomputed from the published daily CSV and compared with the model's own summary. Separately, the observation stage is rebuilt into a temporary directory and diffed field by field against what is published, so a drift between the code and the artefacts shows up as a difference rather than as silence."
