@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T13:14:16.742083+00:00",
+  "generated_at": "2026-09-17T19:26:13.788717+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224",
@@ -60,12 +60,27 @@
       "aim": "Predict monthly discharge from climate and basin attributes alone, pooled across gauges and validated on gauges withheld from training entirely — then calibrated per gauge where one exists.",
       "image": "/data/case-studies/pooled_transfer_atlas.png",
       "image_alt": "Log-log scatter of observed versus predicted discharge on gauges the pooled model never trained on, and feature importance, across 76 Syr Darya / Amu Darya gauges.",
-      "evidence_date": "2026-09-17T13:14:16.742083+00:00",
+      "evidence_date": "2026-09-17T19:26:13.788717+00:00",
       "metric": 0.27081459209322656,
       "metric_label": "Median R² · pooled, gauge-unseen",
       "detail": "52 of 76 gauges positive · gauge-anchored best 0.92",
       "status": "GroupKFold by gauge · transfer experiment",
       "image_revision": "85ce32f2f212"
+    },
+    {
+      "id": "reservoirs",
+      "href": "/reservoir-monitoring.html",
+      "title": "Every reservoir and lake in the basin",
+      "region": "SYR DARYA & AMU DARYA · 378 SWOT-TRACKED LAKES",
+      "aim": "Track reservoir and lake surface area and water level from NASA/CNES’s SWOT satellite, basin-wide, without needing any upstream country to share a gauge reading.",
+      "image": "/data/case-studies/reservoirs/reservoir_status.png",
+      "image_alt": "Map of 378 SWOT-tracked lakes across the Syr Darya / Amu Darya basin, with 6 named reservoirs and the Aral Sea highlighted, and a bar chart of latest versus reference area.",
+      "evidence_date": "2026-09-17T19:26:13.788717+00:00",
+      "metric": 378,
+      "metric_label": "Lakes & reservoirs tracked",
+      "detail": "6 named water bodies incl. the Aral Sea · record since mid-2023",
+      "status": "SWOT KaRIn · satellite monitoring",
+      "image_revision": "8fcdcc842d4b"
     },
     {
       "id": "trends",

@@ -47,6 +47,7 @@ export default defineConfig({
         projects: here('./INTERFACE/projects.html'),
         research: here('./INTERFACE/research.html'),
         drySpell: here('./INTERFACE/dry-spell.html'),
+        reservoirMonitoring: here('./INTERFACE/reservoir-monitoring.html'),
       },
     },
   },

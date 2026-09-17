@@ -131,6 +131,21 @@ def main():
     ga_path=DATA/'gauge_uncertainty_calibration.json'
     ga=json.loads(ga_path.read_text(encoding='utf-8')) if ga_path.exists() else None
     ga_best=max((v['r2'] for v in ga['gauges'].values()), default=None) if ga else None
+    reservoir_manifest_path=DATA/'reservoirs/reservoir_manifest.json'
+    reservoir_manifest=json.loads(reservoir_manifest_path.read_text(encoding='utf-8')) if reservoir_manifest_path.exists() else None
+    def reservoir_card():
+        n=reservoir_manifest['n_lakes_total'] if reservoir_manifest else 378
+        n_named=reservoir_manifest['n_named_reservoirs'] if reservoir_manifest else 8
+        return {'id':'reservoirs','href':'/reservoir-monitoring.html','title':'Every reservoir and lake in the basin',
+         'region':f"SYR DARYA & AMU DARYA · {n} SWOT-TRACKED LAKES",
+         'aim':'Track reservoir and lake surface area and water level from NASA/CNES’s SWOT satellite, basin-wide, without needing any upstream country to share a gauge reading.',
+         'image':'/data/case-studies/reservoirs/reservoir_status.png',
+         'image_alt':f"Map of {n} SWOT-tracked lakes across the Syr Darya / Amu Darya basin, with {n_named} named reservoirs and the Aral Sea highlighted, and a bar chart of latest versus reference area.",
+         'evidence_date':now,
+         'metric':n,
+         'metric_label':'Lakes & reservoirs tracked',
+         'detail':f"{n_named} named water bodies incl. the Aral Sea · record since mid-2023",
+         'status':'SWOT KaRIn · satellite monitoring'}
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -164,6 +179,7 @@ def main():
          'detail':(f"{pooled['per_gauge_positive']} of {pooled['per_gauge_total']} gauges positive"
                    + (f" · gauge-anchored best {ga_best:.2f}" if ga_best is not None else "")) if pooled else 'pooled climate-only transfer experiment',
          'status':'GroupKFold by gauge · transfer experiment'},
+        reservoir_card(),
         {'id':'trends','href':'/trends.html','title':'What survives testing properly',
          'region':'AMU DARYA & SYR DARYA','aim':'Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.',
          'image':'/data/trends/trend-correction-cascade.svg',
