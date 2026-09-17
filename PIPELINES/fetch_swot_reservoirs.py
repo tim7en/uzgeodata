@@ -165,11 +165,14 @@ def fetch_lake_timeseries(pld_id: str) -> pd.DataFrame:
     # around them. A robust per-lake outlier filter on WSE catches what the
     # quality flag misses.
     df = df[df["quality_f"] != 3].copy()
+    df["wse_outlier"] = False
     if df["wse"].notna().sum() > 4:
         median = df["wse"].median()
         mad = (df["wse"] - median).abs().median()
         threshold = max(20.0, 6 * 1.4826 * mad)
-        df.loc[(df["wse"] - median).abs() > threshold, "wse"] = pd.NA
+        # Flagged, not discarded: a chart showing raw observations needs to
+        # display these points as excluded, not silently omit them.
+        df["wse_outlier"] = (df["wse"] - median).abs() > threshold
 
     # area_total is what SWOT's ~50 km swath saw of the lake in that one
     # pass, not a scaled whole-lake estimate. A large or elongated lake is
@@ -184,7 +187,8 @@ def fetch_lake_timeseries(pld_id: str) -> pd.DataFrame:
 def monthly_max_extent(series: pd.DataFrame, name: str) -> pd.DataFrame:
     if series.empty:
         return series
-    monthly = series.set_index("time").resample("MS").agg(
+    clean_wse = series["wse"].where(~series["wse_outlier"])
+    monthly = series.assign(wse=clean_wse).set_index("time").resample("MS").agg(
         area_total=("area_total", "max"),
         wse=("wse", "median"),
         n_overpasses=("area_total", "size"),
@@ -208,8 +212,10 @@ def main() -> None:
           f"(this is a long-running batch call to a public API; progress is saved incrementally)...")
     monthly_path = OUT_DIR / "reservoir_timeseries_monthly.csv"
     summary_path = OUT_DIR / "reservoir_summary.csv"
+    raw_path = OUT_DIR / "reservoir_observations_raw.csv"
     monthly_rows = []
     summary_rows = []
+    raw_rows = []
     named_raw_rows = []
     failed = []
 
@@ -253,6 +259,10 @@ def main() -> None:
         })
         if len(monthly):
             monthly_rows.append(monthly)
+        if len(series):
+            raw = series[["time", "area_total", "wse", "partial_f", "wse_outlier"]].copy()
+            raw.insert(0, "pld_id", pld_id)
+            raw_rows.append(raw)
         if pld_id in NAMED_RESERVOIRS and len(series):
             series = series.copy()
             series["name"] = meta.get("name")
@@ -266,6 +276,7 @@ def main() -> None:
         if i % 25 == 0 or i == len(inventory):
             pd.concat(monthly_rows, ignore_index=True).to_csv(monthly_path, index=False) if monthly_rows else None
             pd.DataFrame(summary_rows).to_csv(summary_path, index=False)
+            pd.concat(raw_rows, ignore_index=True).to_csv(raw_path, index=False) if raw_rows else None
 
         time.sleep(REQUEST_PAUSE_S)
 

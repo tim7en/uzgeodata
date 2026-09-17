@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T19:15:38.262180+00:00Z",
+  "generated": "2026-09-17T20:21:52.043416+00:00Z",
   "sources": {
     "geometry": "https://hydroweb.next.theia-land.fr/geoserver/REF_DATA/ows",
     "timeseries": "https://soto.podaac.earthdatacloud.nasa.gov/hydrocron/v1/timeseries",
@@ -9,6 +9,12 @@
   "min_lake_area_km2": 1.0,
   "n_lakes_total": 378,
   "n_lakes_with_data": 369,
+  "n_named_reservoirs_attempted": 8,
+  "n_named_reservoirs": 6,
+  "named_reservoirs_without_data": [
+    "North Aral Sea",
+    "South Aral Sea (eastern basin)"
+  ],
   "n_fetch_failures": 5,
   "identification_method": "named reservoirs matched by nearest PLD polygon to known coordinates and full-pool area; not an authoritative name crosswalk (PLD has no names). Every other lake is unnamed, identified by PLD id and location only.",
   "dropped_candidates": [
@@ -16,11 +22,5 @@
     "Tuyamuyun"
   ],
   "dropped_reason": "no PLD polygon matched both position and plausible area with enough confidence to publish as named",
-  "quality_filtering": "dropped quality_f==3 (bad); WSE outliers beyond median +/- max(20m, 6*MAD) dropped per lake; area_total aggregated to monthly MAX (not mean) because a single SWOT pass frequently images only part of a large lake \u2014 a partial pass can only under-count true extent, never over-count it.",
-  "n_named_reservoirs_attempted": 8,
-  "n_named_reservoirs": 6,
-  "named_reservoirs_without_data": [
-    "North Aral Sea",
-    "South Aral Sea (eastern basin)"
-  ]
+  "quality_filtering": "dropped quality_f==3 (bad); WSE outliers beyond median +/- max(20m, 6*MAD) dropped per lake; area_total aggregated to monthly MAX (not mean) because a single SWOT pass frequently images only part of a large lake \u2014 a partial pass can only under-count true extent, never over-count it."
 }

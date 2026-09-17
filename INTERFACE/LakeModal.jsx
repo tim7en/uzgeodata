@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { X, Download } from 'lucide-react';
 import { formatNumber } from './landingModel.js';
-import Chart from './features/case-studies/TimeSeriesChart.jsx';
+import ObservationChart from './ObservationChart.jsx';
 import './damModal.css';
 import './case-studies.css';
 
 function swotToCsv(swot) {
-  const lines = ['date,area_km2,wse_m,n_overpasses'];
-  for (const m of swot.months) lines.push([m.time, m.area_km2 ?? '', m.wse_m ?? '', m.n_overpasses].join(','));
+  const lines = ['date,area_km2,area_partial_pass,wse_m,wse_outlier'];
+  for (const o of swot.observations) lines.push([o.time, o.area_km2 ?? '', o.partial, o.wse_m ?? '', o.wse_outlier].join(','));
   return lines.join('\n') + '\n';
 }
 
@@ -41,24 +41,28 @@ function useSwotRecord(waterBodyId) {
 function SwotSection({ waterBodyId, catalogueAreaKm2 }) {
   const { status, data } = useSwotRecord(waterBodyId);
   if (status === 'loading' || status === 'none') return null;
-  const rows = data.months.map(m => ({ label: m.time.slice(0, 7), area_km2: m.area_km2, wse_m: m.wse_m }));
-  const hasWse = rows.some(r => r.wse_m != null);
-  const first = data.months[0], last = data.months[data.months.length - 1];
-  // Max over the last 3 available months, not the literal last one: a
-  // month can close out with a single overpass that only partially imaged
-  // the lake, understating a reservoir that was near full weeks earlier
-  // (matches the same choice made for reservoir_summary.csv's latest_area_km2).
-  const recentAreas = rows.map(r => r.area_km2).filter(v => v != null).slice(-3);
-  const latestArea = recentAreas.length ? Math.max(...recentAreas) : undefined;
+  const obs = data.observations;
+  const hasWse = obs.some(o => o.wse_m != null);
+  const first = obs[0], last = obs[obs.length - 1];
+  const nPartial = obs.filter(o => o.partial).length;
+
+  // Max over the last 3 available months of the area LOESS input (monthly
+  // series), not the raw series' literal last point: a single closing
+  // overpass that only partially imaged the lake would otherwise understate
+  // a reservoir that was near full weeks earlier.
+  const recentMonths = data.months.map(m => m.area_km2).filter(v => v != null).slice(-3);
+  const latestArea = recentMonths.length ? Math.max(...recentMonths) : undefined;
   const catalogue = Number(catalogueAreaKm2);
   const compareText = latestArea != null && Number.isFinite(catalogue) && catalogue > 0
     ? ` The HydroLAKES catalogue figure above (${catalogue.toLocaleString('en', { maximumFractionDigits: 0 })} km²) is a historical survey value, not today's extent; the latest SWOT observation here is ${latestArea.toLocaleString('en', { maximumFractionDigits: 0 })} km² (${(100 * (latestArea - catalogue) / catalogue).toLocaleString('en', { maximumFractionDigits: 0, signDisplay: 'always' })}%).`
     : '';
   return <section className="dam-modal-block">
     <h3>Satellite monitoring (SWOT)</h3>
-    <p>NASA/CNES's SWOT mission has observed this water body's surface area{hasWse ? ' and level' : ''} by radar, roughly every 21 days, from {first.time.slice(0, 7)} to {last.time.slice(0, 7)}. Values are monthly maxima, because a single overpass often images only part of a large lake and can only under-count its true extent, never over-count it.{compareText}</p>
-    <Chart rows={rows} fields={[{ key: 'area_km2', label: 'Surface area', color: '#58c9e5' }]} unit="km²" title="Monthly maximum observed area" />
-    {hasWse && <Chart rows={rows} fields={[{ key: 'wse_m', label: 'Water surface elevation', color: '#edb06c' }]} unit="m" title="Monthly water surface elevation" />}
+    <p>NASA/CNES's SWOT mission has observed this water body's surface area{hasWse ? ' and level' : ''} by radar, roughly every 21 days, from {first.time} to {last.time} ({obs.length} passes, {nPartial} imaging only part of the lake). Points below are the raw per-pass readings, not a monthly average; the line is a LOESS trend through them.{compareText}</p>
+    <ObservationChart observations={obs} loess={data.area_loess} valueKey="area_km2" flagKey="partial"
+      flagLabel="Partial pass" unit="km²" title="Surface area" color="#58c9e5" />
+    {hasWse && <ObservationChart observations={obs} loess={data.wse_loess} valueKey="wse_m" flagKey="wse_outlier"
+      flagLabel="Outlier reading" unit="m" title="Water surface elevation" color="#edb06c" />}
     <div className="station-modal-downloads">
       <button onClick={() => downloadText(swotToCsv(data), 'text/csv;charset=utf-8', `swot-${waterBodyId}.csv`)}><Download size={13}/> CSV</button>
       <button onClick={() => downloadText(JSON.stringify(data, null, 2), 'application/json', `swot-${waterBodyId}.json`)}><Download size={13}/> JSON</button>
