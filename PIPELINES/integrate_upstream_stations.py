@@ -66,11 +66,21 @@ def load_gauges(gpkg: Path) -> pd.DataFrame:
 
 
 def load_meteorological_stations() -> pd.DataFrame:
-    """Load meteorological station locations."""
+    """Load meteorological station locations with real precipitation/temperature records.
+
+    meteo-stations.geojson mixes three station types under one 'meteo stations'
+    label: NSIDC snow-cover stations, soil-temperature stations, and actual
+    meteo stations. Only the 'uz:station/meteo-*' entries have precipitation_total
+    / air_temperature_mean series in station-monthly.csv (52 of 319 total points);
+    matching a gauge to the nearest NSIDC/soil point silently produces zero
+    climate rows downstream. Filtering here keeps distance-ranking honest about
+    which stations can actually contribute climate forcing.
+    """
     print("Loading meteorological stations...")
-    
+
     meteo_file = DATA_DIR / "hydroclimate/meteo-stations.geojson"
-    
+    station_monthly_file = DATA_DIR / "hydromet/station-monthly.csv"
+
     if not meteo_file.exists():
         print(f"  ⚠ File not found: {meteo_file}")
         print(f"    Using placeholder data (no upstream integration)")
@@ -81,11 +91,11 @@ def load_meteorological_stations() -> pd.DataFrame:
             'elevation': [],
             'name': []
         })
-    
+
     import json
     with meteo_file.open() as f:
         data = json.load(f)
-    
+
     stations = []
     for feature in data['features']:
         props = feature['properties']
@@ -97,10 +107,25 @@ def load_meteorological_stations() -> pd.DataFrame:
             'elevation': props.get('elevation', 0),
             'name': props.get('name', ''),
         })
-    
+
     stations_df = pd.DataFrame(stations)
-    print(f"  Loaded {len(stations_df)} meteorological stations")
-    
+    print(f"  Loaded {len(stations_df)} station-network points (all types)")
+
+    if station_monthly_file.exists():
+        monthly = pd.read_csv(station_monthly_file, usecols=['station_id', 'variable'])
+        usable_ids = set(
+            monthly.loc[
+                monthly['variable'].isin(['precipitation_total', 'air_temperature_mean']),
+                'station_id',
+            ].astype(str)
+        )
+        before = len(stations_df)
+        stations_df = stations_df[stations_df['id'].astype(str).isin(usable_ids)].reset_index(drop=True)
+        print(f"  Restricted to {len(stations_df)} of {before} points with real precip/temp records "
+              f"(dropped NSIDC snow-cover and soil-temperature points)")
+    else:
+        print(f"  ⚠ {station_monthly_file} not found; cannot verify which points carry real climate data")
+
     return stations_df
 
 
@@ -211,7 +236,12 @@ def main():
     upstream_records = []
     for _, gauge_row in gauges.iterrows():
         gauge_code = gauge_row['CODE']
-        upstream = find_upstream_stations(gauge_row, stations, max_distance_km=100)
+        # 100km was tuned against the full 319-point file, most of which turned
+        # out to be non-climate stations concentrated in Uzbekistan (see
+        # load_meteorological_stations). With only 52 real stations left, the
+        # network is sparse across Tajikistan/Kyrgyzstan/Afghanistan, so the
+        # radius is widened; distance weighting still favours nearer stations.
+        upstream = find_upstream_stations(gauge_row, stations, max_distance_km=250)
         
         for _, station in upstream.iterrows():
             upstream_records.append({

@@ -37,9 +37,9 @@ def load_data(output_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFram
     
     print("Loading gauge-specific analysis results...")
     
-    importance_df = pd.read_csv(output_dir / "gauge_variable_importance.csv")
-    predictions_df = pd.read_csv(output_dir / "gauge_quantile_predictions.csv")
-    summary_df = pd.read_csv(output_dir / "gauge_prediction_summary.csv")
+    importance_df = pd.read_csv(output_dir / "gauge_variable_importance.csv", dtype={'gauge_code': str})
+    predictions_df = pd.read_csv(output_dir / "gauge_quantile_predictions.csv", dtype={'gauge_code': str})
+    summary_df = pd.read_csv(output_dir / "gauge_prediction_summary.csv", dtype={'gauge_code': str})
     
     with open(output_dir / "gauge_uncertainty_calibration.json") as f:
         calibration = json.load(f)

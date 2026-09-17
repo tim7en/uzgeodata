@@ -42,7 +42,7 @@ class ComprehensiveFeatureEngineer:
     def __init__(self, discharge_file: Path, basin_climate_file: Path):
         """Initialize with discharge and climate data."""
         print("Loading base datasets...")
-        self.discharge_df = pd.read_csv(discharge_file)
+        self.discharge_df = pd.read_csv(discharge_file, dtype={'gauge_code': str})
         self.basin_climate_df = pd.read_csv(basin_climate_file)
         self.features_df = self.discharge_df.copy()
         
@@ -96,39 +96,48 @@ class ComprehensiveFeatureEngineer:
     
     @staticmethod
     def map_esa_landcover(lc_df: pd.DataFrame) -> pd.DataFrame:
-        """Map ESA landcover codes (lc_XX) to categories."""
-        # ESA LCCS categories: 20-110
+        """Map lc_XX codes to categories and normalise to a real percentage.
+
+        The lc_XX columns in CA-discharge's basin_attributes are Copernicus
+        CGLS-LC100 codes (not ESA WorldCover, which uses a different codebook
+        that shares none of the values actually present here) and are stored
+        as **area in km2 per class**, not a fraction — their sum across a row
+        equals that gauge's basin_area_km2. The previous version of this
+        function looked for ESA-style codes (lc_190 urban, lc_200 water, ...)
+        that don't exist in this table, so landcover_water_pct/urban_pct were
+        silently always 0, forest was undercounted (missing the lc_111-126
+        closed/open-forest subtypes), and nothing was divided by area, so
+        "percentages" routinely exceeded 1000. lc_70 (snow and ice) was not
+        mapped to anything at all, even though it is exactly the
+        glacier/permanent-snow signal this study's basin_glacier_pct has
+        stood in for as a hardcoded 0.0 placeholder ever since.
+
+        Copernicus CGLS-LC100 legend for the codes present here:
+          20 shrubs, 30 herbaceous vegetation, 40 cropland, 50 urban/built-up,
+          60 bare/sparse vegetation, 70 snow and ice, 80 permanent water body,
+          90 herbaceous wetland, 100 moss and lichen,
+          111-116 / 121-126 closed/open forest (by leaf type).
+        """
         result = pd.DataFrame(index=lc_df.index)
-        
-        result['landcover_forest_pct'] = lc_df[
-            [c for c in lc_df.columns if c in ['lc_50', 'lc_60', 'lc_61', 'lc_62', 'lc_70', 'lc_71', 'lc_72', 'lc_80', 'lc_81', 'lc_82']]
-        ].sum(axis=1)
-        
-        result['landcover_grassland_pct'] = lc_df[
-            [c for c in lc_df.columns if c in ['lc_30', 'lc_40']]
-        ].sum(axis=1)
-        
-        result['landcover_shrubland_pct'] = lc_df[
-            [c for c in lc_df.columns if c in ['lc_100', 'lc_110']]
-        ].sum(axis=1)
-        
-        result['landcover_water_pct'] = lc_df[
-            [c for c in lc_df.columns if c in ['lc_200']]
-        ].sum(axis=1)
-        
-        result['landcover_urban_pct'] = lc_df[
-            [c for c in lc_df.columns if c in ['lc_190']]
-        ].sum(axis=1)
-        
-        result['landcover_cropland_pct'] = lc_df[
-            [c for c in lc_df.columns if c in ['lc_10', 'lc_11', 'lc_12', 'lc_20']]
-        ].sum(axis=1)
-        
-        result['landcover_bare_pct'] = lc_df[
-            [c for c in lc_df.columns if c in ['lc_120', 'lc_121', 'lc_122']]
-        ].sum(axis=1)
-        
-        return result
+        total_km2 = lc_df.sum(axis=1).replace(0, pd.NA)
+
+        def pct(codes: list[str]) -> pd.Series:
+            present = [c for c in codes if c in lc_df.columns]
+            return 100 * lc_df[present].sum(axis=1) / total_km2 if present else pd.Series(0.0, index=lc_df.index)
+
+        forest_codes = [f'lc_{c}' for c in (111, 112, 113, 114, 115, 116, 121, 122, 123, 124, 125, 126)]
+        result['landcover_forest_pct'] = pct(forest_codes)
+        result['landcover_shrubland_pct'] = pct(['lc_20'])
+        result['landcover_grassland_pct'] = pct(['lc_30'])
+        result['landcover_cropland_pct'] = pct(['lc_40'])
+        result['landcover_urban_pct'] = pct(['lc_50'])
+        result['landcover_bare_pct'] = pct(['lc_60'])
+        result['landcover_snow_ice_pct'] = pct(['lc_70'])
+        result['landcover_water_pct'] = pct(['lc_80'])
+        result['landcover_wetland_pct'] = pct(['lc_90'])
+        result['landcover_moss_lichen_pct'] = pct(['lc_100'])
+
+        return result.fillna(0.0)
     
     def add_climate_extremes(self) -> None:
         """Create temperature extremes and climate anomalies."""
@@ -288,14 +297,17 @@ class ComprehensiveFeatureEngineer:
             "- basin_tpi: Topographic Position Index (elevation relative to neighbors)\n",
             "- basin_tri: Terrain Ruggedness Index (measure of terrain complexity)\n",
             "- basin_roughness: Surface roughness\n",
-            "\n### 2. Landcover Features (7 features, %)\n",
-            "- landcover_forest_pct: Forest cover percentage\n",
-            "- landcover_grassland_pct: Grassland cover\n",
-            "- landcover_shrubland_pct: Shrubland cover\n",
-            "- landcover_water_pct: Water body percentage\n",
-            "- landcover_urban_pct: Urban/built-up area\n",
-            "- landcover_cropland_pct: Agricultural land\n",
-            "- landcover_bare_pct: Bare rock/soil\n",
+            "\n### 2. Landcover Features (10 features, % of basin area)\n",
+            "- landcover_forest_pct: Closed + open forest, all leaf types (Copernicus CGLS-LC100 111-126)\n",
+            "- landcover_shrubland_pct: Shrubs (lc_20)\n",
+            "- landcover_grassland_pct: Herbaceous vegetation (lc_30)\n",
+            "- landcover_cropland_pct: Cultivated/agricultural land (lc_40)\n",
+            "- landcover_urban_pct: Urban/built-up area (lc_50)\n",
+            "- landcover_bare_pct: Bare/sparse vegetation (lc_60)\n",
+            "- landcover_snow_ice_pct: Permanent snow and ice (lc_70) — the real glacier/snowpack signal basin_glacier_pct never had\n",
+            "- landcover_water_pct: Permanent water bodies (lc_80)\n",
+            "- landcover_wetland_pct: Herbaceous wetland (lc_90)\n",
+            "- landcover_moss_lichen_pct: Moss and lichen (lc_100)\n",
             "\n### 3. Climate Forcing Features (12+ features)\n",
             "- basin_precip_mm: Monthly precipitation (mm)\n",
             "- basin_tavg_c: Average temperature (°C)\n",

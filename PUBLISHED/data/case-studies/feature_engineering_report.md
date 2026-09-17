@@ -1,9 +1,9 @@
 # Comprehensive Feature Engineering Report
 ## Overview
-Total records: 6,739
-Total gauges: 38
-Time span: 1948-2020
-Total engineered features: 68
+Total records: 59,516
+Total gauges: 114
+Time span: 1910-2021
+Total engineered features: 71
 
 ## Feature Categories
 ### 1. Terrain Features (5 features)
@@ -13,14 +13,17 @@ Total engineered features: 68
 - basin_tri: Terrain Ruggedness Index (measure of terrain complexity)
 - basin_roughness: Surface roughness
 
-### 2. Landcover Features (7 features, %)
-- landcover_forest_pct: Forest cover percentage
-- landcover_grassland_pct: Grassland cover
-- landcover_shrubland_pct: Shrubland cover
-- landcover_water_pct: Water body percentage
-- landcover_urban_pct: Urban/built-up area
-- landcover_cropland_pct: Agricultural land
-- landcover_bare_pct: Bare rock/soil
+### 2. Landcover Features (10 features, % of basin area)
+- landcover_forest_pct: Closed + open forest, all leaf types (Copernicus CGLS-LC100 111-126)
+- landcover_shrubland_pct: Shrubs (lc_20)
+- landcover_grassland_pct: Herbaceous vegetation (lc_30)
+- landcover_cropland_pct: Cultivated/agricultural land (lc_40)
+- landcover_urban_pct: Urban/built-up area (lc_50)
+- landcover_bare_pct: Bare/sparse vegetation (lc_60)
+- landcover_snow_ice_pct: Permanent snow and ice (lc_70) — the real glacier/snowpack signal basin_glacier_pct never had
+- landcover_water_pct: Permanent water bodies (lc_80)
+- landcover_wetland_pct: Herbaceous wetland (lc_90)
+- landcover_moss_lichen_pct: Moss and lichen (lc_100)
 
 ### 3. Climate Forcing Features (12+ features)
 - basin_precip_mm: Monthly precipitation (mm)
@@ -59,9 +62,9 @@ A dry spell is identified when ≥2 of the following occur:
 3. Evaporative demand > 75th percentile for that gauge
 
 ## Data Coverage
-- Non-null discharge: 6739 / 6739 (100.0%)
-- Non-null basin_precip_mm: 1832 / 6739 (27.2%)
-- Non-null basin_tavg_c: 1832 / 6739 (27.2%)
-- Dry spells identified: 113 (1.7%)
-  - Drought (low flow + low precip): 42
-  - Low flow: 1599
+- Non-null discharge: 59516 / 59516 (100.0%)
+- Non-null basin_precip_mm: 41735 / 59516 (70.1%)
+- Non-null basin_tavg_c: 41735 / 59516 (70.1%)
+- Dry spells identified: 3579 (6.0%)
+  - Drought (low flow + low precip): 1993
+  - Low flow: 12737

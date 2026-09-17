@@ -38,7 +38,7 @@ def load_upstream_stations() -> Dict[str, pd.DataFrame]:
         {gauge_code: DataFrame with columns [station_id, station_name, distance_km, weight]}
     """
     print("Loading upstream station mappings...")
-    df = pd.read_csv(UPSTREAM_FILE)
+    df = pd.read_csv(UPSTREAM_FILE, dtype={'gauge_code': str})
     
     upstream_by_gauge = {}
     for gauge_code in df['gauge_code'].unique():

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T23:08:26.542119+00:00",
+  "generated_at": "2026-09-17T13:14:16.742083+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224",
@@ -20,7 +20,7 @@
       "metric_label": "Monthly NSE · chronological test",
       "detail": "84 held-out months · seasonal-volume uncertainty remains",
       "status": "Chronological model re-evaluation",
-      "image_revision": "385ea05ed43a"
+      "image_revision": "b60112150d0e"
     },
     {
       "id": "regional",
@@ -35,7 +35,7 @@
       "metric_label": "Meteorological locations",
       "detail": "2015–2020 · 6,192 station-month records",
       "status": "Exploratory relationships",
-      "image_revision": "fe4e086e7278"
+      "image_revision": "a76c74a75ccf"
     },
     {
       "id": "water-flow",
@@ -56,16 +56,16 @@
       "id": "dry-spell",
       "href": "/dry-spell.html",
       "title": "River flow without a gauge",
-      "region": "REGIONAL · 38 CA-DISCHARGE GAUGES",
-      "aim": "Model monthly discharge and dry-spell state from climate forcing and basin attributes alone — no discharge lags — for basins where the gauge is missing or silent.",
-      "image": "/data/case-studies/dry_spell_error_atlas.png",
-      "image_alt": "Held-out error atlas: predicted versus observed discharge, residual distributions, signed error by month, and error by dry-spell state across 38 gauges.",
-      "evidence_date": "2026-09-16T23:08:26.542119+00:00",
-      "metric": 0.3146224032473953,
-      "metric_label": "Median R² · climate-only transfer",
-      "detail": "22 of 38 gauges positive · gauge-anchored best 0.85",
-      "status": "Chronological holdout · transfer experiment",
-      "image_revision": "be5206e07714"
+      "region": "SYR DARYA & AMU DARYA · 76 CA-DISCHARGE GAUGES",
+      "aim": "Predict monthly discharge from climate and basin attributes alone, pooled across gauges and validated on gauges withheld from training entirely — then calibrated per gauge where one exists.",
+      "image": "/data/case-studies/pooled_transfer_atlas.png",
+      "image_alt": "Log-log scatter of observed versus predicted discharge on gauges the pooled model never trained on, and feature importance, across 76 Syr Darya / Amu Darya gauges.",
+      "evidence_date": "2026-09-17T13:14:16.742083+00:00",
+      "metric": 0.27081459209322656,
+      "metric_label": "Median R² · pooled, gauge-unseen",
+      "detail": "52 of 76 gauges positive · gauge-anchored best 0.92",
+      "status": "GroupKFold by gauge · transfer experiment",
+      "image_revision": "85ce32f2f212"
     },
     {
       "id": "trends",

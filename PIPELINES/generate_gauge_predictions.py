@@ -46,7 +46,7 @@ def load_models_and_data(models_path: Path, data_path: Path) -> Tuple[Dict, pd.D
         gauge_models = pickle.load(f)
     
     print(f"Loading data from {data_path.name}...")
-    df = pd.read_csv(data_path)
+    df = pd.read_csv(data_path, dtype={'gauge_code': str})
     
     print(f"  Loaded models for {len(gauge_models)} gauges")
     print(f"  Data: {len(df)} records")
@@ -233,9 +233,17 @@ def main():
     # Combine all predictions
     predictions_df = pd.concat(all_predictions, ignore_index=True)
     
-    # Save full predictions
+    # Save predictions: only the prediction/error columns, not the full input
+    # feature matrix generate_gauge_predictions() copied through per gauge —
+    # that carried ~85 feature columns into every row for no downstream
+    # consumer, multiplying this file's size by roughly the feature count.
     pred_file = args.output_dir / "gauge_quantile_predictions.csv"
-    predictions_df.to_csv(pred_file, index=False)
+    output_columns = [
+        "gauge_code", "date", "discharge_observed_m3s", "discharge_pred_median_m3s",
+        "discharge_pred_p10_m3s", "discharge_pred_p90_m3s", "prediction_interval_m3s",
+        "error_m3s", "error_pct", "in_interval",
+    ]
+    predictions_df[output_columns].to_csv(pred_file, index=False)
     print(f"\nSaved {len(predictions_df)} predictions to {pred_file.name}")
     
     # Aggregate statistics

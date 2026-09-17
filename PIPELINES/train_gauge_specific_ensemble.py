@@ -45,7 +45,7 @@ OUTPUT_DIR = ROOT / "PUBLISHED/data/case-studies"
 def load_data(data_path: Path, min_feature_coverage: float = 0.9) -> Tuple[pd.DataFrame, List[str]]:
     """Load feature matrix."""
     print(f"Loading data from {data_path.name}...")
-    df = pd.read_csv(data_path)
+    df = pd.read_csv(data_path, dtype={'gauge_code': str})
     
     # Identify feature columns (exclude gauge_code, year, month, discharge_m3s)
     exclude = {'gauge_code', 'year', 'month', 'discharge_m3s', 'date'}
@@ -318,15 +318,42 @@ def main():
     # Load data
     df, features = load_data(args.data, args.min_feature_coverage)
 
+    # Categorical text columns (e.g. 'season') can pass the coverage threshold
+    # with 100% non-null rates but are not usable by this numeric-only sklearn
+    # pipeline in either mode: np.isnan() on a non-numeric array raises, which
+    # was silently failing every gauge before this filter applied universally.
+    # pandas >= 3 infers text columns as its own StringDtype rather than
+    # 'object', so checking `dtype == object` alone misses them there.
+    categorical = [f for f in features if not pd.api.types.is_numeric_dtype(df[f])]
+    if categorical:
+        features = [f for f in features if f not in categorical]
+        print(f"Dropping {len(categorical)} categorical column(s) not usable by the regressors: {categorical}")
+
+    # discharge_anomaly_std and discharge_above_baseflow are affine transforms of
+    # THIS row's discharge_m3s (current-month value minus/over a per-gauge
+    # constant) — not lagged history. Feeding today's discharge, rescaled, back
+    # in as a predictor of today's discharge is identity leakage, not a
+    # legitimate "gauge already reports" feature: it drove every gauge to
+    # R^2 > 0.9 (many at 1.000) before this filter existed. Lagged/antecedent
+    # discharge features (discharge_lag1_m3s, discharge_3m_mean_m3s, baseflow
+    # ratios, quantile constants) stay: those only use prior months or
+    # whole-series constants, not the current target value itself.
+    # dry_spell_discharge is this month's discharge tested against this gauge's
+    # Q25 threshold, and dry_spell is a composite that includes it — both
+    # describe the current target value, not antecedent conditions.
+    same_timestep_leak = [f for f in ('discharge_anomaly_std', 'discharge_above_baseflow',
+                                       'dry_spell_discharge', 'dry_spell', 'dry_spell_next_month')
+                           if f in features]
+    if same_timestep_leak:
+        features = [f for f in features if f not in same_timestep_leak]
+        print(f"Dropping same-timestep discharge transforms (identity leakage): {same_timestep_leak}")
+
     if args.gauge_independent:
         # Discharge-derived columns describe the answer, not the forcing: at an
         # ungauged basin none of them exists. Dropping them is what makes the
         # experiment a transfer test rather than a persistence nowcast.
         dropped = [f for f in features if any(
             k in f.lower() for k in ('q_', 'discharge', '_flow', 'baseflow', 'runoff_coef'))]
-        # Categorical text columns are also beyond a purely numeric transfer model.
-        dropped += [f for f in features if f not in dropped
-                    and df[f].dtype == object]
         features = [f for f in features if f not in dropped]
         print(f"Gauge-independent mode: dropped {len(dropped)} discharge-derived features")
         for f in dropped:

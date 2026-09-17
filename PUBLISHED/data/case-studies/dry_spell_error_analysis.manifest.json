@@ -2,6 +2,7 @@
   "inputs": [
     "PUBLISHED/data/case-studies/gauge_quantile_predictions.csv",
     "PUBLISHED/data/case-studies/antecedent_discharge_features.csv",
+    "PUBLISHED/data/case-studies/gauge_basin_lookup.csv",
     "PUBLISHED/data/hydroclimate/basins-level10.geojson",
     "PUBLISHED/data/research/ca-discharge-stations.geojson",
     "PUBLISHED/data/case-studies/pskem-candidate-catchment.geojson",
@@ -17,15 +18,16 @@
     "PUBLISHED/data/case-studies/gauge_network_inventory_map.png"
   ],
   "input_hashes": {
-    "gauge_quantile_predictions.csv": "2f89a5438958103b1622815883650c5bb10c98942843b6d97c3ff7fa4877cbb8",
-    "antecedent_discharge_features.csv": "82f9d0fa3fc37a58ac222db93368aef10868d952fabd6e1bfcf81c9fd4d9d0e8",
+    "gauge_quantile_predictions.csv": "9158e8897f6f81b042c8482cb6aa0460048db833672f74ff12a3a5916198e949",
+    "antecedent_discharge_features.csv": "c0d95fd4fad3a8d8a79374800b6bf28e2f00f84a79d27e870144cc09c0c61fe5",
+    "gauge_basin_lookup.csv": "6eae62baa1f20b86b246b85610e913bba723c72d9ce0ed51e50f930469de65a2",
     "basins-level10.geojson": "ddaf29f01f28b08122c37406bfa872bd85ee1659b174101772e877c7e9f99f4b",
     "ca-discharge-stations.geojson": "5273cb2b4fd0e61324850a7f5e4f27a708cdfa6de139c7c273e11b3b2f0f2ba4",
     "pskem-candidate-catchment.geojson": "0aa8e23c8420beb5d6fb81a078eb6a12fd9c1ccff10a0de4e20ae4dbfca08f49",
     "gauge-reach-audit.json": "25d19fedbfb220abc280f780faaadb90495cf9538e3db153369b63ee3c5719da"
   },
-  "n_validation_records": 1363,
-  "n_gauges": 38,
-  "overall_interval_coverage_pct": 79.60381511371973,
+  "n_validation_records": 7125,
+  "n_gauges": 75,
+  "overall_interval_coverage_pct": 77.27719298245614,
   "map_scope": "BasinATLAS level 10 context and provisional Pskem candidate catchment; no unsupported gauge interpolation"
 }

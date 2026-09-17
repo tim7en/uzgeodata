@@ -37,7 +37,7 @@ class AntecedentDrySpellAnalyzer:
     def __init__(self, features_file: Path):
         """Load enhanced features."""
         print("Loading enhanced features...")
-        self.df = pd.read_csv(features_file)
+        self.df = pd.read_csv(features_file, dtype={'gauge_code': str})
         self.df['date'] = pd.to_datetime(self.df['date'])
         self.df = self.df.sort_values(['gauge_code', 'date']).reset_index(drop=True)
         print(f"  Loaded {len(self.df):,} records for {self.df['gauge_code'].nunique()} gauges")

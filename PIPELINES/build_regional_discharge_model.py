@@ -92,30 +92,38 @@ def load_discharge_data() -> Dict[str, List[dict]]:
     ORDER BY CODE, date
     """
     
+    # Native monthly, decadal (10-day) and daily readings are all usable: the
+    # feature builder aggregates every reading that falls in a given
+    # (year, month) into one monthly value (see aggregate_monthly_records), so
+    # decade/day series just arrive as multiple readings per month. Restricting
+    # to res == 'month' alone drops ~95% of gauges, because the ex-Soviet
+    # hydromet network (Naryn, Vaksh, Pyandzh, Kofarnikhan, Chirchik, Zerafshan,
+    # Syr Darya) reports on the 10-day decadal convention, not monthly — only
+    # the Afghan network happens to be digitized natively as 'month'.
     discharge_by_gauge = defaultdict(list)
     for record in rows(conn, discharge_query):
-        if record['res'] == 'month' and record['value'] is not None:
+        if record['res'] in ('month', 'decade', 'day') and record['value'] is not None:
             discharge_by_gauge[record['CODE']].append({
                 'date': record['date'],
                 'value': float(record['value'])
             })
-    
+
     conn.close()
-    
-    # Filter to gauges with sufficient data
+
+    # Filter to gauges with sufficient data, counting distinct calendar months
+    # rather than raw readings (a decadal gauge has ~3 rows per month, a daily
+    # gauge ~30, so raw row counts are not comparable across resolutions).
     print(f"  Total gauges in database: {len(gauges)}")
     filtered_discharge = {}
     for code, records in discharge_by_gauge.items():
-        if len(records) >= MIN_RECORDS:
-            # Check year span
-            dates = [datetime.fromisoformat(r['date']).year for r in records]
-            year_span = max(dates) - min(dates) + 1
+        months = {(datetime.fromisoformat(r['date']).year, datetime.fromisoformat(r['date']).month)
+                  for r in records}
+        if len(months) >= MIN_RECORDS:
+            year_span = max(y for y, m in months) - min(y for y, m in months) + 1
             if year_span >= MIN_YEARS:
                 filtered_discharge[code] = records
-    
+
     print(f"  Gauges with ≥{MIN_YEARS} years of monthly data: {len(filtered_discharge)}")
-    
-    conn.close()
     
     return filtered_discharge
 
@@ -194,7 +202,7 @@ def load_basin_climate_data() -> Dict[Tuple[str, int, int], Dict[str, float]]:
     print(f"  Loading basin climate data from {climate_file.name}...")
     
     import pandas as pd
-    df = pd.read_csv(climate_file)
+    df = pd.read_csv(climate_file, dtype={'gauge_code': str})
     
     climate_by_key = {}
     for _, row in df.iterrows():

@@ -1,0 +1,48 @@
+{
+  "method": "Pooled RF+GB on specific discharge (mm/day, area-normalised), GroupKFold by gauge_code (gauges in a held-out fold are entirely unseen by that fold's model) so every reported number is a genuine spatial-transfer / ungauged-basin test.",
+  "n_gauges": 76,
+  "n_records": 36915,
+  "features": [
+    "basin_area_km2",
+    "basin_elevation_m",
+    "basin_elevation_min_m",
+    "basin_elevation_max_m",
+    "basin_slope_pct",
+    "basin_aspect",
+    "basin_tri",
+    "basin_roughness",
+    "landcover_forest_pct",
+    "landcover_shrubland_pct",
+    "landcover_grassland_pct",
+    "landcover_cropland_pct",
+    "landcover_bare_pct",
+    "landcover_snow_ice_pct",
+    "landcover_water_pct",
+    "basin_precip_mm",
+    "basin_precip_lag1_mm",
+    "basin_precip_3m_mm",
+    "basin_anom_precip",
+    "basin_tavg_c",
+    "basin_tmax_c",
+    "basin_tmin_c"
+  ],
+  "overall_r2": 0.7688286941220603,
+  "overall_rmse_m3s": 90.5904307284805,
+  "per_gauge_r2_median": 0.27081459209322656,
+  "per_gauge_positive": 52,
+  "per_gauge_total": 76,
+  "calibration": {
+    "positive_calibrated": 65,
+    "positive_uncalibrated": 48,
+    "n_gauges_calibrated": 76,
+    "median_r2_calibrated": 0.3578005665123152,
+    "median_r2_uncalibrated": 0.25965631640831544
+  },
+  "mass_balance_check": {
+    "comparisons": 21,
+    "violations_observed": 4,
+    "violations_predicted": 4,
+    "violation_rate_observed_pct": 19.0,
+    "violation_rate_predicted_pct": 19.0
+  }
+}

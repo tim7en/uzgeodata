@@ -22,6 +22,7 @@ STUDY = ROOT / "PUBLISHED/data/case-studies"
 HYDRO = ROOT / "PUBLISHED/data/hydroclimate"
 PREDICTIONS = STUDY / "gauge_quantile_predictions.csv"
 FEATURES = STUDY / "antecedent_discharge_features.csv"
+BASIN_LOOKUP = STUDY / "gauge_basin_lookup.csv"
 BASINS = HYDRO / "basins-level10.geojson"
 STATIONS = ROOT / "PUBLISHED/data/research/ca-discharge-stations.geojson"
 CATCHMENT = STUDY / "pskem-candidate-catchment.geojson"
@@ -37,14 +38,36 @@ OUT_MANIFEST = STUDY / "dry_spell_error_analysis.manifest.json"
 
 
 def load_joined() -> pd.DataFrame:
-    predictions = pd.read_csv(PREDICTIONS)
-    features = pd.read_csv(FEATURES, usecols=[
+    predictions = pd.read_csv(PREDICTIONS, dtype={'gauge_code': str})
+    features = pd.read_csv(FEATURES, dtype={'gauge_code': str}, usecols=[
         "gauge_code", "date", "dry_spell", "dry_spell_severity",
         "dry_spell_discharge", "stress_accumulation_index", "discharge_q25",
     ])
+    # generate_gauge_predictions.py passes through the full input feature matrix
+    # (predictions was trained on antecedent_discharge_features.csv, so it
+    # already carries these same label columns); drop them here so the merge
+    # doesn't silently suffix both copies as dry_spell_x/dry_spell_y.
+    predictions = predictions.drop(columns=[c for c in features.columns
+                                             if c in predictions.columns and c not in ("gauge_code", "date")])
     joined = predictions.merge(features, on=["gauge_code", "date"], how="left", validate="one_to_one")
     if joined[["dry_spell", "dry_spell_severity"]].isna().any().any():
         raise ValueError("Validation predictions could not be matched to dry-spell labels")
+
+    # CA-discharge spans Central Asia, not just the Aral Sea drainage: Harirud
+    # and Murghab flow toward Turkmenistan/Iran, and Balkh/Shirintagab/Chu/Talas
+    # are separate endorheic basins. Reporting them under a "Syr Darya & Amu
+    # Darya" study overstates basin coverage, so they are dropped here rather
+    # than left in the headline gauge count.
+    basins = pd.read_csv(BASIN_LOOKUP, dtype={'gauge_code': str})[["gauge_code", "BASIN", "COUNTRY", "aral_drainage"]]
+    before = joined.gauge_code.nunique()
+    joined = joined.merge(basins, on="gauge_code", how="left", validate="many_to_one")
+    if joined["aral_drainage"].isna().any():
+        missing = sorted(joined.loc[joined["aral_drainage"].isna(), "gauge_code"].unique())
+        raise ValueError(f"No basin classification for gauges: {missing}")
+    joined = joined[joined["aral_drainage"]].drop(columns=["aral_drainage"]).reset_index(drop=True)
+    print(f"Basin scope: kept {joined.gauge_code.nunique()} of {before} gauges "
+          f"within Syr Darya / Amu Darya (Aral Sea) drainage")
+
     joined["signed_error_m3s"] = joined["discharge_pred_median_m3s"] - joined["discharge_observed_m3s"]
     joined["absolute_error_m3s"] = joined["signed_error_m3s"].abs()
     joined["squared_error_m3s2"] = joined["signed_error_m3s"] ** 2
@@ -89,51 +112,44 @@ def save_tables(joined: pd.DataFrame, summary: pd.DataFrame, monthly: pd.DataFra
 
 
 def plot_error_atlas(joined: pd.DataFrame, summary: pd.DataFrame) -> None:
-    gauges = list(summary.gauge_code)
-    colors = plt.cm.viridis(np.linspace(0.1, 0.9, len(gauges)))
-    color_map = dict(zip(gauges, colors))
-    figure, axes = plt.subplots(2, 2, figsize=(13, 9), dpi=160)
+    # Two panels only, at a larger size: a 2x2 grid of per-gauge or
+    # per-basin detail (even aggregated to 14 basins) still reads as clutter.
+    # Everything not shown here (monthly bias timing, residual shape) is one
+    # sentence in the surrounding text instead of a fifth thing to decode.
+    n_gauges = summary.gauge_code.nunique()
+    basins = sorted(joined["BASIN"].unique(), key=lambda b: -joined[joined.BASIN.eq(b)].shape[0])
+    state_colors = {"normal": "#5d8f99", "dry_spell": "#c96b4b"}
+    state_labels = {"normal": "Normal", "dry_spell": "Dry spell"}
+
+    figure, axes = plt.subplots(1, 2, figsize=(13, 5.5), dpi=160)
     figure.patch.set_facecolor("white")
 
-    axis = axes[0, 0]
-    for gauge in gauges:
-        data = joined[joined.gauge_code.eq(gauge)]
-        axis.scatter(data.discharge_observed_m3s, data.discharge_pred_median_m3s, s=18, alpha=.65, color=color_map[gauge], label=gauge)
+    axis = axes[0]
+    for state in ("normal", "dry_spell"):
+        data = joined[joined.dry_spell_state.eq(state)]
+        axis.scatter(data.discharge_observed_m3s, data.discharge_pred_median_m3s, s=16, alpha=.5,
+                     color=state_colors[state], label=state_labels[state])
     limit = max(joined.discharge_observed_m3s.max(), joined.discharge_pred_median_m3s.max()) * 1.05
-    axis.plot([0, limit], [0, limit], "--", color="#333333", linewidth=.9)
-    axis.set(xlabel="Observed discharge (m3/s)", ylabel="Predicted discharge (m3/s)", title="Held-out predictions")
-    axis.legend(fontsize=7, frameon=False, ncol=2)
+    axis.plot([0, limit], [0, limit], "--", color="#333333", linewidth=1)
+    axis.set(xlabel="Observed discharge (m3/s)", ylabel="Predicted discharge (m3/s)",
+             title=f"Held-out predictions ({n_gauges} gauges)")
+    axis.legend(fontsize=10, frameon=False)
 
-    axis = axes[0, 1]
-    error_data = [joined[joined.gauge_code.eq(g)].signed_error_m3s for g in gauges]
-    axis.boxplot(error_data, tick_labels=gauges, showfliers=False, patch_artist=True,
-                 boxprops={"facecolor": "#d7e4e1"}, medianprops={"color": "#b24a32"})
-    axis.axhline(0, color="#333333", linewidth=.8)
-    axis.set(ylabel="Prediction minus observation (m3/s)", title="Residual distribution")
-    axis.tick_params(axis="x", labelrotation=45, labelsize=7)
-
-    axis = axes[1, 0]
-    heat = joined.pivot_table(index="gauge_code", columns="month", values="signed_error_m3s", aggfunc="mean").reindex(gauges)
-    image = axis.imshow(heat, aspect="auto", cmap="RdBu_r", vmin=-np.nanmax(abs(heat.values)), vmax=np.nanmax(abs(heat.values)))
-    axis.set(xticks=range(12), xticklabels=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-             yticks=range(len(gauges)), yticklabels=gauges, title="Mean signed error by month")
-    axis.tick_params(axis="x", labelrotation=45, labelsize=7)
-    figure.colorbar(image, ax=axis, shrink=.8, label="m3/s")
-
-    axis = axes[1, 1]
-    state = joined.groupby(["gauge_code", "dry_spell_state"], sort=True).absolute_error_m3s.mean().unstack(fill_value=np.nan).reindex(gauges)
-    x = np.arange(len(gauges))
+    axis = axes[1]
+    state = joined.groupby(["BASIN", "dry_spell_state"], sort=False).absolute_error_m3s.mean().unstack(fill_value=np.nan).reindex(basins)
+    x = np.arange(len(basins))
     width = .36
-    axis.bar(x - width / 2, state.get("normal", pd.Series(index=gauges)).fillna(0), width, label="Normal", color="#5d8f99")
-    axis.bar(x + width / 2, state.get("dry_spell", pd.Series(index=gauges)).fillna(0), width, label="Dry spell", color="#c96b4b")
-    axis.set(xticks=x, xticklabels=gauges, ylabel="MAE (m3/s)", title="Error by observed dry-spell state")
-    axis.tick_params(axis="x", labelrotation=45, labelsize=7)
-    axis.legend(frameon=False)
+    axis.bar(x - width / 2, state.get("normal", pd.Series(index=basins)).fillna(0), width, label="Normal", color=state_colors["normal"])
+    axis.bar(x + width / 2, state.get("dry_spell", pd.Series(index=basins)).fillna(0), width, label="Dry spell", color=state_colors["dry_spell"])
+    axis.set(xticks=x, xticklabels=basins, ylabel="MAE (m3/s)", title="Error by dry-spell state, per basin")
+    axis.tick_params(axis="x", labelrotation=45, labelsize=9)
+    axis.legend(fontsize=10, frameon=False)
 
     for axis in axes.flat:
         axis.spines[["top", "right"]].set_visible(False)
         axis.grid(axis="y", alpha=.2)
-    figure.suptitle("Dry-spell model error atlas | chronological held-out records", fontsize=14, x=.04, ha="left")
+        axis.tick_params(labelsize=10)
+    figure.suptitle("Dry-spell model error, Syr Darya & Amu Darya gauges only", fontsize=14, x=.04, ha="left")
     figure.tight_layout()
     figure.savefig(OUT_ERROR_FIGURE, facecolor="white")
     plt.close(figure)
@@ -180,7 +196,9 @@ def plot_gauge_error_map(summary: pd.DataFrame) -> None:
     mapped = stations.dropna(subset=["rmse_m3s"])
     mapped.plot(ax=axis, column="rmse_m3s", cmap="magma", markersize=22 + 5 * mapped["dry_spell_months"],
                 legend=True, legend_kwds={"label": "Held-out RMSE (m3/s)", "shrink": .75}, edgecolor="white", linewidth=.35)
-    axis.set_title(f"All-gauge held-out error map\nColor = RMSE; marker size = observed dry-spell months ({duplicate_codes} exact duplicate station rows removed)", loc="left", fontsize=13)
+    axis.set_title(f"Syr Darya & Amu Darya held-out error map ({len(mapped)} gauges)\n"
+                   f"Color = RMSE; marker size = observed dry-spell months ({duplicate_codes} exact duplicate station rows removed)",
+                   loc="left", fontsize=13)
     axis.set_xlabel("Longitude")
     axis.set_ylabel("Latitude")
     axis.grid(alpha=.2)
@@ -204,7 +222,8 @@ def plot_network_inventory_map(summary: pd.DataFrame) -> None:
     without_series.plot(ax=axis, color="#b8c1c0", markersize=8, alpha=.65, label=f"Registry only ({len(without_series)})")
     with_series.plot(ax=axis, color="#4d8390", markersize=13, alpha=.75, label=f"With discharge series ({len(with_series)})")
     modelled_stations.plot(ax=axis, color="#c65336", edgecolor="white", linewidth=.35, markersize=30, label=f"Modelled here ({len(modelled_stations)})")
-    axis.set_title("CA-discharge gauge network coverage\nAll unique gauge locations versus current modelling subset", loc="left", fontsize=13)
+    axis.set_title("CA-discharge gauge network coverage\nAll unique gauge locations versus the Syr Darya / Amu Darya modelling subset",
+                   loc="left", fontsize=13)
     axis.set_xlabel("Longitude")
     axis.set_ylabel("Latitude")
     axis.legend(frameon=True, fontsize=8, loc="lower left")
@@ -214,17 +233,24 @@ def plot_network_inventory_map(summary: pd.DataFrame) -> None:
     plt.close(figure)
 
 
-def write_report(joined: pd.DataFrame, summary: pd.DataFrame) -> None:
+def write_report(joined: pd.DataFrame, summary: pd.DataFrame, excluded: pd.DataFrame) -> None:
     worst = summary.sort_values("rmse_m3s", ascending=False).iloc[0]
     dry = joined[joined.dry_spell.eq(1)]
     dry_mae = dry.absolute_error_m3s.mean() if len(dry) else float("nan")
     normal_mae = joined[joined.dry_spell.eq(0)].absolute_error_m3s.mean()
+    excluded_by_basin = excluded.groupby("BASIN").gauge_code.nunique().sort_values(ascending=False)
     lines = [
         "# Dry-Spell Held-Out Error Analysis",
         "",
-        "**Scope:** Corrected chronological validation predictions only.",
+        "**Scope:** Corrected chronological validation predictions, Syr Darya / Amu Darya (Aral Sea drainage) gauges only.",
         "",
         f"The analysis contains **{len(joined):,} held-out records** across **{joined.gauge_code.nunique()} gauges**. Overall p10-p90 interval coverage is **{100 * joined.in_interval.mean():.1f}%**. This is below nominal 90% and should not be described as calibrated uncertainty.",
+        "",
+        f"**{int(excluded_by_basin.sum())} CA-discharge gauges with usable discharge history were excluded** because their basin "
+        f"does not drain to the Aral Sea: " +
+        ", ".join(f"{basin} ({n})" for basin, n in excluded_by_basin.items()) +
+        ". Harirud and Murghab flow toward Turkmenistan/Iran; Balkh, Shirintagab, Chu and Talas are separate "
+        "endorheic basins. They are real, modellable gauges (see `gauge_ensemble_models.pkl`), just not part of this basin's study.",
         "",
         "## Findings",
         "",
@@ -269,15 +295,20 @@ def main() -> None:
     joined = load_joined()
     summary, monthly = summarize(joined)
     save_tables(joined, summary, monthly)
+
+    basins = pd.read_csv(BASIN_LOOKUP, dtype={'gauge_code': str})
+    modelled_codes = set(pd.read_csv(PREDICTIONS, dtype={'gauge_code': str}, usecols=["gauge_code"]).gauge_code.unique())
+    excluded = basins[basins.gauge_code.isin(modelled_codes) & ~basins.aral_drainage]
+
     plot_error_atlas(joined, summary)
     plot_basin_context_map()
     plot_gauge_error_map(summary)
     plot_network_inventory_map(summary)
-    write_report(joined, summary)
+    write_report(joined, summary, excluded)
     manifest = {
-        "inputs": [str(path.relative_to(ROOT)) for path in [PREDICTIONS, FEATURES, BASINS, STATIONS, CATCHMENT, REACH_AUDIT]],
+        "inputs": [str(path.relative_to(ROOT)) for path in [PREDICTIONS, FEATURES, BASIN_LOOKUP, BASINS, STATIONS, CATCHMENT, REACH_AUDIT]],
         "outputs": [str(path.relative_to(ROOT)) for path in [OUT_CSV, OUT_MONTHLY, OUT_REPORT, OUT_ERROR_FIGURE, OUT_MAP, OUT_ERROR_MAP, OUT_NETWORK_MAP]],
-        "input_hashes": {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in [PREDICTIONS, FEATURES, BASINS, STATIONS, CATCHMENT, REACH_AUDIT]},
+        "input_hashes": {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in [PREDICTIONS, FEATURES, BASIN_LOOKUP, BASINS, STATIONS, CATCHMENT, REACH_AUDIT]},
         "n_validation_records": len(joined),
         "n_gauges": int(joined.gauge_code.nunique()),
         "overall_interval_coverage_pct": float(100 * joined.in_interval.mean()),

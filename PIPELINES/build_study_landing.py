@@ -126,8 +126,11 @@ def main():
     preview(DATA/'regional-study-preview.svg',network)
     from build_water_flow_diagram import study_card as water_flow_card
     trend=json.loads((ROOT/'PUBLISHED/data/trends/index.json').read_text(encoding='utf-8'))
-    gi_path=DATA/'gauge-independent/gauge_independent_summary.json'
-    gi=json.loads(gi_path.read_text(encoding='utf-8')) if gi_path.exists() else None
+    pooled_path=DATA/'pooled_transfer_summary.json'
+    pooled=json.loads(pooled_path.read_text(encoding='utf-8')) if pooled_path.exists() else None
+    ga_path=DATA/'gauge_uncertainty_calibration.json'
+    ga=json.loads(ga_path.read_text(encoding='utf-8')) if ga_path.exists() else None
+    ga_best=max((v['r2'] for v in ga['gauges'].values()), default=None) if ga else None
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -151,15 +154,16 @@ def main():
         # the sense that the bytes are on a server.
         water_flow_card(),
         {'id':'dry-spell','href':'/dry-spell.html','title':'River flow without a gauge',
-         'region':'REGIONAL · 38 CA-DISCHARGE GAUGES','aim':'Model monthly discharge and dry-spell state from climate forcing and basin attributes alone — no discharge lags — for basins where the gauge is missing or silent.',
-         'image':'/data/case-studies/dry_spell_error_atlas.png',
-         'image_alt':'Held-out error atlas: predicted versus observed discharge, residual distributions, signed error by month, and error by dry-spell state across 38 gauges.',
+         'region':f"SYR DARYA & AMU DARYA · {pooled['n_gauges']} CA-DISCHARGE GAUGES" if pooled else 'REGIONAL · CA-DISCHARGE GAUGES',
+         'aim':'Predict monthly discharge from climate and basin attributes alone, pooled across gauges and validated on gauges withheld from training entirely — then calibrated per gauge where one exists.',
+         'image':'/data/case-studies/pooled_transfer_atlas.png',
+         'image_alt':f"Log-log scatter of observed versus predicted discharge on gauges the pooled model never trained on, and feature importance, across {pooled['n_gauges']} Syr Darya / Amu Darya gauges." if pooled else 'Pooled transfer model: observed versus predicted discharge and feature importance.',
          'evidence_date':now,
-         'metric':gi['counts']['median_r2'] if gi else 0.31,
-         'metric_label':'Median R² · climate-only transfer',
-         'detail':(f"{gi['counts']['positive_r2']} of {gi['counts']['gauges_trained']} gauges positive"
-                   " · gauge-anchored best 0.85") if gi else 'climate-only transfer experiment',
-         'status':'Chronological holdout · transfer experiment'},
+         'metric':pooled['per_gauge_r2_median'] if pooled else 0.34,
+         'metric_label':'Median R² · pooled, gauge-unseen',
+         'detail':(f"{pooled['per_gauge_positive']} of {pooled['per_gauge_total']} gauges positive"
+                   + (f" · gauge-anchored best {ga_best:.2f}" if ga_best is not None else "")) if pooled else 'pooled climate-only transfer experiment',
+         'status':'GroupKFold by gauge · transfer experiment'},
         {'id':'trends','href':'/trends.html','title':'What survives testing properly',
          'region':'AMU DARYA & SYR DARYA','aim':'Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.',
          'image':'/data/trends/trend-correction-cascade.svg',
