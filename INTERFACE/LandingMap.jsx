@@ -7,6 +7,8 @@ import DamModal from './DamModal.jsx';
 import { svg } from 'leaflet';
 import LakeLayer from './LakeLayer.jsx';
 import LakeModal from './LakeModal.jsx';
+import RiverLayer from './RiverLayer.jsx';
+import RiverModal from './RiverModal.jsx';
 import StationLayer from './StationLayer.jsx';
 import StationModal from './StationModal.jsx';
 import GaugeModal from './GaugeModal.jsx';
@@ -334,6 +336,9 @@ export default function LandingMap() {
   const [lakes, setLakes] = useState(null);
   const [showLakes, setShowLakes] = useState(false);
   const [lake, setLake] = useState(null);
+  const [swotRivers, setSwotRivers] = useState(null);
+  const [showSwotRivers, setShowSwotRivers] = useState(false);
+  const [riverReach, setRiverReach] = useState(null);
   const [stations, setStations] = useState(null);
   const [showStations, setShowStations] = useState(false);
   const [station, setStation] = useState(null);
@@ -388,6 +393,12 @@ export default function LandingMap() {
     json('/data/hydroclimate/water-bodies-reviewed.geojson').then(d=>{if(live)setLakes(d);}).catch(()=>{if(live)setShowLakes(false);});
     return()=>{live=false;};
   },[showLakes,lakes]);
+  useEffect(()=>{
+    if(!showSwotRivers||swotRivers)return;
+    let live=true;
+    json('/data/case-studies/rivers/reaches.geojson').then(d=>{if(live)setSwotRivers(d);}).catch(()=>{if(live)setShowSwotRivers(false);});
+    return()=>{live=false;};
+  },[showSwotRivers,swotRivers]);
   // Stations are off by default: they are evidence about the products rather than
   // part of the hydrography, and combined meteorological stations and discharge gauges
   // is a lot to impose on a reader who came to look at catchments.
@@ -580,7 +591,7 @@ export default function LandingMap() {
       mouseover: () => setHoveredId(id),
       mouseout: () => setHoveredId(current => (current === id ? null : current)),
       click: () => {
-        if (drawingRef.current) return; setSelected(feature); setDam(null); setLake(null); setStation(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
+        if (drawingRef.current) return; setSelected(feature); setDam(null); setLake(null); setStation(null); setRiverReach(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
     });
   }, []);
 
@@ -616,8 +627,9 @@ export default function LandingMap() {
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
-      {showLakes&&lakes&&<LakeLayer data={lakes} onSelect={properties=>{setLake(properties);setDam(null);setStation(null);setTableOpen(false);}}/>}
-      {showStations&&stations&&<StationLayer data={stations} onSelect={properties=>{setStation(properties);setLake(null);setDam(null);setTableOpen(false);}}/>}
+      {showLakes&&lakes&&<LakeLayer data={lakes} onSelect={properties=>{setLake(properties);setDam(null);setStation(null);setRiverReach(null);setTableOpen(false);}}/>}
+      {showSwotRivers&&swotRivers&&<RiverLayer data={swotRivers} onSelect={properties=>{setRiverReach(properties);setLake(null);setDam(null);setStation(null);setTableOpen(false);}}/>}
+      {showStations&&stations&&<StationLayer data={stations} onSelect={properties=>{setStation(properties);setLake(null);setDam(null);setRiverReach(null);setTableOpen(false);}}/>}
       {/* SVG markers remain above basins while allowing clicks between symbols
           to reach the basin canvas, including after a basin-level remount. */}
       {damClusters.map(cluster => {
@@ -628,7 +640,7 @@ export default function LandingMap() {
             center={[cluster.latitude, cluster.longitude]}
             pathOptions={damStyle(feature.properties, state)}
             radius={damStyle(feature.properties, state).radius}
-            eventHandlers={{ click: () => { setDam(feature.properties); setLake(null); setStation(null); setSelected(null); setTableOpen(false); } }}>
+            eventHandlers={{ click: () => { setDam(feature.properties); setLake(null); setStation(null); setRiverReach(null); setSelected(null); setTableOpen(false); } }}>
             <Tooltip direction="top" offset={[0, -4]} opacity={1} className="land-dam-tip">
               {damLabel(feature.properties)}
             </Tooltip>
@@ -694,6 +706,14 @@ export default function LandingMap() {
               }}/>
               <span className="land-lake-key" aria-hidden="true"><i/><i/><i/></span>
               <span>Lakes{lakes ? ` · ${formatNumber(lakes.features.length)}` : ''}</span>
+            </label>
+            <label className="land-toggle">
+              <input type="checkbox" checked={showSwotRivers} onChange={event => {
+                setShowSwotRivers(event.target.checked);
+                if (!event.target.checked) setRiverReach(null);
+              }}/>
+              <span className="land-river-key" aria-hidden="true"/>
+              <span>SWOT river reaches{swotRivers ? ` · ${formatNumber(swotRivers.features.filter(f => f.properties.has_chart).length)}` : ''}</span>
             </label>
             <label className="land-toggle">
               <input type="checkbox" checked={showDams} onChange={event => {
@@ -859,6 +879,7 @@ export default function LandingMap() {
 
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
     {lake && <LakeModal lake={lake} onClose={()=>setLake(null)}/>}
+    {riverReach && <RiverModal reach={riverReach} onClose={()=>setRiverReach(null)}/>}
     {station && <StationModal station={station} onClose={()=>setStation(null)}/>}
     </main>
 

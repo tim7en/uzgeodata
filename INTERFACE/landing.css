@@ -462,6 +462,7 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-station-hint{background:rgba(10,26,36,.9);border:0;color:#e8f2f7;
   font:500 9px var(--body);padding:2px 5px}
 .land-station-hint::before{display:none}
+.land-river-key{display:inline-block;width:14px;height:2px;background:#3fd0ff;border-radius:1px}
 .station-modal .dam-modal-kicker{color:#ffd27f}
 .station-modal .station-modal-warn{border-left:3px solid #ff6b4a;padding-left:12px}
 .station-modal-downloads{display:flex;gap:8px;margin:10px 0 4px}
