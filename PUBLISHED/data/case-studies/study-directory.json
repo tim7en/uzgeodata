@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-17T21:24:52.710113+00:00",
+  "generated_at": "2026-09-17T21:39:56.393754+00:00",
   "source_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224",
     "regional-station-study.json": "f1c0f711f7256c3c04183c7cc3cef4de9ea17ee03cf4b5784b4da3d2d7d83902",
-    "model-review.json": "ac1174c23323a09701e3f0e8ea1b609b956e172007ef1232cbd2ab81ca512bd9"
+    "model-review.json": "3f39a0916c30eb8d24652d670ac5fd13236d21c81f8a92c6dfda8fda522f55cf"
   },
   "studies": [
     {
@@ -15,7 +15,7 @@
       "aim": "Test how elevation, snowfall and soil-water storage shape seasonal river flow.",
       "image": "/data/case-studies/chirchik-study-preview.svg",
       "image_alt": "Observed and simulated monthly runoff in held-out years, arranged consecutively as a study preview.",
-      "evidence_date": "2026-09-17T21:24:49.370402+00:00",
+      "evidence_date": "2026-09-17T21:39:55.922662+00:00",
       "metric": 0.7595,
       "metric_label": "Monthly NSE · chronological test",
       "detail": "84 held-out months · seasonal-volume uncertainty remains",
@@ -60,7 +60,7 @@
       "aim": "Predict monthly discharge from climate and basin attributes alone, pooled across gauges and validated on gauges withheld from training entirely — then calibrated per gauge where one exists.",
       "image": "/data/case-studies/pooled_transfer_atlas.png",
       "image_alt": "Log-log scatter of observed versus predicted discharge on gauges the pooled model never trained on, and feature importance, across 76 Syr Darya / Amu Darya gauges.",
-      "evidence_date": "2026-09-17T21:24:52.710113+00:00",
+      "evidence_date": "2026-09-17T21:39:56.393754+00:00",
       "metric": 0.27081459209322656,
       "metric_label": "Median R² · pooled, gauge-unseen",
       "detail": "52 of 76 gauges positive · gauge-anchored best 0.92",
@@ -75,7 +75,7 @@
       "aim": "Track reservoir and lake surface area and water level from NASA/CNES’s SWOT satellite, basin-wide, without needing any upstream country to share a gauge reading.",
       "image": "/data/case-studies/reservoirs/reservoir_status.png",
       "image_alt": "Map of 378 SWOT-tracked lakes across the Syr Darya / Amu Darya basin, with 6 named reservoirs and the Aral Sea highlighted, and a bar chart of latest versus reference area.",
-      "evidence_date": "2026-09-17T21:24:52.710113+00:00",
+      "evidence_date": "2026-09-17T21:39:56.393754+00:00",
       "metric": 378,
       "metric_label": "Lakes & reservoirs tracked",
       "detail": "6 named water bodies incl. the Aral Sea · record since mid-2023",
