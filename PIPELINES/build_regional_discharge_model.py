@@ -135,20 +135,43 @@ def load_basin_attributes() -> Dict[str, Dict]:
         {gauge_code: {'area_km2', 'elevation_m', 'slope_pct', ...}}
     """
     print("Loading basin attributes...")
-    
+
     conn = sqlite3.connect(GPKG)
-    
-    # Query available attributes from basin_attributes table
-    # Note: The GeoPackage has minimal attributes; glacier/permafrost/landcover 
-    # require external HydroATLAS integration (future enhancement)
-    attr_query = """
-    SELECT CODE, area_km2, h_mean, h_min, h_max, slope, q_m3s
+
+    # lc_XX are Copernicus CGLS-LC100 codes stored as area in km2 per class
+    # (their row sum equals basin_area_km2, not 100). See
+    # PIPELINES/comprehensive_feature_engineering.py:map_esa_landcover for
+    # the same codebook and the same km2-to-percent normalisation, which
+    # this reuses rather than re-deriving. lc_70 (snow/ice) is the real
+    # glacier/permanent-snow signal -- it used to feed nothing, and
+    # glacier_pct was a hardcoded 0.0 below it. There is no permafrost
+    # column anywhere in basin_attributes, so permafrost_pct stays a
+    # documented placeholder; fabricating a value or crosswalking to a
+    # different basin delineation to get one would be worse than leaving
+    # it at 0.0 and saying so.
+    forest_codes = ['lc_111', 'lc_112', 'lc_113', 'lc_114', 'lc_115', 'lc_116',
+                     'lc_121', 'lc_122', 'lc_123', 'lc_124', 'lc_125', 'lc_126']
+    lc_codes = forest_codes + ['lc_20', 'lc_30', 'lc_40', 'lc_50', 'lc_60', 'lc_70',
+                                'lc_80', 'lc_90', 'lc_100']
+
+    attr_query = f"""
+    SELECT CODE, area_km2, h_mean, h_min, h_max, slope, q_m3s, {', '.join(lc_codes)}
     FROM basin_attributes
     """
-    
+
     attributes = {}
     for row in rows(conn, attr_query):
         code = row['CODE']
+        # Total classified area, not basin_area_km2: the two can differ
+        # slightly, and normalising against what was actually classified is
+        # what keeps class shares summing to (approximately) 100%.
+        total_km2 = sum(row[c] or 0.0 for c in lc_codes)
+
+        def lc_pct(codes):
+            if total_km2 <= 0:
+                return 0.0
+            return round(100 * sum(row[c] or 0.0 for c in codes) / total_km2, 4)
+
         attributes[code] = {
             'area_km2': safe_float(row['area_km2']),
             'elevation_m': safe_float(row['h_mean']),  # Mean elevation
@@ -156,21 +179,23 @@ def load_basin_attributes() -> Dict[str, Dict]:
             'elevation_max_m': safe_float(row['h_max']),
             'slope_pct': safe_float(row['slope']) * 100,  # Convert to percentage
             'mean_q_m3s': safe_float(row['q_m3s']),  # Reference discharge
-            # Placeholder: glacier%, permafrost%, land cover to be added from HydroATLAS
-            'glacier_pct': 0.0,
-            'permafrost_pct': 0.0,
-            'forest_pct': 0.0,
-            'shrub_pct': 0.0,
-            'grass_pct': 0.0,
-            'urban_pct': 0.0,
-            'water_pct': 0.0,
+            'glacier_pct': lc_pct(['lc_70']),
+            'permafrost_pct': 0.0,  # No source in basin_attributes; documented placeholder.
+            'forest_pct': lc_pct(forest_codes),
+            'shrub_pct': lc_pct(['lc_20']),
+            'grass_pct': lc_pct(['lc_30']),
+            'urban_pct': lc_pct(['lc_50']),
+            'water_pct': lc_pct(['lc_80']),
         }
-    
+
     conn.close()
-    
+
     print(f"  Basin attributes for {len(attributes)} gauges")
-    print(f"  Note: Glacier, permafrost, land cover placeholders. Future: integrate HydroATLAS data.")
-    
+    n_with_landcover = sum(1 for a in attributes.values() if a['forest_pct'] > 0 or a['water_pct'] > 0)
+    print(f"  Land cover (glacier/forest/shrub/grass/urban/water) sourced from CA-discharge's own "
+          f"lc_* columns for {n_with_landcover}/{len(attributes)} gauges.")
+    print(f"  Note: permafrost_pct remains a documented 0.0 placeholder -- no source in basin_attributes.")
+
     return attributes
 
 

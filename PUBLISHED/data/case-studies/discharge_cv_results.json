@@ -1,106 +1,96 @@
 {
-  "generated": "2026-09-16T18:54:04.167414Z",
+  "generated": "2026-09-18T20:36:57.534968Z",
   "fold_results": [
     {
       "fold": 1,
-      "r2": 0.3633,
-      "rmse": 14.917,
-      "mae": 9.488,
-      "nse": 0.3633,
-      "n_test": 1524
+      "r2": 0.6975,
+      "rmse": 94.479,
+      "mae": 38.656,
+      "nse": 0.6975,
+      "n_test": 11261
     },
     {
       "fold": 2,
-      "r2": 0.6828,
-      "rmse": 26.473,
-      "mae": 14.452,
-      "nse": 0.6828,
-      "n_test": 652
+      "r2": 0.7755,
+      "rmse": 34.034,
+      "mae": 7.915,
+      "nse": 0.7755,
+      "n_test": 11161
     },
     {
       "fold": 3,
-      "r2": 0.7673,
-      "rmse": 17.346,
-      "mae": 8.047,
-      "nse": 0.7673,
-      "n_test": 1810
+      "r2": 0.8233,
+      "rmse": 20.263,
+      "mae": 7.059,
+      "nse": 0.8233,
+      "n_test": 9028
     },
     {
       "fold": 4,
-      "r2": 0.421,
-      "rmse": 44.125,
-      "mae": 23.483,
-      "nse": 0.421,
-      "n_test": 1471
+      "r2": 0.7862,
+      "rmse": 57.563,
+      "mae": 18.798,
+      "nse": 0.7862,
+      "n_test": 16242
     },
     {
       "fold": 5,
-      "r2": 0.5601,
-      "rmse": 63.597,
-      "mae": 22.453,
-      "nse": 0.5601,
-      "n_test": 1282
+      "r2": 0.8491,
+      "rmse": 94.192,
+      "mae": 35.479,
+      "nse": 0.8491,
+      "n_test": 11563
     }
   ],
   "average_metrics": {
-    "r2": 0.5589,
-    "rmse": 33.292,
-    "mae": 15.585,
-    "nse": 0.5589
+    "r2": 0.7863,
+    "rmse": 60.106,
+    "mae": 21.581,
+    "nse": 0.7863
   },
   "note": "Spatial CV: splits by gauge (can have temporal leakage)",
   "feature_importance_top10": [
     {
       "feature": "basin_mean_q_m3s",
-      "importance": 0.3759836548849303
+      "importance": 0.41228667350530196
     },
     {
       "feature": "month_cos",
-      "importance": 0.29365540757743513
+      "importance": 0.20295790696386562
+    },
+    {
+      "feature": "basin_water_pct",
+      "importance": 0.10084092110081264
     },
     {
       "feature": "month_sin",
-      "importance": 0.10079280280698719
+      "importance": 0.08551254584476162
     },
     {
       "feature": "basin_elevation_max_m",
-      "importance": 0.07467533188986232
+      "importance": 0.07758261104336084
+    },
+    {
+      "feature": "basin_grass_pct",
+      "importance": 0.026537324229934572
+    },
+    {
+      "feature": "basin_forest_pct",
+      "importance": 0.025433653581861605
     },
     {
       "feature": "year_normalized",
-      "importance": 0.06341188738727274
-    },
-    {
-      "feature": "basin_slope_pct",
-      "importance": 0.04411344802901534
-    },
-    {
-      "feature": "basin_area_km2",
-      "importance": 0.019930736629923375
-    },
-    {
-      "feature": "basin_elevation_min_m",
-      "importance": 0.016011866015262582
+      "importance": 0.02294535277483644
     },
     {
       "feature": "basin_elevation_m",
-      "importance": 0.011424864779311001
+      "importance": 0.01134463934301935
     },
     {
-      "feature": "basin_glacier_pct",
-      "importance": 0.0
+      "feature": "basin_area_km2",
+      "importance": 0.01067255302601465
     }
   ],
-  "n_features": 16,
-  "n_observations": 16,
-  "temporal_holdout": {
-    "temporal_r2": 0.8027,
-    "temporal_rmse": 2.486,
-    "temporal_mae": 1.541,
-    "temporal_nse": 0.8027,
-    "temporal_n_test": 120,
-    "temporal_split_year": 2015,
-    "temporal_note": "Trained only on historical data; tests forecasting without leakage"
-  },
-  "temporal_note": "Temporal hold-out: trains only on historical data, tests on future. TRUE forecasting skill."
+  "n_features": 17,
+  "n_observations": 17
 }

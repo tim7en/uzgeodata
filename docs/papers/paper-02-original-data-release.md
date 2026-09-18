@@ -57,13 +57,16 @@ which analyses a subset of the grid data described here (§2.3).
    Pskem catchment (chronological holdout: daily NSE 0.72, monthly NSE 0.76,
    against a published stratified-split reference of 0.88/0.90 that the
    project explicitly does not treat as the honest number); a regional
-   stacking ensemble predicting monthly discharge at 38 quality-screened
-   CA-discharge gauges (median R² 0.857, mean R² −1.59 — the two disagree
-   because a minority of gauges fit very badly, and we report both rather than
-   the flattering one); and a documented, gap-audited adaptation of a 2018
-   MSc thesis's four daily model structures, published as an adaptation with
-   an explicit no-reproduction statement, not as a validation of the original
-   thesis. No modelled output here has been promoted past the `implemented`
+   stacking ensemble predicting monthly discharge at 114 CA-discharge gauges
+   (median R² 0.607, mean R² −0.79 — the two disagree because a minority of
+   gauges fit very badly, and we report both rather than the flattering
+   one), rebuilt after an audit found its glacier/land-cover predictors had
+   been a hardcoded zero for every gauge since the model was first published
+   — the fix is disclosed in §2.4.2 alongside the corrected numbers; and a
+   documented, gap-audited adaptation of a 2018 MSc thesis's four daily
+   model structures, published as an adaptation with an explicit
+   no-reproduction statement, not as a validation of the original thesis.
+   No modelled output here has been promoted past the `implemented`
    or `validated` stage of the project's reproduction ladder.
 
 **Keywords:** Central Asia; Amu Darya; Syr Darya; data descriptor; station
@@ -540,55 +543,83 @@ basin static characteristics (area, elevation, slope, glacier/permafrost/land-co
 fractions), TerraClimate climate forcing (current, 1-month-lag, 3-month and
 6-month accumulations, anomalies vs. 1980–2010), an upstream meteorological
 station aggregate (319-station network, distance-weighted), and cyclical
-temporal encodings. Generated 2026-09-17T12:22:43Z (assembly) /
-2026-09-16T18:54:05Z (case study).
+temporal encodings. Rebuilt 2026-09-18T20:37Z after the land-cover fix
+described below; original build 2026-09-17T12:22:43Z.
+
+**A fixed bug, disclosed rather than silently corrected.** Until this
+rebuild, `PIPELINES/build_regional_discharge_model.py` set
+`glacier_pct`/`permafrost_pct`/`forest_pct`/`shrub_pct`/`grass_pct`/
+`urban_pct`/`water_pct` to a **hardcoded `0.0` for every one of 59,516
+rows** — the source carried its own comment, "Placeholder... to be added
+from HydroATLAS." This was found by an independent R audit
+(`ANALYSIS_R/modelled/10_regional_discharge_ensemble.R`,
+`Assess_landcover_data_quality.R`) that also found a second, genuinely
+sourced land-cover feature set (`landcover_*_pct` in
+`enhanced_discharge_features.csv`, built from CA-discharge's own `lc_*`
+codes by a different, unrelated pipeline) sitting unused next to the
+all-zero one. The fix sources six of the seven fields directly from
+CA-discharge's own `lc_*` land-cover columns for the same gauge/basin
+`CODE` (`lc_70` for glacier/permanent-snow, `lc_111`–`126` for forest,
+`lc_20`/`30`/`50`/`80` for shrub/grass/urban/water), reusing the exact
+class-to-percent methodology `comprehensive_feature_engineering.py` already
+used and validated. `permafrost_pct` remains a **documented** `0.0`
+placeholder: no permafrost source exists anywhere in CA-discharge's
+`basin_attributes` table, and crosswalking to a different basin delineation
+to manufacture one would trade a known gap for an unverified assumption.
 
 **Spatial/temporal support.** The assembled feature table spans 59,516
-records across 114 unique gauges; after CA-discharge grade-1 quality
-filtering and a ≥10-year coverage requirement, the trained and reported model
-covers **38 gauges, 6,739 monthly records** (median 152 records/gauge).
-Cross-validation is spatial 5-fold, grouped by basin cluster rather than by
-date, so a fold never sees a gauge it is also trained on.
+records across 114 unique gauges; after a ≥10-year coverage requirement, the
+trained and reported model covers **114 gauges, 59,516 monthly records**
+(median 460 records/gauge). Cross-validation is spatial 5-fold, grouped by
+basin cluster rather than by date, so a fold never sees a gauge it is also
+trained on. (The pre-fix build's published case study reported only 38
+gauges' skill scores despite the same 114-gauge assembled table; §Known
+limitations below states what changed and what remains unexplained.)
 
-**Processing & QC.** Top predictive features by importance: `basin_mean_q_m3s`
-0.376, `month_cos` 0.294, `month_sin` 0.101, `basin_elevation_max_m` 0.075,
-`year_normalized` 0.063, `basin_slope_pct` 0.044, `basin_area_km2` 0.020,
-`basin_elevation_min_m` 0.016, `basin_elevation_m` 0.011, `basin_glacier_pct`
-0.000 (glacier fraction ranks last in this feature set — read as a property of
-the fitted model, not as evidence that glacier extent is hydrologically
-irrelevant).
+**Processing & QC.** Top predictive features by importance:
+`basin_mean_q_m3s` 0.412, `month_cos` 0.203, **`basin_water_pct` 0.101**,
+`month_sin` 0.086, `basin_elevation_max_m` 0.078, `basin_grass_pct` 0.027,
+`basin_forest_pct` 0.025, `year_normalized` 0.023, `basin_elevation_m`
+0.011, `basin_area_km2` 0.011, `basin_glacier_pct` 0.0056, `basin_urban_pct`
+0.0046, `basin_slope_pct` 0.0042, `basin_shrub_pct` 0.0038,
+`n_stations_contributing` 0.0034, `basin_elevation_min_m` 0.0023,
+`basin_permafrost_pct` 0.0000 (the one field with no source, still
+contributing nothing — consistent, not a separate finding). Before the fix,
+every one of these land-cover/glacier fields scored exactly 0.000 by
+construction; `basin_water_pct` is now the third most important feature in
+the whole model.
 
 **Known limitations.**
 
-- **Mean R² (−1.59) and median R² (0.857) diverge sharply** because a
-  minority of gauges fit very badly and drag the mean far below zero; a
-  results summary that reports only the median would misrepresent the
-  ensemble's actual regional performance, so both are published together.
-- Skill distribution across the 38 gauges: high skill (R² > 0.70) 24 gauges
-  (63.2%), good (0.60–0.70) 0 gauges (0.0%), moderate (0.50–0.60) 3 gauges
-  (7.9%), low (R² < 0.50) 11 gauges (28.9%) — nearly 29% of gauges are
-  low-skill, and the case-study text's own stratification by glacier
-  fraction reports `nan` medians for the glacial- and snow-dominated strata
-  (insufficient qualifying gauges), leaving only the rain-dominated stratum
-  (median R² 0.857) actually populated. An independent recomputation from the
-  released per-gauge skill table (`ANALYSIS_R/modelled/10_regional_discharge_ensemble.R`)
-  makes this precise rather than merely "insufficient": **all 38 trained
-  gauges have `glacier_pct == 0`** — there are zero glacial- or
-  snow-dominated gauges in the trained set at all, not merely too few for a
-  stable median. Read together with `basin_glacier_pct`'s last-place feature
-  importance above, the released model has not actually been evaluated on a
-  single glacierised basin, which should be stated plainly rather than left
-  implicit in an `nan`.
-- The same recomputation found that `regional_discharge_predictions.csv`
-  carries the model's documented primary predictors — every
-  `terraclimate_*` climate-forcing column and every `upstream_*`
-  station-network column — as **100% missing** (all-`NA` `logical` columns)
-  in the released file, even though the case-study narrative and the feature-
-  importance table above describe climate forcing and the upstream station
-  network as dominant contributors to the fitted model. Either these columns
-  were dropped from this particular export after training, or the export
-  pipeline has a gap; either way, a reader trying to inspect *which* forcing
-  values produced a given prediction cannot currently do so from this file.
+- **Mean R² (−0.79) and median R² (0.607) still diverge**, though less
+  sharply than before the fix (was −1.59 / 0.857): a minority of gauges fit
+  very badly and drag the mean down; both are published together rather
+  than only the flattering median.
+- Skill distribution across all 114 gauges: high skill (R² > 0.70) 40
+  gauges (35.1%), good (0.60–0.70) 19 gauges (16.7%), moderate (0.50–0.60)
+  12 gauges (10.5%), low (R² < 0.50) 43 gauges (37.7%). **Glacier
+  stratification is now real, not `nan`**: glacial-dominated (glacier% >
+  10%) median R² = 0.747, snow-dominated (5–10%) median R² = 0.773,
+  rain-dominated (< 5%) median R² = 0.555 — glacial and snow-dominated
+  basins score *better* than rain-dominated ones in this rebuild, the
+  reverse of what could be said before the fix (when zero gauges had any
+  glacier fraction at all). This is reported as a fresh, single-run result,
+  not yet independently reproduced.
+- **A secondary, unexplained change accompanied the fix**: the pre-fix
+  published case study reported skill for only 38 of the 114 assembled
+  gauges (`regional_discharge_gauge_skill.csv` had 38 rows); this rebuild's
+  skill table covers all 114. Training is seeded (`random_state=42`) and
+  gauge assembly (`load_discharge_data()`) was not touched by the fix, so
+  the fold membership itself should be unchanged; the most likely
+  explanation is that some gauges' per-gauge R² was previously undefined
+  (`ss_tot == 0`, a zero-variance held-out sample) under the old
+  near-constant seven-feature block and is no longer degenerate now that
+  those features vary genuinely — but this is not traced line-by-line and
+  is flagged as unresolved, not asserted as solved.
+- `regional_discharge_predictions.csv` still does not carry the
+  `terraclimate_*`/`upstream_*` columns the case-study narrative describes
+  as dominant contributors — this is a separate, pre-existing export gap,
+  untouched by the land-cover fix, and remains open.
 - **A validation figure in the published case-study report
   (`regional_discharge_case_study.md`) states the Pskem HBV daily model's
   benchmark NSE as 0.74**, an approximate round figure distinct from the
@@ -687,7 +718,7 @@ against different spatial supports (`sabitov-snow-process-check.csv`,
 | Glacier inventories (§2.2.2) | Counts/area/extent/provenance independently reproduced from released files | No cross-check against any national Kyrgyz/Tajik inventory |
 | Grid cube (§2.3) | τ/slope match `scipy` to 1e-9; resolution gate tested (16 tests) | No HydroATLAS/grid attribute has passed `REPRODUCIBILITY.md` §5–7 |
 | Pskem HBV model (§2.4.1) | Two published splits, reference vs. chronological, independently reproduced | No second-operator rerun logged |
-| Regional discharge ensemble (§2.4.2) | Spatial 5-fold CV; median/mean skill reproduced; predictor-column and glacier-stratum gaps found (§2.4.2) | Internal-discrepancy flagged; no rerun logged |
+| Regional discharge ensemble (§2.4.2) | Spatial 5-fold CV; a hardcoded-zero land-cover bug found, fixed and rerun (§2.4.2); one gauge-count change still unexplained | Bug fix disclosed; still no independent second-operator rerun logged |
 | Sabitov adaptation (§2.4.3) | Gap matrix per component; daily NSE independently recomputed for all 4 models (§2.4.3) | Explicitly not a reproduction of the original thesis |
 
 No dataset in this release has passed stage 6 (independent rerun) or stage 7
@@ -699,12 +730,16 @@ not asserting that the number is correct in an absolute sense.
 An independent R-language audit layer (`ANALYSIS_R/`, one script per dataset,
 `Rscript ANALYSIS_R/run_all.R`) recomputes every count and statistic this
 descriptor states directly from the released files and reports PASS/MISMATCH
-rather than assuming agreement. Most recomputed values matched exactly; the
-four cases that did not (CA-discharge RMSE/bias, the undocumented
-CHIRPS/CHIRTS station comparison, the regional ensemble's zero-glacier
-training set and missing predictor columns, and the Sabitov m2/m4 divergence)
-are documented in their respective subsections above and in
-`ANALYSIS_R/README.md`.
+rather than assuming agreement. Most recomputed values matched exactly; among
+the cases that did not, one (the regional discharge ensemble's land-cover
+predictors being a hardcoded zero for every gauge) was a genuine upstream
+code defect, since fixed in `PIPELINES/build_regional_discharge_model.py`
+and rebuilt — §2.4.2 documents the before/after numbers and one remaining
+unexplained side effect. The others (CA-discharge RMSE/bias, the
+undocumented CHIRPS/CHIRTS station comparison, the regional ensemble's still
+missing `terraclimate_*`/`upstream_*` predictor columns, and the Sabitov
+m2/m4 divergence) remain open and are documented in their respective
+subsections above and in `ANALYSIS_R/README.md`.
 
 ## 4. Usage notes
 
@@ -734,8 +769,9 @@ are documented in their respective subsections above and in
   missing months across the MODIS snow record (`DATA-LICENSING.md`); it is
   published here for completeness only.
 - **Report both the median and the mean when quoting the regional discharge
-  ensemble's skill** (§2.4.2) — they diverge by more than two full units of
-  R² and citing only the median misrepresents regional performance.
+  ensemble's skill** (§2.4.2) — median 0.607, mean −0.79; citing only the
+  median misrepresents regional performance. Cite the post-fix numbers
+  (rebuilt 2026-09-18), not any pre-fix figure encountered elsewhere.
 - **The Pskem HBV benchmark number differs between two published documents**
   (§2.4.2); use the split-specific values in `model-review.json`, not the
   rounded citation in the discharge case study.

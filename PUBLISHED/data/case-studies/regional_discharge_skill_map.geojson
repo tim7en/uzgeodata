@@ -5,9 +5,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "10-0.000-3M",
-        "r2": 0.5547,
-        "nse": 0.5547,
-        "rmse": 3.581,
+        "r2": -0.2382,
+        "nse": -0.2382,
+        "rmse": 5.971,
         "area_km2": 11581.5198,
         "elevation_m": 1315.9426,
         "glacier_pct": 0.0
@@ -24,9 +24,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "10-0.000-4M",
-        "r2": -1.2652,
-        "nse": -1.2652,
-        "rmse": 3.572,
+        "r2": -5.5334,
+        "nse": -5.5334,
+        "rmse": 6.067,
         "area_km2": 4295.9889,
         "elevation_m": 1622.0566,
         "glacier_pct": 0.0
@@ -43,9 +43,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "10-0.000-6M",
-        "r2": -0.7504,
-        "nse": -0.7504,
-        "rmse": 3.467,
+        "r2": -1.6916,
+        "nse": -1.6916,
+        "rmse": 4.299,
         "area_km2": 3105.1532,
         "elevation_m": 1943.3171,
         "glacier_pct": 0.0
@@ -62,9 +62,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "10-1.1L0-7A",
-        "r2": -1.1644,
-        "nse": -1.1644,
-        "rmse": 2.156,
+        "r2": -6.6643,
+        "nse": -6.6643,
+        "rmse": 4.058,
         "area_km2": 406.8128,
         "elevation_m": 2236.0884,
         "glacier_pct": 0.0
@@ -81,9 +81,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "11-0.000-4M",
-        "r2": 0.5611,
-        "nse": 0.5611,
-        "rmse": 2.993,
+        "r2": 0.1437,
+        "nse": 0.1437,
+        "rmse": 4.18,
         "area_km2": 7228.7624,
         "elevation_m": 2112.8745,
         "glacier_pct": 0.0
@@ -100,9 +100,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "12-0.000-1M",
-        "r2": 0.8708,
-        "nse": 0.8708,
-        "rmse": 10.343,
+        "r2": 0.6253,
+        "nse": 0.6253,
+        "rmse": 17.615,
         "area_km2": 18023.4882,
         "elevation_m": 2363.0305,
         "glacier_pct": 0.0
@@ -119,9 +119,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "12-0.000-9M",
-        "r2": 0.513,
-        "nse": 0.513,
-        "rmse": 2.724,
+        "r2": -0.1795,
+        "nse": -0.1795,
+        "rmse": 4.238,
         "area_km2": 341.4735,
         "elevation_m": 3248.5222,
         "glacier_pct": 0.0
@@ -138,9 +138,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "12-1.R00-1A",
-        "r2": -4.44,
-        "nse": -4.44,
-        "rmse": 2.678,
+        "r2": -8.3921,
+        "nse": -8.3921,
+        "rmse": 3.519,
         "area_km2": 3081.3346,
         "elevation_m": 2350.4517,
         "glacier_pct": 0.0
@@ -157,9 +157,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "13-0.000-1M",
-        "r2": -3.4527,
-        "nse": -3.4527,
-        "rmse": 3.851,
+        "r2": -7.8119,
+        "nse": -7.8119,
+        "rmse": 5.418,
         "area_km2": 8278.3627,
         "elevation_m": 1979.7501,
         "glacier_pct": 0.0
@@ -176,9 +176,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "13-0.000-2M",
-        "r2": -5.7945,
-        "nse": -5.7945,
-        "rmse": 3.555,
+        "r2": -7.3406,
+        "nse": -7.3406,
+        "rmse": 3.939,
         "area_km2": 8230.4339,
         "elevation_m": 1985.1442,
         "glacier_pct": 0.0
@@ -195,12 +195,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-0.000-1M",
-        "r2": 0.9587,
-        "nse": 0.9587,
-        "rmse": 19.16,
+        "r2": 0.832,
+        "nse": 0.832,
+        "rmse": 38.651,
         "area_km2": 37636.4377,
         "elevation_m": 2330.3452,
-        "glacier_pct": 0.0
+        "glacier_pct": 0.353
       },
       "geometry": {
         "type": "Point",
@@ -214,12 +214,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-0.000-2M",
-        "r2": 0.9077,
-        "nse": 0.9077,
-        "rmse": 17.072,
+        "r2": 0.7704,
+        "nse": 0.7704,
+        "rmse": 26.931,
         "area_km2": 23873.0459,
         "elevation_m": 2445.0283,
-        "glacier_pct": 0.0
+        "glacier_pct": 0.056
       },
       "geometry": {
         "type": "Point",
@@ -233,12 +233,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-0.000-3M",
-        "r2": 0.9351,
-        "nse": 0.9351,
-        "rmse": 15.271,
+        "r2": 0.7713,
+        "nse": 0.7713,
+        "rmse": 28.66,
         "area_km2": 22936.4728,
         "elevation_m": 2514.0654,
-        "glacier_pct": 0.0
+        "glacier_pct": 0.0583
       },
       "geometry": {
         "type": "Point",
@@ -252,12 +252,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-0.000-4M",
-        "r2": 0.9179,
-        "nse": 0.9179,
-        "rmse": 16.572,
+        "r2": 0.7768,
+        "nse": 0.7768,
+        "rmse": 27.323,
         "area_km2": 19775.9735,
         "elevation_m": 2711.0139,
-        "glacier_pct": 0.0
+        "glacier_pct": 0.0676
       },
       "geometry": {
         "type": "Point",
@@ -271,12 +271,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-0.000-6M",
-        "r2": 0.8709,
-        "nse": 0.8709,
-        "rmse": 8.996,
+        "r2": 0.6445,
+        "nse": 0.6445,
+        "rmse": 14.93,
         "area_km2": 12619.0861,
         "elevation_m": 3041.4685,
-        "glacier_pct": 0.0
+        "glacier_pct": 0.0275
       },
       "geometry": {
         "type": "Point",
@@ -290,9 +290,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-0.000-8M",
-        "r2": -1.4381,
-        "nse": -1.4381,
-        "rmse": 3.504,
+        "r2": -7.1556,
+        "nse": -7.1556,
+        "rmse": 6.409,
         "area_km2": 3767.5833,
         "elevation_m": 3160.6733,
         "glacier_pct": 0.0
@@ -309,12 +309,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-1.1L0-1A",
-        "r2": 0.8978,
-        "nse": 0.8978,
-        "rmse": 6.938,
+        "r2": 0.7293,
+        "nse": 0.7293,
+        "rmse": 11.293,
         "area_km2": 4452.4815,
         "elevation_m": 2448.5955,
-        "glacier_pct": 0.0
+        "glacier_pct": 0.0509
       },
       "geometry": {
         "type": "Point",
@@ -328,12 +328,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-1.R00-2A",
-        "r2": 0.9405,
-        "nse": 0.9405,
-        "rmse": 13.448,
+        "r2": 0.8078,
+        "nse": 0.8078,
+        "rmse": 24.169,
         "area_km2": 9998.8677,
         "elevation_m": 2688.6458,
-        "glacier_pct": 0.0
+        "glacier_pct": 1.1949
       },
       "geometry": {
         "type": "Point",
@@ -347,12 +347,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-1.R00-5A",
-        "r2": 0.9385,
-        "nse": 0.9385,
-        "rmse": 10.424,
+        "r2": 0.8424,
+        "nse": 0.8424,
+        "rmse": 16.687,
         "area_km2": 4165.6085,
         "elevation_m": 3346.5657,
-        "glacier_pct": 0.0
+        "glacier_pct": 2.5916
       },
       "geometry": {
         "type": "Point",
@@ -366,12 +366,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-5.R00-1A",
-        "r2": 0.9047,
-        "nse": 0.9047,
-        "rmse": 11.623,
+        "r2": 0.6074,
+        "nse": 0.6074,
+        "rmse": 23.586,
         "area_km2": 3712.437,
         "elevation_m": 2750.1572,
-        "glacier_pct": 0.0
+        "glacier_pct": 0.2664
       },
       "geometry": {
         "type": "Point",
@@ -385,12 +385,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "14-9.R00-1A",
-        "r2": 0.8616,
-        "nse": 0.8616,
-        "rmse": 3.166,
+        "r2": 0.6183,
+        "nse": 0.6183,
+        "rmse": 5.259,
         "area_km2": 5025.4468,
         "elevation_m": 3128.71,
-        "glacier_pct": 0.0
+        "glacier_pct": 0.0649
       },
       "geometry": {
         "type": "Point",
@@ -404,12 +404,12 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "15-0.000-1M",
-        "r2": 0.9749,
-        "nse": 0.9749,
-        "rmse": 26.903,
+        "r2": 0.0381,
+        "nse": 0.0381,
+        "rmse": 166.699,
         "area_km2": 20765.3376,
         "elevation_m": 3134.302,
-        "glacier_pct": 0.0
+        "glacier_pct": 3.6701
       },
       "geometry": {
         "type": "Point",
@@ -423,12 +423,316 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "15-10.R00-2A",
-        "r2": 0.9107,
-        "nse": 0.9107,
-        "rmse": 10.34,
+        "r2": 0.7917,
+        "nse": 0.7917,
+        "rmse": 15.793,
         "area_km2": 3353.9656,
         "elevation_m": 3983.094,
-        "glacier_pct": 0.0
+        "glacier_pct": 7.0249
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15102",
+        "r2": 0.0432,
+        "nse": 0.0432,
+        "rmse": 12.029,
+        "area_km2": 5614.1484,
+        "elevation_m": 2921.0715,
+        "glacier_pct": 1.9262
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15149",
+        "r2": 0.6557,
+        "nse": 0.6557,
+        "rmse": 8.937,
+        "area_km2": 1821.5279,
+        "elevation_m": 2986.7629,
+        "glacier_pct": 8.5386
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15171",
+        "r2": 0.1952,
+        "nse": 0.1952,
+        "rmse": 2.049,
+        "area_km2": 252.9823,
+        "elevation_m": 2916.4524,
+        "glacier_pct": 4.0965
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15189",
+        "r2": 0.7135,
+        "nse": 0.7135,
+        "rmse": 3.588,
+        "area_km2": 414.048,
+        "elevation_m": 3142.6963,
+        "glacier_pct": 12.8143
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15194",
+        "r2": 0.7468,
+        "nse": 0.7468,
+        "rmse": 2.415,
+        "area_km2": 270.843,
+        "elevation_m": 3200.6504,
+        "glacier_pct": 14.9066
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15212",
+        "r2": 0.6103,
+        "nse": 0.6103,
+        "rmse": 3.002,
+        "area_km2": 447.5098,
+        "elevation_m": 3072.4233,
+        "glacier_pct": 3.762
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15214",
+        "r2": 0.7548,
+        "nse": 0.7548,
+        "rmse": 2.64,
+        "area_km2": 361.8388,
+        "elevation_m": 3071.9724,
+        "glacier_pct": 9.9169
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15215",
+        "r2": 0.7386,
+        "nse": 0.7386,
+        "rmse": 2.767,
+        "area_km2": 578.4672,
+        "elevation_m": 2933.468,
+        "glacier_pct": 1.1929
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15256",
+        "r2": 0.8081,
+        "nse": 0.8081,
+        "rmse": 3.076,
+        "area_km2": 534.2994,
+        "elevation_m": 3213.2212,
+        "glacier_pct": 1.7532
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15259",
+        "r2": 0.452,
+        "nse": 0.452,
+        "rmse": 8.462,
+        "area_km2": 2494.4498,
+        "elevation_m": 2683.3755,
+        "glacier_pct": 0.6689
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15261",
+        "r2": -0.0466,
+        "nse": -0.0466,
+        "rmse": 13.577,
+        "area_km2": 6726.3933,
+        "elevation_m": 2416.6196,
+        "glacier_pct": 0.7407
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15283",
+        "r2": 0.7485,
+        "nse": 0.7485,
+        "rmse": 1.992,
+        "area_km2": 291.7046,
+        "elevation_m": 3016.8066,
+        "glacier_pct": 1.2219
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15285",
+        "r2": 0.5879,
+        "nse": 0.5879,
+        "rmse": 6.302,
+        "area_km2": 1086.442,
+        "elevation_m": 2677.4702,
+        "glacier_pct": 2.5409
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "15287",
+        "r2": 0.3028,
+        "nse": 0.3028,
+        "rmse": 2.315,
+        "area_km2": 385.8659,
+        "elevation_m": 2861.2996,
+        "glacier_pct": 0.2326
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16055",
+        "r2": 0.3225,
+        "nse": 0.3225,
+        "rmse": 69.25,
+        "area_km2": 10257.0989,
+        "elevation_m": 3554.3018,
+        "glacier_pct": 10.8925
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16068",
+        "r2": 0.8199,
+        "nse": 0.8199,
+        "rmse": 16.855,
+        "area_km2": 5555.9705,
+        "elevation_m": 3696.9307,
+        "glacier_pct": 12.1734
       },
       "geometry": {
         "type": "Point",
@@ -442,11 +746,201 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "16076",
-        "r2": 0.7649,
-        "nse": 0.7649,
-        "rmse": 5.822,
+        "r2": 0.7572,
+        "nse": 0.7572,
+        "rmse": 5.917,
         "area_km2": 1503.843,
         "elevation_m": 3498.4014,
+        "glacier_pct": 3.8136
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16093",
+        "r2": 0.5315,
+        "nse": 0.5315,
+        "rmse": 8.374,
+        "area_km2": 635.8101,
+        "elevation_m": 2286.0156,
+        "glacier_pct": 0.1518
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16096",
+        "r2": 0.7403,
+        "nse": 0.7403,
+        "rmse": 9.225,
+        "area_km2": 906.7993,
+        "elevation_m": 2904.4368,
+        "glacier_pct": 0.8517
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16100",
+        "r2": 0.7749,
+        "nse": 0.7749,
+        "rmse": 11.392,
+        "area_km2": 1747.1524,
+        "elevation_m": 2422.0828,
+        "glacier_pct": 0.8161
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16101",
+        "r2": 0.2499,
+        "nse": 0.2499,
+        "rmse": 5.721,
+        "area_km2": 1049.8638,
+        "elevation_m": 2312.3157,
+        "glacier_pct": 0.134
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16105",
+        "r2": 0.549,
+        "nse": 0.549,
+        "rmse": 4.145,
+        "area_km2": 828.5104,
+        "elevation_m": 1951.1663,
+        "glacier_pct": 0.0574
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16107",
+        "r2": -0.554,
+        "nse": -0.554,
+        "rmse": 79.813,
+        "area_km2": 5869.6117,
+        "elevation_m": 2895.0063,
+        "glacier_pct": 1.9375
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16121",
+        "r2": 0.7863,
+        "nse": 0.7863,
+        "rmse": 21.675,
+        "area_km2": 3949.4204,
+        "elevation_m": 3121.1948,
+        "glacier_pct": 1.9017
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16124",
+        "r2": 0.781,
+        "nse": 0.781,
+        "rmse": 10.5,
+        "area_km2": 865.1554,
+        "elevation_m": 3134.1743,
+        "glacier_pct": 4.4615
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16127",
+        "r2": 0.6112,
+        "nse": 0.6112,
+        "rmse": 17.165,
+        "area_km2": 1187.4452,
+        "elevation_m": 2588.6436,
+        "glacier_pct": 0.3289
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16133",
+        "r2": 0.4879,
+        "nse": 0.4879,
+        "rmse": 2.201,
+        "area_km2": 152.1912,
+        "elevation_m": 2146.6946,
         "glacier_pct": 0.0
       },
       "geometry": {
@@ -460,12 +954,487 @@
     {
       "type": "Feature",
       "properties": {
+        "gauge_code": "16134",
+        "r2": 0.4963,
+        "nse": 0.4963,
+        "rmse": 2.337,
+        "area_km2": 181.2029,
+        "elevation_m": 1972.4541,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16135",
+        "r2": 0.4102,
+        "nse": 0.4102,
+        "rmse": 2.821,
+        "area_km2": 208.9144,
+        "elevation_m": 2009.4098,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16136",
+        "r2": 0.7378,
+        "nse": 0.7378,
+        "rmse": 7.086,
+        "area_km2": 2026.1574,
+        "elevation_m": 3014.0081,
+        "glacier_pct": 1.1094
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16137",
+        "r2": 0.5043,
+        "nse": 0.5043,
+        "rmse": 12.294,
+        "area_km2": 3268.1276,
+        "elevation_m": 2693.032,
+        "glacier_pct": 0.6878
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16139",
+        "r2": 0.4977,
+        "nse": 0.4977,
+        "rmse": 15.506,
+        "area_km2": 943.4313,
+        "elevation_m": 2112.2209,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16143",
+        "r2": 0.4428,
+        "nse": 0.4428,
+        "rmse": 2.263,
+        "area_km2": 379.3872,
+        "elevation_m": 1710.4141,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16146",
+        "r2": 0.5962,
+        "nse": 0.5962,
+        "rmse": 18.413,
+        "area_km2": 1274.0882,
+        "elevation_m": 2215.9658,
+        "glacier_pct": 0.1469
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16151",
+        "r2": 0.5567,
+        "nse": 0.5567,
+        "rmse": 6.098,
+        "area_km2": 527.9882,
+        "elevation_m": 2407.1375,
+        "glacier_pct": 0.4453
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16153",
+        "r2": 0.3963,
+        "nse": 0.3963,
+        "rmse": 3.522,
+        "area_km2": 424.4951,
+        "elevation_m": 3903.8601,
+        "glacier_pct": 14.7455
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16154",
+        "r2": 0.4871,
+        "nse": 0.4871,
+        "rmse": 14.792,
+        "area_km2": 2271.9457,
+        "elevation_m": 3131.4182,
+        "glacier_pct": 4.6386
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16159",
+        "r2": 0.3744,
+        "nse": 0.3744,
+        "rmse": 4.671,
+        "area_km2": 1635.4141,
+        "elevation_m": 2589.3833,
+        "glacier_pct": 4.6377
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16161",
+        "r2": 0.3044,
+        "nse": 0.3044,
+        "rmse": 1.53,
+        "area_km2": 127.0017,
+        "elevation_m": 2791.0066,
+        "glacier_pct": 1.0104
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16169",
+        "r2": 0.6879,
+        "nse": 0.6879,
+        "rmse": 8.563,
+        "area_km2": 2164.0698,
+        "elevation_m": 3246.2166,
+        "glacier_pct": 5.5653
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "gauge_code": "16175",
-        "r2": -1.9698,
-        "nse": -1.9698,
-        "rmse": 1.399,
+        "r2": -31.9405,
+        "nse": -31.9405,
+        "rmse": 4.659,
         "area_km2": 171.9727,
         "elevation_m": 3013.1189,
+        "glacier_pct": 2.4546
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16176",
+        "r2": 0.7987,
+        "nse": 0.7987,
+        "rmse": 2.261,
+        "area_km2": 368.0008,
+        "elevation_m": 2796.8079,
+        "glacier_pct": 0.8694
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16193",
+        "r2": 0.6613,
+        "nse": 0.6613,
+        "rmse": 4.58,
+        "area_km2": 667.0607,
+        "elevation_m": 2504.3711,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16198",
+        "r2": 0.8852,
+        "nse": 0.8852,
+        "rmse": 15.363,
+        "area_km2": 3068.0962,
+        "elevation_m": 3206.9766,
+        "glacier_pct": 13.1545
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16202",
+        "r2": 0.6799,
+        "nse": 0.6799,
+        "rmse": 2.815,
+        "area_km2": 350.9414,
+        "elevation_m": 2373.2551,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16205",
+        "r2": 0.7952,
+        "nse": 0.7952,
+        "rmse": 6.594,
+        "area_km2": 1539.947,
+        "elevation_m": 3156.5869,
+        "glacier_pct": 10.3712
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16223",
+        "r2": -0.3557,
+        "nse": -0.3557,
+        "rmse": 2.114,
+        "area_km2": 599.3303,
+        "elevation_m": 2053.2004,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16230",
+        "r2": 0.5547,
+        "nse": 0.5547,
+        "rmse": 17.968,
+        "area_km2": 1087.6497,
+        "elevation_m": 2516.3689,
+        "glacier_pct": 0.0602
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16262",
+        "r2": 0.8644,
+        "nse": 0.8644,
+        "rmse": 57.15,
+        "area_km2": 11115.9091,
+        "elevation_m": 2546.8328,
+        "glacier_pct": 1.4926
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16279",
+        "r2": 0.7444,
+        "nse": 0.7444,
+        "rmse": 53.687,
+        "area_km2": 5668.7085,
+        "elevation_m": 2692.9712,
+        "glacier_pct": 0.742
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16290",
+        "r2": 0.8132,
+        "nse": 0.8132,
+        "rmse": 29.06,
+        "area_km2": 2518.2371,
+        "elevation_m": 2794.8069,
+        "glacier_pct": 4.9013
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16298",
+        "r2": 0.1173,
+        "nse": 0.1173,
+        "rmse": 2.493,
+        "area_km2": 98.5533,
+        "elevation_m": 2152.0237,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16300",
+        "r2": 0.7014,
+        "nse": 0.7014,
+        "rmse": 10.54,
+        "area_km2": 863.0112,
+        "elevation_m": 2046.0059,
         "glacier_pct": 0.0
       },
       "geometry": {
@@ -480,11 +1449,258 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "16390",
-        "r2": 0.7767,
-        "nse": 0.7767,
-        "rmse": 3.299,
+        "r2": 0.7091,
+        "nse": 0.7091,
+        "rmse": 3.766,
         "area_km2": 434.4306,
         "elevation_m": 2269.1501,
+        "glacier_pct": 1.7772
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16487",
+        "r2": 0.6649,
+        "nse": 0.6649,
+        "rmse": 14.323,
+        "area_km2": 1012.8802,
+        "elevation_m": 2998.9175,
+        "glacier_pct": 3.8112
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16510",
+        "r2": 0.6678,
+        "nse": 0.6678,
+        "rmse": 2.965,
+        "area_km2": 1427.6442,
+        "elevation_m": 2735.4021,
+        "glacier_pct": 4.0425
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16924",
+        "r2": 0.9085,
+        "nse": 0.9085,
+        "rmse": 53.693,
+        "area_km2": 9983.1438,
+        "elevation_m": 2625.938,
+        "glacier_pct": 1.6619
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16936",
+        "r2": 0.9175,
+        "nse": 0.9175,
+        "rmse": 88.224,
+        "area_km2": 52030.007,
+        "elevation_m": 2849.2881,
+        "glacier_pct": 2.8567
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "16938",
+        "r2": 0.5252,
+        "nse": 0.5252,
+        "rmse": 74.396,
+        "area_km2": 12316.492,
+        "elevation_m": 2588.8076,
+        "glacier_pct": 1.1379
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17045",
+        "r2": 0.9684,
+        "nse": 0.9684,
+        "rmse": 131.589,
+        "area_km2": 80180.3424,
+        "elevation_m": 4123.7046,
+        "glacier_pct": 10.3993
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17047",
+        "r2": 0.6511,
+        "nse": 0.6511,
+        "rmse": 425.632,
+        "area_km2": 121053.5115,
+        "elevation_m": 3486.2192,
+        "glacier_pct": 7.5322
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17089",
+        "r2": 0.4629,
+        "nse": 0.4629,
+        "rmse": 258.32,
+        "area_km2": 30965.2954,
+        "elevation_m": 3406.8967,
+        "glacier_pct": 17.2532
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17137",
+        "r2": 0.8935,
+        "nse": 0.8935,
+        "rmse": 45.546,
+        "area_km2": 9797.0632,
+        "elevation_m": 1880.2095,
+        "glacier_pct": 1.6256
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17194",
+        "r2": 0.8364,
+        "nse": 0.8364,
+        "rmse": 23.809,
+        "area_km2": 1994.8422,
+        "elevation_m": 2668.1995,
+        "glacier_pct": 2.3124
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17202",
+        "r2": 0.8317,
+        "nse": 0.8317,
+        "rmse": 8.516,
+        "area_km2": 683.2794,
+        "elevation_m": 2665.7632,
+        "glacier_pct": 5.749
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17211",
+        "r2": 0.6478,
+        "nse": 0.6478,
+        "rmse": 10.321,
+        "area_km2": 906.3265,
+        "elevation_m": 2332.7249,
+        "glacier_pct": 0.1072
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17223",
+        "r2": 0.6061,
+        "nse": 0.6061,
+        "rmse": 3.324,
+        "area_km2": 716.2799,
+        "elevation_m": 2180.0037,
         "glacier_pct": 0.0
       },
       "geometry": {
@@ -498,10 +1714,238 @@
     {
       "type": "Feature",
       "properties": {
+        "gauge_code": "17231",
+        "r2": 0.4088,
+        "nse": 0.4088,
+        "rmse": 4.136,
+        "area_km2": 480.0087,
+        "elevation_m": 1855.7798,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17236",
+        "r2": 0.4649,
+        "nse": 0.4649,
+        "rmse": 16.698,
+        "area_km2": 4918.5374,
+        "elevation_m": 1703.5122,
+        "glacier_pct": 0.2961
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17257",
+        "r2": 0.6193,
+        "nse": 0.6193,
+        "rmse": 3.129,
+        "area_km2": 437.2605,
+        "elevation_m": 2195.0315,
+        "glacier_pct": 0.1131
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17260",
+        "r2": 0.8081,
+        "nse": 0.8081,
+        "rmse": 3.145,
+        "area_km2": 502.7008,
+        "elevation_m": 2729.6453,
+        "glacier_pct": 0.1138
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17275",
+        "r2": 0.2251,
+        "nse": 0.2251,
+        "rmse": 2.487,
+        "area_km2": 1565.1312,
+        "elevation_m": 1456.6307,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17279",
+        "r2": 0.4635,
+        "nse": 0.4635,
+        "rmse": 2.905,
+        "area_km2": 1313.8579,
+        "elevation_m": 1739.9211,
+        "glacier_pct": 0.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17288",
+        "r2": 0.9173,
+        "nse": 0.9173,
+        "rmse": 42.204,
+        "area_km2": 10297.3713,
+        "elevation_m": 3110.23,
+        "glacier_pct": 8.0554
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17344",
+        "r2": 0.6103,
+        "nse": 0.6103,
+        "rmse": 3.955,
+        "area_km2": 1106.3488,
+        "elevation_m": 2585.5142,
+        "glacier_pct": 1.4562
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17459",
+        "r2": 0.8531,
+        "nse": 0.8531,
+        "rmse": 97.239,
+        "area_km2": 36525.2408,
+        "elevation_m": 3000.5149,
+        "glacier_pct": 14.6305
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17461",
+        "r2": 0.8949,
+        "nse": 0.8949,
+        "rmse": 41.722,
+        "area_km2": 12341.9183,
+        "elevation_m": 2941.8557,
+        "glacier_pct": 6.8513
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17462",
+        "r2": 0.4722,
+        "nse": 0.4722,
+        "rmse": 10.901,
+        "area_km2": 5714.7646,
+        "elevation_m": 3579.9922,
+        "glacier_pct": 10.2894
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gauge_code": "17464",
+        "r2": 0.7751,
+        "nse": 0.7751,
+        "rmse": 4.999,
+        "area_km2": 767.0695,
+        "elevation_m": 2629.9639,
+        "glacier_pct": 1.76
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "gauge_code": "8-0.000-1M",
-        "r2": 0.8602,
-        "nse": 0.8602,
-        "rmse": 23.461,
+        "r2": 0.5513,
+        "nse": 0.5513,
+        "rmse": 42.025,
         "area_km2": 33397.5539,
         "elevation_m": 2131.5144,
         "glacier_pct": 0.0
@@ -518,9 +1962,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "8-0.000-3S",
-        "r2": 0.8833,
-        "nse": 0.8833,
-        "rmse": 23.333,
+        "r2": 0.6097,
+        "nse": 0.6097,
+        "rmse": 42.672,
         "area_km2": 26338.4794,
         "elevation_m": 2415.6555,
         "glacier_pct": 0.0
@@ -537,9 +1981,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "8-0.000-4M",
-        "r2": 0.8804,
-        "nse": 0.8804,
-        "rmse": 27.14,
+        "r2": 0.5509,
+        "nse": 0.5509,
+        "rmse": 52.598,
         "area_km2": 21686.5123,
         "elevation_m": 2597.855,
         "glacier_pct": 0.0
@@ -556,9 +2000,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "8-0.000-5M",
-        "r2": 0.8714,
-        "nse": 0.8714,
-        "rmse": 22.806,
+        "r2": 0.5,
+        "nse": 0.5,
+        "rmse": 44.964,
         "area_km2": 11886.0533,
         "elevation_m": 2779.853,
         "glacier_pct": 0.0
@@ -575,9 +2019,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "8-0.000-7M",
-        "r2": 0.86,
-        "nse": 0.86,
-        "rmse": 20.914,
+        "r2": 0.2893,
+        "nse": 0.2893,
+        "rmse": 47.123,
         "area_km2": 6570.4236,
         "elevation_m": 2978.1106,
         "glacier_pct": 0.0
@@ -594,9 +2038,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "8-0.000-9M",
-        "r2": 0.8177,
-        "nse": 0.8177,
-        "rmse": 17.092,
+        "r2": 0.3335,
+        "nse": 0.3335,
+        "rmse": 32.681,
         "area_km2": 2883.7656,
         "elevation_m": 3086.0205,
         "glacier_pct": 0.0
@@ -613,9 +2057,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "8-1.R00-9T",
-        "r2": -36.1315,
-        "nse": -36.1315,
-        "rmse": 3.43,
+        "r2": -36.2996,
+        "nse": -36.2996,
+        "rmse": 3.438,
         "area_km2": 61.2158,
         "elevation_m": 1730.7733,
         "glacier_pct": 0.0
@@ -632,9 +2076,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "8-3.L00-1A",
-        "r2": 0.7131,
-        "nse": 0.7131,
-        "rmse": 5.323,
+        "r2": 0.2582,
+        "nse": 0.2582,
+        "rmse": 8.56,
         "area_km2": 7491.2278,
         "elevation_m": 2490.5686,
         "glacier_pct": 0.0
@@ -651,9 +2095,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "8-3.L00-6A",
-        "r2": -0.4154,
-        "nse": -0.4154,
-        "rmse": 3.192,
+        "r2": -0.6341,
+        "nse": -0.6341,
+        "rmse": 3.43,
         "area_km2": 2009.3037,
         "elevation_m": 2741.1167,
         "glacier_pct": 0.0
@@ -670,9 +2114,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "9-0.000-1M",
-        "r2": 0.8985,
-        "nse": 0.8985,
-        "rmse": 13.415,
+        "r2": 0.6014,
+        "nse": 0.6014,
+        "rmse": 26.588,
         "area_km2": 20542.5127,
         "elevation_m": 2252.2439,
         "glacier_pct": 0.0
@@ -689,9 +2133,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "9-0.000-5M",
-        "r2": 0.8544,
-        "nse": 0.8544,
-        "rmse": 12.036,
+        "r2": 0.529,
+        "nse": 0.529,
+        "rmse": 21.645,
         "area_km2": 15570.8752,
         "elevation_m": 2487.8318,
         "glacier_pct": 0.0
@@ -708,9 +2152,9 @@
       "type": "Feature",
       "properties": {
         "gauge_code": "9-5.L00-1A",
-        "r2": -26.2912,
-        "nse": -26.2912,
-        "rmse": 2.888,
+        "r2": -35.2604,
+        "nse": -35.2604,
+        "rmse": 3.328,
         "area_km2": 1244.8712,
         "elevation_m": 1552.915,
         "glacier_pct": 0.0

@@ -1,6 +1,6 @@
 # Regional CA-Discharge Monthly Discharge Modeling
 
-**Generated:** 2026-09-16T18:54:05.307114Z
+**Generated:** 2026-09-18T20:37:05.800051Z
 
 ## Executive Summary
 
@@ -18,25 +18,25 @@ for all 297 CA-discharge gauges across Central Asia, integrating:
 
 | Metric | Value |
 |--------|-------|
-| Median R² (all gauges) | 0.8572 |
-| Mean R² (all gauges) | -1.5898 |
-| Median NSE | 0.8572 |
-| Median RMSE | 7.97 m³/s |
-| Median Relative RMSE | 43.6% |
-| Median Correlation | 0.9276 |
+| Median R² (all gauges) | 0.6068 |
+| Mean R² (all gauges) | -0.7912 |
+| Median NSE | 0.6068 |
+| Median RMSE | 8.56 m³/s |
+| Median Relative RMSE | 53.6% |
+| Median Correlation | 0.8144 |
 
 ### Model Insights
 
-- **Total gauges analyzed:** 38
-- **Total monthly records:** 6739
-- **Median records per gauge:** 152
+- **Total gauges analyzed:** 114
+- **Total monthly records:** 59516
+- **Median records per gauge:** 460
 
 ### Skill Distribution
 
-- **High skill (R² > 0.70):** 24 gauges (63.2%)
-- **Good skill (R² 0.60-0.70):** 0 gauges (0.0%)
-- **Moderate skill (R² 0.50-0.60):** 3 gauges (7.9%)
-- **Low skill (R² < 0.50):** 11 gauges (28.9%)
+- **High skill (R² > 0.70):** 40 gauges (35.1%)
+- **Good skill (R² 0.60-0.70):** 19 gauges (16.7%)
+- **Moderate skill (R² 0.50-0.60):** 12 gauges (10.5%)
+- **Low skill (R² < 0.50):** 43 gauges (37.7%)
 
 ## Data Fusion Strategy
 
@@ -115,16 +115,16 @@ encoding enables model to learn seasonal mean shifts and phase changes.
 
 | Feature | Importance |
 |---------|-----------|
-| basin_mean_q_m3s | 0.3760 |
-| month_cos | 0.2937 |
-| month_sin | 0.1008 |
-| basin_elevation_max_m | 0.0747 |
-| year_normalized | 0.0634 |
-| basin_slope_pct | 0.0441 |
-| basin_area_km2 | 0.0199 |
-| basin_elevation_min_m | 0.0160 |
-| basin_elevation_m | 0.0114 |
-| basin_glacier_pct | 0.0000 |
+| basin_mean_q_m3s | 0.4123 |
+| month_cos | 0.2030 |
+| basin_water_pct | 0.1008 |
+| month_sin | 0.0855 |
+| basin_elevation_max_m | 0.0776 |
+| basin_grass_pct | 0.0265 |
+| basin_forest_pct | 0.0254 |
+| year_normalized | 0.0229 |
+| basin_elevation_m | 0.0113 |
+| basin_area_km2 | 0.0107 |
 
 
 **Interpretation:** Climate forcing (precipitation, temperature, anomalies) dominates predictions 
@@ -149,9 +149,9 @@ calibrated local models.
 ## Regional Skill Drivers
 
 ### Basin Type Effects
-- **Glacial-dominated (glacier% > 10%):** Median R² = nan
-- **Snow-dominated (glacier% 5-10%):** Median R² = nan
-- **Rain-dominated (glacier% < 5%):** Median R² = 0.857
+- **Glacial-dominated (glacier% > 10%):** Median R² = 0.747
+- **Snow-dominated (glacier% 5-10%):** Median R² = 0.773
+- **Rain-dominated (glacier% < 5%):** Median R² = 0.555
 
 **Insight:** Glacial basins show highest model skill (climate forcing dominates, less year-to-year 
 complexity). Rain-dominated basins show more residual variability (groundwater, land-use effects).

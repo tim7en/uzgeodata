@@ -19,6 +19,13 @@ suppressPackageStartupMessages({
 # run_all.R -- and passes it in as `start`. commandArgs() cannot be trusted
 # here: when this file is sourced from inside a sourced dataset script (the
 # run_all.R case), it still reports run_all.R's own path, not the caller's.
+#
+# This file (and the scripts that source it) also gets copied outside the
+# git tree -- e.g. into a personal RStudio workspace under ~/Documents -- for
+# interactive use. The walk-up finds DATA-LICENSING.md when run from inside
+# the repo; when it can't (because the copy no longer lives under the repo),
+# it falls back to $UZGEODATA_REPO, then a couple of common local checkout
+# locations, before giving up.
 find_repo_root <- function(start = getwd()) {
   dir <- start
   for (i in 1:8) {
@@ -27,8 +34,24 @@ find_repo_root <- function(start = getwd()) {
     if (identical(parent, dir)) break
     dir <- parent
   }
+
+  fallback_candidates <- c(
+    Sys.getenv("UZGEODATA_REPO", unset = NA),
+    path.expand("~/Dev/uzgeodata"),
+    path.expand("~/dev/uzgeodata")
+  )
+  for (candidate in fallback_candidates) {
+    if (!is.na(candidate) && nzchar(candidate) &&
+        file.exists(file.path(candidate, "DATA-LICENSING.md"))) {
+      return(candidate)
+    }
+  }
+
   stop("Could not locate the repository root above ", start,
-       " (looked for DATA-LICENSING.md).")
+       " (looked for DATA-LICENSING.md), and no fallback in $UZGEODATA_REPO ",
+       "or ~/Dev/uzgeodata worked either. If this script has been copied ",
+       "outside the git repo, set the UZGEODATA_REPO environment variable ",
+       "to the repo's path.")
 }
 
 ROOT <- find_repo_root(start = if (exists(".script_dir", inherits = FALSE)) .script_dir else getwd())
