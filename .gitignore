@@ -105,3 +105,8 @@ PUBLISHED/data/case-studies/rivers/river_observations_raw.csv
 PUBLISHED/data/case-studies/rivers/reaches_prior.geojson
 PUBLISHED/data/case-studies/**/*.pkl
 .DS_Store
+
+# QC summary CSVs written by the ANALYSIS_R/ per-dataset scripts. Regenerated
+# on every run (Rscript ANALYSIS_R/run_all.R) from the tracked PUBLISHED/data
+# files; committing them would just be a stale snapshot next to the source.
+ANALYSIS_R/output/
