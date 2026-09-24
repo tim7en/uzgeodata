@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Download } from 'lucide-react';
 
 const BASE = '/data/atlas/climate-continuation/basins/';
+const WATER_BALANCE = new Set(['aet', 'def', 'PDSI', 'pet', 'q', 'soil', 'swe', 'vpd']);
 const PRODUCT = { 'direct_v1.1': 'TerraClimate v1.1 · direct product',
   'estimated_v1.0': 'ERA adjustment · estimated v1.0 statistic' };
 
@@ -103,6 +104,7 @@ export default function BasinClimate({ basin }) {
     <ClimateChart direct={direct} estimate={estimate} unit={(direct || estimate)?.unit}/>
     {support === 'upstream' && <p className="land-sub-note">Upstream values are area weighted over level‑12 basins. CSV/JSON include coverage and water equivalent volumes where applicable. Modelled runoff generation is not routed streamflow.</p>}
     {estimate && <p className="land-sub-note">The CSV includes the river-system 90th percentile of held out absolute error for local ERA estimates. It measures agreement with the older TerraClimate product, not station uncertainty.</p>}
-    <p className="land-sub-note"><a href="/data/atlas/climate-continuation/report.json">Validation and source record ↗</a></p>
+    {estimate && WATER_BALANCE.has(active) && <p className="land-sub-note">This estimate maps the ERA5-Land {active === 'q' ? 'runoff' : 'water and energy'} anomaly onto the TerraClimate v1.0 basin climatology, fitted on 2003–2018 and checked on 2019–2024.{active === 'q' ? ' It is modelled runoff generation, not observed or routed river discharge.' : ''}</p>}
+    <p className="land-sub-note"><a href="/data/atlas/climate-continuation/report.json">Validation and source record ↗</a> · <a href="/data/atlas/climate-continuation/water-balance-report.json">Water-balance validation ↗</a></p>
   </div>;
 }

@@ -69,15 +69,37 @@ def test_modal_download_matches_versioned_source_rows():
     basin_id = "4120050220"
     record = json.loads((OUT / "basins" / f"{basin_id}.json").read_text())
     assert record["basin_id"] == basin_id
-    assert len(record["series"]) == 26
+    assert len(record["series"]) == 50
     direct = record["series"]["direct_v1.1:local:ppt"]
     estimate = record["series"]["estimated_v1.0:local:precipitation"]
     assert len(direct["rows"]) == 12
     assert len(estimate["rows"]) == 20
     assert estimate["rows"][-1][:2] == [2026, 8]
+    runoff = record["series"]["estimated_v1.0:local:q"]
+    assert len(runoff["rows"]) == 20
+    assert all(row[2] >= 0 for row in runoff["rows"])
     con = duckdb.connect()
     source = con.execute("""
         SELECT value FROM read_parquet(?) WHERE basin_id=? AND year=2025
         AND month=1 AND variable='ppt'
     """, [str(OUT / "terraclimate-v1.1/year=2025.parquet"), basin_id]).fetchone()[0]
     assert abs(direct["rows"][0][2] - source) < 1e-10
+
+
+def test_water_balance_continuation_only_publishes_variables_that_beat_climatology():
+    report = json.loads((OUT / "water-balance-report.json").read_text())
+    assert report["held_out_years"] == [2019, 2024]
+    for variable in report["eligible_variables"]:
+        for system in ("amu_darya", "syr_darya"):
+            scores = report["validation"][variable][system]
+            assert scores["era_adjusted"]["rmse"] < scores["seasonal_climatology"]["rmse"]
+            assert scores["era_adjusted"]["mae"] < scores["seasonal_climatology"]["mae"]
+    con = duckdb.connect()
+    path = str(OUT / "v1.0-water-balance-continuation.parquet")
+    rows, basins, first, last = con.execute(
+        "SELECT count(*), count(DISTINCT basin_id), min(year*100+month), max(year*100+month) "
+        "FROM read_parquet(?)", [path]).fetchone()
+    assert (basins, first, last) == (7445, 202501, 202608)
+    assert rows == 7445 * 20 * len(report["eligible_variables"])
+    assert con.execute("SELECT count(*) FROM read_parquet(?) WHERE estimate IS NULL OR NOT isfinite(estimate) "
+                       "OR (variable <> 'PDSI' AND estimate < 0)", [path]).fetchone()[0] == 0

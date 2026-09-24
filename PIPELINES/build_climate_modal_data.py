@@ -35,7 +35,7 @@ def build():
       UNION ALL
       SELECT basin_id, 'estimated_v1.0', 'local', variable,
              year, month, estimate, 1::DOUBLE, NULL::DOUBLE, holdout_abs_error_p90
-      FROM read_parquet('{BASE / 'v1.0-continuation.parquet'}')
+      FROM read_parquet('{BASE / 'v1.0*continuation.parquet'}')
       UNION ALL
       SELECT basin_id,
              CASE WHEN product='terraclimate_v1.1_direct' THEN 'direct_v1.1' ELSE 'estimated_v1.0' END,
@@ -77,7 +77,7 @@ def build():
         raise ValueError(f"Expected 7,445 basins; generated {count}")
     direct_years = sorted(int(path.stem.split("=")[1]) for path in
                           (BASE / "terraclimate-v1.1").glob("year=*.parquet"))
-    continuation_latest = con.execute(f"SELECT max(year*100+month) FROM read_parquet('{BASE / 'v1.0-continuation.parquet'}')").fetchone()[0]
+    continuation_latest = con.execute(f"SELECT max(year*100+month) FROM read_parquet('{BASE / 'v1.0*continuation.parquet'}')").fetchone()[0]
     (BASE / "basins-index.json").write_text(json.dumps({
         "basins": count, "base_url": "/data/atlas/climate-continuation/basins/",
         "schema": "Each series row follows row_fields in the basin JSON.",

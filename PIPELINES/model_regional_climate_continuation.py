@@ -28,7 +28,8 @@ FRAME = ROOT / "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.g
 TRAIN_END = 2018
 TEST_END = 2024
 VARIABLES = ("precipitation", "tmin", "tmax")
-ACCUMULATE_TC = ("ppt", "aet", "pet", "q", "tmin", "tmax")
+ACCUMULATE_TC = ("ppt", "tmin", "tmax", "aet", "def", "pet", "q", "soil",
+                 "srad", "swe", "vap", "ws", "vpd", "PDSI")
 FLUXES = {"ppt", "aet", "pet", "q", "precipitation"}
 
 
@@ -232,14 +233,16 @@ def upstream_products(basins):
     con = duckdb.connect()
     groups = defaultdict(dict)
     for basin, y, month, variable, value in con.execute(
-        "SELECT basin_id,year,month,variable,value FROM read_parquet(?) WHERE variable IN "
-        "('ppt','aet','pet','q','tmin','tmax')",
+        "SELECT basin_id,year,month,variable,value FROM read_parquet(?)",
         [str(OUT / "terraclimate-v1.1/year=*.parquet")]).fetchall():
         groups[("terraclimate_v1.1_direct", y, month, variable)][basin] = value
-    for basin, _, y, month, variable, _, value, _, _ in con.execute(
-        "SELECT * FROM read_parquet(?) WHERE variable IN ('precipitation','tmin','tmax')",
-        [str(OUT / "v1.0-continuation.parquet")]).fetchall():
-        groups[("estimated_v1.0_continuation", y, month, variable)][basin] = value
+    for source in ("v1.0-continuation.parquet", "v1.0-water-balance-continuation.parquet"):
+        path = OUT / source
+        if not path.exists():
+            continue
+        for basin, _, y, month, variable, _, value, _, _ in con.execute(
+            "SELECT * FROM read_parquet(?)", [str(path)]).fetchall():
+            groups[("estimated_v1.0_continuation", y, month, variable)][basin] = value
     rows = []
     for (product, year, month, variable), local in sorted(groups.items()):
         result = accumulate_one(local, order, downstream, area)
@@ -315,6 +318,8 @@ def run():
     coefficient_count = fit(con)
     scores = validate(con)
     eligible, continuation_rows = continuation(con, scores)
+    from PIPELINES.model_regional_climate_water_balance import run as run_water_balance
+    water_balance = run_water_balance()
     latest_code = con.execute(f"SELECT max(year*100+month) FROM read_parquet('{OUT / 'v1.0-continuation.parquet'}')").fetchone()[0]
     latest_month = f"{latest_code // 100:04d}-{latest_code % 100:02d}"
     upstream_rows = upstream_products(basins)
@@ -327,6 +332,10 @@ def run():
     inputs += [CUBE / f"variable={variable}/data_0.parquet"
                for variable in ("pre_mm_s", "tmn_dc_s", "tmx_dc_s")]
     inputs += sorted((OUT / "era5-land").glob("year=*.parquet"))
+    inputs += sorted((OUT / "era5-land-extended").glob("year=*.parquet"))
+    inputs += [CUBE / f"variable={variable}/data_0.parquet"
+               for variable in ("aet_mm_s", "cwd_mm_s", "pds_ix_s", "pet_mm_s",
+                                "rtc_mm_s", "soil_mm_s", "swe_mm_s", "vpd_kp_s")]
     inputs += sorted((OUT / "terraclimate-v1.1").glob("year=*.parquet"))
     inputs += sorted((OUT / "terraclimate-v1.1-primary").glob("year=*.parquet"))
     report = {"generated_at": datetime.now(timezone.utc).isoformat(),
@@ -338,7 +347,9 @@ def run():
                                   "predictor": "ERA5-Land monthly native-grid fractional-overlap basin mean"},
               "coefficients": coefficient_count, "validation": scores,
               "input_sha256": {str(path.relative_to(ROOT)): sha256(path) for path in inputs},
-              "eligible_variables": eligible, "continuation_rows": continuation_rows,
+              "eligible_variables": eligible + water_balance["eligible_variables"],
+              "continuation_rows": continuation_rows + water_balance["estimated_rows"],
+              "water_balance_validation": "/data/atlas/climate-continuation/water-balance-report.json",
               "continuation_through": latest_month,
               "v1.1_2025_agreement": agreement,
               "v1.1_vs_v1.0_2024_overlap": version_overlap,
@@ -356,9 +367,10 @@ def run():
                 "meaning": "producer release reduced onto basin polygons; modelled climate and water balance",
             },
             "estimated_v1.0_continuation": {
-                "file": "/data/atlas/climate-continuation/v1.0-continuation.parquet",
+                "files": ["/data/atlas/climate-continuation/v1.0-continuation.parquet",
+                          "/data/atlas/climate-continuation/v1.0-water-balance-continuation.parquet"],
                 "years": [2025, int(latest_month[:4])], "months_observed_in_era": f"through {latest_month}",
-                "variables": eligible,
+                "variables": eligible + water_balance["eligible_variables"],
                 "meaning": "ERA-derived estimate of the older v1.0 statistic; not a producer observation",
             },
             "upstream": {"file": "/data/atlas/climate-continuation/upstream.parquet",

@@ -8,6 +8,7 @@ Source versions and spatial support stay separate from the existing atlas cube.
 from __future__ import annotations
 
 import argparse
+import calendar
 import json
 import math
 import os
@@ -37,6 +38,20 @@ ERA_ASSET = "ECMWF/ERA5_LAND/MONTHLY_AGGR"
 TC_BASE = "https://climate.northwestknowledge.net/TERRACLIMATE-DATA"
 TC_VARIABLES = ("ppt", "tmin", "tmax", "aet", "def", "pet", "q", "soil",
                 "srad", "swe", "vap", "ws", "vpd", "PDSI")
+ERA_EXTENDED = (
+    ("tmin_c", "temperature_2m_min", "degrees Celsius", -273.15, 1),
+    ("tmax_c", "temperature_2m_max", "degrees Celsius", -273.15, 1),
+    ("dewpoint_c", "dewpoint_temperature_2m", "degrees Celsius", -273.15, 1),
+    ("aet_mm", "total_evaporation_sum", "millimetres per month", 0, -1000),
+    ("pet_mm", "potential_evaporation_sum", "millimetres per month", 0, -1000),
+    ("runoff_mm", "runoff_sum", "millimetres per month", 0, 1000),
+    ("soil_fraction", "volumetric_soil_water_layer_2", "fraction", 0, 1),
+    ("swe_mm", "snow_depth_water_equivalent", "millimetres", 0, 1000),
+    ("srad_wm2", "surface_solar_radiation_downwards_sum", "watts per square metre", 0, None),
+    ("wind_u_ms", "u_component_of_wind_10m", "metres per second", 0, 1),
+    ("wind_v_ms", "v_component_of_wind_10m", "metres per second", 0, 1),
+    ("snowmelt_mm", "snowmelt_sum", "millimetres per month", 0, 1000),
+)
 TC_UNITS = {"ppt": "millimetres per month", "tmin": "degrees Celsius",
             "tmax": "degrees Celsius", "aet": "millimetres per month",
             "def": "millimetres per month", "pet": "millimetres per month",
@@ -177,6 +192,70 @@ def era_year(year, basins, latest):
     print(f"ERA {year}: {len(rows):,} rows", flush=True)
 
 
+def era_extended_year(year, basins, latest):
+    """Extract ERA water/energy predictors on their native grid for one year."""
+    import ee
+    import requests
+
+    output = OUT / "era5-land-extended" / f"year={year}.parquet"
+    months = list(range(1, 13 if year < latest.year else latest.month + 1))
+    if output.exists():
+        metadata = output.with_suffix(".json")
+        if metadata.exists() and json.loads(metadata.read_text()).get("months") == months:
+            print(f"ERA extended {year}: cached", flush=True)
+            return
+    collection = ee.ImageCollection(ERA_ASSET)
+    projection = collection.first().select("temperature_2m").projection().getInfo()
+    layers = []
+    for month in months:
+        start = f"{year}-{month:02d}-01"
+        end = f"{year + 1}-01-01" if month == 12 else f"{year}-{month + 1:02d}-01"
+        image = ee.Image(collection.filterDate(start, end).first())
+        seconds = calendar.monthrange(year, month)[1] * 86400
+        for variable, band, _, offset, scale in ERA_EXTENDED:
+            selected = image.select(band)
+            if offset:
+                selected = selected.add(offset)
+            selected = selected.multiply(1 / seconds if scale is None else scale)
+            layers.append(selected.rename(f"{variable}_{month:02d}"))
+    image = ee.Image.cat(layers).unmask(-9999)
+    url = image.getDownloadURL({"region": ee.Geometry.Rectangle(list(BOUNDS)),
+                                "crs": projection["crs"], "crs_transform": projection["transform"],
+                                "format": "GEO_TIFF", "filePerBand": False})
+    cache = CACHE / f"era-extended-{year}.tif"
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    for attempt in range(3):
+        try:
+            response = requests.get(url, timeout=180)
+            response.raise_for_status()
+            cache.write_bytes(response.content)
+            break
+        except requests.RequestException:
+            if attempt == 2:
+                raise
+            time.sleep(2 * (attempt + 1))
+    rows = []
+    with rasterio.open(cache) as dataset:
+        assert dataset.count == len(ERA_EXTENDED) * len(months)
+        basin_index, flat_cell, weight = grid_weights(basins, dataset.transform,
+                                                       dataset.width, dataset.height)
+        for position, month in enumerate(months):
+            for offset, (variable, _, unit, _, _) in enumerate(ERA_EXTENDED):
+                band = position * len(ERA_EXTENDED) + offset + 1
+                values, coverage = reduce_grid(dataset.read(band), basin_index, flat_cell,
+                                               weight, len(basins), dataset.nodata)
+                rows.extend({"basin_id": basin, "year": year, "month": month,
+                             "variable": variable, "value": float(value) if np.isfinite(value) else None,
+                             "coverage": float(share), "unit": unit}
+                            for basin, value, share in zip(basins.basin_id, values, coverage))
+    write_rows(output, rows, {"source": ERA_ASSET, "year": year, "months": months,
+                              "basins": len(basins), "grid": "native ERA5-Land 0.1 degree",
+                              "variables": [v[0] for v in ERA_EXTENDED],
+                              "reduction": "fractional cell overlap with basin polygons",
+                              "source_transform": projection["transform"]})
+    print(f"ERA extended {year}: {len(rows):,} rows", flush=True)
+
+
 def tc_year(year, basins, refresh=False, variables=TC_VARIABLES):
     family = "terraclimate-v1.1" if tuple(variables) == TC_VARIABLES else "terraclimate-v1.1-primary"
     output = OUT / family / f"year={year}.parquet"
@@ -222,7 +301,7 @@ def tc_year(year, basins, refresh=False, variables=TC_VARIABLES):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("source", choices=("era", "terraclimate-v11"))
+    parser.add_argument("source", choices=("era", "era-extended", "terraclimate-v11"))
     parser.add_argument("--years", help="YYYY-YYYY; defaults to full ERA history or available v1.1 years")
     parser.add_argument("--refresh", action="store_true", help="Re-read an existing v1.1 year after a producer revision")
     parser.add_argument("--variables", help="Comma-separated subset of v1.1 variables for version-overlap checks")
@@ -230,7 +309,7 @@ def main():
     basins = frame()
     if len(basins) != 7445:
         raise ValueError(f"Expected 7,445 regional basins, got {len(basins)}")
-    if args.source == "era":
+    if args.source in ("era", "era-extended"):
         import ee
         from datetime import datetime, timezone
         ee.Initialize(project="ee-sabitovty")
@@ -240,7 +319,10 @@ def main():
         years = range(int(start), int(end or start) + 1)
         for year in years:
             if year <= latest.year:
-                era_year(year, basins, latest)
+                if args.source == "era":
+                    era_year(year, basins, latest)
+                else:
+                    era_extended_year(year, basins, latest)
     else:
         import re
         import requests
