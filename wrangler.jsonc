@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "uzgeodata",
+  "main": "./worker.js",
+  "compatibility_date": "2026-09-24",
+
+  "r2_buckets": [
+    {
+      "binding": "DATA",
+      "bucket_name": "uzgeodata-public"
+    }
+  ],
+
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  }
+}
