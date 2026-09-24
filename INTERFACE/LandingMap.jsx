@@ -14,6 +14,7 @@ import StationModal from './StationModal.jsx';
 import GaugeModal from './GaugeModal.jsx';
 import BasinSubstitutes from './BasinSubstitutes.jsx';
 import BasinHistory from './BasinHistory.jsx';
+import BasinClimate from './BasinClimate.jsx';
 import BasinFinder from './BasinFinder.jsx';
 import BasinCatchment from './BasinCatchment.jsx';
 import CatchmentStatistics from './CatchmentStatistics.jsx';
@@ -61,11 +62,12 @@ const TABS = [
   ['original', 'HydroATLAS attributes'],
   ['substitutes', 'Independent estimates'],
   ['history', 'Monthly record'],
+  ['climate', 'Climate 2025–26'],
   ['catchment', 'Catchment statistics'],
 ];
 
-function stepTab(current, key) {
-  const order = TABS.map(([id]) => id);
+function stepTab(current, key, tabs = TABS) {
+  const order = tabs.map(([id]) => id);
   if (key === 'Home') return order[0];
   if (key === 'End') return order[order.length - 1];
   const at = order.indexOf(current);
@@ -123,6 +125,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
   const [filter, setFilter] = useState('');
   const [kind, setKind] = useState('all');
   const [tab, setTab] = useState(initialTab || (Number(basin.basin_level) === 12 ? 'history' : 'original'));
+  const tabs = Number(basin.basin_level) === 12 ? TABS : TABS.filter(([id]) => id !== 'climate');
 
   useEffect(() => {
     const escape = event => { if (event.key === 'Escape') onClose(); };
@@ -166,11 +169,11 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
         <a href={`/data/atlas/history/${basin.hybas_id}.json`} download>Monthly data &amp; metadata (JSON)</a>
       </div>}
       <div className="land-modal-tabs" role="tablist" aria-label="Basin attribute views">
-        {TABS.map(([id, label]) => <button
+        {tabs.map(([id, label]) => <button
           key={id} type="button" role="tab" id={`basin-tab-${id}`} aria-controls={`basin-panel-${id}`}
           aria-selected={tab === id} tabIndex={tab === id ? 0 : -1} onClick={() => setTab(id)}
           onKeyDown={event => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
-            event.preventDefault(); const next = stepTab(tab, event.key);
+            event.preventDefault(); const next = stepTab(tab, event.key, tabs);
             setTab(next); document.getElementById(`basin-tab-${next}`)?.focus();
           } }}>{label}</button>)}
       </div>
@@ -188,6 +191,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
         <BasinCatchment basin={basin} collection={geometry} url={geometryUrl}/>
         <div className="land-basin-values">
         {tab === 'catchment' ? <CatchmentStatistics key={`c-${basin.hybas_id}`} basin={basin}/>
+          : tab === 'climate' ? <BasinClimate key={`climate-${basin.hybas_id}`} basin={basin}/>
           : tab === 'history' ? <BasinHistory key={`h-${basin.basin_level}-${basin.hybas_id}`} basin={basin}/>
           : tab === 'substitutes' ? <BasinSubstitutes key={`${basin.basin_level}-${basin.hybas_id}`} basin={basin} filter={filter} kind={kind}/>
           : loading && !store ? <p className="land-group-note">Loading the atlas attributes…</p>

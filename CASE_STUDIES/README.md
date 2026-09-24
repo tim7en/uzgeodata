@@ -1,5 +1,15 @@
 ﻿# Chirchik–Charvak case studies
 
+The [Pskem climate continuation](pskem-climate-continuation.md) compares ERA5-Land,
+TerraClimate v1.0 and the local Pskem station, then publishes a separately labeled
+2025–2026 ERA-derived basin estimate with held out validation. It is a climate
+monitoring research product, not observed reservoir storage or inflow.
+
+The [regional extension](regional-climate-continuation.md) applies the tested
+relationship to all 7,445 Amu Darya and Syr Darya level-12 basins, stores the
+producer's 2025 TerraClimate v1.1 as a separate source and computes routed
+upstream aggregates without combining the two TerraClimate versions.
+
 The page now separates Chirchik/Pskem from the implemented
 [regional station–satellite study](regional-station-environment.md), using 86
 station locations, QA-screened historical Earth Engine data, terrain/soil

@@ -483,6 +483,20 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-hist-dot{fill:var(--l-accent-1)}
 .land-hist-cursor{stroke:var(--l-line-1);stroke-width:1}
 .land-hist-marker{fill:var(--l-accent-1);stroke:var(--l-bg-3);stroke-width:1.5}
+.land-climate{padding:16px 18px;display:grid;gap:12px}
+.land-climate .land-hist-warn{margin:0}
+.land-climate .land-sub-chips{display:flex;flex-wrap:wrap;gap:6px}
+.land-climate-chart{margin:0}
+.land-climate-chart svg{width:100%;height:auto}
+.land-climate-chart figcaption{font:600 11px var(--mono);color:var(--dim)}
+.land-climate-direct,.land-climate-estimate{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.land-climate-direct{stroke:var(--l-accent-1)}
+.land-climate-estimate{stroke:var(--l-accent-5);stroke-dasharray:5 4}
+.land-climate-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--ink)}
+.land-climate-legend span{display:inline-flex;align-items:center;gap:6px}
+.land-climate-legend i{display:inline-block;width:18px;border-top:3px solid}
+.land-climate-direct-key{color:var(--l-accent-1)}
+.land-climate-estimate-key{color:var(--l-accent-5);border-top-style:dashed!important}
 .land-hist-warn{display:flex;align-items:flex-start;gap:8px;margin:0 18px 12px;padding:10px 12px;border:1px solid var(--l-accent-5);border-left-width:3px;background:var(--l-tint-3);font-size:10.5px;line-height:1.6;color:var(--ink)}
 .land-hist-download{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border:1px solid var(--l-accent-1);background:transparent;color:var(--l-accent-1);font:600 10px var(--body);cursor:pointer}
 .land-hist-download:hover{background:var(--l-tint-1)}

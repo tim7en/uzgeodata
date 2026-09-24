@@ -1,0 +1,108 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import { Download } from 'lucide-react';
+
+const BASE = '/data/atlas/climate-continuation/basins/';
+const PRODUCT = { 'direct_v1.1': 'TerraClimate v1.1 · direct product',
+  'estimated_v1.0': 'ERA adjustment · estimated v1.0 statistic' };
+
+function save(name, contents, type) {
+  const url = URL.createObjectURL(new Blob([contents], { type }));
+  const link = Object.assign(document.createElement('a'), { href: url, download: name });
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function csv(record) {
+  const lines = ['basin_id,product,support,variable,year,month,value,unit,coverage_fraction,water_equivalent_mcm,holdout_abs_error_p90'];
+  for (const series of Object.values(record.series)) for (const row of series.rows) {
+    lines.push([record.basin_id, series.product, series.support, series.variable,
+      row[0], row[1], row[2] ?? '', series.unit, row[3] ?? '', row[4] ?? '', row[5] ?? ''].join(','));
+  }
+  return lines.join('\n') + '\n';
+}
+
+function ClimateChart({ direct, estimate, unit }) {
+  const [hover, setHover] = useState(null);
+  const all = [...(direct?.rows || []), ...(estimate?.rows || [])].filter(row => Number.isFinite(row[2]));
+  if (!all.length) return <p>No monthly values for this selection.</p>;
+  const min = Math.min(...all.map(row => row[2]));
+  const max = Math.max(...all.map(row => row[2]));
+  const low = min === max ? min - 1 : min - (max - min) * .08;
+  const high = min === max ? max + 1 : max + (max - min) * .08;
+  const x = row => 48 + ((row[0] - 2025) * 12 + row[1] - 1) * 30;
+  const y = row => 194 - (row[2] - low) / (high - low) * 170;
+  const polyline = rows => rows.filter(row => Number.isFinite(row[2]))
+    .map(row => `${x(row)},${y(row)}`).join(' ');
+  const picked = hover == null ? null : [direct, estimate].flatMap(s => s?.rows || [])
+    .filter(row => (row[0] - 2025) * 12 + row[1] - 1 === hover);
+  return <figure className="land-climate-chart">
+    <svg viewBox="0 0 780 235" role="img" aria-label="Monthly basin climate, direct TerraClimate and estimated continuation"
+      onMouseLeave={() => setHover(null)} onMouseMove={event => {
+        const box = event.currentTarget.getBoundingClientRect();
+        const position = event.clientX / box.width * 780;
+        setHover(Math.max(0, Math.min(23, Math.round((position - 48) / 30))));
+      }}>
+      {[0, .5, 1].map((fraction, index) => <g key={index}>
+        <line x1="48" x2="760" y1={24 + fraction * 170} y2={24 + fraction * 170} className="land-hist-grid"/>
+        <text x="42" y={28 + fraction * 170} textAnchor="end" className="land-hist-axis">{(high - fraction * (high - low)).toFixed(1)}</text>
+      </g>)}
+      <text x="48" y="220" className="land-hist-axis">2025</text>
+      <text x="408" y="220" className="land-hist-axis">2026</text>
+      {direct && <polyline points={polyline(direct.rows)} className="land-climate-direct"/>}
+      {estimate && <polyline points={polyline(estimate.rows)} className="land-climate-estimate"/>}
+      {hover != null && <line x1={48 + hover * 30} x2={48 + hover * 30} y1="24" y2="194" className="land-hist-cursor"/>}
+    </svg>
+    <figcaption>{picked?.length ? `${2025 + Math.floor(hover / 12)}-${String(hover % 12 + 1).padStart(2, '0')} · ${picked.map(row => `${Number(row[2]).toFixed(2)} ${unit}`).join(' / ')}` : `Monthly values · ${unit}`}</figcaption>
+  </figure>;
+}
+
+export default function BasinClimate({ basin }) {
+  const [state, setState] = useState({ loading: true });
+  const [variable, setVariable] = useState('ppt');
+  const [support, setSupport] = useState('local');
+  useEffect(() => {
+    let live = true;
+    setState({ loading: true });
+    fetch(`${BASE}${basin.hybas_id}.json`, { cache: 'no-store' }).then(response => {
+      if (!response.ok || !(response.headers.get('content-type') || '').includes('json')) throw Error('Climate record is not published for this basin.');
+      return response.json();
+    }).then(record => {
+      if (String(record.basin_id) !== String(basin.hybas_id)) throw Error('Climate record has the wrong basin identifier.');
+      if (live) setState({ record });
+    }).catch(error => { if (live) setState({ error: error.message }); });
+    return () => { live = false; };
+  }, [basin.hybas_id]);
+  const record = state.record;
+  const variables = useMemo(() => record ? [...new Set(Object.values(record.series)
+    .filter(series => series.support === support).map(series => series.variable === 'precipitation' ? 'ppt' : series.variable))] : [], [record, support]);
+  const active = variables.includes(variable) ? variable : variables[0];
+  const direct = record?.series[`direct_v1.1:${support}:${active}`];
+  const estimate = record?.series[`estimated_v1.0:${support}:${active === 'ppt' ? 'precipitation' : active}`];
+  if (state.loading) return <p role="status" className="land-group-note">Loading versioned climate record…</p>;
+  if (state.error) return <p role="alert" className="land-group-note">{state.error}</p>;
+  return <div className="land-climate">
+    <p className="land-hist-warn">The 2025 TerraClimate v1.1 values are a direct modelled product. The 2025–August 2026 values are ERA-based estimates of the older v1.0 statistic. The producer advises against joining these versions into one trend.</p>
+    <div className="land-history-actions">
+      <button type="button" className="land-hist-download" onClick={() => save(`basin-${basin.hybas_id}-climate.csv`, csv(record), 'text/csv;charset=utf-8')}><Download size={12}/> Download all climate series (CSV)</button>
+      <a href={`${BASE}${basin.hybas_id}.json`} download>JSON with metadata</a>
+    </div>
+    <div className="land-sub-chips" role="group" aria-label="Spatial support">
+      {[['local', 'This basin'], ['upstream', 'Upstream area']].map(([key, label]) =>
+        <button type="button" key={key} className={key === support ? 'active' : ''} onClick={() => setSupport(key)}>{label}</button>)}
+    </div>
+    <div className="land-sub-chips" role="group" aria-label="Climate variable">
+      {variables.map(key => <button type="button" key={key} className={key === active ? 'active' : ''}
+        onClick={() => setVariable(key)}>{(record.series[`direct_v1.1:${support}:${key}`] || record.series[`estimated_v1.0:${support}:${key}`])?.label || key}</button>)}
+    </div>
+    <div className="land-climate-legend">
+      {direct && <span><i className="land-climate-direct-key"/>{PRODUCT['direct_v1.1']}</span>}
+      {estimate && <span><i className="land-climate-estimate-key"/>{PRODUCT['estimated_v1.0']}</span>}
+    </div>
+    <ClimateChart direct={direct} estimate={estimate} unit={(direct || estimate)?.unit}/>
+    {support === 'upstream' && <p className="land-sub-note">Upstream values are area weighted over level‑12 basins. CSV/JSON include coverage and water equivalent volumes where applicable. Modelled runoff generation is not routed streamflow.</p>}
+    {estimate && <p className="land-sub-note">The CSV includes the river-system 90th percentile of held out absolute error for local ERA estimates. It measures agreement with the older TerraClimate product, not station uncertainty.</p>}
+    <p className="land-sub-note"><a href="/data/atlas/climate-continuation/report.json">Validation and source record ↗</a></p>
+  </div>;
+}
