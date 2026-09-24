@@ -25,6 +25,7 @@ from __future__ import annotations
 import collections
 import csv
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -38,16 +39,47 @@ BATCH = ROOT / "PUBLISHED/data/atlas/batch-latest.json"
 OUT = ROOT / "PUBLISHED/data/atlas/basins"
 CATALOGUE = ROOT / "PUBLISHED/data/atlas/catalogue.json"
 INDEX = OUT / "index.json"
-GDB = ROOT / "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb"
 LAYER = "BasinATLAS_v10_lev12"
 BBOX = (57.0, 33.5, 79.5, 48.0)
 SYSTEMS = {4120050220: "amu_darya", 4120050240: "syr_darya"}
 
 
+# The source geodatabase is not in Git and sits wherever it was unpacked: nested
+# under GEODATA/ on the machine this was first written on, at the repository root on
+# another, beside the other HydroSHEDS downloads in earth_engine/ on a third. One
+# hardcoded path made a refresh that had already spent ninety minutes extracting fail
+# at step five of nine, for a file that was present twice in the same checkout.
+# BASINATLAS_GDB overrides the search when it lives somewhere else entirely.
+GDB_CANDIDATES = (
+    "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+    "GEODATA/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+    "BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+    "earth_engine/earth_engine/BasinATLAS_Data_v10.gdb/BasinATLAS_v10.gdb",
+)
+
+
+def geodatabase():
+    """Where the BasinATLAS geodatabase is on this machine.
+
+    Resolved when it is read rather than on import, so that a checkout without the
+    source data can still import this module -- the tests do.
+    """
+    override = os.environ.get("BASINATLAS_GDB")
+    candidates = [Path(override)] if override else [ROOT / name for name in GDB_CANDIDATES]
+    for path in candidates:
+        if path.exists():
+            return path
+    raise SystemExit(
+        "BasinATLAS geodatabase not found. Looked in:\n  "
+        + "\n  ".join(str(path) for path in candidates)
+        + "\nDownload it from HydroSHEDS or set BASINATLAS_GDB to its location."
+    )
+
+
 def originals(columns):
     """Published BasinATLAS values for every basin in the two systems."""
     import pyogrio
-    frame = pyogrio.read_dataframe(GDB, layer=LAYER, bbox=BBOX,
+    frame = pyogrio.read_dataframe(geodatabase(), layer=LAYER, bbox=BBOX,
                                    columns=["HYBAS_ID", "MAIN_BAS", "SUB_AREA"] + columns)
     frame = frame[frame.MAIN_BAS.astype("int64").isin(SYSTEMS)]
     out = {}

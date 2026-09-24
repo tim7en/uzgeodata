@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "release_id": "uz-20260915T155617436Z",
-  "cut_at": "2026-09-15T15:56:17.436+00:00",
-  "promoted_at": "2026-09-15T15:56:18.572+00:00",
+  "release_id": "uz-20260924T150158900Z",
+  "cut_at": "2026-09-24T15:01:58.900+00:00",
+  "promoted_at": "2026-09-24T15:02:00.093+00:00",
   "span": [
     "2003-01",
-    "2024-12"
+    "2026-12"
   ],
-  "rows": 27516720,
-  "path": "releases/uz-20260915T155617436Z.json",
+  "rows": 27874080,
+  "path": "releases/uz-20260924T150158900Z.json",
   "reading": "The release a reader gets by default. Pin the release_id to keep an analysis reproducible; follow this pointer to track the current one."
 }

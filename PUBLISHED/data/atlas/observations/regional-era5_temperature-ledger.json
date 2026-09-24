@@ -1,6 +1,6 @@
 {
-  "run_id": "regional-era5_temperature-20260914T065902520397Z",
-  "started_at": "2026-09-14T06:59:02.536+00:00",
+  "run_id": "regional-era5_temperature-20260924T134039206889Z",
+  "started_at": "2026-09-24T13:40:39.207+00:00",
   "source": "era5_temperature",
   "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
   "bands": [
@@ -13,10 +13,10 @@
   "basins": 7445,
   "years": [
     2003,
-    2024
+    2026
   ],
   "batch_size": 250,
-  "expected_rows": 1965480,
+  "expected_rows": 2144160,
   "retries": [],
   "failures": [],
   "by_year": {
@@ -272,15 +272,36 @@
       "complete": true,
       "values": 89340,
       "null_months": 0,
-      "seconds": 262.70546790002845,
+      "seconds": 377.2842490999974,
       "rows_per_band": 89340,
-      "run_id": "regional-era5_temperature-20260913T173848283162Z",
-      "run_id_recovered_from_store": true
+      "run_id": "regional-era5_temperature-20260924T134039206889Z"
+    },
+    "2025": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 275.101304799995,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260924T134039206889Z"
+    },
+    "2026": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 59560,
+      "null_months": 29780,
+      "seconds": 252.0413780000017,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_temperature-20260924T134039206889Z"
     }
   },
-  "finished_at": "2026-09-14T07:03:33.898+00:00",
-  "wall_seconds": 271.35325749998447,
-  "stored_rows": 1965480,
+  "finished_at": "2026-09-24T13:59:11.698+00:00",
+  "wall_seconds": 1112.4334003999975,
+  "stored_rows": 2144160,
   "complete": true,
   "basin_support": {
     "basins": 7445,
@@ -333,7 +354,17 @@
         2023,
         2024
       ]
+    },
+    {
+      "run_id": "regional-era5_temperature-20260924T134039206889Z",
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "finished_at": "2026-09-24T13:59:11.698+00:00",
+      "wall_seconds": 1112.4334003999975
     }
   ],
-  "span_note": "Years accumulate across runs; each year names the run that produced it. wall_seconds and retries describe the most recent run only. Years marked reconstructed were counted back from the observation store after an earlier ledger was overwritten."
+  "span_note": "Years accumulate across runs; each year names the run that produced it in by_year, and runs lists every run that contributed. wall_seconds and retries describe the latest run only, not the whole span."
 }

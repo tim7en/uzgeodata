@@ -1,6 +1,6 @@
 {
-  "run_id": "regional-era5_runoff-20260913T172923712238Z",
-  "started_at": "2026-09-13T17:29:23.782+00:00",
+  "run_id": "regional-era5_runoff-20260924T132028912519Z",
+  "started_at": "2026-09-24T13:20:28.912+00:00",
   "source": "era5_runoff",
   "asset": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
   "bands": [
@@ -13,10 +13,10 @@
   "basins": 7445,
   "years": [
     2003,
-    2024
+    2026
   ],
   "batch_size": 250,
-  "expected_rows": 1965480,
+  "expected_rows": 2144160,
   "retries": [],
   "failures": [],
   "by_year": {
@@ -277,14 +277,36 @@
       "complete": true,
       "values": 89340,
       "null_months": 0,
-      "seconds": 261.5681230999762,
+      "seconds": 376.13116069999523,
       "rows_per_band": 89340,
-      "run_id": "regional-era5_runoff-20260913T172923712238Z"
+      "run_id": "regional-era5_runoff-20260924T132028912519Z"
+    },
+    "2025": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 89340,
+      "null_months": 0,
+      "seconds": 330.77271940000355,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_runoff-20260924T132028912519Z"
+    },
+    "2026": {
+      "rows": 89340,
+      "basins": 7445,
+      "expected_basins": 7445,
+      "complete": true,
+      "values": 59560,
+      "null_months": 29780,
+      "seconds": 270.59570489999896,
+      "rows_per_band": 89340,
+      "run_id": "regional-era5_runoff-20260924T132028912519Z"
     }
   },
-  "finished_at": "2026-09-13T17:38:39.223+00:00",
-  "wall_seconds": 555.435223700013,
-  "stored_rows": 1965480,
+  "finished_at": "2026-09-24T13:40:28.285+00:00",
+  "wall_seconds": 1199.368984800003,
+  "stored_rows": 2144160,
   "complete": true,
   "basin_support": {
     "basins": 7445,
@@ -332,7 +354,17 @@
         2023,
         2024
       ]
+    },
+    {
+      "run_id": "regional-era5_runoff-20260924T132028912519Z",
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "finished_at": "2026-09-24T13:40:28.285+00:00",
+      "wall_seconds": 1199.368984800003
     }
   ],
-  "span_note": "Years accumulate across runs; each year names the run that produced it. wall_seconds and retries describe the most recent run only. Years marked reconstructed were counted back from the observation store after an earlier ledger was overwritten."
+  "span_note": "Years accumulate across runs; each year names the run that produced it in by_year, and runs lists every run that contributed. wall_seconds and retries describe the latest run only, not the whole span."
 }

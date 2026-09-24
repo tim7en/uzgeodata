@@ -1,74 +1,74 @@
 {
-  "generated_at": "2026-09-15T15:41:11.856+00:00",
-  "rows": 27516720,
+  "generated_at": "2026-09-24T15:01:58.465+00:00",
+  "rows": 27874080,
   "basins": 7445,
   "months": [
     "2003-01",
-    "2024-12"
+    "2026-12"
   ],
-  "bytes": 162605761,
+  "bytes": 164838610,
   "base": "/data/atlas/cube/",
   "files": {
     "aet_mm_s": {
       "path": "/data/atlas/cube/variable=aet_mm_s/data_0.parquet",
-      "bytes": 12374831
+      "bytes": 12374799
     },
     "cwd_mm_s": {
       "path": "/data/atlas/cube/variable=cwd_mm_s/data_0.parquet",
-      "bytes": 10325904
+      "bytes": 10325069
     },
     "pds_ix_s": {
       "path": "/data/atlas/cube/variable=pds_ix_s/data_0.parquet",
-      "bytes": 15041682
+      "bytes": 15040887
     },
     "pet_mm_s": {
       "path": "/data/atlas/cube/variable=pet_mm_s/data_0.parquet",
-      "bytes": 12805709
+      "bytes": 12805799
     },
     "pre_mm_s": {
       "path": "/data/atlas/cube/variable=pre_mm_s/data_0.parquet",
-      "bytes": 9912906
+      "bytes": 9914165
     },
     "rtc_mm_s": {
       "path": "/data/atlas/cube/variable=rtc_mm_s/data_0.parquet",
-      "bytes": 5067141
+      "bytes": 5080290
     },
     "run_mm_s": {
       "path": "/data/atlas/cube/variable=run_mm_s/data_0.parquet",
-      "bytes": 13776087
+      "bytes": 14804211
     },
     "snw_pc_s": {
       "path": "/data/atlas/cube/variable=snw_pc_s/data_0.parquet",
-      "bytes": 9058745
+      "bytes": 9059541
     },
     "soil_mm_s": {
       "path": "/data/atlas/cube/variable=soil_mm_s/data_0.parquet",
-      "bytes": 10971789
+      "bytes": 10977198
     },
     "swe_mm_s": {
       "path": "/data/atlas/cube/variable=swe_mm_s/data_0.parquet",
-      "bytes": 5021034
+      "bytes": 5012869
     },
     "tmn_dc_s": {
       "path": "/data/atlas/cube/variable=tmn_dc_s/data_0.parquet",
-      "bytes": 14522398
+      "bytes": 14547857
     },
     "tmp_dc_s": {
       "path": "/data/atlas/cube/variable=tmp_dc_s/data_0.parquet",
-      "bytes": 15086661
+      "bytes": 16235370
     },
     "tmx_dc_s": {
       "path": "/data/atlas/cube/variable=tmx_dc_s/data_0.parquet",
-      "bytes": 14453632
+      "bytes": 14472550
     },
     "vpd_kp_s": {
       "path": "/data/atlas/cube/variable=vpd_kp_s/data_0.parquet",
-      "bytes": 14187242
+      "bytes": 14188005
     }
   },
   "query": "read_parquet('/data/atlas/cube/variable=*/*.parquet', hive_partitioning = true) reads them all; naming one variable's directory reads only that file.",
   "release": {
-    "store_rows": 22894190,
+    "store_rows": 34151030,
     "generated_from_run": "pskem-all281-20260909T184834061745Z",
     "contract": "ATLAS_MODULES/core/REPRODUCIBILITY.md"
   },
@@ -208,7 +208,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2024
+          2026
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -218,7 +218,7 @@
         "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
         "fallback_cost": "Published separately as uz:rtc-monthly-v1: a bucket model's surplus rather than a land-surface scheme's, so the two differ in method, not only grid.",
         "kind": "flux",
-        "observed_through": "2024-12"
+        "observed_through": "2026-08"
       },
       "uz:snw-monthly-v1": {
         "id": "uz:snw-monthly-v1",
@@ -306,7 +306,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2024
+          2026
         ],
         "support": "basin, local",
         "aggregation": "area-weighted mean of the monthly field",
@@ -316,7 +316,7 @@
         "fallback": "IDAHO_EPSCOR/TERRACLIMATE",
         "fallback_cost": "Finer at about four kilometres, but a midpoint of extremes rather than a mean of hours, and about a degree warmer across this region.",
         "kind": "state",
-        "observed_through": "2024-12"
+        "observed_through": "2026-08"
       },
       "uz:tmx-monthly-v1": {
         "id": "uz:tmx-monthly-v1",

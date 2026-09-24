@@ -123,8 +123,14 @@ def store_status(store=STORE):
     restored: an absent store is a state to report, not a DuckDB traceback.
     """
     partitions = list(store.glob("time_kind=*/*/part.parquet"))
+    # A store restored from a backup drive is read where it lies rather than copied
+    # first, so the path shown is only relative when it actually is.
+    try:
+        shown = str(store.relative_to(ROOT))
+    except ValueError:
+        shown = str(store)
     return {"present": bool(partitions), "partitions": len(partitions),
-            "path": str(store.relative_to(ROOT)).replace("\\", "/")}
+            "path": shown.replace("\\", "/")}
 
 
 def stored_extent(store=STORE):
