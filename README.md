@@ -39,6 +39,7 @@ catchment above a basin and must not be added across basins.
 | Published attributes | 281 HydroATLAS attribute definitions |
 | Independent estimates | Coverage varies by attribute and basin; missing estimates stay explicit |
 | Monthly record | 288 calendar positions, 2003–2026; actual non-null coverage varies by variable |
+| Catchment statistics | Level-12 upstream catchments: area-weighted monthly means, sub-basin extremes, water-volume totals and derived morphology |
 | Downloads | Basin JSON, shared catalogue, monthly CSV and provenance metadata |
 | Query cube | 17.8M rows as partitioned Parquet, readable over HTTP byte ranges |
 | Derived products | Normals, anomalies, seasonal figures, trends, water balance, SPI |
@@ -194,6 +195,9 @@ Paths below are relative to the site root (`/uzgeodata/` on GitHub Pages).
 | `data/atlas/basins/<HYBAS_ID>.json` | Published values and independent estimates |
 | `data/atlas/history/index.json` | Monthly variables, provenance and coverage |
 | `data/atlas/history/<HYBAS_ID>.json` | Basin monthly values and their metadata |
+| `data/atlas/catchments/index.json` | Level-12 drainage network, local areas, series manifest and matrix hashes |
+| `data/atlas/catchments/morphology.json` | Per-catchment area, perimeter, relief, slope and shape measures |
+| `data/atlas/catchments/<variable>-<hash>.bin.gz` | One monthly matrix per variable, every basin in one file |
 | `data/atlas/cube/variable=<name>/*.parquet` | The whole dated record, one file per variable |
 | `data/atlas/cube/index.json` | Cube manifest, variable registry and reading notes |
 | `data/atlas/models/pskem-discharge.json` | The validated model result, skill included |
@@ -204,6 +208,16 @@ Monthly arrays start in January of the first stated year. Nulls retain their
 positions. Annual totals are meaningful only for monthly flux quantities with all
 12 observations. Download the shared catalogue with attribute files; positional
 values are not self-describing without it.
+
+The catchment matrices are basin-major, quantized to 0.0001 native units, delta
+encoded within each basin, byte-shuffled and gzipped; `index.json` states the
+encoding, the scale, the null sentinel and a SHA-256 per file. Read them with
+`decodeMatrix` in `INTERFACE/catchmentStatisticsModel.js` rather than by hand. A
+catchment aggregate weights each sub-basin by its local `SUB_AREA`: its minimum and
+maximum are extrema among sub-basin values, not pixel-level extremes, and a
+full-catchment mean or total is withheld whenever any member basin lacks that
+month. Serve the `.bin.gz` files without `Content-Encoding`, or the browser
+decompresses them in transit and the published hash no longer matches.
 
 ## Use it as a library
 
@@ -532,6 +546,29 @@ observations. Units and periods cannot silently drift within a series; missing
 values state a reason. Public projections retain source release, method and basin
 geometry identifiers. Read the [observation contract](ATLAS_MODULES/core/REPRODUCIBILITY.md).
 This protects traceability; it does not establish scientific reproduction.
+
+## Open findings
+
+Known and unfixed, recorded so they are picked up deliberately rather than
+rediscovered. Detail and the measurements behind them are in
+[docs/LAUNCH.md](docs/LAUNCH.md#open-findings).
+
+- **Catchment tab reads unextended months as gaps.** The monthly frame is 288
+  calendar positions but the record runs to 2024-12, so the catchment table and CSV
+  end with 24 rows at `0%` coverage. Nothing is misstated; a current dataset just
+  looks like it has a two-year hole. Fix is local to
+  `INTERFACE/catchmentStatisticsModel.js` and needs no rebuild of published data.
+- **The withheld-layer notice is published but never rendered.** The release
+  excludes 25 `data/review/` source-geometry files and records the reason in
+  `data/review-layers.json`; `INTERFACE/LayerReview.jsx` never reads it, so the
+  review page lists 13 layers with no explanation of the other 25.
+- **`pytest TESTS` fails on `main`.** Three unrelated pre-existing failures keep
+  the `integrity` workflow red, so it no longer signals anything. See
+  [docs/LAUNCH.md](docs/LAUNCH.md#open-findings) for which and why.
+- **The release is past the documented Pages size limit.** 1,021,390,184 bytes
+  against a documented 1 GB; Pages enforces at 1 GiB, leaving about 52 MB of
+  undocumented headroom. The next bulky dataset needs a trim plan, not another
+  budget raise.
 
 ## Checks and contribution
 

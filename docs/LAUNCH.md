@@ -9,6 +9,10 @@ the 2003–2022 monthly record, and download values with provenance.
 - 7,445 basins in the Amu Darya and Syr Darya systems.
 - 281 published attribute definitions; independent estimate coverage varies.
 - Completed monthly runs only; consult `release.json` for included temperature and other variables.
+- Whole-catchment statistics for level-12 basins: area-weighted monthly means over
+  the traced upstream network, sub-basin extremes, water-volume totals where the
+  unit allows one, and derived morphology. Level 7 and level 9 carry no catchment
+  package and the tab says so.
 - About, citation, source reuse terms, help, projects and responsive map/modal.
 - Public preview, not an independently reproduced scientific release.
 - Snow retained for inspection but withdrawn from trend analysis.
@@ -58,13 +62,54 @@ unfinished runs, honours observation revisions and fails on mixed per-variable
 provenance. Commit reviewed public outputs; do not commit raw partitions or
 credentials. `atlas:api` requires local source GIS data and Python dependencies.
 
+## Release size
+
+`build_launch.mjs` fails the build above a byte budget, currently 1035 MB. The
+budget is a guard, not the real ceiling: GitHub's documented limit is that
+"published GitHub Pages sites may be no larger than 1 GB", stated as GB.
+
+The release passed 1,000,000,000 bytes when the catchment package was added. The
+measured positions:
+
+| Release | Bytes | vs 1,000 MB | vs 1 GiB |
+| --- | --- | --- | --- |
+| `d59d0422c`, before the catchment package | 978,800,018 | 21.2 MB under | 94.9 MB under |
+| `46a486885`, with it | 1,021,390,184 | 21.4 MB over | 52.4 MB under |
+
+Pages deployed and serves the larger one, so the limit is enforced at 1 GiB
+(1,073,741,824) rather than at 10^9. That reading is not documented, so treat the
+remaining ~52 MB as the real headroom and confirm `release.json` on the live site
+after any deploy that adds bulk.
+
+The release ships only files that `git ls-files PUBLISHED` reports, so generated
+public data must be committed to reach the site. 25 files, 162.4 MB, are
+deliberately excluded: the `data/review/` source geometry, kept in the repository
+but not republished. `data/review-layers.json` records the count and the reason and
+the layer index is filtered to what exists, so the review tool never offers a
+missing layer.
+
+If the release has to come back under 1,000 MB, the catchment package cannot do it
+alone. Re-quantizing its nine monthly matrices was measured at 6.2 MB saved at a
+0.001 step, 13.6 MB at 0.01 and 19.5 MB at 0.1, and rounding `morphology.json`
+floats to four decimals saves 0.67 MB. The most aggressive combination still lands
+near 1,001 MB, and published history values carry up to four decimals, so the
+current 0.0001 step is lossless and anything coarser discards source precision. A
+cut of that size has to come from elsewhere in the 482 MB `data/atlas` or 207 MB
+`data/hydroclimate` trees.
+
 ## Release checks
 
 Check `/project.html` and example links on desktop and mobile, then open the map at `/`: choose a level-12 basin, open all
-three tabs, expand evidence, download CSV and JSON, and follow About/Help links.
+four tabs, expand evidence, download CSV and JSON, and follow About/Help links.
 Check a basin outside the Pskem pilot. Verify a missing API file returns 404.
-Check the public `release.json` commit after deployment. The browser test supports
-`ATLAS_TEST_URL`, including a deployment subpath.
+Check the public `release.json` commit and `bytes` after deployment. The browser
+test supports `ATLAS_TEST_URL`, including a deployment subpath.
+
+For the catchment tab, confirm the monthly matrix passes its integrity check: the
+served `.bin.gz` must arrive as `application/gzip` with no `Content-Encoding`, or
+the browser decompresses it in transit and the SHA-256 in `index.json` no longer
+matches what the page hashed. Open a level-7 basin as well; it must show the
+level-12 note without fetching a matrix.
 
 Raw-store integration tests explicitly skip when raw partitions are absent from a
 checkout. Unit tests still exercise the contract with temporary stores. During a
@@ -83,6 +128,46 @@ updates use `atlas:history` after acquisition has finished.
 Revert the launch change on the publishing branch and let the workflow deploy the
 previous reviewed snapshot, or re-run the previous successful deployment workflow.
 Neither action changes the local observation store or acquisition checkpoints.
+
+## Open findings
+
+Recorded from the September 2026 catchment-statistics release and not yet fixed.
+Neither of the first two misstates a number; each makes the site read worse than
+the data behind it actually is.
+
+**1. The catchment tab shows unextended months as coverage gaps.** The published
+history frame is 288 calendar positions, but the record itself is shorter: the
+history files declare `observed_months: 264` with `missing_months: 0` for
+precipitation, meaning 2003-01 to 2024-12 is the record and the rest has simply not
+been extended. `aggregateCatchment` cannot tell the two apart and counts the 24
+unextended slots as members with no observation, so the table and the monthly CSV
+end with 24 rows reading `0%` coverage over none of the member basins, for 2025-01
+to 2026-12. `run_mm_s`
+reaches 2026-08 and shows four such rows. The effect is that a current dataset
+looks like it has a two-year hole. The fix is to stop the table and the CSV at the
+last month any member basin observed and to state the covered span above the
+table; it touches `INTERFACE/catchmentStatisticsModel.js` and its test only, with
+no pipeline rerun and no redeploy of the 42 MB package.
+
+Distinguish this from real within-record missingness, which the tab already
+handles correctly: `snw_pc_s` has 251 months covered at 98–100% of basins, so its
+full-catchment total is withheld in nearly every month by design.
+
+**2. The withheld-layer notice never reaches a reader.** `build_launch.mjs` writes
+`withheld: { layers, reason }` into `data/review-layers.json`, naming HydroSHEDS as
+the place to get the 25 excluded layers unchanged. `INTERFACE/LayerReview.jsx`
+reads that index but never references `withheld`, so the explanation ships in the
+JSON and is shown nowhere. The review page silently lists 13 layers instead of 38.
+
+**3. `python -m pytest TESTS -q` fails on `main`.** Three tests, unrelated to each
+other and pre-existing: `tests/test_ca_discharge.py` (a Windows `charmap` decode
+error that does not reproduce on Linux), `tests/test_case_study_package.py`
+(`PUBLISHED/data/case-studies/model-review.json` no longer matches its declared
+hash) and `tests/test_ontology.py` (reads untracked `WORKSPACE/derived` artefacts).
+The `integrity` workflow has failed at its `Run tests` step since at least
+`798833ad8`; the `Public preview` workflow, which runs `test:ui` and
+`build:launch`, passes. Fixing the hash drift and the encoding assumption would let
+the integrity workflow speak again.
 
 ## Deferred work
 
