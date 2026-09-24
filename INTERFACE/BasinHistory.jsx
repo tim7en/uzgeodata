@@ -120,26 +120,11 @@ export default function BasinHistory({ basin }) {
   const observed = series.observed_months;
   const total = extractedLength(state.history, series);
   return <>
-    <div className="land-sub-note">
-      <div className="land-sub-counts">
-        <span className="land-sub-key">{state.history.years[0]}–{state.history.years[1]} monthly</span>
-        <span>{observed} of {total} months observed</span>
-        <span>{names.length} variables</span>
-      </div>
-      <p>Monthly open-data estimates for this basin. Their period may differ from the climatologies. A month with no
-        observation is drawn as a gap and left empty in the download, never as a zero.</p>
-      <p className="land-sub-links">
+    <div className="land-history-actions">
         <button type="button" className="land-hist-download"
           onClick={() => download(`basin-${basin.hybas_id}-monthly.csv`, toCsv(state.history), 'text/csv')}>
           <Download size={11}/> Download this basin, all variables (CSV)
         </button>
-        <a href={`${state.index.base_url}${basin.hybas_id}.json`} download>JSON</a>
-        <button type="button" className="land-hist-download" onClick={() => download(
-          `basin-${basin.hybas_id}-monthly-metadata.json`, JSON.stringify({ ...state.history,
-            series: Object.fromEntries(Object.entries(state.history.series).map(([key, { values, ...meta }]) => [key, meta]))
-          }, null, 2), 'application/json')}>Download metadata &amp; limitations</button>
-        <a href="/dynamic-atlas.html">Methods &amp; resolutions <ArrowUpRight size={11}/></a>
-      </p>
     </div>
 
     <div className="land-sub-filters">
@@ -154,6 +139,25 @@ export default function BasinHistory({ basin }) {
       across this record; the cause is unresolved. Values remain available for inspection.</span>
     </p>}
     <Chart history={state.history} name={active} series={series}/>
+
+    <div className="land-sub-note">
+      <div className="land-sub-counts">
+        <span className="land-sub-key">{state.history.years[0]}–{state.history.years[1]} monthly</span>
+        <span>{observed} of {total} months observed</span>
+        <span>{names.length} variables</span>
+      </div>
+      <p>Monthly open-data estimates for this basin. Their period may differ from the climatologies. A month with no
+        observation is drawn as a gap and left empty in the download, never as a zero.</p>
+      <p className="land-sub-links">
+
+        <a href={`${state.index.base_url}${basin.hybas_id}.json`} download>JSON</a>
+        <button type="button" className="land-hist-download" onClick={() => download(
+          `basin-${basin.hybas_id}-monthly-metadata.json`, JSON.stringify({ ...state.history,
+            series: Object.fromEntries(Object.entries(state.history.series).map(([key, { values, ...meta }]) => [key, meta]))
+          }, null, 2), 'application/json')}>Download metadata &amp; limitations</button>
+        <a href="/dynamic-atlas.html">Methods &amp; resolutions <ArrowUpRight size={11}/></a>
+      </p>
+    </div>
 
     {drift?.growing && <p className="land-hist-warn">
       <AlertTriangle size={12}/>

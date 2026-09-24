@@ -19,15 +19,15 @@ HydroATLAS attributes beside independent open-data estimates, and download
 
 ## Try it in five minutes
 
-1. Open the map and zoom until the sidebar shows **Level 12**.
-2. Select a basin, or search for a HYBAS ID such as `4120050220`.
-3. Open **Atlas attributes**. Read the published values, then switch to
-   **Independent estimates** and expand a row for its source, period and method.
-4. Open **Monthly record**, choose a variable, and inspect the observed-month counts.
-5. Download the CSV **and metadata JSON**, retaining units, limitations and provenance.
+1. Search for a HYBAS or PFAF identifier, such as `4120050220`, in the visible basin finder.
+2. Select the result to see its monthly chart. Search covers all level-12 basins at any map zoom.
+3. Choose a variable to visualize, or download all monthly variables as CSV or JSON with metadata.
 
-The public [guide](https://uzgeodata.uz/guide.html) includes direct
-API downloads. Search uses the currently displayed basin level. Null values mean
+Published attributes and independent estimates are available in adjacent tabs.
+For multiple basins, choose **Draw area**, drag a rectangle, then choose a download.
+The public [guide](https://uzgeodata.uz/guide.html) includes direct API downloads.
+See [the workflow review](docs/WORKFLOW-REVIEW.md) for interaction budgets and remaining gaps.
+Null values mean
 missing observations, not zero. Upstream attributes already account for the
 catchment above a basin and must not be added across basins.
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { CircleMarker, GeoJSON, Polygon, Polyline, useMap, useMapEvents } from 'react-leaflet';
+import { CircleMarker, GeoJSON, Polygon, Polyline, useMap } from 'react-leaflet';
 import { Download, PenLine, X } from 'lucide-react';
 import {
   AOI_FETCH_CAP, AOI_RULES, aoiFeature, attributesCsv, basinListCsv, dictionaryCsv, exportDocument,
@@ -27,29 +27,71 @@ async function readJson(url) {
 }
 
 /** Drawing and the selected basins, on the map. Lives inside MapContainer. */
-export function AoiLayer({ drawing, vertices, closed, selection, onAdd, onFinish, onCancel }) {
+export function AoiLayer({ drawing, vertices, closed, selection, onRectangle, onCancel }) {
   const map = useMap();
-  useMapEvents({
-    click: event => { if (drawing) onAdd([event.latlng.lng, event.latlng.lat]); },
-    dblclick: () => { if (drawing) onFinish(); },
-  });
 
   useEffect(() => {
     const container = map.getContainer();
     if (!drawing) return undefined;
+    if (window.matchMedia('(max-width: 820px)').matches) container.scrollIntoView({ block: 'center' });
+    const wasDragging = map.dragging.enabled();
+    const wasDoubleClickZoom = map.doubleClickZoom.enabled();
+    const touchAction = container.style.touchAction;
+    map.dragging.disable();
     map.doubleClickZoom.disable();
+    container.style.touchAction = 'none';
     container.classList.add('land-aoi-drawing');
+    let start = null;
+    let origin = null;
+    const corners = event => {
+      const end = map.mouseEventToLatLng(event);
+      return [[start.lng, start.lat], [end.lng, start.lat], [end.lng, end.lat], [start.lng, end.lat]];
+    };
+    const down = event => {
+      if (event.button !== 0 || !event.isPrimary) return;
+      event.preventDefault();
+      event.stopPropagation();
+      start = map.mouseEventToLatLng(event);
+      origin = [event.clientX, event.clientY];
+      container.setPointerCapture(event.pointerId);
+    };
+    const move = event => {
+      if (!start) return;
+      event.preventDefault();
+      event.stopPropagation();
+      onRectangle(corners(event), false);
+    };
+    const up = event => {
+      if (!start) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const valid = Math.abs(event.clientX - origin[0]) >= 5 && Math.abs(event.clientY - origin[1]) >= 5;
+      const rectangle = corners(event);
+      start = null;
+      container.releasePointerCapture(event.pointerId);
+      if (valid) onRectangle(rectangle, true);
+    };
+    const cancel = () => { start = null; onCancel(); };
+    container.addEventListener('pointerdown', down, true);
+    container.addEventListener('pointermove', move, true);
+    container.addEventListener('pointerup', up, true);
+    container.addEventListener('pointercancel', cancel);
     const onKey = event => {
       if (event.key === 'Escape') onCancel();
-      if (event.key === 'Enter') onFinish();
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      map.doubleClickZoom.enable();
+      if (wasDragging) map.dragging.enable();
+      if (wasDoubleClickZoom) map.doubleClickZoom.enable();
+      container.style.touchAction = touchAction;
       container.classList.remove('land-aoi-drawing');
+      container.removeEventListener('pointerdown', down, true);
+      container.removeEventListener('pointermove', move, true);
+      container.removeEventListener('pointerup', up, true);
+      container.removeEventListener('pointercancel', cancel);
       window.removeEventListener('keydown', onKey);
     };
-  }, [drawing, map, onCancel, onFinish]);
+  }, [drawing, map, onCancel, onRectangle]);
 
   const positions = vertices.map(([lng, lat]) => [lat, lng]);
   const outlines = useMemo(() => (selection?.length
@@ -70,10 +112,11 @@ export function AoiLayer({ drawing, vertices, closed, selection, onAdd, onFinish
 
 /** The dock section: draw, read the selection, and take it away. */
 export function AoiPanel({
-  drawing, vertices, closed, rule, selection, loadingGeometry, onStart, onFinish, onCancel, onClear, onRule, onFit,
+  drawing, vertices, closed, rule, selection, loadingGeometry, onStart, onCancel, onClear, onRule, onFit,
 }) {
   const [progress, setProgress] = useState(null);
   const [error, setError] = useState(null);
+  const panel = useRef(null);
   const cache = useRef({ records: new Map(), histories: new Map() });
   const busy = Boolean(progress);
   const summary = useMemo(() => summarise(selection || []), [selection]);
@@ -81,6 +124,9 @@ export function AoiPanel({
   const name = suffix => `uzgeodata-aoi-${summary.count}-basins-${stamp}-${suffix}`;
 
   useEffect(() => { setError(null); }, [selection]);
+  useEffect(() => {
+    if (closed && window.matchMedia('(max-width: 820px)').matches) panel.current?.scrollIntoView({ block: 'start' });
+  }, [closed]);
 
   // Per-basin documents are fetched once per session; switching from CSV to JSON reuses them.
   const collect = async kind => {
@@ -118,7 +164,7 @@ export function AoiPanel({
       } },
     { id: 'dictionary', label: 'Column dictionary', format: 'CSV', note: 'labels, units, periods, sources',
       task: async () => save('uzgeodata-attribute-dictionary.csv', dictionaryCsv(await readJson('/data/atlas/catalogue.json')), 'text/csv') },
-    { id: 'monthly', label: 'Monthly record', format: 'CSV', note: '2003–2022, one row per month',
+    { id: 'monthly', label: 'Monthly record', format: 'CSV', note: 'Full published period, one row per month',
       task: async () => save(name('monthly.csv'), historyCsv(await collect('histories')), 'text/csv') },
     { id: 'json', label: 'Everything', format: 'JSON', note: 'area, rule, provenance, all of the above',
       task: async () => {
@@ -132,17 +178,15 @@ export function AoiPanel({
       } },
   ];
 
-  return <div className="land-aoi">
+  return <div className="land-aoi" ref={panel}>
     <span className="land-aoi-title">Area of interest</span>
     {!drawing && !closed && <>
-      <p className="land-group-note">Draw an area to find every level-12 basin in it and download their data.</p>
+      <p className="land-group-note">Select a rectangle to find level-12 basins and download their data.</p>
       <button type="button" className="land-aoi-primary" onClick={onStart}><PenLine size={13}/> Draw area</button>
     </>}
     {drawing && <>
-      <p className="land-group-note">Click the map to add corners. Double-click or press Enter to finish; Esc cancels.</p>
+      <p className="land-group-note">Drag across the map to select an area. Release to see its basins; Esc cancels.</p>
       <div className="land-aoi-row">
-        <button type="button" className="land-aoi-primary" disabled={vertices.length < 3} onClick={onFinish}>
-          Finish ({vertices.length} {vertices.length === 1 ? 'corner' : 'corners'})</button>
         <button type="button" onClick={onCancel}>Cancel</button>
       </div>
     </>}

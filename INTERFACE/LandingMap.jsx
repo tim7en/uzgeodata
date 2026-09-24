@@ -14,6 +14,8 @@ import StationModal from './StationModal.jsx';
 import GaugeModal from './GaugeModal.jsx';
 import BasinSubstitutes from './BasinSubstitutes.jsx';
 import BasinHistory from './BasinHistory.jsx';
+import BasinFinder from './BasinFinder.jsx';
+import BasinCatchment from './BasinCatchment.jsx';
 import { AoiLayer, AoiPanel } from './AoiTool.jsx';
 import { selectBasins } from './aoiModel.js';
 import { DEFAULT_MAP_VIEW, readMapView, saveMapView, collectionBounds } from './mapViewModel.js';
@@ -31,7 +33,6 @@ const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
 const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const OPACITY_KEY = 'uzgeodata.overlayOpacity';
-const PANEL_CLOSE_DELAY = 650;
 // How much of each corner the fixed UI takes up, in pixels, so a fitted view
 // never lands a basin under the sidebar, the header or the zoom controls.
 const OCCLUDED_TOP_LEFT = [300, 170];
@@ -116,10 +117,10 @@ const GROUP_ORDER = ['basin_specific', 'basin_accumulation'];
  * licence it came from and whether it describes this sub-basin or everything
  * upstream of it.
  */
-function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
+function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, geometry, geometryUrl, onClose }) {
   const [filter, setFilter] = useState('');
   const [kind, setKind] = useState('all');
-  const [tab, setTab] = useState('original');
+  const [tab, setTab] = useState(initialTab || (Number(basin.basin_level) === 12 ? 'history' : 'original'));
 
   useEffect(() => {
     const escape = event => { if (event.key === 'Escape') onClose(); };
@@ -158,6 +159,10 @@ function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
         <button type="button" onClick={onClose} aria-label="Close"><X size={15}/></button>
       </header>
 
+      {Number(basin.basin_level) === 12 && <div className="land-basin-downloads">
+        <a href={`/data/atlas/basins/${basin.hybas_id}.json`} download>Attributes &amp; estimates (JSON)</a>
+        <a href={`/data/atlas/history/${basin.hybas_id}.json`} download>Monthly data &amp; metadata (JSON)</a>
+      </div>}
       <div className="land-modal-tabs" role="tablist" aria-label="Basin attribute views">
         {TABS.map(([id, label]) => <button
           key={id} type="button" role="tab" id={`basin-tab-${id}`} aria-controls={`basin-panel-${id}`}
@@ -177,7 +182,9 @@ function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
         {tab === 'original' && <span>{formatNumber(rows.length)} attributes</span>}
       </div>}
 
-      <div className="land-modal-scroll" role="tabpanel" id={`basin-panel-${tab}`} aria-labelledby={`basin-tab-${tab}`}>
+      <div className="land-modal-scroll land-basin-layout" role="tabpanel" id={`basin-panel-${tab}`} aria-labelledby={`basin-tab-${tab}`}>
+        <BasinCatchment basin={basin} collection={geometry} url={geometryUrl}/>
+        <div className="land-basin-values">
         {tab === 'history' ? <BasinHistory key={`h-${basin.basin_level}-${basin.hybas_id}`} basin={basin}/>
           : tab === 'substitutes' ? <BasinSubstitutes key={`${basin.basin_level}-${basin.hybas_id}`} basin={basin} filter={filter} kind={kind}/>
           : loading && !store ? <p className="land-group-note">Loading the atlas attributes…</p>
@@ -197,6 +204,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, onClose }) {
             </tr>)}</tbody>
           </table>}
         {tab === 'original' && !rows.length && store ? <p className="land-group-note">Nothing matches that filter.</p> : null}
+        </div>
       </div>
 
       <footer>
@@ -251,65 +259,11 @@ export default function LandingMap() {
   const [loadingStore, setLoadingStore] = useState(false);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
-  const [peek, setPeek] = useState(false);
-  const panelCloseTimer = useRef(null);
-  const [stickyOpen, setStickyOpen] = useState(() => {
-    try { return localStorage.getItem('uzgeodata-panel') === 'open'; } catch { return false; }
-  });
-  const panelOpen = stickyOpen || peek || !!selected;
-  const setSticky = value => {
-    setStickyOpen(value);
-    try { localStorage.setItem('uzgeodata-panel', value ? 'open' : 'closed'); } catch { /* storage blocked */ }
-  };
-  // The header obeys the same contract as the reading panel: the map owns the
-  // screen, a touch of the top edge or the brand tab summons the header, and a
-  // click on the tab pins it open across visits.
-  const [headPeek, setHeadPeek] = useState(false);
-  const [headSticky, setHeadSticky] = useState(() => {
-    try { return localStorage.getItem('uzgeodata-head') === 'open'; } catch { return false; }
-  });
-  const headOpen = headSticky || headPeek;
-  const setHeadStickyValue = value => {
-    setHeadSticky(value);
-    try { localStorage.setItem('uzgeodata-head', value ? 'open' : 'closed'); } catch { /* storage blocked */ }
-  };
-  useEffect(() => {
-    const onMove = event => {
-      if (event.clientY <= 6) setHeadPeek(true);
-      else if (event.clientY > 380) setHeadPeek(false);
-    };
-    document.addEventListener('mousemove', onMove, { passive: true });
-    return () => document.removeEventListener('mousemove', onMove);
-  }, []);
-  const keepPanelOpen = useCallback(() => {
-    if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
-    panelCloseTimer.current = null;
-    setPeek(true);
-  }, []);
-  const schedulePanelClose = useCallback(() => {
-    if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
-    panelCloseTimer.current = window.setTimeout(() => {
-      panelCloseTimer.current = null;
-      setPeek(false);
-    }, PANEL_CLOSE_DELAY);
-  }, []);
-  // A touch of the left edge slides the panel out; leaving it lets it fall
-  // closed again unless the reader pinned it. A short grace period lets the
-  // pointer cross accordion gaps without dismissing the panel mid-navigation.
-  useEffect(() => {
-    const onMove = event => { if (event.clientX <= 6) keepPanelOpen(); };
-    document.addEventListener('mousemove', onMove, { passive: true });
-    return () => {
-      document.removeEventListener('mousemove', onMove);
-      if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
-    };
-  }, [keepPanelOpen]);
   useEffect(() => {
     const host = document.getElementById('uz-lang-host');
     if (host && !host.firstChild) mountSelect(host);
   }, []);
   const [hoveredId, setHoveredId] = useState(null);
-  const [query, setQuery] = useState('');
   const [overlay, setOverlay] = useState('');
   // A reader who turns the colours down to read the base map under them usually
   // wants that again next visit; storage can be unavailable, so it is a nicety only.
@@ -320,6 +274,7 @@ export default function LandingMap() {
     try { window.localStorage.setItem(OPACITY_KEY, String(opacity)); } catch { /* storage blocked */ }
   }, [opacity]);
   const [tableOpen, setTableOpen] = useState(false);
+  const [initialTab, setInitialTab] = useState(null);
   // Area of interest. Drawing borrows map clicks, so basin selection is held off
   // through a ref the (stable) basin click handler can read.
   const [aoiDrawing, setAoiDrawing] = useState(false);
@@ -520,38 +475,17 @@ export default function LandingMap() {
   }, [aoiClosed, level12Entry, levels]);
   const aoiSelection = useMemo(() => (aoiClosed && levels[12]
     ? selectBasins(levels[12].features, aoiVertices, aoiRule) : []), [aoiClosed, levels, aoiVertices, aoiRule]);
-  // Vertices are mirrored in a ref as they are added: a double-click's own clicks
-  // may not have rendered by the time the double-click asks to finish.
-  const aoiVerticesRef = useRef(aoiVertices);
-  aoiVerticesRef.current = aoiVertices;
-  const addAoiVertex = useCallback(vertex => {
-    const current = aoiVerticesRef.current;
-    const last = current[current.length - 1];
-    if (last && last[0] === vertex[0] && last[1] === vertex[1]) return;
-    aoiVerticesRef.current = [...current, vertex];
-    setAoiVertices(aoiVerticesRef.current);
+  const setAoiRectangle = useCallback((vertices, complete) => {
+    setAoiVertices(vertices);
+    if (complete) { setAoiDrawing(false); setAoiClosed(true); }
   }, []);
-  const finishAoi = useCallback(() => {
-    if (aoiVerticesRef.current.length < 3) return;
-    setAoiDrawing(false);
-    setAoiClosed(true);
-  }, []);
-  const startAoi = useCallback(() => { aoiVerticesRef.current = []; setAoiVertices([]); setAoiClosed(false); setAoiDrawing(true); }, []);
-  const clearAoi = useCallback(() => { aoiVerticesRef.current = []; setAoiVertices([]); setAoiClosed(false); setAoiDrawing(false); }, []);
+  const startAoi = useCallback(() => { setAoiVertices([]); setAoiClosed(false); setAoiDrawing(true); }, []);
+  const clearAoi = useCallback(() => { setAoiVertices([]); setAoiClosed(false); setAoiDrawing(false); }, []);
 
   const features = basins?.features || [];
   const byId = useMemo(() => new Map(features.map(feature => [String(feature.properties.hybas_id), feature])), [features]);
   const totals = useMemo(() => systemTotals(features), [features]);
   const selectedId = selected ? String(selected.properties.hybas_id) : null;
-  const results = useMemo(() => {
-    const term = query.trim();
-    if (term.length < 3) return [];
-    return features
-      .filter(feature => String(feature.properties.hybas_id).includes(term)
-        || String(feature.properties.pfaf_id).includes(term))
-      .slice(0, 6);
-  }, [query, features]);
-
   // Swapping level mounts a fresh set of Leaflet layers, so the registry is
   // emptied here, during render, before onEachFeature refills it. Doing it in an
   // effect ran after that and wiped the new layers instead of the old ones.
@@ -591,15 +525,20 @@ export default function LandingMap() {
       mouseover: () => setHoveredId(id),
       mouseout: () => setHoveredId(current => (current === id ? null : current)),
       click: () => {
-        if (drawingRef.current) return; setSelected(feature); setDam(null); setLake(null); setStation(null); setRiverReach(null); setQuery(''); setStoreRequested(true); setTableOpen(true); },
+        if (drawingRef.current) return; setInitialTab(null); setSelected(feature); setDam(null); setLake(null); setStation(null); setRiverReach(null); setStoreRequested(true); setTableOpen(true); },
     });
   }, []);
 
-  const focus = feature => {
+  const focus = (feature, view = 'history') => {
+    setInitialTab(view);
     setSelected(feature);
     setDam(null);
     setLake(null);
-    setQuery('');
+
+    setStation(null);
+    setRiverReach(null);
+    setStoreRequested(true);
+    setTableOpen(true);
     setBounds(featureBounds(feature));
   };
 
@@ -659,14 +598,14 @@ export default function LandingMap() {
         </CircleMarker>;
       })}
       <AoiLayer drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} selection={aoiSelection}
-        onAdd={addAoiVertex} onFinish={finishAoi} onCancel={clearAoi}/>
+        onRectangle={setAoiRectangle} onCancel={clearAoi}/>
       <FitTo bounds={bounds} resetVersion={resetVersion}/>
       <WatchZoom onZoom={setZoom}/>
       <ZoomControl position="bottomright"/>
       <ScaleControl position="bottomright" imperial={false}/>
     </MapContainer>
 
-    <header className={`land-head ${headOpen ? '' : 'uz-closed'}`}>
+    <header className="land-head">
       <div className="land-head-top">
         <div>
           <a href="/" className="land-brand" aria-label="UzGeoData home">
@@ -734,18 +673,8 @@ export default function LandingMap() {
           </fieldset>
       <span id="uz-lang-host" className="land-lang"/>
     </section>
-    <button type="button" className="land-head-tab" aria-label="Toggle map header"
-      aria-expanded={headOpen}
-      onClick={() => setHeadStickyValue(!headSticky)}
-      onMouseEnter={() => setHeadPeek(true)}>
-      <span aria-hidden="true">&#8776;</span>
-      <span className="uz-chev" aria-hidden="true">&#9662;</span>
-    </button>
-
-    <aside onMouseEnter={keepPanelOpen} onMouseLeave={schedulePanelClose}
-      onFocusCapture={keepPanelOpen}
-      onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) schedulePanelClose(); }}
-      className={`land-panel ${selected ? 'has-selection' : ''} ${panelOpen ? '' : 'uz-closed'}`}>
+    <aside className={`land-panel ${selected ? 'has-selection' : ''}`}>
+      <BasinFinder entry={level12Entry} onSelect={focus}/>
       {!basins && <p className="land-loading">Loading the reference basins…</p>}
       {basins && <p className="land-level">
         Level {active.level} · {formatNumber(features.length)} basins
@@ -754,15 +683,6 @@ export default function LandingMap() {
           ? ` · selection held at level ${selected.properties.basin_level}` : ''}
       </p>}
       {basins && !selected && <div className="land-intro">
-        <label className="land-search">
-          <Search size={13}/>
-          <input aria-label="Search basins by HYBAS or PFAF identifier" value={query} onChange={event => setQuery(event.target.value)} placeholder="HYBAS or PFAF id"/>
-        </label>
-        {results.length > 0 && <div className="land-results">{results.map(feature => <button key={feature.properties.hybas_id}
-          type="button" onClick={() => focus(feature)}>
-          <strong>{feature.properties.hybas_id}</strong>
-          <small>{systemMeta(feature.properties.system_id).label} · {formatNumber(feature.properties.area_km2)} km²</small>
-        </button>)}</div>}
         <p className="land-hint">Or start from a system.</p>
         <div className="land-systems">{totals.map(entry => <button key={entry.system} type="button"
           onClick={() => focusSystem(entry.system)} style={{ '--system': systemMeta(entry.system).color }}>
@@ -775,8 +695,8 @@ export default function LandingMap() {
         <details className="land-group land-howto">
           <summary>Explore a basin in five minutes</summary>
           <div className="land-group-body">
-            <p>Zoom in to level 12, select a basin, then open Atlas attributes to compare
-              estimates and download its monthly record. <a href="/guide.html">Step-by-step guide</a></p>
+            <p>Search for a basin to view its monthly record and download data. Select a
+              data tab to compare published attributes and independent estimates. <a href="/guide.html">Step-by-step guide</a></p>
           </div>
         </details>
       </div>}
@@ -819,20 +739,11 @@ export default function LandingMap() {
         <p className="land-hint">Public preview · Independent estimates; reproduction has not been established.</p>
       </nav>
     </aside>
-    <button type="button" className="land-panel-tab" aria-label="Toggle basins panel"
-      aria-expanded={panelOpen}
-      onClick={() => setSticky(!panelOpen)}
-      onMouseEnter={keepPanelOpen}
-      onMouseLeave={schedulePanelClose}>
-      <span aria-hidden="true">{panelOpen ? '\u2039' : '\u203a'}</span>
-    </button>
-
-
     {basins && groups && <section className="land-dock" aria-label="Area of interest, basin colouring and map key">
       <AoiPanel drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} rule={aoiRule}
         selection={aoiSelection} loadingGeometry={aoiClosed && !levels[12]}
         onFit={() => setBounds(collectionBounds(aoiSelection.map(basin => basin.feature)))}
-        onStart={startAoi} onFinish={finishAoi} onCancel={clearAoi} onClear={clearAoi} onRule={setAoiRule}/>
+        onStart={startAoi} onCancel={clearAoi} onClear={clearAoi} onRule={setAoiRule}/>
       <label className="land-dock-select">
         <span>Colour basins by</span>
         <select value={overlay} onChange={event => setOverlay(event.target.value)}>
@@ -874,8 +785,9 @@ export default function LandingMap() {
       </div>}
     </section>}
 
-    {tableOpen && selected && <AttributeModal basin={selected.properties} groups={groups} store={detailStore}
-      catalogue={catalogue} loading={loadingStore} onClose={() => setTableOpen(false)}/>}
+    {tableOpen && selected && <AttributeModal key={selected.properties.hybas_id} basin={selected.properties} groups={groups} store={detailStore}
+      geometry={levels[selectedLevel]} geometryUrl={ladder?.levels?.find(entry => entry.level === selectedLevel)?.url}
+      catalogue={catalogue} loading={loadingStore} initialTab={initialTab} onClose={() => setTableOpen(false)}/>}
 
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
     {lake && <LakeModal lake={lake} onClose={()=>setLake(null)}/>}
