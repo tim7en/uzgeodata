@@ -138,12 +138,21 @@ for (const page of pages) {
   if (!html.includes('<head>')) throw Error(`No <head> to tag in ${page}`);
   await writeFile(file, html.replace('<head>', `<head>${releaseTag}`));
 }
-// 1010 MB: raised from 960 to fit the SWOT river-reach monitoring case study
-// (~900 named reaches' per-pass time series, one small JSON each, plus the
-// reach-geometry layer). Previously raised from 950 when the regional
-// discharge / dry-spell study added ~30 MB of curated results. Bulky
-// intermediates and fitted model binaries stay excluded from the release.
-if (bytes > 1010e6) throw Error(`Release exceeds 1010 MB budget: ${bytes}`);
+// 1035 MB: raised from 1010 for the whole-catchment statistics package -- nine
+// monthly matrices over every level-12 basin, ~39 MB compressed, plus the derived
+// morphology. It is one delta-encoded file per variable rather than 7,445 per-basin
+// requests, so the release carries it once instead of the reader fetching a
+// catchment a file at a time. Previously raised from 960 to fit the SWOT river-reach
+// monitoring case study (~900 named reaches' per-pass time series, one small JSON
+// each, plus the reach-geometry layer), and from 950 when the regional discharge /
+// dry-spell study added ~30 MB of curated results. Bulky intermediates and fitted
+// model binaries stay excluded from the release.
+//
+// Pages publishes up to 1 GiB, so this leaves roughly 50 MB of headroom. The next
+// dataset of this size needs the package trimmed rather than the budget raised
+// again: the monthly matrices quantize to 0.0001 native units, and coarser
+// quantization would buy most of it back.
+if (bytes > 1035e6) throw Error(`Release exceeds 1035 MB budget: ${bytes}`);
 const release = {
   status: 'public_preview', generated_at: new Date().toISOString(),
   commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),

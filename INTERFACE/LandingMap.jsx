@@ -16,6 +16,7 @@ import BasinSubstitutes from './BasinSubstitutes.jsx';
 import BasinHistory from './BasinHistory.jsx';
 import BasinFinder from './BasinFinder.jsx';
 import BasinCatchment from './BasinCatchment.jsx';
+import CatchmentStatistics from './CatchmentStatistics.jsx';
 import { AoiLayer, AoiPanel } from './AoiTool.jsx';
 import { selectBasins } from './aoiModel.js';
 import { DEFAULT_MAP_VIEW, readMapView, saveMapView, collectionBounds } from './mapViewModel.js';
@@ -60,6 +61,7 @@ const TABS = [
   ['original', 'HydroATLAS attributes'],
   ['substitutes', 'Independent estimates'],
   ['history', 'Monthly record'],
+  ['catchment', 'Catchment statistics'],
 ];
 
 function stepTab(current, key) {
@@ -172,7 +174,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
             setTab(next); document.getElementById(`basin-tab-${next}`)?.focus();
           } }}>{label}</button>)}
       </div>
-      {tab !== 'history' && <div className="land-modal-tools">
+      {['original', 'substitutes'].includes(tab) && <div className="land-modal-tools">
         <label><Search size={12}/><input value={filter} onChange={event => setFilter(event.target.value)}
           placeholder="Attribute, category or column"/></label>
         <div className="land-modal-kinds">
@@ -185,7 +187,8 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
       <div className="land-modal-scroll land-basin-layout" role="tabpanel" id={`basin-panel-${tab}`} aria-labelledby={`basin-tab-${tab}`}>
         <BasinCatchment basin={basin} collection={geometry} url={geometryUrl}/>
         <div className="land-basin-values">
-        {tab === 'history' ? <BasinHistory key={`h-${basin.basin_level}-${basin.hybas_id}`} basin={basin}/>
+        {tab === 'catchment' ? <CatchmentStatistics key={`c-${basin.hybas_id}`} basin={basin}/>
+          : tab === 'history' ? <BasinHistory key={`h-${basin.basin_level}-${basin.hybas_id}`} basin={basin}/>
           : tab === 'substitutes' ? <BasinSubstitutes key={`${basin.basin_level}-${basin.hybas_id}`} basin={basin} filter={filter} kind={kind}/>
           : loading && !store ? <p className="land-group-note">Loading the atlas attributes…</p>
           : <table>
