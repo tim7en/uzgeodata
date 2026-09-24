@@ -115,3 +115,9 @@ PUBLISHED/data/case-studies/**/*.pkl
 # on every run (Rscript ANALYSIS_R/run_all.R) from the tracked PUBLISHED/data
 # files; committing them would just be a stale snapshot next to the source.
 ANALYSIS_R/output/
+
+# Regenerated climate continuation packages (npm run climate:regional:update and
+# cases:pskem-climate). The regional package is ~440 MB of Parquet and per-basin
+# JSON; both ship to R2 through PUBLISHED/release-includes.txt, not through git.
+PUBLISHED/data/atlas/climate-continuation/
+PUBLISHED/data/case-studies/pskem-climate-continuation/
