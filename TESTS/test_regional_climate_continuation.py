@@ -12,6 +12,13 @@ from PIPELINES.model_regional_climate_continuation import accumulate_one
 from PIPELINES.model_regional_climate_continuation import OUT, frame
 
 
+def continued_through():
+    """(year, month, months since 2024-12) of the published continuation."""
+    through = json.loads((OUT / "report.json").read_text())["continuation_through"]
+    year, month = map(int, through.split("-"))
+    return year, month, (year - 2025) * 12 + month
+
+
 def test_fractional_overlap_reduces_each_basin_on_its_own_support(tmp_path, monkeypatch):
     monkeypatch.setattr(grids, "CACHE", tmp_path)
     basins = gpd.GeoDataFrame({"basin_id": ["A", "B"],
@@ -42,11 +49,11 @@ def test_regional_release_keeps_versions_separate_and_closes_upstream_integrals(
     continuation = OUT / "v1.0-continuation.parquet"
     upstream = OUT / "upstream.parquet"
     assert report["basins"] == 7445
-    assert report["continuation_through"] == "2026-08"
+    last_year, _, _ = continued_through()
     assert con.execute("SELECT count(*), count(DISTINCT basin_id) FROM read_parquet(?)",
                        [str(direct)]).fetchone() == (1_250_760, 7445)
     assert con.execute("SELECT min(year),max(year),count(DISTINCT status) FROM read_parquet(?)",
-                       [str(continuation)]).fetchone() == (2025, 2026, 1)
+                       [str(continuation)]).fetchone() == (2025, last_year, 1)
     basins = frame()
     con.register("basins", basins)
     for system in ("amu_darya", "syr_darya"):
@@ -72,11 +79,12 @@ def test_modal_download_matches_versioned_source_rows():
     assert len(record["series"]) == 50
     direct = record["series"]["direct_v1.1:local:ppt"]
     estimate = record["series"]["estimated_v1.0:local:precipitation"]
-    assert len(direct["rows"]) == 12
-    assert len(estimate["rows"]) == 20
-    assert estimate["rows"][-1][:2] == [2026, 8]
+    assert len(direct["rows"]) == 12 * len(list((OUT / "terraclimate-v1.1").glob("year=*.parquet")))
+    year, month, months = continued_through()
+    assert len(estimate["rows"]) == months
+    assert estimate["rows"][-1][:2] == [year, month]
     runoff = record["series"]["estimated_v1.0:local:q"]
-    assert len(runoff["rows"]) == 20
+    assert len(runoff["rows"]) == months
     assert all(row[2] >= 0 for row in runoff["rows"])
     con = duckdb.connect()
     source = con.execute("""
@@ -99,7 +107,8 @@ def test_water_balance_continuation_only_publishes_variables_that_beat_climatolo
     rows, basins, first, last = con.execute(
         "SELECT count(*), count(DISTINCT basin_id), min(year*100+month), max(year*100+month) "
         "FROM read_parquet(?)", [path]).fetchone()
-    assert (basins, first, last) == (7445, 202501, 202608)
-    assert rows == 7445 * 20 * len(report["eligible_variables"])
+    year, month, months = continued_through()
+    assert (basins, first, last) == (7445, 202501, year * 100 + month)
+    assert rows == 7445 * months * len(report["eligible_variables"])
     assert con.execute("SELECT count(*) FROM read_parquet(?) WHERE estimate IS NULL OR NOT isfinite(estimate) "
                        "OR (variable <> 'PDSI' AND estimate < 0)", [path]).fetchone()[0] == 0

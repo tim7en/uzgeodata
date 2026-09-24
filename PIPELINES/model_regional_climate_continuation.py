@@ -261,18 +261,20 @@ def upstream_products(basins):
 
 
 def v11_agreement(con):
-    """Agreement with 2025 v1.1; ERA is a parent, so this is not independent validation."""
+    """Agreement with every direct v1.1 year; ERA is a parent, so this is not independent validation."""
+    estimates = [str(OUT / name) for name in ("v1.0-continuation.parquet",
+                                              "v1.0-water-balance-continuation.parquet")
+                 if (OUT / name).exists()]
     return con.execute(f"""
-        SELECT c.variable,count(*) n,
+        SELECT c.variable,c.year,count(*) n,
                avg(c.estimate-v.value) bias,
                sqrt(avg(power(c.estimate-v.value,2))) rmse
-        FROM read_parquet('{OUT / 'v1.0-continuation.parquet'}') c
-        JOIN read_parquet('{OUT / 'terraclimate-v1.1/year=2025.parquet'}') v
+        FROM (SELECT basin_id,year,month,variable,estimate FROM read_parquet({estimates})) c
+        JOIN read_parquet('{OUT / 'terraclimate-v1.1/year=*.parquet'}') v
           ON c.basin_id=v.basin_id AND c.year=v.year AND c.month=v.month
-          AND v.variable=CASE c.variable WHEN 'precipitation' THEN 'ppt'
-                                     WHEN 'tmin' THEN 'tmin' ELSE 'tmax' END
-        WHERE c.year=2025 AND v.value IS NOT NULL
-        GROUP BY 1 ORDER BY 1
+          AND v.variable=CASE c.variable WHEN 'precipitation' THEN 'ppt' ELSE c.variable END
+        WHERE v.value IS NOT NULL
+        GROUP BY 1,2 ORDER BY 1,2
     """).fetchall()
 
 
@@ -323,8 +325,9 @@ def run():
     latest_code = con.execute(f"SELECT max(year*100+month) FROM read_parquet('{OUT / 'v1.0-continuation.parquet'}')").fetchone()[0]
     latest_month = f"{latest_code // 100:04d}-{latest_code % 100:02d}"
     upstream_rows = upstream_products(basins)
-    agreement = {v: {"pairs": n, "bias": bias, "rmse": rmse}
-                 for v, n, bias, rmse in v11_agreement(con)}
+    agreement = defaultdict(dict)
+    for variable, year, n, bias, rmse in v11_agreement(con):
+        agreement[variable][str(year)] = {"pairs": n, "bias": bias, "rmse": rmse}
     version_overlap = v11_version_overlap(con)
     direct_years = sorted(int(p.stem.split("=")[1]) for p in
                           (OUT / "terraclimate-v1.1").glob("year=*.parquet"))
@@ -351,10 +354,10 @@ def run():
               "continuation_rows": continuation_rows + water_balance["estimated_rows"],
               "water_balance_validation": "/data/atlas/climate-continuation/water-balance-report.json",
               "continuation_through": latest_month,
-              "v1.1_2025_agreement": agreement,
+              "v1.1_agreement_by_year": agreement,
               "v1.1_vs_v1.0_2024_overlap": version_overlap,
               "upstream_rows": upstream_rows,
-              "interpretation": "2025 TerraClimate v1.1 is a direct but version-changed source; it is not spliced into v1.0. Its ERA5 parent makes agreement with ERA-based estimates non-independent. 2026 continuation is modelled, and upstream runoff generation is not routed observed flow."}
+              "interpretation": "Direct TerraClimate v1.1 years are a version-changed source; it is not spliced into v1.0. Its ERA5 parent makes agreement with ERA-based estimates non-independent. Years after 2024 without a v1.1 release are modelled continuation only, and upstream runoff generation is not routed observed flow."}
     (OUT / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     index = {
         "generated_at": report["generated_at"], "basins": len(basins),

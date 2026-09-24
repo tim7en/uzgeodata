@@ -30,8 +30,9 @@ TARGETS = {
 
 
 def predictors(con):
-    if len(list((OUT / "era5-land-extended").glob("year=*.parquet"))) < 24:
-        raise FileNotFoundError("ERA5-Land extended predictors require complete 2003–2026 annual files")
+    years = {int(path.stem.split("=")[1]) for path in (OUT / "era5-land-extended").glob("year=*.parquet")}
+    if not years or set(range(2003, max(years) + 1)) - years or max(years) < 2025:
+        raise FileNotFoundError("ERA5-Land extended predictors need every year from 2003 to the latest")
     con.execute(f"""
       CREATE TEMP TABLE era_wide AS
       SELECT basin_id,year,month,
@@ -135,6 +136,16 @@ def fit_variable(con, variable, target_file, proxy, kind):
                           "era_adjusted": {"mae": amae, "rmse": armse, "bias": bias,
                                            "absolute_error_p90": p90},
                           "improved": amae < bmae and armse < brmse}
+    # Held-out RMSE per year: error rising with distance from 2018 is model drift;
+    # both columns rising together is the target itself changing.
+    for system, year, adjusted, baseline in con.execute(f"""
+      SELECT p.system_id,p.year,sqrt(avg(power(p.y-({expression}),2))),
+        sqrt(avg(power(p.y-c.target_mean,2)))
+      FROM paired p JOIN coefficients c USING (basin_id,system_id,month)
+      WHERE p.year BETWEEN 2019 AND 2024 GROUP BY 1,2 ORDER BY 1,2
+    """).fetchall():
+        scores[system].setdefault("rmse_by_year", {})[str(year)] = {
+            "era_adjusted": adjusted, "seasonal_climatology": baseline}
     con.unregister("coefficients")
     return coefficients, scores
 

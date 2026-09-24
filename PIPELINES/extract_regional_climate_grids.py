@@ -315,7 +315,9 @@ def main():
         ee.Initialize(project="ee-sabitovty")
         last = ee.ImageCollection(ERA_ASSET).sort("system:time_start", False).first()
         latest = datetime.fromtimestamp(last.get("system:time_start").getInfo() / 1000, timezone.utc)
-        start, _, end = (args.years or "2003-2026").partition("-")
+        # With no --years, run to the newest ERA year so a new year is picked up
+        # without a code change.
+        start, _, end = (args.years or f"2003-{latest.year}").partition("-")
         years = range(int(start), int(end or start) + 1)
         for year in years:
             if year <= latest.year:

@@ -84,7 +84,10 @@ flowchart TD
   L3 --> Public
   L4 --> Public
   Public --> Review[Review, checks and static build]
-  Review --> Site[Public map, downloads and query library]
+  Review -->|git push: frontend| Worker[Cloudflare Worker and static assets]
+  Review -->|publish:r2: data| R2[(R2 bucket uzgeodata-public)]
+  Worker --> Site[Public map, downloads and query library]
+  R2 -->|/data/*| Site
   Public --> Inventory[Freshness and coverage inventory]
   Inventory --> Admin
 ```
@@ -92,8 +95,11 @@ flowchart TD
 `SERVER/dataUpdates.mjs` orchestrates work; Python in `PIPELINES/` performs it.
 `ATLAS_MODULES/core/` defines observation and analysis contracts. `ONTOLOGY/`
 provides semantic identity and relationships across those layers. `PUBLISHED/`
-holds public outputs and `INTERFACE/` presents them. The diagram shows the full
-path; the temporary append mode below bypasses the full-store rebuild.
+holds public outputs and `INTERFACE/` presents them. `worker.js` serves the
+interface from Workers Static Assets and every `/data/*` request from R2, so code
+and data are deployed separately (see [Publish data to Cloudflare R2](#publish-data-to-cloudflare-r2)).
+The diagram shows the full path; the temporary append mode below bypasses the
+full-store rebuild.
 
 ### How a data update happens
 
@@ -116,8 +122,10 @@ path; the temporary append mode below bypasses the full-store rebuild.
    outputs are not transactional: a failed later step can leave earlier outputs
    changed, so inspect them before retrying or publishing.
 6. Review coverage, missingness, source/method metadata and the Git diff; run
-   tests and `npm run build:launch`; commit reviewed outputs and deploy through
-   the Pages workflow. An update job never publishes the live website by itself.
+   tests and `npm run build:launch`. Publish data with `npm run publish:r2`, then
+   commit and push the code, which deploys the frontend. `npm run publish:site`
+   does both halves from one machine. An update job never publishes the live
+   website by itself.
 
 Schedules persist in `WORKSPACE/data-updates/state.json` and run only while the
 server is online. Disabling a schedule stops future runs, not an active job.
@@ -125,6 +133,88 @@ server is online. Disabling a schedule stops future runs, not an active job.
 observation period. A successful check does not imply new observations exist.
 The legacy authenticated dataset upload API stores files separately; an upload
 is **not** automatically a registered variable, observation or public release.
+
+### Climate continuation beyond 2024
+
+The atlas cube's TerraClimate v1.0 series ends in December 2024. A separate,
+versioned package, `PUBLISHED/data/atlas/climate-continuation/`, carries the
+record forward for all 7,445 basins without writing into the cube.
+[The case study](CASE_STUDIES/regional-climate-continuation.md) gives the
+method and scores.
+
+```mermaid
+flowchart LR
+  ERA[ERA5-Land monthly, Earth Engine] -->|era, era-extended| Basin[Basin means by fractional grid overlap]
+  TC11[TerraClimate v1.1 yearly NetCDF] -->|terraclimate-v11| Direct[Direct v1.1 basin values]
+  Cube[Atlas cube: TerraClimate v1.0, 2003-2024] --> Fit
+  Basin --> Fit[Fit 2003-2018, test on held-out 2019-2024]
+  Fit -->|only variables that beat climatology| Est[Estimated v1.0 series from 2025]
+  Direct --> Up[Upstream accumulation]
+  Est --> Up
+  Direct --> Modal[Per-basin JSON: modal chart and CSV]
+  Est --> Modal
+  Up --> Modal
+  Modal -->|publish:r2| R2[(R2)]
+```
+
+- **Two products, never spliced.** *Direct v1.1* is the producer's own release,
+  published about a year late. *Estimated v1.0* comes from ERA5-Land and continues
+  the older statistic up to the latest ERA month. The producer advises against
+  joining v1.0 and v1.1 into one trend, so the chart and downloads keep them apart.
+- **Eleven continued variables.** Precipitation and minimum/maximum temperature
+  use a per-basin, per-month offset or ratio
+  (`model_regional_climate_continuation.py`). AET, PET, climate water deficit,
+  runoff generation, soil moisture, SWE, VPD and PDSI map one ERA predictor's
+  anomaly onto the v1.0 climatology (`model_regional_climate_water_balance.py`).
+  A variable is published only if it beats the seasonal climatology on held-out
+  MAE and RMSE in both river systems.
+- **What it is not.** Estimates emulate a product; they are not station
+  observations. Runoff `q` is modelled runoff generation, not observed or routed
+  discharge.
+
+Scripts, in the order `npm run climate:regional:update` runs them:
+
+| Step | Command | Writes |
+| --- | --- | --- |
+| ERA precipitation and temperature | `climate:regional:era` | `era5-land/year=*.parquet` |
+| ERA water and energy predictors | `climate:regional:era-extended` | `era5-land-extended/year=*.parquet` |
+| Producer v1.1 years | `climate:regional:terraclimate-v11` | `terraclimate-v1.1/year=*.parquet` |
+| Fit, test, estimate, accumulate | `climate:regional:continuation` | `v1.0*-continuation.parquet`, `upstream.parquet`, `report.json`, `water-balance-report.json` |
+| Modal data | `climate:regional:web` | `basins/{HYBAS_ID}.json`, `basins-index.json` |
+
+The package is gitignored and reaches the site only through R2:
+
+```sh
+npm run climate:regional:update      # needs Earth Engine access (ee-sabitovty)
+python -m pytest TESTS/test_regional_climate_continuation.py -q
+npm run publish:site                 # R2 sync, then wrangler deploy
+```
+
+**Adding a new year (for example 2027).** No code change is needed. Rerun the
+update each month or quarter: the ERA steps extract to the newest ERA month and
+finish the previous year once it is complete, estimates cover every month after
+2024, and the chart axis follows the data. When the producer publishes a v1.1
+year, it appears as a direct product next to the estimate, and `report.json`
+records their agreement for that year under `v1.1_agreement_by_year`.
+
+The coefficients stay fixed on 2003–2018, because v1.0 ends in 2024 and no new
+v1.0 year will arrive to test against. Two checks remain:
+
+1. `water-balance-report.json` → `rmse_by_year` holds held-out error for each
+   year from 2019 to 2024. Model error that rises with distance from 2018 means
+   the relationship is drifting. If model and climatology error rise together,
+   the target itself is changing.
+2. `v1.1_agreement_by_year` compares each estimated year with direct v1.1 for
+   the same year. v1.1 is itself built on ERA5, so this checks consistency, not
+   independent accuracy. A large jump from one year to the next is the signal
+   worth investigating.
+
+In the 2026-09 build, held-out error showed no drift from 2019 to 2024 for most
+variables. The exception is Amu Darya SWE, where model and climatology error
+both roughly quadruple, so the v1.0 SWE target itself is changing in
+glacier-covered basins. SWE also disagrees most with direct v1.1 for 2025 (RMSE
+571 mm, against 6 mm/month for precipitation). Treat SWE and Amu runoff estimates
+with the most caution.
 
 ### Scaling the ontology and adding AI
 
@@ -644,10 +734,9 @@ rediscovered. Detail and the measurements behind them are in
 - **`pytest TESTS` fails on `main`.** Three unrelated pre-existing failures keep
   the `integrity` workflow red, so it no longer signals anything. See
   [docs/LAUNCH.md](docs/LAUNCH.md#open-findings) for which and why.
-- **The release is past the documented Pages size limit.** 1,021,390,184 bytes
-  against a documented 1 GB; Pages enforces at 1 GiB, leaving about 52 MB of
-  undocumented headroom. The next bulky dataset needs a trim plan, not another
-  budget raise.
+- **The GitHub Pages workflow can no longer build the release.** The release is
+  now over 1.2 GB and Pages publishes at most 1 GB. The live site serves data from
+  R2, so this only matters for the manual Pages preview, which stays as a rollback.
 
 ## Checks and contribution
 

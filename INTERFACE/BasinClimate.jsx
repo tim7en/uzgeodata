@@ -15,6 +15,17 @@ function save(name, contents, type) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+// "2025", or "2025-01 to 2026-08", from the rows actually published for a product.
+function span(record, product) {
+  const codes = Object.values(record.series).filter(series => series.product === product)
+    .flatMap(series => series.rows.map(row => row[0] * 100 + row[1]));
+  if (!codes.length) return 'none';
+  const label = code => `${Math.floor(code / 100)}-${String(code % 100).padStart(2, '0')}`;
+  const low = Math.min(...codes), high = Math.max(...codes);
+  return low % 100 === 1 && high % 100 === 12 && high - low === 11
+    ? String(Math.floor(low / 100)) : `${label(low)} to ${label(high)}`;
+}
+
 function csv(record) {
   const lines = ['basin_id,product,support,variable,year,month,value,unit,coverage_fraction,water_equivalent_mcm,holdout_abs_error_p90'];
   for (const series of Object.values(record.series)) for (const row of series.rows) {
@@ -32,30 +43,35 @@ function ClimateChart({ direct, estimate, unit }) {
   const max = Math.max(...all.map(row => row[2]));
   const low = min === max ? min - 1 : min - (max - min) * .08;
   const high = min === max ? max + 1 : max + (max - min) * .08;
-  const x = row => 48 + ((row[0] - 2025) * 12 + row[1] - 1) * 30;
+  // The axis spans whatever years the record holds, so a new year needs no code change.
+  const first = Math.min(...all.map(row => row[0]));
+  const months = (Math.max(...all.map(row => row[0])) - first + 1) * 12;
+  const step = 712 / (months - 1);
+  const index = row => (row[0] - first) * 12 + row[1] - 1;
+  const x = row => 48 + index(row) * step;
   const y = row => 194 - (row[2] - low) / (high - low) * 170;
   const polyline = rows => rows.filter(row => Number.isFinite(row[2]))
     .map(row => `${x(row)},${y(row)}`).join(' ');
   const picked = hover == null ? null : [direct, estimate].flatMap(s => s?.rows || [])
-    .filter(row => (row[0] - 2025) * 12 + row[1] - 1 === hover);
+    .filter(row => index(row) === hover);
   return <figure className="land-climate-chart">
     <svg viewBox="0 0 780 235" role="img" aria-label="Monthly basin climate, direct TerraClimate and estimated continuation"
       onMouseLeave={() => setHover(null)} onMouseMove={event => {
         const box = event.currentTarget.getBoundingClientRect();
-        const position = event.clientX / box.width * 780;
-        setHover(Math.max(0, Math.min(23, Math.round((position - 48) / 30))));
+        const position = (event.clientX - box.left) / box.width * 780;
+        setHover(Math.max(0, Math.min(months - 1, Math.round((position - 48) / step))));
       }}>
-      {[0, .5, 1].map((fraction, index) => <g key={index}>
+      {[0, .5, 1].map((fraction, tick) => <g key={tick}>
         <line x1="48" x2="760" y1={24 + fraction * 170} y2={24 + fraction * 170} className="land-hist-grid"/>
         <text x="42" y={28 + fraction * 170} textAnchor="end" className="land-hist-axis">{(high - fraction * (high - low)).toFixed(1)}</text>
       </g>)}
-      <text x="48" y="220" className="land-hist-axis">2025</text>
-      <text x="408" y="220" className="land-hist-axis">2026</text>
+      {Array.from({ length: months / 12 }, (_, offset) =>
+        <text key={offset} x={48 + offset * 12 * step} y="220" className="land-hist-axis">{first + offset}</text>)}
       {direct && <polyline points={polyline(direct.rows)} className="land-climate-direct"/>}
       {estimate && <polyline points={polyline(estimate.rows)} className="land-climate-estimate"/>}
-      {hover != null && <line x1={48 + hover * 30} x2={48 + hover * 30} y1="24" y2="194" className="land-hist-cursor"/>}
+      {hover != null && <line x1={48 + hover * step} x2={48 + hover * step} y1="24" y2="194" className="land-hist-cursor"/>}
     </svg>
-    <figcaption>{picked?.length ? `${2025 + Math.floor(hover / 12)}-${String(hover % 12 + 1).padStart(2, '0')} · ${picked.map(row => `${Number(row[2]).toFixed(2)} ${unit}`).join(' / ')}` : `Monthly values · ${unit}`}</figcaption>
+    <figcaption>{picked?.length ? `${first + Math.floor(hover / 12)}-${String(hover % 12 + 1).padStart(2, '0')} · ${picked.map(row => `${Number(row[2]).toFixed(2)} ${unit}`).join(' / ')}` : `Monthly values · ${unit}`}</figcaption>
   </figure>;
 }
 
@@ -84,7 +100,7 @@ export default function BasinClimate({ basin }) {
   if (state.loading) return <p role="status" className="land-group-note">Loading versioned climate record…</p>;
   if (state.error) return <p role="alert" className="land-group-note">{state.error}</p>;
   return <div className="land-climate">
-    <p className="land-hist-warn">The 2025 TerraClimate v1.1 values are a direct modelled product. The 2025–August 2026 values are ERA-based estimates of the older v1.0 statistic. The producer advises against joining these versions into one trend.</p>
+    <p className="land-hist-warn">TerraClimate v1.1 values ({span(record, 'direct_v1.1')}) are a direct modelled product. The {span(record, 'estimated_v1.0')} values are ERA-based estimates of the older v1.0 statistic. The producer advises against joining these versions into one trend.</p>
     <div className="land-history-actions">
       <button type="button" className="land-hist-download" onClick={() => save(`basin-${basin.hybas_id}-climate.csv`, csv(record), 'text/csv;charset=utf-8')}><Download size={12}/> Download all climate series (CSV)</button>
       <a href={`${BASE}${basin.hybas_id}.json`} download>JSON with metadata</a>
