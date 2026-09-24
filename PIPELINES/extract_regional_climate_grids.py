@@ -256,8 +256,9 @@ def era_extended_year(year, basins, latest):
     print(f"ERA extended {year}: {len(rows):,} rows", flush=True)
 
 
-def tc_year(year, basins, refresh=False, variables=TC_VARIABLES):
-    family = "terraclimate-v1.1" if tuple(variables) == TC_VARIABLES else "terraclimate-v1.1-primary"
+def tc_year(year, basins, refresh=False, variables=TC_VARIABLES, family=None):
+    family = family or ("terraclimate-v1.1" if tuple(variables) == TC_VARIABLES
+                        else "terraclimate-v1.1-primary")
     output = OUT / family / f"year={year}.parquet"
     if output.exists() and not refresh:
         print(f"TerraClimate v1.1 {year}: cached", flush=True)
@@ -305,6 +306,7 @@ def main():
     parser.add_argument("--years", help="YYYY-YYYY; defaults to full ERA history or available v1.1 years")
     parser.add_argument("--refresh", action="store_true", help="Re-read an existing v1.1 year after a producer revision")
     parser.add_argument("--variables", help="Comma-separated subset of v1.1 variables for version-overlap checks")
+    parser.add_argument("--family", help="Output folder under climate-continuation/, e.g. terraclimate-v1.1-history")
     args = parser.parse_args()
     basins = frame()
     if len(basins) != 7445:
@@ -343,7 +345,7 @@ def main():
         if not set(variables) <= set(TC_VARIABLES):
             raise ValueError(f"Unknown TerraClimate variables: {set(variables) - set(TC_VARIABLES)}")
         for year in years:
-            tc_year(year, basins, refresh=args.refresh, variables=variables)
+            tc_year(year, basins, refresh=args.refresh, variables=variables, family=args.family)
 
 
 if __name__ == "__main__":

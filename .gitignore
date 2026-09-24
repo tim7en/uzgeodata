@@ -121,3 +121,6 @@ ANALYSIS_R/output/
 # JSON; both ship to R2 through PUBLISHED/release-includes.txt, not through git.
 PUBLISHED/data/atlas/climate-continuation/
 PUBLISHED/data/case-studies/pskem-climate-continuation/
+# Drought study tables (npm-less: python PIPELINES/build_drought_study.py), ~120 MB,
+# rebuilt from the TerraClimate v1.1 history extraction.
+PUBLISHED/data/atlas/drought-study/
