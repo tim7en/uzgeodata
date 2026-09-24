@@ -48,17 +48,30 @@ await writeFile(path.join(output, 'portal.html'), `<!doctype html><html lang="en
 <meta http-equiv="refresh" content="0;url=${base}"><title>UzGeoData basin map</title>
 </head><body><a href="${base}">Open the public basin map</a></body></html>`);
 
-// Source geometry republished for the internal layer-review tool: HydroSHEDS
-// BasinATLAS and HydroBASINS at every level, 166 MB of it. The preview is not the
-// place to redistribute upstream data unchanged - it is available from HydroSHEDS,
-// it is not this project's product, and a public site with a one-gigabyte ceiling
-// should spend that ceiling on what it made rather than on what it downloaded. One
-// level stays, because the ontology page draws the basin outlines it explains on.
+// Source geometry for the internal layer-review tool: HydroSHEDS BasinATLAS and
+// HydroBASINS at every Pfafstetter level, 162 MB across 25 files. It was withheld
+// because a Pages site publishes at most 1 GB, and that gigabyte should hold what
+// the project made rather than what it downloaded. Data ship from R2 now, which has
+// no such ceiling, so the default is to publish all of it: the level-12 polygons are
+// the geometry every catchment and upstream figure is computed on, and a reader who
+// cannot fetch them cannot check the work.
+//
+// RELEASE_REVIEW_LAYERS=one restores the single-level behaviour, and the Pages
+// workflow sets it because that artifact still has the 1 GB limit. Nothing else
+// does. That one level is what the ontology page draws its basin outlines on.
+//
+// Redistribution is what DATA-LICENSING.md says it is: third-party terms travel
+// with the data. BasinATLAS/HydroATLAS is CC BY 4.0 and HydroSHEDS is free to
+// redistribute with citation, and the catalogue records the source licence per layer.
 //
 // The review index is filtered to match further down, so the page lists what is
 // actually published rather than offering layers that answer 404.
 const REVIEW_KEEP = 'data/review/basinatlas/basinatlas_uz_lev07.geojson';
-const excluded = relative => relative.startsWith('data/review/') && relative !== REVIEW_KEEP;
+const reviewLayers = process.env.RELEASE_REVIEW_LAYERS || 'all';
+if (reviewLayers !== 'all' && reviewLayers !== 'one')
+  throw Error(`RELEASE_REVIEW_LAYERS must be all or one, not ${reviewLayers}`);
+const excluded = relative => reviewLayers === 'one'
+  && relative.startsWith('data/review/') && relative !== REVIEW_KEEP;
 
 // Git's public-file list is the release allowlist. Raw partitions and untracked
 // downloads cannot accidentally enter the artifact. History is checked above.
@@ -124,13 +137,16 @@ try {
   const index = JSON.parse(await readFile(reviewIndex, 'utf8'));
   const before = index.layers.length;
   index.layers = index.layers.filter(layer => !excluded(layer.url.replace(/^\//, '')));
-  index.withheld = {
+  // Only stated when something was actually held back, so an unfiltered index
+  // does not carry a withheld block claiming zero.
+  if (before === index.layers.length) delete index.withheld;
+  else index.withheld = {
     layers: before - index.layers.length,
-    reason: 'Source geometry from HydroSHEDS, not republished in the public preview. '
+    reason: 'Source geometry from HydroSHEDS, not republished in this artifact. '
       + 'It is available unchanged from the original provider.',
   };
   await writeFile(reviewIndex, JSON.stringify(index));
-  console.log(`Review index: ${index.layers.length} published, ${index.withheld.layers} withheld.`);
+  console.log(`Review index: ${index.layers.length} published, ${index.withheld?.layers ?? 0} withheld.`);
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }

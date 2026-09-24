@@ -26,6 +26,10 @@ jobs:
       - run: npm run build:launch
         env:
           SITE_BASE: /
+          # Pages publishes at most 1 GB, so this artifact keeps the single review
+          # level it always had. The R2 release carries all of them; see
+          # PIPELINES/build_launch.mjs.
+          RELEASE_REVIEW_LAYERS: one
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
