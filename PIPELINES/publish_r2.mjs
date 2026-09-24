@@ -254,6 +254,9 @@ const report = {
   dry_run: dryRun,
   local_files: files.size,
   remote_objects: published.size,
+  // What the bucket holds, against R2's 10 GB free tier. The old 1 GB ceiling was
+  // GitHub Pages' publishing limit and does not exist here.
+  remote_bytes: [...published.values()].reduce((total, object) => total + object.bytes, 0),
   unchanged,
   upload: upload.length,
   upload_bytes: upload.reduce((total, item) => total + item.bytes, 0),
