@@ -30,10 +30,18 @@ absent or incomplete. It does not silently deploy a broken history tab.
 the custom domain, set `SITE_BASE=/uzgeodata/` during the build. This rebases both interface URLs and paths in saved data catalogues. The
 artifact includes `release.json` with commit, publication time and release scope.
 
-The Public preview workflow builds pushes to `main` (or a manual dispatch)
-and deploys through GitHub Pages. In repository Settings → Pages, select GitHub
-Actions as the publishing source. The `github-pages` environment must permit the
-launch branch. The live site is `https://uzgeodata.uz/`; the GitHub project URL redirects there. See [GitHub's workflow requirements](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+Deployment is Cloudflare, not GitHub Pages. Cloudflare Workers Builds is connected
+to this repository (Workers → uzgeodata → Settings → Builds) with build command
+`npm run build:cloudflare` and deploy command `npx wrangler deploy`, so a push to
+`main` ships the interface. It ships no data: `build:cloudflare` strips `dist/data`
+and the Worker reads `/data/*` from R2. The GitHub Actions workflow that deployed to
+Pages was removed; `.github/workflows/ci.yml` still runs the tests and the launch
+build on every push, which is what guards the release.
+
+The live site is `https://uzgeodata.uz/`. While the domain is delegated to the
+registrar's nameservers it still answers from the old Pages deployment; the Worker
+takes over once the zone is on Cloudflare and `uzgeodata.uz` is added to the Worker
+as a custom domain.
 
 Public application requests use static files. `/admin.html` displays the saved
 variable inventory; authenticated updates require the separate local admin server
@@ -55,18 +63,66 @@ npm run atlas:coverage
 npm run test:ui
 python -m pytest TESTS -q
 npm run build:launch
+npm run publish:r2
 ```
+
+`publish:r2` is what puts the new snapshot in front of readers: the live site reads
+`/data/*` from R2, and a Git push deploys the frontend only. Run it before or after
+committing, but do not treat the commit as the publication.
 
 The history publisher freezes completed-run eligibility on startup. It excludes
 unfinished runs, honours observation revisions and fails on mixed per-variable
 provenance. Commit reviewed public outputs; do not commit raw partitions or
 credentials. `atlas:api` requires local source GIS data and Python dependencies.
 
+## Publish the data to R2 (Cloudflare)
+
+Cloudflare serves the frontend from Workers Static Assets and the data from the
+`uzgeodata-public` R2 bucket. `build:cloudflare` deletes `dist/data` before
+deployment: the release is about 1 GB, which belongs in object storage rather than
+in an asset bundle, and `worker.js` answers `/data/*` from the bucket.
+
+Nothing in the GitHub → Cloudflare build uploads data. `npm run publish:r2` does,
+from a machine that holds the release:
+
+```sh
+npm run publish:r2 -- --dry-run    # report the difference, upload nothing
+npm run publish:r2                 # build the release, then sync it
+npm run publish:r2 -- --prune      # also delete objects the release dropped
+```
+
+It syncs `dist/data`, the tree `build:launch` validates and filters, not
+`PUBLISHED/data`. Only objects whose MD5 or size differs are uploaded, so a
+one-file change is a one-object upload. Credentials are R2 S3-API tokens in `.env`
+(`R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`), created under
+R2 → API → Manage API tokens with Object Read & Write on the bucket; the wrangler
+OAuth login cannot list a bucket, and listing is what makes this a sync.
+
+`npm run publish:site` publishes the data, strips `dist/data` and runs
+`wrangler deploy` against one build, for a full deployment without waiting for the
+Git-triggered build.
+
+A dataset that should not enter Git at all is gitignored and then declared in
+`PUBLISHED/release-includes.txt`, one path per line under `data/`. The launch build
+reads that file as a second allowlist beside `git ls-files PUBLISHED`, so the data can
+be untracked while the decision to publish them stays tracked and reviewable. A
+declared path missing from a checkout is reported and skipped, so this workflow does
+not break CI or a fresh clone.
+
+Rollback for data is per object: republish the previous release tree
+(`git checkout <commit> -- PUBLISHED`, rebuild, `npm run publish:r2 -- --prune`).
+R2 keeps no versions unless the bucket is configured for them.
+
 ## Release size
 
-`build_launch.mjs` fails the build above a byte budget, currently 1035 MB. The
-budget is a guard, not the real ceiling: GitHub's documented limit is that
-"published GitHub Pages sites may be no larger than 1 GB", stated as GB.
+`build_launch.mjs` fails the build above a byte budget, now 10,000 MB and settable
+with `RELEASE_BYTE_BUDGET`. The old 1035 MB figure existed because "published GitHub
+Pages sites may be no larger than 1 GB"; data ship from R2 now, which stores 10 GB on
+the free tier and charges nothing for egress, so that ceiling no longer binds. The
+budget remains a runaway-pipeline guard rather than a hosting limit.
+
+The measurements below were taken against the 1 GB Pages ceiling and are kept as the
+record of how the package grew.
 
 The release passed 1,000,000,000 bytes when the catchment package was added. The
 measured positions:

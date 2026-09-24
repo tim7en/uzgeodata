@@ -64,6 +64,43 @@ const excluded = relative => relative.startsWith('data/review/') && relative !==
 // downloads cannot accidentally enter the artifact. History is checked above.
 const files = new Set(execFileSync('git', ['ls-files', '-z', 'PUBLISHED'], { encoding: 'utf8', maxBuffer: 8e6 })
   .split('\0').filter(Boolean).map(file => file.slice('PUBLISHED/'.length)));
+// Bulk data are published to R2 and no longer have to be committed, so tracking
+// cannot be the only way into the release. release-includes.txt is the second way:
+// a tracked, reviewed line naming a path as public, whose data may be untracked and
+// gigabytes large. The default is still withhold - a file that is neither tracked
+// nor declared stays out - and a declared path this checkout does not have is
+// reported and skipped, so CI can build without the bulk tree present.
+async function* walk(directory, prefix) {
+  for (const item of await readdir(directory, { withFileTypes: true })) {
+    const relative = `${prefix}/${item.name}`;
+    if (item.isDirectory()) yield* walk(path.join(directory, item.name), relative);
+    else yield relative;
+  }
+}
+const declarations = await readFile(path.join(published, 'release-includes.txt'), 'utf8')
+  .catch(error => { if (error.code === 'ENOENT') return ''; throw error; });
+let declared = 0;
+for (const line of declarations.split('\n')) {
+  const entry = line.trim().replace(/\/+$/, '');
+  if (!entry || entry.startsWith('#')) continue;
+  if (!entry.startsWith('data/') || entry.includes('..'))
+    throw Error(`Release declarations must be paths under data/: ${line.trim()}`);
+  const info = await stat(path.join(published, entry)).catch(() => null);
+  if (!info) {
+    console.log(`Declared release path absent from this checkout: ${entry}`);
+    continue;
+  }
+  if (info.isDirectory()) {
+    for await (const file of walk(path.join(published, entry), entry)) {
+      files.add(file);
+      declared += 1;
+    }
+  } else {
+    files.add(entry);
+    declared += 1;
+  }
+}
+if (declared) console.log(`Release carries ${declared} declared file(s) beyond the Git index.`);
 // Explicit public metadata output, also available in a working tree before first commit.
 files.add('data/variable-inventory.json');
 files.add('data/source-registry.json');
@@ -138,21 +175,20 @@ for (const page of pages) {
   if (!html.includes('<head>')) throw Error(`No <head> to tag in ${page}`);
   await writeFile(file, html.replace('<head>', `<head>${releaseTag}`));
 }
-// 1035 MB: raised from 1010 for the whole-catchment statistics package -- nine
-// monthly matrices over every level-12 basin, ~39 MB compressed, plus the derived
-// morphology. It is one delta-encoded file per variable rather than 7,445 per-basin
-// requests, so the release carries it once instead of the reader fetching a
-// catchment a file at a time. Previously raised from 960 to fit the SWOT river-reach
-// monitoring case study (~900 named reaches' per-pass time series, one small JSON
-// each, plus the reach-geometry layer), and from 950 when the regional discharge /
-// dry-spell study added ~30 MB of curated results. Bulky intermediates and fitted
-// model binaries stay excluded from the release.
+// The release was capped at 1035 MB while GitHub Pages hosted it, because Pages
+// publishes at most 1 GB. Data now ship from R2 (PIPELINES/publish_r2.mjs) and the
+// Worker asset bundle carries none of them, so that ceiling is gone: R2 stores 10 GB
+// on the free tier and charges nothing for egress. The budget stays, at R2's scale
+// rather than Pages', because a release that doubles overnight is a runaway pipeline
+// rather than a dataset. Raise RELEASE_BYTE_BUDGET deliberately, in the same commit
+// as whatever made the release bigger.
 //
-// Pages publishes up to 1 GiB, so this leaves roughly 50 MB of headroom. The next
-// dataset of this size needs the package trimmed rather than the budget raised
-// again: the monthly matrices quantize to 0.0001 native units, and coarser
-// quantization would buy most of it back.
-if (bytes > 1035e6) throw Error(`Release exceeds 1035 MB budget: ${bytes}`);
+// The catchment package is why the old figure kept moving: nine monthly matrices over
+// every level-12 basin, one delta-encoded file per variable rather than 7,445 per-basin
+// requests. It quantizes to 0.0001 native units, so coarser quantization is still the
+// first thing to try when size becomes a problem again.
+const budget = Number(process.env.RELEASE_BYTE_BUDGET || 10_000e6);
+if (bytes > budget) throw Error(`Release exceeds the ${Math.round(budget / 1e6)} MB budget: ${bytes}`);
 const release = {
   status: 'public_preview', generated_at: new Date().toISOString(),
   commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),

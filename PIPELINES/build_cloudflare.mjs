@@ -13,13 +13,17 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const output = path.join(root, 'dist');
-const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
-execFileSync(npm, ['run', 'build:launch'], {
-  cwd: root,
-  stdio: 'inherit',
-  env: { ...process.env, SITE_BASE: process.env.SITE_BASE || '/' },
-});
+// --skip-build reuses the dist/ that publish_r2.mjs just built and published, so
+// `npm run publish:site` validates and packages the release once instead of twice.
+// Cloudflare's own build runs this without the flag and builds from the checkout.
+if (!process.argv.includes('--skip-build')) {
+  execFileSync(process.execPath, [path.join(root, 'PIPELINES/build_launch.mjs')], {
+    cwd: root,
+    stdio: 'inherit',
+    env: { ...process.env, SITE_BASE: process.env.SITE_BASE || '/' },
+  });
+}
 
 // R2 is the production data plane. Keep only the UI/static shell in the
 // Workers Static Assets deployment.

@@ -1,8 +1,13 @@
 node_modules/
+# Wrangler's local state: simulated R2/KV for `wrangler dev`, build temp files.
+.wrangler/
 .venv/
 dist/
 .env
 .env.*
+# The placeholder template is the one env file worth sharing: it documents the
+# variables (admin login, R2 publication tokens) without carrying any value.
+!.env.example
 *.local
 *.log
 WORKSPACE/

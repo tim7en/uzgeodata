@@ -164,7 +164,9 @@
     "test:updates": "node --test TESTS/test_data_updates.mjs TESTS/test_variable_freshness.mjs",
     "cases:water-flow": "python PIPELINES/build_water_flow_case_study.py",
     "research:ca-discharge": "python PIPELINES/import_ca_discharge.py",
-    "build:cloudflare": "node PIPELINES/build_cloudflare.mjs"
+    "build:cloudflare": "node PIPELINES/build_cloudflare.mjs",
+    "publish:r2": "node PIPELINES/publish_r2.mjs",
+    "publish:site": "node PIPELINES/publish_r2.mjs && node PIPELINES/build_cloudflare.mjs --skip-build && wrangler deploy"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.1.1",

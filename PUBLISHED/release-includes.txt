@@ -1,0 +1,20 @@
+# Paths that belong to the public release even when Git does not track them.
+#
+# PIPELINES/build_launch.mjs validates and assembles the release;
+# PIPELINES/publish_r2.mjs publishes it to Cloudflare R2, which is what the live
+# site reads. Git tracks the source, the pipelines and the small reviewed outputs.
+# Bulk datasets no longer have to be committed, because GitHub is not the transport
+# that gets them to readers and its 1 GB page limit no longer applies to them.
+#
+# A line here is the tracked, reviewed statement that a path is public. Anything
+# neither tracked nor declared stays out of the release, so a raw partition or an
+# untracked download still cannot reach the site by accident.
+#
+# Format: one path per line, relative to PUBLISHED/ and beginning with data/.
+# A directory publishes every file beneath it. Blank lines and # comments are
+# ignored. A declared path that a checkout does not have is reported and skipped,
+# so CI and a clone without the bulk tree still build.
+#
+# Example - a dataset generated locally, gitignored, and published to R2:
+# data/climate/era5-daily/
+data/_r2-only-check/

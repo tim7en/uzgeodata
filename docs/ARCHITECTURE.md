@@ -136,8 +136,9 @@ do not push commits or deploy the public site. See [admin setup](ADMIN.md).
 
 ## Deployment and integrity boundaries
 
-The public site is a static GitHub Pages artifact. It has no Python worker,
-credentials, private job state or Node API. The admin server defaults to localhost;
+The public site is a Cloudflare Worker over static assets and an R2 bucket: the
+interface is a static artifact, and `/data/*` is read from `uzgeodata-public`. It has
+no Python worker, credentials, private job state or Node API. The admin server defaults to localhost;
 remote operation requires an explicitly provisioned authenticated server with
 HTTPS, the source inputs and persistent storage. Provider credentials never enter
 browser bundles or public inventory files.

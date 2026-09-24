@@ -9,7 +9,7 @@ HydroATLAS attributes beside independent open-data estimates, and download
 (coverage varies by variable).
 
 [Open the public preview](https://uzgeodata.uz/) ·
-[Deployment status](https://github.com/tim7en/uzgeodata/actions/workflows/pages.yml) ·
+[Integrity checks](https://github.com/tim7en/uzgeodata/actions/workflows/ci.yml) ·
 [Report a problem](https://github.com/tim7en/uzgeodata/issues)
 
 > **Release status: public preview.** No atlas attribute has passed independent
@@ -162,13 +162,91 @@ Open `http://127.0.0.1:4173`. Deploy the resulting `dist/` to a static host.
 `build:launch` does not run acquisition, regenerate the observation store or copy
 raw observation partitions. It validates all 7,445 monthly records before building.
 
-The live custom domain `uzgeodata.uz` uses `SITE_BASE=/`, as configured in the
-[Pages workflow](.github/workflows/pages.yml). For a project-path deployment without
-the custom domain, set `SITE_BASE=/uzgeodata/`. See [deployment, updates and rollback](docs/LAUNCH.md).
+The live site is a Cloudflare Worker: [worker.js](worker.js) serves the interface
+from Workers Static Assets and every `/data/*` request from the `uzgeodata-public`
+R2 bucket. The custom domain `uzgeodata.uz` uses `SITE_BASE=/`. For a project-path
+deployment set `SITE_BASE=/uzgeodata/`; that rebases both interface URLs and the
+paths saved inside data catalogues. See [deployment, updates and rollback](docs/LAUNCH.md).
 
 **Legacy development commands:** `npm run dev` and `npm run build` have publication
 hooks that require Python and local inputs. Use the launch commands above to avoid
 running those hooks during an active download.
+
+## Publish data to Cloudflare R2
+
+The live site is deployed in two halves. GitHub carries source, pipelines, metadata
+and the reviewed public files, and a push to `main` builds and deploys the
+**frontend** through Cloudflare Workers. That push moves no data: `build:cloudflare`
+deletes `dist/data` on purpose, because the release is about 1 GB and the Worker
+asset bundle must not carry it. `worker.js` answers `/data/*` from the
+`uzgeodata-public` R2 bucket, so new data reach readers only once they are
+published there:
+
+```sh
+npm run climate:web                # or whichever pipeline produced the data
+npm run publish:r2 -- --dry-run    # what would change in the bucket
+npm run publish:r2                 # build the release, then sync it
+git add . && git commit -m "…" && git push   # code, pipelines, metadata, frontend
+```
+
+`PIPELINES/publish_r2.mjs` syncs `dist/data`, the validated release tree that
+`build:launch` writes, rather than `PUBLISHED/data` directly. That is deliberate:
+the launch build validates all 7,445 basin records, applies the git-tracked release
+allowlist, excludes raw partitions and unpublished source geometry and compacts the
+JSON, so syncing the working tree would publish files the release withholds. Each
+file is published under its own site path, so `dist/data/atlas/catalogue.json`
+becomes `/data/atlas/catalogue.json`.
+
+The sync lists the bucket, uploads only objects whose MD5 or size differs from what
+is stored, and sets the content types the pages depend on — including
+`application/gzip` without `content-encoding` for the catchment matrices, which the
+browser decompresses itself.
+
+| Flag | Effect |
+| --- | --- |
+| `--dry-run` | report the difference, upload nothing |
+| `--skip-build` | reuse an existing `dist/data` |
+| `--prune` | also delete objects the release no longer contains |
+| `--force` | allow a `--prune` run that would delete over a quarter of the bucket |
+| `--only=<prefix>` | restrict the sync to one key prefix |
+| `--concurrency=<n>` | parallel requests, default 12 |
+
+Objects the release has dropped are reported but kept until `--prune` is passed: a
+withdrawn file that still answers is a smaller problem than an unintended deletion.
+`npm run publish:site` runs the whole deployment from one machine — publish the data,
+strip `dist/data`, `wrangler deploy` — and builds the release once for both halves.
+
+Credentials are R2 S3-API tokens in `.env` (`R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`,
+`R2_SECRET_ACCESS_KEY`; see `.env.example`), created in the Cloudflare dashboard under
+R2 → API → Manage API tokens with Object Read & Write on the bucket. The wrangler
+OAuth login is not enough: only the S3 API can list a bucket, and listing is what
+makes this a sync instead of a blind re-upload of the whole release.
+
+### Data that never enter Git
+
+A dataset no longer has to be committed to be published. `git ls-files PUBLISHED` is
+still one allowlist; `PUBLISHED/release-includes.txt` is the other — a tracked line
+naming a path as public, whose data may be untracked and gigabytes large. To add a
+dataset that lives only in R2:
+
+1. Generate it under `PUBLISHED/data/…` as usual.
+2. Add the path to `.gitignore`, so the commit stays small.
+3. Add the same path to `PUBLISHED/release-includes.txt`; a directory line publishes
+   every file beneath it.
+4. `npm run publish:r2`.
+
+The declaration is what makes a path public, and it is reviewed in Git like any other
+change, so the default stays withhold: a file that is neither tracked nor declared is
+not published. A declared path that a checkout does not have is reported and skipped,
+so CI and a clone without the bulk tree still build — the basin validation still needs
+the atlas records, which remain tracked and small.
+
+With hosting on R2 the release byte budget in `build_launch.mjs` is no longer the
+GitHub Pages 1 GB ceiling: it is 10,000 MB, settable with `RELEASE_BYTE_BUDGET`, and
+kept only as a guard against a runaway pipeline.
+
+The release published so far is still committed as well, so R2 is a second copy of it
+today. Nothing has to change for that; new bulk data can take the R2-only route.
 
 ## Public pages
 
@@ -186,7 +264,8 @@ fit the selected geometry. Normal zoom-dependent basin detail is unchanged.
 
 ## Static data API
 
-Paths below are relative to the site root (`/uzgeodata/` on GitHub Pages).
+Paths below are relative to the site root. In production the Worker answers them
+from R2; `npm run preview:launch` serves the same paths from `dist/`.
 
 | Path | Contents |
 | --- | --- |
