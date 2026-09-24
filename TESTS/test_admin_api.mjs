@@ -22,7 +22,17 @@ test('data updates need no sign-in but require same origin and an allowlisted gr
   const base = `http://127.0.0.1:${port}`;
   const request = (url, body, extra = {}) => fetch(base + url, { method: 'POST',
     headers: { 'Content-Type': 'application/json', ...extra }, body: JSON.stringify(body) });
-  const inventory = await fetch(base + '/api/admin/variables');
+  let inventory;
+  for (let attempt = 0; attempt < 50; attempt++) {
+    if (child.exitCode !== null) throw Error(`Test admin server exited (${child.exitCode})`);
+    try {
+      inventory = await fetch(base + '/api/admin/variables');
+      break;
+    } catch {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+  }
+  if (!inventory) throw Error('Test admin server did not accept connections');
   assert.equal(inventory.status, 200);
   const data = await inventory.json(); assert.ok(data.rows.length >= 281); assert.equal(data.operations.worker, 'local');
   assert.equal((await request('/api/admin/variables/update', { group_id: 'arbitrary-shell-command' })).status, 400);

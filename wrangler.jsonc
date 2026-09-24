@@ -11,6 +11,13 @@
     }
   ],
 
+  "routes": [
+    {
+      "pattern": "uzgeodata.uz/*",
+      "zone_name": "uzgeodata.uz"
+    }
+  ],
+
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"

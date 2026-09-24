@@ -38,10 +38,11 @@ and the Worker reads `/data/*` from R2. The GitHub Actions workflow that deploye
 Pages was removed; `.github/workflows/ci.yml` still runs the tests and the launch
 build on every push, which is what guards the release.
 
-The live site is `https://uzgeodata.uz/`. While the domain is delegated to the
-registrar's nameservers it still answers from the old Pages deployment; the Worker
-takes over once the zone is on Cloudflare and `uzgeodata.uz` is added to the Worker
-as a custom domain.
+The live site is `https://uzgeodata.uz/`. Its Cloudflare DNS currently proxies
+the old GitHub Pages origin. `wrangler.jsonc` declares the `uzgeodata.uz/*`
+Worker route so a successful Worker deployment serves both the frontend and
+R2-backed `/data/*` on that same domain. Until the route is deployed, the domain
+continues to answer from Pages.
 
 Public application requests use static files. `/admin.html` displays the saved
 variable inventory; authenticated updates require the separate local admin server
