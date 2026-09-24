@@ -76,6 +76,12 @@ PUBLISH = [
      ["PIPELINES/derive_regional_substitutes.py"], True),
     ("accumulate the upstream figures", ["PIPELINES/accumulate_upstream_annuals.py"], False),
     ("republish the monthly record", ["PIPELINES/build_basin_history.py"], True),
+    # The whole-catchment package is delta-encoded from the per-basin history and
+    # records its digest, so a republished record leaves it both stale and no longer
+    # matching the hashes it declares. It reads the published JSON rather than the
+    # store, which is why it belongs here and not beside the extractors.
+    ("rebuild the whole-catchment statistics",
+     ["PIPELINES/build_catchment_statistics.py"], False),
     ("republish the per-basin API", ["PIPELINES/build_basin_api.py"], False),
     ("rebuild the coverage ledger", ["PIPELINES/build_regional_coverage.py"], False),
     ("refresh the store manifest", ["PIPELINES/stage_pilot_observations.py"], False),
@@ -107,8 +113,24 @@ def stored_span(store=STORE):
     return first, last
 
 
+def store_status(store=STORE):
+    """Whether the dated partitions are present at all.
+
+    The store is deliberately not in Git -- Parquet does not delta-compress, so every
+    re-extraction would add another full copy to a history that cannot expire it --
+    which means a fresh clone holds the ledgers and none of the rows. --check is
+    documented as safe at any time, and that has to include before the store has been
+    restored: an absent store is a state to report, not a DuckDB traceback.
+    """
+    partitions = list(store.glob("time_kind=*/*/part.parquet"))
+    return {"present": bool(partitions), "partitions": len(partitions),
+            "path": str(store.relative_to(ROOT)).replace("\\", "/")}
+
+
 def stored_extent(store=STORE):
     """The last month the store holds for each dated variable."""
+    if not store_status(store)["present"]:
+        return {}
     extent = {}
     for attribute, unit, support, first, last, basins, observed, missing in query.available(store, observed_span=True):
         if support != "s":
@@ -231,6 +253,7 @@ def extend(through, only=None, dry_run=False):
 
 def check(through=None, probe=True):
     report = {"checked_at": observations._text(__import__("datetime").datetime.now().isoformat()),
+              "store": store_status(),
               "stored": stored_extent(), "plan": missing_years(through=through)}
     if probe:
         report["source"] = source_extent()
