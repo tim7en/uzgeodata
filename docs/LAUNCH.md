@@ -43,6 +43,9 @@ the old GitHub Pages origin. `wrangler.jsonc` declares the `uzgeodata.uz/*`
 Worker route so a successful Worker deployment serves both the frontend and
 R2-backed `/data/*` on that same domain. Until the route is deployed, the domain
 continues to answer from Pages.
+The Pages preview workflow is manual only: its artifact cannot carry the new
+R2-only climate package, so an automatic Pages deploy would show the new chart
+tab with missing data while the domain still points to that origin.
 
 Public application requests use static files. `/admin.html` displays the saved
 variable inventory; authenticated updates require the separate local admin server
