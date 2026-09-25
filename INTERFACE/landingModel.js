@@ -234,6 +234,10 @@ export const CHOROPLETH = ['#2c3e6b', '#256f8f', '#20a08b', '#5fc463', '#bfe040'
  * carried the same observation for the Pskem pilot; it belongs on the map too.
  */
 export const ATTRIBUTE_CAVEATS = {
+  gla_pc_up_glims: 'Ice mapped anywhere upstream, as a share of the upstream catchment: 11,486 km² '
+    + 'drains past the Amu Darya outlet and 1,611 km² past the Syr Darya. It is a floor, not a '
+    + 'total — 33% and 30% of those catchments have been surveyed, and the rest is unsurveyed rather '
+    + 'than ice-free.',
   gla_pc_glims: 'Measured by this project from GLIMS outlines over 2,331 basins: the headwater '
     + 'inventory, plus the Pskem, the Hissar and the Angren, which that inventory never queried and '
     + 'which were fetched separately. Elsewhere a basin is left uncoloured because nothing was looked '
@@ -245,6 +249,40 @@ export const ATTRIBUTE_CAVEATS = {
     + 'catchment can accumulate zero glacier area while holding mapped ice. A zero here means unmapped, not ice-free.',
 };
 
+/**
+ * The project's own measurements as attribute rows, for the basin panel.
+ *
+ * The panel lists what BasinATLAS published. For a Pskem basin that means a
+ * glacier extent of zero, next to nothing saying this project measured 3.5 percent
+ * there from outlines the atlas never had. A reader who opens a basin is asking
+ * what is known about it, not what one publisher recorded, so the measurements sit
+ * in the same table, marked as this project's and never mixed into the archived
+ * rows.
+ */
+const MEASURED_ROWS = [
+  { column: 'gla_pc_glims', label: 'Glacier extent, GLIMS outlines', units: 'percent', extent: 's' },
+  { column: 'gla_km2_glims', label: 'Glacier area, GLIMS outlines', units: 'square kilometres', extent: 's' },
+  { column: 'gla_pc_up_glims', label: 'Glacier extent upstream, GLIMS outlines', units: 'percent', extent: 'u' },
+  { column: 'gla_km2_up_glims', label: 'Glacier area upstream, GLIMS outlines', units: 'square kilometres', extent: 'u' },
+  { column: 'gla_pc_catalogue', label: 'Glacier extent, 2023 regional catalogue', units: 'percent', extent: 's' },
+  { column: 'gla_n_catalogue', label: 'Catalogued glaciers in this sub-basin', units: 'glaciers', extent: 's' },
+];
+
+export function measuredAttributes(store, hybasId) {
+  return MEASURED_ROWS
+    .map(row => ({ ...row, raw: readAttribute(store, hybasId, row.column) }))
+    // A column the reader's basin was never surveyed for is left out rather than
+    // shown as an empty row: the absence is already said by the coverage column.
+    .filter(row => row.raw !== null && row.raw !== undefined)
+    .map(row => ({
+      ...row,
+      ...formatAttribute(row.raw, row.units),
+      measured: true,
+      spatialExtent: row.extent,
+      spatialExtentLabel: row.extent === 'u' ? 'the whole upstream catchment' : 'this sub-basin',
+    }));
+}
+
 export function attributeCaveat(column) {
   return ATTRIBUTE_CAVEATS[column] || null;
 }
@@ -252,7 +290,8 @@ export function attributeCaveat(column) {
 /** Attributes worth offering before a reader knows the catalogue exists. */
 export const HEADLINE_ATTRIBUTES = [
   'dis_m3_pyr', 'run_mm_syr', 'pre_mm_syr', 'tmp_dc_syr', 'snw_pc_syr',
-  'gla_pc_glims', 'gla_pc_sse', 'ele_mt_sav', 'for_pc_sse', 'crp_pc_sse', 'ppd_pk_sav',
+  'gla_pc_up_glims', 'gla_pc_glims', 'gla_pc_sse', 'ele_mt_sav', 'for_pc_sse', 'crp_pc_sse',
+  'ppd_pk_sav',
 ];
 
 /**
@@ -268,6 +307,16 @@ export const PROJECT_ATTRIBUTES = {
     column: 'gla_pc_glims',
     label: 'Glacier extent (GLIMS inventory)',
     units: 'percent of basin area',
+    source: '/data/hydroclimate/glacier-basin-extent.json',
+  },
+  // Ice sits in the headwaters, so local extent draws the Pamir and the Tien Shan
+  // and leaves the rivers they feed blank. Accumulated, the same measurement
+  // answers what a reader of these two basins is actually asking: how much ice
+  // drains past this point.
+  gla_pc_up_glims: {
+    column: 'gla_pc_up_glims',
+    label: 'Glacier extent upstream (GLIMS inventory)',
+    units: 'percent of upstream catchment',
     source: '/data/hydroclimate/glacier-basin-extent.json',
   },
 };

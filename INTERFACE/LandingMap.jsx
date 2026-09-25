@@ -28,7 +28,7 @@ import {
   clusterDams, damClusterBounds, damClusterStyle,
   damLabel, damLegendStops, damStyle, damTotals,
   OVERLAY_OPACITY, attributeCaveat, formatAttribute, formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
-  mergeBasinColumns, projectAttribute,
+  measuredAttributes, mergeBasinColumns, projectAttribute,
   overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
@@ -155,6 +155,13 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
           collected.push({ ...attribute, category: category.id, groupId, variable });
         }
       }
+    }
+    // This project's own measurements, appended rather than interleaved: the
+    // archived rows stay exactly as their publisher released them.
+    for (const row of measuredAttributes(store, basin.hybas_id)) {
+      if (kind !== 'all' && kind !== 'measured') continue;
+      if (term && !row.label.toLowerCase().includes(term) && !row.column.includes(term)) continue;
+      collected.push({ ...row, category: 'Measured by this project', groupId: 'measured' });
     }
     return collected;
   }, [groups, store, catalogue, basin.hybas_id, filter, kind]);

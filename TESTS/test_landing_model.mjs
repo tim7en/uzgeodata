@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
   CHOROPLETH, HEADLINE_ATTRIBUTES, attributeCaveat, carriesAttributes, choroplethColor, classOf, groupAttributes,
-  mergeBasinColumns, projectAttribute, clusterGlaciers, glacierBasis, glacierRadius, groupSummary, indexStore, levelForZoom, positionLabel,
+  measuredAttributes, mergeBasinColumns, projectAttribute, clusterGlaciers, glacierBasis, glacierRadius, groupSummary, indexStore, levelForZoom, positionLabel,
   OVERLAY_OPACITY, legendStops, overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
@@ -207,6 +207,51 @@ test('a zero-inflated column still separates the basins that have the thing', ()
   for (let index = 0; index <= breaks.length; index += 1) {
     assert.ok(occupied.has(index), `class ${index} is declared but empty`);
   }
+});
+
+test('ice accumulates downstream and carries how much was surveyed', () => {
+  const document = read('glacier-basin-extent.json');
+  const level = document.levels['12'];
+  const upstream = level.values.gla_pc_up_glims;
+  const coverage = level.values.gla_cov_up_glims;
+  const area = level.values.gla_km2_up_glims;
+
+  // Ice sits in the headwaters, so far more basins have ice upstream than in them.
+  const withUpstream = upstream.filter(value => value !== null).length;
+  const withLocal = level.values.gla_km2_glims.filter(value => value).length;
+  assert.ok(withUpstream > withLocal * 2, 'accumulation must reach past the headwaters');
+
+  for (let index = 0; index < upstream.length; index += 1) {
+    if (upstream[index] === null) {
+      assert.equal(coverage[index], null, 'an unsurveyed catchment states nothing, not zero');
+      assert.equal(area[index], null);
+      continue;
+    }
+    assert.ok(coverage[index] > 0 && coverage[index] <= 1, 'coverage is a fraction of the catchment');
+    assert.ok(area[index] >= 0);
+  }
+
+  // No basin can have more ice above it than was mapped in the whole domain, which
+  // is what a confluence counted twice would produce; and the main stem must carry
+  // most of it, which is what losing the ice on the way down would prevent.
+  const mapped = level.iceAreaKm2;
+  const deepest = Math.max(...area.filter(value => value !== null));
+  assert.ok(deepest <= mapped + 1, 'accumulation must not count a basin twice');
+  assert.ok(deepest > mapped * 0.5, 'the main stem must carry the ice down to its outlet');
+});
+
+test('a basin panel shows what this project measured, not only what the atlas holds', () => {
+  const store = {
+    ids: [1],
+    index: new Map([[1, 0]]),
+    values: { gla_pc_glims: [3.5], gla_km2_glims: [12], gla_pc_up_glims: [1.2], gla_cov_up_glims: [0.4] },
+  };
+  const rows = measuredAttributes(store, 1);
+  assert.ok(rows.length >= 3, 'the measured columns must reach the panel');
+  assert.ok(rows.every(row => row.measured), 'they must be marked as measured here');
+  assert.ok(rows.some(row => row.spatialExtent === 'u'), 'upstream rows say so');
+  // A column the basin was never surveyed for is absent, not an empty row.
+  assert.equal(measuredAttributes({ ids: [1], index: new Map([[1, 0]]), values: {} }, 1).length, 0);
 });
 
 test('the glacier catalogues group by area, not only by count', () => {

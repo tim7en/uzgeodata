@@ -177,6 +177,36 @@ def catalogue_ice(base: list[dict]) -> tuple[dict[int, float], dict[int, int], d
     return {key: round(value, 6) for key, value in ice.items()}, dict(counted), summary
 
 
+def accumulate(order: list[int], next_down: dict[int, int],
+               local_ice: dict[int, float], local_assessed: dict[int, float]):
+    """Sum ice and surveyed area over everything draining into each basin.
+
+    Ice sits in the headwaters, so a map of local extent shows the Pamir and the
+    Tien Shan and leaves the rivers they feed blank. Accumulated, the same
+    measurement answers the question a reader of these two basins actually has: how
+    much ice drains past this point.
+
+    Processed in ascending upstream area, which is a topological order on a drainage
+    tree - a basin's upstream area is larger than that of anything above it - so
+    every contributor is already summed when its outlet is reached.
+
+    The surveyed area is accumulated beside the ice, because the sum is only a floor
+    otherwise. A basin whose upstream catchment is a third surveyed is not reporting
+    a third of the ice; it is reporting the ice found in the third that was looked
+    at, and the published coverage says which.
+    """
+    ice = defaultdict(float)
+    surveyed = defaultdict(float)
+    for hybas in order:
+        ice[hybas] += local_ice.get(hybas, 0.0)
+        surveyed[hybas] += local_assessed.get(hybas, 0.0)
+        downstream = next_down.get(hybas, 0)
+        if downstream:
+            ice[downstream] += ice[hybas]
+            surveyed[downstream] += surveyed[hybas]
+    return ice, surveyed
+
+
 def formation_zone() -> set[int]:
     covered = set()
     with MEMBERSHIP.open(encoding="utf-8") as handle:
@@ -249,13 +279,38 @@ def main() -> None:
         for hybas, code in pfaf.items():
             children[code if digits is None else code[:digits]].append(hybas)
 
+        # Local ice and surveyed area per basin at this level, before any
+        # withholding: accumulation needs the measurement, and the coverage fraction
+        # beside it is what states how much of the catchment it stands for.
+        features = basins(level)
+        local_ice, local_assessed, upstream_km2, next_down = {}, {}, {}, {}
+        for feature in features:
+            properties = feature["properties"]
+            hybas = int(properties["HYBAS_ID"])
+            units = children.get(str(properties["PFAF_ID"]), [])
+            local_ice[hybas] = sum(ice.get(unit, 0.0) for unit in units)
+            local_assessed[hybas] = sum(area_km2[unit] for unit in units if assessed[unit])
+            upstream_km2[hybas] = float(properties["UP_AREA"])
+            next_down[hybas] = int(properties["NEXT_DOWN"])
+        order = sorted(local_ice, key=lambda hybas: upstream_km2[hybas])
+        up_ice, up_surveyed = accumulate(order, next_down, local_ice, local_assessed)
+
         ids, ice_column, percent_column, survey_column = [], [], [], []
         catalogue_km2, catalogue_pc, catalogue_n = [], [], []
+        up_km2, up_pc, up_cov = [], [], []
         assessed_count = with_ice = withheld = 0
-        for feature in basins(level):
+        for feature in features:
             properties = feature["properties"]
             hybas = int(properties["HYBAS_ID"])
             code = str(properties["PFAF_ID"])
+            catchment = upstream_km2[hybas]
+            coverage = up_surveyed[hybas] / catchment if catchment > 0 else 0.0
+            # Published wherever any of the catchment was surveyed. A zero from a
+            # catchment nobody surveyed would be indistinguishable from a river with
+            # no ice above it, so that one stays null.
+            up_km2.append(round(up_ice[hybas], 4) if coverage > 0 else None)
+            up_pc.append(round(up_ice[hybas] / catchment * 100, 4) if coverage > 0 else None)
+            up_cov.append(round(min(1.0, coverage), 4) if coverage > 0 else None)
             units = children.get(code, [])
             ids.append(hybas)
             # The catalogues are a survey of their own ground: a basin is covered by
@@ -299,7 +354,10 @@ def main() -> None:
             "values": {"gla_km2_glims": ice_column, "gla_pc_glims": percent_column,
                        "gla_survey_glims": survey_column,
                        "gla_km2_catalogue": catalogue_km2, "gla_pc_catalogue": catalogue_pc,
-                       "gla_n_catalogue": catalogue_n},
+                       "gla_n_catalogue": catalogue_n,
+                       "gla_km2_up_glims": up_km2, "gla_pc_up_glims": up_pc,
+                       "gla_cov_up_glims": up_cov},
+            "upstreamBasins": sum(1 for value in up_km2 if value is not None),
             "catalogueBasins": sum(1 for value in catalogue_n if value),
         }
 
@@ -313,7 +371,7 @@ def main() -> None:
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "joinKey": "hybas_id",
         "columns": ["gla_km2_glims", "gla_pc_glims", "gla_km2_catalogue", "gla_pc_catalogue",
-                    "gla_n_catalogue"],
+                    "gla_n_catalogue", "gla_km2_up_glims", "gla_pc_up_glims", "gla_cov_up_glims"],
         "provenance": {"column": "gla_survey_glims", "codes": survey_codes, "mixed": -1,
                        "added": added},
         "units": {"gla_km2_glims": "square kilometres", "gla_pc_glims": "percent of basin area"},
@@ -323,6 +381,15 @@ def main() -> None:
             "gla_km2_catalogue": "Glacier area, 2023 regional catalogues",
             "gla_pc_catalogue": "Glacier extent, 2023 regional catalogues",
             "gla_n_catalogue": "Catalogued glaciers in the basin",
+            "gla_km2_up_glims": "Glacier area upstream, GLIMS inventory",
+            "gla_pc_up_glims": "Glacier extent upstream, GLIMS inventory",
+            "gla_cov_up_glims": "Share of the upstream catchment that was surveyed",
+        },
+        "upstream": {
+            "accumulation": "Ice summed over everything draining into a basin, following NEXT_DOWN.",
+            "coverage": "gla_cov_up_glims is the surveyed share of the upstream catchment. An "
+                        "accumulated total is a floor: it is the ice found in the part that was "
+                        "surveyed, not an estimate of the whole.",
         },
         "catalogue": {
             **catalogue_summary,
