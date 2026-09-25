@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
   CHOROPLETH, HEADLINE_ATTRIBUTES, attributeCaveat, carriesAttributes, choroplethColor, classOf, groupAttributes,
-  mergeBasinColumns, projectAttribute, clusterGlaciers, glacierRadius, groupSummary, indexStore, levelForZoom, positionLabel,
+  mergeBasinColumns, projectAttribute, clusterGlaciers, glacierBasis, glacierRadius, groupSummary, indexStore, levelForZoom, positionLabel,
   OVERLAY_OPACITY, legendStops, overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
@@ -229,7 +229,18 @@ test('the glacier catalogues group by area, not only by count', () => {
 
   // One large glacier must not draw smaller than a scatter of tiny ones.
   assert.ok(glacierRadius({ areaKm2: 40, count: 1 }) > glacierRadius({ areaKm2: 0.2, count: 6 }));
-  assert.ok(glacierRadius({ areaKm2: 0, count: 1 }) >= 4, 'a catalogue without areas still draws');
+
+  // The Pskem catalogue reports no area at all: 254 glaciers, every one of them
+  // with a perimeter and an elevation range and none with an area. Sized on a
+  // shorter scale than the area branch, the richest survey the project holds drew
+  // as the smallest marks on the map.
+  const pskem = read('pskem-glaciers.geojson');
+  assert.equal(pskem.features.filter(f => Number(f.properties.area_km2) > 0).length, 0);
+  const many = clusterGlaciers(pskem.features, 6).sort((a, b) => b.count - a.count)[0];
+  assert.equal(glacierBasis(many), 'count', 'a catalogue with no area is sized by count');
+  assert.equal(glacierBasis({ areaKm2: 12, count: 3 }), 'area');
+  assert.ok(glacierRadius(many) >= glacierRadius({ areaKm2: 13, count: 55 }),
+    '254 glaciers must not draw smaller than 55 of them');
 });
 
 test('the project glacier column joins by basin id, not by position', () => {

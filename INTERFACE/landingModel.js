@@ -660,11 +660,25 @@ export function clusterGlaciers(features, zoom) {
     });
 }
 
-/** Mark size: area where the catalogue reports it, count where it does not. */
+/**
+ * Mark size: area where the catalogue reports it, glacier count where it does not.
+ *
+ * The Pskem catalogue reports a perimeter, an elevation range and a morphology for
+ * all 254 of its glaciers and an area for none of them. Sizing that branch on a
+ * shorter scale drew the richest survey the project holds as the smallest marks on
+ * the map - 254 glaciers reading as less than 55 - which is a defect of the symbol,
+ * not a property of the ice. Both branches now share one scale, and the layer says
+ * which one a mark is drawn on rather than letting the reader assume area.
+ */
 export function glacierRadius(cluster) {
   const area = Number(cluster?.areaKm2) || 0;
   if (area > 0) return Math.max(5, Math.min(18, 4 + Math.sqrt(area) * 3.4));
-  return Math.max(4, Math.min(12, 3 + Math.sqrt(Number(cluster?.count) || 1) * 1.6));
+  return Math.max(5, Math.min(18, 4 + Math.sqrt(Number(cluster?.count) || 1) * 1.6));
+}
+
+/** Whether a group's size stands for reported area or only for how many glaciers. */
+export function glacierBasis(cluster) {
+  return (Number(cluster?.areaKm2) || 0) > 0 ? 'area' : 'count';
 }
 
 export function clusterStations(features, zoom) {
