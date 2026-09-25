@@ -234,6 +234,9 @@ export const CHOROPLETH = ['#2c3e6b', '#256f8f', '#20a08b', '#5fc463', '#bfe040'
  * carried the same observation for the Pskem pilot; it belongs on the map too.
  */
 export const ATTRIBUTE_CAVEATS = {
+  gla_pc_glims: 'Measured by this project from GLIMS outlines over the 2,240 headwater basins the '
+    + 'inventory covers. Outside them a basin is left uncoloured because nothing was looked for there, '
+    + 'not because there is no ice. Survey epochs differ between glaciers.',
   gla_pc_sse: 'Known gap: the atlas glacier layer reports zero in 693 basins that hold 5,009 km² of ice in '
     + 'the project GLIMS inventory, 39% of the mapped area, including the Pskem and the Zeravshan. A zero here '
     + 'means unmapped, not ice-free.',
@@ -248,8 +251,53 @@ export function attributeCaveat(column) {
 /** Attributes worth offering before a reader knows the catalogue exists. */
 export const HEADLINE_ATTRIBUTES = [
   'dis_m3_pyr', 'run_mm_syr', 'pre_mm_syr', 'tmp_dc_syr', 'snw_pc_syr',
-  'gla_pc_sse', 'ele_mt_sav', 'for_pc_sse', 'crp_pc_sse', 'ppd_pk_sav',
+  'gla_pc_glims', 'gla_pc_sse', 'ele_mt_sav', 'for_pc_sse', 'crp_pc_sse', 'ppd_pk_sav',
 ];
+
+/**
+ * Columns this project measured itself, offered beside the atlas ones.
+ *
+ * They are not in the BasinATLAS catalogue, so they carry their own label and
+ * unit rather than being looked up in it. Keeping them separate is the point: the
+ * atlas column stays exactly as its publisher released it, and the independent
+ * estimate stands next to it with its own provenance and its own coverage.
+ */
+export const PROJECT_ATTRIBUTES = {
+  gla_pc_glims: {
+    column: 'gla_pc_glims',
+    label: 'Glacier extent (GLIMS inventory)',
+    units: 'percent of basin area',
+    source: '/data/hydroclimate/glacier-basin-extent.json',
+  },
+};
+
+export function projectAttribute(column) {
+  return PROJECT_ATTRIBUTES[column] || null;
+}
+
+/**
+ * Splice the project's own basin columns into an atlas attribute store.
+ *
+ * The two are published separately and joined here by basin id rather than by
+ * position: they are built by different pipelines at different times, and lining
+ * up two arrays on the assumption that they were written in the same order is the
+ * kind of join that works until the day it silently does not.
+ */
+export function mergeBasinColumns(store, document, level) {
+  const entry = document?.levels?.[String(level)];
+  if (!store?.ids || !entry) return store;
+  const position = new Map(entry.ids.map((id, index) => [Number(id), index]));
+  const added = {};
+  for (const column of document.columns || []) {
+    const source = entry.values?.[column];
+    if (!source) continue;
+    added[column] = store.ids.map(id => {
+      const index = position.get(Number(id));
+      return index === undefined ? null : source[index] ?? null;
+    });
+  }
+  return { ...store, values: { ...store.values, ...added } };
+}
 
 /**
  * Quantile breaks over the values that exist.

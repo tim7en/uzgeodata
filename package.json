@@ -49,6 +49,7 @@
     "basins:anomaly": "python PIPELINES/era5_headwater_anomaly_service.py --scope full-basin",
     "headwaters:snow": "python PIPELINES/modis_snow_headwater_service.py",
     "headwaters:glaciers": "python PIPELINES/build_glacier_inventory.py",
+    "basins:glacier-extent": "python PIPELINES/build_glacier_basin_extent.py",
     "basins:roles": "python PIPELINES/build_basin_hydrological_roles.py",
     "basins:waterbodies": "python PIPELINES/build_transboundary_water_bodies.py",
     "basins:waterbody-review": "python PIPELINES/cross_reference_water_bodies.py",

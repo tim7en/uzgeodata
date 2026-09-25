@@ -3,7 +3,8 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
-  CHOROPLETH, HEADLINE_ATTRIBUTES, attributeCaveat, carriesAttributes, choroplethColor, classOf, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
+  CHOROPLETH, HEADLINE_ATTRIBUTES, attributeCaveat, carriesAttributes, choroplethColor, classOf, groupAttributes,
+  mergeBasinColumns, projectAttribute, groupSummary, indexStore, levelForZoom, positionLabel,
   OVERLAY_OPACITY, legendStops, overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
@@ -208,6 +209,33 @@ test('a zero-inflated column still separates the basins that have the thing', ()
   }
 });
 
+test('the project glacier column joins by basin id, not by position', () => {
+  // The atlas store and the project's own columns are built by different pipelines
+  // at different times. Lining them up on the assumption that both were written in
+  // the same order is the join that works until the day it silently does not.
+  const store = { ids: [101, 202, 303], values: { pre_mm_syr: [10, 20, 30] } };
+  const document = {
+    columns: ['gla_pc_glims'],
+    levels: { 12: { ids: [303, 101], values: { gla_pc_glims: [4.5, 0] } } },
+  };
+  const merged = mergeBasinColumns(store, document, 12);
+  assert.deepEqual(merged.values.gla_pc_glims, [0, null, 4.5]);
+  assert.deepEqual(merged.values.pre_mm_syr, [10, 20, 30], 'the atlas columns stay untouched');
+  assert.equal(merged.values.gla_pc_glims[1], null, 'a basin the inventory never assessed stays null');
+
+  assert.equal(mergeBasinColumns(store, document, 7), store, 'a level with no columns is left alone');
+  assert.equal(mergeBasinColumns(null, document, 12), null);
+
+  // Null is not zero here: the inventory covers the runoff-formation zone only, and
+  // an unassessed basin must not draw as a basin with no ice.
+  assert.equal(choroplethColor(merged.values.gla_pc_glims[1], quantileBreaks(merged.values.gla_pc_glims)), null);
+
+  const meta = projectAttribute('gla_pc_glims');
+  assert.ok(meta && meta.units, 'the column carries its own label and unit');
+  assert.equal(projectAttribute('pre_mm_syr'), null, 'an atlas column is not one of ours');
+  assert.ok(HEADLINE_ATTRIBUTES.includes('gla_pc_glims'), 'it must be offered beside the atlas columns');
+});
+
 test('an attribute with a known coverage gap says so where it is drawn', () => {
   // The atlas glacier layer records zero in 693 basins holding 5,009 km2 of ice in
   // the project's GLIMS inventory, including every Pskem and Zeravshan unit. Drawn
@@ -257,13 +285,40 @@ test('overlay opacity follows the reader and keeps hover and selection visible',
   for (const unreadable of [null, '', 'abc', undefined]) assert.equal(overlayOpacity(unreadable), OVERLAY_OPACITY.default);
 });
 
-test('every headline attribute offered on the map exists in the published groups', () => {
+test('every headline attribute offered on the map exists in the published data', () => {
   const groups = read('reference-attribute-groups.json');
   const columns = new Set(groups.groups.flatMap(group =>
     group.categories.flatMap(category => category.attributes.map(a => a.column))));
+  // An offered column is either one BasinATLAS published or one this project
+  // measured; the second kind is absent from the atlas catalogue by design, so it
+  // has to be found in the document that actually carries it.
+  const project = read('glacier-basin-extent.json');
   for (const column of HEADLINE_ATTRIBUTES) {
+    if (projectAttribute(column)) {
+      assert.ok(project.columns.includes(column), `${column} is offered but not published`);
+      for (const level of Object.values(project.levels)) {
+        assert.equal(level.values[column].length, level.ids.length,
+          `${column} must carry one value per basin, null where nothing was assessed`);
+      }
+      continue;
+    }
     assert.ok(columns.has(column), `${column} is offered but not published`);
   }
+});
+
+test('the glacier inventory publishes coverage rather than assuming zero', () => {
+  const project = read('glacier-basin-extent.json');
+  assert.match(project.coverage.note, /not assessed, never zero/);
+  for (const [level, entry] of Object.entries(project.levels)) {
+    const percents = entry.values.gla_pc_glims;
+    assert.equal(entry.assessed + entry.notAssessed, entry.basins, `level ${level} loses basins`);
+    assert.equal(percents.filter(value => value === null).length, entry.notAssessed,
+      `level ${level} must leave every unassessed basin null`);
+    assert.ok(entry.withIce > 0 && entry.withIce <= entry.assessed);
+  }
+  // The atlas column reports zero for basins this inventory maps ice in. Both are
+  // published; neither is quietly rewritten to agree with the other.
+  assert.ok(project.comparison.atlasZeroBasinsWithMappedIce > 0);
 });
 
 test('every level publishes the attribute store its overlay needs', () => {

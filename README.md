@@ -382,6 +382,7 @@ from R2; `npm run preview:launch` serves the same paths from `dist/`.
 | `data/atlas/catchments/index.json` | Level-12 drainage network, local areas, series manifest and matrix hashes |
 | `data/atlas/catchments/morphology.json` | Per-catchment area, perimeter, relief, slope and shape measures |
 | `data/atlas/catchments/<variable>-<hash>.bin.gz` | One monthly matrix per variable, every basin in one file |
+| `data/hydroclimate/glacier-basin-extent.json` | Glacier area and extent per basin from the GLIMS inventory, null where unassessed |
 | `data/atlas/cube/variable=<name>/*.parquet` | The whole dated record, one file per variable |
 | `data/atlas/cube/index.json` | Cube manifest, variable registry and reading notes |
 | `data/atlas/models/pskem-discharge.json` | The validated model result, skill included |
@@ -736,6 +737,16 @@ This protects traceability; it does not establish scientific reproduction.
 Known and unfixed, recorded so they are picked up deliberately rather than
 rediscovered. Detail and the measurements behind them are in
 [docs/LAUNCH.md](docs/LAUNCH.md#open-findings).
+
+- **The atlas glacier column has no Western Tien Shan coverage.** Read straight
+  from `BasinATLAS_v10.gdb`, every level-12 basin in the Pskem window reports
+  `gla_pc_sse = 0` and `gla_pc_use = 0`. Against this project's GLIMS inventory over
+  the same basins the atlas records zero in 693 basins holding 5,009 km² of ice,
+  39% of the 12,820 km² mapped, and agrees on only 394. The 2012 snapshot behind the
+  column appears to lack coverage rather than to disagree about area. The archived
+  attribute is unchanged and now carries that statement where it is drawn;
+  `npm run basins:glacier-extent` publishes the inventory as a basin column beside
+  it, assessed over the runoff-formation zone and null elsewhere.
 
 - **Catchment tab reads unextended months as gaps.** The monthly frame is 288
   calendar positions but the record runs to 2024-12, so the catchment table and CSV

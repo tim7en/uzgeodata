@@ -27,12 +27,16 @@ import {
   clusterDams, damClusterBounds, damClusterStyle,
   damLabel, damLegendStops, damStyle, damTotals,
   OVERLAY_OPACITY, attributeCaveat, formatAttribute, formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
+  mergeBasinColumns, projectAttribute,
   overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
 const LADDER_URL = '/data/hydroclimate/reference-basin-levels.json';
 const RIVER_LADDER_URL = '/data/hydroclimate/reference-river-levels.json';
 const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
+// Published apart from the atlas attributes and joined by basin id, so the
+// archived column stays exactly as BasinATLAS released it.
+const PROJECT_COLUMNS_URL = '/data/hydroclimate/glacier-basin-extent.json';
 const CATALOGUE_URL = '/data/hydroclimate/reference-attribute-catalogue.json';
 const DAMS_URL = '/data/hydroclimate/dams-transboundary.geojson';
 const OPACITY_KEY = 'uzgeodata.overlayOpacity';
@@ -265,6 +269,7 @@ export default function LandingMap() {
   const [riverTiers, setRiverTiers] = useState({});
   const [zoom, setZoom] = useState(initialView.zoom);
   const [groups, setGroups] = useState(null);
+  const [projectColumns, setProjectColumns] = useState(null);
   const [storeRequested, setStoreRequested] = useState(false);
   const [loadingStore, setLoadingStore] = useState(false);
   const [error, setError] = useState(null);
@@ -324,6 +329,7 @@ export default function LandingMap() {
         setRiverLadder(riverDocument);
         setGroups(groupDocument);
       })
+      .then(() => json(PROJECT_COLUMNS_URL).then(document => live && setProjectColumns(document)))
       .catch(cause => live && setError(cause.message));
     return () => { live = false; };
   }, []);
@@ -398,7 +404,13 @@ export default function LandingMap() {
   // Attributes are fetched per level, and only once a reader asks for them —
   // either by opening a group in the panel or by colouring the map.
   const [stores, setStores] = useState({});
-  const store = active ? stores[active.level] : null;
+  // The project's own columns are merged here rather than at fetch time: the two
+  // documents arrive independently, and whichever lands second must still reach a
+  // store that already exists.
+  const store = useMemo(() => {
+    const level = active ? stores[active.level] : null;
+    return level && projectColumns ? mergeBasinColumns(level, projectColumns, active.level) : level;
+  }, [active, stores, projectColumns]);
   // HydroBASINS id spaces do not overlap between levels, so a level-7 id looked up
   // in the level-10 store resolves to nothing at all. The panel therefore reads the
   // store of the level the *selected* basin belongs to, which is not always the
@@ -453,7 +465,12 @@ export default function LandingMap() {
   }, [tier, riverTiers]);
 
   const overlayMeta = useMemo(() => {
-    if (!overlay || !groups) return null;
+    if (!overlay) return null;
+    // A column this project measured is not in the atlas catalogue and carries its
+    // own label and unit, so the lookup below would report it as unknown.
+    const own = projectAttribute(overlay);
+    if (own) return own;
+    if (!groups) return null;
     for (const group of groups.groups) {
       for (const category of group.categories) {
         const found = category.attributes.find(attribute => attribute.column === overlay);
@@ -759,7 +776,7 @@ export default function LandingMap() {
         <select value={overlay} onChange={event => setOverlay(event.target.value)}>
           <option value="">River system</option>
           {HEADLINE_ATTRIBUTES.map(column => {
-            const meta = attributeMeta(groups, column);
+            const meta = attributeMeta(groups, column) || projectAttribute(column);
             return meta ? <option key={column} value={column}>{meta.label}</option> : null;
           })}
         </select>
@@ -778,7 +795,8 @@ export default function LandingMap() {
             : stop.to === null ? `≥ ${formatAttribute(stop.from, overlayMeta?.units).value}`
               : `${formatAttribute(stop.from, overlayMeta?.units).value} – ${formatAttribute(stop.to, overlayMeta?.units).value}`}</em>
         </li>)}</ol>
-        <a href={`/atlas.html?attribute=${overlay}`}>Open in the atlas explorer <ArrowUpRight size={11}/></a>
+        {!projectAttribute(overlay)
+          && <a href={`/atlas.html?attribute=${overlay}`}>Open in the atlas explorer <ArrowUpRight size={11}/></a>}
       </div>}
       {/* A known gap in a source belongs beside the colouring it distorts, not only
           on the page that documents it. Without this the glacier layer draws an
