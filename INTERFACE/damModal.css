@@ -63,4 +63,11 @@
 .gauge-modal-links{display:flex;flex-direction:column;gap:6px;margin:8px 0}
 .station-modal-warn{border-left:3px solid #ff6b4a;background:rgba(255,107,74,0.08)}
 
+.glacier-modal .dam-modal-card{border-top-color:#9ee2ff}
+.glacier-modal .dam-modal-kicker{color:#9ee2ff}
+.glacier-modal .dam-modal-figures{margin-top:18px}
+.glacier-record-picker{display:grid;gap:6px;font-size:13px;color:var(--ink,#e8eef2)}
+.glacier-record-picker select{width:100%;min-width:0;padding:8px;background:var(--panel,#0a1216);color:inherit;border:1px solid var(--line,#2d3a41);border-radius:3px}
+.glacier-modal p,.glacier-modal h2{overflow-wrap:anywhere}
+
 @media(max-width:600px){.dam-modal-card h2{font-size:24px}}

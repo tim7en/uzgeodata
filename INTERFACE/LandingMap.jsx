@@ -6,6 +6,7 @@ import { mountSelect } from './lang.js';
 import DamModal from './DamModal.jsx';
 import { svg } from 'leaflet';
 import GlacierLayer from './GlacierLayer.jsx';
+import GlacierModal from './GlacierModal.jsx';
 import LakeLayer from './LakeLayer.jsx';
 import LakeModal from './LakeModal.jsx';
 import RiverLayer from './RiverLayer.jsx';
@@ -282,6 +283,60 @@ export default function LandingMap() {
   const [loadingStore, setLoadingStore] = useState(false);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
+  const [peek, setPeek] = useState(false);
+  const panelCloseTimer = useRef(null);
+  const [stickyOpen, setStickyOpen] = useState(() => {
+    try { return localStorage.getItem('uzgeodata-panel') === 'open'; } catch { return false; }
+  });
+  const panelOpen = stickyOpen || peek || !!selected;
+  const setSticky = value => {
+    setStickyOpen(value);
+    try { localStorage.setItem('uzgeodata-panel', value ? 'open' : 'closed'); } catch { /* storage blocked */ }
+  };
+  // The header obeys the same contract as the reading panel: the map owns the
+  // screen, a touch of the top edge or the brand tab summons the header, and a
+  // click on the tab pins it open across visits.
+  const [headPeek, setHeadPeek] = useState(false);
+  const [headSticky, setHeadSticky] = useState(() => {
+    try { return localStorage.getItem('uzgeodata-head') === 'open'; } catch { return false; }
+  });
+  const headOpen = headSticky || headPeek;
+  const setHeadStickyValue = value => {
+    setHeadSticky(value);
+    try { localStorage.setItem('uzgeodata-head', value ? 'open' : 'closed'); } catch { /* storage blocked */ }
+  };
+  useEffect(() => {
+    const onMove = event => {
+      if (event.clientY <= 6) setHeadPeek(true);
+      else if (event.clientY > 380) setHeadPeek(false);
+    };
+    document.addEventListener('mousemove', onMove, { passive: true });
+    return () => document.removeEventListener('mousemove', onMove);
+  }, []);
+  const keepPanelOpen = useCallback(() => {
+    if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
+    panelCloseTimer.current = null;
+    setPeek(true);
+  }, []);
+  const schedulePanelClose = useCallback(() => {
+    if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
+    panelCloseTimer.current = window.setTimeout(() => {
+      panelCloseTimer.current = null;
+      setPeek(false);
+    }, 650);
+  }, []);
+  // A touch of the left edge slides the panel out; leaving it lets it fall
+  // closed again unless the reader pinned it. A short grace period lets the
+  // pointer cross accordion gaps without dismissing the panel mid-navigation.
+  useEffect(() => {
+    const onMove = event => { if (event.clientX <= 6) keepPanelOpen(); };
+    document.addEventListener('mousemove', onMove, { passive: true });
+    return () => {
+      document.removeEventListener('mousemove', onMove);
+      if (panelCloseTimer.current !== null) window.clearTimeout(panelCloseTimer.current);
+    };
+  }, [keepPanelOpen]);
+
   useEffect(() => {
     const host = document.getElementById('uz-lang-host');
     if (host && !host.firstChild) mountSelect(host);
@@ -321,6 +376,8 @@ export default function LandingMap() {
   const [showStations, setShowStations] = useState(false);
   const [showGlaciers, setShowGlaciers] = useState(false);
   const [glaciers, setGlaciers] = useState(null);
+  const [glacier, setGlacier] = useState(null);
+  const closeGlacier = useCallback(() => setGlacier(null), []);
   const [station, setStation] = useState(null);
   // SVG only intercepts events on its interactive paths. A marker-pane canvas
   // covers the entire map and prevents the basin canvas underneath receiving clicks.
@@ -590,7 +647,7 @@ export default function LandingMap() {
       mouseover: () => setHoveredId(id),
       mouseout: () => setHoveredId(current => (current === id ? null : current)),
       click: () => {
-        if (drawingRef.current) return; setInitialTab(null); setSelected(feature); setDam(null); setLake(null); setStation(null); setRiverReach(null); setStoreRequested(true); setTableOpen(true); },
+        if (drawingRef.current) return; setInitialTab(null); setSelected(feature); setDam(null); setLake(null); setStation(null); setRiverReach(null); setStoreRequested(true); setGlacier(null); setTableOpen(true); },
     });
   }, []);
 
@@ -603,7 +660,7 @@ export default function LandingMap() {
     setStation(null);
     setRiverReach(null);
     setStoreRequested(true);
-    setTableOpen(true);
+    setGlacier(null); setTableOpen(true);
     setBounds(featureBounds(feature));
   };
 
@@ -631,10 +688,12 @@ export default function LandingMap() {
         style={feature => styleFor(feature.properties, {})} onEachFeature={onEachFeature}/>}
       {rivers && <GeoJSON key={`rivers-${tier.id}`} data={rivers} style={feature => riverStyle(feature.properties)}
         interactive={false} smoothFactor={1.2}/>}
-      {showLakes&&lakes&&<LakeLayer data={lakes} onSelect={properties=>{setLake(properties);setDam(null);setStation(null);setRiverReach(null);setTableOpen(false);}}/>}
-      {showSwotRivers&&swotRivers&&<RiverLayer data={swotRivers} onSelect={properties=>{setRiverReach(properties);setLake(null);setDam(null);setStation(null);setTableOpen(false);}}/>}
-      {showGlaciers && glaciers && <GlacierLayer data={glaciers}/>}
-      {showStations&&stations&&<StationLayer data={stations} onSelect={properties=>{setStation(properties);setLake(null);setDam(null);setRiverReach(null);setTableOpen(false);}}/>}
+      {showLakes&&lakes&&<LakeLayer data={lakes} onSelect={properties=>{setLake(properties);setDam(null);setStation(null);setRiverReach(null);setGlacier(null); setTableOpen(false);}}/>}
+      {showSwotRivers&&swotRivers&&<RiverLayer data={swotRivers} onSelect={properties=>{setRiverReach(properties);setLake(null);setDam(null);setStation(null);setGlacier(null); setTableOpen(false);}}/>}
+      {showGlaciers && glaciers && <GlacierLayer data={glaciers} onSelect={cluster => {
+        setGlacier(cluster); setLake(null); setDam(null); setStation(null); setRiverReach(null); setTableOpen(false);
+      }}/>}
+      {showStations&&stations&&<StationLayer data={stations} onSelect={properties=>{setStation(properties);setLake(null);setDam(null);setRiverReach(null);setGlacier(null); setTableOpen(false);}}/>}
       {/* SVG markers remain above basins while allowing clicks between symbols
           to reach the basin canvas, including after a basin-level remount. */}
       {damClusters.map(cluster => {
@@ -645,7 +704,7 @@ export default function LandingMap() {
             center={[cluster.latitude, cluster.longitude]}
             pathOptions={damStyle(feature.properties, state)}
             radius={damStyle(feature.properties, state).radius}
-            eventHandlers={{ click: () => { setDam(feature.properties); setLake(null); setStation(null); setRiverReach(null); setSelected(null); setTableOpen(false); } }}>
+            eventHandlers={{ click: () => { setDam(feature.properties); setLake(null); setStation(null); setRiverReach(null); setSelected(null); setGlacier(null); setTableOpen(false); } }}>
             <Tooltip direction="top" offset={[0, -4]} opacity={1} className="land-dam-tip">
               {damLabel(feature.properties)}
             </Tooltip>
@@ -671,7 +730,7 @@ export default function LandingMap() {
       <ScaleControl position="bottomright" imperial={false}/>
     </MapContainer>
 
-    <header className="land-head">
+    <header id="map-header" className={`land-head ${headOpen ? '' : 'uz-closed'}`}>
       <div className="land-head-top">
         <div>
           <a href="/" className="land-brand" aria-label="UzGeoData home">
@@ -730,7 +789,7 @@ export default function LandingMap() {
             </label>
             <label className="land-toggle">
               <input type="checkbox" checked={showGlaciers}
-                onChange={event => setShowGlaciers(event.target.checked)}/>
+                onChange={event => { setShowGlaciers(event.target.checked); if (!event.target.checked) setGlacier(null); }}/>
               <span className="land-glacier-key" aria-hidden="true"/>
               <span>Glacier catalogues{glaciers ? ` · ${formatNumber(glaciers.features.length)} surveyed` : ''}</span>
             </label>
@@ -745,7 +804,18 @@ export default function LandingMap() {
           </fieldset>
       <span id="uz-lang-host" className="land-lang"/>
     </section>
-    <aside className={`land-panel ${selected ? 'has-selection' : ''}`}>
+    <button type="button" className="land-head-tab" aria-label="Toggle map header"
+      aria-expanded={headOpen} aria-controls="map-header"
+      onClick={() => { setHeadStickyValue(!headSticky); setHeadPeek(false); }}
+      onMouseEnter={() => setHeadPeek(true)}>
+      <span aria-hidden="true">&#8776;</span>
+      <span className="uz-chev" aria-hidden="true">&#9662;</span>
+    </button>
+
+    <aside id="basins-panel" onMouseEnter={keepPanelOpen} onMouseLeave={schedulePanelClose}
+      onFocusCapture={keepPanelOpen}
+      onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) schedulePanelClose(); }}
+      className={`land-panel ${selected ? 'has-selection' : ''} ${panelOpen ? '' : 'uz-closed'}`}>
       <BasinFinder entry={level12Entry} onSelect={focus}/>
       {!basins && <p className="land-loading">Loading the reference basins…</p>}
       {basins && <p className="land-level">
@@ -782,7 +852,7 @@ export default function LandingMap() {
           <dt>{row.label}</dt>
           <dd>{row.value}{row.unit ? <em> {row.unit}</em> : null}</dd>
         </div>)}</dl>
-        <button type="button" className="land-open-table" onClick={() => { setStoreRequested(true); setTableOpen(true); }}>
+        <button type="button" className="land-open-table" onClick={() => { setStoreRequested(true); setGlacier(null); setTableOpen(true); }}>
           <span>
             <strong>Atlas attributes</strong>
             <small>{groups?.groups?.reduce((total, group) => total + group.attributeCount, 0) || 281} published attributes, estimates and monthly downloads</small>
@@ -811,6 +881,13 @@ export default function LandingMap() {
         <p className="land-hint">Public preview · Independent estimates; reproduction has not been established.</p>
       </nav>
     </aside>
+    <button type="button" className="land-panel-tab" aria-label="Toggle basins panel"
+      aria-expanded={panelOpen} aria-controls="basins-panel"
+      onClick={() => { setSticky(!stickyOpen); setPeek(false); }}
+      onMouseEnter={keepPanelOpen}
+      onMouseLeave={schedulePanelClose}>
+      <span aria-hidden="true">{panelOpen ? '\u2039' : '\u203a'}</span>
+    </button>
     {basins && groups && <section className="land-dock" aria-label="Area of interest, basin colouring and map key">
       <AoiPanel drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} rule={aoiRule}
         selection={aoiSelection} loadingGeometry={aoiClosed && !levels[12]}
@@ -868,6 +945,7 @@ export default function LandingMap() {
       geometry={levels[selectedLevel]} geometryUrl={ladder?.levels?.find(entry => entry.level === selectedLevel)?.url}
       catalogue={catalogue} loading={loadingStore} initialTab={initialTab} onClose={() => setTableOpen(false)}/>}
 
+    {glacier && <GlacierModal key={glacier.key} cluster={glacier} onClose={closeGlacier}/>}
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
     {lake && <LakeModal lake={lake} onClose={()=>setLake(null)}/>}
     {riverReach && <RiverModal reach={riverReach} onClose={()=>setRiverReach(null)}/>}

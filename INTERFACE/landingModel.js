@@ -691,7 +691,11 @@ const PLACEMENT_RANK = ['departs_from_network_relationship', 'not_checked',
 export function clusterGlaciers(features, zoom) {
   return clusterPoints(features, zoom, feature => feature.geometry?.coordinates)
     .map(bucket => {
-      const members = bucket.members.map(member => member.properties || {});
+      const members = bucket.members.map(member => ({
+        ...member.properties,
+        longitude: member.geometry.coordinates[0],
+        latitude: member.geometry.coordinates[1],
+      }));
       const areaKm2 = members.reduce((total, row) => total + (Number(row.area_km2) || 0), 0);
       const largest = members.reduce((best, row) => (
         (Number(row.area_km2) || 0) > (Number(best?.area_km2) || 0) ? row : best

@@ -32,7 +32,7 @@ const ice = (radius, basis) => {
     + '</svg>';
 };
 
-export default function GlacierLayer({ data }) {
+export default function GlacierLayer({ data, onSelect }) {
   const map = useMap();
   const readView = () => {
     const bounds = map.getBounds().pad(0.25);
@@ -63,6 +63,8 @@ export default function GlacierLayer({ data }) {
         ? `${formatNumber(cluster.largest.elevation_min_m)}–${formatNumber(cluster.largest.elevation_max_m)} m`
         : null;
       return <Marker key={cluster.key} position={[cluster.latitude, cluster.longitude]}
+        title={cluster.count > 1 ? `${cluster.count} glaciers` : name || 'Glacier'}
+        eventHandlers={{ click: () => onSelect(cluster) }}
         icon={divIcon({
           className: 'land-glacier-mark',
           html: ice(radius, basis),
