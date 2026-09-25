@@ -63,12 +63,20 @@ SYSTEMS = PUBLISHED / "glacier-headwater-systems.json"
 # Institute in Tashkent. They are intersected here so the published column covers a
 # basin this project has a whole case study about.
 PSKEM_OUTLINES = ROOT / "PUBLISHED/data/case-studies/pskem-glims-outlines.geojson"
+# The Kashkadarya and Surkhandarya 2023 catalogues are a different kind of evidence
+# and get their own columns rather than being poured into the GLIMS ones. They
+# deliver a centre point and a reported area per glacier, with no outline, so a
+# basin total here is areas attributed to the basin a point falls in - not area
+# measured inside that basin. Summing the two kinds into one number would state a
+# precision that only one of them has.
+REGIONAL_CATALOGUE = PUBLISHED / "regional-glaciers.geojson"
 OUTPUT = PUBLISHED / "glacier-basin-extent.json"
 GEOD = Geod(ellps="WGS84")
 
-# Which survey put ice in a basin, published per basin because two different
-# extractions of the same archive are not one measurement.
-SURVEY_CODES = {"not_assessed": 0, "headwater_inventory": 1, "pskem_case_study": 2}
+# Which survey put ice in a basin, published per basin because two extractions of
+# the same archive over different ground are not one measurement. Codes are built
+# as the sources are found, so adding a region does not renumber the others.
+BASE_SURVEYS = {"not_assessed": 0, "headwater_inventory": 1}
 
 BASE_LEVEL = 12
 # Pfafstetter ids nest by prefix: the first ten digits of a level-12 id name its
@@ -92,22 +100,31 @@ def ice_by_basin() -> dict[int, float]:
     return dict(ice)
 
 
-def pskem_ice(base: list[dict]) -> dict[int, float]:
-    """Ice per level-12 basin from the case study's Pskem outlines.
+def outline_sources() -> list[tuple[str, Path]]:
+    """Every set of glacier outlines published outside the headwater inventory.
 
-    Exact vector intersection, geodesic area, same as the headwater inventory does
-    it, so the two sets of numbers mean the same thing. The file carries one
-    `glac_bound` polygon per glacier and no internal rock, so nothing is subtracted
-    and nothing is deduplicated: that was done when it was published.
+    The case study digitised the Pskem; extract_glacier_region_outlines.py fetches
+    the windows the inventory's formation geometry excluded. Each is a separate
+    survey and keeps its own name in the per-basin provenance.
     """
-    if not PSKEM_OUTLINES.exists():
-        print(f"Pskem outlines absent, skipping: {PSKEM_OUTLINES}")
-        return {}
-    with PSKEM_OUTLINES.open(encoding="utf-8") as handle:
+    found = []
+    if PSKEM_OUTLINES.exists():
+        found.append(("pskem_case_study", PSKEM_OUTLINES))
+    for path in sorted(PUBLISHED.glob("glims-*-outlines.geojson")):
+        found.append((f"glims_{path.stem.split('-')[1]}", path))
+    return found
+
+
+def outline_ice(path: Path, tree: STRtree, polygons: list[tuple[int, object]]) -> dict[int, float]:
+    """Ice per level-12 basin from one set of outlines.
+
+    Exact vector intersection, geodesic area, the way the headwater inventory does
+    it, so every number in the column means the same thing. Each file arrives
+    already deduplicated to one outline per glacier with internal rock removed, so
+    nothing is subtracted here.
+    """
+    with path.open(encoding="utf-8") as handle:
         outlines = [shape(feature["geometry"]) for feature in json.load(handle)["features"]]
-    polygons = [(int(feature["properties"]["HYBAS_ID"]), shape(feature["geometry"]))
-                for feature in base]
-    tree = STRtree([geometry for _, geometry in polygons])
     ice: dict[int, float] = defaultdict(float)
     for outline in outlines:
         if not outline.is_valid:
@@ -119,6 +136,45 @@ def pskem_ice(base: list[dict]) -> dict[int, float]:
                 continue
             ice[hybas] += abs(GEOD.geometry_area_perimeter(piece)[0]) / 1e6
     return {hybas: round(value, 6) for hybas, value in ice.items()}
+
+
+def catalogue_ice(base: list[dict]) -> tuple[dict[int, float], dict[int, int], dict]:
+    """Reported glacier area per basin from the 2023 point catalogues.
+
+    Each row is one glacier: a catalogue number, an area, a perimeter and a centre
+    point. The whole reported area is credited to the basin the point falls in,
+    which is the only placement the survey supports. A glacier astride a divide is
+    therefore credited to one side of it - stated here rather than smoothed over.
+    """
+    if not REGIONAL_CATALOGUE.exists():
+        return {}, {}, {}
+    with REGIONAL_CATALOGUE.open(encoding="utf-8") as handle:
+        points = json.load(handle)["features"]
+    polygons = [(int(feature["properties"]["HYBAS_ID"]), shape(feature["geometry"]))
+                for feature in base]
+    tree = STRtree([geometry for _, geometry in polygons])
+    ice: dict[int, float] = defaultdict(float)
+    counted: dict[int, int] = defaultdict(int)
+    placed = 0
+    for feature in points:
+        point = shape(feature["geometry"])
+        area = float(feature["properties"].get("area_km2") or 0)
+        for index in tree.query(point):
+            hybas, basin = polygons[int(index)]
+            if not basin.contains(point):
+                continue
+            ice[hybas] += area
+            counted[hybas] += 1
+            placed += 1
+            break
+    summary = {
+        "glaciers": len(points),
+        "placedInBasins": placed,
+        "outsideBasins": len(points) - placed,
+        "basins": len(ice),
+        "areaKm2": round(sum(ice.values()), 3),
+    }
+    return {key: round(value, 6) for key, value in ice.items()}, dict(counted), summary
 
 
 def formation_zone() -> set[int]:
@@ -142,17 +198,35 @@ def main() -> None:
     survey = {int(feature["properties"]["HYBAS_ID"]): "not_assessed" for feature in base}
     for hybas in ice:
         survey[hybas] = "headwater_inventory"
-    pskem = pskem_ice(base)
-    for hybas, value in pskem.items():
-        # The case study only fills ground the inventory never covered; where both
-        # looked, the inventory's own intersection stands, because mixing two
-        # extractions inside one basin would double count the ice in it.
-        if survey.get(hybas) == "headwater_inventory":
-            continue
-        ice[hybas] = value
-        survey[hybas] = "pskem_case_study"
-    print(f"Pskem case study adds {len(pskem)} basin(s), "
-          f"{round(sum(pskem.values()), 2)} km2 of ice the headwater inventory never reached.")
+
+    polygons = [(int(feature["properties"]["HYBAS_ID"]), shape(feature["geometry"]))
+                for feature in base]
+    tree = STRtree([geometry for _, geometry in polygons])
+    survey_codes = dict(BASE_SURVEYS)
+    added = {}
+    for name, path in outline_sources():
+        survey_codes.setdefault(name, len(survey_codes))
+        found = outline_ice(path, tree, polygons)
+        fresh = 0.0
+        for hybas, value in found.items():
+            # A later survey only fills ground no earlier one covered. Where two
+            # extractions of the same archive overlap a basin, the first stands, or
+            # the ice in it would be counted twice.
+            if survey.get(hybas) != "not_assessed":
+                continue
+            ice[hybas] = value
+            survey[hybas] = name
+            fresh += value
+        added[name] = {"basins": sum(1 for h, s in survey.items() if s == name),
+                       "iceAreaKm2": round(fresh, 3)}
+        print(f"{name}: adds {added[name]['basins']} basin(s), {added[name]['iceAreaKm2']} km2 "
+              f"the headwater inventory never reached.")
+
+    catalogue, catalogue_counts, catalogue_summary = catalogue_ice(base)
+    if catalogue_summary:
+        print(f"2023 catalogues place {catalogue_summary['placedInBasins']} of "
+              f"{catalogue_summary['glaciers']} glaciers in {catalogue_summary['basins']} basins, "
+              f"{catalogue_summary['areaKm2']} km2 reported.")
 
     # Assessed means the inventory looked here: inside the formation zone it did by
     # construction, and a glacier mapped just outside it is evidence that it looked
@@ -166,7 +240,7 @@ def main() -> None:
         pfaf[hybas] = str(properties["PFAF_ID"])
         area_km2[hybas] = float(properties["SUB_AREA"])
         assessed[hybas] = (hybas in formation or ice.get(hybas, 0.0) > 0
-                           or survey.get(hybas) == "pskem_case_study")
+                           or survey.get(hybas) != "not_assessed")
 
     levels = {}
     for level in LEVELS:
@@ -176,6 +250,7 @@ def main() -> None:
             children[code if digits is None else code[:digits]].append(hybas)
 
         ids, ice_column, percent_column, survey_column = [], [], [], []
+        catalogue_km2, catalogue_pc, catalogue_n = [], [], []
         assessed_count = with_ice = withheld = 0
         for feature in basins(level):
             properties = feature["properties"]
@@ -183,13 +258,23 @@ def main() -> None:
             code = str(properties["PFAF_ID"])
             units = children.get(code, [])
             ids.append(hybas)
+            # The catalogues are a survey of their own ground: a basin is covered by
+            # them when a catalogued glacier sits in it, and silent otherwise. There
+            # is no formation geometry to say where they looked, so this column
+            # claims nothing about where they did not.
+            reported = round(sum(catalogue.get(unit, 0.0) for unit in units), 6)
+            glaciers = sum(catalogue_counts.get(unit, 0) for unit in units)
+            catalogue_km2.append(reported if glaciers else None)
+            catalogue_n.append(glaciers if glaciers else None)
+            catalogue_pc.append(round(reported / float(properties["SUB_AREA"]) * 100, 3)
+                                if glaciers and float(properties["SUB_AREA"]) > 0 else None)
             # A parent whose children were not all assessed has an ice total that
             # cannot be compared with its own area, so it is withheld rather than
             # published as a number that reads like a measurement.
             if not units or not all(assessed[unit] for unit in units):
                 ice_column.append(None)
                 percent_column.append(None)
-                survey_column.append(SURVEY_CODES["not_assessed"])
+                survey_column.append(survey_codes["not_assessed"])
                 withheld += 1
                 continue
             total = round(sum(ice.get(unit, 0.0) for unit in units), 4)
@@ -199,8 +284,8 @@ def main() -> None:
             # A parent inherits a survey only when every unit inside it names the
             # same one; mixed provenance is recorded as mixed, not as either.
             named = {survey[unit] for unit in units if survey[unit] != "not_assessed"}
-            survey_column.append(SURVEY_CODES[named.pop()] if len(named) == 1 else
-                                 (SURVEY_CODES["not_assessed"] if not named else -1))
+            survey_column.append(survey_codes[named.pop()] if len(named) == 1 else
+                                 (survey_codes["not_assessed"] if not named else -1))
             assessed_count += 1
             with_ice += 1 if total > 0 else 0
 
@@ -212,7 +297,10 @@ def main() -> None:
             "notAssessed": withheld,
             "iceAreaKm2": round(sum(value for value in ice_column if value), 3),
             "values": {"gla_km2_glims": ice_column, "gla_pc_glims": percent_column,
-                       "gla_survey_glims": survey_column},
+                       "gla_survey_glims": survey_column,
+                       "gla_km2_catalogue": catalogue_km2, "gla_pc_catalogue": catalogue_pc,
+                       "gla_n_catalogue": catalogue_n},
+            "catalogueBasins": sum(1 for value in catalogue_n if value),
         }
 
     with MANIFEST.open(encoding="utf-8") as handle:
@@ -224,12 +312,23 @@ def main() -> None:
         "version": "1.0",
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "joinKey": "hybas_id",
-        "columns": ["gla_km2_glims", "gla_pc_glims"],
-        "provenance": {"column": "gla_survey_glims", "codes": SURVEY_CODES, "mixed": -1},
+        "columns": ["gla_km2_glims", "gla_pc_glims", "gla_km2_catalogue", "gla_pc_catalogue",
+                    "gla_n_catalogue"],
+        "provenance": {"column": "gla_survey_glims", "codes": survey_codes, "mixed": -1,
+                       "added": added},
         "units": {"gla_km2_glims": "square kilometres", "gla_pc_glims": "percent of basin area"},
         "labels": {
             "gla_km2_glims": "Glacier area, GLIMS inventory",
             "gla_pc_glims": "Glacier extent, GLIMS inventory",
+            "gla_km2_catalogue": "Glacier area, 2023 regional catalogues",
+            "gla_pc_catalogue": "Glacier extent, 2023 regional catalogues",
+            "gla_n_catalogue": "Catalogued glaciers in the basin",
+        },
+        "catalogue": {
+            **catalogue_summary,
+            "source": "Kashkadarya and Surkhandarya 2023 workbooks",
+            "geometry": "centre point per glacier; the reported area is credited to the basin "
+                        "containing the point, not measured inside it",
         },
         "source": manifest["source"],
         "selection": manifest["selection"],

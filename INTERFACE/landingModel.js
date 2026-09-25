@@ -234,10 +234,10 @@ export const CHOROPLETH = ['#2c3e6b', '#256f8f', '#20a08b', '#5fc463', '#bfe040'
  * carried the same observation for the Pskem pilot; it belongs on the map too.
  */
 export const ATTRIBUTE_CAVEATS = {
-  gla_pc_glims: 'Measured by this project from GLIMS outlines over 2,271 basins: the headwater '
-    + 'inventory, plus the Pskem, which that inventory never queried and the case study digitised '
-    + 'separately. Elsewhere a basin is left uncoloured because nothing was looked for there, not '
-    + 'because there is no ice. Survey epochs differ between glaciers.',
+  gla_pc_glims: 'Measured by this project from GLIMS outlines over 2,331 basins: the headwater '
+    + 'inventory, plus the Pskem, the Hissar and the Angren, which that inventory never queried and '
+    + 'which were fetched separately. Elsewhere a basin is left uncoloured because nothing was looked '
+    + 'for there, not because there is no ice. Survey epochs differ between glaciers.',
   gla_pc_sse: 'Known gap: the atlas glacier layer reports zero in 693 basins that hold 5,009 km² of ice in '
     + 'the project GLIMS inventory, 39% of the mapped area, including the Pskem and the Zeravshan. A zero here '
     + 'means unmapped, not ice-free.',
