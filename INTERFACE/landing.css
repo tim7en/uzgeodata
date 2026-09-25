@@ -458,6 +458,9 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-station-symbol{background:none;border:0}
 .land-station-key{display:inline-block;width:11px;height:11px;
   clip-path:polygon(50% 8%,92% 88%,8% 88%);background:#ffd27f}
+.land-glacier-key{width:11px;height:11px;border-radius:50%;background:rgba(158,226,255,.42);border:1.2px solid #9ee2ff;flex:none}
+.land-glacier-mark{background:none;border:0}
+
 .land-station-name{background:rgba(10,26,36,.82);border:0;box-shadow:none;color:#ffe9c2;
   font:600 9px var(--display);letter-spacing:.04em;padding:1px 4px;white-space:nowrap}
 .land-station-name::before{display:none}

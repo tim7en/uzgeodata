@@ -625,6 +625,48 @@ export function clusterPoints(features, zoom, positionOf, cellPixels = CLUSTER_C
 const PLACEMENT_RANK = ['departs_from_network_relationship', 'not_checked',
                         'consistent_with_network', 'coordinate_supplied_by_source', 'gauge'];
 
+/**
+ * Glacier catalogue points, grouped the way the dams and stations are.
+ *
+ * These are catalogue surveys rather than outlines: the Kashkadarya and
+ * Surkhandarya 2023 workbooks and the Pskem catalogue give one row per glacier
+ * with an area and a centre point, and no polygon. They are the only glacier
+ * evidence this project holds for the Hissar ranges, where both the atlas column
+ * and the GLIMS inventory are silent, so they are drawn as what they are - a
+ * position and a reported area - rather than dressed up as mapped extent.
+ *
+ * Area is summed over a group because that is the quantity a reader compares;
+ * count alone would make 150 small glaciers look like more ice than one large one.
+ */
+export function clusterGlaciers(features, zoom) {
+  return clusterPoints(features, zoom, feature => feature.geometry?.coordinates)
+    .map(bucket => {
+      const members = bucket.members.map(member => member.properties || {});
+      const areaKm2 = members.reduce((total, row) => total + (Number(row.area_km2) || 0), 0);
+      const largest = members.reduce((best, row) => (
+        (Number(row.area_km2) || 0) > (Number(best?.area_km2) || 0) ? row : best
+      ), members[0]);
+      const catalogues = [...new Set(members.map(row => row.catalogue).filter(Boolean))];
+      return {
+        key: bucket.key,
+        count: bucket.count,
+        longitude: bucket.longitude,
+        latitude: bucket.latitude,
+        members,
+        largest,
+        areaKm2,
+        catalogues,
+      };
+    });
+}
+
+/** Mark size: area where the catalogue reports it, count where it does not. */
+export function glacierRadius(cluster) {
+  const area = Number(cluster?.areaKm2) || 0;
+  if (area > 0) return Math.max(5, Math.min(18, 4 + Math.sqrt(area) * 3.4));
+  return Math.max(4, Math.min(12, 3 + Math.sqrt(Number(cluster?.count) || 1) * 1.6));
+}
+
 export function clusterStations(features, zoom) {
   return clusterPoints(features, zoom, feature => feature.geometry?.coordinates)
     .map(bucket => {

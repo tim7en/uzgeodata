@@ -5,6 +5,7 @@ import { ArrowUpRight, BookOpen, Droplets, Layers, Search, X } from 'lucide-reac
 import { mountSelect } from './lang.js';
 import DamModal from './DamModal.jsx';
 import { svg } from 'leaflet';
+import GlacierLayer from './GlacierLayer.jsx';
 import LakeLayer from './LakeLayer.jsx';
 import LakeModal from './LakeModal.jsx';
 import RiverLayer from './RiverLayer.jsx';
@@ -311,6 +312,8 @@ export default function LandingMap() {
   const [riverReach, setRiverReach] = useState(null);
   const [stations, setStations] = useState(null);
   const [showStations, setShowStations] = useState(false);
+  const [showGlaciers, setShowGlaciers] = useState(false);
+  const [glaciers, setGlaciers] = useState(null);
   const [station, setStation] = useState(null);
   // SVG only intercepts events on its interactive paths. A marker-pane canvas
   // covers the entire map and prevents the basin canvas underneath receiving clicks.
@@ -393,6 +396,34 @@ export default function LandingMap() {
     }).catch(()=>{if(live)setShowStations(false);});
     return()=>{live=false;};
   },[showStations,stations]);
+  // Two separate surveys, loaded together because a reader asking "where are the
+  // glaciers" does not care which workbook a row came from. Each feature keeps the
+  // catalogue that recorded it, so the tooltip can still say.
+  useEffect(() => {
+    if (!showGlaciers || glaciers) return undefined;
+    let live = true;
+    Promise.all([
+      json('/data/hydroclimate/regional-glaciers.geojson'),
+      json('/data/hydroclimate/pskem-glaciers.geojson'),
+    ]).then(([regional, pskem]) => {
+      if (!live) return;
+      setGlaciers({
+        type: 'FeatureCollection',
+        features: [
+          ...regional.features.map(feature => ({
+            ...feature,
+            properties: { ...feature.properties, catalogue: `${feature.properties.basin} 2023` },
+          })),
+          ...pskem.features.map(feature => ({
+            ...feature,
+            properties: { ...feature.properties, catalogue: 'Pskem catalogue' },
+          })),
+        ],
+      });
+    }).catch(() => { if (live) setShowGlaciers(false); });
+    return () => { live = false; };
+  }, [showGlaciers, glaciers]);
+
   // Recomputed on every zoom change: this is what regroups the dams as the reader
   // moves in. A hundred points is small enough that the whole grid is rebuilt
   // rather than updated incrementally.
@@ -595,6 +626,7 @@ export default function LandingMap() {
         interactive={false} smoothFactor={1.2}/>}
       {showLakes&&lakes&&<LakeLayer data={lakes} onSelect={properties=>{setLake(properties);setDam(null);setStation(null);setRiverReach(null);setTableOpen(false);}}/>}
       {showSwotRivers&&swotRivers&&<RiverLayer data={swotRivers} onSelect={properties=>{setRiverReach(properties);setLake(null);setDam(null);setStation(null);setTableOpen(false);}}/>}
+      {showGlaciers && glaciers && <GlacierLayer data={glaciers}/>}
       {showStations&&stations&&<StationLayer data={stations} onSelect={properties=>{setStation(properties);setLake(null);setDam(null);setRiverReach(null);setTableOpen(false);}}/>}
       {/* SVG markers remain above basins while allowing clicks between symbols
           to reach the basin canvas, including after a basin-level remount. */}
@@ -688,6 +720,12 @@ export default function LandingMap() {
               }}/>
               <Droplets size={12}/>
               <span>Dams{damStats ? ` · ${formatNumber(damStats.dams)}` : ''}</span>
+            </label>
+            <label className="land-toggle">
+              <input type="checkbox" checked={showGlaciers}
+                onChange={event => setShowGlaciers(event.target.checked)}/>
+              <span className="land-glacier-key" aria-hidden="true"/>
+              <span>Glacier catalogues{glaciers ? ` · ${formatNumber(glaciers.features.length)} surveyed` : ''}</span>
             </label>
             <label className="land-toggle">
               <input type="checkbox" checked={showStations} onChange={event => {

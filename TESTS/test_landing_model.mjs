@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
   CHOROPLETH, HEADLINE_ATTRIBUTES, attributeCaveat, carriesAttributes, choroplethColor, classOf, groupAttributes,
-  mergeBasinColumns, projectAttribute, groupSummary, indexStore, levelForZoom, positionLabel,
+  mergeBasinColumns, projectAttribute, clusterGlaciers, glacierRadius, groupSummary, indexStore, levelForZoom, positionLabel,
   OVERLAY_OPACITY, legendStops, overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
@@ -207,6 +207,29 @@ test('a zero-inflated column still separates the basins that have the thing', ()
   for (let index = 0; index <= breaks.length; index += 1) {
     assert.ok(occupied.has(index), `class ${index} is declared but empty`);
   }
+});
+
+test('the glacier catalogues group by area, not only by count', () => {
+  // The catalogues are point surveys: 210 glaciers over Kashkadarya and
+  // Surkhandarya and 254 over the Pskem, with a reported area and no outline. Read
+  // from the published files so a re-run of the pipeline cannot silently empty the
+  // only glacier evidence the project holds for those provinces.
+  const regional = read('regional-glaciers.geojson');
+  assert.ok(regional.features.length > 200, 'the regional catalogue must not come back empty');
+
+  const wide = clusterGlaciers(regional.features, 6);
+  const close = clusterGlaciers(regional.features, 11);
+  assert.ok(close.length > wide.length, 'zooming in must separate what national zoom groups');
+  assert.equal(wide.reduce((total, cluster) => total + cluster.count, 0), regional.features.length,
+    'grouping must not lose a glacier');
+
+  const areas = wide.reduce((total, cluster) => total + cluster.areaKm2, 0);
+  assert.ok(areas > 50, 'the reported area must survive grouping');
+  assert.ok(wide.every(cluster => cluster.catalogues.length >= 0));
+
+  // One large glacier must not draw smaller than a scatter of tiny ones.
+  assert.ok(glacierRadius({ areaKm2: 40, count: 1 }) > glacierRadius({ areaKm2: 0.2, count: 6 }));
+  assert.ok(glacierRadius({ areaKm2: 0, count: 1 }) >= 4, 'a catalogue without areas still draws');
 });
 
 test('the project glacier column joins by basin id, not by position', () => {
