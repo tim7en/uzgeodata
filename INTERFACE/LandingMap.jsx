@@ -26,7 +26,7 @@ import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
   clusterDams, damClusterBounds, damClusterStyle,
   damLabel, damLegendStops, damStyle, damTotals,
-  OVERLAY_OPACITY, formatAttribute, formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
+  OVERLAY_OPACITY, attributeCaveat, formatAttribute, formatNumber, groupAttributes, indexStore, legendStops, levelForZoom,
   overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
@@ -780,6 +780,12 @@ export default function LandingMap() {
         </li>)}</ol>
         <a href={`/atlas.html?attribute=${overlay}`}>Open in the atlas explorer <ArrowUpRight size={11}/></a>
       </div>}
+      {/* A known gap in a source belongs beside the colouring it distorts, not only
+          on the page that documents it. Without this the glacier layer draws an
+          ice-free Western Tien Shan and says nothing about why. */}
+      {overlay && attributeCaveat(overlay) && <p className="land-group-note land-caveat">
+        {attributeCaveat(overlay)} <a href="/surrogates.html">Open-data surrogates <ArrowUpRight size={11}/></a>
+      </p>}
       {!overlay && <p className="land-group-note">Basins are coloured by river system. Choose a measured
         attribute to shade them by value.</p>}
       {showDams && damStats && <div className="land-dock-key">

@@ -221,6 +221,30 @@ export function carriesAttributes(properties, ladder) {
 // teal and green to yellow, so the eye reads magnitude without a key.
 export const CHOROPLETH = ['#2c3e6b', '#256f8f', '#20a08b', '#5fc463', '#bfe040', '#fde725'];
 
+/**
+ * Defects in a published attribute, stated where a reader would otherwise read a
+ * zero as a measurement.
+ *
+ * The atlas glacier layer has no Western Tien Shan or Zeravshan coverage. Checked
+ * against this project's own GLIMS inventory over the same level-12 basins, it
+ * records zero in 693 basins holding 5,009 km2 of ice, which is 39 percent of the
+ * mapped area and includes every Pskem and Zeravshan unit. A reader colouring the
+ * map by glacier extent therefore sees an ice-free Uzbekistan and no warning that
+ * this is a gap in the source rather than a finding. The surrogates page has
+ * carried the same observation for the Pskem pilot; it belongs on the map too.
+ */
+export const ATTRIBUTE_CAVEATS = {
+  gla_pc_sse: 'Known gap: the atlas glacier layer reports zero in 693 basins that hold 5,009 km² of ice in '
+    + 'the project GLIMS inventory, 39% of the mapped area, including the Pskem and the Zeravshan. A zero here '
+    + 'means unmapped, not ice-free.',
+  gla_pc_use: 'Known gap: the atlas glacier layer has no Western Tien Shan or Zeravshan coverage, so an upstream '
+    + 'catchment can accumulate zero glacier area while holding mapped ice. A zero here means unmapped, not ice-free.',
+};
+
+export function attributeCaveat(column) {
+  return ATTRIBUTE_CAVEATS[column] || null;
+}
+
 /** Attributes worth offering before a reader knows the catalogue exists. */
 export const HEADLINE_ATTRIBUTES = [
   'dis_m3_pyr', 'run_mm_syr', 'pre_mm_syr', 'tmp_dc_syr', 'snw_pc_syr',

@@ -205,6 +205,8 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
   .land-panel{position:relative;width:100%;height:auto;padding:0 18px 24px;background:none}
   .land-panel.has-selection{background:none}
 }
+.land-caveat{margin-top:9px;padding:8px 10px;border-left:2px solid var(--sub-up);background:color-mix(in srgb,var(--sub-up) 12%,transparent);color:inherit}
+.land-caveat a{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
 .land-legend{margin-top:9px}
 .land-legend>span{display:block;font:600 8px var(--mono);color:var(--l-line-1);margin-bottom:5px}
 .land-legend ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}

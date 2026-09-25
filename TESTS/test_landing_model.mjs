@@ -3,7 +3,7 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
-  CHOROPLETH, HEADLINE_ATTRIBUTES, carriesAttributes, choroplethColor, classOf, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
+  CHOROPLETH, HEADLINE_ATTRIBUTES, attributeCaveat, carriesAttributes, choroplethColor, classOf, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
   OVERLAY_OPACITY, legendStops, overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
@@ -206,6 +206,17 @@ test('a zero-inflated column still separates the basins that have the thing', ()
   for (let index = 0; index <= breaks.length; index += 1) {
     assert.ok(occupied.has(index), `class ${index} is declared but empty`);
   }
+});
+
+test('an attribute with a known coverage gap says so where it is drawn', () => {
+  // The atlas glacier layer records zero in 693 basins holding 5,009 km2 of ice in
+  // the project's GLIMS inventory, including every Pskem and Zeravshan unit. Drawn
+  // without that, the map reads as an ice-free Western Tien Shan.
+  const caveat = attributeCaveat('gla_pc_sse');
+  assert.ok(caveat, 'the glacier layer must carry its known gap');
+  assert.match(caveat, /unmapped, not ice-free/);
+  assert.equal(attributeCaveat('pre_mm_syr'), null, 'a sound attribute must not be given a warning');
+  assert.equal(attributeCaveat(''), null);
 });
 
 test('the legend covers every class from open low to open high', () => {
