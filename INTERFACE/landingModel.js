@@ -235,20 +235,42 @@ export const HEADLINE_ATTRIBUTES = [
  * the distribution actually present, and nulls are left out rather than counted
  * as zero — a basin with no measurement is not a basin measuring nothing.
  */
+function quantilesOf(sorted, classes) {
+  const breaks = [];
+  for (let index = 1; index < classes; index += 1) {
+    const position = (sorted.length - 1) * (index / classes);
+    const low = Math.floor(position);
+    const high = Math.ceil(position);
+    breaks.push(sorted[low] + (sorted[high] - sorted[low]) * (position - low));
+  }
+  return breaks;
+}
+
 export function quantileBreaks(values, classes = CHOROPLETH.length) {
   const present = (values || []).filter(value => value !== null && value !== undefined && Number.isFinite(Number(value)))
     .map(Number)
     .sort((left, right) => left - right);
   if (!present.length) return [];
-  const breaks = [];
-  for (let index = 1; index < classes; index += 1) {
-    const position = (present.length - 1) * (index / classes);
-    const low = Math.floor(position);
-    const high = Math.ceil(position);
-    breaks.push(present[low] + (present[high] - present[low]) * (position - low));
-  }
   // A skewed column can repeat a break; collapsing keeps classes distinct.
-  return [...new Set(breaks)];
+  const plain = [...new Set(quantilesOf(present, classes))];
+  // Some columns are not merely skewed, they are zero-inflated: glacier extent is
+  // zero for 7,050 of the 7,445 level-12 basins and forest cover for 6,804. Every
+  // quantile then lands on that floor. A break sitting at the floor separates
+  // nothing -- everything at the floor still falls in the class above it, the
+  // lowest colour is never used, and the legend opens with "< 0" for a percentage
+  // that cannot be negative. In the worst case every break collapses to the one
+  // value and a glaciated basin draws in the same colour as a basin with no ice at
+  // all: one flat wash over the whole map, which reads as a layer that failed to
+  // draw rather than as a layer saying nothing.
+  //
+  // So when the floor would be swallowed, it keeps a class to itself and the rest
+  // spread over the values that actually vary. The measurement is untouched; only
+  // the classification changes.
+  const above = present.filter(value => value > present[0]);
+  if (above.length && plain[0] <= present[0]) {
+    return [...new Set([above[0], ...quantilesOf(above, classes - 1)])];
+  }
+  return plain;
 }
 
 export function classOf(value, breaks) {

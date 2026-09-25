@@ -3,7 +3,7 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 import {
   SYSTEMS, basinHeadline, basinStyle, channelLabel, formatAttribute, formatNumber,
-  CHOROPLETH, HEADLINE_ATTRIBUTES, carriesAttributes, choroplethColor, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
+  CHOROPLETH, HEADLINE_ATTRIBUTES, carriesAttributes, choroplethColor, classOf, groupAttributes, groupSummary, indexStore, levelForZoom, positionLabel,
   OVERLAY_OPACITY, legendStops, overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals,
   tierForZoom,
   damHeadline, damLabel, damLegendStops, damRadius, damStyle, damTotals, damUseLabel,
@@ -182,6 +182,30 @@ test('a choropleth spreads classes over the values that exist', () => {
   assert.equal(choroplethColor(0, breaks), CHOROPLETH[0]);
   assert.equal(quantileBreaks([]).length, 0);
   assert.equal(quantileBreaks([null, null]).length, 0);
+});
+
+test('a zero-inflated column still separates the basins that have the thing', () => {
+  // Glacier extent is zero for 7,050 of the 7,445 level-12 basins and forest cover
+  // for 6,804. Plain quantiles put every break on that floor, the distinct breaks
+  // collapse to one, and a glaciated basin drew in the same colour as a basin with
+  // no ice at all -- a flat wash that reads as a layer that failed to draw.
+  const glacierLike = [...Array(95).fill(0), 1, 2, 5, 9, 19];
+  const breaks = quantileBreaks(glacierLike);
+  assert.ok(breaks.length > 1, 'the classes must not collapse onto the floor');
+  assert.ok(breaks.every(value => value > 0), 'a break at the floor separates nothing');
+
+  const classes = new Set(glacierLike.map(value => classOf(value, breaks)));
+  assert.ok(classes.size > 2, 'basins that differ must not share one class');
+  assert.notEqual(choroplethColor(0, breaks), choroplethColor(19, breaks),
+    'no glacier must not draw as the most glaciated basin in the region');
+  assert.equal(choroplethColor(0, breaks), CHOROPLETH[0], 'the floor takes the lowest class');
+
+  // Every class the breaks declare must be reachable, or the legend shows a row
+  // that colours nothing and opens with "< 0" for a percentage.
+  const occupied = new Set(glacierLike.map(value => classOf(value, breaks)));
+  for (let index = 0; index <= breaks.length; index += 1) {
+    assert.ok(occupied.has(index), `class ${index} is declared but empty`);
+  }
 });
 
 test('the legend covers every class from open low to open high', () => {
