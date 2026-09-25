@@ -102,3 +102,88 @@ export function continuationCsv(continuation, support) {
   }
   return rows;
 }
+
+/**
+ * One monthly series a reader can follow to the present.
+ *
+ * The observed rows stop where their source stops, and the estimate carries on
+ * from there. They are joined into one series for reading and downloading, and
+ * every row says which it is, because a table that ends in 2024 without saying why
+ * reads as a portal two years behind - and one that continues without saying how
+ * reads as observation.
+ *
+ * Nothing is overwritten: an estimated month is used only where the record has no
+ * observation for it. The statistics elsewhere in the report - normals, anomalies,
+ * the trend - are computed from the observed rows alone, which is why this returns
+ * a separate series rather than extending that one.
+ */
+export function monthlySeries(scopeReport, continuation) {
+  const observed = (scopeReport?.rows || []).map(row => ({
+    year: row.year, month: row.month,
+    value: row.mean_observed_area,
+    coverage: row.area_coverage_percent === null || row.area_coverage_percent === undefined
+      ? null : row.area_coverage_percent / 100,
+    errorP90: null,
+    source: row.observed_basins > 0 && row.mean_observed_area !== null ? 'observed' : null,
+  }));
+  const position = new Map(observed.map((row, index) => [row.year * 12 + row.month, index]));
+  for (const row of continuation?.estimated?.rows || []) {
+    const key = row.year * 12 + row.month;
+    const entry = {
+      year: row.year, month: row.month, value: row.value,
+      coverage: row.coverage ?? null, errorP90: row.errorP90 ?? null, source: 'estimated_v1.0',
+    };
+    const index = position.get(key);
+    // An observation is never replaced by an estimate of itself.
+    if (index === undefined) observed.push(entry);
+    else if (observed[index].source === null) observed[index] = entry;
+  }
+  return observed
+    .filter(row => row.source !== null)
+    .sort((left, right) => left.year * 12 + left.month - (right.year * 12 + right.month));
+}
+
+/**
+ * One local continuation series over several basins, weighted by their area.
+ *
+ * Local series add up the way the observed statistics do: an area-weighted mean
+ * over the basins a report matched. Upstream series do not, because two basins in
+ * the same report usually share most of their catchment, and averaging those sets
+ * would count the shared part twice - which is why only the local support is
+ * aggregated here.
+ *
+ * The error reported for a month is the largest of the contributing basins', not
+ * their mean: a p90 of a weighted mean is not the weighted mean of p90s, and an
+ * upper bound is the one of the two that cannot mislead.
+ */
+export function aggregateLocalContinuation(entries, variable) {
+  const months = new Map();
+  let unit = null;
+  let label = null;
+  for (const { document, areaKm2 } of entries) {
+    const series = continuationFor(document, variable, 'local')?.estimated;
+    if (!series || !(areaKm2 > 0)) continue;
+    unit = unit ?? series.unit;
+    label = label ?? series.label;
+    for (const row of series.rows) {
+      const key = row.year * 12 + row.month;
+      const carried = months.get(key) || { year: row.year, month: row.month, weighted: 0, area: 0, errorP90: null };
+      carried.weighted += row.value * areaKm2;
+      carried.area += areaKm2;
+      if (row.errorP90 !== null && row.errorP90 !== undefined) {
+        carried.errorP90 = Math.max(carried.errorP90 ?? 0, row.errorP90);
+      }
+      months.set(key, carried);
+    }
+  }
+  if (!months.size) return null;
+  const complete = entries.filter(entry => entry.areaKm2 > 0).length;
+  const rows = [...months.values()]
+    // A month only some of the basins carry would be a mean over a different area
+    // than its neighbours, so it is left out rather than quietly rescaled.
+    .filter(entry => entry.area > 0)
+    .sort((left, right) => left.year * 12 + left.month - (right.year * 12 + right.month))
+    .map(entry => ({ year: entry.year, month: entry.month, value: entry.weighted / entry.area,
+      coverage: null, errorP90: entry.errorP90 }));
+  return { estimated: { rows, unit, label, product: 'estimated_v1.0', support: 'local' }, basins: complete };
+}

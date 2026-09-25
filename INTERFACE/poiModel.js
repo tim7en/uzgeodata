@@ -372,6 +372,13 @@ export function makePoiReport({ feature, match, index, values, variable, geometr
 
 export function reportMonthlyCsv(report) {
   const columns = Object.keys(report.local.rows[0]);
-  return toCsv(['scope', 'variable', 'unit', 'total_unit', ...columns], ['local', 'upstream'].flatMap(scope =>
-    report[scope].rows.map(row => [scope, report.variable, report.meta.unit, report[scope].total.unit, ...columns.map(key => row[key])])));
+  // `source` says whether a row is an observation or the estimate that continues
+  // it past the end of its source. Without it a spreadsheet would show one
+  // unbroken series and nothing to tell the two apart.
+  return toCsv(['scope', 'variable', 'unit', 'total_unit', 'source', ...columns],
+    ['local', 'upstream'].flatMap(scope => report[scope].rows.map(row => [
+      scope, report.variable, report.meta.unit, report[scope].total.unit,
+      row.observed_basins > 0 && row.mean_observed_area !== null ? 'observed' : 'no observation',
+      ...columns.map(key => row[key]),
+    ])));
 }

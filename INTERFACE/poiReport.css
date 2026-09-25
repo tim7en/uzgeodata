@@ -38,3 +38,5 @@
 
 .poi-continuation{margin-top:12px;padding:10px;border:1px dashed var(--line);border-radius:4px}
 .poi-continuation h5{margin:0 0 8px;font-size:12px;letter-spacing:.3px;text-transform:uppercase;color:var(--muted)}
+
+.poi-table tr.poi-estimated td,.poi-table tr.poi-estimated th{font-style:italic;color:var(--muted)}

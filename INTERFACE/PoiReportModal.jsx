@@ -7,7 +7,7 @@ import { BASEMAPS, collectionBounds } from './mapViewModel.js';
 import { formatNumber } from './landingModel.js';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
 import { monthlyNormals } from './poiModel.js';
-import { CONTINUATION_METHOD, continuationFor, continuationLatest } from './continuationModel.js';
+import { aggregateLocalContinuation, CONTINUATION_METHOD, continuationFor, continuationLatest, monthlySeries } from './continuationModel.js';
 import { basinUnits, CONDITION_METHOD, makePoiReport, matchPoi, MAX_UPLOAD_BYTES, parsePois, REPORT_METHOD, reportMonthlyCsv } from './poiModel.js';
 import { reportFilename, reportPdf, reportZip, saveFile } from './poiExports.js';
 import './damModal.css';
@@ -98,21 +98,72 @@ function Summary({ report, scope }) {
   </section>;
 }
 
-async function continuationOf(basinId, variable, report, signal) {
+async function continuationOf(report, variable, index, signal) {
+  const ids = report.match.basin_ids;
   try {
-    const document = await json(`/data/atlas/climate-continuation/basins/${basinId}.json`, signal);
+    const { results, failures } = await fetchAll(ids.map(id => `/data/atlas/climate-continuation/basins/${id}.json`),
+      { fetcher: url => fetch(url, { signal }), concurrency: 6 });
+    if (failures.length || !results.length) return null;
     const scopes = {};
-    for (const scope of ['local', 'upstream']) {
-      const series = continuationFor(document, variable, scope);
-      if (!series) continue;
-      scopes[scope] = { ...series, latest: continuationLatest(series, monthlyNormals(report[scope].rows)) };
+    if (ids.length === 1) {
+      // One basin: the file's own upstream series is used as published.
+      for (const scope of ['local', 'upstream']) {
+        const series = continuationFor(results[0], variable, scope);
+        if (!series) continue;
+        scopes[scope] = { ...series, latest: continuationLatest(series, monthlyNormals(report[scope].rows)) };
+      }
+    } else {
+      // Several basins: their local series average by area, their upstream sets
+      // overlap and do not, so only the local one is offered.
+      const areas = new Map(index.ids.map((id, position) => [String(id), index.areas_km2[position]]));
+      const local = aggregateLocalContinuation(
+        results.map((document, position) => ({ document, areaKm2: areas.get(String(ids[position])) })), variable);
+      if (local) {
+        scopes.local = { ...local, latest: continuationLatest(local, monthlyNormals(report.local.rows)) };
+        scopes.upstreamWithheld = ids.length;
+      }
     }
-    return Object.keys(scopes).length ? { basinId, note: document.note, ...scopes } : null;
+    return Object.keys(scopes).length ? { basins: ids.length, ...scopes } : null;
   } catch {
-    // A missing continuation is not a failed report: most variables do not have
+    // A missing continuation is not a failed report: three variables do not have
     // one, and the observed record stands on its own.
     return null;
   }
+}
+
+/**
+ * The monthly series, observed and estimated, in one table.
+ *
+ * Splitting them into two tables would leave a reader comparing a column that
+ * ends in 2024 with one that starts in 2025 and working out the join themselves.
+ * One series, one row per month, and a column that says where each value came
+ * from.
+ */
+function MonthlyTable({ report }) {
+  const local = monthlySeries(report.local, report.continuation?.local);
+  const upstream = monthlySeries(report.upstream, report.continuation?.upstream);
+  const byMonth = new Map(upstream.map(row => [row.year * 12 + row.month, row]));
+  const estimated = local.filter(row => row.source !== 'observed').length;
+  return <details><summary>Monthly local and upstream statistics
+    {estimated ? ` · ${local.length} months, ${estimated} estimated` : ` · ${local.length} months observed`}
+  </summary>
+    <div className="poi-table"><table>
+      <thead><tr><th>Month</th><th>Source</th><th>Local</th><th>Local coverage</th><th>Upstream</th></tr></thead>
+      <tbody>{local.map(row => {
+        const other = byMonth.get(row.year * 12 + row.month);
+        return <tr key={`${row.year}-${row.month}`} className={row.source === 'observed' ? undefined : 'poi-estimated'}>
+          <th>{month(row.year, row.month)}</th>
+          <td>{row.source === 'observed' ? 'observed' : 'estimate'}</td>
+          <td>{formatNumber(row.value, 2)}{row.errorP90 ? ` ±${formatNumber(row.errorP90, 2)}` : ''}</td>
+          <td>{row.coverage === null ? '—' : `${formatNumber(row.coverage * 100, 1)}%`}</td>
+          <td>{other ? formatNumber(other.value, 2) : '—'}</td>
+        </tr>;
+      })}</tbody>
+    </table></div>
+    {report.continuation?.upstreamWithheld && <p className="poi-coverage" role="note">Estimated months are shown
+      for the local basins only: this report matched {report.continuation.upstreamWithheld} basins, and their
+      upstream catchments overlap, so averaging them would count the shared parts more than once.</p>}
+  </details>;
 }
 
 const month = (year, number) => `${year}-${String(number).padStart(2, '0')}`;
@@ -298,9 +349,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
       // published for this variable it is fetched for a single basin only: it is
       // stored per basin with its own upstream series, and averaging several
       // basins' upstream sets would count the shared ones more than once.
-      const continuation = result.match.basin_ids.length === 1
-        ? await continuationOf(result.match.basin_ids[0], variable, result, signal)
-        : null;
+      const continuation = await continuationOf(result, variable, data.index, signal);
       setReport({ ...result, catalogue: data.catalogue, continuation,
         records: result.local.ids.map(id => records.current.get(id)) });
     })().catch(cause => { if (!signal.aborted) setError(cause.message); })
@@ -401,12 +450,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
           <p role="note">The traced network covers less than 95% of the reported upstream area. Results describe the published network only.</p>}
         {!!report.geometry_missing_ids.length && <p role="note">{report.geometry_missing_ids.length} upstream basins have statistics but no display boundary.</p>}
         {variable === 'snw_pc_s' && <p>Snow-cover records are not suitable for trend analysis.</p>}
-        <details><summary>Monthly local and upstream statistics</summary><div className="poi-table"><table>
-          <thead><tr><th>Month</th><th>Local mean</th><th>Local coverage</th><th>Upstream mean</th><th>Upstream coverage</th></tr></thead>
-          <tbody>{report.local.rows.map((row, i) => <tr key={i}><th>{row.year}-{String(row.month).padStart(2, '0')}</th>
-            <td>{formatNumber(row.mean_observed_area, 2)}</td><td>{formatNumber(row.area_coverage_percent, 1)}%</td>
-            <td>{formatNumber(report.upstream.rows[i].mean_observed_area, 2)}</td><td>{formatNumber(report.upstream.rows[i].area_coverage_percent, 1)}%</td></tr>)}</tbody>
-        </table></div></details>
+        <MonthlyTable report={report}/>
         {report.morphology && <details><summary>Upstream catchment morphology</summary><dl className="poi-morphology">
           {MORPHOLOGY_FIELDS.map(([key, label, unit]) => <div key={key}><dt>{label}</dt><dd>{formatNumber(report.morphology[key], 2)} {unit}</dd></div>)}
         </dl></details>}

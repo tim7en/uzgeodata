@@ -14,6 +14,51 @@ const monthly = (years, value) => {
   return rows;
 };
 
+test('the monthly series runs to the present and says where each month came from', async () => {
+  const { monthlySeries, aggregateLocalContinuation } = await import('../INTERFACE/continuationModel.js');
+  // The observed frame is 288 positions; for a TerraClimate variable the last 24
+  // carry no observation, which is what made the table look two years behind.
+  const rows = [];
+  for (let i = 0; i < 288; i += 1) {
+    const year = 2003 + Math.floor(i / 12);
+    const observed = year <= 2024;
+    rows.push({ year, month: i % 12 + 1, mean_observed_area: observed ? 30 : null,
+      observed_basins: observed ? 5 : 0, area_coverage_percent: observed ? 100 : 0 });
+  }
+  const continuation = { estimated: { rows: [
+    { year: 2024, month: 12, value: 99, errorP90: 8 },
+    { year: 2025, month: 1, value: 25, errorP90: 8 },
+    { year: 2026, month: 8, value: 12, errorP90: 8 },
+  ] } };
+  const series = monthlySeries({ rows }, continuation);
+
+  assert.equal(series.at(-1).year, 2026, 'the series must reach the last estimated month');
+  assert.equal(series.at(-1).source, 'estimated_v1.0');
+  assert.equal(series.filter(row => row.source === 'observed').length, 264);
+  assert.equal(series.filter(row => row.source === 'estimated_v1.0').length, 2);
+
+  // An observed month is never replaced by an estimate of itself.
+  const december = series.find(row => row.year === 2024 && row.month === 12);
+  assert.equal(december.value, 30);
+  assert.equal(december.source, 'observed');
+
+  // Months with neither an observation nor an estimate are absent, not blank rows.
+  assert.ok(!series.some(row => row.value === null));
+
+  // Several basins average by area, and a heavier basin pulls the mean towards it.
+  const document = { row_fields: ['year', 'month', 'value', 'coverage_fraction', 'water_equivalent_mcm', 'holdout_abs_error_p90'],
+    series: { 'estimated_v1.0:local:precipitation': { product: 'estimated_v1.0', support: 'local', unit: 'mm',
+      rows: [[2026, 8, 10, 1, null, 4]] } } };
+  const heavier = { row_fields: document.row_fields,
+    series: { 'estimated_v1.0:local:precipitation': { product: 'estimated_v1.0', support: 'local', unit: 'mm',
+      rows: [[2026, 8, 20, 1, null, 9]] } } };
+  const merged = aggregateLocalContinuation([
+    { document, areaKm2: 100 }, { document: heavier, areaKm2: 300 },
+  ], 'pre_mm_s');
+  assert.equal(merged.estimated.rows[0].value, 17.5, 'the area-weighted mean, not the plain one');
+  assert.equal(merged.estimated.rows[0].errorP90, 9, 'the error reported is the largest, an upper bound');
+});
+
 test('a continuation is kept beside the record, never spliced into it', async () => {
   const { continuationFor, continuationLatest, continuationCsv } =
     await import('../INTERFACE/continuationModel.js');
