@@ -1,7 +1,32 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { aoiFeature } from '../INTERFACE/aoiModel.js';
-import { parsePois, matchPoi, reportMembers, makePoiReport, reportMonthlyCsv } from '../INTERFACE/poiModel.js';
+import { basinUnits, parsePois, matchPoi, reportMembers, makePoiReport, reportMonthlyCsv } from '../INTERFACE/poiModel.js';
+
+test('a coarse basin is reported through the level-12 units inside it', () => {
+  // The map draws level 7 at a regional view, and statistics are published for
+  // level 12, so the report was unavailable at every zoom a reader browses at.
+  // Pfafstetter ids nest by prefix, which is what makes the coarse basin
+  // reportable at all: its units are the level-12 basins whose id starts with its.
+  const unit = (hybas, pfaf) => ({ type: 'Feature', properties: { hybas_id: hybas, basin_level: 12, pfaf_id: pfaf } });
+  const features = [
+    unit(11, 461101000000), unit(12, 461101010000), unit(13, 461101100000),
+    unit(21, 461200000000), { type: 'Feature', properties: { hybas_id: 7, basin_level: 7, pfaf_id: 4611010 } },
+  ];
+  const coarse = basinUnits(features, { basin_level: 7, hybas_id: 7, pfaf_id: 4611010 });
+  assert.deepEqual(coarse.map(f => f.properties.hybas_id), [11, 12],
+    'only the units whose Pfafstetter id continues the parent belong to it');
+  // 461101100000 is a unit of 4611011, one digit along, and must stay out of it.
+  assert.ok(!coarse.some(f => f.properties.hybas_id === 13), 'a neighbouring parent keeps its own units');
+
+  // A level-12 basin is its own single unit, matched on the identifier rather than
+  // on geometry, so a neighbour sharing a boundary cannot come with it.
+  assert.deepEqual(basinUnits(features, { basin_level: 12, hybas_id: 13 }).map(f => f.properties.hybas_id), [13]);
+
+  // A basin with no published units says so instead of reporting an empty one.
+  assert.deepEqual(basinUnits(features, { basin_level: 7, hybas_id: 9, pfaf_id: 9999999 }), []);
+  assert.deepEqual(basinUnits(features, { basin_level: 7, hybas_id: 9 }), [], 'no id, no units');
+});
 
 test('a basin chosen on the map reports itself, not its neighbours', () => {
   // A chosen basin is the answer, not something to match. Passing its own outline

@@ -180,13 +180,17 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
         <button type="button" onClick={onClose} aria-label="Close"><X size={15}/></button>
       </header>
 
-      {Number(basin.basin_level) === 12 && <div className="land-basin-downloads">
-        <a href={`/data/atlas/basins/${basin.hybas_id}.json`} download>Attributes &amp; estimates (JSON)</a>
-        <a href={`/data/atlas/history/${basin.hybas_id}.json`} download>Monthly data &amp; metadata (JSON)</a>
-        {/* The two links above are this sub-basin's own files. The report adds what
-            drains into it, and packages both as a PDF or a data bundle. */}
+      {/* The per-basin files exist for level 12 only, where they are published. The
+          report does not: a coarser basin is reported through the level-12 units
+          inside it, and hiding the button there was why it seemed unavailable at
+          every zoom a reader actually browses at. */}
+      <div className="land-basin-downloads">
+        {Number(basin.basin_level) === 12 && <>
+          <a href={`/data/atlas/basins/${basin.hybas_id}.json`} download>Attributes &amp; estimates (JSON)</a>
+          <a href={`/data/atlas/history/${basin.hybas_id}.json`} download>Monthly data &amp; metadata (JSON)</a>
+        </>}
         {onReport && <button type="button" onClick={onReport}>Basin &amp; upstream report</button>}
-      </div>}
+      </div>
       <div className="land-modal-tabs" role="tablist" aria-label="Basin attribute views">
         {tabs.map(([id, label]) => <button
           key={id} type="button" role="tab" id={`basin-tab-${id}`} aria-controls={`basin-panel-${id}`}
@@ -956,10 +960,10 @@ export default function LandingMap() {
     {tableOpen && selected && <AttributeModal key={selected.properties.hybas_id} basin={selected.properties} groups={groups} store={detailStore}
       geometry={levels[selectedLevel]} geometryUrl={ladder?.levels?.find(entry => entry.level === selectedLevel)?.url}
       catalogue={catalogue} loading={loadingStore} initialTab={initialTab} onClose={() => setTableOpen(false)}
-      onReport={() => { setPoiDrawn(null); setPoiBasin(selected.properties.hybas_id); setPoiOpen(true); setTableOpen(false); }}/>}
+      onReport={() => { setPoiDrawn(null); setPoiBasin(selected.properties); setPoiOpen(true); setTableOpen(false); }}/>}
 
     {poiOpen && <React.Suspense fallback={<div className="dam-modal" role="status">Loading upload tools…</div>}>
-      <PoiReportModal entry={level12Entry} drawn={poiDrawn} basinId={poiBasin} onClose={closePoi}/>
+      <PoiReportModal entry={level12Entry} drawn={poiDrawn} basin={poiBasin} onClose={closePoi}/>
     </React.Suspense>}
     {glacier && <GlacierModal key={glacier.key} cluster={glacier} onClose={closeGlacier}/>}
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}

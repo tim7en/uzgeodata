@@ -135,6 +135,30 @@ export function matchPoi(feature, basins, toleranceKm = 1) {
     distanceKm: nearest?.distanceKm ?? null, coordinate: accepted ? nearest.coordinate : null };
 }
 
+/**
+ * The level-12 units a basin selected on the map is made of.
+ *
+ * The map draws level 7 at a regional view and level 12 only close in, so a reader
+ * who clicks a basin usually clicks a coarse one. Statistics are published for
+ * level 12, which is why the report was simply unavailable there. A coarse basin
+ * is not a different thing, though: Pfafstetter ids nest by prefix, so its units
+ * are every level-12 basin whose id begins with its own, and the report about it
+ * is the report about them.
+ *
+ * Nothing is matched geometrically here. The containing basin is known from the
+ * identifier, and asking a polygon matcher instead would return every neighbour
+ * that shares a boundary with it.
+ */
+export function basinUnits(features, basin) {
+  const units = features.filter(item => Number(item.properties.basin_level) === 12);
+  if (Number(basin?.basin_level) === 12) {
+    return units.filter(item => String(item.properties.hybas_id) === String(basin.hybas_id));
+  }
+  const prefix = String(basin?.pfaf_id ?? '');
+  if (!prefix) return [];
+  return units.filter(item => String(item.properties.pfaf_id).startsWith(prefix));
+}
+
 export function reportMembers(index, basins) {
   const positions = new Map(index.ids.map((id, i) => [String(id), i]));
   const roots = [...new Set(basins.map(f => String(f.properties.hybas_id)))];
