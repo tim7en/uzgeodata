@@ -741,8 +741,8 @@ rediscovered. Detail and the measurements behind them are in
 - **The atlas glacier column has no Western Tien Shan coverage.** Read straight
   from `BasinATLAS_v10.gdb`, every level-12 basin in the Pskem window reports
   `gla_pc_sse = 0` and `gla_pc_use = 0`. Against this project's GLIMS inventory over
-  the same basins the atlas records zero in 693 basins holding 5,009 km² of ice,
-  39% of the 12,820 km² mapped, and agrees on only 394. The 2012 snapshot behind the
+  the same basins the atlas records zero in 713 basins holding 5,111 km² of ice,
+  40% of the 12,923 km² mapped, and agrees on only 394. The 2012 snapshot behind the
   column appears to lack coverage rather than to disagree about area. The archived
   attribute is unchanged and now carries that statement where it is drawn;
   `npm run basins:glacier-extent` publishes the inventory as a basin column beside
