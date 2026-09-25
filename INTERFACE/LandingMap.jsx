@@ -130,7 +130,7 @@ const GROUP_ORDER = ['basin_specific', 'basin_accumulation'];
  * licence it came from and whether it describes this sub-basin or everything
  * upstream of it.
  */
-function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, geometry, geometryUrl, onClose }) {
+function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, geometry, geometryUrl, onClose, onReport }) {
   const [filter, setFilter] = useState('');
   const [kind, setKind] = useState('all');
   const [tab, setTab] = useState(initialTab || (Number(basin.basin_level) === 12 ? 'history' : 'original'));
@@ -183,6 +183,9 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
       {Number(basin.basin_level) === 12 && <div className="land-basin-downloads">
         <a href={`/data/atlas/basins/${basin.hybas_id}.json`} download>Attributes &amp; estimates (JSON)</a>
         <a href={`/data/atlas/history/${basin.hybas_id}.json`} download>Monthly data &amp; metadata (JSON)</a>
+        {/* The two links above are this sub-basin's own files. The report adds what
+            drains into it, and packages both as a PDF or a data bundle. */}
+        {onReport && <button type="button" onClick={onReport}>Basin &amp; upstream report</button>}
       </div>}
       <div className="land-modal-tabs" role="tablist" aria-label="Basin attribute views">
         {tabs.map(([id, label]) => <button
@@ -357,7 +360,8 @@ export default function LandingMap() {
   // The feature the report opens on: an area drawn on the map, or nothing, which
   // leaves the reader at the upload step.
   const [poiDrawn, setPoiDrawn] = useState(null);
-  const closePoi = useCallback(() => { setPoiOpen(false); setPoiDrawn(null); }, []);
+  const [poiBasin, setPoiBasin] = useState(null);
+  const closePoi = useCallback(() => { setPoiOpen(false); setPoiDrawn(null); setPoiBasin(null); }, []);
   const [initialTab, setInitialTab] = useState(null);
   // Area of interest. Drawing borrows map clicks, so basin selection is held off
   // through a ref the (stable) basin click handler can read.
@@ -896,8 +900,8 @@ export default function LandingMap() {
     </button>
     {basins && groups && <section className="land-dock" aria-label="Area of interest, basin colouring and map key">
       <AoiPanel drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} rule={aoiRule}
-        onUpload={() => { setPoiDrawn(null); setPoiOpen(true); setTableOpen(false); setGlacier(null); setLake(null); setDam(null); setStation(null); setRiverReach(null); }}
-        onReport={() => { setPoiDrawn(aoiFeature(aoiVertices)); setPoiOpen(true); setTableOpen(false); setGlacier(null); setLake(null); setDam(null); setStation(null); setRiverReach(null); }}
+        onUpload={() => { setPoiDrawn(null); setPoiBasin(null); setPoiOpen(true); setTableOpen(false); setGlacier(null); setLake(null); setDam(null); setStation(null); setRiverReach(null); }}
+        onReport={() => { setPoiBasin(null); setPoiDrawn(aoiFeature(aoiVertices)); setPoiOpen(true); setTableOpen(false); setGlacier(null); setLake(null); setDam(null); setStation(null); setRiverReach(null); }}
         selection={aoiSelection} loadingGeometry={aoiClosed && !levels[12]}
         onFit={() => setBounds(collectionBounds(aoiSelection.map(basin => basin.feature)))}
         onStart={startAoi} onCancel={clearAoi} onClear={clearAoi} onRule={setAoiRule}/>
@@ -951,10 +955,11 @@ export default function LandingMap() {
 
     {tableOpen && selected && <AttributeModal key={selected.properties.hybas_id} basin={selected.properties} groups={groups} store={detailStore}
       geometry={levels[selectedLevel]} geometryUrl={ladder?.levels?.find(entry => entry.level === selectedLevel)?.url}
-      catalogue={catalogue} loading={loadingStore} initialTab={initialTab} onClose={() => setTableOpen(false)}/>}
+      catalogue={catalogue} loading={loadingStore} initialTab={initialTab} onClose={() => setTableOpen(false)}
+      onReport={() => { setPoiDrawn(null); setPoiBasin(selected.properties.hybas_id); setPoiOpen(true); setTableOpen(false); }}/>}
 
     {poiOpen && <React.Suspense fallback={<div className="dam-modal" role="status">Loading upload tools…</div>}>
-      <PoiReportModal entry={level12Entry} drawn={poiDrawn} onClose={closePoi}/>
+      <PoiReportModal entry={level12Entry} drawn={poiDrawn} basinId={poiBasin} onClose={closePoi}/>
     </React.Suspense>}
     {glacier && <GlacierModal key={glacier.key} cluster={glacier} onClose={closeGlacier}/>}
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}

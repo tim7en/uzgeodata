@@ -84,7 +84,7 @@ function Summary({ report, scope }) {
   </section>;
 }
 
-export default function PoiReportModal({ entry, drawn, onClose }) {
+export default function PoiReportModal({ entry, drawn, basinId, onClose }) {
   const [data, setData] = useState(null), [upload, setUpload] = useState(null);
   const [matches, setMatches] = useState([]), [active, setActive] = useState(0);
   const [tolerance, setTolerance] = useState(1), [variable, setVariable] = useState('pre_mm_s');
@@ -122,7 +122,23 @@ export default function PoiReportModal({ entry, drawn, onClose }) {
     return () => controller.abort();
   }, [entry, retry]);
 
+  // A basin the reader picked on the map is not matched to anything: it is the
+  // answer already. Running its own outline back through polygon intersection
+  // would pull in every neighbour that shares a boundary with it.
   useEffect(() => {
+    if (!basinId || !data) return;
+    const feature = data.geometry.features.find(item => String(item.properties.hybas_id) === String(basinId)
+      && Number(item.properties.basin_level) === 12);
+    if (!feature) { setInputError(`Basin ${basinId} has no published level-12 outline.`); return; }
+    const name = `Basin ${basinId}`;
+    setInputError(''); setError(''); setActive(0);
+    setUpload({ name, collection: { type: 'FeatureCollection',
+      features: [{ ...feature, id: 1, properties: { ...feature.properties, poi_name: name } }] } });
+    setMatches([{ status: 'selected on the map', basins: [feature], distanceKm: null, coordinate: null }]);
+  }, [basinId, data]);
+
+  useEffect(() => {
+    if (basinId) return undefined;
     let live = true; setMatches([]); setReport(null); setMatching(false);
     if (!upload || !data) return;
     setMatching(true); setError('');
@@ -166,7 +182,7 @@ export default function PoiReportModal({ entry, drawn, onClose }) {
   // messages, and a ring that failed to close is caught here rather than deep in
   // the matching.
   useEffect(() => {
-    if (!drawn) return;
+    if (!drawn || basinId) return;
     const version = ++fileVersion.current;
     setInputError(''); setError(''); setReport(null); setMatches([]); setActive(0);
     try {
@@ -203,14 +219,16 @@ export default function PoiReportModal({ entry, drawn, onClose }) {
       <header><span className="dam-modal-kicker">Basin atlas · Your locations</span><h2 id="poi-title">Upload &amp; basin reports</h2>
         <p className="dam-modal-sub">Match points or polygons to level-12 basins and compare local and upstream information.</p></header>
       <div className="poi-controls">
-        <label>{drawn ? 'Upload other locations' : 'Upload locations'}
+        <label>{drawn || basinId ? 'Upload other locations' : 'Upload locations'}
           <input type="file" accept=".geojson,.json,.csv" onChange={readFile} disabled={!!busy}/></label>
-        <label>Maximum point snap distance
+        {!basinId && <label>Maximum point snap distance
           <select value={tolerance} disabled={!!busy} onChange={event => setTolerance(Number(event.target.value))}>
             {[0, 0.1, 0.5, 1, 2, 5, 10].map(km => <option key={km} value={km}>{km ? `${km} km` : 'Containing basin only'}</option>)}
           </select>
-        </label>
+        </label>}
       </div>
+      {basinId && <p role="status">Reporting on basin {basinId}, chosen on the map, and everything
+        draining into it. Upload a file to report on something else.</p>}
       {drawn && <p role="status">Reporting on the area drawn on the map. Its statistics describe every
         level-12 basin the area intersects, whole, not the drawn shape itself. Upload a file to report on
         something else.</p>}

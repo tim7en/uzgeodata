@@ -3,6 +3,28 @@ import assert from 'node:assert/strict';
 import { aoiFeature } from '../INTERFACE/aoiModel.js';
 import { parsePois, matchPoi, reportMembers, makePoiReport, reportMonthlyCsv } from '../INTERFACE/poiModel.js';
 
+test('a basin chosen on the map reports itself, not its neighbours', () => {
+  // A chosen basin is the answer, not something to match. Passing its own outline
+  // back through polygon intersection would pull in every neighbour that shares a
+  // boundary with it, which is why the modal skips matching for this input. The
+  // model still has to place it correctly in the network.
+  const square = (id, x, nextDown) => ({ type: 'Feature',
+    properties: { hybas_id: id, basin_level: 12, next_down: nextDown },
+    geometry: { type: 'Polygon', coordinates: [[[x, 40], [x + 1, 40], [x + 1, 41], [x, 41], [x, 40]]] } });
+  const basins = [square(1, 70, 0), square(2, 71, 1), square(3, 72, 2)];
+  const index = { ids: [1, 2, 3], next_down: [0, 1, 2] };
+
+  const chosen = reportMembers(index, [basins[1]]);
+  assert.deepEqual(chosen.local, [1], 'the report is about the basin that was chosen');
+  assert.deepEqual([...chosen.upstream].sort(), [1, 2], 'and everything draining into it');
+
+  // The neighbour it touches must not be dragged in with it.
+  assert.ok(!chosen.local.includes(0), 'a shared boundary is not a match');
+
+  // The headwater has nothing above it and still reports itself.
+  assert.deepEqual(reportMembers(index, [basins[2]]).upstream, [2]);
+});
+
 test('an area drawn on the map is parsed like an uploaded polygon', () => {
   // The drawn ring and an uploaded polygon reach the same matcher, so they go
   // through the same validation: one parser, one set of error messages.
