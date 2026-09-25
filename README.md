@@ -312,6 +312,7 @@ browser decompresses itself.
 | `--dry-run` | report the difference, upload nothing |
 | `--skip-build` | reuse an existing `dist/data` |
 | `--prune` | also delete objects the release no longer contains |
+| `--retype` | re-upload objects whose stored content type is wrong; a sync compares bytes, and a listing does not report the type |
 | `--force` | allow a `--prune` run that would delete over a quarter of the bucket |
 | `--only=<prefix>` | restrict the sync to one key prefix |
 | `--concurrency=<n>` | parallel requests, default 12 |

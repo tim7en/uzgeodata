@@ -15,6 +15,7 @@
 //   npm run publish:r2 -- --dry-run      report the difference, upload nothing
 //   npm run publish:r2 -- --skip-build   reuse an existing dist/data
 //   npm run publish:r2 -- --prune        also delete objects the release dropped
+//   npm run publish:r2 -- --retype       re-upload objects whose stored type is wrong
 //   npm run publish:r2 -- --prune --force   prune even a large share of the bucket
 //   npm run publish:r2 -- --only=atlas/catchments/   restrict to one prefix
 //
@@ -36,6 +37,7 @@ const flag = name => args.includes(`--${name}`);
 const option = name => args.find(arg => arg.startsWith(`--${name}=`))?.slice(name.length + 3);
 const dryRun = flag('dry-run');
 const prune = flag('prune');
+const retype = flag('retype');
 const only = option('only') || '';
 const concurrency = Number(option('concurrency') || 12);
 
@@ -152,6 +154,20 @@ async function send(request, attempt = 0) {
   return response;
 }
 
+/**
+ * The content type an object is already stored with, or null if it is not there.
+ *
+ * A listing returns an ETag and a size and says nothing about the type, so a
+ * sync that compares only content can never notice a wrong one. It is asked for
+ * explicitly, and only when asked: one HEAD per object is cheap but not free.
+ */
+async function storedType(key) {
+  try {
+    const response = await send({ method: 'HEAD', key });
+    return response.headers.get('content-type');
+  } catch { return null; }
+}
+
 async function each(items, limit, visit) {
   const iterator = items[Symbol.iterator]();
   await Promise.all(Array.from({ length: limit }, async () => {
@@ -238,6 +254,26 @@ for (const [key, file] of files) {
   }
   upload.push({ key, file, bytes: body.length, existed: Boolean(known) });
 }
+// Content type is set when an object is written, so an object whose bytes never
+// change keeps whatever type it was first given. The bulk of this bucket was
+// uploaded before this publisher existed and carries application/octet-stream,
+// which the pages reject: they check that a response claiming to be JSON says so,
+// precisely so an HTML error page cannot be parsed as data. Correcting it needs a
+// HEAD per object, so it happens when asked for rather than on every run.
+const retyped = [];
+if (retype) {
+  const queued = new Set(upload.map(item => item.key));
+  await each([...files].filter(([key]) => published.has(key) && !queued.has(key)), concurrency,
+    async ([key, file]) => {
+      const wanted = contentType(key);
+      const current = await storedType(key);
+      if (!current || current === wanted) return;
+      retyped.push(key);
+      upload.push({ key, file, bytes: published.get(key).bytes, existed: true });
+    });
+  console.log(`${retyped.length} object(s) stored with the wrong content type.`);
+}
+
 const stale = [...published.keys()].filter(key => !files.has(key));
 // R2 keeps no object versions, so a deletion here is final. Pruning a quarter of
 // the bucket at once is more likely a mistyped prefix or a half-built release than
@@ -262,6 +298,7 @@ const report = {
   upload_bytes: upload.reduce((total, item) => total + item.bytes, 0),
   added: upload.filter(item => !item.existed).length,
   replaced: upload.filter(item => item.existed).length,
+  retyped: retyped.length,
   stale_remote: stale.length,
   pruned: 0,
   examples: { upload: upload.slice(0, 10).map(item => item.key), stale: stale.slice(0, 10) },
