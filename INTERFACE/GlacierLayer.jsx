@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Marker, Pane, Tooltip, useMapEvents } from 'react-leaflet';
+import { Marker, Pane, Tooltip, useMap, useMapEvents } from 'react-leaflet';
 import { divIcon } from 'leaflet';
 import { clusterGlaciers, formatNumber, glacierBasis, glacierRadius, withinBounds } from './landingModel.js';
 
@@ -33,16 +33,23 @@ const ice = (radius, basis) => {
 };
 
 export default function GlacierLayer({ data }) {
-  const [zoom, setZoom] = useState(7);
-  const [bounds, setBounds] = useState(null);
-  const map = useMapEvents({
-    zoomend: () => { setZoom(map.getZoom()); setBounds(map.getBounds()); },
-    moveend: () => setBounds(map.getBounds()),
+  const map = useMap();
+  const readView = () => {
+    const bounds = map.getBounds().pad(0.25);
+    return {
+      zoom: map.getZoom(),
+      bounds: [[bounds.getSouth(), bounds.getWest()], [bounds.getNorth(), bounds.getEast()]],
+    };
+  };
+  const [{ zoom, bounds }, setView] = useState(readView);
+  useMapEvents({
+    zoomend: () => setView(readView()),
+    moveend: () => setView(readView()),
   });
 
   const clusters = useMemo(() => clusterGlaciers(data?.features || [], zoom), [data, zoom]);
   const drawn = useMemo(
-    () => clusters.filter(cluster => withinBounds(bounds, cluster.longitude, cluster.latitude)),
+    () => clusters.filter(cluster => withinBounds([cluster.longitude, cluster.latitude], bounds)),
     [clusters, bounds],
   );
 

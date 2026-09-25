@@ -56,6 +56,7 @@
     "basins:waterbody-review": "python PIPELINES/cross_reference_water_bodies.py",
     "test:waterbody-review": "python -m pytest tests/test_water_body_cross_reference.py -q",
     "test:map-browser": "node TESTS/test_map_browser.cjs",
+    "test:map-symbols-browser": "node TESTS/test_map_symbols_browser.cjs",
     "basins:dams": "python PIPELINES/build_basin_dams.py",
     "basins:wastewater": "python PIPELINES/build_basin_wastewater.py",
     "rivers:condition": "python PIPELINES/build_reach_condition.py",
