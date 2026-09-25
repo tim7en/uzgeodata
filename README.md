@@ -45,11 +45,15 @@ catchment above a basin and must not be added across basins.
 | Derived products | Normals, anomalies, seasonal figures, trends, water balance, SPI |
 | Reading support | About, source reuse terms, citation, five-minute guide and issue reporting |
 
-The saved snapshot includes snow, precipitation, evapotranspiration, soil moisture,
-runoff, and minimum, mean, and maximum temperature. See the deployed `release.json` and history index for the actual snapshot.
-The tracked September 2026 snapshot includes an ERA5 runoff append through August
-2026; that does not extend every variable or rebuild the release. Calendar positions
-include nulls and must not be read as observed-month counts.
+The snapshot carries fourteen variables: precipitation, actual and potential
+evapotranspiration, total runoff (ERA5-Land) and TerraClimate runoff, soil moisture,
+snow cover and snow water equivalent, minimum, mean and maximum temperature, climate
+water deficit, vapour pressure deficit, and the Palmer drought severity index. See the
+deployed `release.json` and history index for the actual snapshot.
+Each variable ends where its source ends: ERA5-Land runoff and mean temperature run to
+2026-08, the TerraClimate family to 2024-12, which is the latest month that product has
+published. Calendar positions include nulls and must not be read as observed-month
+counts.
 The roadmap is future research scope, not a promise of completed features.
 
 ## What the platform offers
