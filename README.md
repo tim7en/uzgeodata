@@ -216,6 +216,17 @@ glacier-covered basins. SWE also disagrees most with direct v1.1 for 2025 (RMSE
 571 mm, against 6 mm/month for precipitation). Treat SWE and Amu runoff estimates
 with the most caution.
 
+### Drought study, 1961–2025
+
+A separate study at `/drought.html` uses TerraClimate v1.1's full 1960–2025
+record, one product version with no splicing. It compares each water year
+(October–September) for every basin with the 1991–2020 normal and the previous
+10, 20 and 30 years, computes SPI-12 and PDSI, and follows upstream runoff
+generation to Uzbekistan's regions. Every level-12 basin also has a **Drought
+1961–2025** tab in the basin explorer. See
+[the case study](CASE_STUDIES/drought-study.md). The data is gitignored and
+published to R2 through `PUBLISHED/release-includes.txt`.
+
 ### Scaling the ontology and adding AI
 
 Extend the existing contracts: register a concept and product, define units,

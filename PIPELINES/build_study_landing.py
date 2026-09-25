@@ -146,6 +146,19 @@ def main():
          'metric_label':'Lakes & reservoirs tracked',
          'detail':f"{n_named} named water bodies incl. the Aral Sea · record since mid-2023",
          'status':'SWOT KaRIn · satellite monitoring'}
+    drought_path=DATA/'drought-study-card.json'
+    drought=json.loads(drought_path.read_text(encoding='utf-8')) if drought_path.exists() else None
+    def drought_card():
+        return {'id':'drought','href':'/drought.html','title':'Where drought lands, and who downstream feels it',
+         'region':'AMU DARYA & SYR DARYA · 438 SUB-BASINS · 1961–2025',
+         'aim':'Water-year precipitation, SPI and Palmer drought index for every basin against the 1991–2020 normal and the previous 10, 20 and 30 years, with the upstream supply each Uzbek region depends on.',
+         'image':'/data/case-studies/drought-study-preview.svg',
+         'image_alt':'SPI-12 by water year, 1961 to 2025, for the Amu Darya and Syr Darya: brown bars for dry years and teal bars for wet years.',
+         'evidence_date':drought['generated_at'] if drought else now,
+         'metric':drought['confirmed_in_data'] if drought else 6,
+         'metric_label':'Documented dry and wet years found in the data',
+         'detail':(f"of {drought['documented_events']} · {drought['units_with_4plus_severe_years']} of {drought['level07_units']} sub-basins had 4+ severe drought years since 1991") if drought else 'TerraClimate v1.1, one product version',
+         'status':'Drought climatology · TerraClimate v1.1'}
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -180,6 +193,7 @@ def main():
                    + (f" · gauge-anchored best {ga_best:.2f}" if ga_best is not None else "")) if pooled else 'pooled climate-only transfer experiment',
          'status':'GroupKFold by gauge · transfer experiment'},
         reservoir_card(),
+        drought_card(),
         {'id':'trends','href':'/trends.html','title':'What survives testing properly',
          'region':'AMU DARYA & SYR DARYA','aim':'Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.',
          'image':'/data/trends/trend-correction-cascade.svg',

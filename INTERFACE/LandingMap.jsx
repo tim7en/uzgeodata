@@ -15,6 +15,7 @@ import GaugeModal from './GaugeModal.jsx';
 import BasinSubstitutes from './BasinSubstitutes.jsx';
 import BasinHistory from './BasinHistory.jsx';
 import BasinClimate from './BasinClimate.jsx';
+import BasinDrought from './BasinDrought.jsx';
 import BasinFinder from './BasinFinder.jsx';
 import BasinCatchment from './BasinCatchment.jsx';
 import CatchmentStatistics from './CatchmentStatistics.jsx';
@@ -63,6 +64,7 @@ const TABS = [
   ['substitutes', 'Independent estimates'],
   ['history', 'Monthly record'],
   ['climate', 'Climate 2025–26'],
+  ['drought', 'Drought 1961–2025'],
   ['catchment', 'Catchment statistics'],
 ];
 
@@ -125,7 +127,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
   const [filter, setFilter] = useState('');
   const [kind, setKind] = useState('all');
   const [tab, setTab] = useState(initialTab || (Number(basin.basin_level) === 12 ? 'history' : 'original'));
-  const tabs = Number(basin.basin_level) === 12 ? TABS : TABS.filter(([id]) => id !== 'climate');
+  const tabs = Number(basin.basin_level) === 12 ? TABS : TABS.filter(([id]) => id !== 'climate' && id !== 'drought');
 
   useEffect(() => {
     const escape = event => { if (event.key === 'Escape') onClose(); };
@@ -192,6 +194,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
         <div className="land-basin-values">
         {tab === 'catchment' ? <CatchmentStatistics key={`c-${basin.hybas_id}`} basin={basin}/>
           : tab === 'climate' ? <BasinClimate key={`climate-${basin.hybas_id}`} basin={basin}/>
+          : tab === 'drought' ? <BasinDrought key={`drought-${basin.hybas_id}`} basin={basin}/>
           : tab === 'history' ? <BasinHistory key={`h-${basin.basin_level}-${basin.hybas_id}`} basin={basin}/>
           : tab === 'substitutes' ? <BasinSubstitutes key={`${basin.basin_level}-${basin.hybas_id}`} basin={basin} filter={filter} kind={kind}/>
           : loading && !store ? <p className="land-group-note">Loading the atlas attributes…</p>

@@ -10,6 +10,12 @@ relationship to all 7,445 Amu Darya and Syr Darya level-12 basins, stores the
 producer's 2025 TerraClimate v1.1 as a separate source and computes routed
 upstream aggregates without combining the two TerraClimate versions.
 
+The [drought study](drought-study.md) compares every basin's water years since
+1961 with the 1991–2020 normal and the previous 10, 20 and 30 years, checks six
+documented dry and wet years against the data, and traces how much of each Uzbek
+region's shortfall comes from upstream. It is at `/drought.html` and in the
+basin explorer's **Drought 1961–2025** tab.
+
 The page now separates Chirchik/Pskem from the implemented
 [regional station–satellite study](regional-station-environment.md), using 86
 station locations, QA-screened historical Earth Engine data, terrain/soil

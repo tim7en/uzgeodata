@@ -45,6 +45,14 @@ HISTORY = ROOT / "PUBLISHED/data/atlas/climate-continuation/terraclimate-v1.1-hi
 GEO = ROOT / "GEODATA/transboundary_basins_v2"
 ADMIN = ROOT / "GEODATA/uzb_admbnda_adm1_2018b/uzb_admbnda_adm1_2018b.shp"
 OUT = ROOT / "PUBLISHED/data/atlas/drought-study"
+# The directory card and its preview are small and tracked, so the case-study index
+# builds in a checkout that does not have the R2-only study tables.
+CARD = ROOT / "PUBLISHED/data/case-studies/drought-study-card.json"
+PREVIEW = ROOT / "PUBLISHED/data/case-studies/drought-study-preview.svg"
+BASIN_FIELDS = ["water_year", "ppt", "ppt_trailing_10", "ppt_trailing_20", "ppt_trailing_30",
+                "ppt_anom_pct_wmo", "ppt_anom_pct_trailing_10", "ppt_anom_pct_trailing_20",
+                "ppt_anom_pct_trailing_30", "ppt_anom_pct_early", "spi12", "pdsi", "q",
+                "q_anom_pct_wmo", "up_spi12", "up_ppt_anom_pct_wmo", "up_q_anom_pct_wmo"]
 WMO = (1991, 2020)
 EARLY = (1961, 1990)
 TRAILING = (10, 20, 30)
@@ -193,6 +201,80 @@ def records(frame, columns):
             for row in frame[columns].itertuples(index=False, name=None)]
 
 
+def basin_documents(level12, basins, severity, checks):
+    """One JSON per level-12 basin for the map's Drought tab and its CSV download."""
+    dest = OUT / "basins"
+    dest.mkdir(exist_ok=True)
+    unit_of = dict(zip(basins.basin_id, basins.level07))
+    severe = {row.level07: {"severe_years": row.severe_years, "moderate_years": row.moderate_years,
+                            "wet_years": row.wet_years, "worst_year": row.worst_year,
+                            "worst_spi": round(row.worst_spi, 3)} for row in severity.itertuples()}
+    documented = [{"water_year": e["water_year"], "kind": e["kind"], "source": e["source"], "url": e["url"]}
+                  for e in DOCUMENTED]
+    count = 0
+    for basin_id, group in level12.sort_values(["basin_id", "water_year"]).groupby("basin_id", sort=False):
+        first = group.iloc[0]
+        document = {
+            "basin_id": basin_id, "level07": unit_of[basin_id],
+            "record_type": "basin_drought_water_years",
+            "source": "TerraClimate v1.1 producer NetCDF, 1960-2025",
+            "water_year": "October to September, labelled by the ending year",
+            "norms_mm": {"wmo_1991_2020": round(float(first.ppt_wmo), 2),
+                         "early_1961_1990": round(float(first.ppt_early), 2)},
+            "pdsi_wmo_mean": round(float(first.pdsi_wmo), 3),
+            "level07_severity_1991_2025": severe.get(unit_of[basin_id]),
+            "fields": BASIN_FIELDS,
+            "rows": records(group, BASIN_FIELDS),
+            "documented_years": documented,
+            "study": "/drought.html",
+            "note": "SPI-12 is fitted on 1991-2020. Upstream values cover the whole catchment above this basin; q is runoff generation without glacier melt or reservoir regulation, not river flow.",
+        }
+        (dest / f"{basin_id}.json").write_text(json.dumps(document, separators=(",", ":"), allow_nan=False) + "\n")
+        count += 1
+    if count != 7445:
+        raise ValueError(f"Expected 7,445 basin documents, wrote {count}")
+    return count
+
+
+def card_and_preview(systems, checks, severity):
+    """Directory card numbers and an SPI strip for both systems, drawn from the data."""
+    confirmed = sum(1 for e in DOCUMENTED if any(
+        c["water_year"] == e["water_year"] and ((e["kind"] == "dry" and c["spi12"] <= -1) or
+                                                (e["kind"] == "wet" and c["spi12"] >= 1))
+        for c in checks))
+    CARD.write_text(json.dumps({
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "documented_events": len(DOCUMENTED), "confirmed_in_data": confirmed,
+        "level07_units": int(len(severity)),
+        "units_with_4plus_severe_years": int((severity.severe_years >= 4).sum()),
+        "water_years": [int(systems.water_year.min()), int(systems.water_year.max())],
+    }, indent=2) + "\n")
+    colours = ["#8c510a", "#d8b365", "#f1e3bd", "#dfe4e2", "#c7eae5", "#5ab4ac", "#01665e"]
+    breaks = [-2, -1.5, -1, 1, 1.5, 2]
+    width, height, pad = 1080, 552, 60
+    years = sorted(systems.water_year.unique())
+    step = (width - 2 * pad) / len(years)
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}">',
+             f'<rect width="{width}" height="{height}" fill="#103d40"/>']
+    for row, (system, label) in enumerate((("amu_darya", "AMU DARYA"), ("syr_darya", "SYR DARYA"))):
+        top = 90 + row * 230
+        middle = top + 90
+        parts.append(f'<text x="{pad}" y="{top - 14}" fill="#b3d3cb" font-family="Arial" font-size="20" letter-spacing="3">{label} · SPI-12 BY WATER YEAR</text>')
+        parts.append(f'<line x1="{pad}" x2="{width - pad}" y1="{middle}" y2="{middle}" stroke="#4d7471" stroke-width="1"/>')
+        series = systems[systems.system_id == system].set_index("water_year").spi12
+        for i, year in enumerate(years):
+            value = float(series.get(year, 0.0))
+            bar = max(2.0, abs(value) / 3 * 90)
+            colour = colours[sum(value > b for b in breaks)]
+            y = middle - bar if value > 0 else middle
+            parts.append(f'<rect x="{pad + i * step + 1:.1f}" y="{y:.1f}" width="{step - 2:.1f}" height="{bar:.1f}" rx="1.5" fill="{colour}"/>')
+    for year in (1970, 1990, 2010):
+        x = pad + years.index(year) * step + step / 2
+        parts.append(f'<text x="{x:.1f}" y="{height - 30}" fill="#b3d3cb" font-family="Arial" font-size="16" text-anchor="middle">{year}</text>')
+    parts.append("</svg>")
+    PREVIEW.write_text("\n".join(parts) + "\n")
+
+
 def build():
     OUT.mkdir(parents=True, exist_ok=True)
     geo12 = gpd.read_file(GEO / "hydroatlas-level12-full-basins.geojson")
@@ -319,7 +401,17 @@ def build():
     (OUT / "geometry.json").write_text(json.dumps(geometry, separators=(",", ":")) + "\n")
     level07.to_parquet(OUT / "level07-wateryear.parquet", compression="zstd", index=False)
     region.to_parquet(OUT / "regions-wateryear.parquet", compression="zstd", index=False)
-    print(f"Drought study written: {len(level07):,} level-7 rows, {len(region):,} region rows", flush=True)
+    documents = basin_documents(level12, basins, severity, checks)
+    card_and_preview(systems, checks, severity)
+    (OUT / "index.json").write_text(json.dumps({
+        "generated_at": report["generated_at"], "study": "/drought.html",
+        "files": {"summary": "summary.json", "geometry": "geometry.json",
+                  "basins": "basins/{HYBAS_ID}.json",
+                  "level12": "basin-wateryear.parquet", "level07": "level07-wateryear.parquet",
+                  "regions": "regions-wateryear.parquet"},
+        "basins": documents, "water_years": report["water_years"],
+    }, indent=2) + "\n")
+    print(f"Drought study written: {len(level07):,} level-7 rows, {len(region):,} region rows, {documents:,} basin files", flush=True)
     for check in checks:
         print(f"  {check['water_year']} {check['kind']:3} {check['system_id']:10} SPI {check['spi12']:+.2f} "
               f"P {check['ppt_anom_pct_wmo']:+.0f}% PDSI {check['pdsi']:+.2f} rank {check['dry_rank']}/{check['years']}")

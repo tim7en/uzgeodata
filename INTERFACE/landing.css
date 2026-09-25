@@ -727,3 +727,23 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
   .land-morphology dt{font-size:10px}
   .land-morphology dd{font-size:14px}
 }
+
+/* Drought tab. Dry-to-wet diverging ramp: brown arm, neutral middle, teal arm.
+   Dark values are the default, as for the rest of the landing page. */
+:root{--l-dr-d3:#e3a857;--l-dr-d2:#a8773a;--l-dr-d1:#5a4830;--l-dr-n0:#2c3538;--l-dr-w1:#2a5450;--l-dr-w2:#3f978c;--l-dr-w3:#74d6c7}
+[data-theme="light"]{--l-dr-d3:#8c510a;--l-dr-d2:#d8b365;--l-dr-d1:#f1e3bd;--l-dr-n0:#dfe4e2;--l-dr-w1:#c7eae5;--l-dr-w2:#5ab4ac;--l-dr-w3:#01665e}
+.land-drought{padding:16px 18px;display:grid;gap:12px}
+.land-drought .land-hist-warn{margin:0}
+.land-drought-controls{display:grid;gap:8px}
+.land-drought-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.land-drought-stats div{border:1px solid var(--line);padding:8px 10px;display:grid;gap:2px}
+.land-drought-stats b{font:600 18px var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.land-drought-stats span{font-size:10px;color:var(--dim)}
+.land-drought-chart{margin:0}
+.land-drought-chart svg{width:100%;height:auto}
+.land-drought-chart figcaption{font:600 11px var(--mono);color:var(--dim);min-height:1.4em}
+.land-drought-event{stroke-width:1;stroke-dasharray:2 3}
+.land-drought-event.dry{stroke:var(--l-dr-d3)}.land-drought-event.wet{stroke:var(--l-dr-w3)}
+.land-drought-norm{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+.land-drought-actions{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:11px}
+.land-drought-actions a{color:var(--l-accent-1)}

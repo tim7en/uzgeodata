@@ -83,6 +83,21 @@
       "image_revision": "8fcdcc842d4b"
     },
     {
+      "id": "drought",
+      "href": "/drought.html",
+      "title": "Where drought lands, and who downstream feels it",
+      "region": "AMU DARYA & SYR DARYA · 438 SUB-BASINS · 1961–2025",
+      "aim": "Water-year precipitation, SPI and Palmer drought index for every basin against the 1991–2020 normal and the previous 10, 20 and 30 years, with the upstream supply each Uzbek region depends on.",
+      "image": "/data/case-studies/drought-study-preview.svg",
+      "image_alt": "SPI-12 by water year, 1961 to 2025, for the Amu Darya and Syr Darya: brown bars for dry years and teal bars for wet years.",
+      "evidence_date": "2026-09-25T02:45:52.586777+00:00",
+      "metric": 6,
+      "metric_label": "Documented dry and wet years found in the data",
+      "detail": "of 6 · 206 of 438 sub-basins had 4+ severe drought years since 1991",
+      "status": "Drought climatology · TerraClimate v1.1",
+      "image_revision": "6d9ae7351d0a"
+    },
+    {
       "id": "trends",
       "href": "/trends.html",
       "title": "What survives testing properly",

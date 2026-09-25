@@ -47,6 +47,7 @@ export default function BasinFinder({ entry, onSelect }) {
         <button type="button" onClick={() => onSelect(feature, 'original')}>Attributes</button>
         <button type="button" onClick={() => onSelect(feature, 'substitutes')}>Estimates</button>
         <button type="button" onClick={() => onSelect(feature, 'catchment')}>Catchment</button>
+        <button type="button" onClick={() => onSelect(feature, 'drought')}>Drought</button>
       </div>
       </div>)}</div>}
   </div>;

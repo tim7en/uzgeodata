@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#103d40">
+<meta name="description" content="Water-year drought and wet years for every Amu Darya and Syr Darya basin, 1961-2025: precipitation against the 1991-2020 normal and the previous 10, 20 and 30 years, SPI-12, Palmer drought index, and the upstream supply Uzbekistan's regions depend on.">
+<title>Drought in the Amu and Syr Darya basins &middot; UzGeoData</title>
+<link rel="stylesheet" href="/home.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>try{var t=localStorage.getItem('uzgeodata-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':(new Date().getHours()>=7&&new Date().getHours()<19?'light':'dark')}document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+.dr {
+  --dr-page: #f3f5f3;
+  --dr-surface: #fbfcfb;
+  --dr-ink: #142120;
+  --dr-ink-2: #44524f;
+  --dr-muted: #7b8784;
+  --dr-rule: #d9dfdc;
+  --dr-axis: #b9c2be;
+  --dr-accent: #0e5c63;
+  --dr-focus: #0e5c63;
+  --d3: #8c510a; --d2: #d8b365; --d1: #f1e3bd; --n0: #eceeec; --w1: #c7eae5; --w2: #5ab4ac; --w3: #01665e;
+  --event-dry: #8c510a; --event-wet: #01665e;
+  
+  
+  --dr-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --dr-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --dr-body: Manrope, system-ui, sans-serif;
+}
+[data-theme="dark"] .dr {
+  color-scheme: dark;
+  --dr-page: #0f1515; --dr-surface: #151d1c; --dr-ink: #e8eeec; --dr-ink-2: #b4c0bd; --dr-muted: #84918e;
+  --dr-rule: #26302f; --dr-axis: #3a4644; --dr-accent: #6fc7c9; --dr-focus: #6fc7c9;
+  --d3: #e3a857; --d2: #a8773a; --d1: #5a4830; --n0: #333a39; --w1: #2a5450; --w2: #3f978c; --w3: #74d6c7;
+  --event-dry: #e3a857; --event-wet: #74d6c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .dr {
+  color-scheme: dark;
+  --dr-page: #0f1515; --dr-surface: #151d1c; --dr-ink: #e8eeec; --dr-ink-2: #b4c0bd; --dr-muted: #84918e;
+  --dr-rule: #26302f; --dr-axis: #3a4644; --dr-accent: #6fc7c9; --dr-focus: #6fc7c9;
+  --d3: #e3a857; --d2: #a8773a; --d1: #5a4830; --n0: #333a39; --w1: #2a5450; --w2: #3f978c; --w3: #74d6c7;
+  --event-dry: #e3a857; --event-wet: #74d6c7;
+  }
+}
+.dr * { box-sizing: border-box; }
+.dr { background: var(--dr-page); color: var(--dr-ink); font: 15px/1.55 var(--dr-body); padding-inline: 16px; padding-block: 0 48px; }
+.dr .dr-inner { max-width: 1120px; margin: 0 auto; display: grid; gap: 56px; }
+.dr h1, .dr h2, .dr h3 { font-family: var(--dr-display); font-weight: 600; letter-spacing: .01em; text-wrap: balance; margin: 0; line-height: 1.05; }
+.dr h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 700; }
+.dr h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); }
+.dr h3 { font-size: 1.25rem; }
+.dr p { margin: 0; max-width: 68ch; }
+.dr a { color: var(--dr-accent); }
+.dr .eyebrow { font: 500 .75rem/1 var(--dr-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dr-muted); }
+.dr .lede { font-size: 1.1rem; color: var(--dr-ink-2); }
+.dr header.masthead { padding-top: 40px; display: grid; gap: 18px; border-bottom: 1px solid var(--dr-rule); padding-bottom: 28px; }
+.dr .section { display: grid; gap: 18px; }
+.dr .section > header { display: grid; gap: 8px; }
+.dr .findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.dr .finding { background: var(--dr-surface); border: 1px solid var(--dr-rule); padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.dr .finding b { font: 600 1.6rem/1 var(--dr-display); letter-spacing: .01em; }
+.dr .finding span { color: var(--dr-ink-2); font-size: .9rem; }
+.dr .controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.dr .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.dr .chips button, .dr .seg button { font: 500 .82rem/1 var(--dr-body); padding: 7px 11px; border: 1px solid var(--dr-rule); background: var(--dr-surface); color: var(--dr-ink-2); cursor: pointer; }
+.dr .chips button[aria-pressed="true"], .dr .seg button[aria-pressed="true"] { background: var(--dr-ink); color: var(--dr-page); border-color: var(--dr-ink); }
+.dr button:focus-visible, .dr select:focus-visible, .dr input:focus-visible { outline: 2px solid var(--dr-focus); outline-offset: 2px; }
+.dr label.field { display: flex; gap: 8px; align-items: center; font-size: .85rem; color: var(--dr-ink-2); }
+.dr select { font: inherit; font-size: .85rem; padding: 6px 8px; background: var(--dr-surface); color: var(--dr-ink); border: 1px solid var(--dr-rule); max-width: 100%; }
+.dr .figure { background: var(--dr-surface); border: 1px solid var(--dr-rule); padding: 14px; display: grid; gap: 10px; }
+.dr .figure figcaption, .dr .note { font-size: .82rem; color: var(--dr-muted); max-width: 90ch; }
+.dr .chart-wrap { overflow-x: auto; }
+.dr svg { display: block; }
+.dr svg text { font-family: var(--dr-mono); font-size: 11px; fill: var(--dr-muted); }
+.dr .grid { stroke: var(--dr-rule); stroke-width: 1; }
+.dr .base { stroke: var(--dr-axis); stroke-width: 1; }
+.dr .year-slider { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+.dr .year-slider output { font: 600 1.7rem/1 var(--dr-display); min-width: 4ch; text-align: right; font-variant-numeric: tabular-nums; }
+.dr input[type=range] { width: 100%; accent-color: var(--dr-accent); }
+.dr .map-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(220px, 1fr); gap: 14px; align-items: start; }
+.dr .map-side { display: grid; gap: 12px; font-size: .85rem; }
+.dr .legend { display: grid; gap: 4px; }
+.dr .legend-row { display: flex; }
+.dr .legend-row i { flex: 1; height: 12px; border-right: 2px solid var(--dr-surface); }
+.dr .legend-labels { position: relative; height: 14px; font: .7rem var(--dr-mono); color: var(--dr-muted); }
+.dr .legend-labels span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.dr .legend-title { font-size: .8rem; color: var(--dr-ink-2); }
+.dr .readout { border-top: 1px solid var(--dr-rule); padding-top: 10px; display: grid; gap: 4px; min-height: 120px; }
+.dr .readout dl { display: grid; grid-template-columns: auto auto; gap: 2px 12px; margin: 0; font-variant-numeric: tabular-nums; }
+.dr .readout dt { color: var(--dr-muted); }
+.dr .readout dd { margin: 0; text-align: right; font-family: var(--dr-mono); font-size: .8rem; }
+.dr .map path.unit { stroke: var(--dr-surface); stroke-width: .6; vector-effect: non-scaling-stroke; cursor: pointer; }
+.dr .map path.unit:hover, .dr .map path.unit.sel { stroke: var(--dr-ink); stroke-width: 1.6; }
+.dr .map path.region { fill: none; stroke: var(--dr-ink); stroke-opacity: .55; stroke-width: .8; stroke-dasharray: 3 2; vector-effect: non-scaling-stroke; pointer-events: none; }
+.dr .two-maps { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.dr table { border-collapse: collapse; width: 100%; font-size: .85rem; font-variant-numeric: tabular-nums; }
+.dr th, .dr td { padding: 7px 10px; border-bottom: 1px solid var(--dr-rule); text-align: right; white-space: nowrap; }
+.dr th:first-child, .dr td:first-child { text-align: left; }
+.dr th { font: 500 .72rem/1.2 var(--dr-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--dr-muted); }
+.dr td .cell { display: inline-block; min-width: 58px; padding: 3px 6px; font-family: var(--dr-mono); font-size: .78rem; }
+.dr .tag { font: 500 .7rem/1 var(--dr-mono); letter-spacing: .05em; text-transform: uppercase; padding: 3px 6px; border: 1px solid currentColor; }
+.dr .tag.dry { color: var(--event-dry); } .tag.wet { color: var(--event-wet); }
+.dr .verdict { font-size: .82rem; color: var(--dr-ink-2); white-space: normal; text-align: left; min-width: 220px; }
+.dr .tip { position: fixed; pointer-events: none; background: var(--dr-ink); color: var(--dr-page); font: .78rem/1.35 var(--dr-mono); padding: 7px 9px; max-width: 280px; z-index: 5; }
+.dr .method { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px 28px; }
+.dr .method div { display: grid; gap: 6px; }
+.dr .method p, .dr .method li { font-size: .9rem; color: var(--dr-ink-2); }
+.dr .method ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.dr code { font-family: var(--dr-mono); font-size: .85em; }
+@media (max-width: 760px) { .dr .map-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: no-preference) { .dr .map path.unit { transition: fill .25s ease; } }
+
+.dr { padding-block: 8px 48px; }
+.dr h1 { letter-spacing: 0; font-weight: 700; margin: 0; }
+.dr h2, .dr h3 { letter-spacing: 0; margin: 0; }
+.dr p { font-size: inherit; color: inherit; }
+.dr .lede { color: var(--dr-ink-2); }
+.dr .masthead { padding-top: 28px; }
+.dr .tip { position: fixed; }
+/* home.css styles .section, .eyebrow and .tag for the marketing pages; reset them here. */
+.dr .section { padding: 0; }
+.dr .section p { font-size: inherit; color: inherit; }
+.dr .section .lede, .dr .lede { color: var(--dr-ink-2); }
+.dr .section .note, .dr .note { color: var(--dr-muted); font-size: .82rem; }
+.dr .eyebrow, .dr .section .eyebrow { font: 500 .75rem/1 var(--dr-mono); letter-spacing: .08em; color: var(--dr-muted); margin: 0; }
+.dr .dr-status { padding: 40px 0; color: var(--dr-muted); }
+
+</style></head><body><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><a class="brand" href="/" aria-label="UzGeoData home"><span class="brand-icon" aria-hidden="true">&#8776;</span>UzGeoData<span class="brand-sub">BASIN ATLAS</span></a><nav aria-label="Main navigation"><a href="/project.html">Project overview</a><a href="/examples.html">Use cases</a><a href="/case-studies.html">Case studies</a><a href="/guide.html">User guide</a><a href="/projects.html">Projects</a><a class="button small" href="/">Open basin explorer <span aria-hidden="true">&#8599;</span></a></nav></header>
+<main id="main" class="dr"><div class="dr-inner">
+<p class="dr-status" id="dr-status" role="status">Loading the drought record…</p>
+
+  <header class="masthead">
+    <span class="eyebrow">Amu Darya · Syr Darya · 7,445 basins · water years <span id="span-years"></span></span>
+    <h1>Where drought lands, and who downstream feels it</h1>
+    <p class="lede">Each water year's precipitation and drought index for every basin, set against the 1991–2020 WMO normal and against the 10, 20 and 30 years before it. All values come from one product version, TerraClimate v1.1, from 1960 to 2025.</p>
+    <div class="findings" id="findings"></div>
+  </header>
+
+  <section class="section" id="timeline">
+    <header>
+      <span class="eyebrow">1 · System record</span>
+      <h2>Wet and dry water years since 1961</h2>
+      <p>Bars show SPI-12, a standard score for water-year precipitation (October–September) fitted on 1991–2020. Below −1 is a moderate drought, below −1.5 severe, below −2 extreme. The lower chart shows the precipitation totals themselves against the fixed normal and the three trailing norms.</p>
+    </header>
+    <div class="controls">
+      <div class="chips" id="system-chips" role="group" aria-label="Area"></div>
+    </div>
+    <figure class="figure">
+      <div class="chart-wrap"><svg id="spi-chart" role="img" aria-label="SPI-12 by water year"></svg></div>
+      <div class="chart-wrap"><svg id="ppt-chart" role="img" aria-label="Water-year precipitation and its norms"></svg></div>
+      <figcaption id="timeline-caption"></figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="map-section">
+    <header>
+      <span class="eyebrow">2 · Basin map</span>
+      <h2>One year, 438 sub-basins</h2>
+      <p>Level-7 HydroBASINS units, each built from its level-12 basins. Pick a year and the norm to compare against. Dashed outlines are Uzbekistan's regions. Select a unit to read its values.</p>
+    </header>
+    <div class="controls">
+      <label class="field">Compare
+        <select id="metric"></select>
+      </label>
+      <div class="chips" id="year-jumps" role="group" aria-label="Documented years"></div>
+    </div>
+    <div class="year-slider">
+      <span class="eyebrow">Water year</span>
+      <input type="range" id="year" aria-label="Water year">
+      <output id="year-out" for="year"></output>
+    </div>
+    <div class="map-grid">
+      <figure class="figure">
+        <div class="chart-wrap"><svg id="map" class="map" role="img" aria-label="Basin map"></svg></div>
+      </figure>
+      <aside class="map-side">
+        <div class="legend" id="legend"></div>
+        <div class="readout" id="readout"><span class="note">Select a sub-basin on the map to read its values.</span></div>
+        <p class="note" id="map-note"></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="severity">
+    <header>
+      <span class="eyebrow">3 · Exposure</span>
+      <h2>Which basins dry out most often</h2>
+      <p>On the left, how many water years from 1991 to 2025 each sub-basin spent in severe drought (SPI-12 ≤ −1.5). On the right, how far the 1991–2020 normal has moved from the 1961–1990 normal: brown means the newer normal is drier.</p>
+    </header>
+    <div class="two-maps">
+      <figure class="figure"><div class="chart-wrap"><svg id="map-severe" class="map" role="img" aria-label="Severe drought years per sub-basin"></svg></div><div class="legend" id="legend-severe"></div></figure>
+      <figure class="figure"><div class="chart-wrap"><svg id="map-shift" class="map" role="img" aria-label="Change between normals"></svg></div><div class="legend" id="legend-shift"></div></figure>
+    </div>
+    <figure class="figure">
+      <h3>Sub-basins with the most severe drought years, 1991–2025</h3>
+      <div class="chart-wrap"><table id="rank-table"></table></div>
+    </figure>
+  </section>
+
+  <section class="section" id="events">
+    <header>
+      <span class="eyebrow">4 · Check against the record</span>
+      <h2>Do the documented years show up in the data?</h2>
+      <p>Drought and flood years named in published sources, and how each one ranks among the system's water years in this data. Rank 1 is the driest year on record.</p>
+    </header>
+    <figure class="figure"><div class="chart-wrap"><table id="event-table"></table></div>
+      <figcaption>Sources are linked in each row. The data was not tuned to match them.</figcaption></figure>
+  </section>
+
+  <section class="section" id="downstream">
+    <header>
+      <span class="eyebrow">5 · Downstream</span>
+      <h2>Local rain versus water arriving from upstream</h2>
+      <p>For each region of Uzbekistan: local precipitation against the 1991–2020 normal, and the runoff generated across the whole upstream catchment of the largest river passing through it. Lowland regions such as Karakalpakstan and Khorezm get little rain in any year. What reaches them is set by the mountains upstream.</p>
+    </header>
+    <div class="controls">
+      <label class="field">Water year <select id="down-year"></select></label>
+    </div>
+    <figure class="figure">
+      <div class="chart-wrap"><svg id="down-chart" role="img" aria-label="Local versus upstream anomaly by region"></svg></div>
+      <div class="chart-wrap"><table id="down-table"></table></div>
+      <figcaption>Upstream supply is TerraClimate runoff generation summed over the upstream area. It includes rain and snowmelt but not glacier melt or reservoir releases, which both buffer the real river in dry years.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="method">
+    <header><span class="eyebrow">6 · Method</span><h2>How the numbers are made</h2></header>
+    <div class="method">
+      <div><h3>Source</h3><p>TerraClimate v1.1 monthly precipitation, PDSI, runoff and PET from the producer's yearly NetCDF files (June 2026 release). Each 1/24° grid is reduced to all 7,445 level-12 basins by fractional cell overlap, then area-weighted into 438 level-7 units, two systems and Uzbekistan's 14 regions.</p></div>
+      <div><h3>Norms</h3><ul>
+        <li><b>1991–2020</b>: the current WMO standard normal.</li>
+        <li><b>1961–1990</b>: the previous standard normal.</li>
+        <li><b>Trailing 10, 20 and 30 years</b>: the mean of the water years just before the year shown. They start in 1971, 1981 and 1991.</li></ul></div>
+      <div><h3>Indices</h3><p>SPI-12 fits a gamma distribution to each unit's own 1991–2020 water-year totals. PDSI is the water-year mean of TerraClimate's monthly Palmer index. It already expresses departure from local normal, so its difference from a norm shows change in drought state.</p></div>
+      <div><h3>Limits</h3><ul id="caveats"></ul></div>
+    </div>
+    <p class="note">Built by <code>PIPELINES/build_drought_study.py</code>. Downloads: <a href="/data/atlas/drought-study/basin-wateryear.parquet">all 7,445 basins × water years (Parquet)</a> · <a href="/data/atlas/drought-study/level07-wateryear.parquet">438 sub-basins (Parquet)</a> · <a href="/data/atlas/drought-study/regions-wateryear.parquet">Uzbekistan regions (Parquet)</a> · <a href="/data/atlas/drought-study/summary.json">summary (JSON)</a>. Each basin's own record is in the <b>Drought</b> tab of the <a href="/">basin explorer</a>, with a CSV download.</p>
+  </section>
+</div><div class="tip" id="tip" hidden></div></main>
+<script type="module" src="/drought-main.js"></script>
+</body></html>
