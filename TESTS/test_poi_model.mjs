@@ -1,7 +1,70 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { aoiFeature } from '../INTERFACE/aoiModel.js';
-import { basinUnits, parsePois, matchPoi, reportMembers, makePoiReport, reportMonthlyCsv } from '../INTERFACE/poiModel.js';
+import { annualSeries, basinUnits, currentConditions, monthlyNormals, parsePois, matchPoi, reportMembers, makePoiReport, reportMonthlyCsv } from '../INTERFACE/poiModel.js';
+
+const monthly = (years, value) => {
+  const rows = [];
+  for (let y = 0; y < years; y += 1) {
+    for (let m = 1; m <= 12; m += 1) {
+      rows.push({ year: 2003 + y, month: m, mean_observed_area: value(y, m), observed_basins: 3,
+        area_coverage_percent: 100 });
+    }
+  }
+  return rows;
+};
+
+test('current conditions compare a month with the same month in the record', () => {
+  // A monthly value on its own answers nothing: 40 mm is a drought in April and a
+  // deluge in September, so the comparison has to be against the same calendar
+  // month rather than against the record as a whole.
+  const seasonal = (y, m) => 40 + 30 * Math.cos((m - 3) / 12 * 2 * Math.PI) + y * 0.8;
+  const state = currentConditions(monthly(20, seasonal), { factor: 1000, unit: 'm³' });
+  assert.equal(state.baseline.years, 20);
+  assert.equal(state.latest.year, 2022);
+  assert.ok(state.latest.normal > 0 && state.latest.value > state.latest.normal);
+  assert.ok(state.latest.rankPercentile > 80, 'the warmest end of a rising series ranks high');
+
+  // A trend of +0.8 per month is +9.6 a year on an annual sum, so 96 a decade.
+  assert.ok(Math.abs(state.trend.slopePerDecade - 96) < 0.5, 'Sen slope must recover the planted trend');
+  assert.equal(state.trend.direction, 'increasing');
+  assert.ok(state.trend.p < 0.01);
+});
+
+test('a percent anomaly is withheld where zero is not an absence', () => {
+  // Temperature has no meaningful zero, so "12% above normal" would be a statement
+  // about the Celsius scale. The package says which variables have a total, and
+  // that is the same distinction.
+  const flat = currentConditions(monthly(15, (y, m) => 10 + m + y * 0.1), { factor: null, unit: null });
+  assert.equal(flat.latest.anomalyPercent, null);
+  assert.equal(flat.lastTwelveMonths.anomalyPercent, null);
+  assert.equal(flat.lastTwelveMonths.aggregation, 'mean', 'intensive quantities average over the year');
+
+  const depth = currentConditions(monthly(15, (y, m) => 10 + m + y * 0.1), { factor: 1000, unit: 'm³' });
+  assert.ok(depth.latest.anomalyPercent !== null);
+  assert.equal(depth.lastTwelveMonths.aggregation, 'sum');
+});
+
+test('an incomplete record reports less rather than reporting wrong', () => {
+  // Nine years is not a baseline, and a year missing months is not a low year.
+  const short = currentConditions(monthly(9, (y, m) => m + y), { factor: 1000, unit: 'm³' });
+  assert.equal(short.baseline, null, 'fewer than ten complete years leaves the normals unstated');
+  assert.equal(short.trend, null);
+  assert.equal(short.latest.normal, null);
+  assert.equal(short.latest.anomaly, null);
+
+  const gapped = monthly(15, (y, m) => m + y).filter(row => !(row.year === 2016 && row.month === 7));
+  const state = currentConditions(gapped, { factor: 1000, unit: 'm³' });
+  assert.equal(state.trend.years, 14, 'the year with a gap is left out of the trend');
+  assert.equal(monthlyNormals(gapped).years, 14);
+
+  // A running twelve months over a gap would be a smaller number, not a drier year.
+  const recentGap = monthly(15, (y, m) => m + y).filter(row => !(row.year === 2017 && row.month === 5));
+  assert.equal(currentConditions(recentGap.slice(0, -6), { factor: 1000, unit: 'm³' }).lastTwelveMonths, null);
+
+  assert.equal(annualSeries([], { factor: null }).trend, null);
+  assert.equal(currentConditions([], { factor: null }), null);
+});
 
 test('a coarse basin is reported through the level-12 units inside it', () => {
   // The map draws level 7 at a regional view, and statistics are published for

@@ -142,8 +142,25 @@ def build():
         digest = hashlib.sha256(data).hexdigest()
         filename = f'{name}-{digest[:12]}.bin.gz'
         (OUTPUT / filename).write_bytes(data)
+        # Where this variable's record actually ends, published beside it. The frame
+        # is 288 calendar positions for every variable, but TerraClimate stops in
+        # 2024 while ERA5-Land reaches 2026, and a reader offered a list of
+        # variables has no way to tell which is which until they have loaded one and
+        # found it short. Counted from the matrix rather than declared, so it cannot
+        # drift from the values it describes.
+        observed = np.isfinite(matrix).any(axis=0)
+        positions = np.flatnonzero(observed)
+        span = None
+        if positions.size:
+            first, last = int(positions[0]), int(positions[-1])
+            span = {
+                'first': f'{history_index["years"][0] + first // 12}-{first % 12 + 1:02d}',
+                'last': f'{history_index["years"][0] + last // 12}-{last % 12 + 1:02d}',
+                'observed_months': int(observed.sum()),
+                'frame_months': int(matrix.shape[1]),
+            }
         manifests[name] = {'url': f'/data/atlas/catchments/{filename}', 'bytes': len(data), 'sha256': digest,
-                           'meta': history_index['series'][name],
+                           'meta': history_index['series'][name], 'coverage': span,
                            'provenance': [json.loads(value) for value in provenance[name]],
                            'provenance_ids': provenance_ids[name]}
         print(f'{name}: {len(data):,} bytes', flush=True)

@@ -6,7 +6,7 @@ import { fetchAll } from './aoiModel.js';
 import { collectionBounds } from './mapViewModel.js';
 import { formatNumber } from './landingModel.js';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
-import { basinUnits, makePoiReport, matchPoi, MAX_UPLOAD_BYTES, parsePois, REPORT_METHOD, reportMonthlyCsv } from './poiModel.js';
+import { basinUnits, CONDITION_METHOD, makePoiReport, matchPoi, MAX_UPLOAD_BYTES, parsePois, REPORT_METHOD, reportMonthlyCsv } from './poiModel.js';
 import { reportFilename, reportPdf, reportZip, saveFile } from './poiExports.js';
 import './damModal.css';
 import './poiReport.css';
@@ -81,6 +81,50 @@ function Summary({ report, scope }) {
       <p>Area-weighted mean · {formatNumber(latest.area_coverage_percent, 1)}% area coverage</p>
       <p>{data.total.label}: {latest.total_full_catchment == null ? 'Not available' : `${formatNumber(latest.total_full_catchment, 2)} ${data.total.unit}`}</p>
     </> : <p>No observations for this variable.</p>}
+  </section>;
+}
+
+const month = (year, number) => `${year}-${String(number).padStart(2, '0')}`;
+
+/**
+ * Where this catchment stands now against its own record.
+ *
+ * A monthly value alone answers nothing a reader came with: 40 mm is a drought in
+ * April and a deluge in September. The comparisons are the point, and the record
+ * end is stated beside them, because a variable that stops in 2024 is reporting
+ * the source's limit rather than current conditions.
+ */
+function Conditions({ report }) {
+  const scopes = ['local', 'upstream'].map(scope => [scope, report[scope].conditions]).filter(([, state]) => state);
+  if (!scopes.length) return null;
+  const unit = report.meta.unit;
+  return <section className="poi-conditions" aria-label="Current conditions against the record">
+    <h4>Current conditions</h4>
+    {report.coverage && <p className="poi-coverage">Record {report.coverage.first} to {report.coverage.last} ·
+      {' '}{report.coverage.observed_months} observed months of {report.coverage.frame_months}</p>}
+    <div className="poi-summaries">{scopes.map(([scope, state]) => {
+      const { latest, baseline, lastTwelveMonths: window, trend } = state;
+      return <dl key={scope}>
+        <div><dt>{scope === 'local' ? 'Local basin' : 'Upstream catchment'}</dt>
+          <dd>{baseline ? `baseline ${baseline.firstYear}–${baseline.lastYear}` : 'no baseline'}</dd></div>
+        <div><dt>Latest month {month(latest.year, latest.month)}</dt>
+          <dd>{formatNumber(latest.value, 2)} {unit}</dd></div>
+        <div><dt>Normal for that month</dt><dd>{formatNumber(latest.normal, 2)} {unit}</dd></div>
+        <div><dt>Anomaly</dt><dd>{formatNumber(latest.anomaly, 2)} {unit}
+          {latest.anomalyPercent !== null && ` · ${formatNumber(latest.anomalyPercent, 0)}%`}</dd></div>
+        {latest.rankPercentile !== null && <div><dt>Rank in that month</dt>
+          <dd>{latest.rankPercentile}th percentile of {latest.rankYears} years</dd></div>}
+        {window && <div><dt>Last 12 months ({window.aggregation})</dt>
+          <dd>{formatNumber(window.value, 1)} {unit} · {formatNumber(window.anomalyPercent ?? window.anomaly, 1)}
+            {window.anomalyPercent === null ? ` ${unit}` : '%'} vs normal</dd></div>}
+        <div><dt>Trend, {trend ? `${trend.years} complete years` : 'not reported'}</dt>
+          <dd>{trend ? `${trend.direction}${trend.slopePerDecade === null ? ''
+            : ` · ${formatNumber(trend.slopePerDecade, 2)} ${unit} per decade · p ${formatNumber(trend.p, 3)}`}`
+            : 'fewer than ten complete years'}</dd></div>
+      </dl>;
+    })}</div>
+    {report.variable === 'snw_pc_s' && <p role="note">Snow cover is withdrawn from trend use; the slope above is
+      shown for inspection only.</p>}
   </section>;
 }
 
@@ -257,7 +301,11 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
       {match?.status === 'unmatched' && <p role="status">No basin matches this location within the selected rule. Check the coordinates or point snap distance. No report has been inferred.</p>}
       {data && upload && <label className="poi-picker">Report variable
         <select value={variable} disabled={!!busy} onChange={event => setVariable(event.target.value)}>
-          {Object.entries(data.index.series).map(([key, item]) => <option key={key} value={key}>{item.meta.label} · {item.meta.unit}</option>)}
+          {/* Every variable has the same 288-month frame and they do not all reach
+              the same month; without this the reader picks one, sees it stop in
+              2024, and concludes the atlas is two years behind. */}
+          {Object.entries(data.index.series).map(([key, item]) => <option key={key} value={key}>
+            {item.meta.label} · {item.meta.unit}{item.coverage ? ` · to ${item.coverage.last}` : ''}</option>)}
         </select>
       </label>}
       {loadingReport && <p role="status">Preparing local and upstream statistics…</p>}
@@ -268,6 +316,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
         {busy && <p role="status">Preparing {busy} download…</p>}
         <ReportMap key={`${active}-${variable}`} report={report}/>
         <div className="poi-summaries"><Summary report={report} scope="local"/><Summary report={report} scope="upstream"/></div>
+        <Conditions report={report}/>
         {report.morphology?.traced_area_km2 < report.morphology?.reported_upstream_area_km2 * 0.95 &&
           <p role="note">The traced network covers less than 95% of the reported upstream area. Results describe the published network only.</p>}
         {!!report.geometry_missing_ids.length && <p role="note">{report.geometry_missing_ids.length} upstream basins have statistics but no display boundary.</p>}
@@ -282,7 +331,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
           {MORPHOLOGY_FIELDS.map(([key, label, unit]) => <div key={key}><dt>{label}</dt><dd>{formatNumber(report.morphology[key], 2)} {unit}</dd></div>)}
         </dl></details>}
         <AttributeDetails key={active} report={report}/>
-        <details><summary>Methods &amp; sources</summary><p>{REPORT_METHOD}</p><p>{report.upstream.total.note}</p>
+        <details><summary>Methods &amp; sources</summary><p>{REPORT_METHOD}</p><p>{CONDITION_METHOD}</p><p>{report.upstream.total.note}</p>
           <p>Means describe the area with observations; the CSV/JSON also include full-area means, totals, coverage and extrema. Missing values are not replaced with zero.</p>
           {report.morphology_notes.map(note => <p key={note}>{note}</p>)}
           <p>Generated {report.generatedAt}. The ZIP contains the full report and relevant geometry, attribute and monthly files for this location and variable.</p>

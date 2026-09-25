@@ -168,7 +168,181 @@ export function reportMembers(index, basins) {
   return { local: roots.map(id => positions.get(id)), upstream };
 }
 
+// A monthly value on its own says nothing: 40 mm of rain is a drought in April and
+// a deluge in September. These turn the rows a report already carries into the two
+// comparisons a reader is actually making - this month against the same month in
+// the record, and the record against itself over time.
+
+/** Complete calendar years, which is what a normal and an annual trend need. */
+function completeYears(rows) {
+  const byYear = new Map();
+  for (const row of rows) {
+    if (!(row.observed_basins > 0) || row.mean_observed_area === null) continue;
+    const year = byYear.get(row.year) || [];
+    year.push(row);
+    byYear.set(row.year, year);
+  }
+  return [...byYear.entries()].filter(([, months]) => months.length === 12).sort((a, b) => a[0] - b[0]);
+}
+
+/**
+ * The mean for each calendar month over the complete years of the record.
+ *
+ * Not a 1991-2020 normal: this record starts in 2003, and calling a 2003-2024 mean
+ * a climate normal would borrow authority the period does not have. It is stated
+ * as what it is - the baseline available here - with its years attached so a
+ * reader can judge it.
+ */
+export function monthlyNormals(rows) {
+  const years = completeYears(rows);
+  if (years.length < 10) return null;
+  const sums = Array.from({ length: 12 }, () => []);
+  for (const [, months] of years) for (const row of months) sums[row.month - 1].push(row.mean_observed_area);
+  return {
+    firstYear: years[0][0],
+    lastYear: years.at(-1)[0],
+    years: years.length,
+    byMonth: sums.map(values => values.reduce((total, value) => total + value, 0) / values.length),
+    samples: sums,
+  };
+}
+
+function mannKendall(values) {
+  let score = 0;
+  for (let i = 0; i < values.length - 1; i += 1) {
+    for (let j = i + 1; j < values.length; j += 1) score += Math.sign(values[j] - values[i]);
+  }
+  const ties = new Map();
+  for (const value of values) ties.set(value, (ties.get(value) || 0) + 1);
+  let variance = values.length * (values.length - 1) * (2 * values.length + 5);
+  for (const count of ties.values()) variance -= count * (count - 1) * (2 * count + 5);
+  variance /= 18;
+  const z = score === 0 || variance <= 0 ? 0
+    : (score > 0 ? score - 1 : score + 1) / Math.sqrt(variance);
+  // Two-sided p from the normal approximation, which is what Mann-Kendall uses
+  // once a series is longer than about ten points.
+  const p = 2 * (1 - 0.5 * (1 + erf(Math.abs(z) / Math.SQRT2)));
+  return { score, z, p };
+}
+
+function erf(x) {
+  // Abramowitz and Stegun 7.1.26: enough for a reported significance, and it keeps
+  // this file free of a statistics dependency.
+  const t = 1 / (1 + 0.3275911 * x);
+  const y = 1 - ((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t * t
+    * Math.exp(-x * x) - 0.254829592 * t * Math.exp(-x * x);
+  return Math.max(0, Math.min(1, y));
+}
+
+function senSlope(points) {
+  const slopes = [];
+  for (let i = 0; i < points.length - 1; i += 1) {
+    for (let j = i + 1; j < points.length; j += 1) {
+      const run = points[j][0] - points[i][0];
+      if (run !== 0) slopes.push((points[j][1] - points[i][1]) / run);
+    }
+  }
+  if (!slopes.length) return null;
+  slopes.sort((left, right) => left - right);
+  const middle = slopes.length >> 1;
+  return slopes.length % 2 ? slopes[middle] : (slopes[middle - 1] + slopes[middle]) / 2;
+}
+
+/**
+ * The annual series and its trend.
+ *
+ * Extensive quantities are summed over the year and intensive ones averaged,
+ * decided by whether the package defines a total for the variable rather than by
+ * guessing from the unit. Only complete years are used: a year missing four months
+ * is not a low year.
+ */
+export function annualSeries(rows, total) {
+  const years = completeYears(rows);
+  const extensive = total?.factor !== null && total?.factor !== undefined;
+  const series = years.map(([year, months]) => {
+    const values = months.map(row => row.mean_observed_area);
+    const sum = values.reduce((carried, value) => carried + value, 0);
+    return { year, value: extensive ? sum : sum / values.length };
+  });
+  if (series.length < 10) return { series, extensive, trend: null };
+  const { score, z, p } = mannKendall(series.map(entry => entry.value));
+  const slope = senSlope(series.map(entry => [entry.year, entry.value]));
+  return {
+    series,
+    extensive,
+    trend: {
+      years: series.length, score, z, p,
+      slopePerYear: slope,
+      slopePerDecade: slope === null ? null : slope * 10,
+      significant: p < 0.05,
+      direction: slope === null || p >= 0.05 ? 'no detectable trend' : slope > 0 ? 'increasing' : 'decreasing',
+    },
+  };
+}
+
+/**
+ * Where the most recent months sit against the baseline.
+ *
+ * Percent anomalies are reported only where zero means none of the quantity -
+ * rainfall, runoff, snow-covered area. A temperature anomaly in percent would be a
+ * statement about the Celsius scale rather than about the weather.
+ */
+export function currentConditions(rows, total) {
+  const normals = monthlyNormals(rows);
+  const observed = rows.filter(row => row.observed_basins > 0 && row.mean_observed_area !== null);
+  if (!observed.length) return null;
+  const latest = observed.at(-1);
+  const ratioMeaningful = total?.factor !== null && total?.factor !== undefined;
+  const normal = normals ? normals.byMonth[latest.month - 1] : null;
+  const sample = normals ? normals.samples[latest.month - 1] : [];
+  const below = sample.filter(value => value < latest.mean_observed_area).length;
+
+  // Twelve months only when the twelve most recent positions were all observed:
+  // a running total over a gap is a smaller number, not a drier year.
+  const tail = observed.slice(-12);
+  const contiguous = tail.length === 12 && tail.every((row, index) => index === 0
+    || row.year * 12 + row.month === tail[index - 1].year * 12 + tail[index - 1].month + 1);
+  const window = contiguous
+    ? tail.reduce((carried, row) => carried + row.mean_observed_area, 0) / (ratioMeaningful ? 1 : 12)
+    : null;
+  const windowNormal = normals
+    ? normals.byMonth.reduce((carried, value) => carried + value, 0) / (ratioMeaningful ? 1 : 12)
+    : null;
+
+  return {
+    baseline: normals && { firstYear: normals.firstYear, lastYear: normals.lastYear, years: normals.years },
+    latest: {
+      year: latest.year, month: latest.month,
+      value: latest.mean_observed_area,
+      coveragePercent: latest.area_coverage_percent,
+      normal,
+      anomaly: normal === null ? null : latest.mean_observed_area - normal,
+      anomalyPercent: normal && ratioMeaningful ? (latest.mean_observed_area - normal) / normal * 100 : null,
+      rankPercentile: sample.length ? Math.round(100 * below / sample.length) : null,
+      rankYears: sample.length,
+    },
+    lastTwelveMonths: window === null ? null : {
+      value: window, normal: windowNormal,
+      anomaly: windowNormal === null ? null : window - windowNormal,
+      anomalyPercent: windowNormal && ratioMeaningful ? (window - windowNormal) / windowNormal * 100 : null,
+      aggregation: ratioMeaningful ? 'sum' : 'mean',
+    },
+    ...annualSeries(rows, total),
+  };
+}
+
+export const CONDITION_METHOD = 'Normals are the mean of each calendar month over the complete years '
+  + 'of this record, not a 1991-2020 climate normal, and the years used are stated. Percent anomalies are '
+  + 'given only where zero means none of the quantity. Annual figures use complete years only, so a year '
+  + 'missing months is left out rather than counted low. The trend is Mann-Kendall with a Sen slope over '
+  + 'those annual values; it describes this record and this catchment, and a variable whose record ends '
+  + 'earlier is not extrapolated to the present.';
+
 export const REPORT_METHOD = 'Local: full matched level-12 sub-basins. Upstream: their union plus all connected upstream sub-basins, counted once, including virtual links. Monthly means use local basin area as weights. Full-area means and totals are withheld if any member lacks data. This is basin assignment, not river snapping or catchment delineation at the uploaded coordinate. Polygon results describe whole intersecting basins, not a clipped polygon. Matching uses simplified map outlines; boundary matches can differ from a full-resolution GIS overlay.';
+
+function withConditions(aggregate) {
+  return { ...aggregate, conditions: currentConditions(aggregate.rows, aggregate.total) };
+}
 
 export function makePoiReport({ feature, match, index, values, variable, geometry, morphology, sourceFile, generatedAt = new Date().toISOString() }) {
   const members = reportMembers(index, match.basins);
@@ -183,8 +357,12 @@ export function makePoiReport({ feature, match, index, values, variable, geometr
     match: { status: match.status, distance_km: match.distanceKm, snapped_coordinate: match.coordinate, basin_ids: ids('local'), candidate_count: match.candidateCount || match.basins.length },
     method: REPORT_METHOD, variable, meta: entry.meta, provenance,
     source_hashes: { monthly: entry.sha256, history: index.history_sha256, geometry: index.display_geometry_sha256 },
-    local: { ids: ids('local'), ...aggregateCatchment(index, values, members.local, variable) },
-    upstream: { ids: ids('upstream'), ...aggregateCatchment(index, values, members.upstream, variable) },
+    local: { ids: ids('local'), ...withConditions(aggregateCatchment(index, values, members.local, variable)) },
+    upstream: { ids: ids('upstream'), ...withConditions(aggregateCatchment(index, values, members.upstream, variable)) },
+    // Where this variable's record ends, taken from the package rather than from
+    // the frame: every variable has 288 calendar positions and they do not all
+    // reach the same month.
+    coverage: entry.coverage || null,
     morphology: match.basins.length === 1 ? morphology?.basins?.[ids('local')[0]] || null : null,
     morphology_notes: morphology?.notes || [],
     local_geometry: collection(match.basins), upstream_geometry: upstreamGeometry,

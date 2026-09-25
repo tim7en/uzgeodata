@@ -1,4 +1,4 @@
-import { reportMonthlyCsv } from './poiModel.js';
+import { CONDITION_METHOD, reportMonthlyCsv } from './poiModel.js';
 import { attributesCsv, dictionaryCsv } from './aoiModel.js';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
 import fontUrl from './assets/NotoSans-Regular.ttf?url';
@@ -48,6 +48,10 @@ export async function reportPdf(report) {
   line(`Level-12 basin IDs: ${report.match.basin_ids.join(', ')}`);
   line(`Variable: ${report.meta.label} (${report.meta.unit})`, 12);
   line(`Source: ${report.meta.source_release || report.meta.source}`);
+  if (report.coverage) {
+    line(`Record: ${report.coverage.first} to ${report.coverage.last}`
+      + ` · ${report.coverage.observed_months} observed months in a ${report.coverage.frame_months}-month frame`);
+  }
   for (const scope of ['local', 'upstream']) {
     const data = report[scope];
     line(scope === 'local' ? 'Local basin summary' : 'Upstream catchment summary (including local)', 14);
@@ -61,13 +65,41 @@ export async function reportPdf(report) {
       }
     } else line('No observations are available for this variable.');
     line(data.total.note, 9);
+    conditions(data);
   }
+  function conditions(data) {
+    const state = data.conditions;
+    if (!state) return;
+    const unit = report.meta.unit;
+    const { latest, baseline, lastTwelveMonths: window, trend } = state;
+    line('How this compares with the record', 12);
+    if (baseline) line(`Baseline: mean of each calendar month, ${baseline.firstYear}-${baseline.lastYear}, `
+      + `${baseline.years} complete years.`, 9);
+    const share = latest.anomalyPercent === null ? '' : ` (${number(latest.anomalyPercent)}%)`;
+    line(`Latest month ${latest.year}-${String(latest.month).padStart(2, '0')}: ${number(latest.value)} ${unit}`
+      + `; normal ${number(latest.normal)}; anomaly ${number(latest.anomaly)} ${unit}${share}`);
+    if (latest.rankPercentile !== null) {
+      line(`That is the ${latest.rankPercentile}th percentile of the ${latest.rankYears} years this record holds `
+        + 'for that calendar month.', 9);
+    }
+    if (window) {
+      const windowShare = window.anomalyPercent === null ? '' : ` (${number(window.anomalyPercent)}%)`;
+      line(`Last 12 months (${window.aggregation}): ${number(window.value)} ${unit} against a normal of `
+        + `${number(window.normal)}; anomaly ${number(window.anomaly)}${windowShare}`);
+    } else line('The last twelve months are not contiguous in this record, so no running total is given.', 9);
+    if (trend) {
+      line(`Trend over ${trend.years} complete years: ${trend.direction}`
+        + `; Sen slope ${number(trend.slopePerDecade)} ${unit} per decade; Mann-Kendall p = ${number(trend.p)}`);
+    } else line('Fewer than ten complete years: no trend is reported.', 9);
+  }
+
   if (report.morphology) {
     line('Upstream catchment morphology', 14);
     for (const [key, label, unit] of MORPHOLOGY_FIELDS) line(`${label}: ${number(report.morphology[key])} ${unit}`);
   }
   line('Methods and coverage', 14);
   line(report.method, 9);
+  line(CONDITION_METHOD, 9);
   if (report.geometry_missing_ids.length) line(`${report.geometry_missing_ids.length} upstream basins have statistics but no display geometry.`, 9);
   if (report.morphology?.traced_area_km2 < report.morphology?.reported_upstream_area_km2 * 0.95) line('The traced network covers less than 95% of the reported upstream area. These results describe only the published network.');
   for (const note of report.morphology_notes) line(note, 9);

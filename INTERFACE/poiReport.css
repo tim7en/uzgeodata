@@ -23,3 +23,11 @@
 .poi-modal [role=alert]{color:var(--l-accent-1,#ffb787)}
 .poi-modal :focus-visible{outline:2px solid var(--l-accent-1,#66c5e8);outline-offset:2px}
 @media(max-width:600px){.poi-controls,.poi-summaries,.poi-morphology{grid-template-columns:1fr}.poi-map{height:240px}.poi-modal .dam-modal-card{padding:18px 12px}}
+
+.poi-conditions{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.poi-conditions h4{margin:0 0 4px;font-size:13px}
+.poi-coverage{margin:0 0 10px;font-size:11px;color:var(--muted)}
+.poi-conditions dl{margin:0;display:grid;gap:4px}
+.poi-conditions dl>div{display:flex;justify-content:space-between;gap:12px;font-size:12px;border-bottom:1px solid var(--line);padding-bottom:3px}
+.poi-conditions dt{color:var(--muted)}
+.poi-conditions dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
