@@ -112,7 +112,7 @@ export function AoiLayer({ drawing, vertices, closed, selection, onRectangle, on
 
 /** The dock section: draw, read the selection, and take it away. */
 export function AoiPanel({
-  drawing, vertices, closed, rule, selection, loadingGeometry, onStart, onCancel, onClear, onRule, onFit,
+  drawing, vertices, closed, rule, selection, loadingGeometry, onStart, onCancel, onClear, onRule, onFit, onUpload,
 }) {
   const [progress, setProgress] = useState(null);
   const [error, setError] = useState(null);
@@ -180,6 +180,7 @@ export function AoiPanel({
 
   return <div className="land-aoi" ref={panel}>
     <span className="land-aoi-title">Area of interest</span>
+    {onUpload && <button type="button" className="land-aoi-primary" onClick={onUpload}>Upload points or polygons · basin reports</button>}
     {!drawing && !closed && <>
       <p className="land-group-note">Select a rectangle to find level-12 basins and download their data.</p>
       <button type="button" className="land-aoi-primary" onClick={onStart}><PenLine size={13}/> Draw area</button>

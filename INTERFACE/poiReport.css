@@ -1,0 +1,25 @@
+.poi-modal .dam-modal-card{width:min(1000px,100%);background:var(--panel,#060b0e);color:var(--ink,#e8eef2);border-top-color:var(--l-accent-1,#66c5e8)}
+.poi-modal h2,.poi-modal h3{color:var(--ink,#e8eef2)}
+.poi-modal p{font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.poi-modal label{display:grid;gap:7px;font-size:13px;min-width:0}
+.poi-controls{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.poi-modal select,.poi-modal input{width:100%;min-width:0;box-sizing:border-box;background:var(--l-bg-7,#17242c);color:inherit;border:1px solid var(--line,#30434c);border-radius:4px;padding:9px}
+.poi-picker{margin:14px 0}
+.poi-modal button:not(.dam-modal-close){padding:8px 12px;border:1px solid var(--line,#30434c);border-radius:4px;background:var(--l-bg-7,#17242c);color:inherit;cursor:pointer}
+.poi-modal button:disabled{opacity:.5;cursor:wait}
+.poi-downloads{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.poi-map{height:300px;background:var(--l-bg-7,#15262c);border:1px solid var(--line,#30434c)}
+.poi-map-key{font-size:11px!important}
+.poi-summaries{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.poi-summary{border:1px solid var(--line,#30434c);padding:14px;border-radius:5px}
+.poi-summary h3{margin:0;font-size:18px}.poi-summary strong{font-size:20px}
+.poi-modal details{margin-top:14px;border-top:1px solid var(--line,#30434c);padding-top:10px}
+.poi-modal summary{cursor:pointer;font-size:14px;font-weight:600}
+.poi-table{max-height:330px;overflow:auto;margin-top:12px}
+.poi-table table{border-collapse:collapse;width:100%;font-size:12px}
+.poi-table td,.poi-table th{padding:8px;border-bottom:1px solid var(--line,#30434c);text-align:left;vertical-align:top}
+.poi-table small{display:block;font-size:10px;font-weight:400;min-width:100px}
+.poi-morphology{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px}.poi-morphology dd{margin:4px 0}
+.poi-modal [role=alert]{color:var(--l-accent-1,#ffb787)}
+.poi-modal :focus-visible{outline:2px solid var(--l-accent-1,#66c5e8);outline-offset:2px}
+@media(max-width:600px){.poi-controls,.poi-summaries,.poi-morphology{grid-template-columns:1fr}.poi-map{height:240px}.poi-modal .dam-modal-card{padding:18px 12px}}

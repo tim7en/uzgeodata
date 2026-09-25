@@ -33,6 +33,7 @@ import {
   overlayOpacity, overlayStyle, quantileBreaks, readAttribute, riverStyle, systemMeta, systemTotals, tierForZoom,
 } from './landingModel.js';
 
+const PoiReportModal = React.lazy(() => import('./PoiReportModal.jsx'));
 const LADDER_URL = '/data/hydroclimate/reference-basin-levels.json';
 const RIVER_LADDER_URL = '/data/hydroclimate/reference-river-levels.json';
 const GROUPS_URL = '/data/hydroclimate/reference-attribute-groups.json';
@@ -352,6 +353,8 @@ export default function LandingMap() {
     try { window.localStorage.setItem(OPACITY_KEY, String(opacity)); } catch { /* storage blocked */ }
   }, [opacity]);
   const [tableOpen, setTableOpen] = useState(false);
+  const [poiOpen, setPoiOpen] = useState(false);
+  const closePoi = useCallback(() => setPoiOpen(false), []);
   const [initialTab, setInitialTab] = useState(null);
   // Area of interest. Drawing borrows map clicks, so basin selection is held off
   // through a ref the (stable) basin click handler can read.
@@ -890,6 +893,7 @@ export default function LandingMap() {
     </button>
     {basins && groups && <section className="land-dock" aria-label="Area of interest, basin colouring and map key">
       <AoiPanel drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} rule={aoiRule}
+        onUpload={() => { setPoiOpen(true); setTableOpen(false); setGlacier(null); setLake(null); setDam(null); setStation(null); setRiverReach(null); }}
         selection={aoiSelection} loadingGeometry={aoiClosed && !levels[12]}
         onFit={() => setBounds(collectionBounds(aoiSelection.map(basin => basin.feature)))}
         onStart={startAoi} onCancel={clearAoi} onClear={clearAoi} onRule={setAoiRule}/>
@@ -945,6 +949,9 @@ export default function LandingMap() {
       geometry={levels[selectedLevel]} geometryUrl={ladder?.levels?.find(entry => entry.level === selectedLevel)?.url}
       catalogue={catalogue} loading={loadingStore} initialTab={initialTab} onClose={() => setTableOpen(false)}/>}
 
+    {poiOpen && <React.Suspense fallback={<div className="dam-modal" role="status">Loading upload tools…</div>}>
+      <PoiReportModal entry={level12Entry} onClose={closePoi}/>
+    </React.Suspense>}
     {glacier && <GlacierModal key={glacier.key} cluster={glacier} onClose={closeGlacier}/>}
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}
     {lake && <LakeModal lake={lake} onClose={()=>setLake(null)}/>}

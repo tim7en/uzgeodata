@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'node:url';
+import { createReadStream, statSync } from 'node:fs';
 import { defineConfig } from 'vite';
 
 const here = path => fileURLToPath(new URL(path, import.meta.url));
@@ -13,6 +14,13 @@ const here = path => fileURLToPath(new URL(path, import.meta.url));
 // reads it back as an inventory.
 // JSX is left to Vite's default esbuild transform, matching how the portal built before.
 export default defineConfig({
+  plugins: [{
+    name: 'raw-catchment-matrices',
+    // These are hashed application payloads, not HTTP-compressed responses.
+    // Vite's static middleware otherwise labels .gz as Content-Encoding: gzip.
+    configureServer(server) { server.middlewares.use(rawMatrices(here('./PUBLISHED'))); },
+    configurePreviewServer(server) { server.middlewares.use(rawMatrices(here('./dist'))); },
+  }],
   base: process.env.SITE_BASE || '/',
   root: here('./INTERFACE'),
   publicDir: process.env.LAUNCH_BUILD ? false : here('./PUBLISHED'),
@@ -53,3 +61,19 @@ export default defineConfig({
     },
   },
 });
+
+function rawMatrices(root) {
+  return (request, response, next) => {
+    const pathname = request.url?.split('?')[0];
+    if (!/^\/data\/atlas\/catchments\/[a-z0-9_-]+\.bin\.gz$/.test(pathname || '')
+      || !['GET', 'HEAD'].includes(request.method)) return next();
+    const filename = `${root}${pathname}`;
+    let stat;
+    try { stat = statSync(filename); } catch { return next(); }
+    response.setHeader('Content-Type', 'application/gzip');
+    response.setHeader('Content-Length', stat.size);
+    response.setHeader('Cache-Control', 'no-cache');
+    if (request.method === 'HEAD') return response.end();
+    createReadStream(filename).on('error', error => response.destroy(error)).pipe(response);
+  };
+}
