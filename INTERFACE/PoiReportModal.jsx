@@ -84,7 +84,7 @@ function Summary({ report, scope }) {
   </section>;
 }
 
-export default function PoiReportModal({ entry, onClose }) {
+export default function PoiReportModal({ entry, drawn, onClose }) {
   const [data, setData] = useState(null), [upload, setUpload] = useState(null);
   const [matches, setMatches] = useState([]), [active, setActive] = useState(0);
   const [tolerance, setTolerance] = useState(1), [variable, setVariable] = useState('pre_mm_s');
@@ -161,6 +161,20 @@ export default function PoiReportModal({ entry, onClose }) {
     return () => controller.abort();
   }, [data, upload, matches, active, variable, retry]);
 
+  // An area drawn on the map is the same kind of input as an uploaded polygon, so
+  // it goes through the same parser: one validation path, one set of error
+  // messages, and a ring that failed to close is caught here rather than deep in
+  // the matching.
+  useEffect(() => {
+    if (!drawn) return;
+    const version = ++fileVersion.current;
+    setInputError(''); setError(''); setReport(null); setMatches([]); setActive(0);
+    try {
+      const collection = parsePois(JSON.stringify(drawn), 'drawn-area.geojson');
+      if (version === fileVersion.current) setUpload({ name: 'Area drawn on the map', collection });
+    } catch (cause) { if (version === fileVersion.current) setInputError(cause.message); }
+  }, [drawn]);
+
   const readFile = async event => {
     const file = event.target.files[0]; event.target.value = '';
     if (!file) return;
@@ -189,13 +203,17 @@ export default function PoiReportModal({ entry, onClose }) {
       <header><span className="dam-modal-kicker">Basin atlas · Your locations</span><h2 id="poi-title">Upload &amp; basin reports</h2>
         <p className="dam-modal-sub">Match points or polygons to level-12 basins and compare local and upstream information.</p></header>
       <div className="poi-controls">
-        <label>Upload locations<input type="file" accept=".geojson,.json,.csv" onChange={readFile} disabled={!!busy}/></label>
+        <label>{drawn ? 'Upload other locations' : 'Upload locations'}
+          <input type="file" accept=".geojson,.json,.csv" onChange={readFile} disabled={!!busy}/></label>
         <label>Maximum point snap distance
           <select value={tolerance} disabled={!!busy} onChange={event => setTolerance(Number(event.target.value))}>
             {[0, 0.1, 0.5, 1, 2, 5, 10].map(km => <option key={km} value={km}>{km ? `${km} km` : 'Containing basin only'}</option>)}
           </select>
         </label>
       </div>
+      {drawn && <p role="status">Reporting on the area drawn on the map. Its statistics describe every
+        level-12 basin the area intersects, whole, not the drawn shape itself. Upload a file to report on
+        something else.</p>}
       <p>GeoJSON Point, Polygon or MultiPolygon; or CSV with longitude, latitude and optional name columns. WGS84 coordinates. Up to 100 locations, 5 MB. Files stay in your browser.</p>
       <p>Points outside a basin snap to its nearest boundary only within the chosen distance. Polygons use all intersecting basins.</p>
       {!data && !loadError && <p role="status">Loading basin boundaries and statistics index…</p>}

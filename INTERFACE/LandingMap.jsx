@@ -22,7 +22,7 @@ import BasinFinder from './BasinFinder.jsx';
 import BasinCatchment from './BasinCatchment.jsx';
 import CatchmentStatistics from './CatchmentStatistics.jsx';
 import { AoiLayer, AoiPanel } from './AoiTool.jsx';
-import { selectBasins } from './aoiModel.js';
+import { aoiFeature, selectBasins } from './aoiModel.js';
 import { DEFAULT_MAP_VIEW, readMapView, saveMapView, collectionBounds } from './mapViewModel.js';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
@@ -354,7 +354,10 @@ export default function LandingMap() {
   }, [opacity]);
   const [tableOpen, setTableOpen] = useState(false);
   const [poiOpen, setPoiOpen] = useState(false);
-  const closePoi = useCallback(() => setPoiOpen(false), []);
+  // The feature the report opens on: an area drawn on the map, or nothing, which
+  // leaves the reader at the upload step.
+  const [poiDrawn, setPoiDrawn] = useState(null);
+  const closePoi = useCallback(() => { setPoiOpen(false); setPoiDrawn(null); }, []);
   const [initialTab, setInitialTab] = useState(null);
   // Area of interest. Drawing borrows map clicks, so basin selection is held off
   // through a ref the (stable) basin click handler can read.
@@ -893,7 +896,8 @@ export default function LandingMap() {
     </button>
     {basins && groups && <section className="land-dock" aria-label="Area of interest, basin colouring and map key">
       <AoiPanel drawing={aoiDrawing} vertices={aoiVertices} closed={aoiClosed} rule={aoiRule}
-        onUpload={() => { setPoiOpen(true); setTableOpen(false); setGlacier(null); setLake(null); setDam(null); setStation(null); setRiverReach(null); }}
+        onUpload={() => { setPoiDrawn(null); setPoiOpen(true); setTableOpen(false); setGlacier(null); setLake(null); setDam(null); setStation(null); setRiverReach(null); }}
+        onReport={() => { setPoiDrawn(aoiFeature(aoiVertices)); setPoiOpen(true); setTableOpen(false); setGlacier(null); setLake(null); setDam(null); setStation(null); setRiverReach(null); }}
         selection={aoiSelection} loadingGeometry={aoiClosed && !levels[12]}
         onFit={() => setBounds(collectionBounds(aoiSelection.map(basin => basin.feature)))}
         onStart={startAoi} onCancel={clearAoi} onClear={clearAoi} onRule={setAoiRule}/>
@@ -950,7 +954,7 @@ export default function LandingMap() {
       catalogue={catalogue} loading={loadingStore} initialTab={initialTab} onClose={() => setTableOpen(false)}/>}
 
     {poiOpen && <React.Suspense fallback={<div className="dam-modal" role="status">Loading upload tools…</div>}>
-      <PoiReportModal entry={level12Entry} onClose={closePoi}/>
+      <PoiReportModal entry={level12Entry} drawn={poiDrawn} onClose={closePoi}/>
     </React.Suspense>}
     {glacier && <GlacierModal key={glacier.key} cluster={glacier} onClose={closeGlacier}/>}
     {dam && <DamModal dam={dam} onClose={() => setDam(null)}/>}

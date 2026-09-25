@@ -1,6 +1,26 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { aoiFeature } from '../INTERFACE/aoiModel.js';
 import { parsePois, matchPoi, reportMembers, makePoiReport, reportMonthlyCsv } from '../INTERFACE/poiModel.js';
+
+test('an area drawn on the map is parsed like an uploaded polygon', () => {
+  // The drawn ring and an uploaded polygon reach the same matcher, so they go
+  // through the same validation: one parser, one set of error messages.
+  const vertices = [[70, 41], [71, 41], [71, 42], [70, 42]];
+  const feature = aoiFeature(vertices);
+  const collection = parsePois(JSON.stringify(feature), 'drawn-area.geojson');
+  assert.equal(collection.features.length, 1);
+  const [parsed] = collection.features;
+  assert.equal(parsed.geometry.type, 'Polygon');
+  const ring = parsed.geometry.coordinates[0];
+  assert.deepEqual(ring[0], ring.at(-1), 'the drawn ring must close before it is matched');
+  assert.ok(parsed.properties.poi_name, 'the area is named for the report');
+
+  // A degenerate drag - a line, or a single point - must be refused with the same
+  // message an invalid upload gets, not matched against every basin it touches.
+  assert.throws(() => parsePois(JSON.stringify(aoiFeature([[70, 41], [71, 41]])), 'drawn-area.geojson'));
+});
+
 
 const polygon = (id, x = 70, holes = []) => ({ type: 'Feature', properties: { hybas_id: id, basin_level: 12 },
   geometry: { type: 'Polygon', coordinates: [[[x, 40], [x + 1, 40], [x + 1, 41], [x, 41], [x, 40]], ...holes] } });

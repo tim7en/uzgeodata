@@ -112,7 +112,7 @@ export function AoiLayer({ drawing, vertices, closed, selection, onRectangle, on
 
 /** The dock section: draw, read the selection, and take it away. */
 export function AoiPanel({
-  drawing, vertices, closed, rule, selection, loadingGeometry, onStart, onCancel, onClear, onRule, onFit, onUpload,
+  drawing, vertices, closed, rule, selection, loadingGeometry, onStart, onCancel, onClear, onRule, onFit, onUpload, onReport,
 }) {
   const [progress, setProgress] = useState(null);
   const [error, setError] = useState(null);
@@ -205,6 +205,8 @@ export function AoiPanel({
       </div>}
       {onFit && <button type="button" className="land-aoi-primary" disabled={loadingGeometry || !summary.count}
         onClick={onFit}>Zoom to selected polygons</button>}
+      {onReport && <button type="button" className="land-aoi-primary" disabled={busy || loadingGeometry || !summary.count}
+        onClick={onReport}>Basin report for this area</button>}
       {!loadingGeometry && summary.count > 0 && <ul className="land-aoi-downloads">
         {downloads.map(item => <li key={item.id}>
           <button type="button" disabled={busy} onClick={() => run(item.task)}>
