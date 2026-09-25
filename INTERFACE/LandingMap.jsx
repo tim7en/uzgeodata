@@ -23,7 +23,7 @@ import BasinCatchment from './BasinCatchment.jsx';
 import CatchmentStatistics from './CatchmentStatistics.jsx';
 import { AoiLayer, AoiPanel } from './AoiTool.jsx';
 import { aoiFeature, selectBasins } from './aoiModel.js';
-import { DEFAULT_MAP_VIEW, readMapView, saveMapView, collectionBounds } from './mapViewModel.js';
+import { DEFAULT_MAP_VIEW, readMapView, saveMapView, collectionBounds, BASEMAPS } from './mapViewModel.js';
 import {
   HEADLINE_ATTRIBUTES, SYSTEMS, basinHeadline, basinStyle,
   clusterDams, damClusterBounds, damClusterStyle,
@@ -251,27 +251,6 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
 // plain option takes the basemap away so the basin colouring stands alone.
 // Each carries the attribution its licence requires; dimming is applied only to
 // the cartographic maps, because dimming imagery destroys what it is for.
-const BASEMAPS = [
-  {
-    id: 'map', label: 'Street map',
-    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 19, dim: true,
-  },
-  {
-    id: 'satellite', label: 'Satellite',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Imagery &copy; Esri, Maxar, Earthstar Geographics',
-    maxZoom: 19, dim: false,
-  },
-  {
-    id: 'terrain', label: 'Terrain',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Shaded relief &copy; Esri',
-    maxZoom: 13, dim: true,
-  },
-  { id: 'none', label: 'No basemap', url: null, attribution: '', dim: false },
-];
 
 export default function LandingMap() {
   const theme = useTheme();

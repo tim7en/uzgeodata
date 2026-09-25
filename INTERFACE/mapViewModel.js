@@ -29,3 +29,32 @@ export function collectionBounds(features) {
   }
   return Number.isFinite(south) ? [[south, west], [north, east]] : null;
 }
+
+/**
+ * Basemaps, shared rather than owned by the main map.
+ *
+ * The report's map had no tiles at all: catchment outlines floating on white,
+ * which shows their shape and nothing about where they are. A reader looking at
+ * an uploaded location wants the terrain it sits in.
+ */
+export const BASEMAPS = [
+  {
+    id: 'map', label: 'Street map',
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 19, dim: true,
+  },
+  {
+    id: 'satellite', label: 'Satellite',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Imagery &copy; Esri, Maxar, Earthstar Geographics',
+    maxZoom: 19, dim: false,
+  },
+  {
+    id: 'terrain', label: 'Terrain',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Shaded relief &copy; Esri',
+    maxZoom: 13, dim: true,
+  },
+  { id: 'none', label: 'No basemap', url: null, attribution: '', dim: false },
+];

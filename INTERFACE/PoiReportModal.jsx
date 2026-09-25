@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { CircleMarker, GeoJSON, MapContainer, ScaleControl, Tooltip, useMap } from 'react-leaflet';
+import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, useMap } from 'react-leaflet';
 import { X } from 'lucide-react';
 import { json, matrix } from './catchmentData.js';
 import { fetchAll } from './aoiModel.js';
-import { collectionBounds } from './mapViewModel.js';
+import { BASEMAPS, collectionBounds } from './mapViewModel.js';
 import { formatNumber } from './landingModel.js';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
+import { monthlyNormals } from './poiModel.js';
+import { CONTINUATION_METHOD, continuationFor, continuationLatest } from './continuationModel.js';
 import { basinUnits, CONDITION_METHOD, makePoiReport, matchPoi, MAX_UPLOAD_BYTES, parsePois, REPORT_METHOD, reportMonthlyCsv } from './poiModel.js';
 import { reportFilename, reportPdf, reportZip, saveFile } from './poiExports.js';
 import './damModal.css';
@@ -22,6 +24,11 @@ function Fit({ bounds }) {
 }
 
 function ReportMap({ report }) {
+  // Outlines on white show a catchment's shape and nothing about where it is.
+  // Shaded relief is the default because these are mountain catchments and the
+  // terrain is half the explanation; imagery and a street map are a switch away.
+  const [basemap, setBasemap] = useState('terrain');
+  const base = BASEMAPS.find(entry => entry.id === basemap) || BASEMAPS[0];
   const bounds = useMemo(() => {
     const result = collectionBounds([...report.upstream_geometry.features, report.input]);
     if (result && report.input.geometry.type === 'Point') {
@@ -35,6 +42,8 @@ function ReportMap({ report }) {
   const coordinate = report.input.geometry.type === 'Point' ? report.input.geometry.coordinates : null;
   return <>
     <MapContainer className="poi-map" bounds={bounds} preferCanvas scrollWheelZoom={false}>
+      {base.url && <TileLayer key={base.id} url={base.url} attribution={base.attribution}
+        maxZoom={base.maxZoom} className={base.dim ? 'poi-map-dim' : undefined}/>}
       <GeoJSON data={report.upstream_geometry} interactive={false} style={{ color: '#1594bc', weight: 0.6, fillOpacity: 0.25 }}/>
       <GeoJSON data={report.local_geometry} interactive={false} style={{ color: '#df7300', weight: 2, fillOpacity: 0.6 }}/>
       {coordinate ? <CircleMarker center={[coordinate[1], coordinate[0]]} radius={6}
@@ -44,6 +53,11 @@ function ReportMap({ report }) {
         radius={4} pathOptions={{ color: '#cf4317', fillOpacity: 1 }}><Tooltip>Snapped basin boundary</Tooltip></CircleMarker>}
       <Fit bounds={bounds}/><ScaleControl imperial={false}/>
     </MapContainer>
+    <label className="poi-basemap">Basemap
+      <select value={basemap} onChange={event => setBasemap(event.target.value)}>
+        {BASEMAPS.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}
+      </select>
+    </label>
     <p className="poi-map-key">Orange: matched basins · Blue: upstream · Purple: uploaded location</p>
   </>;
 }
@@ -82,6 +96,23 @@ function Summary({ report, scope }) {
       <p>{data.total.label}: {latest.total_full_catchment == null ? 'Not available' : `${formatNumber(latest.total_full_catchment, 2)} ${data.total.unit}`}</p>
     </> : <p>No observations for this variable.</p>}
   </section>;
+}
+
+async function continuationOf(basinId, variable, report, signal) {
+  try {
+    const document = await json(`/data/atlas/climate-continuation/basins/${basinId}.json`, signal);
+    const scopes = {};
+    for (const scope of ['local', 'upstream']) {
+      const series = continuationFor(document, variable, scope);
+      if (!series) continue;
+      scopes[scope] = { ...series, latest: continuationLatest(series, monthlyNormals(report[scope].rows)) };
+    }
+    return Object.keys(scopes).length ? { basinId, note: document.note, ...scopes } : null;
+  } catch {
+    // A missing continuation is not a failed report: most variables do not have
+    // one, and the observed record stands on its own.
+    return null;
+  }
 }
 
 const month = (year, number) => `${year}-${String(number).padStart(2, '0')}`;
@@ -125,7 +156,48 @@ function Conditions({ report }) {
     })}</div>
     {report.variable === 'snw_pc_s' && <p role="note">Snow cover is withdrawn from trend use; the slope above is
       shown for inspection only.</p>}
+    <Continuation report={report}/>
   </section>;
+}
+
+/**
+ * Where the record continues past its source.
+ *
+ * TerraClimate stops in 2024 and this reader wants to know what has happened
+ * since. The estimate answers that and is never folded into the observed rows: it
+ * is a different product, shown with its own held-out error, so a month inside
+ * that error reads as "not distinguishable from normal" rather than as a change.
+ */
+function Continuation({ report }) {
+  const state = report.continuation;
+  if (!state) {
+    return report.coverage && report.coverage.last < '2025'
+      ? <p className="poi-coverage" role="note">No continuation is published for this variable, so the record
+        ends at {report.coverage.last}. Runoff and mean temperature reach 2026-08 from ERA5-Land.</p>
+      : null;
+  }
+  return <div className="poi-continuation">
+    <h5>Beyond the observed record · estimated</h5>
+    <div className="poi-summaries">{['local', 'upstream'].filter(scope => state[scope]?.latest).map(scope => {
+      const latest = state[scope].latest;
+      const direct = state[scope].direct?.rows?.length;
+      return <dl key={scope}>
+        <div><dt>{scope === 'local' ? 'Local basin' : 'Upstream catchment'}</dt>
+          <dd>{latest.months} estimated months from {latest.first}</dd></div>
+        <div><dt>Latest estimate {month(latest.year, latest.month)}</dt>
+          <dd>{formatNumber(latest.value, 2)} {latest.unit}</dd></div>
+        {latest.normal !== null && <div><dt>Against the observed normal</dt>
+          <dd>{formatNumber(latest.anomaly, 2)} {latest.unit}
+            {latest.rankPercentile !== null && ` · ${latest.rankPercentile}th percentile`}</dd></div>}
+        {latest.errorP90 !== null && latest.errorP90 !== undefined && <div><dt>Held-out error (p90)</dt>
+          <dd>±{formatNumber(latest.errorP90, 2)} {latest.unit}</dd></div>}
+        {latest.withinError && <div><dt>Reading</dt>
+          <dd>within the model's own error of normal</dd></div>}
+        {direct ? <div><dt>Producer v1.1, 2025</dt><dd>{direct} months published separately</dd></div> : null}
+      </dl>;
+    })}</div>
+    <p className="poi-coverage">{CONTINUATION_METHOD}</p>
+  </div>;
 }
 
 export default function PoiReportModal({ entry, drawn, basin, onClose }) {
@@ -222,7 +294,15 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
       if (failures.length) throw Error('Some basin attribute files could not load. Retry to produce a complete report.');
       results.forEach((record, i) => records.current.set(missing[i], record));
       const result = makePoiReport({ feature: upload.collection.features[active], match, ...data, values, variable, sourceFile: upload.name });
-      setReport({ ...result, catalogue: data.catalogue, records: result.local.ids.map(id => records.current.get(id)) });
+      // The observed record stops where its source stops. Where a continuation is
+      // published for this variable it is fetched for a single basin only: it is
+      // stored per basin with its own upstream series, and averaging several
+      // basins' upstream sets would count the shared ones more than once.
+      const continuation = result.match.basin_ids.length === 1
+        ? await continuationOf(result.match.basin_ids[0], variable, result, signal)
+        : null;
+      setReport({ ...result, catalogue: data.catalogue, continuation,
+        records: result.local.ids.map(id => records.current.get(id)) });
     })().catch(cause => { if (!signal.aborted) setError(cause.message); })
       .finally(() => { if (!signal.aborted) setLoadingReport(false); });
     return () => controller.abort();

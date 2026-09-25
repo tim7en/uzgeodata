@@ -1,4 +1,5 @@
 import { CONDITION_METHOD, reportMonthlyCsv } from './poiModel.js';
+import { CONTINUATION_METHOD, continuationCsv } from './continuationModel.js';
 import { attributesCsv, dictionaryCsv } from './aoiModel.js';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
 import fontUrl from './assets/NotoSans-Regular.ttf?url';
@@ -97,6 +98,21 @@ export async function reportPdf(report) {
     line('Upstream catchment morphology', 14);
     for (const [key, label, unit] of MORPHOLOGY_FIELDS) line(`${label}: ${number(report.morphology[key])} ${unit}`);
   }
+  if (report.continuation) {
+    line('Beyond the observed record · estimated', 14);
+    for (const scope of ['local', 'upstream']) {
+      const latest = report.continuation[scope]?.latest;
+      if (!latest) continue;
+      const error = latest.errorP90 === null || latest.errorP90 === undefined ? ''
+        : `; held-out p90 error ±${number(latest.errorP90)}`;
+      line(`${scope === 'local' ? 'Local basin' : 'Upstream catchment'}: `
+        + `${latest.months} estimated months from ${latest.first}. Latest ${latest.year}-`
+        + `${String(latest.month).padStart(2, '0')}: ${number(latest.value)} ${latest.unit}`
+        + `${latest.normal === null ? '' : `; anomaly ${number(latest.anomaly)} against the observed normal`}`
+        + `${error}${latest.withinError ? '; within the model error of normal' : ''}`);
+    }
+    line(CONTINUATION_METHOD, 9);
+  }
   line('Methods and coverage', 14);
   line(report.method, 9);
   line(CONDITION_METHOD, 9);
@@ -122,6 +138,12 @@ export async function reportZip(report) {
     'matched-basins.geojson': json(report.local_geometry),
     'upstream-basins.geojson': json(report.upstream_geometry),
     'monthly-statistics.csv': strToU8(reportMonthlyCsv(report)),
+    ...(report.continuation ? { 'continuation-estimates.csv': strToU8(
+      ['support,product,unit,year,month,value,coverage_fraction,holdout_abs_error_p90']
+        .concat(['local', 'upstream'].flatMap(scope => continuationCsv(
+          { estimated: report.continuation[scope]?.estimated, direct: report.continuation[scope]?.direct }, scope,
+        ).map(row => row.join(','))))
+        .join('\n')) } : {}),
     'basin-attributes.csv': strToU8(attributesCsv(report.catalogue, report.records)),
     'attribute-dictionary.csv': strToU8(dictionaryCsv(report.catalogue)),
     'README.txt': strToU8(`${report.method}\n\nVariable: ${report.variable} (${report.meta.unit}).\nBasin attributes carry the original encoded HydroATLAS values and project estimates in separate columns; consult attribute-dictionary.csv for units and spatial support. Never sum upstream attribute columns across basins. report.json retains source metadata, coverage, morphology, and all monthly rows.\nGeometry missing for ${report.geometry_missing_ids.length} upstream basin IDs (listed in report.json).\n`),

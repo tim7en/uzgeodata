@@ -14,6 +14,48 @@ const monthly = (years, value) => {
   return rows;
 };
 
+test('a continuation is kept beside the record, never spliced into it', async () => {
+  const { continuationFor, continuationLatest, continuationCsv } =
+    await import('../INTERFACE/continuationModel.js');
+  // Shaped like the published per-basin file: one row per month, with the model's
+  // own held-out error in the last field.
+  const document = {
+    row_fields: ['year', 'month', 'value', 'coverage_fraction', 'water_equivalent_mcm', 'holdout_abs_error_p90'],
+    series: {
+      'estimated_v1.0:local:precipitation': {
+        product: 'estimated_v1.0', support: 'local', label: 'Precipitation', unit: 'mm/month',
+        rows: [[2025, 1, 30, 1, null, 8], [2026, 8, 12, 1, null, 8], [2025, 2, null, 1, null, 8]],
+      },
+      'direct_v1.1:local:ppt': {
+        product: 'direct_v1.1', support: 'local', label: 'Precipitation', unit: 'mm/month',
+        rows: [[2025, 1, 31, 1, null, null]],
+      },
+    },
+  };
+
+  const series = continuationFor(document, 'pre_mm_s', 'local');
+  assert.equal(series.estimated.rows.length, 2, 'a month with no value is not a month');
+  assert.deepEqual(series.estimated.rows.map(row => row.year), [2025, 2026], 'rows arrive in time order');
+  assert.ok(series.direct, 'the producer release is carried separately, under its own name');
+
+  // ERA5-Land runoff and mean temperature already reach the present, so they have
+  // no continuation and must not be given one.
+  assert.equal(continuationFor(document, 'run_mm_s', 'local'), null);
+  assert.equal(continuationFor(document, 'snw_pc_s', 'local'), null);
+
+  // The estimate continues the observed statistic, so it is measured against the
+  // observed baseline rather than against itself.
+  const normals = { byMonth: Array.from({ length: 12 }, () => 30), samples: Array.from({ length: 12 }, () => [10, 20, 30, 40]) };
+  const latest = continuationLatest(series, normals);
+  assert.equal(latest.year, 2026);
+  assert.equal(latest.anomaly, -18);
+  assert.ok(!latest.withinError, 'an anomaly larger than the error is a signal');
+  assert.ok(continuationLatest({ estimated: { rows: [{ year: 2026, month: 8, value: 26, errorP90: 8 }], unit: 'mm' } },
+    normals).withinError, 'one smaller than the error is not');
+
+  assert.equal(continuationCsv(series, 'local').length, 3, 'both products reach the download');
+});
+
 test('current conditions compare a month with the same month in the record', () => {
   // A monthly value on its own answers nothing: 40 mm is a drought in April and a
   // deluge in September, so the comparison has to be against the same calendar
