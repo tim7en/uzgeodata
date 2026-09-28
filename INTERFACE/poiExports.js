@@ -46,22 +46,89 @@ async function reportFont() {
 }
 
 export async function reportPdf(report) {
-  const [{ jsPDF }, ttf] = await Promise.all([import('jspdf'), reportFont()]);
+  const [{ jsPDF }, ttf, { reportFigures }] = await Promise.all([import('jspdf'), reportFont(), import('./reportFigures.js')]);
+  const figures = await reportFigures(report);
   const doc = new jsPDF({ putOnlyUsedFonts: true, compress: true });
   doc.addFileToVFS('NotoSans.ttf', ttf);
   doc.addFont('NotoSans.ttf', 'NotoSans', 'normal');
   doc.setFont('NotoSans');
-  let y = 20;
+  doc.setProperties({ title: `${report.name} · Basin & upstream report`, author: 'UzGeoData',
+    subject: `${report.meta.label}: local and upstream conditions, maps and forecast`, creator: 'UzGeoData basin atlas' });
+  let y = 30;
+  const newPage = () => { doc.addPage(); y = 30; };
   const line = (value, size = 10) => {
+    if (size >= 12 && y > 245) newPage();
     doc.setFontSize(size);
+    doc.setTextColor(size >= 12 ? '#163b49' : '#344c57');
     const text = String(value).replace(/[\u0000-\u001f]/g, ' ');
     for (const part of doc.splitTextToSize(text, 174)) {
-      if (y > 276) { doc.addPage(); y = 20; }
+      if (y > 274) { newPage(); doc.setFontSize(size); }
       doc.text(part, 18, y); y += size * 0.45 + 1.5;
     }
     y += 2;
   };
-  line('UZGEODATA · Location report', 18);
+  let figureNumber = 0;
+  const figure = (item, height) => {
+    const caption = `Figure ${++figureNumber}. ${item.caption}`;
+    doc.setFontSize(9);
+    const lines = doc.splitTextToSize(caption, 174);
+    const needed = height + lines.length * 5.55 + 19;
+    if (y + needed > 274) newPage();
+    if (item.title) line(item.title, 12);
+    if (item.image) doc.addImage(item.image, 'PNG', 18, y, 174, height);
+    y += height + 5;
+    line(caption, 9);
+  };
+
+  line('BASIN & UPSTREAM REPORT', 22);
+  line(report.name, 14);
+  line(`${report.meta.label} · ${report.meta.unit}`, 11);
+  line(`Issued ${report.generatedAt.slice(0, 10)} · ${report.meta.source_release || report.meta.source}`, 9);
+  if (figures.map.image) figure({ image: figures.map.image, caption: figures.map.note }, 109.4);
+  else line(figures.map.note, 10);
+  line('Catchment at a glance', 14);
+  line(`Local: ${number(report.local.areaKm2)} km² · ${report.local.ids.length} basin(s). `
+    + `Upstream including local: ${number(report.upstream.areaKm2)} km² · ${report.upstream.ids.length} basin(s).`);
+  if (report.coverage) line(`Observed record: ${report.coverage.first}–${report.coverage.last}. `
+    + 'Later modelled months are labelled as estimates; seasonal outlooks are forecasts.', 9);
+  if (report.geometry_missing_ids.length) line(`Map coverage: ${report.geometry_missing_ids.length} upstream basins have statistics but no display boundary.`, 9);
+
+  for (const section of figures.series) {
+    newPage();
+    line(section.scope === 'local' ? '01 / LOCAL BASIN' : '02 / UPSTREAM CATCHMENT', 18);
+    line(`${report.meta.label} · ${report.meta.unit}`, 11);
+    line('Monthly values against the observed seasonal normal. Both time windows are included regardless of the on-screen chart selection.', 9);
+    if (!section.figures.length) line('No monthly values are available for this scope.');
+    for (const item of section.figures) figure(item, 57.2);
+    if (section.scope === 'upstream' && report.continuation?.upstreamWithheld) {
+      line('Upstream estimates are withheld because the matched catchments overlap. Only the observed upstream record is shown.', 9);
+    }
+  }
+  if (figures.drought.length) {
+    newPage(); line('03 / DROUGHT HISTORY', 18);
+    line('Water-year precipitation standardized against the reference climate. Local and upstream records are shown separately.', 10);
+    for (const item of figures.drought) figure(item, 53.4);
+  }
+  for (let i = 0; i < figures.seasonal.length; i++) {
+    if (i % 2 === 0) {
+      newPage(); line('04 / SEASONAL OUTLOOK', 18);
+      line('Grey bars indicate no demonstrated forecast skill: use the normal range. Coloured bars indicate useful historical skill. Probabilities refer to below-, near- and above-normal conditions.', 9);
+    }
+    const section = figures.seasonal[i];
+    line(section.title, 12); line(section.subtitle, 9);
+    for (const { entry, variable, image } of section.entries) {
+      const unit = variable === 'ppt' ? 'mm' : '°C';
+      const f = entry.forecast;
+      figure({ image, title: variable === 'ppt' ? 'Precipitation' : 'Mean temperature',
+        caption: `Median ${number(f.median)} ${unit}; 80% range ${number(f.p10)}–${number(f.p90)} ${unit}; normal ${number(f.normal)} ${unit}. `
+          + (variable === 'ppt' ? `Drought-level probability ${Math.round(f.dry_probability * 100)}%. ` : '')
+          + (entry.skill.useful ? `RPSS ${number(entry.skill.rpss)} (${entry.skill.years} hindcast years).`
+            : 'No demonstrated skill; use climatology.') }, 18);
+    }
+    if (i % 2 === 1 || i === figures.seasonal.length - 1) line('Applies to the named level-7 basin or zone. Precipitation and temperature only; not a river-flow forecast.', 8);
+  }
+  if (figures.forecastMissing) { newPage(); line('Seasonal outlook', 18); line('No seasonal forecast could be loaded for this location at export time.'); }
+  newPage(); line('05 / STATISTICS & METHODS', 18);
   line(report.name, 14);
   line(`Generated: ${report.generatedAt} | File: ${report.sourceFile}`);
   line(`Match: ${report.match.status}; distance: ${number(report.match.distance_km)} km`);
@@ -183,7 +250,15 @@ export async function reportPdf(report) {
   for (const source of report.provenance) line(JSON.stringify(source), 8);
   line('The downloadable ZIP includes the input geometry, basin boundaries, full monthly statistics, basin attributes, and source metadata.', 9);
   const pages = doc.getNumberOfPages();
-  for (let page = 1; page <= pages; page++) { doc.setPage(page); doc.setFontSize(8); doc.text(`uzgeodata.uz · ${page} / ${pages}`, 18, 289); }
+  for (let page = 1; page <= pages; page++) {
+    doc.setPage(page);
+    doc.setDrawColor('#087e98'); doc.setLineWidth(0.7); doc.line(18, 15, 192, 15);
+    doc.setFontSize(8); doc.setTextColor('#163b49'); doc.text('UZGEODATA / BASIN ATLAS', 18, 12);
+    doc.setTextColor('#617782'); doc.text(report.generatedAt.slice(0, 10), 192, 12, { align: 'right' });
+    doc.setDrawColor('#dfe7eb'); doc.setLineWidth(0.2); doc.line(18, 282, 192, 282);
+    doc.setFontSize(8); doc.text('uzgeodata.uz · Observed / Estimated / Forecast', 18, 289);
+    doc.text(`${page} / ${pages}`, 192, 289, { align: 'right' });
+  }
   return new Uint8Array(doc.output('arraybuffer'));
 }
 
