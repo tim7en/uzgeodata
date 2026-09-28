@@ -1,0 +1,23 @@
+/* Imported by DroughtOutlook.jsx, which the report and the basin drought tab both use. */
+/* Drought & outlook */
+.poi-drought{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+.poi-drought h4{margin:0 0 6px;font-size:15px}
+.poi-drought h5{margin:0 0 6px;font-size:13px;color:var(--ink,#e8eef2)}
+.poi-drought-scopes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.poi-drought-scope{border:1px solid var(--line,#30434c);border-radius:5px;padding:12px}
+.poi-drought dl{margin:8px 0 0;display:grid;gap:6px}
+.poi-drought dl>div{padding:6px 0 6px 10px;border-left:3px solid var(--line,#30434c)}
+.poi-drought dt{font-size:11.5px;color:var(--dim,#8fa3ad)}
+.poi-drought dd{margin:2px 0 0;font-size:13px;line-height:1.45;font-variant-numeric:tabular-nums}
+.poi-drought dd small{display:block;margin-top:3px;font-size:11px;color:var(--dim,#8fa3ad)}
+.poi-drought .poi-drought-alert{border-left-color:var(--l-dr-d3,#e3a857)}
+.poi-drought .poi-drought-chance{border-left-color:var(--l-accent-1,#4cc9f0);background:var(--l-tint-5,rgba(76,201,240,.05))}
+.poi-spi{margin:0}
+.poi-spi svg{display:block;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.poi-spi-threshold{stroke:var(--l-dr-d2,#a8773a);stroke-width:1;stroke-dasharray:3 3}
+.poi-spi-picked{stroke:var(--ink,#e8eef2);stroke-width:1.5}
+@media(max-width:760px){.poi-drought-scopes{grid-template-columns:1fr}}
+.poi-drought p{margin:0 0 8px;font-size:12px;line-height:1.55;color:var(--dim,#8fa3ad)}
+.poi-drought details{margin-top:10px}
+.poi-drought summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--ink,#e8eef2)}
+.land-drought .poi-drought{margin-top:0;padding-top:0;border-top:0}

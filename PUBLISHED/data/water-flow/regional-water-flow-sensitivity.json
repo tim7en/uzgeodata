@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-09-15T18:58:07.420+00:00",
+  "generated_at": "2026-09-28T08:46:10.610+00:00",
   "title": "Modelled land-water diagnostics",
   "basis": "modelled",
   "period": [
@@ -33,19 +33,19 @@
   ],
   "domain": {
     "basins": 7445,
-    "area_km2": 965724.8,
-    "geometry": "PUBLISHED/data/hydroclimate/basins-level12.geojson",
+    "area_km2": 965724.7999999998,
+    "geometry": "PUBLISHED\\data\\hydroclimate\\basins-level12.geojson",
     "geometry_sha256": "9ce2e5fa1416719043d927fa51fc9c42be7f84eacb3dd8f0f088a3a88e21d84f"
   },
-  "source_cube_index_sha256": "c886835971f7b9039fde12292f94ba1fa3c2959570dea54247fc6c26bd470ca2",
+  "source_cube_index_sha256": "08a51a3ce4fcd8f7525cdb5164b6a48d9d7e3da630e14e9bdc909c5c4f2a18b2",
   "input_hashes": {
-    "variable=pre_mm_s/data_0.parquet": "edc87ed74c2dcab3f0f8908f8532c08ff43d35d8d1ae12a4d6bc5c4aa520bc51",
-    "variable=aet_mm_s/data_0.parquet": "b31ed505a1bce5a2f90c6ffe734bcbfc4f86310270a2d64e3eeb6f24f83a5e6c",
-    "variable=run_mm_s/data_0.parquet": "c86eefc28509348f3d5448e23a6eea8bdad7b34dc19f5737cb6ea4d8788cd759",
-    "variable=rtc_mm_s/data_0.parquet": "a9887bac4923d0f41c691d2e912d202cf2782af82acea1065553272e77cd8a66"
+    "variable=pre_mm_s\\data_0.parquet": "cb25410d6ae6f0a1ce00b92ae80ede30c06a8a56a9a9f9ce7517bbea5f00e284",
+    "variable=aet_mm_s\\data_0.parquet": "33ce388a1f2d3ea42115422a39f0ce431e42f79b23550dfef24c441414cee8d4",
+    "variable=run_mm_s\\data_0.parquet": "7652bff5ad12372a4247bbce18276628e988487d5fc3c2a55e3ed955ba612fef",
+    "variable=rtc_mm_s\\data_0.parquet": "712a920f2a28a9c9a15532495f23104f33a844196f4472d3a1e7597fae6aee5a"
   },
   "source_cube_release": {
-    "store_rows": 22894190,
+    "store_rows": 34151030,
     "generated_from_run": "pskem-all281-20260909T184834061745Z",
     "contract": "ATLAS_MODULES/core/REPRODUCIBILITY.md"
   },
@@ -77,8 +77,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999968,
-      "volume_km3": 412.413314409518,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 372.71552613515354,
       "status": "complete"
     },
     {
@@ -86,8 +86,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 260.8917333559168,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 261.82279793080977,
       "status": "complete"
     },
     {
@@ -95,8 +95,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 193.89731954265864,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 193.8973195426581,
       "status": "complete"
     },
     {
@@ -104,8 +104,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 151.7021128989207,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 108.0830542839551,
       "status": "complete"
     },
     {
@@ -113,8 +113,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 335.6331103715685,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 322.20232409455315,
       "status": "complete"
     },
     {
@@ -122,8 +122,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000027,
-      "volume_km3": 227.15141758210729,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 230.0725712126436,
       "status": "complete"
     },
     {
@@ -131,8 +131,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 168.84559007892005,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 168.84559007892028,
       "status": "complete"
     },
     {
@@ -140,8 +140,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 101.32711078879096,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 84.99244382897461,
       "status": "complete"
     },
     {
@@ -149,8 +149,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999968,
-      "volume_km3": 308.5176586309331,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 277.24389498068194,
       "status": "complete"
     },
     {
@@ -158,8 +158,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000027,
-      "volume_km3": 218.69561515864612,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 211.196176866255,
       "status": "complete"
     },
     {
@@ -167,8 +167,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000007,
-      "volume_km3": 176.04837643485158,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 176.0483764348508,
       "status": "complete"
     },
     {
@@ -176,8 +176,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 127.37673136995477,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 94.13340941319765,
       "status": "complete"
     },
     {
@@ -185,8 +185,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999968,
-      "volume_km3": 302.24178236047936,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 278.8290470210062,
       "status": "complete"
     },
     {
@@ -194,8 +194,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 199.1766020342455,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 204.37321524972307,
       "status": "complete"
     },
     {
@@ -203,8 +203,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000007,
-      "volume_km3": 141.92296219908175,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 141.92296219908178,
       "status": "complete"
     },
     {
@@ -212,8 +212,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 75.36718857182777,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 68.09188764024057,
       "status": "complete"
     },
     {
@@ -221,8 +221,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999968,
-      "volume_km3": 289.7849429567778,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 272.6305036560968,
       "status": "complete"
     },
     {
@@ -230,8 +230,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000027,
-      "volume_km3": 201.28415524454468,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 199.63252176065737,
       "status": "complete"
     },
     {
@@ -239,8 +239,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 137.04108087308603,
+      "coverage_area_fraction": 0.9999999999999997,
+      "volume_km3": 137.04108087308617,
       "status": "complete"
     },
     {
@@ -248,8 +248,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 99.89029581409775,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 67.16268786261146,
       "status": "complete"
     },
     {
@@ -257,8 +257,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999968,
-      "volume_km3": 253.3342770205951,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 240.83088084908908,
       "status": "complete"
     },
     {
@@ -266,8 +266,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000027,
-      "volume_km3": 192.11173054129904,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 191.2288062466114,
       "status": "complete"
     },
     {
@@ -275,8 +275,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 108.83524682814154,
+      "coverage_area_fraction": 0.9999999999999997,
+      "volume_km3": 108.83524682814163,
       "status": "complete"
     },
     {
@@ -284,8 +284,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 59.08762927366413,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 51.79033349507148,
       "status": "complete"
     },
     {
@@ -293,8 +293,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999968,
-      "volume_km3": 371.8547554601712,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 336.98910037234486,
       "status": "complete"
     },
     {
@@ -302,8 +302,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 242.09796249624404,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 242.4531086573742,
       "status": "complete"
     },
     {
@@ -311,8 +311,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 185.80416987886306,
+      "coverage_area_fraction": 0.9999999999999997,
+      "volume_km3": 185.8041698788623,
       "status": "complete"
     },
     {
@@ -320,8 +320,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 129.56587957770577,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 90.74711486181353,
       "status": "complete"
     },
     {
@@ -329,8 +329,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999969,
-      "volume_km3": 304.39090351362574,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 300.5162074979873,
       "status": "complete"
     },
     {
@@ -338,8 +338,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 218.15158738952906,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 219.47724901708023,
       "status": "complete"
     },
     {
@@ -347,8 +347,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 218.99580410086443,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 218.99580410086386,
       "status": "complete"
     },
     {
@@ -356,8 +356,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 115.03714313220799,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 107.36688738383245,
       "status": "complete"
     },
     {
@@ -365,8 +365,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999968,
-      "volume_km3": 295.147025517014,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 284.05875481926756,
       "status": "complete"
     },
     {
@@ -374,8 +374,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 189.8544223817278,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 188.46785443532409,
       "status": "complete"
     },
     {
@@ -383,8 +383,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 118.06188267406513,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 118.06188267406482,
       "status": "complete"
     },
     {
@@ -392,8 +392,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 57.311303687946165,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 49.42589557267398,
       "status": "complete"
     },
     {
@@ -401,8 +401,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 308.30356716855397,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 272.3088446790015,
       "status": "complete"
     },
     {
@@ -410,8 +410,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 199.9271560982615,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 199.5091811836628,
       "status": "complete"
     },
     {
@@ -419,8 +419,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 171.1353195571105,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 171.13531955711048,
       "status": "complete"
     },
     {
@@ -428,8 +428,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 123.73258016949704,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 95.54403721398319,
       "status": "complete"
     },
     {
@@ -437,8 +437,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 319.18607713722685,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 269.2687800668252,
       "status": "complete"
     },
     {
@@ -446,8 +446,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 228.2812680373035,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 207.11566473514193,
       "status": "complete"
     },
     {
@@ -455,8 +455,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 138.49182987760435,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 138.49182987760443,
       "status": "complete"
     },
     {
@@ -464,8 +464,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 97.28861603774241,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 67.04525989214065,
       "status": "complete"
     },
     {
@@ -473,8 +473,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 312.1603472472825,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 279.84334962181146,
       "status": "complete"
     },
     {
@@ -482,8 +482,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 215.12939013115252,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 204.27423869898914,
       "status": "complete"
     },
     {
@@ -491,8 +491,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 131.1361600984783,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 131.136160098478,
       "status": "complete"
     },
     {
@@ -500,8 +500,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 87.29121917137807,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 68.87237902743163,
       "status": "complete"
     },
     {
@@ -509,8 +509,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999966,
-      "volume_km3": 369.4966020004058,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 339.4489264970143,
       "status": "complete"
     },
     {
@@ -518,8 +518,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 245.15292784283835,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 239.63234898453416,
       "status": "complete"
     },
     {
@@ -527,8 +527,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000007,
-      "volume_km3": 165.8127576859459,
+      "coverage_area_fraction": 0.9999999999999997,
+      "volume_km3": 165.81275768594585,
       "status": "complete"
     },
     {
@@ -536,8 +536,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 129.72077504872024,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 93.3502062397548,
       "status": "complete"
     },
     {
@@ -545,8 +545,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999966,
-      "volume_km3": 392.0305853680278,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 315.63015958958687,
       "status": "complete"
     },
     {
@@ -554,8 +554,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 266.84228129733157,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 234.74989532317133,
       "status": "complete"
     },
     {
@@ -563,8 +563,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 168.69438890942925,
+      "coverage_area_fraction": 0.9999999999999997,
+      "volume_km3": 168.6943889094287,
       "status": "complete"
     },
     {
@@ -572,8 +572,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 99.38969163588735,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 72.43294490211498,
       "status": "complete"
     },
     {
@@ -581,8 +581,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 300.06373273640816,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 287.20168041294784,
       "status": "complete"
     },
     {
@@ -590,8 +590,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 228.19968801294715,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 210.01693279966807,
       "status": "complete"
     },
     {
@@ -599,8 +599,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000007,
-      "volume_km3": 192.94362987910364,
+      "coverage_area_fraction": 0.9999999999999997,
+      "volume_km3": 192.94362987910387,
       "status": "complete"
     },
     {
@@ -608,8 +608,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 115.82179755472987,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 105.30600445612431,
       "status": "complete"
     },
     {
@@ -617,8 +617,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 282.4052740215789,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 274.32320412401907,
       "status": "complete"
     },
     {
@@ -626,8 +626,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 211.53718314573922,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 204.31675058351544,
       "status": "complete"
     },
     {
@@ -635,8 +635,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000007,
-      "volume_km3": 135.60315648168523,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 135.60315648168591,
       "status": "complete"
     },
     {
@@ -644,8 +644,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 61.83415744645126,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 58.70984151394834,
       "status": "complete"
     },
     {
@@ -653,8 +653,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 301.7357216072524,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 293.7988484900218,
       "status": "complete"
     },
     {
@@ -662,8 +662,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 221.69566647789574,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 220.93836120140372,
       "status": "complete"
     },
     {
@@ -671,8 +671,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 160.16767195786252,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 160.16767195786295,
       "status": "complete"
     },
     {
@@ -680,8 +680,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 83.93191593262459,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 84.61181073611965,
       "status": "complete"
     },
     {
@@ -689,8 +689,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 276.9648368594463,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 268.74921778295493,
       "status": "complete"
     },
     {
@@ -698,8 +698,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 211.1851966246046,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 206.94764806122797,
       "status": "complete"
     },
     {
@@ -707,8 +707,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 127.98110419446907,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 127.9811041944693,
       "status": "complete"
     },
     {
@@ -716,8 +716,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 58.34947731408331,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 53.682266224139155,
       "status": "complete"
     },
     {
@@ -725,8 +725,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 232.76609296369668,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 224.88786890839603,
       "status": "complete"
     },
     {
@@ -734,8 +734,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 179.16363431133584,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 176.17779944510775,
       "status": "complete"
     },
     {
@@ -743,8 +743,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 128.05977032617554,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 128.05977032617562,
       "status": "complete"
     },
     {
@@ -752,8 +752,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 68.78923356988626,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 60.59478522187258,
       "status": "complete"
     },
     {
@@ -761,8 +761,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999966,
-      "volume_km3": 309.386783200232,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 288.75477692238485,
       "status": "complete"
     },
     {
@@ -770,8 +770,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000027,
-      "volume_km3": 220.45869858185782,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 211.8641237099321,
       "status": "complete"
     },
     {
@@ -779,8 +779,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 125.53225868071338,
+      "coverage_area_fraction": 0.9999999999999998,
+      "volume_km3": 125.53225868071407,
       "status": "complete"
     },
     {
@@ -788,8 +788,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 90.7513865843205,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 63.90386986688318,
       "status": "complete"
     },
     {
@@ -797,8 +797,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999967,
-      "volume_km3": 255.1697067305408,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 241.19949735262978,
       "status": "complete"
     },
     {
@@ -806,8 +806,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 199.1262297647629,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 193.14295637480876,
       "status": "complete"
     },
     {
@@ -815,8 +815,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 132.90585949431488,
+      "coverage_area_fraction": 0.9999999999999996,
+      "volume_km3": 132.90585949431483,
       "status": "complete"
     },
     {
@@ -824,8 +824,8 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 75.6656359972167,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 66.45240303449815,
       "status": "complete"
     },
     {
@@ -833,8 +833,8 @@
       "variable": "pre_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 0.9999999999999968,
-      "volume_km3": 342.6137165090429,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 321.23224612523046,
       "status": "complete"
     },
     {
@@ -842,8 +842,8 @@
       "variable": "aet_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000029,
-      "volume_km3": 245.87245182750186,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 237.17542523686654,
       "status": "complete"
     },
     {
@@ -851,8 +851,8 @@
       "variable": "run_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000004,
-      "volume_km3": 153.8085856209531,
+      "coverage_area_fraction": 0.9999999999999996,
+      "volume_km3": 153.80858562095335,
       "status": "complete"
     },
     {
@@ -860,194 +860,194 @@
       "variable": "rtc_mm_s",
       "complete_basins": 7445,
       "total_basins": 7445,
-      "coverage_area_fraction": 1.0000000000000016,
-      "volume_km3": 84.9961103538103,
+      "coverage_area_fraction": 1.000000000000001,
+      "volume_km3": 71.91183499099454,
       "status": "complete"
     }
   ],
   "annual": [
     {
       "year": 2003,
-      "pre_mm_s": 412.413314409518,
-      "aet_mm_s": 260.8917333559168,
-      "run_mm_s": 193.89731954265864,
-      "rtc_mm_s": 151.7021128989207,
-      "p_minus_aet_km3": 151.5215810536012
+      "pre_mm_s": 372.71552613515354,
+      "aet_mm_s": 261.82279793080977,
+      "run_mm_s": 193.8973195426581,
+      "rtc_mm_s": 108.0830542839551,
+      "p_minus_aet_km3": 110.89272820434377
     },
     {
       "year": 2004,
-      "pre_mm_s": 335.6331103715685,
-      "aet_mm_s": 227.15141758210729,
-      "run_mm_s": 168.84559007892005,
-      "rtc_mm_s": 101.32711078879096,
-      "p_minus_aet_km3": 108.48169278946119
+      "pre_mm_s": 322.20232409455315,
+      "aet_mm_s": 230.0725712126436,
+      "run_mm_s": 168.84559007892028,
+      "rtc_mm_s": 84.99244382897461,
+      "p_minus_aet_km3": 92.12975288190955
     },
     {
       "year": 2005,
-      "pre_mm_s": 308.5176586309331,
-      "aet_mm_s": 218.69561515864612,
-      "run_mm_s": 176.04837643485158,
-      "rtc_mm_s": 127.37673136995477,
-      "p_minus_aet_km3": 89.82204347228699
+      "pre_mm_s": 277.24389498068194,
+      "aet_mm_s": 211.196176866255,
+      "run_mm_s": 176.0483764348508,
+      "rtc_mm_s": 94.13340941319765,
+      "p_minus_aet_km3": 66.04771811442694
     },
     {
       "year": 2006,
-      "pre_mm_s": 302.24178236047936,
-      "aet_mm_s": 199.1766020342455,
-      "run_mm_s": 141.92296219908175,
-      "rtc_mm_s": 75.36718857182777,
-      "p_minus_aet_km3": 103.06518032623387
+      "pre_mm_s": 278.8290470210062,
+      "aet_mm_s": 204.37321524972307,
+      "run_mm_s": 141.92296219908178,
+      "rtc_mm_s": 68.09188764024057,
+      "p_minus_aet_km3": 74.45583177128313
     },
     {
       "year": 2007,
-      "pre_mm_s": 289.7849429567778,
-      "aet_mm_s": 201.28415524454468,
-      "run_mm_s": 137.04108087308603,
-      "rtc_mm_s": 99.89029581409775,
-      "p_minus_aet_km3": 88.50078771223312
+      "pre_mm_s": 272.6305036560968,
+      "aet_mm_s": 199.63252176065737,
+      "run_mm_s": 137.04108087308617,
+      "rtc_mm_s": 67.16268786261146,
+      "p_minus_aet_km3": 72.99798189543941
     },
     {
       "year": 2008,
-      "pre_mm_s": 253.3342770205951,
-      "aet_mm_s": 192.11173054129904,
-      "run_mm_s": 108.83524682814154,
-      "rtc_mm_s": 59.08762927366413,
-      "p_minus_aet_km3": 61.22254647929606
+      "pre_mm_s": 240.83088084908908,
+      "aet_mm_s": 191.2288062466114,
+      "run_mm_s": 108.83524682814163,
+      "rtc_mm_s": 51.79033349507148,
+      "p_minus_aet_km3": 49.60207460247767
     },
     {
       "year": 2009,
-      "pre_mm_s": 371.8547554601712,
-      "aet_mm_s": 242.09796249624404,
-      "run_mm_s": 185.80416987886306,
-      "rtc_mm_s": 129.56587957770577,
-      "p_minus_aet_km3": 129.75679296392715
+      "pre_mm_s": 336.98910037234486,
+      "aet_mm_s": 242.4531086573742,
+      "run_mm_s": 185.8041698788623,
+      "rtc_mm_s": 90.74711486181353,
+      "p_minus_aet_km3": 94.53599171497066
     },
     {
       "year": 2010,
-      "pre_mm_s": 304.39090351362574,
-      "aet_mm_s": 218.15158738952906,
-      "run_mm_s": 218.99580410086443,
-      "rtc_mm_s": 115.03714313220799,
-      "p_minus_aet_km3": 86.23931612409669
+      "pre_mm_s": 300.5162074979873,
+      "aet_mm_s": 219.47724901708023,
+      "run_mm_s": 218.99580410086386,
+      "rtc_mm_s": 107.36688738383245,
+      "p_minus_aet_km3": 81.03895848090707
     },
     {
       "year": 2011,
-      "pre_mm_s": 295.147025517014,
-      "aet_mm_s": 189.8544223817278,
-      "run_mm_s": 118.06188267406513,
-      "rtc_mm_s": 57.311303687946165,
-      "p_minus_aet_km3": 105.29260313528621
+      "pre_mm_s": 284.05875481926756,
+      "aet_mm_s": 188.46785443532409,
+      "run_mm_s": 118.06188267406482,
+      "rtc_mm_s": 49.42589557267398,
+      "p_minus_aet_km3": 95.59090038394348
     },
     {
       "year": 2012,
-      "pre_mm_s": 308.30356716855397,
-      "aet_mm_s": 199.9271560982615,
-      "run_mm_s": 171.1353195571105,
-      "rtc_mm_s": 123.73258016949704,
-      "p_minus_aet_km3": 108.37641107029248
+      "pre_mm_s": 272.3088446790015,
+      "aet_mm_s": 199.5091811836628,
+      "run_mm_s": 171.13531955711048,
+      "rtc_mm_s": 95.54403721398319,
+      "p_minus_aet_km3": 72.79966349533868
     },
     {
       "year": 2013,
-      "pre_mm_s": 319.18607713722685,
-      "aet_mm_s": 228.2812680373035,
-      "run_mm_s": 138.49182987760435,
-      "rtc_mm_s": 97.28861603774241,
-      "p_minus_aet_km3": 90.90480909992334
+      "pre_mm_s": 269.2687800668252,
+      "aet_mm_s": 207.11566473514193,
+      "run_mm_s": 138.49182987760443,
+      "rtc_mm_s": 67.04525989214065,
+      "p_minus_aet_km3": 62.15311533168324
     },
     {
       "year": 2014,
-      "pre_mm_s": 312.1603472472825,
-      "aet_mm_s": 215.12939013115252,
-      "run_mm_s": 131.1361600984783,
-      "rtc_mm_s": 87.29121917137807,
-      "p_minus_aet_km3": 97.03095711613
+      "pre_mm_s": 279.84334962181146,
+      "aet_mm_s": 204.27423869898914,
+      "run_mm_s": 131.136160098478,
+      "rtc_mm_s": 68.87237902743163,
+      "p_minus_aet_km3": 75.56911092282232
     },
     {
       "year": 2015,
-      "pre_mm_s": 369.4966020004058,
-      "aet_mm_s": 245.15292784283835,
-      "run_mm_s": 165.8127576859459,
-      "rtc_mm_s": 129.72077504872024,
-      "p_minus_aet_km3": 124.34367415756745
+      "pre_mm_s": 339.4489264970143,
+      "aet_mm_s": 239.63234898453416,
+      "run_mm_s": 165.81275768594585,
+      "rtc_mm_s": 93.3502062397548,
+      "p_minus_aet_km3": 99.81657751248017
     },
     {
       "year": 2016,
-      "pre_mm_s": 392.0305853680278,
-      "aet_mm_s": 266.84228129733157,
-      "run_mm_s": 168.69438890942925,
-      "rtc_mm_s": 99.38969163588735,
-      "p_minus_aet_km3": 125.18830407069623
+      "pre_mm_s": 315.63015958958687,
+      "aet_mm_s": 234.74989532317133,
+      "run_mm_s": 168.6943889094287,
+      "rtc_mm_s": 72.43294490211498,
+      "p_minus_aet_km3": 80.88026426641554
     },
     {
       "year": 2017,
-      "pre_mm_s": 300.06373273640816,
-      "aet_mm_s": 228.19968801294715,
-      "run_mm_s": 192.94362987910364,
-      "rtc_mm_s": 115.82179755472987,
-      "p_minus_aet_km3": 71.864044723461
+      "pre_mm_s": 287.20168041294784,
+      "aet_mm_s": 210.01693279966807,
+      "run_mm_s": 192.94362987910387,
+      "rtc_mm_s": 105.30600445612431,
+      "p_minus_aet_km3": 77.18474761327977
     },
     {
       "year": 2018,
-      "pre_mm_s": 282.4052740215789,
-      "aet_mm_s": 211.53718314573922,
-      "run_mm_s": 135.60315648168523,
-      "rtc_mm_s": 61.83415744645126,
-      "p_minus_aet_km3": 70.8680908758397
+      "pre_mm_s": 274.32320412401907,
+      "aet_mm_s": 204.31675058351544,
+      "run_mm_s": 135.60315648168591,
+      "rtc_mm_s": 58.70984151394834,
+      "p_minus_aet_km3": 70.00645354050363
     },
     {
       "year": 2019,
-      "pre_mm_s": 301.7357216072524,
-      "aet_mm_s": 221.69566647789574,
-      "run_mm_s": 160.16767195786252,
-      "rtc_mm_s": 83.93191593262459,
-      "p_minus_aet_km3": 80.04005512935666
+      "pre_mm_s": 293.7988484900218,
+      "aet_mm_s": 220.93836120140372,
+      "run_mm_s": 160.16767195786295,
+      "rtc_mm_s": 84.61181073611965,
+      "p_minus_aet_km3": 72.86048728861806
     },
     {
       "year": 2020,
-      "pre_mm_s": 276.9648368594463,
-      "aet_mm_s": 211.1851966246046,
-      "run_mm_s": 127.98110419446907,
-      "rtc_mm_s": 58.34947731408331,
-      "p_minus_aet_km3": 65.77964023484168
+      "pre_mm_s": 268.74921778295493,
+      "aet_mm_s": 206.94764806122797,
+      "run_mm_s": 127.9811041944693,
+      "rtc_mm_s": 53.682266224139155,
+      "p_minus_aet_km3": 61.80156972172696
     },
     {
       "year": 2021,
-      "pre_mm_s": 232.76609296369668,
-      "aet_mm_s": 179.16363431133584,
-      "run_mm_s": 128.05977032617554,
-      "rtc_mm_s": 68.78923356988626,
-      "p_minus_aet_km3": 53.60245865236084
+      "pre_mm_s": 224.88786890839603,
+      "aet_mm_s": 176.17779944510775,
+      "run_mm_s": 128.05977032617562,
+      "rtc_mm_s": 60.59478522187258,
+      "p_minus_aet_km3": 48.71006946328828
     },
     {
       "year": 2022,
-      "pre_mm_s": 309.386783200232,
-      "aet_mm_s": 220.45869858185782,
-      "run_mm_s": 125.53225868071338,
-      "rtc_mm_s": 90.7513865843205,
-      "p_minus_aet_km3": 88.92808461837419
+      "pre_mm_s": 288.75477692238485,
+      "aet_mm_s": 211.8641237099321,
+      "run_mm_s": 125.53225868071407,
+      "rtc_mm_s": 63.90386986688318,
+      "p_minus_aet_km3": 76.89065321245275
     },
     {
       "year": 2023,
-      "pre_mm_s": 255.1697067305408,
-      "aet_mm_s": 199.1262297647629,
-      "run_mm_s": 132.90585949431488,
-      "rtc_mm_s": 75.6656359972167,
-      "p_minus_aet_km3": 56.0434769657779
+      "pre_mm_s": 241.19949735262978,
+      "aet_mm_s": 193.14295637480876,
+      "run_mm_s": 132.90585949431483,
+      "rtc_mm_s": 66.45240303449815,
+      "p_minus_aet_km3": 48.056540977821015
     },
     {
       "year": 2024,
-      "pre_mm_s": 342.6137165090429,
-      "aet_mm_s": 245.87245182750186,
-      "run_mm_s": 153.8085856209531,
-      "rtc_mm_s": 84.9961103538103,
-      "p_minus_aet_km3": 96.74126468154103
+      "pre_mm_s": 321.23224612523046,
+      "aet_mm_s": 237.17542523686654,
+      "run_mm_s": 153.80858562095335,
+      "rtc_mm_s": 71.91183499099454,
+      "p_minus_aet_km3": 84.05682088836392
     }
   ],
   "means_km3": {
-    "pre_mm_s": 312.52730971774446,
-    "aet_mm_s": 219.1812271971724,
-    "run_mm_s": 153.714769335199,
-    "rtc_mm_s": 95.19218145143017
+    "pre_mm_s": 289.21198363631834,
+    "aet_mm_s": 213.39025580520493,
+    "run_mm_s": 153.71476933519898,
+    "rtc_mm_s": 76.55506171192617
   },
   "methodology": {
     "volume": "sum over non-overlapping local basins: sum of 12 monthly depths (mm) × basin area (km2) × 1e-6 = km3/year",

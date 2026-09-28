@@ -56,6 +56,7 @@ export default defineConfig({
         research: here('./INTERFACE/research.html'),
         drySpell: here('./INTERFACE/dry-spell.html'),
         drought: here('./INTERFACE/drought.html'),
+        seasonal: here('./INTERFACE/seasonal.html'),
         reservoirMonitoring: here('./INTERFACE/reservoir-monitoring.html'),
       },
     },

@@ -124,3 +124,6 @@ PUBLISHED/data/case-studies/pskem-climate-continuation/
 # Drought study tables (npm-less: python PIPELINES/build_drought_study.py), ~120 MB,
 # rebuilt from the TerraClimate v1.1 history extraction.
 PUBLISHED/data/atlas/drought-study/
+
+# Full monthly SEAS5 files reach readers through R2 (release-includes.txt); the compact latest.json and skill.json are tracked.
+PUBLISHED/data/atlas/seasonal-forecast/forecast-*.json

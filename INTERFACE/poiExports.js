@@ -1,11 +1,30 @@
 import { CONDITION_METHOD, reportMonthlyCsv } from './poiModel.js';
-import { CONTINUATION_METHOD, continuationCsv } from './continuationModel.js';
+import { CONTINUATION_METHOD, continuationCsv, monthlySeries } from './continuationModel.js';
+import { DROUGHT_METHOD, ordinal } from './droughtModel.js';
 import { attributesCsv, dictionaryCsv } from './aoiModel.js';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
 import fontUrl from './assets/NotoSans-Regular.ttf?url';
 
 const number = value => value == null ? 'Not available' : Number(value).toLocaleString('en', { maximumFractionDigits: 3 });
 export const reportFilename = report => `uzgeodata-location-${report.input.id}-${report.variable}`;
+/**
+ * On a phone a download link opens the blob in a tab at best; the share sheet is
+ * how a file reaches a messenger, mail or Files. It is offered only on touch
+ * devices that can share files, and anything short of a completed share other
+ * than the reader cancelling falls back to the ordinary download - including a
+ * share refused because generating the PDF outlasted the tap that asked for it.
+ */
+export async function shareOrSaveFile(name, data, type) {
+  const file = typeof File === 'function' ? new File([data], name, { type }) : null;
+  const touch = window.matchMedia?.('(pointer: coarse)').matches;
+  if (touch && file && navigator.canShare?.({ files: [file] })) {
+    try { await navigator.share({ files: [file], title: name }); return; } catch (cause) {
+      if (cause?.name === 'AbortError') return;
+    }
+  }
+  saveFile(name, data, type);
+}
+
 export function saveFile(name, data, type) {
   const url = URL.createObjectURL(new Blob([data], { type }));
   const link = Object.assign(document.createElement('a'), { href: url, download: name });
@@ -57,47 +76,87 @@ export async function reportPdf(report) {
     const data = report[scope];
     line(scope === 'local' ? 'Local basin summary' : 'Upstream catchment summary (including local)', 14);
     line(`${data.ids.length} basins; ${number(data.areaKm2)} km²`);
-    const rows = data.rows.filter(row => row.observed_basins > 0);
-    if (rows.length) {
-      line(`Available record: ${rows[0].year}-${String(rows[0].month).padStart(2, '0')} to ${rows.at(-1).year}-${String(rows.at(-1).month).padStart(2, '0')}`);
-      line('Latest 12 months with observations. Full monthly series are in the CSV/JSON files.');
-      for (const row of rows.slice(-12)) {
-        line(`${row.year}-${String(row.month).padStart(2, '0')}: mean ${number(row.mean_observed_area)} ${report.meta.unit}; coverage ${number(row.area_coverage_percent)}%; total ${number(row.total_full_catchment)} ${data.total.unit || '(not applicable)'}`, 9);
+    // The latest twelve months of the record continued to the present, each
+    // marked observed or estimated: listing the last observed months instead
+    // made a report printed in 2026 read as if nothing had happened since 2024.
+    const series = monthlySeries(data, report.continuation?.[scope]);
+    const observed = new Map(data.rows.map(row => [row.year * 12 + row.month, row]));
+    if (series.length) {
+      const period = row => `${row.year}-${String(row.month).padStart(2, '0')}`;
+      line(`Record ${period(series[0])} to ${period(series.at(-1))}; latest 12 months below, full series in the CSV/JSON files.`);
+      for (const row of series.slice(-12)) {
+        const source = observed.get(row.year * 12 + row.month);
+        line(row.source === 'observed'
+          ? `${period(row)}: mean ${number(row.value)} ${report.meta.unit}; coverage ${number(source?.area_coverage_percent)}%; total ${number(source?.total_full_catchment)} ${data.total.unit || '(not applicable)'}`
+          : `${period(row)}: ${number(row.value)}${row.errorP90 ? ` ±${number(row.errorP90)}` : ''} ${report.meta.unit}, estimated`, 9);
       }
     } else line('No observations are available for this variable.');
     line(data.total.note, 9);
     conditions(data);
   }
   function conditions(data) {
-    const state = data.conditions;
-    if (!state) return;
+    const scope = data === report.local ? 'local' : 'upstream';
+    const now = report.present?.[scope];
+    const trend = data.conditions?.trend;
+    if (!now) return;
     const unit = report.meta.unit;
-    const { latest, baseline, lastTwelveMonths: window, trend } = state;
-    line('How this compares with the record', 12);
-    if (baseline) line(`Baseline: mean of each calendar month, ${baseline.firstYear}-${baseline.lastYear}, `
-      + `${baseline.years} complete years.`, 9);
-    const share = latest.anomalyPercent === null ? '' : ` (${number(latest.anomalyPercent)}%)`;
-    line(`Latest month ${latest.year}-${String(latest.month).padStart(2, '0')}: ${number(latest.value)} ${unit}`
-      + `; normal ${number(latest.normal)}; anomaly ${number(latest.anomaly)} ${unit}${share}`);
-    if (latest.rankPercentile !== null) {
-      line(`That is the ${latest.rankPercentile}th percentile of the ${latest.rankYears} years this record holds `
-        + 'for that calendar month.', 9);
-    }
-    if (window) {
-      const windowShare = window.anomalyPercent === null ? '' : ` (${number(window.anomalyPercent)}%)`;
-      line(`Last 12 months (${window.aggregation}): ${number(window.value)} ${unit} against a normal of `
-        + `${number(window.normal)}; anomaly ${number(window.anomaly)}${windowShare}`);
-    } else line('The last twelve months are not contiguous in this record, so no running total is given.', 9);
+    const estimated = source => (source && source !== 'observed' ? ' (estimated)' : '');
+    const error = value => (value ? ` ±${number(value)}` : '');
+    const versus = (anomaly, percent) => (percent === null || percent === undefined
+      ? `anomaly ${number(anomaly)} ${unit}` : `${Math.round(percent)}% vs normal`);
+    line(`Current conditions, ${now.latest}`, 12);
+    if (now.baseline) line(`Normals: mean of each calendar month over the observed years ${now.baseline.firstYear}-`
+      + `${now.baseline.lastYear}. Observed to ${now.lastObserved}; ${now.estimatedMonths} later months are estimates.`, 9);
+    const { month, lastTwelveMonths: twelve, waterYearToDate: toDate } = now;
+    const sumUnit = now.extensive ? unit.replace(/ per month$/, '') : `${unit} (mean)`;
+    line(`Latest month ${month.period}${estimated(month.source)}: ${number(month.value)}${error(month.errorP90)} ${unit}`
+      + `; normal ${number(month.normal)}; ${versus(month.anomaly, month.anomalyPercent)}`
+      + `${month.withinError ? `; ${month.standing}` : month.percentile === null ? '' : `; ${ordinal(month.percentile)} percentile (${month.standing})`}`);
+    if (twelve) line(`Last 12 months ${twelve.from} to ${twelve.to}: ${number(twelve.value)}${error(twelve.errorBound)} ${sumUnit}; `
+      + `${versus(twelve.anomaly, twelve.anomalyPercent)}; ${twelve.estimatedMonths} estimated months`);
+    if (toDate) line(`Water year ${toDate.waterYear} so far, ${toDate.from} to ${toDate.to}: ${number(toDate.value)}`
+      + `${error(toDate.errorBound)} ${sumUnit}; ${versus(toDate.anomaly, toDate.anomalyPercent)}`
+      + `${toDate.percentile === null ? '' : `; ${ordinal(toDate.percentile)} percentile of ${toDate.comparedYears} years (${toDate.standing})`}`);
     if (trend) {
-      line(`Trend over ${trend.years} complete years: ${trend.direction}`
+      line(`Trend over the observed record, ${trend.years} complete years: ${trend.direction}`
         + `; Sen slope ${number(trend.slopePerDecade)} ${unit} per decade; Mann-Kendall p = ${number(trend.p)}`);
-    } else line('Fewer than ten complete years: no trend is reported.', 9);
+    } else line('Fewer than ten complete observed years: no trend is reported.', 9);
+  }
+
+  function droughtSection(drought) {
+    if (!drought) return;
+    line('Drought and outlook', 14);
+    for (const [scope, title] of [['local', 'This basin'], ['upstream', 'Everything upstream (headwater supply)']]) {
+      const reading = drought[scope];
+      if (!reading) continue;
+      const { outlook, toDate, chance } = reading;
+      const { last, recent, early, afterDry, any, trend } = outlook;
+      const pct = value => (value === null || value === undefined ? '-' : `${Math.round(value * 100)}%`);
+      line(title, 12);
+      if (toDate) line(`Water year ${toDate.waterYear} so far (${toDate.from} to ${toDate.to}): ${number(toDate.value)} mm, `
+        + `${toDate.anomalyPercent === null ? '-' : Math.round(toDate.anomalyPercent)}% vs normal${toDate.percentile === null ? ''
+          : `, ${ordinal(toDate.percentile)} percentile of ${toDate.comparedYears} years`}${toDate.dry ? ' - drought-level dry' : ''}.`);
+      line(`Last complete water year ${last.year}: SPI-12 ${number(last.spi)}`
+        + `${last.severe ? ', severe drought' : last.dry ? ', drought' : ', not a drought year'}.`);
+      line(`Drought years ${recent.from}-${recent.to}: ${recent.dry} of ${recent.years} (${pct(recent.dryShare)}), `
+        + `${recent.severe} severe; ${early.from}-${early.to}: ${early.dry} of ${early.years} (${pct(early.dryShare)}).`);
+      line(`After a drought year the next was dry in ${afterDry.dry} of ${afterDry.years}; any year: ${pct(any.share)}.`);
+      if (chance) line(chance.sparse
+        ? `Chance of a drought year in WY ${chance.forWaterYear}: too few comparable years to give one.`
+        : `Chance of a drought year in WY ${chance.forWaterYear}: ${pct(chance.share)} (${chance.dryYears} of ${chance.years} `
+          + `years after a ${chance.dry ? 'dry' : 'non-drought'} year), against ${pct(chance.baseShare)} in any year. `
+          + 'A historical frequency, not a forecast.');
+      if (trend) line(`Trend ${trend.from}-${trend.to}: ${trend.direction}; ${number(trend.pointsPerDecade)} points of `
+        + `normal per decade; p = ${number(trend.p)}.`);
+    }
+    line(DROUGHT_METHOD, 9);
   }
 
   if (report.morphology) {
     line('Upstream catchment morphology', 14);
     for (const [key, label, unit] of MORPHOLOGY_FIELDS) line(`${label}: ${number(report.morphology[key])} ${unit}`);
   }
+  droughtSection(report.drought);
   if (report.continuation) {
     line('Beyond the observed record · estimated', 14);
     for (const scope of ['local', 'upstream']) {
@@ -128,6 +187,18 @@ export async function reportPdf(report) {
   return new Uint8Array(doc.output('arraybuffer'));
 }
 
+/** The water-year records the drought section was read from, one row a year. */
+function droughtCsv(drought) {
+  const lines = [];
+  for (const scope of ['local', 'upstream']) {
+    const record = drought[scope]?.record;
+    if (!record) continue;
+    if (!lines.length) lines.push(['reading', 'basin_id', ...record.fields].join(','));
+    for (const row of record.rows) lines.push([scope, record.basin_id, ...row.map(value => value ?? '')].join(','));
+  }
+  return `${lines.join('\n')}\n`;
+}
+
 export async function reportZip(report) {
   const { zipSync, strToU8 } = await import('fflate');
   const json = data => strToU8(JSON.stringify(data, null, 2));
@@ -144,6 +215,7 @@ export async function reportZip(report) {
           { estimated: report.continuation[scope]?.estimated, direct: report.continuation[scope]?.direct }, scope,
         ).map(row => row.join(','))))
         .join('\n')) } : {}),
+    ...(report.drought ? { 'drought-water-years.csv': strToU8(droughtCsv(report.drought)) } : {}),
     'basin-attributes.csv': strToU8(attributesCsv(report.catalogue, report.records)),
     'attribute-dictionary.csv': strToU8(dictionaryCsv(report.catalogue)),
     'README.txt': strToU8(`${report.method}\n\nVariable: ${report.variable} (${report.meta.unit}).\nBasin attributes carry the original encoded HydroATLAS values and project estimates in separate columns; consult attribute-dictionary.csv for units and spatial support. Never sum upstream attribute columns across basins. report.json retains source metadata, coverage, morphology, and all monthly rows.\nGeometry missing for ${report.geometry_missing_ids.length} upstream basin IDs (listed in report.json).\n`),

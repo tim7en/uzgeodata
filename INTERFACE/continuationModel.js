@@ -1,7 +1,6 @@
-// The observed record ends where its source ends: TerraClimate stops in 2024-12
-// and ERA5-Land reaches 2026-08. The continuation product estimates the older
-// statistic from ERA for the months in between, and the producer's own 2025
-// release sits beside it. Neither is an observation of the series it continues,
+// The observed record ends where its source's latest release ends: TerraClimate
+// publishes once a year, ERA5-Land every month. The continuation product
+// estimates the record's statistic from ERA for the months in between. Neither is an observation of the series it continues,
 // and this file keeps them labelled as what they are rather than splicing them
 // onto the end of the record.
 //
@@ -22,11 +21,11 @@ export const CONTINUATION_VARIABLES = {
   vpd_kp_s: { estimated: 'vpd', direct: 'vpd' },
 };
 
-export const CONTINUATION_METHOD = 'Beyond the observed record, two separate products are shown and never '
-  + 'merged into it. The estimate continues the same v1.0 statistic from ERA and carries the 90th percentile '
-  + 'of its held-out absolute error, so its own uncertainty is stated in the units of the variable. The 2025 '
-  + 'producer release is a different version of the source, not a later observation of the same series. '
-  + 'Anomalies use the baseline of the observed record, which is what makes them comparable with it.';
+export const CONTINUATION_METHOD = 'TerraClimate is released once a year. Months after its latest release are '
+  + 'estimated from ERA5-Land, mapped basin by basin and month by month onto the record’s own TerraClimate '
+  + 'statistic - the principle TerraClimate v1.1 is itself built on - and carry the 90th percentile of their '
+  + 'error on held-out years, in the units of the variable. They are shown as estimates and never merged into the '
+  + 'observed statistics; the producer’s next release replaces them. Anomalies use the observed baseline.';
 
 const FIELD = { year: 0, month: 1, value: 2, coverage: 3, waterEquivalent: 4, errorP90: 5 };
 
@@ -36,7 +35,7 @@ function seriesRows(document, key) {
   const index = (document.row_fields || []).length === 6 ? FIELD : null;
   if (!index) return null;
   return {
-    label: entry.label, unit: entry.unit, product: entry.product, support: entry.support,
+    label: entry.label, unit: entry.unit, product: entry.product ?? key.split(":")[0], support: entry.support,
     rows: entry.rows
       .map(row => ({
         year: row[index.year], month: row[index.month], value: row[index.value],
@@ -57,7 +56,11 @@ function seriesRows(document, key) {
 export function continuationFor(document, variable, support) {
   const names = CONTINUATION_VARIABLES[variable];
   if (!names || !document) return null;
-  const estimated = seriesRows(document, `estimated_v1.0:${support}:${names.estimated}`);
+  // The estimate is named for the release it continues (estimated_v1.1 since the
+  // record was rebased on v1.1); any release is read the same way.
+  const estimatedKey = Object.keys(document.series || {})
+    .find(key => /^estimated_[^:]+:/.test(key) && key.endsWith(`:${support}:${names.estimated}`));
+  const estimated = estimatedKey ? seriesRows(document, estimatedKey) : null;
   const direct = seriesRows(document, `direct_v1.1:${support}:${names.direct}`);
   if (!estimated && !direct) return null;
   return { estimated, direct };
@@ -131,7 +134,8 @@ export function monthlySeries(scopeReport, continuation) {
     const key = row.year * 12 + row.month;
     const entry = {
       year: row.year, month: row.month, value: row.value,
-      coverage: row.coverage ?? null, errorP90: row.errorP90 ?? null, source: 'estimated_v1.0',
+      coverage: row.coverage ?? null, errorP90: row.errorP90 ?? null,
+      source: continuation.estimated.product || 'estimated',
     };
     const index = position.get(key);
     // An observation is never replaced by an estimate of itself.
@@ -160,11 +164,13 @@ export function aggregateLocalContinuation(entries, variable) {
   const months = new Map();
   let unit = null;
   let label = null;
+  let product = null;
   for (const { document, areaKm2 } of entries) {
     const series = continuationFor(document, variable, 'local')?.estimated;
     if (!series || !(areaKm2 > 0)) continue;
     unit = unit ?? series.unit;
     label = label ?? series.label;
+    product = product ?? series.product;
     for (const row of series.rows) {
       const key = row.year * 12 + row.month;
       const carried = months.get(key) || { year: row.year, month: row.month, weighted: 0, area: 0, errorP90: null };
@@ -185,5 +191,23 @@ export function aggregateLocalContinuation(entries, variable) {
     .sort((left, right) => left.year * 12 + left.month - (right.year * 12 + right.month))
     .map(entry => ({ year: entry.year, month: entry.month, value: entry.weighted / entry.area,
       coverage: null, errorP90: entry.errorP90 }));
-  return { estimated: { rows, unit, label, product: 'estimated_v1.0', support: 'local' }, basins: complete };
+  return { estimated: { rows, unit, label, product: product || 'estimated', support: 'local' }, basins: complete };
+}
+
+/**
+ * A basin's published monthly record, continued by its estimate.
+ *
+ * The history file holds one value a month from January of its first year, with
+ * nulls where nothing was observed. It is read into the same observed-then-
+ * estimated series a report uses, so the explorer and the report say the same
+ * thing about the same basin.
+ */
+export function historySeries(history, key, document) {
+  const values = history?.series?.[key]?.values || [];
+  const rows = values.map((value, position) => ({
+    year: history.years[0] + Math.floor(position / 12), month: (position % 12) + 1,
+    mean_observed_area: value, area_coverage_percent: value === null ? null : 100,
+    observed_basins: value === null ? 0 : 1,
+  }));
+  return monthlySeries({ rows }, continuationFor(document, key, 'local'));
 }

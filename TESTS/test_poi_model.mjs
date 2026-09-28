@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { aoiFeature } from '../INTERFACE/aoiModel.js';
-import { annualSeries, basinUnits, currentConditions, monthlyNormals, parsePois, matchPoi, reportMembers, makePoiReport, reportMonthlyCsv } from '../INTERFACE/poiModel.js';
+import { annualSeries, basinUnits, chartWindow, outletOf, currentConditions, monthlyNormals, parsePois, matchPoi, reportMembers, makePoiReport, reportMonthlyCsv } from '../INTERFACE/poiModel.js';
 
 const monthly = (years, value) => {
   const rows = [];
@@ -25,7 +25,8 @@ test('the monthly series runs to the present and says where each month came from
     rows.push({ year, month: i % 12 + 1, mean_observed_area: observed ? 30 : null,
       observed_basins: observed ? 5 : 0, area_coverage_percent: observed ? 100 : 0 });
   }
-  const continuation = { estimated: { rows: [
+  // The source of an estimated month is the product that made it, named in the data.
+  const continuation = { estimated: { product: 'estimated_v1.1', rows: [
     { year: 2024, month: 12, value: 99, errorP90: 8 },
     { year: 2025, month: 1, value: 25, errorP90: 8 },
     { year: 2026, month: 8, value: 12, errorP90: 8 },
@@ -33,9 +34,9 @@ test('the monthly series runs to the present and says where each month came from
   const series = monthlySeries({ rows }, continuation);
 
   assert.equal(series.at(-1).year, 2026, 'the series must reach the last estimated month');
-  assert.equal(series.at(-1).source, 'estimated_v1.0');
+  assert.equal(series.at(-1).source, 'estimated_v1.1');
   assert.equal(series.filter(row => row.source === 'observed').length, 264);
-  assert.equal(series.filter(row => row.source === 'estimated_v1.0').length, 2);
+  assert.equal(series.filter(row => row.source === 'estimated_v1.1').length, 2);
 
   // An observed month is never replaced by an estimate of itself.
   const december = series.find(row => row.year === 2024 && row.month === 12);
@@ -282,4 +283,42 @@ test('overlapping upstream traces are deduplicated and missing data is never ext
   assert.equal(report.morphology, null, 'No invented dissolved morphology for a multi-outlet polygon');
   assert.match(reportMonthlyCsv(report), /upstream,pre_mm_s/);
   assert.throws(() => reportMembers(index, [polygon(99)]), /No partial report/);
+});
+
+test('the report chart window is calendar time, and carries each month its normal', () => {
+  const series = [
+    { year: 2020, month: 1, value: 1, source: 'observed' },
+    { year: 2023, month: 11, value: 2, source: 'observed' },
+    { year: 2024, month: 12, value: 3, source: 'estimated_v1.0' },
+  ];
+  const normals = { byMonth: Array.from({ length: 12 }, (_, index) => index + 100) };
+  const window = chartWindow(series, normals, 36);
+  assert.deepEqual(window.map(row => row.value), [2, 3]);
+  assert.deepEqual(window.map(row => row.normal), [110, 111]);
+  assert.equal(chartWindow(series, null, null).length, 3);
+  assert.equal(chartWindow(series, null, null)[0].normal, null);
+  assert.deepEqual(chartWindow([], normals, 36), []);
+});
+
+test('a set of basins has an outlet only when exactly one member drains out of it', () => {
+  const index = { ids: [1, 2, 3, 4], next_down: [3, 3, 0, 0] };
+  assert.equal(outletOf(['1', '2', '3'], index), '3');
+  assert.equal(outletOf(['1', '2'], index), null);
+  assert.equal(outletOf(['4'], index), '4');
+  assert.equal(outletOf(['3', '4'], index), null);
+});
+
+test('the monthly CSV carries the estimate in its own columns, only where nothing was observed', () => {
+  const row = (month, value) => ({ year: 2024, month, mean_observed_area: value, observed_basins: value === null ? 0 : 1 });
+  const scope = { rows: [row(11, 4), row(12, null)], total: { unit: 'm3' } };
+  const report = {
+    variable: 'pre_mm_s', meta: { unit: 'mm' }, local: scope, upstream: scope,
+    continuation: { local: { estimated: { rows: [{ year: 2024, month: 11, value: 99, errorP90: 1 }, { year: 2024, month: 12, value: 5, errorP90: 2 }] } } },
+  };
+  const lines = reportMonthlyCsv(report).trim().split(/\r?\n/);
+  assert.match(lines[0], /source.*estimated_value,estimated_error_p90$/);
+  assert.match(lines[1], /^local,.*,observed,.*,,$/);
+  assert.match(lines[2], /^local,.*,estimated,.*,5,2$/);
+  // No upstream estimate: the month stays unobserved.
+  assert.match(lines[4], /^upstream,.*,no observation,/);
 });

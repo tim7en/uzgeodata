@@ -301,7 +301,18 @@ def index_cube(note, cube=CUBE):
     return rows_total
 
 
+# The TerraClimate series were rebased on the producer's v1.1 release, which Earth
+# Engine does not carry. Appending Earth Engine's v1.0 to them would splice two
+# releases in one series; new TerraClimate years arrive through
+# `npm run climate:regional:update` instead.
+REBASED = {"terraclimate", "terraclimate_temperature", "terraclimate_moisture"}
+
+
 def update(source, through, dry_run=False, cube=CUBE, history=HISTORY):
+    if source in REBASED:
+        raise ValueError(f"{source} is published from TerraClimate v1.1 (rebase_terraclimate_v11.py); "
+                         "Earth Engine holds v1.0 and would splice two releases. Run "
+                         "`npm run climate:regional:update` for new producer years.")
     known = sources()
     if source not in known:
         raise ValueError(f"Unknown source {source}")

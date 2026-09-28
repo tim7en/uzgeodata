@@ -5,11 +5,15 @@ import { json, matrix } from './catchmentData.js';
 import { fetchAll } from './aoiModel.js';
 import { BASEMAPS, collectionBounds } from './mapViewModel.js';
 import { formatNumber } from './landingModel.js';
+import ReportChart from './ReportChart.jsx';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
 import { monthlyNormals } from './poiModel.js';
-import { aggregateLocalContinuation, CONTINUATION_METHOD, continuationFor, continuationLatest, monthlySeries } from './continuationModel.js';
-import { basinUnits, CONDITION_METHOD, makePoiReport, matchPoi, MAX_UPLOAD_BYTES, parsePois, REPORT_METHOD, reportMonthlyCsv } from './poiModel.js';
-import { reportFilename, reportPdf, reportZip, saveFile } from './poiExports.js';
+import { aggregateLocalContinuation, CONTINUATION_METHOD, CONTINUATION_VARIABLES, continuationFor, continuationLatest, monthlySeries } from './continuationModel.js';
+import { basinUnits, CONDITION_METHOD, makePoiReport, matchPoi, MAX_UPLOAD_BYTES, outletOf, parsePois, REPORT_METHOD, reportMonthlyCsv } from './poiModel.js';
+import { DROUGHT_METHOD, droughtOutlook, nextYearChance, ordinal, presentConditions } from './droughtModel.js';
+import DroughtOutlook from './DroughtOutlook.jsx';
+import SeasonalForecast from './SeasonalForecast.jsx';
+import { reportFilename, reportPdf, reportZip, shareOrSaveFile } from './poiExports.js';
 import './damModal.css';
 import './poiReport.css';
 
@@ -41,7 +45,10 @@ function ReportMap({ report }) {
   if (!bounds) return null;
   const coordinate = report.input.geometry.type === 'Point' ? report.input.geometry.coordinates : null;
   return <>
-    <MapContainer className="poi-map" bounds={bounds} preferCanvas scrollWheelZoom={false}>
+    {/* On a touch screen the map sits inside a scrolling sheet: one finger scrolls
+        the report, two pinch the map, so a swipe past it never gets trapped. */}
+    <MapContainer className="poi-map" bounds={bounds} preferCanvas scrollWheelZoom={false}
+      dragging={!window.matchMedia?.('(pointer: coarse)').matches}>
       {base.url && <TileLayer key={base.id} url={base.url} attribution={base.attribution}
         maxZoom={base.maxZoom} className={base.dim ? 'poi-map-dim' : undefined}/>}
       <GeoJSON data={report.upstream_geometry} interactive={false} style={{ color: '#1594bc', weight: 0.6, fillOpacity: 0.25 }}/>
@@ -83,17 +90,35 @@ function AttributeDetails({ report }) {
   </details>;
 }
 
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const monthName = period => MONTHS[Number(period.slice(5)) - 1];
+// formatNumber gives small numbers two decimals whatever it is asked for; a
+// percentage read at a glance wants whole points.
+const signed = (value, digits = 1) => `${value > 0 ? '+' : ''}${digits === 0 ? Math.round(value) : formatNumber(value, digits)}`;
+const isEstimate = source => source && source !== 'observed';
+
+/**
+ * The headline is the latest month there is. Where that month is an estimate it
+ * says so and carries its error; the end of the observed record is stated under
+ * it rather than presented as the present.
+ */
 function Summary({ report, scope }) {
   const data = report[scope];
-  const latest = data.rows.findLast(row => row.observed_basins > 0);
+  const now = report.present?.[scope];
+  const month = now?.month;
+  const unit = report.meta.unit;
   return <section className="poi-summary">
     <h3>{scope === 'local' ? 'Local basin' : 'Upstream including local'}</h3>
     <p>{formatNumber(data.ids.length)} basins · {formatNumber(data.areaKm2, 2)} km²</p>
-    {latest ? <>
-      <p>Latest available: {latest.year}-{String(latest.month).padStart(2, '0')}</p>
-      <strong>{formatNumber(latest.mean_observed_area, 2)} {report.meta.unit}</strong>
-      <p>Area-weighted mean · {formatNumber(latest.area_coverage_percent, 1)}% area coverage</p>
-      <p>{data.total.label}: {latest.total_full_catchment == null ? 'Not available' : `${formatNumber(latest.total_full_catchment, 2)} ${data.total.unit}`}</p>
+    {month ? <>
+      <p>Latest month: {now.latest}{isEstimate(month.source) && ' · estimated'}</p>
+      <strong>{formatNumber(month.value, 2)} {unit}{month.errorP90 ? ` ±${formatNumber(month.errorP90, 2)}` : ''}</strong>
+      {month.standing && <p className={`poi-standing poi-standing-${month.withinError ? 'mid' : month.percentile <= 30 ? 'low' : month.percentile >= 70 ? 'high' : 'mid'}`}>
+        {month.standing} for {monthName(now.latest)}
+        {month.anomalyPercent !== null && ` · ${signed(month.anomalyPercent, 0)}% vs normal`}
+        {month.withinError && ` (±${formatNumber(month.errorP90, 1)} error)`}</p>}
+      {now.lastObserved && now.lastObserved !== now.latest && <p className="poi-coverage">Observed to {now.lastObserved};
+        {' '}{now.estimatedMonths} later months estimated.</p>}
     </> : <p>No observations for this variable.</p>}
   </section>;
 }
@@ -113,15 +138,19 @@ async function continuationOf(report, variable, index, signal) {
         scopes[scope] = { ...series, latest: continuationLatest(series, monthlyNormals(report[scope].rows)) };
       }
     } else {
-      // Several basins: their local series average by area, their upstream sets
-      // overlap and do not, so only the local one is offered.
+      // Several basins: their local series average by area. Their upstream sets
+      // overlap and cannot be averaged, but a set with a single outlet has the
+      // outlet's own upstream series as its upstream, counted once.
       const areas = new Map(index.ids.map((id, position) => [String(id), index.areas_km2[position]]));
       const local = aggregateLocalContinuation(
         results.map((document, position) => ({ document, areaKm2: areas.get(String(ids[position])) })), variable);
-      if (local) {
-        scopes.local = { ...local, latest: continuationLatest(local, monthlyNormals(report.local.rows)) };
-        scopes.upstreamWithheld = ids.length;
-      }
+      if (local) scopes.local = { ...local, latest: continuationLatest(local, monthlyNormals(report.local.rows)) };
+      const outlet = outletOf(ids, index);
+      const upstream = outlet ? continuationFor(results[ids.indexOf(outlet)], variable, 'upstream') : null;
+      if (upstream) {
+        scopes.upstream = { ...upstream, latest: continuationLatest(upstream, monthlyNormals(report.upstream.rows)) };
+        scopes.upstreamFrom = outlet;
+      } else if (local) scopes.upstreamWithheld = ids.length;
     }
     return Object.keys(scopes).length ? { basins: ids.length, ...scopes } : null;
   } catch {
@@ -129,6 +158,49 @@ async function continuationOf(report, variable, index, signal) {
     // one, and the observed record stands on its own.
     return null;
   }
+}
+
+const extensiveOf = total => total?.factor !== null && total?.factor !== undefined;
+
+/** The present for each scope, on the observed record continued by its estimate. */
+function presentOf(report, continuation) {
+  return Object.fromEntries(['local', 'upstream'].map(scope => [scope,
+    presentConditions(monthlySeries(report[scope], continuation?.[scope]), { extensive: extensiveOf(report[scope].total) })]));
+}
+
+async function droughtRecord(id, signal) {
+  const response = await fetch(`/data/atlas/drought-study/basins/${id}.json`, { signal });
+  if (!response.ok || !(response.headers.get('content-type') || '').includes('json')) return null;
+  const record = await response.json();
+  return String(record.basin_id) === String(id) ? record : null;
+}
+
+/**
+ * Drought, always read from precipitation whatever variable the report shows.
+ *
+ * The local reading needs one basin: SPI is fitted per basin and does not average.
+ * The upstream reading needs one outlet, whose upstream SPI covers the whole set.
+ */
+async function droughtOf(precipitation, index, signal) {
+  const ids = precipitation.match.basin_ids;
+  const outlet = ids.length === 1 ? ids[0] : outletOf(ids, index);
+  const [localRecord, outletRecord] = await Promise.all([
+    ids.length === 1 ? droughtRecord(ids[0], signal).catch(() => null) : null,
+    outlet ? droughtRecord(outlet, signal).catch(() => null) : null,
+  ]);
+  const scope = (record, support) => {
+    const outlook = droughtOutlook(record, support);
+    if (!outlook) return null;
+    const toDate = precipitation.present?.[support]?.waterYearToDate || null;
+    return { outlook, toDate, chance: nextYearChance(outlook, toDate), record };
+  };
+  const result = {
+    local: localRecord ? scope(localRecord, 'local') : null,
+    upstream: outletRecord ? scope(outletRecord, 'upstream') : null,
+    outlet, basins: ids.length,
+    present: precipitation.present, unit: precipitation.meta.unit,
+  };
+  return result.local || result.upstream ? result : null;
 }
 
 /**
@@ -171,35 +243,46 @@ const month = (year, number) => `${year}-${String(number).padStart(2, '0')}`;
 /**
  * Where this catchment stands now against its own record.
  *
- * A monthly value alone answers nothing a reader came with: 40 mm is a drought in
- * April and a deluge in September. The comparisons are the point, and the record
- * end is stated beside them, because a variable that stops in 2024 is reporting
- * the source's limit rather than current conditions.
+ * "Now" is the latest month of the record continued by its estimate, not the last
+ * month the source observed: a report that stops two years back answers a
+ * question nobody asked. The baseline and the trend stay on the observed record
+ * alone - an estimate measured against its own mean, or a trend drawn across the
+ * join between two products, would report the join.
  */
 function Conditions({ report }) {
-  const scopes = ['local', 'upstream'].map(scope => [scope, report[scope].conditions]).filter(([, state]) => state);
+  const scopes = ['local', 'upstream'].map(scope => [scope, report.present?.[scope], report[scope].conditions])
+    .filter(([, now]) => now);
   if (!scopes.length) return null;
   const unit = report.meta.unit;
+  const first = scopes[0][1];
+  const value = (number, error, sum) => `${formatNumber(number, 1)} ${sum ? unit.replace(/ per month$/, '') : unit}`
+    + `${error ? ` ±${formatNumber(error, 1)}` : ''}`;
+  const versus = (anomaly, percent) => (percent !== null && percent !== undefined
+    ? `${signed(percent, 0)}% vs normal` : anomaly === null ? '' : `${signed(anomaly, 2)} ${unit} vs normal`);
   return <section className="poi-conditions" aria-label="Current conditions against the record">
-    <h4>Current conditions</h4>
-    {report.coverage && <p className="poi-coverage">Record {report.coverage.first} to {report.coverage.last} ·
-      {' '}{report.coverage.observed_months} observed months of {report.coverage.frame_months}</p>}
-    <div className="poi-summaries">{scopes.map(([scope, state]) => {
-      const { latest, baseline, lastTwelveMonths: window, trend } = state;
+    <h4>Current conditions · {first.latest}</h4>
+    <p className="poi-coverage">
+      {report.coverage && `Observed ${report.coverage.first} to ${first.lastObserved || report.coverage.last}`}
+      {first.lastObserved && first.lastObserved !== first.latest && `, estimated to ${first.latest}`}
+      {first.baseline && ` · normals ${first.baseline.firstYear}–${first.baseline.lastYear}, observed years only`}</p>
+    <div className="poi-summaries">{scopes.map(([scope, now, observed]) => {
+      const { month, lastTwelveMonths: twelve, waterYearToDate: toDate } = now;
+      const trend = observed?.trend;
       return <dl key={scope}>
-        <div><dt>{scope === 'local' ? 'Local basin' : 'Upstream catchment'}</dt>
-          <dd>{baseline ? `baseline ${baseline.firstYear}–${baseline.lastYear}` : 'no baseline'}</dd></div>
-        <div><dt>Latest month {month(latest.year, latest.month)}</dt>
-          <dd>{formatNumber(latest.value, 2)} {unit}</dd></div>
-        <div><dt>Normal for that month</dt><dd>{formatNumber(latest.normal, 2)} {unit}</dd></div>
-        <div><dt>Anomaly</dt><dd>{formatNumber(latest.anomaly, 2)} {unit}
-          {latest.anomalyPercent !== null && ` · ${formatNumber(latest.anomalyPercent, 0)}%`}</dd></div>
-        {latest.rankPercentile !== null && <div><dt>Rank in that month</dt>
-          <dd>{latest.rankPercentile}th percentile of {latest.rankYears} years</dd></div>}
-        {window && <div><dt>Last 12 months ({window.aggregation})</dt>
-          <dd>{formatNumber(window.value, 1)} {unit} · {formatNumber(window.anomalyPercent ?? window.anomaly, 1)}
-            {window.anomalyPercent === null ? ` ${unit}` : '%'} vs normal</dd></div>}
-        <div><dt>Trend, {trend ? `${trend.years} complete years` : 'not reported'}</dt>
+        <div><dt>{scope === 'local' ? 'Local basin' : 'Upstream catchment'}</dt><dd/></div>
+        <div><dt>{month.period}{isEstimate(month.source) ? ' · estimated' : ''}</dt>
+          <dd>{value(month.value, month.errorP90)}</dd></div>
+        <div><dt>Normal for {monthName(month.period)}</dt><dd>{month.normal === null ? '—' : value(month.normal)}</dd></div>
+        <div><dt>Standing</dt><dd>{[versus(month.anomaly, month.anomalyPercent),
+          !month.withinError && month.percentile !== null && `${ordinal(month.percentile)} percentile`,
+          month.standing].filter(Boolean).join(' · ') || '—'}</dd></div>
+        {twelve && <div><dt>Last 12 months, {twelve.from} to {twelve.to}</dt>
+          <dd>{value(twelve.value, twelve.errorBound, now.extensive)}{now.extensive ? '' : ' mean'} · {versus(twelve.anomaly, twelve.anomalyPercent)}
+            {twelve.estimatedMonths ? ` · ${twelve.estimatedMonths} estimated` : ''}</dd></div>}
+        {toDate && <div><dt>Water year {toDate.waterYear} so far, {toDate.from} to {toDate.to}</dt>
+          <dd>{value(toDate.value, toDate.errorBound, now.extensive)}{now.extensive ? '' : ' mean'} · {versus(toDate.anomaly, toDate.anomalyPercent)}
+            {toDate.percentile !== null && ` · ${toDate.standing}, ${ordinal(toDate.percentile)} percentile of ${toDate.comparedYears} years`}</dd></div>}
+        <div><dt>Trend, observed record{trend ? `, ${trend.years} complete years` : ''}</dt>
           <dd>{trend ? `${trend.direction}${trend.slopePerDecade === null ? ''
             : ` · ${formatNumber(trend.slopePerDecade, 2)} ${unit} per decade · p ${formatNumber(trend.p, 3)}`}`
             : 'fewer than ten complete years'}</dd></div>
@@ -212,42 +295,26 @@ function Conditions({ report }) {
 }
 
 /**
- * Where the record continues past its source.
+ * How the record reaches the present, stated once under the conditions.
  *
- * TerraClimate stops in 2024 and this reader wants to know what has happened
- * since. The estimate answers that and is never folded into the observed rows: it
- * is a different product, shown with its own held-out error, so a month inside
- * that error reads as "not distinguishable from normal" rather than as a change.
+ * The estimate is never folded into the observed rows' statistics; the producer's
+ * own later release is a different version of the source and is listed apart.
  */
 function Continuation({ report }) {
   const state = report.continuation;
   if (!state) {
-    return report.coverage && report.coverage.last < '2025'
-      ? <p className="poi-coverage" role="note">No continuation is published for this variable, so the record
-        ends at {report.coverage.last}. Runoff and mean temperature reach 2026-08 from ERA5-Land.</p>
+    return report.coverage && report.frontier && report.coverage.last < report.frontier
+      ? <p className="poi-coverage" role="note">No continuation is published for this variable, so its record
+        ends at {report.coverage.last}. Precipitation, the water balance and PDSI are continued to the latest month.</p>
       : null;
   }
+  const direct = ['local', 'upstream'].map(scope => state[scope]?.direct?.rows?.length || 0);
   return <div className="poi-continuation">
-    <h5>Beyond the observed record · estimated</h5>
-    <div className="poi-summaries">{['local', 'upstream'].filter(scope => state[scope]?.latest).map(scope => {
-      const latest = state[scope].latest;
-      const direct = state[scope].direct?.rows?.length;
-      return <dl key={scope}>
-        <div><dt>{scope === 'local' ? 'Local basin' : 'Upstream catchment'}</dt>
-          <dd>{latest.months} estimated months from {latest.first}</dd></div>
-        <div><dt>Latest estimate {month(latest.year, latest.month)}</dt>
-          <dd>{formatNumber(latest.value, 2)} {latest.unit}</dd></div>
-        {latest.normal !== null && <div><dt>Against the observed normal</dt>
-          <dd>{formatNumber(latest.anomaly, 2)} {latest.unit}
-            {latest.rankPercentile !== null && ` · ${latest.rankPercentile}th percentile`}</dd></div>}
-        {latest.errorP90 !== null && latest.errorP90 !== undefined && <div><dt>Held-out error (p90)</dt>
-          <dd>±{formatNumber(latest.errorP90, 2)} {latest.unit}</dd></div>}
-        {latest.withinError && <div><dt>Reading</dt>
-          <dd>within the model's own error of normal</dd></div>}
-        {direct ? <div><dt>Producer v1.1, 2025</dt><dd>{direct} months published separately</dd></div> : null}
-      </dl>;
-    })}</div>
     <p className="poi-coverage">{CONTINUATION_METHOD}</p>
+    {state.upstreamFrom && <p className="poi-coverage">The upstream estimate is the one published for basin
+      {' '}{state.upstreamFrom}, which every basin in this report drains through.</p>}
+    {direct.some(Boolean) && <p className="poi-coverage">The producer's own v1.1 release adds {Math.max(...direct)} months,
+      published separately in the ZIP and not joined to this series.</p>}
   </div>;
 }
 
@@ -350,7 +417,27 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
       // stored per basin with its own upstream series, and averaging several
       // basins' upstream sets would count the shared ones more than once.
       const continuation = await continuationOf(result, variable, data.index, signal);
-      setReport({ ...result, catalogue: data.catalogue, continuation,
+      const present = presentOf(result, continuation);
+      // Drought is read from precipitation. When the report already shows it the
+      // work is shared; otherwise precipitation is aggregated for the same basins.
+      let precipitation = { ...result, present };
+      if (variable !== 'pre_mm_s' && data.index.series.pre_mm_s) {
+        const rain = makePoiReport({ feature: upload.collection.features[active], match, ...data,
+          values: await matrix(data.index, 'pre_mm_s', signal), variable: 'pre_mm_s', sourceFile: upload.name });
+        precipitation = { ...rain, present: presentOf(rain, await continuationOf(rain, 'pre_mm_s', data.index, signal)) };
+      }
+      const drought = await droughtOf(precipitation, data.index, signal).catch(() => null);
+      if (signal.aborted) return;
+      // The newest month any variable reaches, so a record that stops short of it
+      // can say so without the page naming a date that goes stale next month.
+      const frontier = Object.values(data.index.series).map(item => item.coverage?.last).filter(Boolean).sort().at(-1);
+      // The seasonal forecast is read for the basin the report drains out through:
+      // its level-7 basin and zone stand for the whole set.
+      const outlet = match.basins.length === 1 ? String(match.basins[0].properties.hybas_id)
+        : outletOf(result.local.ids, data.index);
+      const forecastBasin = basin && Number(basin.basin_level) !== 12 ? basin
+        : data.geometry.features.find(feature => String(feature.properties.hybas_id) === outlet)?.properties || null;
+      setReport({ ...result, catalogue: data.catalogue, continuation, present, drought, frontier, forecastBasin,
         records: result.local.ids.map(id => records.current.get(id)) });
     })().catch(cause => { if (!signal.aborted) setError(cause.message); })
       .finally(() => { if (!signal.aborted) setLoadingReport(false); });
@@ -386,46 +473,54 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
     setBusy(kind); setError('');
     try {
       const name = reportFilename(report);
-      if (kind === 'PDF') saveFile(`${name}.pdf`, await reportPdf(report), 'application/pdf');
-      if (kind === 'ZIP') saveFile(`${name}.zip`, await reportZip(report), 'application/zip');
-      if (kind === 'CSV') saveFile(`${name}.csv`, reportMonthlyCsv(report), 'text/csv;charset=utf-8');
-      if (kind === 'JSON') saveFile(`${name}.json`, JSON.stringify(report, null, 2), 'application/json');
+      if (kind === 'PDF') await shareOrSaveFile(`${name}.pdf`, await reportPdf(report), 'application/pdf');
+      if (kind === 'ZIP') await shareOrSaveFile(`${name}.zip`, await reportZip(report), 'application/zip');
+      if (kind === 'CSV') await shareOrSaveFile(`${name}.csv`, reportMonthlyCsv(report), 'text/csv;charset=utf-8');
+      if (kind === 'JSON') await shareOrSaveFile(`${name}.json`, JSON.stringify(report, null, 2), 'application/json');
     } catch (cause) { setError(cause.message); } finally { setBusy(''); }
   };
   const match = matches[active];
+  const uploadControls = <>
+    <div className="poi-controls">
+      <label>{drawn || basin ? 'Upload other locations' : 'Upload locations'}
+        <input type="file" accept=".geojson,.json,.csv" onChange={readFile} disabled={!!busy}/></label>
+      {!basin && <label>Maximum point snap distance
+        <select value={tolerance} disabled={!!busy} onChange={event => setTolerance(Number(event.target.value))}>
+          {[0, 0.1, 0.5, 1, 2, 5, 10].map(km => <option key={km} value={km}>{km ? `${km} km` : 'Containing basin only'}</option>)}
+        </select>
+      </label>}
+    </div>
+    <p>GeoJSON Point, Polygon or MultiPolygon; or CSV with longitude, latitude and optional name columns. WGS84 coordinates. Up to 100 locations, 5 MB. Files stay in your browser.</p>
+    <p>Points outside a basin snap to its nearest boundary only within the chosen distance. Polygons use all intersecting basins.</p>
+  </>;
   return <div className="dam-modal poi-modal" role="dialog" aria-modal="true" aria-labelledby="poi-title" onClick={onClose}>
     <div className="dam-modal-card" ref={card} onClick={event => event.stopPropagation()}>
       <button type="button" className="dam-modal-close" aria-label="Close" onClick={onClose}><X size={16}/></button>
-      <header><span className="dam-modal-kicker">Basin atlas · Your locations</span><h2 id="poi-title">Upload &amp; basin reports</h2>
-        <p className="dam-modal-sub">Match points or polygons to level-12 basins and compare local and upstream information.</p></header>
-      <div className="poi-controls">
-        <label>{drawn || basin ? 'Upload other locations' : 'Upload locations'}
-          <input type="file" accept=".geojson,.json,.csv" onChange={readFile} disabled={!!busy}/></label>
-        {!basin && <label>Maximum point snap distance
-          <select value={tolerance} disabled={!!busy} onChange={event => setTolerance(Number(event.target.value))}>
-            {[0, 0.1, 0.5, 1, 2, 5, 10].map(km => <option key={km} value={km}>{km ? `${km} km` : 'Containing basin only'}</option>)}
-          </select>
-        </label>}
-      </div>
+      <header><span className="dam-modal-kicker">Basin atlas · {basin ? 'Selected basin' : drawn ? 'Drawn area' : 'Your locations'}</span>
+        <h2 id="poi-title">{basin ? 'Basin & upstream report' : drawn ? 'Area report' : 'Upload & basin reports'}</h2>
+        <p className="dam-modal-sub">{basin || drawn ? 'Local and upstream conditions, against their own record.'
+          : 'Match points or polygons to level-12 basins and compare local and upstream information.'}</p></header>
       {basin && <p role="status">Reporting on basin {basin.hybas_id}, chosen on the map, and everything
         draining into it.{Number(basin.basin_level) !== 12 && ' Statistics are published for level-12 '
-        + 'sub-basins, so this covers every one inside it.'} Upload a file to report on something else.</p>}
+        + 'sub-basins, so this covers every one inside it.'}</p>}
       {drawn && <p role="status">Reporting on the area drawn on the map. Its statistics describe every
-        level-12 basin the area intersects, whole, not the drawn shape itself. Upload a file to report on
-        something else.</p>}
-      <p>GeoJSON Point, Polygon or MultiPolygon; or CSV with longitude, latitude and optional name columns. WGS84 coordinates. Up to 100 locations, 5 MB. Files stay in your browser.</p>
-      <p>Points outside a basin snap to its nearest boundary only within the chosen distance. Polygons use all intersecting basins.</p>
+        level-12 basin the area intersects, whole, not the drawn shape itself.</p>}
+      {/* A reader who arrived with a basin or an area came for its report, and on a
+          phone the upload instructions pushed that below the first screen. They
+          stay one tap away rather than in front of it. */}
+      {basin || drawn ? <details className="poi-other"><summary>Report on other locations</summary>{uploadControls}</details>
+        : uploadControls}
       {!data && !loadError && <p role="status">Loading basin boundaries and statistics index…</p>}
       {loadError && <p role="alert">{loadError} <button onClick={() => setRetry(n => n + 1)}>Retry loading</button></p>}
       {inputError && <p role="alert">{inputError}</p>}
       {error && <p role="alert">{error} {upload && <button onClick={() => setRetry(n => n + 1)}>Retry report</button>}</p>}
       {matching && <p role="status">Matching uploaded locations…</p>}
-      {upload && <label className="poi-picker">Location report
+      {upload && upload.collection.features.length > 1 && <label className="poi-picker">Location report
         <select value={active} disabled={matching || !!busy} onChange={event => setActive(Number(event.target.value))}>
           {upload.collection.features.map((feature, i) => <option key={feature.id} value={i}>{i + 1}. {feature.properties.poi_name} · {matches[i]?.status || 'pending'}</option>)}
         </select>
       </label>}
-      {match && <p>Match: <strong>{match.status}</strong>{match.distanceKm != null && ` · ${formatNumber(match.distanceKm, 3)} km`}
+      {match && !basin && <p>Match: <strong>{match.status}</strong>{match.distanceKm != null && ` · ${formatNumber(match.distanceKm, 3)} km`}
         {match.basins.length > 0 && ` · ${match.basins.length} basin(s)`}</p>}
       {match?.status === 'unmatched' && <p role="status">No basin matches this location within the selected rule. Check the coordinates or point snap distance. No report has been inferred.</p>}
       {data && upload && <label className="poi-picker">Report variable
@@ -434,18 +529,19 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
               the same month; without this the reader picks one, sees it stop in
               2024, and concludes the atlas is two years behind. */}
           {Object.entries(data.index.series).map(([key, item]) => <option key={key} value={key}>
-            {item.meta.label} · {item.meta.unit}{item.coverage ? ` · to ${item.coverage.last}` : ''}</option>)}
+            {item.meta.label} · {item.meta.unit}{item.coverage ? CONTINUATION_VARIABLES[key]
+              ? ` · observed to ${item.coverage.last}, estimated since` : ` · to ${item.coverage.last}` : ''}</option>)}
         </select>
       </label>}
       {loadingReport && <p role="status">Preparing local and upstream statistics…</p>}
       {report && <article aria-label="Location basin report">
         <h3>{report.name}</h3><p>{report.meta.label} · {report.meta.source_release}</p>
-        <div className="poi-downloads">{['PDF', 'ZIP', 'CSV', 'JSON'].map(kind => <button key={kind} disabled={!!busy}
-          onClick={() => download(kind)}>{kind === 'ZIP' ? 'Report & data (ZIP)' : `Download ${kind}`}</button>)}</div>
-        {busy && <p role="status">Preparing {busy} download…</p>}
-        <ReportMap key={`${active}-${variable}`} report={report}/>
         <div className="poi-summaries"><Summary report={report} scope="local"/><Summary report={report} scope="upstream"/></div>
+        <ReportChart key={`chart-${active}-${variable}`} report={report}/>
         <Conditions report={report}/>
+        <DroughtOutlook drought={report.drought} method={DROUGHT_METHOD}/>
+        <SeasonalForecast basin={report.forecastBasin}/>
+        <ReportMap key={`${active}-${variable}`} report={report}/>
         {report.morphology?.traced_area_km2 < report.morphology?.reported_upstream_area_km2 * 0.95 &&
           <p role="note">The traced network covers less than 95% of the reported upstream area. Results describe the published network only.</p>}
         {!!report.geometry_missing_ids.length && <p role="note">{report.geometry_missing_ids.length} upstream basins have statistics but no display boundary.</p>}
@@ -460,6 +556,14 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
           {report.morphology_notes.map(note => <p key={note}>{note}</p>)}
           <p>Generated {report.generatedAt}. The ZIP contains the full report and relevant geometry, attribute and monthly files for this location and variable.</p>
         </details>
+        {/* Last in the article and sticky to the bottom of the sheet: visible the
+            whole time the report is read, and landing in place at its end. */}
+        <div className="poi-downloads" role="group" aria-labelledby="poi-downloads-label">
+          <span id="poi-downloads-label">Download</span>
+          {[['PDF', 'Report (PDF)'], ['ZIP', 'Report & data (ZIP)'], ['CSV', 'Monthly table (CSV)'], ['JSON', 'Full report (JSON)']].map(([kind, title]) =>
+            <button key={kind} type="button" disabled={!!busy} title={title} aria-label={title} onClick={() => download(kind)}>{kind}</button>)}
+        </div>
+        {busy && <p role="status">Preparing {busy} download…</p>}
       </article>}
     </div>
   </div>;

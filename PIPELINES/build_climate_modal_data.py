@@ -26,19 +26,27 @@ LABELS = {
 
 
 def build():
+    import sys
+    sys.path.insert(0, str(ROOT))
+    from PIPELINES.model_regional_climate_continuation import TEST_END, VERSION
     DEST.mkdir(parents=True, exist_ok=True)
     con = duckdb.connect()
-    query = f"""
+    estimated = f"estimated_{VERSION}"
+    # A producer year the record already holds is the record, not a second product.
+    direct = [path for path in (BASE / "terraclimate-v1.1").glob("year=*.parquet")
+              if int(path.stem.split("=")[1]) > TEST_END]
+    direct_part = f"""
       SELECT basin_id, 'direct_v1.1' product, 'local' support, variable,
              year, month, value, coverage, NULL::DOUBLE integral, NULL::DOUBLE err
-      FROM read_parquet('{BASE / 'terraclimate-v1.1/year=*.parquet'}')
-      UNION ALL
-      SELECT basin_id, 'estimated_v1.0', 'local', variable,
-             year, month, estimate, 1::DOUBLE, NULL::DOUBLE, holdout_abs_error_p90
-      FROM read_parquet('{BASE / 'v1.0*continuation.parquet'}')
+      FROM read_parquet({[str(path) for path in direct]})
+      UNION ALL""" if direct else ""
+    query = f"""{direct_part}
+      SELECT basin_id, '{estimated}' product, 'local' support, variable,
+             year, month, estimate AS value, 1::DOUBLE coverage, NULL::DOUBLE integral, holdout_abs_error_p90 err
+      FROM read_parquet('{BASE / f'{VERSION}*continuation.parquet'}')
       UNION ALL
       SELECT basin_id,
-             CASE WHEN product='terraclimate_v1.1_direct' THEN 'direct_v1.1' ELSE 'estimated_v1.0' END,
+             CASE WHEN product='terraclimate_v1.1_direct' THEN 'direct_v1.1' ELSE '{estimated}' END,
              'upstream', variable, year, month, upstream_mean,
              coverage_fraction, upstream_integral_mcm, NULL::DOUBLE
       FROM read_parquet('{BASE / 'upstream.parquet'}')
@@ -57,7 +65,7 @@ def build():
             "row_fields": ["year", "month", "value", "coverage_fraction", "water_equivalent_mcm", "holdout_abs_error_p90"],
             "series": series,
             "source_index": "/data/atlas/climate-continuation/index.json",
-            "note": "Direct TerraClimate v1.1 and estimated v1.0 are distinct products. Upstream runoff is modelled generation, not observed flow.",
+            "note": f"The atlas record is TerraClimate {VERSION} through {TEST_END}-12; later months are ERA-based estimates of it until the producer releases the year. Upstream runoff is modelled generation, not observed flow.",
         }
         (DEST / f"{current_id}.json").write_text(json.dumps(document, separators=(",", ":"), allow_nan=False) + "\n")
         count += 1
@@ -75,14 +83,13 @@ def build():
     flush()
     if count != 7445:
         raise ValueError(f"Expected 7,445 basins; generated {count}")
-    direct_years = sorted(int(path.stem.split("=")[1]) for path in
-                          (BASE / "terraclimate-v1.1").glob("year=*.parquet"))
-    continuation_latest = con.execute(f"SELECT max(year*100+month) FROM read_parquet('{BASE / 'v1.0*continuation.parquet'}')").fetchone()[0]
+    direct_years = sorted(int(path.stem.split("=")[1]) for path in direct)
+    continuation_latest = con.execute(f"SELECT max(year*100+month) FROM read_parquet('{BASE / f'{VERSION}*continuation.parquet'}')").fetchone()[0]
     (BASE / "basins-index.json").write_text(json.dumps({
         "basins": count, "base_url": "/data/atlas/climate-continuation/basins/",
         "schema": "Each series row follows row_fields in the basin JSON.",
         "products": {"direct_v1.1": {"meaning": "Producer TerraClimate v1.1", "years": direct_years},
-                     "estimated_v1.0": {"meaning": "ERA-based estimate of v1.0 statistic",
+                     estimated: {"meaning": f"ERA-based provisional TerraClimate {VERSION} after {TEST_END}-12",
                                         "through": f"{continuation_latest // 100}-{continuation_latest % 100:02d}"}},
     }, indent=2) + "\n")
     print(f"Built climate modal JSON for {count} basins")

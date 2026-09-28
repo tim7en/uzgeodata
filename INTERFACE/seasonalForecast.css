@@ -1,0 +1,65 @@
+/* Seasonal forecast. Dry and wet take the drought ramp's ends, cold and warm the
+   substitutes' signed colours, so a reading means the same thing everywhere on
+   the page; a forecast without skill is drawn grey. */
+.seas{margin-top:16px;padding-top:12px;border-top:1px solid var(--line,#30434c)}
+.seas h4{margin:0 0 4px;font-size:15px}
+.seas h5{margin:12px 0 6px;font-size:13px;color:var(--ink,#e8eef2)}
+.seas p{margin:6px 0 0;font-size:12.5px;line-height:1.55;color:var(--ink,#e8eef2)}
+.seas .seas-meta,.seas .seas-note{font-size:11.5px;color:var(--dim,#8fa3ad)}
+.seas a{color:var(--l-accent-1,#4cc9f0)}
+.seas-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seas-reading{border:1px solid var(--line,#30434c);border-radius:5px;padding:10px}
+.seas-reading-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
+.seas-reading-head strong{font-size:12.5px}
+.seas-skill{flex:none;font-size:10.5px;padding:2px 6px;border-radius:3px;border:1px solid var(--line,#30434c);color:var(--dim,#8fa3ad)}
+.seas-skill-yes{border-color:var(--l-accent-1,#4cc9f0);color:var(--l-accent-1,#4cc9f0)}
+.seas-terciles{display:flex;height:22px;border-radius:4px;overflow:hidden;gap:2px}
+.seas-terciles span{display:flex;align-items:center;justify-content:center;min-width:2px;font-size:10.5px;font-weight:600;white-space:nowrap;overflow:hidden}
+.seas-ppt .seas-below{background:var(--l-dr-d2,#a8773a);color:#fff}
+.seas-ppt .seas-above{background:var(--l-dr-w2,#3f978c);color:#fff}
+.seas-tmean .seas-below{background:var(--sub-down,#8fd3ff);color:#06202c}
+.seas-tmean .seas-above{background:var(--sub-up,#ffb27a);color:#2a1406}
+.seas-terciles .seas-near{background:var(--l-dr-n0,#2c3538);color:var(--ink,#e8eef2)}
+.seas-unskilled span{background:var(--l-bg-7,#1d282d)!important;color:var(--dim,#8fa3ad)!important}
+@media(max-width:760px){.seas-grid{grid-template-columns:1fr}}
+
+/* The seasonal page. */
+.seas-page{max-width:1120px;margin:0 auto;padding:0 16px 48px;color:var(--ink);font-family:var(--body)}
+.seas-head{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}
+.seas-intro{padding:28px 0 8px;display:grid;gap:10px}
+.seas-intro h1{margin:0;font:700 clamp(30px,5vw,48px)/1 var(--display);text-transform:uppercase;letter-spacing:-.01em}
+.seas-intro p,.seas-section>p{margin:0;max-width:72ch;font-size:14px;line-height:1.65;color:var(--dim)}
+.seas-eyebrow{font:600 11px var(--display);letter-spacing:.18em;text-transform:uppercase;color:var(--l-accent-1)!important}
+.seas-empty{padding:16px;border:1px dashed var(--line);color:var(--dim)}
+.seas-section{padding-top:28px;display:grid;gap:12px}
+.seas-section h2{margin:0;font:700 26px var(--display);text-transform:uppercase}
+.seas-section h3{margin:10px 0 0;font:600 18px var(--display)}
+.seas-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.seas-controls button{padding:8px 12px;min-height:40px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--ink);font:600 13px var(--body);cursor:pointer}
+.seas-controls button[aria-pressed=true]{background:var(--l-accent-1);border-color:var(--l-accent-1);color:var(--l-bg-4)}
+.seas-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.seas-card h3{margin:0 0 6px;font:600 16px var(--display)}
+.seas-map{height:460px;border:1px solid var(--line);background:var(--l-bg-1)}
+.seas-legend{display:flex;flex-wrap:wrap;gap:12px;margin:0;padding:0;list-style:none;font-size:12px;color:var(--dim)}
+.seas-legend li{display:inline-flex;align-items:center;gap:6px}
+.seas-legend i{width:18px;height:12px;border:1px solid var(--line)}
+.seas-table{overflow-x:auto;border:1px solid var(--line)}
+.seas-table table{border-collapse:collapse;width:100%;min-width:720px;font-size:12px}
+.seas-table th,.seas-table td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:center;font-variant-numeric:tabular-nums}
+.seas-table tbody th{text-align:left;font-weight:600;white-space:nowrap}
+.seas-table thead th{font:600 11px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.seas-share td,.seas-share th{background:var(--l-sheen-2)}
+.seas-method p{font-size:13px}
+@media(max-width:600px){.seas-map{height:340px}.seas-cards{grid-template-columns:1fr}}
+/* The row names stay in view while the months scroll under them. */
+.seas-table tbody th,.seas-table thead th:first-child{position:sticky;left:0;z-index:1;background:var(--l-bg-1);white-space:normal;min-width:120px;max-width:150px;text-align:left}
+.seas-table table{min-width:0}
+.seas-table td{min-width:52px}
+.seas-periods{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.seas-periods button{padding:6px 10px;min-height:36px;border:1px solid var(--line,#30434c);border-radius:4px;background:transparent;color:var(--ink,#e8eef2);font-size:12px;cursor:pointer}
+.seas-periods button[aria-pressed=true]{background:var(--l-accent-1,#4cc9f0);border-color:var(--l-accent-1,#4cc9f0);color:var(--l-bg-4,#050a0c)}
+/* Inside the report modal its generic button rule is more specific; restate the pressed state there. */
+.poi-modal .seas-periods button[aria-pressed=true]{background:var(--l-accent-1,#4cc9f0);border-color:var(--l-accent-1,#4cc9f0);color:var(--l-bg-4,#050a0c)}
+/* The deepest skill step is dark in the light theme and light in the dark one. */
+[data-theme="light"] .seas-table td.seas-strong{color:#fff}
+[data-theme="dark"] .seas-table td.seas-strong{color:#06201c}

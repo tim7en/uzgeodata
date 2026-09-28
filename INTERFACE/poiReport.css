@@ -40,3 +40,30 @@
 .poi-continuation h5{margin:0 0 8px;font-size:12px;letter-spacing:.3px;text-transform:uppercase;color:var(--muted)}
 
 .poi-table tr.poi-estimated td,.poi-table tr.poi-estimated th{font-style:italic;color:var(--muted)}
+
+/* The report on a phone. A card floating in a 12px margin wasted the width the
+   chart needs and let a stray tap on the backdrop close a report mid-read, so
+   below 600px the sheet takes the whole screen. */
+.poi-other{margin-top:14px}
+.poi-other[open]>summary{margin-bottom:6px}
+.poi-downloads{position:sticky;bottom:0;z-index:2;margin:16px -4px 0;padding:10px 4px;background:var(--panel,#060b0e);border-top:1px solid var(--line,#30434c)}
+.poi-downloads{align-items:center}
+.poi-downloads>span{font-size:12px;color:var(--dim,#8fa3ad);margin-right:4px}
+.poi-downloads button{flex:1 1 0;min-width:0}
+@media(max-width:600px){
+  .poi-modal.dam-modal{padding:0;align-items:stretch}
+  .poi-modal .dam-modal-card{width:100%;max-height:none;height:100%;border-left:0;border-right:0;padding:16px 14px 0}
+  .poi-modal .dam-modal-close{padding:10px;right:4px;top:4px}
+  .poi-modal button:not(.dam-modal-close),.poi-modal select,.poi-modal summary{min-height:44px}
+  .poi-modal select,.poi-modal input{font-size:16px}
+  .poi-downloads{flex-wrap:nowrap;gap:6px;margin:16px -14px 0;padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+  .poi-conditions dl>div{flex-wrap:wrap}
+  .poi-conditions dd{text-align:left}
+}
+
+/* Where the latest month stands. Words carry the reading; the colour only
+   repeats it, taken from the drought ramp so dry reads the same everywhere. */
+.poi-modal .poi-standing{margin:6px 0 0;font-weight:600}
+.poi-standing-low{color:var(--l-dr-d3,#e3a857)}
+.poi-standing-high{color:var(--l-dr-w3,#74d6c7)}
+.poi-summary .poi-coverage{margin-top:6px}

@@ -1,8 +1,13 @@
-"""Fit and validate ERA-based TerraClimate v1.0 continuation for 7,445 basins.
+"""Fit and validate the ERA-based continuation of the atlas's TerraClimate series.
 
-The 2025 producer TerraClimate v1.1 record stays separate. ERA-based estimates
-continue the old v1.0 statistic for precipitation and temperature extrema; they
-are never written into the original atlas cube or labeled as observations.
+TerraClimate is released once a year, so the months since its last release have
+no producer value. ERA5-Land reaches the latest month; this maps it onto the
+atlas's own TerraClimate statistic, basin by basin and month by month - the same
+principle the producer's v1.1 uses to build TerraClimate from ERA5 anomalies over
+its climatology. The target is whatever release the cube holds (v1.1 since the
+rebase), the held-out years are the last six the cube has, and the estimates begin
+the month after the cube ends. They are never written into the cube or labelled as
+observations; when the producer publishes the year, the rebase replaces them.
 """
 from __future__ import annotations
 
@@ -25,8 +30,25 @@ sys.path.insert(0, str(ROOT))
 OUT = ROOT / "PUBLISHED/data/atlas/climate-continuation"
 CUBE = ROOT / "PUBLISHED/data/atlas/cube"
 FRAME = ROOT / "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
-TRAIN_END = 2018
-TEST_END = 2024
+HELD_OUT_YEARS = 6
+
+
+def span():
+    """(train_end, test_end, version): the cube's last complete year and its release.
+
+    Read from the data rather than written down, so a new producer year moves the
+    training, the held-out test and the start of the estimates without a code change.
+    """
+    last = duckdb.sql(f"""
+        SELECT max(year) FROM (
+          SELECT year FROM read_parquet('{CUBE / 'variable=pre_mm_s/data_0.parquet'}')
+          WHERE value IS NOT NULL GROUP BY year HAVING count(DISTINCT month) = 12)""").fetchone()[0]
+    index = json.loads((ROOT / "PUBLISHED/data/atlas/history/index.json").read_text(encoding="utf-8"))
+    version = index["series"]["pre_mm_s"].get("product_version", "v1.0")
+    return last - HELD_OUT_YEARS, last, version
+
+
+TRAIN_END, TEST_END, VERSION = span()
 VARIABLES = ("precipitation", "tmin", "tmax")
 ACCUMULATE_TC = ("ppt", "tmin", "tmax", "aet", "def", "pet", "q", "soil",
                  "srad", "swe", "vap", "ws", "vpd", "PDSI")
@@ -51,8 +73,8 @@ def frame():
 
 def connection(basins):
     era_files = sorted((OUT / "era5-land").glob("year=*.parquet"))
-    if len(era_files) < 24 or not (OUT / "terraclimate-v1.1/year=2025.parquet").exists():
-        raise FileNotFoundError("Regional ERA years 2003–2026 and TerraClimate v1.1 2025 are required")
+    if len(era_files) < TEST_END - 2003 + 2:
+        raise FileNotFoundError(f"Regional ERA years 2003 to after {TEST_END} are required")
     con = duckdb.connect()
     con.register("basins", basins)
     con.execute("PRAGMA memory_limit='3GB'")
@@ -76,7 +98,7 @@ def connection(basins):
           ON e.basin_id=t.basin_id AND e.year=t.year AND e.month=t.month
           AND e.variable=t.era_variable
         JOIN basins b ON b.basin_id=t.basin_id
-        WHERE t.year BETWEEN 2003 AND 2024
+        WHERE t.year BETWEEN 2003 AND {TEST_END}
           AND e.value IS NOT NULL AND t.reference IS NOT NULL
           AND e.coverage > 0.999
     """)
@@ -170,18 +192,18 @@ def continuation(con, scores):
                CASE WHEN c.variable='precipitation' THEN greatest(0,e.value*c.coefficient)
                     ELSE e.value+c.coefficient END AS estimate,
                s.holdout_abs_error_p90,
-               'estimated_terraclimate_v1.0_continuation' AS status
+               'estimated_terraclimate_{VERSION}_continuation' AS status
         FROM read_parquet('{OUT / 'era5-land/year=*.parquet'}') e
         JOIN coefficients c ON e.basin_id=c.basin_id AND e.month=c.month
           AND e.variable=CASE WHEN c.variable='precipitation' THEN 'precipitation_mm'
                               ELSE 'temperature_c' END
         JOIN basins b ON e.basin_id=b.basin_id
         JOIN error_scale s ON b.system_id=s.system_id AND c.variable=s.variable
-        WHERE e.year>2024 AND e.value IS NOT NULL AND e.coverage>0.999
+        WHERE e.year>{TEST_END} AND e.value IS NOT NULL AND e.coverage>0.999
           AND c.variable IN ({values})
         ORDER BY c.variable,e.basin_id,e.year,e.month
     """).to_arrow_table()
-    pq.write_table(table, OUT / "v1.0-continuation.parquet", compression="zstd")
+    pq.write_table(table, OUT / f"{VERSION}-continuation.parquet", compression="zstd")
     return eligible, table.num_rows
 
 
@@ -232,17 +254,21 @@ def upstream_products(basins):
     area = dict(zip(basins.basin_id, basins.area_km2))
     con = duckdb.connect()
     groups = defaultdict(dict)
-    for basin, y, month, variable, value in con.execute(
-        "SELECT basin_id,year,month,variable,value FROM read_parquet(?)",
-        [str(OUT / "terraclimate-v1.1/year=*.parquet")]).fetchall():
-        groups[("terraclimate_v1.1_direct", y, month, variable)][basin] = value
-    for source in ("v1.0-continuation.parquet", "v1.0-water-balance-continuation.parquet"):
+    # A direct producer year the cube already holds is the record itself, not a
+    # separate product; only later ones are carried.
+    direct = sorted((OUT / "terraclimate-v1.1").glob("year=*.parquet"))
+    if [path for path in direct if int(path.stem.split("=")[1]) > TEST_END]:
+        for basin, y, month, variable, value in con.execute(
+            "SELECT basin_id,year,month,variable,value FROM read_parquet(?) WHERE year > ?",
+            [str(OUT / "terraclimate-v1.1/year=*.parquet"), TEST_END]).fetchall():
+            groups[("terraclimate_v1.1_direct", y, month, variable)][basin] = value
+    for source in (f"{VERSION}-continuation.parquet", f"{VERSION}-water-balance-continuation.parquet"):
         path = OUT / source
         if not path.exists():
             continue
         for basin, _, y, month, variable, _, value, _, _ in con.execute(
             "SELECT * FROM read_parquet(?)", [str(path)]).fetchall():
-            groups[("estimated_v1.0_continuation", y, month, variable)][basin] = value
+            groups[(f"estimated_{VERSION}_continuation", y, month, variable)][basin] = value
     rows = []
     for (product, year, month, variable), local in sorted(groups.items()):
         result = accumulate_one(local, order, downstream, area)
@@ -262,8 +288,13 @@ def upstream_products(basins):
 
 def v11_agreement(con):
     """Agreement with every direct v1.1 year; ERA is a parent, so this is not independent validation."""
-    estimates = [str(OUT / name) for name in ("v1.0-continuation.parquet",
-                                              "v1.0-water-balance-continuation.parquet")
+    # Only producer years later than the record can be compared: an earlier one is
+    # the record itself. Until the producer publishes the next year there are none.
+    if not [path for path in (OUT / "terraclimate-v1.1").glob("year=*.parquet")
+            if int(path.stem.split("=")[1]) > TEST_END]:
+        return []
+    estimates = [str(OUT / name) for name in (f"{VERSION}-continuation.parquet",
+                                              f"{VERSION}-water-balance-continuation.parquet")
                  if (OUT / name).exists()]
     return con.execute(f"""
         SELECT c.variable,c.year,count(*) n,
@@ -281,6 +312,9 @@ def v11_agreement(con):
 def v11_version_overlap(con):
     """Same-year v1.1 vs v1.0 difference before deciding whether to splice."""
     source = OUT / "terraclimate-v1.1-primary/year=2024.parquet"
+    if VERSION != "v1.0":
+        # Once the cube is v1.1 there is no second version to compare it with.
+        return {"status": f"not applicable: the record is TerraClimate {VERSION} throughout"}
     if not source.exists():
         return {"status": "not_extracted"}
     rows = con.execute(f"""
@@ -322,15 +356,15 @@ def run():
     eligible, continuation_rows = continuation(con, scores)
     from PIPELINES.model_regional_climate_water_balance import run as run_water_balance
     water_balance = run_water_balance()
-    latest_code = con.execute(f"SELECT max(year*100+month) FROM read_parquet('{OUT / 'v1.0-continuation.parquet'}')").fetchone()[0]
+    latest_code = con.execute(f"SELECT max(year*100+month) FROM read_parquet('{OUT / f'{VERSION}-continuation.parquet'}')").fetchone()[0]
     latest_month = f"{latest_code // 100:04d}-{latest_code % 100:02d}"
     upstream_rows = upstream_products(basins)
     agreement = defaultdict(dict)
     for variable, year, n, bias, rmse in v11_agreement(con):
         agreement[variable][str(year)] = {"pairs": n, "bias": bias, "rmse": rmse}
     version_overlap = v11_version_overlap(con)
-    direct_years = sorted(int(p.stem.split("=")[1]) for p in
-                          (OUT / "terraclimate-v1.1").glob("year=*.parquet"))
+    direct_years = sorted(int(p.stem.split("=")[1]) for p in (OUT / "terraclimate-v1.1").glob("year=*.parquet")
+                          if int(p.stem.split("=")[1]) > TEST_END)
     inputs = [FRAME, CUBE / "index.json"]
     inputs += [CUBE / f"variable={variable}/data_0.parquet"
                for variable in ("pre_mm_s", "tmn_dc_s", "tmx_dc_s")]
@@ -345,8 +379,8 @@ def run():
               "basins": len(basins), "systems": {"amu_darya": 4917, "syr_darya": 2528},
               "training_years": [2003, TRAIN_END], "held_out_years": [TRAIN_END + 1, TEST_END],
               "method": "basin-calendar-month additive delta for temperature extrema and multiplicative factor for precipitation; 8 pseudo-year shrinkage toward system monthly coefficient",
-              "source_versions": {"target": "TerraClimate v1.0 Earth Engine through 2024-12",
-                                  "verification": f"TerraClimate v1.1 producer NetCDF through {direct_years[-1]}-12",
+              "source_versions": {"target": f"TerraClimate {VERSION} as the atlas cube holds it, through {TEST_END}-12",
+                                  "verification": "the held-out years of the same target",
                                   "predictor": "ERA5-Land monthly native-grid fractional-overlap basin mean"},
               "coefficients": coefficient_count, "validation": scores,
               "input_sha256": {str(path.relative_to(ROOT)): sha256(path) for path in inputs},
@@ -357,7 +391,7 @@ def run():
               "v1.1_agreement_by_year": agreement,
               "v1.1_vs_v1.0_2024_overlap": version_overlap,
               "upstream_rows": upstream_rows,
-              "interpretation": "Direct TerraClimate v1.1 years are a version-changed source; it is not spliced into v1.0. Its ERA5 parent makes agreement with ERA-based estimates non-independent. Years after 2024 without a v1.1 release are modelled continuation only, and upstream runoff generation is not routed observed flow."}
+              "interpretation": f"Months after {TEST_END} have no producer release yet and are modelled continuation of TerraClimate {VERSION}; the producer's next yearly release replaces them. TerraClimate v1.1 is itself built from ERA5 anomalies, so agreement between the two is not independent validation. Upstream runoff generation is not routed observed flow."}
     (OUT / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     index = {
         "generated_at": report["generated_at"], "basins": len(basins),
@@ -369,18 +403,18 @@ def run():
                           for year in direct_years],
                 "meaning": "producer release reduced onto basin polygons; modelled climate and water balance",
             },
-            "estimated_v1.0_continuation": {
-                "files": ["/data/atlas/climate-continuation/v1.0-continuation.parquet",
-                          "/data/atlas/climate-continuation/v1.0-water-balance-continuation.parquet"],
-                "years": [2025, int(latest_month[:4])], "months_observed_in_era": f"through {latest_month}",
+            f"estimated_{VERSION}_continuation": {
+                "files": [f"/data/atlas/climate-continuation/{VERSION}-continuation.parquet",
+                          f"/data/atlas/climate-continuation/{VERSION}-water-balance-continuation.parquet"],
+                "years": [TEST_END + 1, int(latest_month[:4])], "months_observed_in_era": f"through {latest_month}",
                 "variables": eligible + water_balance["eligible_variables"],
-                "meaning": "ERA-derived estimate of the older v1.0 statistic; not a producer observation",
+                "meaning": f"ERA-derived provisional TerraClimate {VERSION} until the producer releases the year; not a producer observation",
             },
             "upstream": {"file": "/data/atlas/climate-continuation/upstream.parquet",
                          "meaning": "area-weighted upstream mean; water equivalent integral only for fluxes"},
         },
         "validation": "/data/atlas/climate-continuation/report.json",
-        "source_note": "v1.0 and v1.1 are not spliced into one source series",
+        "source_note": f"One release throughout: the record is TerraClimate {VERSION}, and the estimates continue that release",
     }
     (OUT / "index.json").write_text(json.dumps(index, indent=2) + "\n")
     return report

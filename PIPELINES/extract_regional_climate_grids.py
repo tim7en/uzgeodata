@@ -36,6 +36,11 @@ OUT = ROOT / "PUBLISHED/data/atlas/climate-continuation"
 CACHE = ROOT / "WORKSPACE/derived/regional-climate-grids"
 ERA_ASSET = "ECMWF/ERA5_LAND/MONTHLY_AGGR"
 TC_BASE = "https://climate.northwestknowledge.net/TERRACLIMATE-DATA"
+# The producer's THREDDS server cuts the window out server side: about 7 MB a
+# variable-year instead of the whole 150 MB global file, which the chunking
+# (2 x 864 x 1728) otherwise makes a range read pull in. Checked cell for cell
+# against the range read over the same window: identical.
+TC_NCSS = "http://thredds.northwestknowledge.net:8080/thredds/ncss/TERRACLIMATE_ALL/data"
 TC_VARIABLES = ("ppt", "tmin", "tmax", "aet", "def", "pet", "q", "soil",
                 "srad", "swe", "vap", "ws", "vpd", "PDSI")
 ERA_EXTENDED = (
@@ -256,6 +261,52 @@ def era_extended_year(year, basins, latest):
     print(f"ERA extended {year}: {len(rows):,} rows", flush=True)
 
 
+def tc_window_ncss(variable, year, window):
+    """Twelve months of one variable over the window, scaled, NaN where missing."""
+    import netCDF4
+    import requests
+    height, width = int(window.height), int(window.width)
+    west = -180 + window.col_off / 24
+    north = 90 - window.row_off / 24
+    half = 1 / 48
+    params = {"var": variable, "north": north - half, "south": north - height / 24 + half,
+              "west": west + half, "east": west + width / 24 - half,
+              "time_start": f"{year}-01-01T00:00:00Z", "time_end": f"{year}-12-31T23:59:59Z",
+              "accept": "netcdf"}
+    url = f"{TC_NCSS}/TerraClimate_{variable}_{year}.nc"
+    for attempt in range(4):
+        try:
+            response = requests.get(url, params=params, timeout=300)
+            response.raise_for_status()
+            break
+        except requests.RequestException:
+            if attempt == 3:
+                raise
+            time.sleep(5 * (attempt + 1))
+    dataset = netCDF4.Dataset("subset", memory=response.content)
+    try:
+        if dataset.getncattr("version") != "V1.1":
+            raise ValueError(f"Unexpected TerraClimate release from {url}")
+        lat, lon = dataset["lat"][:], dataset["lon"][:]
+        # Locate the window's first cell by its centre, so an extra boundary row or
+        # column the server includes is dropped rather than shifting the grid.
+        row0 = int(np.argmin(np.abs(lat - (north - half))))
+        col0 = int(np.argmin(np.abs(lon - (west + half))))
+        if abs(lat[row0] - (north - half)) > 1e-6 or abs(lon[col0] - (west + half)) > 1e-6:
+            raise ValueError(f"TerraClimate subset grid does not align with the window: {url}")
+        values = dataset[variable]
+        values.set_auto_maskandscale(True)
+        data = np.ma.filled(values[:, row0:row0 + height, col0:col0 + width].astype(np.float64), np.nan)
+        if data.shape != (12, height, width):
+            raise ValueError(f"TerraClimate subset has shape {data.shape}, expected (12, {height}, {width})")
+        meta = {"url": response.url, "scale": float(getattr(values, "scale_factor", 1.0)),
+                "offset": float(getattr(values, "add_offset", 0.0)), "unit": getattr(values, "units", None),
+                "published_unit": TC_UNITS[variable], "access": "THREDDS NCSS server-side subset"}
+    finally:
+        dataset.close()
+    return data, meta
+
+
 def tc_year(year, basins, refresh=False, variables=TC_VARIABLES, family=None):
     family = family or ("terraclimate-v1.1" if tuple(variables) == TC_VARIABLES
                         else "terraclimate-v1.1-primary")
@@ -270,6 +321,21 @@ def tc_year(year, basins, refresh=False, variables=TC_VARIABLES, family=None):
     rows = []
     source_files = {}
     for variable in variables:
+        try:
+            data, source_files[variable] = tc_window_ncss(variable, year, window)
+        except Exception as error:  # The range read below is slower but needs no THREDDS.
+            print(f"TerraClimate v1.1 {year} {variable}: subset failed ({error}); range read", flush=True)
+            data = None
+        if data is not None:
+            for month in range(1, 13):
+                grid = np.where(np.isnan(data[month - 1]), -9999, data[month - 1])
+                values, coverage = reduce_grid(grid, basin_index, flat_cell, weight, len(basins))
+                rows.extend({"basin_id": basin, "year": year, "month": month,
+                             "variable": variable, "value": float(value) if np.isfinite(value) else None,
+                             "coverage": float(share), "unit": TC_UNITS[variable]}
+                            for basin, value, share in zip(basins.basin_id, values, coverage))
+            print(f"TerraClimate v1.1 {year}: {variable} complete", flush=True)
+            continue
         url = f"{TC_BASE}/TerraClimate_{variable}_{year}.nc"
         path = f"HDF5:/vsicurl/{url}://{variable}"
         with warnings.catch_warnings():
@@ -340,7 +406,10 @@ def main():
             if missing:
                 raise ValueError(f"TerraClimate v1.1 yearly files not yet published: {missing}")
         else:
-            years = range(2025, max(found) + 1)
+            # The record's own family runs from the first year of the atlas; cached years
+            # are skipped, so a monthly run costs one listing unless a year is new.
+            first = 2003 if (args.family or "").endswith("history") else 2025
+            years = range(first, max(found) + 1)
         variables = tuple(args.variables.split(",")) if args.variables else TC_VARIABLES
         if not set(variables) <= set(TC_VARIABLES):
             raise ValueError(f"Unknown TerraClimate variables: {set(variables) - set(TC_VARIABLES)}")

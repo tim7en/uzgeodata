@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-09-15T18:58:04.026+00:00",
+  "generated_at": "2026-09-28T08:46:03.426+00:00",
   "reviewed_at": "2026-09-15",
   "title": "Water withdrawals and downstream deliveries",
   "status": "Source-audited descriptive case study; not a validated discharge model",
@@ -1488,7 +1488,7 @@
     "Modelled P minus AET is not routed available water and is not netted against withdrawals."
   ],
   "input_hashes": {
-    "regional-withdrawals.csv": "951eadc196b0acf9b3c18fb6ae3507d8116a53e4c6b862d2abdf4a6ae834afdf",
+    "regional-withdrawals.csv": "22c301564678d07e8525af8bcc3e4136f2329d78d5724d00f822827e6e1d956d",
     "sources.json": "14f6b394df263921107e8219ead39c92355730da941d9e703f681fdd728e875b"
   }
 }

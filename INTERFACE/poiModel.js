@@ -159,6 +159,22 @@ export function basinUnits(features, basin) {
   return units.filter(item => String(item.properties.pfaf_id).startsWith(prefix));
 }
 
+/**
+ * The one basin a set drains out through, or null when it has several.
+ *
+ * A basin chosen at level 7 is reported through the hundreds of level-12 units
+ * inside it. Their upstream sets overlap, so their upstream series cannot be
+ * averaged - but when exactly one member drains out of the set, every other
+ * member drains into it, and that member's own upstream series is the upstream
+ * of the whole set, already computed once and counted once.
+ */
+export function outletOf(ids, index) {
+  const members = new Set(ids.map(String));
+  const nextDown = new Map(index.ids.map((id, i) => [String(id), String(index.next_down[i] || '')]));
+  const outlets = [...members].filter(id => !members.has(nextDown.get(id)));
+  return outlets.length === 1 ? outlets[0] : null;
+}
+
 export function reportMembers(index, basins) {
   const positions = new Map(index.ids.map((id, i) => [String(id), i]));
   const roots = [...new Set(basins.map(f => String(f.properties.hybas_id)))];
@@ -207,7 +223,7 @@ export function monthlyNormals(rows) {
   };
 }
 
-function mannKendall(values) {
+export function mannKendall(values) {
   let score = 0;
   for (let i = 0; i < values.length - 1; i += 1) {
     for (let j = i + 1; j < values.length; j += 1) score += Math.sign(values[j] - values[i]);
@@ -234,7 +250,7 @@ function erf(x) {
   return Math.max(0, Math.min(1, y));
 }
 
-function senSlope(points) {
+export function senSlope(points) {
   const slopes = [];
   for (let i = 0; i < points.length - 1; i += 1) {
     for (let j = i + 1; j < points.length; j += 1) {
@@ -372,13 +388,38 @@ export function makePoiReport({ feature, match, index, values, variable, geometr
 
 export function reportMonthlyCsv(report) {
   const columns = Object.keys(report.local.rows[0]);
-  // `source` says whether a row is an observation or the estimate that continues
-  // it past the end of its source. Without it a spreadsheet would show one
-  // unbroken series and nothing to tell the two apart.
-  return toCsv(['scope', 'variable', 'unit', 'total_unit', 'source', ...columns],
-    ['local', 'upstream'].flatMap(scope => report[scope].rows.map(row => [
-      scope, report.variable, report.meta.unit, report[scope].total.unit,
-      row.observed_basins > 0 && row.mean_observed_area !== null ? 'observed' : 'no observation',
-      ...columns.map(key => row[key]),
-    ])));
+  // `source` says whether a row is an observation, the estimate that continues
+  // it past the end of its source, or neither. The estimate sits in columns of
+  // its own and fills only months with no observation, so a spreadsheet can
+  // always tell the two apart and never mistakes one for the other.
+  const estimates = scope => new Map((report.continuation?.[scope]?.estimated?.rows || [])
+    .map(row => [row.year * 12 + row.month, row]));
+  return toCsv(['scope', 'variable', 'unit', 'total_unit', 'source', ...columns, 'estimated_value', 'estimated_error_p90'],
+    ['local', 'upstream'].flatMap(scope => {
+      const estimated = estimates(scope);
+      return report[scope].rows.map(row => {
+        const observed = row.observed_basins > 0 && row.mean_observed_area !== null;
+        const estimate = observed ? null : estimated.get(row.year * 12 + row.month);
+        return [
+          scope, report.variable, report.meta.unit, report[scope].total.unit,
+          observed ? 'observed' : estimate ? 'estimated' : 'no observation',
+          ...columns.map(key => row[key]),
+          estimate ? estimate.value : null, estimate ? estimate.errorP90 ?? null : null,
+        ];
+      });
+    }));
+}
+
+/**
+ * The months a report chart draws: the last `span` calendar months of a series
+ * (all of it when span is null), each carrying the normal for its calendar
+ * month. The window is measured in calendar time rather than in rows, so a
+ * series with gaps is not stretched back past the period the reader chose.
+ */
+export function chartWindow(series, normals, span) {
+  if (!series.length) return [];
+  const end = series.at(-1).year * 12 + series.at(-1).month - 1;
+  return series
+    .map(row => ({ ...row, key: row.year * 12 + row.month - 1, normal: normals ? normals.byMonth[row.month - 1] : null }))
+    .filter(row => !span || row.key > end - span);
 }

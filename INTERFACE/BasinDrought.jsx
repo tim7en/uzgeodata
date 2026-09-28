@@ -1,8 +1,36 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Download } from 'lucide-react';
+import DroughtOutlook from './DroughtOutlook.jsx';
+import SeasonalForecast from './SeasonalForecast.jsx';
+import { DROUGHT_METHOD, droughtOutlook, nextYearChance, presentConditions } from './droughtModel.js';
+import { historySeries } from './continuationModel.js';
 
-// One level-12 basin's water years, 1961-2025, from the drought case study.
+// One level-12 basin's water years from the drought case study, placed beside
+// where the current water year stands on the monthly record continued to the
+// latest month.
 const BASE = '/data/atlas/drought-study/basins/';
+const CONTINUATION = '/data/atlas/climate-continuation/basins/';
+const HISTORY = '/data/atlas/history/';
+
+const optionalJson = url => fetch(url).then(response => (response.ok
+  && (response.headers.get('content-type') || '').includes('json') ? response.json() : null)).catch(() => null);
+
+/**
+ * The outlook for this basin. The current water year needs the monthly record
+ * and its continuation; either may be missing, and the drought record still
+ * stands without them.
+ */
+function outlookOf(record, history, continuation) {
+  const present = history ? presentConditions(historySeries(history, 'pre_mm_s', continuation), { extensive: true }) : null;
+  const reading = (support, toDate) => {
+    const outlook = droughtOutlook(record, support);
+    return outlook ? { outlook, toDate, chance: nextYearChance(outlook, toDate), record } : null;
+  };
+  // The upstream monthly record is not in the per-basin history file, so the
+  // upstream outlook conditions on the last complete water year instead.
+  return { local: reading('local', present?.waterYearToDate || null), upstream: reading('upstream', null),
+    basins: 1, unit: 'millimetres per month' };
+}
 const RAMP = ['--l-dr-d3', '--l-dr-d2', '--l-dr-d1', '--l-dr-n0', '--l-dr-w1', '--l-dr-w2', '--l-dr-w3'];
 const SCALES = { pct: [-40, -25, -10, 10, 25, 40], spi: [-2, -1.5, -1, 1, 1.5, 2], pdsi: [-4, -3, -2, 2, 3, 4] };
 const NORMS = [
@@ -86,16 +114,21 @@ export default function BasinDrought({ basin }) {
   useEffect(() => {
     let live = true;
     setState({ loading: true });
-    fetch(`${BASE}${basin.hybas_id}.json`).then(response => {
-      if (!response.ok || !(response.headers.get('content-type') || '').includes('json')) throw Error('The drought record is not published for this basin.');
-      return response.json();
-    }).then(record => {
+    Promise.all([
+      fetch(`${BASE}${basin.hybas_id}.json`).then(response => {
+        if (!response.ok || !(response.headers.get('content-type') || '').includes('json')) throw Error('The drought record is not published for this basin.');
+        return response.json();
+      }),
+      optionalJson(`${HISTORY}${basin.hybas_id}.json`),
+      optionalJson(`${CONTINUATION}${basin.hybas_id}.json`),
+    ]).then(([record, history, continuation]) => {
       if (String(record.basin_id) !== String(basin.hybas_id)) throw Error('The drought record has the wrong basin identifier.');
-      if (live) setState({ record });
+      const matched = history && String(history.basin_id) === String(basin.hybas_id) ? history : null;
+      if (live) setState({ record, outlook: outlookOf(record, matched, continuation) });
     }).catch(error => { if (live) setState({ error: error.message }); });
     return () => { live = false; };
   }, [basin.hybas_id]);
-  if (state.loading) return <p role="status" className="land-group-note">Loading the 1961–2025 drought record…</p>;
+  if (state.loading) return <p role="status" className="land-group-note">Loading the drought record…</p>;
   if (state.error) return <p role="alert" className="land-group-note">{state.error}</p>;
   const record = state.record;
   const F = Object.fromEntries(record.fields.map((f, i) => [f, i]));
@@ -107,8 +140,11 @@ export default function BasinDrought({ basin }) {
   const severe = recent.filter(r => r[F.spi12] <= -1.5).length;
   const worst = recent.reduce((a, b) => (b[F.spi12] < a[F.spi12] ? b : a), recent[0]);
   const last = record.rows[record.rows.length - 1];
+  const span = `${record.rows[0][F.water_year]}–${last[F.water_year]}`;
   return <div className="land-drought">
-    <p className="land-hist-warn">Water years from TerraClimate v1.1, one product version for 1961–2025. SPI-12 is fitted on 1991–2020. This is a separate product from the Climate 2025–26 tab and is not joined to it.</p>
+    <DroughtOutlook drought={state.outlook} method={DROUGHT_METHOD}/>
+    <SeasonalForecast basin={basin}/>
+    <p className="land-hist-warn">Water years from TerraClimate v1.1, one product version for {span}. SPI-12 is fitted on 1991–2020. The current water year above is read from the monthly record and its estimate, a separate product, and is not joined to these years.</p>
     <div className="land-drought-stats">
       <div><b>{Math.round(record.norms_mm.wmo_1991_2020)} mm</b><span>1991–2020 normal ({fmt((record.norms_mm.wmo_1991_2020 - record.norms_mm.early_1961_1990) / record.norms_mm.early_1961_1990 * 100, 1)}% vs 1961–1990)</span></div>
       <div><b>{severe}</b><span>severe drought years since 1991 (SPI ≤ −1.5)</span></div>

@@ -4,8 +4,10 @@ import { formatNumber } from './landingModel.js';
 import {
   dateAt, extentOf, extractedLength, gapDrift, pathOf, segments, seriesNames, toCsv, yearRows,
 } from './historyModel.js';
+import { useWidth } from './ReportChart.jsx';
+import { CONTINUATION_VARIABLES, continuationFor } from './continuationModel.js';
 
-const CHART = { width: 960, height: 190, pad: 34 };
+const CHART = { height: 190, pad: 38 };
 
 async function json(url) {
   const response = await fetch(url, { cache: 'no-store' });
@@ -21,27 +23,58 @@ async function json(url) {
 
 // The monthly record as a broken line: drawn where there are observations and
 // absent where there are none, so a gap reads as a gap rather than as a value.
-function Chart({ history, name, series }) {
+// Drawn at the width it is given rather than scaled from a fixed viewBox: a
+// 960-unit drawing shrunk onto a phone set its axis labels at four pixels.
+function Chart({ history, name, series, estimate }) {
+  const [frame, frameWidth] = useWidth();
+  return <div ref={frame} className="land-hist-frame">{frameWidth > 0
+    && <Plot history={history} name={name} series={series} estimate={estimate} outer={frameWidth}/>}</div>;
+}
+
+/**
+ * The estimate that continues a series past its source, on the record's own
+ * month positions, and only where the record has no observation: an estimate
+ * never stands in for a month that was observed.
+ */
+function estimateFor(history, key, document) {
+  const values = history.series[key].values;
+  const rows = CONTINUATION_VARIABLES[key] ? continuationFor(document, key, 'local')?.estimated?.rows : null;
+  if (!rows?.length) return null;
+  const out = values.map(() => null);
+  for (const row of rows) {
+    const position = (row.year - history.years[0]) * 12 + row.month - 1;
+    if (position >= 0 && position < out.length && values[position] == null) out[position] = row;
+  }
+  return out.some(Boolean) ? out : null;
+}
+
+function Plot({ history, name, series, estimate, outer }) {
   const [hover, setHover] = useState(null);
   const values = series.values;
-  const extent = useMemo(() => extentOf(values), [values]);
-  const width = CHART.width - CHART.pad * 2;
+  const estimated = useMemo(() => (estimate ? estimate.map(row => row?.value ?? null) : null), [estimate]);
+  const extent = useMemo(() => extentOf(estimated ? values.map((value, i) => value ?? estimated[i]) : values),
+    [values, estimated]);
+  const width = outer - CHART.pad - 12;
   const lines = useMemo(() => segments(values, extent, width, CHART.height), [values, extent, width]);
+  const estimateLines = useMemo(() => (estimated ? segments(estimated, extent, width, CHART.height) : []),
+    [estimated, extent, width]);
   if (!extent) return <p className="land-group-note">No observation in this window.</p>;
 
   const step = width / (values.length - 1);
   const years = history.years[1] - history.years[0] + 1;
   const ticks = [extent.high, (extent.high + extent.low) / 2, extent.low];
+  // A tap reads a month the same way a hover does.
+  const pick = event => {
+    const box = event.currentTarget.getBoundingClientRect();
+    const index = Math.round((event.clientX - box.left - CHART.pad) / step);
+    setHover(index >= 0 && index < values.length ? index : null);
+  };
+  const yearStep = Math.max(1, Math.ceil(years / Math.max(1, Math.floor(width / 48))));
   return <figure className="land-hist-figure">
-    <svg viewBox={`0 0 ${CHART.width} ${CHART.height + 40}`} role="img"
+    <svg width={outer} height={CHART.height + 40} role="img"
       aria-label={`${series.label} for every month from ${history.years[0]} to ${history.years[1]}`}
-      onMouseLeave={() => setHover(null)}
-      onMouseMove={event => {
-        const box = event.currentTarget.getBoundingClientRect();
-        const x = ((event.clientX - box.left) / box.width) * CHART.width - CHART.pad;
-        const index = Math.round(x / step);
-        setHover(index >= 0 && index < values.length ? index : null);
-      }}>
+      onPointerLeave={event => { if (event.pointerType === 'mouse') setHover(null); }}
+      onPointerDown={pick} onPointerMove={pick}>
       <g transform={`translate(${CHART.pad} 8)`}>
         {ticks.map((value, index) => {
           const y = (CHART.height / 2) * index;
@@ -53,22 +86,27 @@ function Chart({ history, name, series }) {
         {lines.map((segment, index) => segment.length === 1
           ? <circle key={index} cx={segment[0].x} cy={segment[0].y} r={1.6} className="land-hist-dot"/>
           : <path key={index} d={pathOf(segment)} className="land-hist-line"/>)}
-        {Array.from({ length: years }, (_, index) => index).filter(index => index % 2 === 0).map(index =>
+        {estimateLines.map((segment, index) => <path key={`e${index}`} d={pathOf(segment)} className="land-hist-estimate"/>)}
+        {Array.from({ length: years }, (_, index) => index).filter(index => index % yearStep === 0).map(index =>
           <text key={index} x={index * 12 * step} y={CHART.height + 16} className="land-hist-axis"
             textAnchor="middle">{history.years[0] + index}</text>)}
-        {hover != null && values[hover] != null && <>
+        {hover != null && (values[hover] ?? estimated?.[hover]) != null && <>
           <line x1={hover * step} x2={hover * step} y1={0} y2={CHART.height} className="land-hist-cursor"/>
-          <circle cx={hover * step} cy={CHART.height - ((values[hover] - extent.low) / (extent.high - extent.low)) * CHART.height}
-            r={3} className="land-hist-marker"/>
+          <circle cx={hover * step} cy={CHART.height - (((values[hover] ?? estimated[hover]) - extent.low) / (extent.high - extent.low)) * CHART.height}
+            r={3} className={values[hover] == null ? 'land-hist-marker estimated' : 'land-hist-marker'}/>
         </>}
       </g>
     </svg>
     <figcaption>
       {hover != null
-        ? values[hover] == null
-          ? `${dateAt(history, hover).label}: no observation`
-          : `${dateAt(history, hover).label}: ${formatNumber(values[hover], 2)} ${series.unit}`
-        : `${series.label} · ${series.unit} · ${history.years[0]}–${history.years[1]}`}
+        ? values[hover] != null
+          ? `${dateAt(history, hover).label}: ${formatNumber(values[hover], 2)} ${series.unit}`
+          : estimate?.[hover]
+            ? `${dateAt(history, hover).label}: ${formatNumber(estimate[hover].value, 2)} ${series.unit} · estimated`
+              + `${estimate[hover].errorP90 ? ` ±${formatNumber(estimate[hover].errorP90, 2)}` : ''}`
+            : `${dateAt(history, hover).label}: no observation`
+        : `${series.label} · ${series.unit} · ${history.years[0]}–${history.years[1]}`
+          + `${estimate ? ' · dashed: estimated past the end of the source' : ''}`}
     </figcaption>
   </figure>;
 }
@@ -96,7 +134,12 @@ export default function BasinHistory({ basin }) {
       if (String(history.basin_id) !== String(basin.hybas_id)) {
         throw Error('The record does not belong to this basin. Refresh the page.');
       }
-      if (live) setState({ index, history });
+      // The continuation is optional: without it the record simply ends where
+      // its source does, as it did before.
+      const continuation = await fetch(`/data/atlas/climate-continuation/basins/${basin.hybas_id}.json`)
+        .then(response => (response.ok && (response.headers.get('content-type') || '').includes('json') ? response.json() : null))
+        .catch(() => null);
+      if (live) setState({ index, history, continuation });
     })().catch(error => { if (live) setState({ error: error.message }); });
     return () => { live = false; };
   }, [basin.hybas_id, retry]);
@@ -138,7 +181,8 @@ export default function BasinHistory({ basin }) {
       <AlertTriangle size={12}/><span>Snow is not for trend analysis. Regional missing months increase
       across this record; the cause is unresolved. Values remain available for inspection.</span>
     </p>}
-    <Chart history={state.history} name={active} series={series}/>
+    <Chart history={state.history} name={active} series={series}
+      estimate={state.continuation ? estimateFor(state.history, active, state.continuation) : null}/>
 
     <div className="land-sub-note">
       <div className="land-sub-counts">

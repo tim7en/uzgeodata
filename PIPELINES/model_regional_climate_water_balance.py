@@ -1,9 +1,10 @@
-"""Emulate the missing TerraClimate v1.0 water-balance variables from ERA5-Land.
+"""Emulate TerraClimate's water-balance variables from ERA5-Land past the last release.
 
 Each basin/calendar-month has a training climatology. A predictor anomaly from
-ERA5-Land is mapped with a slope shrunk toward its river-system/month slope.
-2019–2024 is never used to fit coefficients. Predictions remain model estimates,
-and TerraClimate runoff generation is not observed or routed river discharge.
+ERA5-Land is mapped with a slope shrunk toward its river-system/month slope. The
+last six years the cube holds are never used to fit coefficients. Predictions
+remain model estimates, and TerraClimate runoff generation is not observed or
+routed river discharge.
 """
 from __future__ import annotations
 
@@ -15,7 +16,7 @@ import duckdb
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from PIPELINES.model_regional_climate_continuation import CUBE, OUT, frame
+from PIPELINES.model_regional_climate_continuation import CUBE, OUT, TEST_END, TRAIN_END, VERSION, frame
 
 TARGETS = {
     "aet": ("aet_mm_s", "aet_mm", "nonnegative"),
@@ -31,7 +32,7 @@ TARGETS = {
 
 def predictors(con):
     years = {int(path.stem.split("=")[1]) for path in (OUT / "era5-land-extended").glob("year=*.parquet")}
-    if not years or set(range(2003, max(years) + 1)) - years or max(years) < 2025:
+    if not years or set(range(2003, max(years) + 1)) - years or max(years) <= TEST_END:
         raise FileNotFoundError("ERA5-Land extended predictors need every year from 2003 to the latest")
     con.execute(f"""
       CREATE TEMP TABLE era_wide AS
@@ -82,21 +83,21 @@ def fit_variable(con, variable, target_file, proxy, kind):
       JOIN read_parquet('{CUBE / f'variable={target_file}/data_0.parquet'}') t
         USING (basin_id,year,month)
       JOIN basins b USING (basin_id)
-      WHERE p.year BETWEEN 2003 AND 2024
+      WHERE p.year BETWEEN 2003 AND {TEST_END}
         AND p.{proxy} IS NOT NULL AND isfinite(p.{proxy})
         AND t.value IS NOT NULL AND isfinite(t.value)
     """)
-    con.execute("""
+    con.execute(f"""
       CREATE OR REPLACE TEMP TABLE local_stats AS
       SELECT basin_id,system_id,month,count(*) n,avg(x) xmean,avg(y) ymean,
         covar_pop(x,y)/nullif(var_pop(x),0) local_slope
-      FROM paired WHERE year<=2018 GROUP BY 1,2,3
+      FROM paired WHERE year<={TRAIN_END} GROUP BY 1,2,3
     """)
-    global_rows = con.execute("""
+    global_rows = con.execute(f"""
       SELECT p.system_id,p.month,
         sum((p.x-l.xmean)*(p.y-l.ymean))/nullif(sum(power(p.x-l.xmean,2)),0) slope
       FROM paired p JOIN local_stats l USING (basin_id,system_id,month)
-      WHERE p.year<=2018 GROUP BY 1,2
+      WHERE p.year<={TRAIN_END} GROUP BY 1,2
     """).fetchall()
     global_slope = {(system, month): max(0.0, slope or 0.0)
                     for system, month, slope in global_rows}
@@ -127,7 +128,7 @@ def fit_variable(con, variable, target_file, proxy, kind):
         avg(({expression})-p.y) adjusted_bias,
         quantile_cont(abs(p.y-({expression})),0.9) abs_error_p90
       FROM paired p JOIN coefficients c USING (basin_id,system_id,month)
-      WHERE p.year BETWEEN 2019 AND 2024
+      WHERE p.year BETWEEN {TRAIN_END + 1} AND {TEST_END}
       GROUP BY 1 ORDER BY 1
     """).fetchall()
     for system, pairs, basins, bmae, brmse, amae, armse, bias, p90 in rows:
@@ -136,13 +137,13 @@ def fit_variable(con, variable, target_file, proxy, kind):
                           "era_adjusted": {"mae": amae, "rmse": armse, "bias": bias,
                                            "absolute_error_p90": p90},
                           "improved": amae < bmae and armse < brmse}
-    # Held-out RMSE per year: error rising with distance from 2018 is model drift;
+    # Held-out RMSE per year: error rising with distance from the training end is model drift;
     # both columns rising together is the target itself changing.
     for system, year, adjusted, baseline in con.execute(f"""
       SELECT p.system_id,p.year,sqrt(avg(power(p.y-({expression}),2))),
         sqrt(avg(power(p.y-c.target_mean,2)))
       FROM paired p JOIN coefficients c USING (basin_id,system_id,month)
-      WHERE p.year BETWEEN 2019 AND 2024 GROUP BY 1,2 ORDER BY 1,2
+      WHERE p.year BETWEEN {TRAIN_END + 1} AND {TEST_END} GROUP BY 1,2 ORDER BY 1,2
     """).fetchall():
         scores[system].setdefault("rmse_by_year", {})[str(year)] = {
             "era_adjusted": adjusted, "seasonal_climatology": baseline}
@@ -187,12 +188,12 @@ def run():
           SELECT p.basin_id,b.system_id,p.year,p.month,'{variable}' AS variable,
             p.{proxy} AS era_value,{expression} AS estimate,
             e.holdout_abs_error_p90,
-            'estimated_terraclimate_v1.0_water_balance' AS status
+            'estimated_terraclimate_{VERSION}_water_balance' AS status
           FROM predictors p JOIN water_coefficients c
             ON p.basin_id=c.basin_id AND p.month=c.month AND c.variable='{variable}'
           JOIN basins b ON p.basin_id=b.basin_id
           JOIN error_scale e ON b.system_id=e.system_id AND e.variable='{variable}'
-          WHERE p.year>2024 AND p.{proxy} IS NOT NULL
+          WHERE p.year>{TEST_END} AND p.{proxy} IS NOT NULL
           ORDER BY p.basin_id,p.year,p.month
         """).fetchall())
     table = pa.Table.from_pylist([
@@ -201,10 +202,10 @@ def run():
          "holdout_abs_error_p90": p90, "status": status}
         for basin, system, year, month, variable, raw, estimate, p90, status in rows
     ])
-    pq.write_table(table, OUT / "v1.0-water-balance-continuation.parquet", compression="zstd")
+    pq.write_table(table, OUT / f"{VERSION}-water-balance-continuation.parquet", compression="zstd")
     report = {"generated_at": datetime.now(timezone.utc).isoformat(),
-              "method": "basin/month ERA predictor anomaly scaled to TerraClimate v1.0 using a basin slope shrunk toward river-system/month slope with eight pseudo-years",
-              "training_years": [2003, 2018], "held_out_years": [2019, 2024],
+              "method": f"basin/month ERA predictor anomaly scaled to TerraClimate {VERSION} using a basin slope shrunk toward river-system/month slope with eight pseudo-years",
+              "training_years": [2003, TRAIN_END], "held_out_years": [TRAIN_END + 1, TEST_END],
               "validation": validation, "eligible_variables": eligible,
               "estimated_rows": table.num_rows,
               "warning": "TerraClimate product emulation; not independent station validation. q is modelled runoff generation, not observed discharge or routed river flow."}

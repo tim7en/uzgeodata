@@ -778,3 +778,55 @@ body{margin:0;background:var(--l-bg-1);color:var(--ink);font-family:var(--body)}
 .land-drought-norm{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
 .land-drought-actions{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:11px}
 .land-drought-actions a{color:var(--l-accent-1)}
+
+/* Monthly record chart frame: the SVG is drawn at this box's measured width. */
+.land-hist-frame{padding:14px 18px 4px}
+.land-hist-frame .land-hist-figure{padding:0}
+.land-hist-frame svg{width:auto;height:auto;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+
+/* The basin report is the one action here that answers a question rather than
+   handing over a file, so it leads the row. */
+.land-basin-downloads .land-basin-report{order:-1;border-color:var(--l-accent-1);background:var(--l-accent-1);color:var(--l-bg-4);font-weight:600}
+.land-basin-downloads .land-basin-report:hover{background:var(--l-accent-4)}
+
+/* ------------------------------------------------------------ phone reading
+   Measured at 390px, the data of the basin modal began 709px down: three
+   download buttons, six tabs over two rows and a catchment map stood in front of
+   every tab. On a phone the modal takes the screen, the tabs and the variable
+   chips become single swipeable rows, and the catchment map follows the values
+   it illustrates. On the landing page the map moves up past the layer controls,
+   which are settings and belong under what they set. */
+@media(max-width:820px){
+  .land-modal{padding:0;align-items:stretch}
+  .land-modal>section{max-height:none;height:100%;border:0}
+  .land-modal header{padding:12px 14px}
+  .land-modal header h2{font-size:22px;margin:3px 0 2px}
+  .land-modal header button{padding:10px}
+  .land-basin-downloads{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:8px 14px}
+  .land-basin-downloads a,.land-basin-downloads button{flex:none;white-space:nowrap;min-height:40px;display:inline-flex;align-items:center}
+  .land-modal-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:8px 14px;scroll-snap-type:x proximity}
+  .land-modal-tabs button{flex:none;white-space:nowrap;min-height:40px;scroll-snap-align:start}
+  .land-basin-layout{display:flex;flex-direction:column;align-items:stretch}
+  /* The layout is also the scroll box, so its children must not shrink to fit it. */
+  .land-basin-layout>*{flex:none}
+  .land-basin-values{order:1}
+  .land-catchment{order:2;border-bottom:0;border-top:1px solid var(--line)}
+  .land-sub-filters{padding:0 14px 10px}
+  .land-sub-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:0 14px}
+  .land-sub-chips button{flex:none;white-space:nowrap;min-height:36px}
+  .land-hist-frame{padding:10px 8px 4px}
+  .land-history-actions{padding:10px 14px 4px}
+  .land-modal footer{flex-wrap:wrap;padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+
+  .land-head p{display:none}
+  .land-head h1{font-size:26px;margin:4px 0 6px}
+  .land-head{padding:12px 16px 4px}
+  .land-map{height:64vh}
+  .land-mapctrl{order:0;margin-top:12px}
+  .land-layers .land-toggle{min-height:36px}
+  .land-layers .land-toggle input{width:18px;height:18px}
+}
+/* The estimate that carries a series past its source: dashed, in the colour the
+   report and the climate tab use for it. */
+.land-hist-estimate{fill:none;stroke:var(--l-accent-5);stroke-width:1.4;stroke-dasharray:4 3;stroke-linejoin:round}
+.land-hist-marker.estimated{fill:var(--l-accent-5)}

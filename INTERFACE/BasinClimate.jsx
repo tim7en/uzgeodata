@@ -3,8 +3,12 @@ import { Download } from 'lucide-react';
 
 const BASE = '/data/atlas/climate-continuation/basins/';
 const WATER_BALANCE = new Set(['aet', 'def', 'PDSI', 'pet', 'q', 'soil', 'swe', 'vpd']);
-const PRODUCT = { 'direct_v1.1': 'TerraClimate v1.1 · direct product',
-  'estimated_v1.0': 'ERA adjustment · estimated v1.0 statistic' };
+const PRODUCT = { 'direct_v1.1': 'TerraClimate v1.1 · direct product' };
+// The estimate is named for the release it continues: estimated_v1.1 since the
+// record was rebased on v1.1, estimated_v1.0 in files built before that.
+const estimateProduct = record => Object.values(record?.series || {})
+  .map(series => series.product).find(product => product?.startsWith('estimated_')) || null;
+const estimateLabel = product => `ERA-based estimate · provisional TerraClimate ${product?.replace('estimated_', '') || ''}`;
 
 function save(name, contents, type) {
   const url = URL.createObjectURL(new Blob([contents], { type }));
@@ -96,11 +100,15 @@ export default function BasinClimate({ basin }) {
     .filter(series => series.support === support).map(series => series.variable === 'precipitation' ? 'ppt' : series.variable))] : [], [record, support]);
   const active = variables.includes(variable) ? variable : variables[0];
   const direct = record?.series[`direct_v1.1:${support}:${active}`];
-  const estimate = record?.series[`estimated_v1.0:${support}:${active === 'ppt' ? 'precipitation' : active}`];
+  const estimated = estimateProduct(record);
+  const estimate = record?.series[`${estimated}:${support}:${active === 'ppt' ? 'precipitation' : active}`];
   if (state.loading) return <p role="status" className="land-group-note">Loading versioned climate record…</p>;
   if (state.error) return <p role="alert" className="land-group-note">{state.error}</p>;
   return <div className="land-climate">
-    <p className="land-hist-warn">TerraClimate v1.1 values ({span(record, 'direct_v1.1')}) are a direct modelled product. The {span(record, 'estimated_v1.0')} values are ERA-based estimates of the older v1.0 statistic. The producer advises against joining these versions into one trend.</p>
+    <p className="land-hist-warn">{span(record, 'direct_v1.1') !== 'none'
+      ? `TerraClimate v1.1 values (${span(record, 'direct_v1.1')}) are the producer’s own release. ` : ''}
+      The {span(record, estimated)} values are ERA-based estimates of the record’s TerraClimate
+      {' '}{estimated?.replace('estimated_', '')} statistic, published until the producer releases those months.</p>
     <div className="land-history-actions">
       <button type="button" className="land-hist-download" onClick={() => save(`basin-${basin.hybas_id}-climate.csv`, csv(record), 'text/csv;charset=utf-8')}><Download size={12}/> Download all climate series (CSV)</button>
       <a href={`${BASE}${basin.hybas_id}.json`} download>JSON with metadata</a>
@@ -111,16 +119,17 @@ export default function BasinClimate({ basin }) {
     </div>
     <div className="land-sub-chips" role="group" aria-label="Climate variable">
       {variables.map(key => <button type="button" key={key} className={key === active ? 'active' : ''}
-        onClick={() => setVariable(key)}>{(record.series[`direct_v1.1:${support}:${key}`] || record.series[`estimated_v1.0:${support}:${key}`])?.label || key}</button>)}
+        onClick={() => setVariable(key)}>{(record.series[`direct_v1.1:${support}:${key}`]
+          || record.series[`${estimated}:${support}:${key === 'ppt' ? 'precipitation' : key}`])?.label || key}</button>)}
     </div>
     <div className="land-climate-legend">
       {direct && <span><i className="land-climate-direct-key"/>{PRODUCT['direct_v1.1']}</span>}
-      {estimate && <span><i className="land-climate-estimate-key"/>{PRODUCT['estimated_v1.0']}</span>}
+      {estimate && <span><i className="land-climate-estimate-key"/>{estimateLabel(estimated)}</span>}
     </div>
     <ClimateChart direct={direct} estimate={estimate} unit={(direct || estimate)?.unit}/>
     {support === 'upstream' && <p className="land-sub-note">Upstream values are area weighted over level‑12 basins. CSV/JSON include coverage and water equivalent volumes where applicable. Modelled runoff generation is not routed streamflow.</p>}
-    {estimate && <p className="land-sub-note">The CSV includes the river-system 90th percentile of held out absolute error for local ERA estimates. It measures agreement with the older TerraClimate product, not station uncertainty.</p>}
-    {estimate && WATER_BALANCE.has(active) && <p className="land-sub-note">This estimate maps the ERA5-Land {active === 'q' ? 'runoff' : 'water and energy'} anomaly onto the TerraClimate v1.0 basin climatology, fitted on 2003–2018 and checked on 2019–2024.{active === 'q' ? ' It is modelled runoff generation, not observed or routed river discharge.' : ''}</p>}
+    {estimate && <p className="land-sub-note">The CSV includes the river-system 90th percentile of held out absolute error for local ERA estimates. It measures agreement with TerraClimate on years held out of the fit, not station uncertainty.</p>}
+    {estimate && WATER_BALANCE.has(active) && <p className="land-sub-note">This estimate maps the ERA5-Land {active === 'q' ? 'runoff' : 'water and energy'} anomaly onto the record’s TerraClimate basin climatology, fitted on its earlier years and checked on its last six.{active === 'q' ? ' It is modelled runoff generation, not observed or routed river discharge.' : ''}</p>}
     <p className="land-sub-note"><a href="/data/atlas/climate-continuation/report.json">Validation and source record ↗</a> · <a href="/data/atlas/climate-continuation/water-balance-report.json">Water-balance validation ↗</a></p>
   </div>;
 }

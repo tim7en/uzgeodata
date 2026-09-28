@@ -1,0 +1,33 @@
+/* Shared by the report chart and the drought strip; imported by ReportChart.jsx
+   so a chart drawn outside the report modal is still styled. */
+/* Report chart. Observed and estimated keep the marks the climate tab uses:
+   solid for what was measured, dashed for what was modelled. */
+.poi-chart{margin-top:14px}
+.poi-chart-controls{display:flex;flex-wrap:wrap;gap:8px 12px;margin-bottom:8px}
+.poi-chart-controls [role=group]{display:inline-flex}
+.poi-modal .poi-chart-controls button{border-radius:0;padding:6px 10px;font-size:12px}
+.poi-modal .poi-chart-controls button:first-child{border-radius:4px 0 0 4px}
+.poi-modal .poi-chart-controls button:last-child{border-radius:0 4px 4px 0}
+.poi-modal .poi-chart-controls button+button{border-left:0}
+.poi-modal .poi-chart-controls button[aria-pressed=true]{background:var(--l-accent-1,#4cc9f0);border-color:var(--l-accent-1,#4cc9f0);color:var(--l-bg-4,#050a0c)}
+.poi-chart-legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 6px;padding:0;list-style:none;font-size:11.5px;color:var(--ink,#e8eef2)}
+.poi-chart-legend li{display:inline-flex;align-items:center;gap:6px}
+.poi-chart-legend i{display:inline-block;width:18px;border-top:2px solid}
+.poi-key-observed{color:var(--l-accent-1,#4cc9f0)}
+.poi-key-estimated{color:var(--l-accent-5,#ffa552);border-top-style:dashed!important}
+.poi-key-normal{color:var(--l-line-1,#6b7d86)}
+.poi-chart-frame{width:100%;touch-action:pan-y}
+.poi-chart-frame svg{display:block;user-select:none;-webkit-user-select:none}
+.poi-chart-grid{stroke:var(--l-bg-7,#1d282d);stroke-width:1;stroke-dasharray:2 4}
+.poi-chart-axis{fill:var(--l-line-1,#6b7d86);font:600 11px var(--mono,ui-monospace,monospace)}
+.poi-chart-observed,.poi-chart-estimated,.poi-chart-normal{fill:none;stroke-linejoin:round;stroke-linecap:round}
+.poi-chart-observed{stroke:var(--l-accent-1,#4cc9f0);stroke-width:2}
+.poi-chart-estimated{stroke:var(--l-accent-5,#ffa552);stroke-width:2;stroke-dasharray:5 4}
+.poi-chart-normal{stroke:var(--l-line-1,#6b7d86);stroke-width:1.25}
+.poi-chart-band{fill:var(--l-accent-5,#ffa552);opacity:.16}
+.poi-chart-dot{fill:var(--l-accent-1,#4cc9f0)}
+.poi-chart-cursor{stroke:var(--l-line-1,#6b7d86);stroke-width:1}
+.poi-chart-marker{fill:var(--l-accent-1,#4cc9f0);stroke:var(--panel,#060b0e);stroke-width:2}
+.poi-chart-marker.estimated{fill:var(--l-accent-5,#ffa552)}
+.poi-chart-readout{margin:4px 0 0;min-height:2.6em;font:500 12px/1.5 var(--mono,ui-monospace,monospace);color:var(--dim,#8fa3ad)}
+.poi-chart-readout strong{color:var(--ink,#e8eef2)}

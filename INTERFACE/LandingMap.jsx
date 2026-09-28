@@ -51,6 +51,7 @@ const DEEPER = [
   { href: '/data-lineage.html', label: 'Data lineage & updates', note: 'Source tree, coverage gaps and refresh classes' },
   { href: '/dynamic-atlas.html', label: 'Dynamic HydroATLAS', note: 'Earth Engine results, resolution and updates' },
   { href: '/roadmap.html', label: 'Atlas roadmap', note: 'Methods, reproduction and basin history' },
+  { href: '/seasonal.html', label: 'Seasonal forecast', note: 'SEAS5 six months ahead, scored against TerraClimate' },
   { href: '/case-studies.html', label: 'Case studies', note: 'Runoff models and station–satellite work' },
   { href: '/research.html', label: 'Research foundations', note: 'Published research bound to layers 1–4' },
 ];
@@ -70,8 +71,10 @@ const TABS = [
   ['original', 'HydroATLAS attributes'],
   ['substitutes', 'Independent estimates'],
   ['history', 'Monthly record'],
-  ['climate', 'Climate 2025–26'],
-  ['drought', 'Drought 1961–2025'],
+  // Named for what they hold rather than for their years: the record moves on
+  // every month, and a tab that says 2025-26 goes stale with the first update.
+  ['climate', 'Recent climate'],
+  ['drought', 'Drought & outlook'],
   ['catchment', 'Catchment statistics'],
 ];
 
@@ -189,7 +192,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
           <a href={`/data/atlas/basins/${basin.hybas_id}.json`} download>Attributes &amp; estimates (JSON)</a>
           <a href={`/data/atlas/history/${basin.hybas_id}.json`} download>Monthly data &amp; metadata (JSON)</a>
         </>}
-        {onReport && <button type="button" onClick={onReport}>Basin &amp; upstream report</button>}
+        {onReport && <button type="button" className="land-basin-report" onClick={onReport}>Basin &amp; upstream report</button>}
       </div>
       <div className="land-modal-tabs" role="tablist" aria-label="Basin attribute views">
         {tabs.map(([id, label]) => <button
@@ -960,7 +963,7 @@ export default function LandingMap() {
         </a>
         <p>Water systems cross borders.<br/>Understanding them should, too.</p>
       </div>
-      <div><strong>Explore</strong><a href="/">Basin explorer</a><a href="/examples.html">Practical examples</a><a href="/case-studies.html">Research case studies</a></div>
+      <div><strong>Explore</strong><a href="/">Basin explorer</a><a href="/examples.html">Practical examples</a><a href="/case-studies.html">Research case studies</a><a href="/seasonal.html">Seasonal forecast</a></div>
       <div><strong>Understand</strong><a href="/research.html">Research foundations</a><a href="/about.html#citation">Citation &amp; reuse</a><a href="/guide.html">Guide &amp; data access</a><a href="/roadmap.html">Research roadmap</a></div>
       <div><strong>Contribute</strong><a href="https://github.com/tim7en/uzgeodata">Project on GitHub &#8599;</a><a href="https://github.com/tim7en/uzgeodata/issues">Report an issue &#8599;</a><a href="/release.json">Release metadata</a></div>
       <p className="footer-note">Independent research project &middot; Public preview &middot; Amu Darya &amp; Syr Darya</p>

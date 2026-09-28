@@ -4,6 +4,28 @@
 Darya, 2,528 Syr Darya). The versioned data package is
 `PUBLISHED/data/atlas/climate-continuation/`.
 
+## Update 2026-09-28: the record is TerraClimate v1.1 throughout
+
+The eleven TerraClimate series of the atlas record were rebased on the producer's
+v1.1 release for 2003–2025 (`PIPELINES/rebase_terraclimate_v11.py`). Earth
+Engine's collection is v1.0 and stops at 2024-12; the producer publishes v1.1 for
+every year from 1958 and advises against joining the two. v1.1 is read from the
+producer's THREDDS server as a server-side subset of the Amu/Syr window (about
+7 MB per variable-year instead of a 150 MB global file; checked cell for cell
+against the range read). What changed, 2003–2024, basin-month by basin-month
+(`v1.1-vs-v1.0.json`): precipitation is 8.5% lower in the Amu Darya and 5.5% in
+the Syr Darya (r = 0.92), temperatures within a few tenths of a degree (r = 0.99),
+PDSI 0.7–1.2 units drier (r ≈ 0.8), and Amu Darya SWE falls from 115 mm to 46 mm,
+where v1.0 accumulated snow on the Pamir glaciers without melt.
+
+The continuation now targets v1.1: trained 2003–2019, held out 2020–2025, and
+estimates begin the month after the record ends. Held-out precipitation RMSE is
+5.05 mm/month (Amu) and 4.30 (Syr); on 2025 alone, against the producer's own
+v1.1 values, r = 0.986 and the annual total is within 1.2%. The training and test
+windows are read from the cube, so a new producer year moves them without a code
+change; `npm run climate:regional:update` fetches it, rebases, refits and republishes.
+Everything below describes the v1.0-era package and is kept as its record.
+
 ## Two different TerraClimate products
 
 The atlas cube contains the Earth Engine TerraClimate v1.0 series through
