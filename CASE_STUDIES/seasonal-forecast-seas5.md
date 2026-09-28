@@ -79,8 +79,11 @@ Amu Darya headwaters and rains 1.1–1.5 times more over the Syr Darya headwater
 the Amu lowlands it is too wet in spring and half as wet in summer. The quantile
 mapping removes these before any forecast is shown.
 
-June and October start months remain queued at CDS as of 2026-09-28. Their skill is
-unknown; the page shows the missing months explicitly. The downloader stores job IDs
+October was collected on 2026-09-28 and the skill table covers 11 of 12 start months;
+for October starts the forecast beats climatology in 55% of level-7 basins for
+five-month precipitation and 46% for temperature. June stayed queued at the CDS for
+over six hours, so the stalled request was deleted and resubmitted; its skill is
+unknown until it completes, and the page shows the month as pending. The downloader stores job IDs
 in `WORKSPACE/derived/seas5/jobs.json`, resumes those requests on subsequent runs,
 and collects completed files without submitting duplicate queued requests.
 
