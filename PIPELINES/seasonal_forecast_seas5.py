@@ -248,6 +248,35 @@ def request_for(init_month, years):
     }
 
 
+def collect_parts(path, client):
+    """Assemble a file from year-range parts once every part has finished.
+
+    A whole hindcast can sit in the CDS queue for many hours; the same request split
+    by years is sometimes served first. Parts are listed in jobs-<kind>-m<MM>-parts.json
+    as {"first-last": job id}, and whichever arrives first - the whole or all its
+    parts - is kept.
+    """
+    import xarray as xr
+    listing = path.with_name(f"jobs-{path.stem.rsplit('-', 2)[0]}-parts.json")
+    if not listing.exists():
+        return False
+    parts = json.loads(listing.read_text())
+    if any(client.get_remote(job).status != "successful" for job in parts.values()):
+        return False
+    files = []
+    for span, job in sorted(parts.items()):
+        part = path.with_name(f"{path.stem}-part-{span}.nc")
+        client.get_remote(job).download(str(part))
+        files.append(part)
+    with xr.open_mfdataset([str(f) for f in files], combine="nested", concat_dim="forecast_reference_time") as merged:
+        merged.sortby("forecast_reference_time").to_netcdf(path.with_suffix(".part"))
+    path.with_suffix(".part").replace(path)
+    for part in files:
+        part.unlink()
+    listing.unlink()
+    return True
+
+
 def download(kind, init_month, years, client=None, wait=0):
     """One start month's file: the cached copy, the finished job's result, or None while queued.
 
@@ -273,6 +302,10 @@ def download(kind, init_month, years, client=None, wait=0):
             client.get_remote(job).download(str(temporary))
             temporary.replace(path)
             jobs.pop(path.name)
+            JOBS.write_text(json.dumps(jobs, indent=1))
+            return path
+        if collect_parts(path, client):
+            jobs.pop(path.name, None)
             JOBS.write_text(json.dumps(jobs, indent=1))
             return path
         if status not in ("accepted", "running"):
