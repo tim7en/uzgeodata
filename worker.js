@@ -28,7 +28,12 @@ export default {
       object.writeHttpMetadata(headers);
 
       headers.set("etag", object.httpEtag);
-      headers.set("cache-control", "public, max-age=3600");
+      // Mutable manifests and records must be revalidated after a data-only publish.
+      // Otherwise reports can combine last release's history with new estimates.
+      // Content-addressed matrices retain their cache lifetime and integrity checks.
+      headers.set("cache-control", /\.(?:json|geojson)$/.test(key)
+        ? "public, no-cache"
+        : "public, max-age=3600");
 
       return new Response(
         request.method === "HEAD" ? null : object.body,

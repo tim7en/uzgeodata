@@ -2,7 +2,9 @@ import { decodeMatrix } from './catchmentStatisticsModel.js';
 
 const matrices = new Map();
 export async function json(url, signal) {
-  const response = await fetch(url, { signal });
+  // The manifest can change when data are republished without a frontend release.
+  // Revalidate it so an old matrix cannot be paired with newer continuation data.
+  const response = await fetch(url, { signal, cache: 'no-cache' });
   if (!response.ok || !response.headers.get('content-type')?.includes('json')) throw Error('Catchment statistics are not available.');
   return response.json();
 }
