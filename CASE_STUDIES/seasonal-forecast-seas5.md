@@ -79,6 +79,13 @@ Amu Darya headwaters and rains 1.1–1.5 times more over the Syr Darya headwater
 the Amu lowlands it is too wet in spring and half as wet in summer. The quantile
 mapping removes these before any forecast is shown.
 
-June and October start months were refused by the CDS queue limit on this build and
-are added by the next `seasonal:download -- --all-hindcasts`, which fetches only what
-the cache lacks.
+June and October start months remain queued at CDS as of 2026-09-28. Their skill is
+unknown; the page shows the missing months explicitly. The downloader stores job IDs
+in `WORKSPACE/derived/seas5/jobs.json`, resumes those requests on subsequent runs,
+and collects completed files without submitting duplicate queued requests.
+
+Run `npm run seasonal:download -- --init 2026-09 --all-hindcasts` again to collect
+them (or add `--wait 60` for bounded polling per job). Once all 12 files are cached,
+rerun the `skill` command above, then `python PIPELINES/build_study_landing.py`
+to refresh the catalogue card and preview. Publish using `npm run publish:site`.
+The dedicated page is also linked from the case-study catalogue at `/case-studies`.

@@ -218,46 +218,79 @@ def unit_matrix(groups, n_basins):
 
 # --------------------------------------------------------------------------- data
 
-def cds_client():
-    """A CDS client from CDSAPI_URL/CDSAPI_KEY, the project's .env (url, key), or ~/.cdsapirc."""
+def credentials():
+    """(url, key) from CDSAPI_URL/CDSAPI_KEY or the project's .env (url, key); None to use ~/.cdsapirc."""
     import os
-    import cdsapi
     from dotenv import dotenv_values
     local = dotenv_values(ROOT / ".env")
     url = os.environ.get("CDSAPI_URL") or local.get("CDSAPI_URL") or local.get("url")
     key = os.environ.get("CDSAPI_KEY") or local.get("CDSAPI_KEY") or local.get("key")
-    if url and key and "cds.climate.copernicus.eu" in url:
-        return cdsapi.Client(url=url, key=key, quiet=True)
-    return cdsapi.Client(quiet=True)
+    return (url, key) if url and key and "cds.climate.copernicus.eu" in url else (None, None)
 
 
-def download(kind, init_month, years, client=None):
-    """One CDS request: every year and lead of one start month. Cached by content."""
-    import cdsapi
-    CACHE.mkdir(parents=True, exist_ok=True)
-    path = CACHE / f"{kind}-m{init_month:02d}-{years[0]}-{years[-1]}.nc"
-    if path.exists() and path.stat().st_size > 0:
-        return path
-    request = {
+def cds_client():
+    """The CDS job client: submits a request and returns without waiting for the queue."""
+    from ecmwf.datastores import Client
+    url, key = credentials()
+    return Client(url=url, key=key) if url else Client()
+
+
+JOBS = CACHE / "jobs.json"
+
+
+def request_for(init_month, years):
+    return {
         "originating_centre": CENTRE, "system": SYSTEM,
         "variable": sorted(VARIABLES), "product_type": ["monthly_mean"],
         "year": [str(year) for year in years], "month": [f"{init_month:02d}"],
         "leadtime_month": [str(lead) for lead in LEADS],
         "data_format": "netcdf", "area": AREA,
     }
+
+
+def download(kind, init_month, years, client=None, wait=0):
+    """One start month's file: the cached copy, the finished job's result, or None while queued.
+
+    The CDS queue can hold a request for hours and rejects a user's requests beyond a
+    few queued ones. So a request is submitted once and its job id kept in jobs.json;
+    each run collects what has finished and leaves the rest queued, instead of
+    blocking on the queue or submitting it again. `wait` seconds are spent polling
+    before giving up for this run.
+    """
     import time
-    import requests
-    # The CDS limits how many requests one user may have queued per dataset and
-    # rejects the rest; that is a reason to wait, not to fail the monthly run.
-    for attempt in range(8):
-        try:
-            (client or cds_client()).retrieve(DATASET, request).download(str(path))
-            break
-        except requests.HTTPError as error:
-            if "temporarily limited" not in str(error) or attempt == 7:
-                raise
-            time.sleep(120)
-    return path
+    CACHE.mkdir(parents=True, exist_ok=True)
+    path = CACHE / f"{kind}-m{init_month:02d}-{years[0]}-{years[-1]}.nc"
+    if path.exists() and path.stat().st_size > 0:
+        return path
+    jobs = json.loads(JOBS.read_text()) if JOBS.exists() else {}
+    client = client or cds_client()
+    deadline = time.monotonic() + max(0, wait)
+    while True:
+        job = jobs.get(path.name)
+        status = client.get_remote(job).status if job else None
+        if status == "successful":
+            temporary = path.with_suffix(".part")
+            client.get_remote(job).download(str(temporary))
+            temporary.replace(path)
+            jobs.pop(path.name)
+            JOBS.write_text(json.dumps(jobs, indent=1))
+            return path
+        if status not in ("accepted", "running"):
+            # Never submitted, or rejected or failed: submit it (again).
+            try:
+                jobs[path.name] = client.submit(DATASET, request_for(init_month, years)).request_id
+                JOBS.write_text(json.dumps(jobs, indent=1))
+                status = 'submitted'
+            except Exception as error:  # the queue limit: try again on a later run
+                if "limited" not in str(error):
+                    raise
+                print(f"{path.name}: CDS queue limit; retry on a later run", flush=True)
+                return None
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            print(f"{path.name}: queued at the CDS ({status}); collect it on a later run", flush=True)
+            return None
+        time.sleep(min(30, remaining))
 
 
 def read(path):
@@ -470,6 +503,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=("download", "build", "skill"))
     parser.add_argument("--init", default=None, help="Start month YYYY-MM; defaults to the current month's")
+    parser.add_argument("--wait", type=int, default=0, help="Seconds to wait for each queued CDS job this run")
     parser.add_argument("--all-hindcasts", action="store_true",
                         help="Download the hindcasts of all twelve start months, for the skill comparison")
     arguments = parser.parse_args()
@@ -478,9 +512,16 @@ def main():
     year, month = (int(part) for part in init.split("-"))
     if arguments.command == "download":
         hindcast_years = list(range(HINDCAST[0], HINDCAST[1] + 1))
-        for start in (range(1, 13) if arguments.all_hindcasts else [month]):
-            print(download("hindcast", start, hindcast_years), flush=True)
-        print(download("forecast", month, [year]), flush=True)
+        # Submit everything first, then poll: queued jobs run side by side at the CDS.
+        wanted = [("hindcast", start, hindcast_years) for start in (range(1, 13) if arguments.all_hindcasts else [month])]
+        wanted.append(("forecast", month, [year]))
+        for kind, start, years in wanted:
+            download(kind, start, years)
+        if arguments.wait > 0:
+            for kind, start, years in wanted:
+                result = download(kind, start, years, wait=arguments.wait)
+                if result is not None:
+                    print(result, flush=True)
     elif arguments.command == "build":
         print(json.dumps(build(init), indent=2), flush=True)
     else:

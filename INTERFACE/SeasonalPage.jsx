@@ -1,13 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet';
-import ThemeToggle, { useTheme } from './ThemeToggle.jsx';
+import { useTheme } from './ThemeToggle.jsx';
 import { formatNumber } from './landingModel.js';
 import { Reading } from './SeasonalForecast.jsx';
 import { BASEMAPS } from './mapViewModel.js';
+import { Freshness, KeyMessages, SiteNav, SkillShareChart, VersionSection } from './SeasonalInsights.jsx';
 
 const LATEST = '/data/atlas/seasonal-forecast/latest.json';
 const SKILL = '/data/atlas/seasonal-forecast/skill.json';
 const LEVEL7 = '/data/hydroclimate/reference-basins-level07.geojson';
+const REPORT = '/data/atlas/climate-continuation/report.json';
+const VERSIONS = '/data/atlas/climate-continuation/v1.1-vs-v1.0.json';
+const SECTIONS = [['outlook', 'Outlook'], ['zones', 'Zones'], ['map', 'Map'], ['skill', 'Against TerraClimate'],
+  ['terraclimate', 'TerraClimate v1.1'], ['data', 'Data & method']];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const REGIONS = [
   ['zone:amu_darya:headwater', 'Amu Darya · runoff-formation zone'],
@@ -85,7 +90,7 @@ function ForecastMap({ forecast, basins, variable, period }) {
 }
 
 function SkillTable({ table, variable, period }) {
-  const months = table.start_months;
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
   return <div className="seas-table"><table>
     <thead><tr><th>Start month</th>{months.map(month => <th key={month}>{MONTHS[month - 1]}</th>)}</tr></thead>
     <tbody>
@@ -122,20 +127,18 @@ export default function SeasonalPage() {
   const [variable, setVariable] = useState('ppt');
   const [period, setPeriod] = useState('season5');
   useEffect(() => {
-    Promise.all([json(LATEST), json(SKILL), json(LEVEL7)])
-      .then(([forecast, skill, basins]) => setState({ forecast, skill, basins }));
+    // The forecast draws first; the heavier map geometry and the comparisons follow.
+    json(LATEST).then(forecast => setState(current => ({ ...current, loading: false, forecast })));
+    Promise.all([json(SKILL), json(REPORT), json(VERSIONS), json(LEVEL7)])
+      .then(([skill, report, versions, basins]) => setState(current => ({ ...current, skill, report, versions, basins })));
   }, []);
   const windows = state.forecast?.windows || [];
   const current = windows.find(entry => entry.id === period) || windows[0];
   const headline = useMemo(() => REGIONS.slice(0, 4), []);
 
   return <main className="seas-page">
-    <header className="seas-head">
-      <a href="/" className="land-brand"><span className="land-brand-icon" aria-hidden="true">&#8776;</span>
-        <span className="land-brand-word">UZGEODATA</span><span className="land-brand-sub">BASIN ATLAS</span></a>
-      <ThemeToggle/>
-    </header>
-    <section className="seas-intro">
+    <SiteNav sections={SECTIONS}/>
+    <section className="seas-intro" id="outlook">
       <p className="seas-eyebrow">Seasonal forecast · Amu Darya and Syr Darya</p>
       <h1>The months ahead, and how far to trust them</h1>
       <p>ECMWF’s SEAS5 forecasts precipitation and temperature six months ahead. Here each forecast is read in the
@@ -149,13 +152,15 @@ export default function SeasonalPage() {
       built monthly from the Copernicus Climate Data Store once the new SEAS5 run is released, on the 5th.</p>}
 
     {state.forecast && <>
+      <KeyMessages forecast={state.forecast}/>
+      <Freshness forecast={state.forecast} report={state.report}/>
       <div className="seas-controls" role="group" aria-label="Forecast shown">
         {VARIABLES.map(([id, label]) => <button key={id} type="button" aria-pressed={variable === id}
           onClick={() => setVariable(id)}>{label}</button>)}
         {windows.map(entry => <button key={entry.id} type="button" aria-pressed={period === entry.id}
           onClick={() => setPeriod(entry.id)}>{entry.label}</button>)}
       </div>
-      <section className="seas-section">
+      <section className="seas-section" id="zones">
         <h2>Where the water forms, and below it</h2>
         <p className="seas-meta">{state.forecast.system}, started {state.forecast.init}, {state.forecast.members} members.
           Headwater zones are where the rivers’ water is made; this winter’s snow there is next summer’s flow.</p>
@@ -165,7 +170,7 @@ export default function SeasonalPage() {
         </div>)}</div>
       </section>
 
-      {state.basins && <section className="seas-section">
+      {state.basins && <section className="seas-section" id="map">
         <h2>Basin by basin</h2>
         <p className="seas-meta">Which way {current.label} leans in each of the 438 level-7 basins: the likelier of
           {' '}{LEAN[variable].names.join(' or ')} than normal, and how likely. Grey: the forecast has shown no skill
@@ -180,8 +185,12 @@ export default function SeasonalPage() {
       </section>}
     </>}
 
-    {state.skill && <section className="seas-section">
+    {state.skill && <section className="seas-section" id="skill">
       <h2>SEAS5 against TerraClimate</h2>
+      <p className="seas-meta">{state.skill.start_months.length} of 12 start months evaluated.
+        {state.skill.start_months.length < 12 && <> Hindcasts not yet available for{' '}
+          {MONTHS.filter((_, i) => !state.skill.start_months.includes(i + 1)).join(', ')};
+          their skill is unknown, not zero.</>}</p>
       <p>How much better than climatology each forecast was, as the ranked probability skill score over
         {' '}{state.skill.hindcast_years[0]}–{state.skill.hindcast_years[1]}, scored against TerraClimate v1.1 with each
         year left out of the thresholds it was judged by. Zero is no better than always forecasting one in three; ✓
@@ -193,6 +202,10 @@ export default function SeasonalPage() {
         {[['next3', 'Next 3 months'], ['season5', 'Next 5 months']].map(([id, label]) =>
           <button key={id} type="button" aria-pressed={period === id} onClick={() => setPeriod(id)}>{label}</button>)}
       </div>
+      <h3>When in the year a forecast is worth reading</h3>
+      <p>The share of the 438 level-7 basins where the forecast beat climatology, by the month it starts.</p>
+      <SkillShareChart table={state.skill} period={period}/>
+      <h3>By zone and start month</h3>
       <SkillTable table={state.skill} variable={variable} period={period}/>
       <h3>How the raw model differs from the record</h3>
       <p>SEAS5’s own climate against TerraClimate’s for the same months and years, one month after the start:
@@ -202,8 +215,17 @@ export default function SeasonalPage() {
       <BiasTable table={state.skill} variable={variable}/>
     </section>}
 
-    <section className="seas-section seas-method">
-      <h2>Method</h2>
+    {state.versions && <section className="seas-section" id="terraclimate">
+      <h2>The record underneath: TerraClimate v1.1</h2>
+      <p>Every normal, anomaly and trend on the portal, and the scale the forecast is placed on, comes from TerraClimate.
+        Earth Engine carries its v1.0, which stops in December 2024; the producer now publishes v1.1, built on ERA5
+        anomalies, and advises against joining the two. The atlas was rebased on v1.1 from 2003 to its latest yearly
+        release. What that changed, year by year, over the years both releases cover:</p>
+      <VersionSection comparison={state.versions}/>
+    </section>}
+
+    <section className="seas-section seas-method" id="data">
+      <h2>Data &amp; method</h2>
       <p>Monthly means of ECMWF SEAS5 (system 51) from the Copernicus Climate Data Store: 51 members for the forecast,
         25 for the 1993–2016 hindcasts. Both are reduced to the 7,445 level-12 basins by fractional overlap of the
         one-degree grid and averaged by area into level-7 basins, zones and systems; no finer unit is reported, because
@@ -212,8 +234,17 @@ export default function SeasonalPage() {
         removes the model’s bias without inventing a relationship the hindcast does not show. A drought-level season is
         one below the 16th percentile, the share SPI −1 marks. Precipitation and temperature only: this is not a
         forecast of river flow, which also depends on the snow and ice already in the mountains.</p>
-      <p><a href="/data/atlas/seasonal-forecast/latest.json">Latest forecast (JSON)</a> ·
-        {' '}<a href="/data/atlas/seasonal-forecast/skill.json">Skill and bias against TerraClimate (JSON)</a></p>
+      <p>The months after TerraClimate’s latest yearly release are estimated from ERA5-Land, basin by basin and month by
+        month, trained on the record’s earlier years and checked on its last six; they are marked as estimates wherever
+        they appear and replaced when the producer publishes the year.</p>
+      <ul className="seas-downloads">
+        <li><a href="/data/atlas/seasonal-forecast/latest.json">Latest forecast, every unit (JSON)</a></li>
+        <li><a href="/data/atlas/seasonal-forecast/skill.json">Skill and bias against TerraClimate (JSON)</a></li>
+        <li><a href="/data/atlas/climate-continuation/v1.1-vs-v1.0.json">TerraClimate v1.1 against v1.0 (JSON)</a></li>
+        <li><a href="/data/atlas/climate-continuation/report.json">Estimate validation (JSON)</a></li>
+      </ul>
+      <p>Basin reports carry the forecast for the basin chosen: open any basin on the <a href="/">map</a> and choose
+        {' '}<b>Basin &amp; upstream report</b>, or its <b>Drought &amp; outlook</b> tab.</p>
     </section>
   </main>;
 }

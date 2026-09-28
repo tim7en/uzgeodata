@@ -159,6 +159,29 @@ def main():
          'metric_label':'Documented dry and wet years found in the data',
          'detail':(f"of {drought['documented_events']} · {drought['units_with_4plus_severe_years']} of {drought['level07_units']} sub-basins had 4+ severe drought years since 1991") if drought else 'TerraClimate v1.1, one product version',
          'status':'Drought climatology · TerraClimate v1.1'}
+    seasonal_path=ROOT/'PUBLISHED/data/atlas/seasonal-forecast/skill.json'
+    seasonal=json.loads(seasonal_path.read_text(encoding='utf-8')) if seasonal_path.exists() else None
+    seasonal_cards=[]
+    if seasonal:
+        hashes['seasonal-forecast/skill.json']=hashlib.sha256(seasonal_path.read_bytes()).hexdigest()
+        months=seasonal['start_months']
+        def seasonal_preview(ax):
+            x=np.array(months)
+            for name, offset, color in [('ppt',-.18,'#58c9e5'),('tmean',.18,'#edb06c')]:
+                shares=seasonal['level7_useful_share'][name]
+                ax.bar(x+offset,[shares[str(m)]['season5']*100 for m in months],width=.34,color=color)
+            ax.set_xlim(.4,12.6)
+            ax.set_ylim(0,100)
+        preview(DATA/'seasonal-study-preview.svg',seasonal_preview)
+        seasonal_cards=[{'id':'seasonal','href':'/seasonal','title':'What the next season may bring',
+            'region':'AMU DARYA & SYR DARYA · ECMWF SEAS5',
+            'aim':'Explore precipitation and temperature probabilities, historical forecast skill, and the TerraClimate record behind them.',
+            'image':'/data/case-studies/seasonal-study-preview.svg',
+            'image_alt':'Share of level-7 basins with useful five-month forecast skill by start month: precipitation in blue and temperature in orange. Missing months have no bars.',
+            'evidence_date':seasonal['generated_at'],'metric':len(months),
+            'metric_label':'Start months evaluated out of 12',
+            'detail':'1993–2016 hindcasts · TerraClimate v1.1 reference',
+            'status':'Seasonal outlook · historical skill assessment'}]
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -194,6 +217,7 @@ def main():
          'status':'GroupKFold by gauge · transfer experiment'},
         reservoir_card(),
         drought_card(),
+        *seasonal_cards,
         {'id':'trends','href':'/trends.html','title':'What survives testing properly',
          'region':'AMU DARYA & SYR DARYA','aim':'Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.',
          'image':'/data/trends/trend-correction-cascade.svg',

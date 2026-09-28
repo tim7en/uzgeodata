@@ -1,7 +1,50 @@
 import numpy as np
 import pytest
+import json
+from types import SimpleNamespace
 
 from PIPELINES import seasonal_forecast_seas5 as seas5
+
+
+def test_download_resumes_job_and_publishes_only_complete_file(tmp_path, monkeypatch):
+    monkeypatch.setattr(seas5, 'CACHE', tmp_path)
+    monkeypatch.setattr(seas5, 'JOBS', tmp_path / 'jobs.json')
+    calls = []
+    remote = SimpleNamespace(status='accepted', request_id='saved-job')
+    def collect(target):
+        from pathlib import Path
+        Path(target).write_bytes(b'completed download')
+    remote.download = collect
+    client = SimpleNamespace(
+        submit=lambda *args: calls.append(args) or remote,
+        get_remote=lambda job: remote,
+    )
+    assert seas5.download('hindcast', 6, [1993, 2016], client) is None
+    assert seas5.download('hindcast', 6, [1993, 2016], client) is None
+    assert len(calls) == 1
+    remote.status = 'successful'
+    result = seas5.download('hindcast', 6, [1993, 2016], client)
+    assert result.read_bytes() == b'completed download'
+    assert json.loads(seas5.JOBS.read_text()) == {}
+    assert not result.with_suffix('.part').exists()
+    assert seas5.download('hindcast', 6, [1993, 2016], client) == result
+    assert len(calls) == 1
+
+
+def test_failed_collection_keeps_job_for_retry(tmp_path, monkeypatch):
+    monkeypatch.setattr(seas5, 'CACHE', tmp_path)
+    monkeypatch.setattr(seas5, 'JOBS', tmp_path / 'jobs.json')
+    name = 'hindcast-m10-1993-2016.nc'
+    seas5.JOBS.write_text(json.dumps({name: 'saved-job'}))
+    def fail(target):
+        from pathlib import Path
+        Path(target).write_bytes(b'incomplete')
+        raise OSError('connection lost')
+    client = SimpleNamespace(get_remote=lambda job: SimpleNamespace(status='successful', download=fail))
+    with pytest.raises(OSError):
+        seas5.download('hindcast', 10, [1993, 2016], client)
+    assert not (tmp_path / name).exists()
+    assert json.loads(seas5.JOBS.read_text())[name] == 'saved-job'
 
 
 def test_quantile_mapping_removes_a_multiplicative_bias():

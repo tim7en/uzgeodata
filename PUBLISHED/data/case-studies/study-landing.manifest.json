@@ -1,10 +1,11 @@
 {
-  "generated_at": "2026-09-17T21:39:56.393754+00:00",
+  "generated_at": "2026-09-28T11:01:27.890816+00:00",
   "input_hashes": {
     "pskem-daily-model.json": "f3cf4a0ace80eabaa5f2bcc77ac7ed91851e295270a972323808aa9689bdd0c0",
     "pskem-daily-model.csv": "4aa1bc9edb645a49e359c2ac06f64aecad157d42a749c3ec2396b707a3153224",
     "regional-station-study.json": "f1c0f711f7256c3c04183c7cc3cef4de9ea17ee03cf4b5784b4da3d2d7d83902",
-    "model-review.json": "3f39a0916c30eb8d24652d670ac5fd13236d21c81f8a92c6dfda8fda522f55cf"
+    "model-review.json": "3f39a0916c30eb8d24652d670ac5fd13236d21c81f8a92c6dfda8fda522f55cf",
+    "seasonal-forecast/skill.json": "acb5c90cfe240f7a1c348da6edf7d37739bc63aa7d0eea860e7345a582db9ae2"
   },
   "daily_validation_nse_recomputed": 0.8786926122652396,
   "monthly_validation_nse_recomputed": 0.900775006908644,
