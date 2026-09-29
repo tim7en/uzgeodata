@@ -35,6 +35,14 @@ existing server directly and avoids the acquisition/publication hooks of
 `npm run dev`. Use `PORT` to choose another local port. The server binds to
 localhost. `COOKIE_SECURE=true` is required when operating behind HTTPS.
 
+Open **http://localhost:5173/agents.html** for scientific validation reruns. The
+page executes only the allowlisted Python checks shown there, one at a time, and
+shows live output through the local API; final logs are saved in `WORKSPACE/agent-runs/state.json`. A failed check is
+shown as failed evidence, even when the failure is an already known release
+discrepancy. The public page shows a reviewed snapshot only; local runs are not
+published or promoted automatically. These checks can require the optional
+bulk local inputs described in their linked QA reports.
+
 The inventory snapshot is already included. Regenerate it after adding a product
 or changing registry metadata with `npm run data:inventory`; this command reads
 local metadata and tables and does not acquire imagery.

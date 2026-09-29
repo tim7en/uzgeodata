@@ -31,6 +31,7 @@ export default defineConfig({
       input: {
         main: here('./INTERFACE/index.html'),
         admin: here('./INTERFACE/admin.html'),
+        agents: here('./INTERFACE/agents.html'),
         project: here('./INTERFACE/project.html'),
         examples: here('./INTERFACE/examples.html'),
         ...(process.env.LAUNCH_BUILD ? {} : { portal: here('./INTERFACE/portal.html') }),

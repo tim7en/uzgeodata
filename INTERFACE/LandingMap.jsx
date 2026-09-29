@@ -54,6 +54,7 @@ const DEEPER = [
   { href: '/seasonal.html', label: 'Seasonal forecast', note: 'SEAS5 six months ahead, scored against TerraClimate' },
   { href: '/case-studies.html', label: 'Case studies', note: 'Runoff models and station–satellite work' },
   { href: '/research.html', label: 'Research foundations', note: 'Published research bound to layers 1–4' },
+  { href: '/agents.html', label: 'Validation agents', note: 'Reviewed QA status and private reruns' },
 ];
 
 // Public reading support is available without loading the map or a data bundle.

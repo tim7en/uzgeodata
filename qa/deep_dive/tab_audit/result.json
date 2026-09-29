@@ -1,0 +1,125 @@
+{
+  "basin_id": "4121292070",
+  "scope": "published intermediate arithmetic, not raw NetCDF re-extraction or station validation",
+  "files_sha256": {
+    "PUBLISHED/data/atlas/climate-continuation/era5-land-extended/year=2020.parquet": "46d11a80f2b487c072b2770fca90de1947797bb06bf5be2e4835c9fd38f1f8c2",
+    "PUBLISHED/data/atlas/climate-continuation/era5-land-extended/year=2021.parquet": "85d0e0464fd4666d6162994446f0fe4323c5ac2aecc0f4ef5dc92efbdf9f5da1",
+    "PUBLISHED/data/atlas/climate-continuation/era5-land-extended/year=2022.parquet": "ff4b57bc908aa9a4665b99ae791b9415e6a365687ef3066069c5f7caee5b26f1",
+    "PUBLISHED/data/atlas/climate-continuation/era5-land-extended/year=2023.parquet": "4dc9d8ef34c1bc8fb407e212b946941e1d36b1f69881a13911541212c7f3b5ec",
+    "PUBLISHED/data/atlas/climate-continuation/era5-land-extended/year=2024.parquet": "5734e4d74f1b5d4f2c5c20f96a7154b57017f26f7b0a156497d9fbd862755d87",
+    "PUBLISHED/data/atlas/climate-continuation/era5-land-extended/year=2025.parquet": "5c0284366743bcb2eae995de8d462ab3adb8aec5f3b7ac6175926a79c659820c",
+    "PUBLISHED/data/atlas/climate-continuation/era5-land-extended/year=2026.parquet": "1ba0cd7bb5a8bbff0f8662ff4d46433e6df04677a301a5229f8728110b1ad6f8",
+    "PUBLISHED/data/atlas/climate-continuation/terraclimate-v1.1-history/year=2020.parquet": "bea9b59a09222bf9420c7d9d60330daa85d3778fc8120d21d747dacbb63469ad",
+    "PUBLISHED/data/atlas/climate-continuation/terraclimate-v1.1-history/year=2021.parquet": "67b9c3c549ee0e7e7508234923772d152f7f39d08a80d01f91a51ed0061d9e51",
+    "PUBLISHED/data/atlas/climate-continuation/terraclimate-v1.1-history/year=2022.parquet": "e2b0f932f63b2796c1a435e9bd3e6ea99354d9bab8d7ae26dc3fc602ab81dced",
+    "PUBLISHED/data/atlas/climate-continuation/terraclimate-v1.1-history/year=2023.parquet": "b8f65ecf43c2aac6e10797ce35506557b43423ab98a91d332c6b8e7f1d21f005",
+    "PUBLISHED/data/atlas/climate-continuation/terraclimate-v1.1-history/year=2024.parquet": "1d33a1cd48981e048b7e2d6908ef6ec1584478439109d18d6f09d86aedcc29dd",
+    "PUBLISHED/data/atlas/climate-continuation/terraclimate-v1.1-history/year=2025.parquet": "76192f2b7d86f979d363b9a8e0e65c1abbe71a57428acdf264434fd63c343c43",
+    "PUBLISHED/data/atlas/climate-continuation/v1.1-water-balance-continuation.parquet": "b9762a7883a3f750e40047cd49d32aa0dd7e9b8f289f9b7951b253dd516a6b8a",
+    "PUBLISHED/data/atlas/climate-continuation/water-balance-coefficients.parquet": "c26e2a0a4e646698b221e0879dcef5bef0ab710933624f4ea52374bc576d203e",
+    "PUBLISHED/data/atlas/history/4121292070.json": "f43ceda129d498d933bfa73169dac7ab4b75399c2ea3ef3b604aa3ad4282d53b"
+  },
+  "checks": {
+    "aet_2025": {
+      "monthly": [
+        {
+          "month": 1,
+          "intermediate": 12.601413465055076,
+          "display": 12.6014,
+          "difference": -1.3465055076267163e-05
+        },
+        {
+          "month": 2,
+          "intermediate": 31.18771825779681,
+          "display": 31.1877,
+          "difference": -1.825779681041695e-05
+        },
+        {
+          "month": 3,
+          "intermediate": 67.50576414255144,
+          "display": 67.5058,
+          "difference": 3.585744855172379e-05
+        },
+        {
+          "month": 4,
+          "intermediate": 84.61188311603458,
+          "display": 84.6119,
+          "difference": 1.688396542931514e-05
+        },
+        {
+          "month": 5,
+          "intermediate": 44.16382447729589,
+          "display": 44.1638,
+          "difference": -2.4477295887948003e-05
+        },
+        {
+          "month": 6,
+          "intermediate": 15.074018384050483,
+          "display": 15.074,
+          "difference": -1.8384050482822545e-05
+        },
+        {
+          "month": 7,
+          "intermediate": 7.079004487037591,
+          "display": 7.079,
+          "difference": -4.487037591260901e-06
+        },
+        {
+          "month": 8,
+          "intermediate": 4.602292104108454,
+          "display": 4.6023,
+          "difference": 7.89589154592818e-06
+        },
+        {
+          "month": 9,
+          "intermediate": 3.602438333675563,
+          "display": 3.6024,
+          "difference": -3.833367556316247e-05
+        },
+        {
+          "month": 10,
+          "intermediate": 14.858041560174897,
+          "display": 14.858,
+          "difference": -4.156017489620467e-05
+        },
+        {
+          "month": 11,
+          "intermediate": 27.789556212409607,
+          "display": 27.7896,
+          "difference": 4.378759039269653e-05
+        },
+        {
+          "month": 12,
+          "intermediate": 28.769915584592805,
+          "display": 28.7699,
+          "difference": -1.558459280559532e-05
+        }
+      ],
+      "annual_total_mm": 341.8458701247832,
+      "displayed_month_sum_mm": 341.8458,
+      "maximum_absolute_display_difference_mm": 4.378759039269653e-05,
+      "status": "PASS"
+    },
+    "aet_2026_01_estimate": {
+      "predictor_mm": 7.959962550035256,
+      "target_mean_mm": 14.826811010735605,
+      "predictor_mean_mm": 5.290322851302578,
+      "slope": 2.8131838684213335,
+      "recomputed_mm": 22.336998345707563,
+      "published_mm": 22.336998345707563,
+      "difference_mm": 0.0,
+      "holdout_abs_error_p90_mm": 14.795024688178904,
+      "status": "PASS"
+    },
+    "aet_2020_2025_local_holdout": {
+      "months": 72,
+      "estimated_rmse_mm_per_month": 13.794963692984545,
+      "seasonal_baseline_rmse_mm_per_month": 16.595701366731138,
+      "status": "CALCULATED_MODEL_SKILL"
+    }
+  },
+  "limitations": [
+    "Raw TerraClimate v1.1 NetCDF grids are absent; monthly basin values cannot be independently extracted.",
+    "The drought record is checked separately by qa/deep_dive/drought/check_drought_basin.py."
+  ]
+}

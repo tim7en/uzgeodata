@@ -116,6 +116,7 @@ for (const line of declarations.split('\n')) {
 if (declared) console.log(`Release carries ${declared} declared file(s) beyond the Git index.`);
 // Explicit public metadata output, also available in a working tree before first commit.
 files.add('data/variable-inventory.json');
+files.add('data/agent-status.json');
 files.add('data/source-registry.json');
 for (const name of await readdir(path.join(published, 'data/atlas/history'))) {
   if (/^(?:index|\d+)\.json$/.test(name)) files.add(`data/atlas/history/${name}`);

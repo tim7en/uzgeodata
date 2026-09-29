@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import multer from 'multer';
 import { DataUpdates } from './SERVER/dataUpdates.mjs';
+import { AgentRuns } from './SERVER/agentRuns.mjs';
 
 dotenv.config();
 
@@ -149,6 +150,15 @@ app.get('/api/admin/requests', authenticated, async (_req, res, next) => {
 // allowlisted group id.
 const updateGroups = JSON.parse(await fs.readFile(path.join(root, 'ATLAS_MODULES/update-groups.json'), 'utf8')).groups;
 const dataUpdates = await new DataUpdates({ root, directory: path.join(storageRoot, 'data-updates'), groups: updateGroups }).init();
+const agentRuns = await new AgentRuns({ root, directory: path.join(storageRoot, 'agent-runs') }).init();
+app.get('/api/agents', (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.json(agentRuns.snapshot());
+});
+app.post('/api/agents/:id/run', updateRequest, async (req, res, next) => {
+  try { res.status(202).json(await agentRuns.enqueue(req.params.id)); }
+  catch (error) { next(error); }
+});
 app.get('/api/admin/variables', async (_req, res, next) => {
   try {
     res.setHeader('Cache-Control', 'no-store');

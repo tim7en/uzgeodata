@@ -1,0 +1,188 @@
+{
+  "basin": "4121292070",
+  "inputs_sha256": {
+    "PUBLISHED/data/atlas/catchments/index.json": "7a36c2a624c02ec824d22233477e865e1db9d6d34fbac312d71b063ab52a0f28",
+    "PUBLISHED/data/atlas/catchments/morphology.json": "cb7279d1a9985d516a1c603bb4bcf279bbe07e3ee5ab65bf549e3e28b6b20e29",
+    "PUBLISHED/data/atlas/catalogue.json": "d36945c9cf314a94a813ae6df74be329ba77c9fc90ea4e9d950ba972bd8e65c7",
+    "PUBLISHED/data/atlas/basins/4121292070.json": "fa2ee6b76b5e9ca8be52f3798def7b7653089f64a674c0b80b15820c47c86b65",
+    "PUBLISHED/data/atlas/history/4121292070.json": "f43ceda129d498d933bfa73169dac7ab4b75399c2ea3ef3b604aa3ad4282d53b",
+    "PUBLISHED/data/atlas/catchments/pre_mm_s-820afd66f08f.bin.gz": "820afd66f08f74623d3432554f98495fb46f6bafa5fc7246a48062510cf9ac03",
+    "PUBLISHED/data/atlas/catchments/snw_pc_s-b3fd5792ee75.bin.gz": "b3fd5792ee7540025d957a3ecdb7080207cbc0381d73769c7d5b24dfb3e9bc7e"
+  },
+  "network": {
+    "member_count_including_selected": 89,
+    "upstream_count_excluding_selected": 88,
+    "traced_area_km2_recalculated": 11885.5,
+    "traced_area_km2_published": 11885.499999999998,
+    "reported_upstream_area_km2": 11884.8,
+    "difference_traced_minus_reported_km2": 0.7000000000007276
+  },
+  "morphology": {
+    "relief_m_recalculated": 3674.0,
+    "relief_m_published": 3674.0,
+    "circularity_recalculated": 0.38297982342818765,
+    "circularity_published": 0.38297982342818765
+  },
+  "catchment_months": {
+    "pre_mm_s": {
+      "compressed_sha256": "820afd66f08f74623d3432554f98495fb46f6bafa5fc7246a48062510cf9ac03",
+      "provenance": [
+        {
+          "asset": "TerraClimate v1.1, Climatology Lab yearly NetCDF (climate.northwestknowledge.net)",
+          "extracted_through": "2025-12",
+          "geometry_version": "reg-166479294ef8",
+          "label": "precipitation",
+          "methods": [
+            "terraclimate_v11_rebase@1"
+          ],
+          "product_version": "v1.1",
+          "reduction": "fractional 1/24 degree cell overlap with basin polygons",
+          "run_ids": [
+            "terraclimate-v11-rebase-20260928T081549.932+0000"
+          ],
+          "source": "terraclimate_v1.1",
+          "source_release": "terraclimate-v1.1@climatologylab",
+          "statistic": "monthly_mean",
+          "unit": "millimetres per month"
+        }
+      ],
+      "months": {
+        "2003-01": {
+          "observed_basins": 89,
+          "basin_count": 89,
+          "covered_area_km2": 11885.5,
+          "coverage_percent": 100.0,
+          "weighted_mean_observed_area": 64.0714044272433,
+          "full_catchment_total": 761520677.3200002,
+          "covered_area_total": 761520677.3200002,
+          "subbasin_min": 35.2507,
+          "subbasin_max": 104.9335
+        },
+        "2025-12": {
+          "observed_basins": 89,
+          "basin_count": 89,
+          "covered_area_km2": 11885.5,
+          "coverage_percent": 100.0,
+          "weighted_mean_observed_area": 119.03668065457913,
+          "full_catchment_total": 1414810467.9200003,
+          "covered_area_total": 1414810467.9200003,
+          "subbasin_min": 68.614,
+          "subbasin_max": 175.3185
+        }
+      }
+    },
+    "snw_pc_s": {
+      "compressed_sha256": "b3fd5792ee7540025d957a3ecdb7080207cbc0381d73769c7d5b24dfb3e9bc7e",
+      "provenance": [
+        {
+          "asset": "MODIS/061/MYD10A1",
+          "geometry_version": "reg-166479294ef8",
+          "label": "snow cover",
+          "limitation": "Not for trend analysis: regional missing months increase across 2003–2022 and the cause has not been established.",
+          "methods": [
+            "dated_snow@ed5216826e7f",
+            "dated_snow@f0772072c007"
+          ],
+          "run_ids": [
+            "regional-snow-20260910T070340280486Z",
+            "regional-snow-20260913T174832998639Z"
+          ],
+          "source": "snow",
+          "source_release": "modis_myd10a1@061",
+          "statistic": "monthly_mean",
+          "trend_use": "withdrawn",
+          "unit": "percent"
+        }
+      ],
+      "months": {
+        "2003-01": {
+          "observed_basins": 89,
+          "basin_count": 89,
+          "covered_area_km2": 11885.5,
+          "coverage_percent": 100.0,
+          "weighted_mean_observed_area": 94.24478416642127,
+          "full_catchment_total": 11201.4638221,
+          "covered_area_total": 11201.4638221,
+          "subbasin_min": 32.9123,
+          "subbasin_max": 100.0
+        },
+        "2025-01": {
+          "observed_basins": 0,
+          "basin_count": 89,
+          "covered_area_km2": 0,
+          "coverage_percent": 0.0,
+          "weighted_mean_observed_area": null,
+          "full_catchment_total": null,
+          "covered_area_total": null,
+          "subbasin_min": null,
+          "subbasin_max": null
+        },
+        "2025-12": {
+          "observed_basins": 0,
+          "basin_count": 89,
+          "covered_area_km2": 0,
+          "coverage_percent": 0.0,
+          "weighted_mean_observed_area": null,
+          "full_catchment_total": null,
+          "covered_area_total": null,
+          "subbasin_min": null,
+          "subbasin_max": null
+        }
+      }
+    }
+  },
+  "substitutes": {
+    "pre_mm_s01": {
+      "published_estimate": 76.42759179008526,
+      "published_valid": 23,
+      "published_expected": 23,
+      "published_source": {
+        "unit": "millimeters",
+        "time_kind": "climatology",
+        "period": [
+          "2003-01-01",
+          "2027-01-01"
+        ],
+        "statistic": "monthly_climatological_mean",
+        "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
+        "method": "derive_climatology@ea786948fb84/2003-2026"
+      },
+      "reestimated_mean_from_current_monthly_history": 69.04147826086957,
+      "history_valid": 23,
+      "difference_current_history_minus_published": -7.386113529215692,
+      "history_source": "terraclimate-v1.1@climatologylab"
+    },
+    "aet_mm_s01": {
+      "published_estimate": 9.750254774036877,
+      "published_valid": 23,
+      "published_expected": 23,
+      "published_source": {
+        "unit": "millimetres per month",
+        "time_kind": "climatology",
+        "period": [
+          "2003-01-01",
+          "2027-01-01"
+        ],
+        "statistic": "monthly_climatological_mean",
+        "source_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
+        "method": "derive_climatology@ea786948fb84/2003-2026"
+      },
+      "reestimated_mean_from_current_monthly_history": 15.053260869565218,
+      "history_valid": 23,
+      "difference_current_history_minus_published": 5.303006095528341,
+      "history_source": "terraclimate-v1.1@climatologylab"
+    },
+    "counts": {
+      "attributes": 281,
+      "non_null_estimates": 216,
+      "non_null_originals": 281
+    }
+  },
+  "checks": {
+    "upstream_members": "PASS",
+    "traced_area": "PASS",
+    "relief": "PASS",
+    "circularity": "PASS",
+    "precipitation_coverage": "PASS"
+  }
+}

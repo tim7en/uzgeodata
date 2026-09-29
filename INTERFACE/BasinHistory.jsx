@@ -58,7 +58,7 @@ function Plot({ history, name, series, estimate, outer }) {
   const lines = useMemo(() => segments(values, extent, width, CHART.height), [values, extent, width]);
   const estimateLines = useMemo(() => (estimated ? segments(estimated, extent, width, CHART.height) : []),
     [estimated, extent, width]);
-  if (!extent) return <p className="land-group-note">No observation in this window.</p>;
+  if (!extent) return <p className="land-group-note">No source value in this window.</p>;
 
   const step = width / (values.length - 1);
   const years = history.years[1] - history.years[0] + 1;
@@ -104,7 +104,7 @@ function Plot({ history, name, series, estimate, outer }) {
           : estimate?.[hover]
             ? `${dateAt(history, hover).label}: ${formatNumber(estimate[hover].value, 2)} ${series.unit} · estimated`
               + `${estimate[hover].errorP90 ? ` ±${formatNumber(estimate[hover].errorP90, 2)}` : ''}`
-            : `${dateAt(history, hover).label}: no observation`
+            : `${dateAt(history, hover).label}: no source value`
         : `${series.label} · ${series.unit} · ${history.years[0]}–${history.years[1]}`
           + `${estimate ? ' · dashed: estimated past the end of the source' : ''}`}
     </figcaption>
@@ -154,12 +154,12 @@ export default function BasinHistory({ basin }) {
   if (state.loading) return <p role="status" className="land-group-note">Loading this basin’s record…</p>;
   if (state.error) return <div className="land-sub-note" role="alert">
     <p>{state.error}</p>
-    <p>Dated observations are published for level-12 basins in the two river systems.</p>
+    <p>Dated source values are published for level-12 basins in the two river systems.</p>
     <button onClick={() => setRetry(n => n + 1)}>Try again</button>
   </div>;
 
   const series = state.history.series[active];
-  if (!series) return <p className="land-group-note">This basin carries no dated observation.</p>;
+  if (!series) return <p className="land-group-note">This basin carries no dated source value.</p>;
   const observed = series.observed_months;
   const total = extractedLength(state.history, series);
   return <>
@@ -187,11 +187,11 @@ export default function BasinHistory({ basin }) {
     <div className="land-sub-note">
       <div className="land-sub-counts">
         <span className="land-sub-key">{state.history.years[0]}–{state.history.years[1]} monthly</span>
-        <span>{observed} of {total} months observed</span>
+        <span>{observed} of {total} months with source values</span>
         <span>{names.length} variables</span>
       </div>
-      <p>Monthly open-data estimates for this basin. Their period may differ from the climatologies. A month with no
-        observation is drawn as a gap and left empty in the download, never as a zero.</p>
+      <p>Monthly gridded estimates and reanalysis for this basin, not field measurements. Their period may differ from the climatologies. A month with no
+        source value is drawn as a gap and left empty in the download, never as a zero.</p>
       <p className="land-sub-links">
 
         <a href={`${state.index.base_url}${basin.hybas_id}.json`} download>JSON</a>

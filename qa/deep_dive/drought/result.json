@@ -1,0 +1,908 @@
+{
+  "basin_id": "4121292070",
+  "served_url": "https://uzgeodata.uz/data/atlas/drought-study/basins/4121292070.json",
+  "served_sha256": "47f9e1682edc1d0e985966f501c83c7fffafd70cce614f4e2be1d423da771644",
+  "scope": "served drought record against local v1.1 monthly data and an independent SPI estimator",
+  "checks": {
+    "water_year_totals": {
+      "years": [
+        1992,
+        2025
+      ],
+      "compared": 34,
+      "max_abs_difference_mm": 0.0004975085078058328,
+      "status": "PASS"
+    },
+    "wmo_normal": {
+      "served_mm": 683.77,
+      "recomputed_mm": 683.7741,
+      "status": "PASS"
+    },
+    "anomalies": {
+      "compared": 65,
+      "max_abs_difference_pct_points": 0.0005578127337737548,
+      "status": "PASS"
+    },
+    "spi12": {
+      "method": "Thom (1958) gamma MLE approximation fitted on WY1991-2020",
+      "alpha": 29.28936894771527,
+      "beta_mm": 23.34547054327499,
+      "compared": 65,
+      "max_abs_difference": 0.0004978559558150852,
+      "status": "PASS"
+    },
+    "latest_year": {
+      "water_year": 2025,
+      "ppt_mm": 476.147,
+      "anomaly_pct_served": -30.365,
+      "spi12_served": -1.784,
+      "spi12_recomputed": -1.783889750671162
+    }
+  },
+  "totals": [
+    {
+      "water_year": 1992,
+      "served_mm": 803.879,
+      "local_mm": 803.879,
+      "difference_mm": -3.671357546863874e-05
+    },
+    {
+      "water_year": 1993,
+      "served_mm": 771.113,
+      "local_mm": 771.1129,
+      "difference_mm": 0.00010303027625013783
+    },
+    {
+      "water_year": 1994,
+      "served_mm": 765.85,
+      "local_mm": 765.8504,
+      "difference_mm": -0.000411358890005431
+    },
+    {
+      "water_year": 1995,
+      "served_mm": 598.62,
+      "local_mm": 598.6204,
+      "difference_mm": -0.0004212962758174399
+    },
+    {
+      "water_year": 1996,
+      "served_mm": 622.763,
+      "local_mm": 622.7631,
+      "difference_mm": -8.593552797719894e-05
+    },
+    {
+      "water_year": 1997,
+      "served_mm": 628.723,
+      "local_mm": 628.7227,
+      "difference_mm": 0.0002715376276682946
+    },
+    {
+      "water_year": 1998,
+      "served_mm": 862.37,
+      "local_mm": 862.3703,
+      "difference_mm": -0.00033534513738686655
+    },
+    {
+      "water_year": 1999,
+      "served_mm": 720.726,
+      "local_mm": 720.7261,
+      "difference_mm": -0.00014375864213889145
+    },
+    {
+      "water_year": 2000,
+      "served_mm": 528.76,
+      "local_mm": 528.7603,
+      "difference_mm": -0.0002994606412585199
+    },
+    {
+      "water_year": 2001,
+      "served_mm": 565.81,
+      "local_mm": 565.8099,
+      "difference_mm": 9.613513896056247e-05
+    },
+    {
+      "water_year": 2002,
+      "served_mm": 978.42,
+      "local_mm": 978.4201,
+      "difference_mm": -5.268933091429062e-05
+    },
+    {
+      "water_year": 2003,
+      "served_mm": 818.983,
+      "local_mm": 818.9829,
+      "difference_mm": 0.00011904551206498581
+    },
+    {
+      "water_year": 2004,
+      "served_mm": 680.079,
+      "local_mm": 680.0786,
+      "difference_mm": 0.00035381335555939586
+    },
+    {
+      "water_year": 2005,
+      "served_mm": 770.733,
+      "local_mm": 770.7328,
+      "difference_mm": 0.0001902381062564018
+    },
+    {
+      "water_year": 2006,
+      "served_mm": 571.229,
+      "local_mm": 571.229,
+      "difference_mm": 4.937595917908766e-05
+    },
+    {
+      "water_year": 2007,
+      "served_mm": 725.823,
+      "local_mm": 725.823,
+      "difference_mm": 1.9307305251459184e-05
+    },
+    {
+      "water_year": 2008,
+      "served_mm": 466.338,
+      "local_mm": 466.3376,
+      "difference_mm": 0.00042277628716647087
+    },
+    {
+      "water_year": 2009,
+      "served_mm": 869.469,
+      "local_mm": 869.4685,
+      "difference_mm": 0.0004975085078058328
+    },
+    {
+      "water_year": 2010,
+      "served_mm": 782.975,
+      "local_mm": 782.9752,
+      "difference_mm": -0.00015003625901499618
+    },
+    {
+      "water_year": 2011,
+      "served_mm": 442.086,
+      "local_mm": 442.0863,
+      "difference_mm": -0.0002891135120535182
+    },
+    {
+      "water_year": 2012,
+      "served_mm": 645.801,
+      "local_mm": 645.8011,
+      "difference_mm": -7.928083414299181e-05
+    },
+    {
+      "water_year": 2013,
+      "served_mm": 625.192,
+      "local_mm": 625.1925,
+      "difference_mm": -0.0004748031202552738
+    },
+    {
+      "water_year": 2014,
+      "served_mm": 625.809,
+      "local_mm": 625.8088,
+      "difference_mm": 0.00018036304311408458
+    },
+    {
+      "water_year": 2015,
+      "served_mm": 662.451,
+      "local_mm": 662.4506,
+      "difference_mm": 0.0004333502686222346
+    },
+    {
+      "water_year": 2016,
+      "served_mm": 774.182,
+      "local_mm": 774.1825,
+      "difference_mm": -0.0004968374613554261
+    },
+    {
+      "water_year": 2017,
+      "served_mm": 772.798,
+      "local_mm": 772.7982,
+      "difference_mm": -0.0001576051408846979
+    },
+    {
+      "water_year": 2018,
+      "served_mm": 488.57,
+      "local_mm": 488.5705,
+      "difference_mm": -0.00046530201001360183
+    },
+    {
+      "water_year": 2019,
+      "served_mm": 718.585,
+      "local_mm": 718.5851,
+      "difference_mm": -8.568177406687028e-05
+    },
+    {
+      "water_year": 2020,
+      "served_mm": 591.979,
+      "local_mm": 591.9788,
+      "difference_mm": 0.00023068673294801556
+    },
+    {
+      "water_year": 2021,
+      "served_mm": 439.181,
+      "local_mm": 439.1806,
+      "difference_mm": 0.00040702680217918896
+    },
+    {
+      "water_year": 2022,
+      "served_mm": 630.991,
+      "local_mm": 630.991,
+      "difference_mm": -5.786506108051981e-06
+    },
+    {
+      "water_year": 2023,
+      "served_mm": 646.157,
+      "local_mm": 646.1566,
+      "difference_mm": 0.0003873425339406822
+    },
+    {
+      "water_year": 2024,
+      "served_mm": 761.416,
+      "local_mm": 761.4156,
+      "difference_mm": 0.00041973108625370514
+    },
+    {
+      "water_year": 2025,
+      "served_mm": 476.147,
+      "local_mm": 476.1473,
+      "difference_mm": -0.0003278918650835294
+    }
+  ],
+  "anomalies": [
+    {
+      "water_year": 1961,
+      "served_pct": -24.243,
+      "recomputed_pct": -24.24325519202906
+    },
+    {
+      "water_year": 1962,
+      "served_pct": -18.824,
+      "recomputed_pct": -18.824360267521097
+    },
+    {
+      "water_year": 1963,
+      "served_pct": 14.433,
+      "recomputed_pct": 14.432675937857258
+    },
+    {
+      "water_year": 1964,
+      "served_pct": 20.988,
+      "recomputed_pct": 20.987618571689108
+    },
+    {
+      "water_year": 1965,
+      "served_pct": -28.373,
+      "recomputed_pct": -28.372689167372673
+    },
+    {
+      "water_year": 1966,
+      "served_pct": -8.058,
+      "recomputed_pct": -8.05793901816403
+    },
+    {
+      "water_year": 1967,
+      "served_pct": -11.737,
+      "recomputed_pct": -11.73663933746539
+    },
+    {
+      "water_year": 1968,
+      "served_pct": 3.833,
+      "recomputed_pct": 3.8325376758201344
+    },
+    {
+      "water_year": 1969,
+      "served_pct": 65.782,
+      "recomputed_pct": 65.78223714527942
+    },
+    {
+      "water_year": 1970,
+      "served_pct": -4.239,
+      "recomputed_pct": -4.238695206501668
+    },
+    {
+      "water_year": 1971,
+      "served_pct": -24.643,
+      "recomputed_pct": -24.64353358806658
+    },
+    {
+      "water_year": 1972,
+      "served_pct": 0.599,
+      "recomputed_pct": 0.5991598687344264
+    },
+    {
+      "water_year": 1973,
+      "served_pct": 0.322,
+      "recomputed_pct": 0.3220215565345373
+    },
+    {
+      "water_year": 1974,
+      "served_pct": -33.011,
+      "recomputed_pct": -33.01150189806838
+    },
+    {
+      "water_year": 1975,
+      "served_pct": -36.169,
+      "recomputed_pct": -36.168684950190425
+    },
+    {
+      "water_year": 1976,
+      "served_pct": -8.356,
+      "recomputed_pct": -8.355698175757167
+    },
+    {
+      "water_year": 1977,
+      "served_pct": -16.813,
+      "recomputed_pct": -16.81258474107165
+    },
+    {
+      "water_year": 1978,
+      "served_pct": 15.531,
+      "recomputed_pct": 15.530699393264541
+    },
+    {
+      "water_year": 1979,
+      "served_pct": 28.422,
+      "recomputed_pct": 28.42165270664684
+    },
+    {
+      "water_year": 1980,
+      "served_pct": -16.409,
+      "recomputed_pct": -16.40938140242515
+    },
+    {
+      "water_year": 1981,
+      "served_pct": 13.029,
+      "recomputed_pct": 13.029434721203978
+    },
+    {
+      "water_year": 1982,
+      "served_pct": -26.324,
+      "recomputed_pct": -26.3243518583111
+    },
+    {
+      "water_year": 1983,
+      "served_pct": -20.254,
+      "recomputed_pct": -20.2545109561769
+    },
+    {
+      "water_year": 1984,
+      "served_pct": -21.801,
+      "recomputed_pct": -21.800635619278353
+    },
+    {
+      "water_year": 1985,
+      "served_pct": 2.039,
+      "recomputed_pct": 2.0385241266084795
+    },
+    {
+      "water_year": 1986,
+      "served_pct": -26.007,
+      "recomputed_pct": -26.006995585237874
+    },
+    {
+      "water_year": 1987,
+      "served_pct": 29.98,
+      "recomputed_pct": 29.97976963444507
+    },
+    {
+      "water_year": 1988,
+      "served_pct": -9.976,
+      "recomputed_pct": -9.976116381126461
+    },
+    {
+      "water_year": 1989,
+      "served_pct": -25.058,
+      "recomputed_pct": -25.0582904500185
+    },
+    {
+      "water_year": 1990,
+      "served_pct": 12.682,
+      "recomputed_pct": 12.681512797867015
+    },
+    {
+      "water_year": 1991,
+      "served_pct": -7.41,
+      "recomputed_pct": -7.409917983146775
+    },
+    {
+      "water_year": 1992,
+      "served_pct": 17.565,
+      "recomputed_pct": 17.56499697780306
+    },
+    {
+      "water_year": 1993,
+      "served_pct": 12.773,
+      "recomputed_pct": 12.773063501527782
+    },
+    {
+      "water_year": 1994,
+      "served_pct": 12.003,
+      "recomputed_pct": 12.003364853977367
+    },
+    {
+      "water_year": 1995,
+      "served_pct": -12.453,
+      "recomputed_pct": -12.453542770923901
+    },
+    {
+      "water_year": 1996,
+      "served_pct": -8.923,
+      "recomputed_pct": -8.922698300505964
+    },
+    {
+      "water_year": 1997,
+      "served_pct": -8.051,
+      "recomputed_pct": -8.051065403032965
+    },
+    {
+      "water_year": 1998,
+      "served_pct": 26.119,
+      "recomputed_pct": 26.119137884865783
+    },
+    {
+      "water_year": 1999,
+      "served_pct": 5.404,
+      "recomputed_pct": 5.404109339619623
+    },
+    {
+      "water_year": 2000,
+      "served_pct": -22.67,
+      "recomputed_pct": -22.67036730405553
+    },
+    {
+      "water_year": 2001,
+      "served_pct": -17.252,
+      "recomputed_pct": -17.251911120938924
+    },
+    {
+      "water_year": 2002,
+      "served_pct": 43.091,
+      "recomputed_pct": 43.09111737341323
+    },
+    {
+      "water_year": 2003,
+      "served_pct": 19.774,
+      "recomputed_pct": 19.773913636097067
+    },
+    {
+      "water_year": 2004,
+      "served_pct": -0.54,
+      "recomputed_pct": -0.5403977717202253
+    },
+    {
+      "water_year": 2005,
+      "served_pct": 12.717,
+      "recomputed_pct": 12.71748959195734
+    },
+    {
+      "water_year": 2006,
+      "served_pct": -16.459,
+      "recomputed_pct": -16.459397921038533
+    },
+    {
+      "water_year": 2007,
+      "served_pct": 6.15,
+      "recomputed_pct": 6.149530963515583
+    },
+    {
+      "water_year": 2008,
+      "served_pct": -31.799,
+      "recomputed_pct": -31.79940568091128
+    },
+    {
+      "water_year": 2009,
+      "served_pct": 27.157,
+      "recomputed_pct": 27.157346263919628
+    },
+    {
+      "water_year": 2010,
+      "served_pct": 14.508,
+      "recomputed_pct": 14.507846962907786
+    },
+    {
+      "water_year": 2011,
+      "served_pct": -35.346,
+      "recomputed_pct": -35.3461910885481
+    },
+    {
+      "water_year": 2012,
+      "served_pct": -5.553,
+      "recomputed_pct": -5.55345690923361
+    },
+    {
+      "water_year": 2013,
+      "served_pct": -8.567,
+      "recomputed_pct": -8.56746402064658
+    },
+    {
+      "water_year": 2014,
+      "served_pct": -8.477,
+      "recomputed_pct": -8.477229541159867
+    },
+    {
+      "water_year": 2015,
+      "served_pct": -3.119,
+      "recomputed_pct": -3.1184421872662265
+    },
+    {
+      "water_year": 2016,
+      "served_pct": 13.222,
+      "recomputed_pct": 13.221895944874198
+    },
+    {
+      "water_year": 2017,
+      "served_pct": 13.02,
+      "recomputed_pct": 13.019489916333482
+    },
+    {
+      "water_year": 2018,
+      "served_pct": -28.548,
+      "recomputed_pct": -28.548039476780414
+    },
+    {
+      "water_year": 2019,
+      "served_pct": 5.091,
+      "recomputed_pct": 5.0909942333294085
+    },
+    {
+      "water_year": 2020,
+      "served_pct": -13.425,
+      "recomputed_pct": -13.42476996423233
+    },
+    {
+      "water_year": 2021,
+      "served_pct": -35.771,
+      "recomputed_pct": -35.77103900250097
+    },
+    {
+      "water_year": 2022,
+      "served_pct": -7.719,
+      "recomputed_pct": -7.719376911175781
+    },
+    {
+      "water_year": 2023,
+      "served_pct": -5.501,
+      "recomputed_pct": -5.501392930793948
+    },
+    {
+      "water_year": 2024,
+      "served_pct": 11.355,
+      "recomputed_pct": 11.354905077568759
+    },
+    {
+      "water_year": 2025,
+      "served_pct": -30.365,
+      "recomputed_pct": -30.364867578342025
+    }
+  ],
+  "spi": [
+    {
+      "water_year": 1961,
+      "served": -1.373,
+      "recomputed": -1.3731779079751893
+    },
+    {
+      "water_year": 1962,
+      "served": -1.028,
+      "recomputed": -1.0281210239547725
+    },
+    {
+      "water_year": 1963,
+      "served": 0.807,
+      "recomputed": 0.8073261066305798
+    },
+    {
+      "water_year": 1964,
+      "served": 1.126,
+      "recomputed": 1.1255156257005756
+    },
+    {
+      "water_year": 1965,
+      "served": -1.648,
+      "recomputed": -1.647607542362286
+    },
+    {
+      "water_year": 1966,
+      "served": -0.386,
+      "recomputed": -0.3863252988031112
+    },
+    {
+      "water_year": 1967,
+      "served": -0.6,
+      "recomputed": -0.5996215330460443
+    },
+    {
+      "water_year": 1968,
+      "served": 0.266,
+      "recomputed": 0.26627160108120784
+    },
+    {
+      "water_year": 1969,
+      "served": 3.046,
+      "recomputed": 3.045877623812896
+    },
+    {
+      "water_year": 1970,
+      "served": -0.171,
+      "recomputed": -0.1708590948731087
+    },
+    {
+      "water_year": 1971,
+      "served": -1.399,
+      "recomputed": -1.3993248504883864
+    },
+    {
+      "water_year": 1972,
+      "served": 0.094,
+      "recomputed": 0.09397293099605847
+    },
+    {
+      "water_year": 1973,
+      "served": 0.079,
+      "recomputed": 0.07903429604129522
+    },
+    {
+      "water_year": 1974,
+      "served": -1.969,
+      "recomputed": -1.9691514940033568
+    },
+    {
+      "water_year": 1975,
+      "served": -2.197,
+      "recomputed": -2.196874404373915
+    },
+    {
+      "water_year": 1976,
+      "served": -0.403,
+      "recomputed": -0.403374088939044
+    },
+    {
+      "water_year": 1977,
+      "served": -0.904,
+      "recomputed": -0.9040054724035248
+    },
+    {
+      "water_year": 1978,
+      "served": 0.861,
+      "recomputed": 0.8614477955980963
+    },
+    {
+      "water_year": 1979,
+      "served": 1.473,
+      "recomputed": 1.4729742904041951
+    },
+    {
+      "water_year": 1980,
+      "served": -0.879,
+      "recomputed": -0.8793752764562716
+    },
+    {
+      "water_year": 1981,
+      "served": 0.738,
+      "recomputed": 0.7376595099449343
+    },
+    {
+      "water_year": 1982,
+      "served": -1.51,
+      "recomputed": -1.510166386555221
+    },
+    {
+      "water_year": 1983,
+      "served": -1.118,
+      "recomputed": -1.1176279915144238
+    },
+    {
+      "water_year": 1984,
+      "served": -1.216,
+      "recomputed": -1.2156287909130314
+    },
+    {
+      "water_year": 1985,
+      "served": 0.171,
+      "recomputed": 0.17112148954129755
+    },
+    {
+      "water_year": 1986,
+      "served": -1.489,
+      "recomputed": -1.4891069673817112
+    },
+    {
+      "water_year": 1987,
+      "served": 1.544,
+      "recomputed": 1.5441211170291655
+    },
+    {
+      "water_year": 1988,
+      "served": -0.497,
+      "recomputed": -0.4968127357851708
+    },
+    {
+      "water_year": 1989,
+      "served": -1.427,
+      "recomputed": -1.4265177590346345
+    },
+    {
+      "water_year": 1990,
+      "served": 0.72,
+      "recomputed": 0.7202980751468339
+    },
+    {
+      "water_year": 1991,
+      "served": -0.349,
+      "recomputed": -0.3493492787429785
+    },
+    {
+      "water_year": 1992,
+      "served": 0.961,
+      "recomputed": 0.9608300890008483
+    },
+    {
+      "water_year": 1993,
+      "served": 0.725,
+      "recomputed": 0.7248699158548468
+    },
+    {
+      "water_year": 1994,
+      "served": 0.686,
+      "recomputed": 0.6863562596489373
+    },
+    {
+      "water_year": 1995,
+      "served": -0.642,
+      "recomputed": -0.6418821178806873
+    },
+    {
+      "water_year": 1996,
+      "served": -0.436,
+      "recomputed": -0.435941961200138
+    },
+    {
+      "water_year": 1997,
+      "served": -0.386,
+      "recomputed": -0.38593217445126543
+    },
+    {
+      "water_year": 1998,
+      "served": 1.367,
+      "recomputed": 1.3667972686633962
+    },
+    {
+      "water_year": 1999,
+      "served": 0.349,
+      "recomputed": 0.3487300882016147
+    },
+    {
+      "water_year": 2000,
+      "served": -1.271,
+      "recomputed": -1.27133703499833
+    },
+    {
+      "water_year": 2001,
+      "served": -0.931,
+      "recomputed": -0.9309344768017799
+    },
+    {
+      "water_year": 2002,
+      "served": 2.122,
+      "recomputed": 2.1219177732777585
+    },
+    {
+      "water_year": 2003,
+      "served": 1.067,
+      "recomputed": 1.0674704596529578
+    },
+    {
+      "water_year": 2004,
+      "served": 0.032,
+      "recomputed": 0.032370409928704436
+    },
+    {
+      "water_year": 2005,
+      "served": 0.722,
+      "recomputed": 0.722094969413707
+    },
+    {
+      "water_year": 2006,
+      "served": -0.882,
+      "recomputed": -0.8824262249551187
+    },
+    {
+      "water_year": 2007,
+      "served": 0.388,
+      "recomputed": 0.38755622940516826
+    },
+    {
+      "water_year": 2008,
+      "served": -1.884,
+      "recomputed": -1.8836922709454544
+    },
+    {
+      "water_year": 2009,
+      "served": 1.415,
+      "recomputed": 1.4148281505869091
+    },
+    {
+      "water_year": 2010,
+      "served": 0.811,
+      "recomputed": 0.8110421802525176
+    },
+    {
+      "water_year": 2011,
+      "served": -2.137,
+      "recomputed": -2.136812822457811
+    },
+    {
+      "water_year": 2012,
+      "served": -0.244,
+      "recomputed": -0.24437165192807495
+    },
+    {
+      "water_year": 2013,
+      "served": -0.416,
+      "recomputed": -0.4155218110390664
+    },
+    {
+      "water_year": 2014,
+      "served": -0.41,
+      "recomputed": -0.4103432981362908
+    },
+    {
+      "water_year": 2015,
+      "served": -0.109,
+      "recomputed": -0.108753225413335
+    },
+    {
+      "water_year": 2016,
+      "served": 0.747,
+      "recomputed": 0.7472482505997681
+    },
+    {
+      "water_year": 2017,
+      "served": 0.737,
+      "recomputed": 0.7371637504588612
+    },
+    {
+      "water_year": 2018,
+      "served": -1.659,
+      "recomputed": -1.6594978559558151
+    },
+    {
+      "water_year": 2019,
+      "served": 0.332,
+      "recomputed": 0.33236677146817006
+    },
+    {
+      "water_year": 2020,
+      "served": -0.7,
+      "recomputed": -0.6995085845661001
+    },
+    {
+      "water_year": 2021,
+      "served": -2.168,
+      "recomputed": -2.167770390834214
+    },
+    {
+      "water_year": 2022,
+      "served": -0.367,
+      "recomputed": -0.36698523332436883
+    },
+    {
+      "water_year": 2023,
+      "served": -0.241,
+      "recomputed": -0.24144760041031021
+    },
+    {
+      "water_year": 2024,
+      "served": 0.654,
+      "recomputed": 0.6537731852358489
+    },
+    {
+      "water_year": 2025,
+      "served": -1.784,
+      "recomputed": -1.783889750671162
+    }
+  ],
+  "not_checked": [
+    "PDSI",
+    "runoff q and its anomaly",
+    "upstream SPI and anomalies",
+    "water year 1991 against local monthly data (needs October-December 1990)"
+  ]
+}
