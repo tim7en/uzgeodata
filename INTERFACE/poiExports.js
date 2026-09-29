@@ -97,6 +97,16 @@ export async function reportPdf(report) {
   const baseline = report.present?.local?.baseline;
   if (baseline) line(baselineNote(baseline.firstYear, baseline.lastYear), 9);
   if (report.geometry_missing_ids.length) line(`Map coverage: ${report.geometry_missing_ids.length} upstream basins have statistics but no display boundary.`, 9);
+  if (report.assessment?.length) {
+    newPage(); line('BASIN ASSESSMENT', 18);
+    line('Generated from the figures in this report. Each answer states what it rests on: historical gridded data, provisional estimates, a seasonal forecast, or nothing yet.', 9);
+    const basis = { gridded: 'Historical gridded data', provisional: 'Provisional estimates', forecast: 'Seasonal forecast', none: 'Not established' };
+    for (const item of report.assessment) {
+      line(item.question, 12);
+      line(item.answer, 10);
+      line(`Basis: ${basis[item.basis] || item.basis}`, 8);
+    }
+  }
 
   for (const section of figures.series) {
     newPage();
@@ -133,7 +143,7 @@ export async function reportPdf(report) {
     if (i % 2 === 1 || i === figures.seasonal.length - 1) line('Applies to the named level-7 basin or zone. Precipitation and temperature only; not a river-flow forecast.', 8);
   }
   if (figures.forecastMissing) { newPage(); line('Seasonal outlook', 18); line('No seasonal forecast could be loaded for this location at export time.'); }
-  upstreamSection(report.upstreamInsights, figures.attribution);
+  upstreamSection(report.upstreamInsights, figures.attribution, figures.landcover);
   newPage(); line('05 / STATISTICS & METHODS', 18);
   line(report.name, 14);
   line(`Generated: ${report.generatedAt} | File: ${report.sourceFile}`);
@@ -199,8 +209,8 @@ export async function reportPdf(report) {
     if (twelve?.errorBound || toDate?.errorBound) line(ERROR_BOUND_NOTE, 9);
   }
 
-  function upstreamSection(insights, map) {
-    if (!insights || (!insights.attribution && !insights.snow && !insights.gauges)) return;
+  function upstreamSection(insights, map, landcoverImage) {
+    if (!insights || (!insights.attribution && !insights.snow && !insights.gauges && !insights.glaciers && !insights.landcover)) return;
     newPage(); line('UPSTREAM IN DETAIL', 18);
     const a = insights.attribution;
     if (a) {
@@ -208,7 +218,8 @@ export async function reportPdf(report) {
       const signed = v => `${v > 0 ? '+' : ''}${number(v)}`;
       const pct = v => `${v > 0 ? '+' : ''}${Math.round(v)}%`;
       const mm = v => `${v > 0 ? '+' : ''}${Math.round(v * 10) / 10}`;
-      line(`Where the anomaly came from · water year ${a.waterYear}`, 14);
+      line(`Contribution to the catchment-wide precipitation anomaly · water year ${a.waterYear}`, 14);
+      line('This divides the precipitation anomaly by where it fell. It is not each sub-basin’s share of the change in river flow at the outlet: a high mountain sub-basin can supply far more runoff than its area share, a lowland one far less.', 9);
       line(`Upstream ${insights.label}: ${number(a.catchment.value)} ${unit} against a ${a.baseline[0]}–${a.baseline[1]} normal of `
         + `${number(a.catchment.normal)} (${a.catchment.percent === null ? `${signed(a.catchment.anomaly)} ${unit}` : pct(a.catchment.percent)}). `
         + 'Each sub-basin contributes its area share times its own anomaly, so the contributions add up to the catchment figure.', 9);
@@ -226,9 +237,39 @@ export async function reportPdf(report) {
       line(`October–March precipitation against the peak monthly snow water equivalent it built, each against its `
         + `${snow.baseline[0]}–${snow.baseline[1]} mean. Snow water equivalent is TerraClimate v1.1’s modelled snowpack, not a measurement.`, 9);
       for (const r of snow.rows.slice(-8).reverse()) {
-        line(`WY ${r.waterYear}: winter precipitation ${number(r.winterPrecipitation)} mm`
-          + `${r.rainAnomaly === null ? '' : ` (${r.rainAnomaly > 0 ? '+' : ''}${Math.round(r.rainAnomaly)}%)`}; peak snowpack `
-          + `${number(r.peakSwe)} mm${r.snowAnomaly === null ? '' : ` (${r.snowAnomaly > 0 ? '+' : ''}${Math.round(r.snowAnomaly)}%)`} — ${r.reading}.`, 9);
+        line(`WY ${r.waterYear}: ${r.statement || `winter precipitation ${number(r.winterPrecipitation)} mm; peak snowpack ${number(r.peakSwe)} mm.`}`
+          + ` Peak in ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][r.peakMonth - 1]}; ${r.reading}.`, 9);
+      }
+      line(snow.rule, 8);
+    }
+    const ice = insights.glaciers;
+    if (ice) {
+      line('Glaciers upstream', 14);
+      if (!ice.iceKm2) line(ice.assessedShare ? 'No glacier ice was mapped in the surveyed part of this catchment.'
+        : 'This catchment lies outside the glacier survey: its ice is not assessed, which is not the same as none.', 9);
+      else {
+        line(`Ice area ${Math.round(ice.iceKm2 * 10) / 10} km² (${Math.round(ice.iceShare * 1000) / 10}% of the catchment) in ${ice.glaciers} inventoried glaciers`
+          + `${ice.survey ? `, surveyed ${ice.survey[0]}–${ice.survey[1]}` : ''}. ${Math.round(ice.below4000Km2 * 10) / 10} km² lies below 4,000 m, where warming `
+          + `thins it first; ${Math.round(ice.smallKm2 * 10) / 10} km² is in glaciers under 0.5 km².`, 9);
+        line(`${ice.assessedShare < 0.99 ? `The survey covers ${Math.round(ice.assessedShare * 100)}% of the catchment, so the area is a floor. ` : ''}`
+          + 'One survey per glacier: change over time is not measured here; glacier mass change from repeat elevation surveys is planned.', 8);
+      }
+    }
+    const cover = insights.landcover;
+    if (cover) {
+      line('Land cover', 14);
+      if (!cover.coveredShare) line('The annual land-cover series covers basins intersecting Uzbekistan; none of this catchment is among them yet.', 9);
+      else if (!cover.representative) {
+        line(`The annual land-cover series covers ${cover.coveredShare < 0.01 ? 'less than 1%' : `${Math.round(cover.coveredShare * 100)}%`} of this catchment `
+          + `(${Math.round(cover.coveredKm2)} km²) - too little to describe it, so no composition is shown. Extending the series to the headwaters is planned.`, 9);
+      } else {
+        line(`Annual 10 m land cover over ${Math.round(cover.coveredShare * 100)}% of the catchment (${Math.round(cover.coveredKm2)} km²), the part the series covers.`, 9);
+        if (landcoverImage?.image) figure(landcoverImage, 40);
+        for (const c of cover.change.filter(x => Math.abs(x.change) >= 0.5).sort((a, b) => Math.abs(b.change) - Math.abs(a.change)).slice(0, 6)) {
+          const km = value => (Math.abs(value) < 10 ? Math.round(value * 10) / 10 : Math.round(value)).toLocaleString('en-US');
+          line(`${c.name}: ${km(c.first)} km² in ${cover.years[0]}, ${km(c.last)} km² in ${cover.years.at(-1)} (${c.change > 0 ? '+' : ''}${km(c.change)} km²)`, 9);
+        }
+        line('Impact Observatory / Esri. Single-year differences include classification noise; the snow/ice class mixes seasonal snow with glaciers.', 8);
       }
     }
     const gauges = insights.gauges;

@@ -7,7 +7,10 @@ import { BASEMAPS, collectionBounds } from './mapViewModel.js';
 import { formatNumber } from './landingModel.js';
 import ReportChart from './ReportChart.jsx';
 import { aggregateCatchment, MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
-import { gaugesInCatchment, snowSeasons, upstreamAttribution } from './upstreamModel.js';
+import { gaugesInCatchment, glacierSummary, landcoverSummary, snowSeasons, upstreamAttribution } from './upstreamModel.js';
+import { basinAssessment } from './assessmentModel.js';
+import { forecastUnits, readForecast } from './seasonalModel.js';
+import BasinAssessment from './BasinAssessment.jsx';
 import UpstreamInsights from './UpstreamInsights.jsx';
 import { monthlyNormals } from './poiModel.js';
 import { aggregateLocalContinuation, CONTINUATION_METHOD, CONTINUATION_VARIABLES, continuationFor, continuationLatest, monthlySeries } from './continuationModel.js';
@@ -172,6 +175,9 @@ function presentOf(report, continuation) {
 }
 
 const GAUGES = '/data/research/ca-discharge-stations.geojson';
+const GLACIERS = '/data/atlas/glacier-basin-context.json';
+const LANDCOVER_INDEX = '/data/landcover/index.json';
+const LANDCOVER = '/data/landcover/basin-series.json';
 
 /**
  * Upstream taken apart: which sub-basins made the anomaly, whether the winter went
@@ -179,12 +185,13 @@ const GAUGES = '/data/research/ca-discharge-stations.geojson';
  * headwater basin has nothing upstream to attribute, and a missing file leaves its
  * part out rather than failing the report.
  */
-async function upstreamOf(result, values, precipitation, data, variable, signal) {
+async function upstreamOf(result, rainValues, precipitation, data, signal) {
   const position = new Map(data.index.ids.map((id, i) => [String(id), i]));
   const members = result.upstream.ids.map(id => position.get(String(id))).filter(i => i !== undefined);
   const pfafById = new Map(data.geometry.features.map(f => [String(f.properties.hybas_id), f.properties.pfaf_id]));
-  const attribution = upstreamAttribution(data.index, values, members,
-    { extensive: extensiveOf(result.upstream.total), pfafById });
+  // Always precipitation: the attribution answers where the catchment's precipitation
+  // anomaly came from, whatever variable the report is showing.
+  const attribution = upstreamAttribution(data.index, rainValues, members, { extensive: true, pfafById });
   let snow = null;
   if (data.index.series.swe_mm_s && data.index.series.pre_mm_s) {
     try {
@@ -198,7 +205,12 @@ async function upstreamOf(result, values, precipitation, data, variable, signal)
     const stations = await json(GAUGES, signal);
     gauges = gaugesInCatchment(stations.features, result.upstream_geometry.features);
   } catch { gauges = null; }
-  return { attribution, snow, gauges, variable, unit: result.meta.unit, label: result.meta.label };
+  const basins = members.map(i => ({ id: String(data.index.ids[i]), area: data.index.areas_km2[i] }));
+  const glaciers = await json(GLACIERS, signal).then(context => glacierSummary(context, basins)).catch(() => null);
+  const landcover = await Promise.all([json(LANDCOVER_INDEX, signal), json(LANDCOVER, signal)])
+    .then(([index, series]) => landcoverSummary(series, index, basins)).catch(() => null);
+  return { attribution, snow, gauges, glaciers, landcover, variable: 'pre_mm_s',
+    unit: precipitation.meta.unit, label: precipitation.meta.label };
 }
 
 async function droughtRecord(id, signal) {
@@ -458,13 +470,15 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
       // Drought is read from precipitation. When the report already shows it the
       // work is shared; otherwise precipitation is aggregated for the same basins.
       let precipitation = { ...result, present };
+      let rainValues = values;
       if (variable !== 'pre_mm_s' && data.index.series.pre_mm_s) {
+        rainValues = await matrix(data.index, 'pre_mm_s', signal);
         const rain = makePoiReport({ feature: upload.collection.features[active], match, ...data,
-          values: await matrix(data.index, 'pre_mm_s', signal), variable: 'pre_mm_s', sourceFile: upload.name });
+          values: rainValues, variable: 'pre_mm_s', sourceFile: upload.name });
         precipitation = { ...rain, present: presentOf(rain, await continuationOf(rain, 'pre_mm_s', data.index, signal)) };
       }
       const drought = await droughtOf(precipitation, data.index, signal).catch(() => null);
-      const upstream = await upstreamOf(result, values, precipitation, data, variable, signal).catch(() => null);
+      const upstream = await upstreamOf(result, rainValues, precipitation, data, signal).catch(() => null);
       if (signal.aborted) return;
       // The newest month any variable reaches, so a record that stops short of it
       // can say so without the page naming a date that goes stale next month.
@@ -475,7 +489,18 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
         : outletOf(result.local.ids, data.index);
       const forecastBasin = basin && Number(basin.basin_level) !== 12 ? basin
         : data.geometry.features.find(feature => String(feature.properties.hybas_id) === outlet)?.properties || null;
-      setReport({ ...result, catalogue: data.catalogue, continuation, present, drought, frontier, forecastBasin, upstreamInsights: upstream,
+      // The forecast unit the assessment reads: the runoff-formation or lowland zone
+      // the catchment belongs to, else its level-7 basin.
+      const forecastData = forecastBasin ? await readForecast('/data/atlas/seasonal-forecast/latest.json').catch(() => null) : null;
+      let forecastUnit = null;
+      if (forecastData) {
+        const units = forecastUnits(forecastData, forecastBasin);
+        const unit = units.find(u => u.key.startsWith('zone:')) || units[0];
+        const window = forecastData.windows.find(w => w.id === 'season5');
+        if (unit && window) forecastUnit = { label: unit.label, window: window.label, entry: forecastData.units[unit.key]?.ppt?.season5 };
+      }
+      const assessment = basinAssessment({ drought, insights: upstream, forecast: forecastUnit });
+      setReport({ ...result, catalogue: data.catalogue, continuation, present, drought, frontier, forecastBasin, upstreamInsights: upstream, assessment,
         records: result.local.ids.map(id => records.current.get(id)) });
     })().catch(cause => { if (!signal.aborted) setError(cause.message); })
       .finally(() => { if (!signal.aborted) setLoadingReport(false); });
@@ -574,6 +599,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
       {loadingReport && <p role="status">Preparing local and upstream statistics…</p>}
       {report && <article aria-label="Location basin report">
         <h3>{report.name}</h3><p>{report.meta.label} · {report.meta.source_release}</p>
+        <BasinAssessment assessment={report.assessment}/>
         <div className="poi-summaries"><Summary report={report} scope="local"/><Summary report={report} scope="upstream"/></div>
         <ReportChart key={`chart-${active}-${variable}`} report={report}/>
         <Conditions report={report}/>

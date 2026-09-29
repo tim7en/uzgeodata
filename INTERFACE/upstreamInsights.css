@@ -13,3 +13,26 @@
 .up-block th small{display:block;font-weight:400;font-size:10.5px;color:var(--dim,#8fa3ad)}
 @media(max-width:760px){.up-tables{grid-template-columns:1fr}.up-map{height:220px}}
 .up-block .poi-table{max-height:none}
+
+/* Basin assessment: the conclusions first, each tagged with its basis. */
+.assess{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line,#30434c);border-left:4px solid var(--l-accent-1,#4cc9f0);border-radius:6px;background:var(--l-tint-5,rgba(76,201,240,.05))}
+.assess h4{margin:0;font-size:16px}
+.assess .assess-lede{margin:2px 0 8px;font-size:11.5px;color:var(--dim,#8fa3ad)}
+.assess ol{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.assess li{padding-left:10px;border-left:3px solid var(--line,#30434c)}
+.assess h5{margin:0 0 3px;font-size:13px}
+.assess li p{margin:0;font-size:13px;line-height:1.55}
+.assess-basis{display:inline-block;margin-top:4px;padding:1px 6px;border-radius:3px;font-size:10.5px;border:1px solid var(--line,#30434c);color:var(--dim,#8fa3ad)}
+.assess-gridded{border-left-color:var(--l-accent-1,#4cc9f0)!important}
+.assess-provisional{border-left-color:var(--l-accent-5,#ffa552)!important}
+.assess-forecast{border-left-color:#9b8cd6!important}
+.assess-none{border-left-color:var(--l-dr-d2,#a8773a)!important}
+/* Glaciers and land cover. */
+.up-bar{display:flex;height:18px;border-radius:3px;overflow:hidden;margin:4px 0}
+.up-bar span{min-width:1px}
+.up-figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;margin:6px 0;background:var(--line,#30434c);border:1px solid var(--line,#30434c)}
+.up-figures>div{padding:7px 9px;background:var(--panel,#060b0e)}
+.up-figures dt{font-size:10.5px;color:var(--dim,#8fa3ad)}
+.up-figures dd{margin:2px 0 0;font-size:15px;font-weight:600}
+.up-bars-row{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:6px;font-size:11px;color:var(--dim,#8fa3ad)}
+.up-caveat{padding:6px 10px;border-left:3px solid var(--l-accent-5,#ffa552);background:var(--l-tint-3,rgba(255,165,82,.12))}

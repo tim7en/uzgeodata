@@ -52,7 +52,10 @@ function Attribution({ insights, geometry }) {
     <td>{signed(group.contribution, 1)} {a.extensive ? 'mm' : unit}</td>
   </tr>;
   return <section className="up-block">
-    <h4>Where the upstream anomaly came from · water year {a.waterYear}</h4>
+    <h4>Contribution to the catchment-wide precipitation anomaly · water year {a.waterYear}</h4>
+    <p className="up-caveat">This divides the precipitation anomaly by where it fell. It is not each sub-basin’s share of the
+      change in river flow at the outlet: a high mountain sub-basin covering 10% of the area can supply far more than 10% of
+      the runoff, and a lowland one far less.</p>
     <p>Across the whole upstream catchment, {insights.label} in water year {a.waterYear} (October–September) was
       {' '}{formatNumber(a.catchment.value, 0)} {unit} against a normal of {formatNumber(a.catchment.normal, 0)}
       {' '}({a.catchment.percent === null ? `${signed(a.catchment.anomaly, 2)} ${unit}` : `${signed(a.catchment.percent)}%`},
@@ -83,13 +86,15 @@ function Snow({ snow }) {
       + 'winter water, so the snowpack readings carry less weight here.'}</p>
     <div className="poi-table"><table>
       <thead><tr><th>Water year</th><th>Winter precipitation</th><th>Peak snowpack</th><th>Reading</th></tr></thead>
-      <tbody>{recent.map(r => <tr key={r.waterYear}>
+      <tbody>{recent.map(r => <tr key={r.waterYear} title={r.statement || ''}>
         <th>{r.waterYear}</th>
         <td>{formatNumber(r.winterPrecipitation, 0)} mm{r.rainAnomaly === null ? '' : ` (${signed(r.rainAnomaly)}%)`}</td>
         <td>{formatNumber(r.peakSwe, 0)} mm{r.snowAnomaly === null ? '' : ` (${signed(r.snowAnomaly)}%)`}, {MONTHS[r.peakMonth - 1]}</td>
         <td>{r.reading}</td>
       </tr>)}</tbody>
     </table></div>
+    {recent[0]?.statement && <p><b>Water year {recent[0].waterYear}:</b> {recent[0].statement}</p>}
+    <p className="poi-coverage">{snow.rule}</p>
     <p className="poi-coverage">Snow water equivalent is TerraClimate v1.1’s modelled snowpack, not a measurement, and at
       four kilometres it smooths the high terrain the melt comes from. Satellite snow-cover persistence and freezing-level
       changes are the next additions; a peak falling earlier than usual is itself a warning sign.</p>
@@ -121,13 +126,87 @@ function Gauges({ gauges }) {
   </section>;
 }
 
+const km2 = value => (value < 10 ? formatNumber(value, 1) : formatNumber(Math.round(value)));
+
+function Glaciers({ glaciers }) {
+  if (!glaciers) return null;
+  if (!glaciers.iceKm2) {
+    return <section className="up-block"><h4>Glaciers upstream</h4>
+      <p>{glaciers.assessedShare ? 'No glacier ice was mapped in the surveyed part of this catchment.'
+        : 'This catchment lies outside the glacier survey, so its ice is not assessed - that is not the same as none.'}</p></section>;
+  }
+  const high = glaciers.iceKm2 - glaciers.below4000Km2;
+  return <section className="up-block">
+    <h4>Glaciers upstream</h4>
+    <dl className="up-figures">
+      <div><dt>Ice area</dt><dd>{km2(glaciers.iceKm2)} km²</dd></div>
+      <div><dt>Share of the catchment</dt><dd>{formatNumber(glaciers.iceShare * 100, 2)}%</dd></div>
+      <div><dt>Glaciers inventoried</dt><dd>{formatNumber(glaciers.glaciers)}</dd></div>
+      <div><dt>Surveyed</dt><dd>{glaciers.survey ? `${glaciers.survey[0]}–${glaciers.survey[1]}` : '—'}</dd></div>
+    </dl>
+    <div className="up-bars-row"><span>Ice by elevation</span><div className="up-bar" role="img"
+      aria-label={`${km2(glaciers.below4000Km2)} km² below 4,000 m, ${km2(high)} km² above`}>
+      <span style={{ flexGrow: glaciers.below4000Km2, background: '#d8b365' }}/>
+      <span style={{ flexGrow: Math.max(high, 0), background: '#8fd3ff' }}/></div></div>
+    <ul className="up-legend"><li><i style={{ background: '#d8b365' }}/>below 4,000 m</li><li><i style={{ background: '#8fd3ff' }}/>4,000 m and above</li></ul>
+    <p>{km2(glaciers.below4000Km2)} km² ({Math.round(glaciers.below4000Km2 / glaciers.iceKm2 * 100)}%) of the ice lies below
+      4,000 m, where warming thins it first; {km2(glaciers.smallKm2)} km² is in glaciers under 0.5 km², which shrink fastest.
+      Glacier melt sustains late-summer flow in dry years, so this ice is a buffer the precipitation figures above do not show.</p>
+    <p className="poi-coverage">{glaciers.assessedShare < 0.99 ? `The survey covers ${Math.round(glaciers.assessedShare * 100)}% of the
+      catchment, so the ice area is a floor. ` : ''}GLIMS outlines are one survey per glacier; how the ice has changed since is not
+      measured here. Glacier mass change from repeat elevation surveys is the planned addition.</p>
+  </section>;
+}
+
+function LandCover({ landcover }) {
+  if (!landcover) return null;
+  if (!landcover.coveredShare) {
+    return <section className="up-block"><h4>Land cover</h4>
+      <p>The annual land-cover series covers basins intersecting Uzbekistan; none of this catchment is among them yet.</p></section>;
+  }
+  const { years, classes, totals, change } = landcover;
+  const bar = (year, y) => {
+    const total = classes.reduce((sum, c) => sum + totals[y][c.code], 0) || 1;
+    return <div className="up-bars-row" key={year}><span>{year}</span><div className="up-bar" role="img"
+      aria-label={classes.map(c => `${c.name} ${Math.round(totals[y][c.code] / total * 100)}%`).join(', ')}>
+      {classes.map(c => <span key={c.code} title={`${c.name} ${km2(totals[y][c.code])} km²`}
+        style={{ flexGrow: totals[y][c.code], background: c.color }}/>)}</div></div>;
+  };
+  const moved = change.filter(c => Math.abs(c.change) >= 0.5).sort((a, b) => Math.abs(b.change) - Math.abs(a.change));
+  const coveredText = landcover.coveredShare < 0.01 ? 'less than 1%' : `${Math.round(landcover.coveredShare * 100)}%`;
+  if (!landcover.representative) {
+    return <section className="up-block"><h4>Land cover</h4>
+      <p>The annual land-cover series covers {coveredText} of this catchment ({km2(landcover.coveredKm2)} km²), the part
+        inside Uzbekistan’s basins - too little to describe the catchment, so no composition is shown. Extending the series
+        to the transboundary headwaters is planned.</p></section>;
+  }
+  return <section className="up-block">
+    <h4>Land cover, {years[0]}–{years.at(-1)}</h4>
+    <p>Annual 10 m land cover over {coveredText} of the catchment
+      ({km2(landcover.coveredKm2)} km²), the part the series covers.</p>
+    {bar(years[0], 0)}
+    {bar(years.at(-1), years.length - 1)}
+    <ul className="up-legend">{classes.filter(c => change.some(x => x.code === c.code)).map(c =>
+      <li key={c.code}><i style={{ background: c.color }}/>{c.name}</li>)}</ul>
+    {moved.length > 0 && <div className="poi-table"><table>
+      <thead><tr><th>Class</th><th>{years[0]}</th><th>{years.at(-1)}</th><th>Change</th></tr></thead>
+      <tbody>{moved.slice(0, 6).map(c => <tr key={c.code}><th>{c.name}</th><td>{km2(c.first)} km²</td><td>{km2(c.last)} km²</td>
+        <td>{c.change > 0 ? '+' : ''}{km2(c.change)} km²{c.first > 0 ? ` (${c.change > 0 ? '+' : ''}${Math.round(c.change / c.first * 100)}%)` : ''}</td></tr>)}</tbody>
+    </table></div>}
+    <p className="poi-coverage">Impact Observatory / Esri annual land cover. Differences between single years include
+      classification noise; the snow/ice class mixes seasonal snow with glaciers and is not a glacier measurement.</p>
+  </section>;
+}
+
 /** The upstream catchment taken apart: anomaly by sub-basin, snow storage, and river gauges. */
 export default function UpstreamInsights({ insights, geometry }) {
-  if (!insights || (!insights.attribution && !insights.snow && !insights.gauges)) return null;
+  if (!insights || (!insights.attribution && !insights.snow && !insights.gauges && !insights.glaciers && !insights.landcover)) return null;
   return <section className="up-insights" aria-label="Upstream catchment in detail">
     <h4 className="up-title">Upstream in detail</h4>
     <Attribution insights={insights} geometry={geometry}/>
     <Snow snow={insights.snow}/>
+    <Glaciers glaciers={insights.glaciers}/>
+    <LandCover landcover={insights.landcover}/>
     <Gauges gauges={insights.gauges}/>
   </section>;
 }

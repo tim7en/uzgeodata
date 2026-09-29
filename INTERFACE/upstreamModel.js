@@ -115,20 +115,89 @@ export function snowSeasons(precipitation, snow, { minimumYears = 10 } = {}) {
   if (seasons.length < minimumYears) return null;
   const mean = key => seasons.reduce((sum, s) => sum + s[key], 0) / seasons.length;
   const normal = { winterPrecipitation: mean('winterPrecipitation'), peakSwe: mean('peakSwe') };
+  // A category needs a stated rule, not a feeling for "near normal": each winter is
+  // placed in the lowest, middle or highest third of the years this record holds,
+  // for precipitation and for the snowpack separately. A peak 21% below the mean
+  // that ranks in the lowest third is called below normal, whatever the percentage.
+  const third = (value, key) => {
+    const below = seasons.filter(s => s[key] < value).length, n = seasons.length;
+    const rank = (below + 0.5 * seasons.filter(s => s[key] === value).length) / n;
+    return rank < 1 / 3 ? 'below' : rank > 2 / 3 ? 'above' : 'near';
+  };
   const rows = seasons.map(season => {
     const rainAnomaly = normal.winterPrecipitation > 0 ? (season.winterPrecipitation / normal.winterPrecipitation - 1) * 100 : null;
     const snowAnomaly = normal.peakSwe > 1 ? (season.peakSwe / normal.peakSwe - 1) * 100 : null;
-    let reading = 'near normal';
-    if (rainAnomaly !== null && snowAnomaly !== null) {
-      if (rainAnomaly >= 10 && snowAnomaly >= 10) reading = 'wet winter, snowpack built';
-      else if (rainAnomaly >= 10 && snowAnomaly < 0) reading = 'wet winter, snowpack below normal - more fell as rain or melted early';
-      else if (rainAnomaly <= -10 && snowAnomaly <= -10) reading = 'dry winter, thin snowpack';
-      else if (rainAnomaly <= -10 && snowAnomaly >= 0) reading = 'dry winter, snowpack held';
-    }
-    return { ...season, rainAnomaly, snowAnomaly, reading };
+    const rainClass = third(season.winterPrecipitation, 'winterPrecipitation');
+    const snowClass = third(season.peakSwe, 'peakSwe');
+    const pct = v => `${Math.abs(Math.round(v))}% ${v >= 0 ? 'above' : 'below'} average`;
+    const statement = rainAnomaly === null || snowAnomaly === null ? null
+      : `Winter precipitation was ${pct(rainAnomaly)}, while peak modelled snow storage was ${pct(snowAnomaly)}.`;
+    let reading = { below: { below: 'dry winter, low snow storage', near: 'dry winter, snow storage near normal', above: 'dry winter, snow storage held' },
+      near: { below: 'near-normal winter, low snow storage', near: 'near-normal winter and snow storage', above: 'near-normal winter, high snow storage' },
+      above: { below: 'wet winter, low snow storage - more fell as rain or melted early', near: 'wet winter, snow storage near normal', above: 'wet winter, high snow storage' },
+    }[rainClass][snowClass];
+    return { ...season, rainAnomaly, snowAnomaly, rainClass, snowClass, statement, reading };
   });
   return { normal, baseline: [seasons[0].waterYear, seasons.at(-1).waterYear], rows,
+    rule: 'Below, near or above normal means the lowest, middle or highest third of the water years in this record, '
+      + 'ranked separately for winter precipitation and peak snow storage.',
     snowDominated: normal.peakSwe > 0.2 * normal.winterPrecipitation };
+}
+
+/**
+ * The ice draining into a set of basins, from the per-basin glacier context file.
+ *
+ * Assessment matters as much as the figure: a basin never surveyed is absent, not
+ * ice-free, so the surveyed share of the catchment is reported beside the total and
+ * the total is a floor wherever that share is below one.
+ */
+export function glacierSummary(context, basins) {
+  if (!context?.basins) return null;
+  let area = 0, assessed = 0, ice = 0, glaciers = 0, below = 0, small = 0, first = null, last = null;
+  for (const { id, area: km2 } of basins) {
+    area += km2;
+    const entry = context.basins[String(id)];
+    if (!entry) continue;
+    assessed += km2;
+    const [iceKm2, count, belowKm2, smallKm2, survey] = entry;
+    ice += iceKm2 || 0; glaciers += count || 0; below += belowKm2 || 0; small += smallKm2 || 0;
+    if (survey) { first = Math.min(first ?? survey[0], survey[0]); last = Math.max(last ?? survey[1], survey[1]); }
+  }
+  if (!assessed) return { assessedShare: 0, iceKm2: null };
+  return { area, assessedShare: assessed / area, iceKm2: ice, iceShare: ice / area, glaciers,
+    below4000Km2: below, smallKm2: small, survey: first ? [first, last] : null };
+}
+
+/**
+ * Land cover over the part of a catchment the land-cover series covers, year by year.
+ *
+ * The annual 10 m product is reduced only over basins intersecting Uzbekistan, so a
+ * mountain catchment is often covered in part; the covered share is returned and
+ * every figure describes that part alone. Year-to-year differences in a classified
+ * product include classification noise, so change is given from the first to the
+ * last year rather than as a trend.
+ */
+export function landcoverSummary(series, index, basins) {
+  if (!series?.basins || !index?.years) return null;
+  const classes = index.classes.filter(c => c.name !== 'Clouds');
+  let area = 0, covered = 0;
+  const totals = index.years.map(() => Object.fromEntries(classes.map(c => [c.code, 0])));
+  for (const { id, area: km2 } of basins) {
+    area += km2;
+    const entry = series.basins[String(id)];
+    if (!entry) continue;
+    covered += km2;
+    index.years.forEach((year, y) => {
+      for (const c of classes) totals[y][c.code] += entry.years?.[String(year)]?.[String(c.code)] || 0;
+    });
+  }
+  if (!covered) return { coveredShare: 0 };
+  const first = totals[0], last = totals.at(-1);
+  const change = classes.map(c => ({ code: c.code, name: c.name, color: c.color, first: first[c.code], last: last[c.code],
+    change: last[c.code] - first[c.code] })).filter(c => c.first > 0 || c.last > 0);
+  // Below a tenth of the catchment the covered part is a sample, not the catchment.
+  return { coveredShare: covered / area, coveredKm2: covered, representative: covered / area >= 0.1,
+    years: index.years, classes, totals, change };
 }
 
 /** River gauges inside the catchment's basins, with the years their record covers. */
@@ -146,5 +215,11 @@ export function gaugesInCatchment(gauges, basins) {
       first: p.ts_start ? String(p.ts_start).slice(0, 4) : null, last: p.ts_end ? String(p.ts_end).slice(0, 4) : null,
       completeMonths: p.n_complete ?? null, source: p.source });
   }
-  return inside.sort((a, b) => (b.last || '').localeCompare(a.last || '') || (b.meanDischarge || 0) - (a.meanDischarge || 0));
+  // The compilation lists some stations twice, once per source; keep the record reaching furthest.
+  const byCode = new Map();
+  for (const gauge of inside) {
+    const kept = byCode.get(gauge.code);
+    if (!kept || (gauge.last || '') > (kept.last || '')) byCode.set(gauge.code, gauge);
+  }
+  return [...byCode.values()].sort((a, b) => (b.last || '').localeCompare(a.last || '') || (b.meanDischarge || 0) - (a.meanDischarge || 0));
 }

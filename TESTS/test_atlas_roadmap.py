@@ -132,8 +132,8 @@ def test_news_is_republished_and_missing_recipe_fails(tmp_path):
                 shutil.copy(ROOT / relative, destination)
     before = module.assemble(tmp_path)
     news_path = tmp_path / "ATLAS_MODULES/updates.json"
-    news = json.loads(news_path.read_text())
-    news["updates"].append({"id": "test-news", "date": "2026-09-10", "phase": "specification", "source": "test", "title": "Test update"})
+    news = json.loads(news_path.read_text(encoding="utf-8"))
+    news["updates"].append({"id": "test-news", "date": "2099-01-01", "phase": "specification", "source": "test", "title": "Test update"})
     news_path.write_text(json.dumps(news))
     after = module.assemble(tmp_path)
     assert after["revision"] != before["revision"]

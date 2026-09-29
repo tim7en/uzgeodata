@@ -236,6 +236,31 @@ function attributionMap(report) {
     + `class breaks at ${scale}. North up; scale at map centre. Shaded relief © Esri.` });
 }
 
+function landcoverFigure(report) {
+  const cover = report.upstreamInsights?.landcover;
+  if (!cover?.coveredShare || !cover.representative) return null;
+  const { years, classes, totals } = cover;
+  const rows = [0, years.length - 1];
+  const height = 90 + rows.length * 70, { canvas, ctx } = surface(height);
+  rows.forEach((y, r) => {
+    const total = classes.reduce((sum, c) => sum + totals[y][c.code], 0) || 1;
+    let x = 110;
+    ctx.fillStyle = INK; ctx.textAlign = 'left'; ctx.font = '26px Arial'; ctx.fillText(years[y], 10, 40 + r * 70 + 22);
+    for (const c of classes) {
+      const width = totals[y][c.code] / total * (W - 130);
+      ctx.fillStyle = c.color; ctx.fillRect(x, 40 + r * 70, width, 44); x += width;
+    }
+  });
+  let lx = 110;
+  ctx.font = '20px Arial';
+  for (const c of classes.filter(c => totals.some(t => t[c.code] > 0))) {
+    ctx.fillStyle = c.color; ctx.fillRect(lx, height - 36, 20, 20);
+    ctx.fillStyle = INK; ctx.fillText(c.name, lx + 26, height - 19); lx += 36 + ctx.measureText(c.name).width;
+  }
+  return { image: canvas.toDataURL('image/png'),
+    caption: `Land-cover composition of the covered part of the catchment, ${years[0]} and ${years.at(-1)}.` };
+}
+
 export async function reportFigures(report) {
   // Fetch the same cached forecast used in the report panel; do not infer it from a screenshot.
   const forecastPromise = report.forecastBasin ? readForecast('/data/atlas/seasonal-forecast/latest.json').catch(() => null) : Promise.resolve(null);
@@ -254,5 +279,5 @@ export async function reportFigures(report) {
       }),
     }))) : [];
   const attribution = await attributionMap(report);
-  return { map, series, drought, seasonal, attribution, forecastMissing: !!report.forecastBasin && !seasonal.length };
+  return { map, series, drought, seasonal, attribution, landcover: landcoverFigure(report), forecastMissing: !!report.forecastBasin && !seasonal.length };
 }

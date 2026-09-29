@@ -1,6 +1,15 @@
 {
   "updates": [
     {
+      "id": "basin-assessment-20260929",
+      "date": "2026-09-29",
+      "kind": "implementation",
+      "phase": "living",
+      "title": "Basin assessment, explicit snow wording, glaciers and land cover in reports",
+      "summary": "Each basin report opens with five generated answers: last water year, current precipitation and snow, where the precipitation anomaly came from, the seasonal forecast and its reliability, and what cannot be said about river discharge without gauges or a calibrated model. Snow is stated as two numbers against their own terciles; the attribution map is titled as a share of the precipitation anomaly; glacier inventory and annual land cover are added. Next: gauge discharge series, then a seasonal water-availability assessment.",
+      "source": "CASE_STUDIES/report-review-20260929.md"
+    },
+    {
       "id": "report-review-20260929",
       "date": "2026-09-29",
       "kind": "implementation",
