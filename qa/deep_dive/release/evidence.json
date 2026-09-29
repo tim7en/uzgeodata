@@ -1,0 +1,131 @@
+{
+  "checked_at_utc": "2026-09-29T12:47:18.898775+00:00",
+  "base": "https://uzgeodata.uz",
+  "method": "GET; 12 s timeout; 100000 byte response cap; no remote body persisted",
+  "local": {
+    "manifest": {
+      "bytes": 20633,
+      "sha256": "2b13ce9c4f7aa3cc76f526489bc1628b94618fbe42d4a3468b76faf3c02b5420",
+      "canonical_json_sha256": "ac6c8f13fd34e9a0d745e51cbf36ff89051beee3f029a158478970b235edcbe5",
+      "json_fields": {
+        "release_id": "uz-20260924T150158900Z",
+        "commit": "c4fffce35768d0b93239d6aabb7abc6b4adbb9ca",
+        "rows": 27874080
+      }
+    },
+    "latest": {
+      "bytes": 445,
+      "sha256": "6857f93286e298dec69e81cd265ab71567257da68de65afad822918af30db9bf",
+      "canonical_json_sha256": "17f442abb5c442acb385deac5279ff450f7a876d0039d96136f5a00d90bed16b",
+      "json_fields": {
+        "release_id": "uz-20260924T150158900Z",
+        "path": "releases/uz-20260924T150158900Z.json",
+        "rows": 27874080
+      }
+    },
+    "cube_index": {
+      "bytes": 17435,
+      "sha256": "08a51a3ce4fcd8f7525cdb5164b6a48d9d7e3da630e14e9bdc909c5c4f2a18b2",
+      "canonical_json_sha256": "f292132be14251b4ca73fdff3336224ecb2e8cae92f0d1e692bfae517a59a409",
+      "json_fields": {
+        "generated_at": "2026-09-28T08:17:12.143+00:00",
+        "rows": 28856820,
+        "months": [
+          "2003-01",
+          "2026-12"
+        ],
+        "bytes": 185790167
+      }
+    }
+  },
+  "git_06ac19791_cube_index": {
+    "bytes": 16812,
+    "sha256": "68b2781cd6208a8a679ab0f006af6cb5984cc99cd246fc5d5f7c692ab1bcd46c",
+    "canonical_json_sha256": "d38b1b117e5c5319671f01958ae8e6b6751d1b5fcd51153cd98863c63c0bcd72",
+    "json_fields": {
+      "generated_at": "2026-09-24T15:01:58.465+00:00",
+      "rows": 27874080,
+      "months": [
+        "2003-01",
+        "2026-12"
+      ],
+      "bytes": 164838610
+    }
+  },
+  "git_06ac19791_cube_index_crlf": {
+    "bytes": 17212,
+    "sha256": "6f3c36818ef1e2108994e4a6958c8d87af6857fff0f6cfd59e39a7bd6edc8d6c",
+    "canonical_json_sha256": "d38b1b117e5c5319671f01958ae8e6b6751d1b5fcd51153cd98863c63c0bcd72",
+    "json_fields": {
+      "generated_at": "2026-09-24T15:01:58.465+00:00",
+      "rows": 27874080,
+      "months": [
+        "2003-01",
+        "2026-12"
+      ],
+      "bytes": 164838610
+    }
+  },
+  "manifest_cube_index": {
+    "bytes": 17212,
+    "sha256": "6f3c36818ef1e2108994e4a6958c8d87af6857fff0f6cfd59e39a7bd6edc8d6c"
+  },
+  "remote_verified": {
+    "/release.json": {
+      "status": 200,
+      "tls_verified_by": "Windows Schannel",
+      "bytes": 819,
+      "sha256": "abc22809b92d00ad2db8388ccd10cd9a8cec27da4b75382262be3f9a22205a39",
+      "canonical_json_sha256": "cacb81b588bfbe1198629b5d892fe152a37fa7bc0a9be21d22b2f1590541afa2",
+      "json_fields": {
+        "commit": "b51a06b32cd54995b62309f730cca1b489c10782",
+        "generated_at": "2026-09-29T10:24:29.757Z",
+        "bytes": 1327851774
+      }
+    },
+    "/data/atlas/latest.json": {
+      "status": 200,
+      "tls_verified_by": "Windows Schannel",
+      "bytes": 385,
+      "sha256": "1b95ac28f0d16c34194fae341b321b87828823ebf71bbb17d603597fd1a6a264",
+      "canonical_json_sha256": "17f442abb5c442acb385deac5279ff450f7a876d0039d96136f5a00d90bed16b",
+      "json_fields": {
+        "release_id": "uz-20260924T150158900Z",
+        "path": "releases/uz-20260924T150158900Z.json",
+        "rows": 27874080
+      }
+    },
+    "/data/atlas/cube/index.json": {
+      "status": 200,
+      "tls_verified_by": "Windows Schannel",
+      "bytes": 13878,
+      "sha256": "5bd30e19373dea2a265610979cb3ec850c54705a604d66754f0087e9e0f51223",
+      "canonical_json_sha256": "f292132be14251b4ca73fdff3336224ecb2e8cae92f0d1e692bfae517a59a409",
+      "json_fields": {
+        "generated_at": "2026-09-28T08:17:12.143+00:00",
+        "rows": 28856820,
+        "months": [
+          "2003-01",
+          "2026-12"
+        ],
+        "bytes": 185790167
+      }
+    },
+    "/data/atlas/releases/uz-20260924T150158900Z.json": {
+      "status": 200,
+      "tls_verified_by": "Windows Schannel",
+      "bytes": 16159,
+      "sha256": "aa2fbfc3d0f783ac958de8b3ada19b544761aab3ae02e068b2b3b285b89c3f00",
+      "canonical_json_sha256": "ac6c8f13fd34e9a0d745e51cbf36ff89051beee3f029a158478970b235edcbe5",
+      "json_fields": {
+        "release_id": "uz-20260924T150158900Z",
+        "commit": "c4fffce35768d0b93239d6aabb7abc6b4adbb9ca",
+        "rows": 27874080
+      }
+    }
+  },
+  "python_ssl_diagnostic": {
+    "verified_request": "CERTIFICATE_VERIFY_FAILED: certificate has expired",
+    "scope": "Python CA-bundle chain on this machine; Windows Schannel verified the site"
+  }
+}

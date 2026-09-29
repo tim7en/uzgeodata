@@ -1,0 +1,16 @@
+# One basin-month climate extraction audit
+
+**Scope:** level-12 basin `4121272730` (Syr Darya), January 2003, two ERA5-Land variables. The independent script is [`check_one_basin.py`](check_one_basin.py); machine-readable output and input SHA-256 hashes are in [`result.json`](result.json). Run with `python qa/deep_dive/climate/check_one_basin.py` from the repository root.
+
+**Input inspection:** `WORKSPACE/derived/regional-climate-grids/era-2003.tif` is a 204 × 133, 24-band float64 GeoTIFF in EPSG:4326 on a 0.1° grid, with no declared nodata and no band descriptions or original source identifier embedded. The adjacent published metadata identifies `ECMWF/ERA5_LAND/MONTHLY_AGGR`, January–December 2003, the WGS84 native-grid transform, and fractional basin overlap. The acquisition script `PIPELINES/extract_regional_climate_grids.py` defines bands 1/2 as January temperature/precipitation, with Kelvin→°C and metre→mm conversion performed in Earth Engine before download. The basin geometry comes from the separate level-12 GeoJSON frame (EPSG:4326 by GeoJSON convention), with 8 intersecting grid cells. The local GeoTIFF is an Earth Engine transformed export, not an unmodified upstream ERA archive.
+
+**Independent method:** intersect the basin polygon with each candidate cell using Shapely, compute each overlap's planar degree² area multiplied by cosine of cell-centre latitude, and take the valid-pixel weighted mean. No production reduction function or cached production weights are imported. A WGS84 geodesic-area weighted mean provides a sensitivity check. The tolerance is 0.01 in each variable's unit, selected to catch pixel, scale, or band errors while allowing negligible geometric differences.
+
+| January 2003 | Independent cosine mean | Published mean | Difference | Geodesic sensitivity |
+| --- | ---: | ---: | ---: | ---: |
+| Temperature, °C | 0.7926014603 | 0.7926014603 | < 1e-12 | -0.000016 °C |
+| Precipitation, mm | 25.5709638122 | 25.5709638122 | < 1e-12 | -0.000159 mm |
+
+**Result: PASS for this extraction only.** Both variables have complete grid coverage and agree within tolerance. This substantiates the local raster-to-basin calculation for one month and polygon. It does not independently verify the Earth Engine export against original ERA5-Land cells, the full basin/month corpus, TerraClimate v1.1 producer data, continuation skill, upstream routing, or hydrologic forecast claims. Such broader portal claims require separate checks. The 2003 `era5-land` file is a predictor in the continuation package; agreement here is not validation of the continuation model against independent field measurements.
+
+**Portal implication:** show a compact provenance and validation card per climate series: source asset and product version, observed/modelled/estimated status, spatial and time support, transform and unit, source checksum or immutable asset version, and a validation scope that distinguishes extraction reproducibility from predictive or field accuracy. This input has no source checksum or band labels embedded in the TIFF; retain the Earth Engine request manifest and remote asset/version identifier with each export so the upstream acquisition itself can be audited.

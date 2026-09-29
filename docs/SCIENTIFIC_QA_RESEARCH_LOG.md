@@ -101,3 +101,32 @@ Agents run in this order so each can use the previous agent's persisted evidence
 
 - **Version control:** committed the first-pass QA workspace on `qa/scientific-research-agents-20260929` as `71358e652` and pushed the branch to `origin`.
 - **Review:** opened [draft pull request #2](https://github.com/tim7en/uzgeodata/pull/2) against `main`. It presents the evidence and known failures for review; no merge or deployment was performed.
+
+### 2026-09-29 12:47 UTC — Release provenance deep dive (agent follow-up)
+
+- **Artifacts:** `qa/deep_dive/release/probe.py`, `evidence.json`, `REPORT.md`.
+- **Executed:** four bounded public GETs over verified Windows Schannel HTTPS; all returned 200. Local Git history and published manifest were compared. The September 24 index, with its original CRLF line endings, matches the pinned manifest exactly. Commit `d9e3d917d` replaced the index on September 28 without a new atlas release pointer. The public pointer still names September 24, while the public cube index semantically matches the September 28 rebuild (28,856,820 rows versus 27,874,080 in the pinned release).
+- **Conclusion:** the served fixed cube-index path and the public release pointer describe different dataset states. Scientific values and the served Parquet partitions were not independently verified. The site's leaf certificate is valid; an Anaconda Python certificate-chain failure on this machine does not establish a portal-wide TLS fault.
+- **Next:** inspect built and deployed user-facing provenance and a broader functional workflow before recommending portal changes.
+
+### 2026-09-29 12:52 UTC — Functional provenance follow-up
+
+- **Artifacts:** `qa/deep_dive/functional/REPORT.md`, `scenarios.json`.
+- **Observed:** local Vite development returned HTML fallback for `/release.json`, explaining `release: null` in its AOI Everything export. The existing built preview and public endpoint returned JSON at `/release.json`, but that object identifies a frontend build commit, while `/data/atlas/latest.json` identifies the scientific atlas release. A successful public browser export was not tested.
+- **Executed:** the documented `tests/test_workflow_browser.py` suite stopped at its first English-labelled finder assertion; separate browser inspection saw Russian UI. Its later mobile, empty-state and retry cases did not run. The existing `dist` preview lacks local data assets and cannot complete an AOI export. Three bounded public metadata GETs passed over verified HTTPS.
+- **Interpretation:** a frontend commit in the export does not pin the dataset, especially while the atlas release pointer and cube index diverge. The UI suite failure shows a test/language-state problem at its entry point; it does not establish failure of later user journeys.
+- **Next:** independently recalculate one climate value from available source material and assess scientific coverage.
+
+### 2026-09-29 12:56 UTC — One basin-month climate extraction
+
+- **Artifacts:** `qa/deep_dive/climate/check_one_basin.py`, `result.json`, `README.md`.
+- **Source and scope:** local 24-band ERA5-Land-derived GeoTIFF for 2003, a separate level-12 basin polygon `4121272730` in the Syr Darya system, and January 2003 published continuation rows. Input file SHA-256 hashes are recorded in `result.json`.
+- **Executed by orchestrator:** `python qa/deep_dive/climate/check_one_basin.py` returned `PASS`. Independent Shapely cell intersections over 8 cells gave 0.7926014603 °C and 25.5709638122 mm, agreeing with published values to numerical precision under a predeclared 0.01-unit tolerance. Geodesic-area sensitivity was −0.000016 °C and −0.000159 mm.
+- **Boundary:** this validates one local raster-to-basin extraction, not the upstream Earth Engine export, other months or basins, TerraClimate v1.1, model skill, or field truth. The GeoTIFF itself has no embedded source checksum or band labels; the acquisition manifest remains important.
+- **Next:** independently review these deeper results and recommend the next portal changes with explicit acceptance criteria.
+
+### 2026-09-29 12:59 UTC — Portal recommendation review
+
+- **Artifact:** `qa/deep_dive/PORTAL_RECOMMENDATIONS.md` with five ranked changes and acceptance criteria.
+- **Independent synthesis:** prioritize a coherent immutable atlas release, explicit frontend and dataset identities in exports, a complete language-aware browser gate, visible validation scope and model limits, then a broader independent science sample across both river systems.
+- **Claims retained as unverified:** served Parquet bytes, public AOI export behavior, downstream browser scenarios, upstream provider-cell fidelity, all-basin accuracy and prospective discharge forecasting. The valid portal leaf certificate is not a site TLS defect; the local Anaconda Python trust-chain failure is client-specific.

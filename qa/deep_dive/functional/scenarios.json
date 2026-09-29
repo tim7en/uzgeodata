@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-29",
+  "scope": "Bounded SR-02 and workflow follow-up",
+  "scenarios": [
+    {"id":"dev_release_metadata","environment":"local Vite dev","status":"FAIL","evidence":"GET /release.json returned 200 text/html (SPA fallback); AoiTool.readJson rejects non-JSON and Everything writes release:null."},
+    {"id":"dev_browser_workflow","environment":"local Vite dev","status":"FAIL","evidence":"python tests/test_workflow_browser.py exited 1 at first assertion after 5 seconds: English-labelled basin finder not found. Browser inspection after 12 seconds showed Russian UI; later suite scenarios did not run."},
+    {"id":"dev_aoi_export","environment":"local Vite dev","status":"FAIL","evidence":"First-pass captured Everything JSON with release:null; source trace and /release.json response reproduce cause. Not rerun in this follow-up."},
+    {"id":"preview_release_metadata","environment":"existing dist served by Vite preview","status":"PASS","evidence":"GET /release.json returned 200 application/json with frontend commit b51a06b32cd54995b62309f730cca1b489c10782."},
+    {"id":"preview_aoi_export","environment":"existing dist served by Vite preview","status":"NOT TESTED","evidence":"GET /data/atlas/basins/index.json returned 200 text/html; the existing dist is a Cloudflare frontend-only bundle, so local preview cannot complete the data export."},
+    {"id":"public_release_metadata","environment":"https://uzgeodata.uz","status":"PASS","evidence":"Verified-TLS GET /release.json returned 200 application/json; frontend commit b51a06b32cd54995b62309f730cca1b489c10782, 7445 basins."},
+    {"id":"public_catalogue_metadata","environment":"https://uzgeodata.uz","status":"PASS","evidence":"Verified-TLS GET /data/atlas/catalogue.json returned 200 application/json."},
+    {"id":"public_atlas_release_pointer","environment":"https://uzgeodata.uz","status":"PASS","evidence":"Verified-TLS GET /data/atlas/latest.json returned release_id uz-20260924T150158900Z; distinct from frontend commit."},
+    {"id":"public_aoi_export","environment":"https://uzgeodata.uz","status":"NOT TESTED","evidence":"No public browser export was executed; successful metadata GET alone does not prove client-side export succeeds."},
+    {"id":"empty_retry_mobile","environment":"local Vite dev","status":"NOT TESTED","evidence":"Existing browser suite contains no-match, 503/retry, desktop mobile viewport, and touch drag checks, but execution stopped at its first assertion."}
+  ]
+}

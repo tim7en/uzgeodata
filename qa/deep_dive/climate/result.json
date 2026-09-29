@@ -1,0 +1,43 @@
+{
+  "basin_id": "4121272730",
+  "year": 2003,
+  "month": 1,
+  "frame_crs": "GeoJSON default WGS84",
+  "raster_crs": "EPSG:4326",
+  "raster_bands": 24,
+  "raster_band_mapping": {
+    "1": "January temperature_2m converted K to C in Earth Engine",
+    "2": "January total_precipitation_sum converted m to mm in Earth Engine"
+  },
+  "overlap_cells": 8,
+  "tolerance": 0.01,
+  "files_sha256": {
+    "WORKSPACE\\derived\\regional-climate-grids\\era-2003.tif": "f8f26fc2ef812fdc827d05a3f0b0c6980187aecc1b7aee4bc440a69ab1be360d",
+    "GEODATA\\transboundary_basins_v2\\hydroatlas-level12-full-basins.geojson": "b5298e98486df9b065f744393e4723795a2a9a0a83ec17a32af8fa2630ebbed0",
+    "PUBLISHED\\data\\atlas\\climate-continuation\\era5-land\\year=2003.parquet": "110d3ff37c436504c0b2ab4608f24044303f60ea94367dc3e22c084dfbc0da80",
+    "PUBLISHED\\data\\atlas\\climate-continuation\\era5-land\\year=2003.json": "fdc74e0844ee2b5da1eea3c1c154e077e159f3779f0f5024fad75034fbf1cadc"
+  },
+  "results": {
+    "temperature_c": {
+      "cos_latitude": 0.7926014603100696,
+      "geodesic": 0.7925854279555499,
+      "covered_fraction": 1.0,
+      "published": 0.7926014603100697,
+      "published_coverage": 0.9999999999999999,
+      "difference_cos": -1.1102230246251565e-16,
+      "difference_geodesic": -1.6032354519857073e-05,
+      "within_tolerance": true
+    },
+    "precipitation_mm": {
+      "cos_latitude": 25.570963812181596,
+      "geodesic": 25.57080453279937,
+      "covered_fraction": 1.0,
+      "published": 25.5709638121816,
+      "published_coverage": 0.9999999999999999,
+      "difference_cos": -3.552713678800501e-15,
+      "difference_geodesic": -0.00015927938222759508,
+      "within_tolerance": true
+    }
+  },
+  "status": "PASS"
+}
