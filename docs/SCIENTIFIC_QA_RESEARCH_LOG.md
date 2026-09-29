@@ -96,3 +96,8 @@ Agents run in this order so each can use the previous agent's persisted evidence
 - **Artifacts:** `qa/seed_research_backlog.py`, `qa/research_state/registry.json`, `qa/research_state/README.md`. Six findings SR-01 through SR-06 are stored as `PROPOSED`, with next actions and hashed evidence. No follow-up task was marked approved or completed.
 - **Executed:** `python -m qa.seed_research_backlog` twice; the second run left the six-task registry unchanged. A fresh `python -m qa.continuity --store qa/research_state --workspace . status` process read the persisted state. `python -m pytest TESTS/test_research_continuity.py TESTS/test_basin_api_selection.py -q` passed (9 tests). `python -m compileall -q qa` passed. All 9 JSON files under `qa/` parsed successfully.
 - **Boundary:** reading the backlog from a new process verifies durable storage, not the requested full agent interruption-and-resumption climate experiment. The latter remains open. No scheduled agent process is running after this session.
+
+### 2026-09-29 12:37 UTC — Review handoff (orchestrator)
+
+- **Version control:** committed the first-pass QA workspace on `qa/scientific-research-agents-20260929` as `71358e652` and pushed the branch to `origin`.
+- **Review:** opened [draft pull request #2](https://github.com/tim7en/uzgeodata/pull/2) against `main`. It presents the evidence and known failures for review; no merge or deployment was performed.
