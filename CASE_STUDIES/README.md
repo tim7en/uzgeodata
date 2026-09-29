@@ -10,6 +10,11 @@ relationship to all 7,445 Amu Darya and Syr Darya level-12 basins, stores the
 producer's 2025 TerraClimate v1.1 as a separate source and computes routed
 upstream aggregates without combining the two TerraClimate versions.
 
+The [snow forecast study](snow-forecast-study.md) adapts a USGS/Uzhydromet
+Kashkadarya design to forecast April–September flow from ERA5-Land snow, first
+for Pskem, then for Chatkal, Ugam, Charvak inflow and four Kashkadarya gauges.
+April 1 forecasts beat the 30-year average out of sample at all eight gauges.
+
 The [drought study](drought-study.md) compares every basin's water years since
 1961 with the 1991–2020 normal and the previous 10, 20 and 30 years, checks six
 documented dry and wet years against the data, and traces how much of each Uzbek

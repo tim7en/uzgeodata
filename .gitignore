@@ -127,3 +127,8 @@ PUBLISHED/data/atlas/drought-study/
 
 # Full monthly SEAS5 files reach readers through R2 (release-includes.txt); the compact latest.json and skill.json are tracked.
 PUBLISHED/data/atlas/seasonal-forecast/forecast-*.json
+
+# Snow forecast study: daily ERA5-Land cell forcing is rebuilt by
+# extract_snow_forecast_forcing.py; the per-gauge study.json and cells.json stay tracked.
+PUBLISHED/data/case-studies/snow-forecast/*/year=*.parquet
+PUBLISHED/data/case-studies/snow-forecast/*/year=*.json

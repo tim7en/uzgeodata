@@ -1,0 +1,100 @@
+{
+  "gauge": "17257",
+  "basin_area_km2": 437.2604814240796,
+  "source": "ECMWF/ERA5_LAND/DAILY_AGGR",
+  "grid": "native ERA5-Land 0.1 degree",
+  "elevation": "CGIAR SRTM 90 m mean per cell",
+  "cells": [
+    {
+      "cell": 7,
+      "lon": 67.0,
+      "lat": 39.0,
+      "weight": 0.00022474100055436375,
+      "elevation_m": 868.7
+    },
+    {
+      "cell": 8,
+      "lon": 67.1,
+      "lat": 39.0,
+      "weight": 0.1041343965928291,
+      "elevation_m": 1095.9
+    },
+    {
+      "cell": 9,
+      "lon": 67.2,
+      "lat": 39.0,
+      "weight": 0.08151554793952008,
+      "elevation_m": 1332.1
+    },
+    {
+      "cell": 10,
+      "lon": 67.3,
+      "lat": 39.0,
+      "weight": 0.014025909995832316,
+      "elevation_m": 1669.6
+    },
+    {
+      "cell": 15,
+      "lon": 67.1,
+      "lat": 38.9,
+      "weight": 0.029298323804865276,
+      "elevation_m": 1245.5
+    },
+    {
+      "cell": 16,
+      "lon": 67.2,
+      "lat": 38.9,
+      "weight": 0.16559396231717824,
+      "elevation_m": 1647.3
+    },
+    {
+      "cell": 17,
+      "lon": 67.3,
+      "lat": 38.9,
+      "weight": 0.19753642923812387,
+      "elevation_m": 2158.9
+    },
+    {
+      "cell": 18,
+      "lon": 67.4,
+      "lat": 38.9,
+      "weight": 0.14978034503121465,
+      "elevation_m": 2884.2
+    },
+    {
+      "cell": 19,
+      "lon": 67.5,
+      "lat": 38.9,
+      "weight": 0.11609501509027306,
+      "elevation_m": 3400.9
+    },
+    {
+      "cell": 23,
+      "lon": 67.2,
+      "lat": 38.8,
+      "weight": 0.01949986567104202,
+      "elevation_m": 2407.2
+    },
+    {
+      "cell": 24,
+      "lon": 67.3,
+      "lat": 38.8,
+      "weight": 0.039247772970821534,
+      "elevation_m": 2485.4
+    },
+    {
+      "cell": 25,
+      "lon": 67.4,
+      "lat": 38.8,
+      "weight": 0.06868482691581228,
+      "elevation_m": 2866.8
+    },
+    {
+      "cell": 26,
+      "lon": 67.5,
+      "lat": 38.8,
+      "weight": 0.014362863431933262,
+      "elevation_m": 3325.8
+    }
+  ]
+}
