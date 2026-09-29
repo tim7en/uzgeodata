@@ -1,0 +1,35 @@
+{
+  "base_url": "http://127.0.0.1:5175",
+  "results": [
+    {
+      "scenario": "AOI basin selection",
+      "status": "PASS",
+      "detail": "Map rectangle selected 23 level-12 basins"
+    },
+    {
+      "scenario": "CSV basin identifiers and system",
+      "status": "PASS",
+      "detail": "CSV rows=23, selected=23, IDs absent or system mismatch=[]"
+    },
+    {
+      "scenario": "JSON identifiers and AOI geometry",
+      "status": "PASS",
+      "detail": "CSV IDs=23, JSON IDs=23, geometry=Polygon"
+    },
+    {
+      "scenario": "JSON attribute and release metadata",
+      "status": "FAIL",
+      "detail": "attribute_meta present=True, release present=False"
+    },
+    {
+      "scenario": "Invalid coordinate input",
+      "status": "NOT TESTED",
+      "detail": "Map AOI is pointer driven; coordinate upload validation was outside this bounded run"
+    },
+    {
+      "scenario": "Browser page errors",
+      "status": "PASS",
+      "detail": "[]"
+    }
+  ]
+}

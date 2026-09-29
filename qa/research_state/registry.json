@@ -1,0 +1,240 @@
+{
+  "created_at": "2026-09-29T12:35:12.888659+00:00",
+  "limits": {
+    "max_concurrent_tasks": 1,
+    "max_download_bytes": 0,
+    "max_execution_seconds": 3600,
+    "max_external_requests": 0,
+    "max_retries": 0,
+    "max_storage_bytes": 1000000000
+  },
+  "projects": {
+    "RES-QA-20260929": {
+      "basins": [
+        "system:amu_darya",
+        "system:syr_darya"
+      ],
+      "created_at": "2026-09-29T12:35:12.891891+00:00",
+      "memory": [
+        {
+          "actor": "scientific_reviewer",
+          "at": "2026-09-29T12:35:12.898891+00:00",
+          "claim": "The local cube/index.json fails the pinned release manifest's byte count and SHA-256.",
+          "evidence": [
+            {
+              "bytes": 596,
+              "path": "qa/reports/cube-index-integrity.json",
+              "sha256": "2025dc48baf6c569952dc4c22c11a19a21dbef8a0395066e8010c9cb5b49c2cd"
+            }
+          ],
+          "kind": "unresolved_issue",
+          "verified": false
+        },
+        {
+          "actor": "scientific_reviewer",
+          "at": "2026-09-29T12:35:12.906057+00:00",
+          "claim": "The local AOI Everything export has release=null.",
+          "evidence": [
+            {
+              "bytes": 1006,
+              "path": "qa/functional/results.json",
+              "sha256": "7936d8d902fc472d74ab48525dc4ef7ef04de1b7ab839453c7bc330e861cfbcc"
+            }
+          ],
+          "kind": "unresolved_issue",
+          "verified": false
+        },
+        {
+          "actor": "scientific_reviewer",
+          "at": "2026-09-29T12:35:12.912120+00:00",
+          "claim": "Pskem same-month linear reconstruction has poorer held-out skill than training-month climatology.",
+          "evidence": [
+            {
+              "bytes": 5303,
+              "path": "qa/model_validation/results.json",
+              "sha256": "8b54fc1ffcdc329caedd5b06523b030fb31bb7a4c30f5d34580ce71dae18865f"
+            }
+          ],
+          "kind": "limitation",
+          "verified": false
+        },
+        {
+          "actor": "scientific_reviewer",
+          "at": "2026-09-29T12:35:12.920118+00:00",
+          "claim": "Pskem interval calibration, source independence and geographic transfer are unverified.",
+          "evidence": [
+            {
+              "bytes": 3784,
+              "path": "qa/model_validation/REPORT.md",
+              "sha256": "f55ec0a6bae427361a17d66a24ee3e8a5119955847355ce20cf00d6fed17f1b5"
+            }
+          ],
+          "kind": "unresolved_issue",
+          "verified": false
+        },
+        {
+          "actor": "scientific_reviewer",
+          "at": "2026-09-29T12:35:12.927274+00:00",
+          "claim": "The selected Siegfried et al. 2024 result has not been numerically replicated.",
+          "evidence": [
+            {
+              "bytes": 3452,
+              "path": "qa/replication/REPORT.md",
+              "sha256": "693b0e31e2bfe71a40dacb324c85038792292ee4e5b222ca98bedf41a5e56e3f"
+            }
+          ],
+          "kind": "unresolved_issue",
+          "verified": false
+        },
+        {
+          "actor": "scientific_reviewer",
+          "at": "2026-09-29T12:35:12.935549+00:00",
+          "claim": "The passing topology and functional checks support only their sampled scopes.",
+          "evidence": [
+            {
+              "bytes": 3291,
+              "path": "qa/data_audit/results.json",
+              "sha256": "8e65ad74c6d8c7abaede3c37d8c98854e4e1d81a8e977bb79fcfbed05cc633c1"
+            }
+          ],
+          "kind": "unresolved_issue",
+          "verified": false
+        }
+      ],
+      "methodology": "Investigate each triage finding using its pinned evidence and retest criterion; require separate review before validation",
+      "objective": "Resolve first-pass scientific QA findings with reproducible evidence",
+      "outstanding_questions": [],
+      "questions": [
+        "Which release, interface, topology and model claims can be independently verified?"
+      ],
+      "scope": "Amu Darya and Syr Darya; first-pass findings dated 2026-09-29",
+      "sources": [
+        "UZGEODATA release uz-20260924T150158900Z",
+        "WWF/HydroATLAS/v1/Basins/level07 local export 2026-09-08"
+      ],
+      "tasks": {
+        "SR-01": {
+          "checkpoints": [],
+          "dependencies": [],
+          "handoffs": [],
+          "history": [
+            {
+              "at": "2026-09-29T12:35:12.894892+00:00",
+              "by": "qa_architect",
+              "reason": "created",
+              "to": "PROPOSED"
+            }
+          ],
+          "next_actions": [
+            "Trace index and manifest generation, identify authoritative version, inspect deployed object, then issue a consistent versioned release if required.",
+            "Retest: Pinned local and deployed index bytes and SHA-256 both equal a newly documented manifest; then verify referenced cube payloads and representative decoded values."
+          ],
+          "owner": "qa_architect",
+          "status": "PROPOSED",
+          "title": "The local cube/index.json fails the pinned release manifest's byte count and SHA-256."
+        },
+        "SR-02": {
+          "checkpoints": [],
+          "dependencies": [],
+          "handoffs": [],
+          "history": [
+            {
+              "at": "2026-09-29T12:35:12.902892+00:00",
+              "by": "functional_qa",
+              "reason": "created",
+              "to": "PROPOSED"
+            }
+          ],
+          "next_actions": [
+            "Supply release metadata to the development path or identify the atlas latest release in the export; report fetch failure instead of silently using null.",
+            "Retest: On local development and deployed targets, download Everything and assert a non-null release ID matching the served metadata and data release; preserve the exported basin IDs."
+          ],
+          "owner": "functional_qa",
+          "status": "PROPOSED",
+          "title": "The local AOI Everything export has release=null."
+        },
+        "SR-03": {
+          "checkpoints": [],
+          "dependencies": [],
+          "handoffs": [],
+          "history": [
+            {
+              "at": "2026-09-29T12:35:12.910118+00:00",
+              "by": "model_validator",
+              "reason": "created",
+              "to": "PROPOSED"
+            }
+          ],
+          "next_actions": [
+            "Label the model as retrospective and present the baseline and 59-month scope alongside NSE; do not claim prospective forecast skill.",
+            "Retest: If prospective skill is claimed, define issue time and lead, use predictors available then, pre-register a held-out test, and compare with seasonal climatology with uncertainty."
+          ],
+          "owner": "model_validator",
+          "status": "PROPOSED",
+          "title": "Pskem same-month linear reconstruction has poorer held-out skill than training-month climatology."
+        },
+        "SR-04": {
+          "checkpoints": [],
+          "dependencies": [],
+          "handoffs": [],
+          "history": [
+            {
+              "at": "2026-09-29T12:35:12.916118+00:00",
+              "by": "model_validator",
+              "reason": "created",
+              "to": "PROPOSED"
+            }
+          ],
+          "next_actions": [
+            "Keep claims confined to the tested retrospective split; pin raw observations and revision policy before independent rebuild.",
+            "Retest: Rebuild input rows independently from pinned raw data; for any interval claim, check empirical coverage on held-out months and additional catchments."
+          ],
+          "owner": "model_validator",
+          "status": "PROPOSED",
+          "title": "Pskem interval calibration, source independence and geographic transfer are unverified."
+        },
+        "SR-05": {
+          "checkpoints": [],
+          "dependencies": [],
+          "handoffs": [],
+          "history": [
+            {
+              "at": "2026-09-29T12:35:12.923332+00:00",
+              "by": "research_replicator",
+              "reason": "created",
+              "to": "PROPOSED"
+            }
+          ],
+          "next_actions": [
+            "Acquire and verify the author code and data under documented licence, reproduce the original target, then separately compare only a matched design.",
+            "Retest: Hash-pin inputs, execute an identified code path to the target table value, document ensemble and median definitions, then independently recalculate it."
+          ],
+          "owner": "research_replicator",
+          "status": "PROPOSED",
+          "title": "The selected Siegfried et al. 2024 result has not been numerically replicated."
+        },
+        "SR-06": {
+          "checkpoints": [],
+          "dependencies": [],
+          "handoffs": [],
+          "history": [
+            {
+              "at": "2026-09-29T12:35:12.932550+00:00",
+              "by": "data_auditor",
+              "reason": "created",
+              "to": "PROPOSED"
+            }
+          ],
+          "next_actions": [
+            "Keep the PASS statements scoped; pin source licence and original asset version; sample other topology and climate cases against separate sources.",
+            "Retest: Check exact membership for separately sourced outlets and variable/period-matched climate values against independent computations with declared tolerances."
+          ],
+          "owner": "data_auditor",
+          "status": "PROPOSED",
+          "title": "The passing topology and functional checks support only their sampled scopes."
+        }
+      }
+    }
+  },
+  "schema_version": 1
+}

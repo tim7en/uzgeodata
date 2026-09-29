@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "review_date_utc": "2026-09-29",
+  "scope": "First-pass independent review of the six prior QA artifacts; no portal-wide certification",
+  "findings": [
+    {
+      "id": "SR-01",
+      "class": "confirmed_defect",
+      "severity": "P1",
+      "confidence": "high for local integrity failure; unknown for deployed bytes and scientific values",
+      "claim": "The local cube/index.json fails the pinned release manifest's byte count and SHA-256.",
+      "evidence": ["qa/reports/cube-index-integrity.json", "PUBLISHED/data/atlas/releases/uz-20260924T150158900Z.json"],
+      "reproduce": "python -m qa.release_integrity --release-id uz-20260924T150158900Z --file cube/index.json (exit 1)",
+      "alternatives": ["Local index changed after release promotion", "Manifest points to different authoritative bytes", "Deployed R2 object differs from the local checkout"],
+      "scientific_impact": "Analyses pinned to this release cannot verify the local cube index; no wrong cube value has yet been demonstrated.",
+      "action": "Trace index and manifest generation, identify authoritative version, inspect deployed object, then issue a consistent versioned release if required.",
+      "retest": "Pinned local and deployed index bytes and SHA-256 both equal a newly documented manifest; then verify referenced cube payloads and representative decoded values."
+    },
+    {
+      "id": "SR-02",
+      "class": "confirmed_defect",
+      "severity": "P2",
+      "confidence": "high for local Vite path; low for deployed site",
+      "claim": "The local AOI Everything export has release=null.",
+      "evidence": ["qa/functional/results.json", "qa/functional/area-export.json", "INTERFACE/AoiTool.jsx"],
+      "reproduce": "Run the local Vite server and python qa/functional/check_first_pass.py; inspect area-export.json top-level release (exit 1).",
+      "alternatives": ["PUBLISHED/release.json is absent by build design", "dist/release.json exists because the launch build writes it", "The deployed site may serve a valid release.json"],
+      "scientific_impact": "A downloaded local export lacks a release identifier, weakening provenance; it does not show incorrect basin values.",
+      "action": "Supply release metadata to the development path or identify the atlas latest release in the export; report fetch failure instead of silently using null.",
+      "retest": "On local development and deployed targets, download Everything and assert a non-null release ID matching the served metadata and data release; preserve the exported basin IDs."
+    },
+    {
+      "id": "SR-03",
+      "class": "methodological_limitation",
+      "severity": "P2",
+      "confidence": "high for retrospective held-out result; medium for generalization",
+      "claim": "Pskem same-month linear reconstruction has poorer held-out skill than training-month climatology.",
+      "evidence": ["qa/model_validation/results.json", "PUBLISHED/data/atlas/models/pskem-discharge.json", "qa/model_validation/check_pskem.py"],
+      "reproduce": "python qa/model_validation/check_pskem.py; compare 2013-01 to 2017-12 model RMSE 35.834 and climatology RMSE 19.278 mm/month (59 valid months).",
+      "alternatives": ["Positive NSE uses the evaluation-period mean, a different baseline", "This is a historical reconstruction with same-month climate, not a lead-time forecast", "One invalid gauge month is excluded"],
+      "scientific_impact": "A generic validated-model label can imply useful prediction although squared-error skill versus seasonal climatology is -2.455; the model artifact itself discloses that figure.",
+      "action": "Label the model as retrospective and present the baseline and 59-month scope alongside NSE; do not claim prospective forecast skill.",
+      "retest": "If prospective skill is claimed, define issue time and lead, use predictors available then, pre-register a held-out test, and compare with seasonal climatology with uncertainty."
+    },
+    {
+      "id": "SR-04",
+      "class": "missing_evidence",
+      "severity": "P2",
+      "confidence": "high",
+      "claim": "Pskem interval calibration, source independence and geographic transfer are unverified.",
+      "evidence": ["qa/model_validation/REPORT.md", "qa/model_validation/results.json"],
+      "reproduce": "Inspect results.json uncertainty.published_interval=null and check_pskem.py query.observations selection.",
+      "alternatives": ["No predictive interval is claimed by the artifact", "The observation query may correctly resolve runs and revisions"],
+      "scientific_impact": "No quantified predictive uncertainty or independent source-data rebuild supports wider model claims.",
+      "action": "Keep claims confined to the tested retrospective split; pin raw observations and revision policy before independent rebuild.",
+      "retest": "Rebuild input rows independently from pinned raw data; for any interval claim, check empirical coverage on held-out months and additional catchments."
+    },
+    {
+      "id": "SR-05",
+      "class": "missing_evidence",
+      "severity": "P2",
+      "confidence": "high",
+      "claim": "The selected Siegfried et al. 2024 result has not been numerically replicated.",
+      "evidence": ["qa/replication/REPORT.md", "qa/replication/literature.json"],
+      "reproduce": "Inspect literature.json target_status=BLOCKED and the absence of retrieved input/code archives and a numerical reproduction script.",
+      "alternatives": ["The paper's baseline, 221 catchments, model and SSP5-8.5 projection differ from UZGEODATA's historical basin record"],
+      "scientific_impact": "No inference of agreement or disagreement with the published -2.7% projection is justified.",
+      "action": "Acquire and verify the author code and data under documented licence, reproduce the original target, then separately compare only a matched design.",
+      "retest": "Hash-pin inputs, execute an identified code path to the target table value, document ensemble and median definitions, then independently recalculate it."
+    },
+    {
+      "id": "SR-06",
+      "class": "missing_evidence",
+      "severity": "P2",
+      "confidence": "high",
+      "claim": "The passing topology and functional checks support only their sampled scopes.",
+      "evidence": ["qa/data_audit/results.json", "qa/functional/results.json"],
+      "reproduce": "python -c \"from qa.data_audit.check_syr_darya_level07 import audit; print(audit()['status'])\"; inspect functional results.json NOT TESTED scenarios.",
+      "alternatives": ["0.6 km2 area difference is within 1.8 km2 source-field rounding bound", "CSV, JSON and UI use the same project artifacts", "The local GEE export is not an independently downloaded original shapefile"],
+      "scientific_impact": "One 35-unit outlet's routing is supported; climate fields, other outlets and independent AOI geometry accuracy remain unverified.",
+      "action": "Keep the PASS statements scoped; pin source licence and original asset version; sample other topology and climate cases against separate sources.",
+      "retest": "Check exact membership for separately sourced outlets and variable/period-matched climate values against independent computations with declared tolerances."
+    }
+  ]
+}

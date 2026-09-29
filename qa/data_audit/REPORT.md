@@ -1,0 +1,9 @@
+# Independent data audit: upper Syr Darya, HydroATLAS level 07
+
+Run: `python qa/data_audit/check_syr_darya_level07.py` (exit 0, PASS). The machine-readable evidence is `results.json`.
+
+The check uses native `HYBAS_ID`, `MAIN_BAS`, `NEXT_DOWN`, `SUB_AREA`, and `UP_AREA` fields from the local GeoJSON export of `WWF/HydroATLAS/v1/Basins/level07` (Google Earth Engine; export generated 2026-09-08). The script selects `MAIN_BAS=4070050240`, independently traverses reverse `NEXT_DOWN` edges from outlet `HYBAS_ID=4070425650`, and follows each selected unit downstream to detect cycles or broken paths. It does not import the production basin builder or use the export's derived `in_headwater_formation` flag to calculate expected membership.
+
+The reconstructed set contains 35 unique upstream units out of 177 full Syr Darya units. All 35 published membership IDs match exactly; no missing or extra IDs or broken downstream paths were found. The sum of source `SUB_AREA` values is **95,297.6 km²**, matching the local source manifest's reported value. It differs from the outlet's native `UP_AREA=95,297.0 km²` by **0.6 km²** (relative error `6.30e-6`), within the **1.8 km²** bound obtained from 35 areas rounded to 0.1 km² plus final rounding (35 × 0.05 + 0.05). All required values were present; missing rate is 0%. Hashes for the source export and published CSV are in `results.json`; the source export hash matches its manifest.
+
+Scope is static topology and source area attributes, with no reference period. This verifies the selected outlet's membership and source attribute sum, not geodesic polygon area, all basin levels, TerraClimate values, or any release-wide scientific claim. The local GeoJSON is a GEE export of the named asset rather than a separately downloaded WWF shapefile, and its exact licence/attribution terms are not pinned in the local manifest. Those remain evidence gaps before broader source-level validation or redistribution.

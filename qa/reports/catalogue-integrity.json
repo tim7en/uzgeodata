@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "check": "release_file_integrity",
+  "release_id": "uz-20260924T150158900Z",
+  "manifest": "PUBLISHED\\data\\atlas\\releases\\uz-20260924T150158900Z.json",
+  "scope": [
+    "catalogue.json"
+  ],
+  "status": "PASS",
+  "results": [
+    {
+      "path": "catalogue.json",
+      "status": "PASS",
+      "expected_bytes": 257827,
+      "actual_bytes": 257827,
+      "expected_sha256": "d36945c9cf314a94a813ae6df74be329ba77c9fc90ea4e9d950ba972bd8e65c7",
+      "actual_sha256": "d36945c9cf314a94a813ae6df74be329ba77c9fc90ea4e9d950ba972bd8e65c7"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "check": "release_file_integrity",
+  "release_id": "uz-20260924T150158900Z",
+  "manifest": "PUBLISHED\\data\\atlas\\releases\\uz-20260924T150158900Z.json",
+  "scope": [
+    "cube/index.json"
+  ],
+  "status": "FAIL",
+  "results": [
+    {
+      "path": "cube/index.json",
+      "status": "FAIL",
+      "expected_bytes": 17212,
+      "actual_bytes": 17435,
+      "expected_sha256": "6f3c36818ef1e2108994e4a6958c8d87af6857fff0f6cfd59e39a7bd6edc8d6c",
+      "actual_sha256": "08a51a3ce4fcd8f7525cdb5164b6a48d9d7e3da630e14e9bdc909c5c4f2a18b2"
+    }
+  ]
+}

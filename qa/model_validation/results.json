@@ -1,0 +1,206 @@
+{
+  "classification": "retrospective monthly statistical reconstruction using same-month observed climate; no lead-time forecast skill established",
+  "target_unit": "mm/month catchment depth",
+  "area_km2": 2626.8999999999996,
+  "split": {
+    "train": [
+      "2003-01",
+      "2012-12"
+    ],
+    "evaluate": [
+      "2013-01",
+      "2017-12"
+    ],
+    "train_months": 120,
+    "heldout_months": 59,
+    "heldout_keys": [
+      "2013-01",
+      "2013-02",
+      "2013-03",
+      "2013-04",
+      "2013-05",
+      "2013-06",
+      "2013-07",
+      "2013-08",
+      "2013-09",
+      "2013-10",
+      "2013-11",
+      "2013-12",
+      "2014-01",
+      "2014-02",
+      "2014-03",
+      "2014-04",
+      "2014-05",
+      "2014-06",
+      "2014-07",
+      "2014-08",
+      "2014-09",
+      "2014-10",
+      "2014-11",
+      "2014-12",
+      "2015-01",
+      "2015-03",
+      "2015-04",
+      "2015-05",
+      "2015-06",
+      "2015-07",
+      "2015-08",
+      "2015-09",
+      "2015-10",
+      "2015-11",
+      "2015-12",
+      "2016-01",
+      "2016-02",
+      "2016-03",
+      "2016-04",
+      "2016-05",
+      "2016-06",
+      "2016-07",
+      "2016-08",
+      "2016-09",
+      "2016-10",
+      "2016-11",
+      "2016-12",
+      "2017-01",
+      "2017-02",
+      "2017-03",
+      "2017-04",
+      "2017-05",
+      "2017-06",
+      "2017-07",
+      "2017-08",
+      "2017-09",
+      "2017-10",
+      "2017-11",
+      "2017-12"
+    ]
+  },
+  "missingness": {
+    "gauge_valid_months_total": 203,
+    "rejected_calendar_months": [
+      "2015-02"
+    ],
+    "incomplete_predictor_months": {},
+    "nominal_train_months": 120,
+    "nominal_evaluation_months": 60
+  },
+  "coefficients_refit": [
+    -77.12838338628504,
+    0.323995477484472,
+    9.260003746452503,
+    1.3383782695111068
+  ],
+  "published_coefficients": [
+    -77.12838338628504,
+    0.323995477484472,
+    9.260003746452503,
+    1.3383782695111068
+  ],
+  "published_metric_deltas": {
+    "bias": 7.105427357601002e-15,
+    "mae": -3.552713678800501e-15,
+    "rmse": -7.105427357601002e-15,
+    "nash_sutcliffe": 1.1102230246251565e-16
+  },
+  "model": {
+    "n": 59,
+    "bias": 13.983689043717042,
+    "mae": 28.014003118003398,
+    "rmse": 35.834217900406365,
+    "nash_sutcliffe": 0.5499786616403453,
+    "skill_against_training_month_climatology": -2.455330324966997
+  },
+  "baseline": {
+    "n": 59,
+    "bias": 9.184378126953792,
+    "mae": 13.105934053092165,
+    "rmse": 19.27760797811642
+  },
+  "residual_quantiles_mm": {
+    "0": -98.4782470310601,
+    "0.1": -25.555162788733337,
+    "0.25": -2.8165623582842265,
+    "0.5": 15.025100273400412,
+    "0.75": 40.142858011195635,
+    "0.9": 56.73616688590875,
+    "1": 74.50691825651465
+  },
+  "strata": {
+    "cold_Nov_Apr": {
+      "model": {
+        "n": 29,
+        "bias": 9.944190294179078,
+        "mae": 17.565800661676583,
+        "rmse": 23.836105288757565
+      },
+      "baseline": {
+        "n": 29,
+        "bias": 4.399731625450739,
+        "mae": 7.446950375754299,
+        "rmse": 10.594246290111442
+      }
+    },
+    "warm_May_Oct": {
+      "model": {
+        "n": 30,
+        "bias": 17.888537834937072,
+        "mae": 38.11393215911931,
+        "rmse": 44.45399930817215
+      },
+      "baseline": {
+        "n": 30,
+        "bias": 13.809536411740075,
+        "mae": 18.576284941185424,
+        "rmse": 24.947304739462123
+      }
+    },
+    "dry_lower_training_tercile": {
+      "model": {
+        "n": 19,
+        "bias": 6.883597947457332,
+        "mae": 14.829315831124134,
+        "rmse": 21.66170727128663
+      },
+      "baseline": {
+        "n": 19,
+        "bias": 3.248682826866168,
+        "mae": 5.020063984163843,
+        "rmse": 6.048734248290362
+      }
+    },
+    "wet_upper_training_tercile": {
+      "model": {
+        "n": 17,
+        "bias": -8.622570337308499,
+        "mae": 27.069301999483702,
+        "rmse": 34.36224849258678
+      },
+      "baseline": {
+        "n": 17,
+        "bias": 17.115515293580216,
+        "mae": 26.47817058711565,
+        "rmse": 31.45861233456816
+      }
+    }
+  },
+  "training_target_tercile_thresholds_mm": [
+    31.284195972439004,
+    92.75740073851307
+  ],
+  "uncertainty": {
+    "published_interval": null,
+    "coverage_test": "unavailable: no predictive interval published"
+  },
+  "provenance": {
+    "model_sha256": "c41683e236692d8b06a5cc20abda0edcff3f23383eddcf6534cc6767daf673db",
+    "gauge_monthly_sha256": "a0fc1f68bcf10d3c5fed6e9f57ce4f47135a0001c29a1d81606774fd123d6e17",
+    "geometry_sha256": "9ce2e5fa1416719043d927fa51fc9c42be7f84eacb3dd8f0f088a3a88e21d84f",
+    "observation_manifest_sha256": "6206b153af89a089c580f50deec76096e2b6b5bf597103295495fdb9d5ad06ec"
+  },
+  "limitations": [
+    "Predictor row choice uses repository query view; aggregation, fit and metrics are recalculated separately.",
+    "Historical same-month predictor values may not have been available at forecast issue time.",
+    "Five evaluation years from one gauge and one catchment; no geographic transfer test.",
+    "No uncertainty interval or probabilistic coverage claim in the model artifact."
+  ]
+}

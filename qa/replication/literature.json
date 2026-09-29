@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "review_date_utc": "2026-09-29",
+  "studies": [
+    {
+      "id": "siegfried-2024-water-pulse",
+      "title": "Unveiling the future water pulse of central asia: a comprehensive 21st century hydrological forecast from stochastic water balance modeling",
+      "authors": ["Tobias Siegfried", "Aziz Ul Haq Mujahid", "Beatrice Marti", "Peter Molnar", "Dirk Nikolaus Karger", "Andrey Yakovlev"],
+      "year": 2024,
+      "journal": "Climatic Change 177, article 141",
+      "doi": "10.1007/s10584-024-03799-y",
+      "full_text_url": "https://link.springer.com/article/10.1007/s10584-024-03799-y",
+      "data_doi": "10.5281/zenodo.10125163",
+      "data_url": "https://zenodo.org/records/10125163",
+      "study_area": "221 high-mountain Central Asian catchments over five large river basins, including Amu Darya and Syr Darya; catchments greater than 200 km2",
+      "baseline_period": "1979-01-01/2011-12-31",
+      "future_periods": ["2011/2040", "2041/2070", "2071/2100"],
+      "sources": ["CHELSA V2.1 daily baseline temperature and precipitation", "four CMIP6 GCMs under SSP1-2.6, SSP2-4.5, SSP3-7.0 and SSP5-8.5", "Marti et al. 2023 gauge norms and catchment geometry", "global soil and rooting-depth products", "Rounce et al. 2023 glacier ablation projections"],
+      "method": "Steady-state stochastic soil moisture water-balance model; runoff coefficient as function of aridity and storage indices; glacier imbalance ablation added to modeled discharge; GCM ensemble and catchment median reporting",
+      "original_code": "Zenodo CODE_ZENODO.zip, 327.4 kB, listed publicly; not downloaded in this first pass",
+      "original_data": "Zenodo DATA_ZENODO.zip, 2.5 GB, listed publicly; not downloaded or verified in this first pass",
+      "published_target": "Regional median modeled specific-discharge change for 2071-2100 under SSP5-8.5 versus modeled 1979-2011 baseline: -2.7%; article section 3.3, Figure 5/Table 2 context",
+      "target_status": "BLOCKED",
+      "blocking_evidence": "Full author input data and code archives have not been acquired, checksum-verified, or inspected; published aggregate alone cannot independently recreate the 221 catchment model inputs or ensemble median."
+    }
+  ]
+}
