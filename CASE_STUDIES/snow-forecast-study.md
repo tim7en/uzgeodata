@@ -1,6 +1,6 @@
 # Seasonal flow forecasts from snow: Pskem, then seven more gauges
 
-**Build date:** 2026-09-29. **Status:** research result, not yet on the website.
+**Build date:** 2026-09-29. **Status:** internal research result. Outputs live in `RESEARCH/snow-forecast/` and are deliberately kept off the website.
 
 ## Question
 
@@ -101,11 +101,65 @@ Trends use tie-corrected Mann–Kendall with Sen's slope.
 - **Earlier melt shows only in the Chirchik system.** No Kashkadarya gauge shows
   a timing trend.
 
+## Regional run: every gauged catchment
+
+`PIPELINES/extract_snow_forecast_region.py` stores, for each water year from
+1951, one 40-band ERA5-Land grid over the whole Aral region: SWE on the day before
+each issue date, plus monthly precipitation, temperature and SWE. Cells whose
+September SWE exceeds 500 mm in most years are ERA5-Land glacier cells, and are
+kept out of every SWE predictor. `PIPELINES/build_snow_forecast_region.py`
+reduces the grids to every CA-discharge catchment that drains to the Aral Sea
+and has at least 25 complete April–September seasons since 1951. It then scores
+each one the same way as the single-basin study, using 500 m bands.
+
+**52 gauges were scored.** On Pskem, Chatkal and Charvak inflow the regional
+store reproduces the daily-cell study to within 0.01 in skill.
+
+| Issue | Median operational skill (IQR) | Gauges above 0 |
+| --- | --- | ---: |
+| 1 Jan | 0.09 (0.00–0.15) | 73% |
+| 1 Mar | 0.26 (0.15–0.36) | 94% |
+| 1 Apr | **0.39 (0.24–0.50)** | **94%** |
+| 1 Apr, 1996–2017 only | 0.34 (0.20–0.49) | 71% |
+
+- **Strongest:** the Chirchik system (median 0.58), Akhangaran, Kofarnikhan,
+  Vakhsh, and Akdarya and Yakkabagdarya in the Kashkadarya.
+- **Weakest:** Zeravshan (median 0.17), where glacier melt that winter snow
+  cannot see feeds the summer flow, and a few small Fergana-valley rivers
+  (Akbura, Isfara, Karakol) and the Rovatkhodzha diversion inflow.
+- **Regulated gauges:** seven gauges have a dam in their catchment. They mostly
+  score well because they are reconstructed reservoir inflows (Toktogul,
+  Charvak, Nurek/Vakhsh). Where at least 25 years precede the dam, the
+  pre-regulation score is stored as well.
+- **Coverage gap:** the Amu Darya headwaters are thin in this gauge set. No
+  Pyanj gauge has 25 complete seasons after 1951.
+
+**Association with basins.** Each gauge is linked to the level-12 basin at its
+location whose upstream area best matches the catchment (51 of 52 within a
+factor of 1.5). Walking down the river network, every level-12 basin is tied to
+the nearest scored gauge below it. 1,208 basins, mostly the headwater zone, are
+covered by a tested forecast, and 929 of those by one with April skill above 0.3.
+For all 7,445 basins and every water year, the build also stores April 1 SWE and
+October–March precipitation, both locally and accumulated over the upstream area
+(SWE volume in km³). These are inputs for forecasting ungauged basins later.
+
+| File in `RESEARCH/snow-forecast/region/` | Content |
+| --- | --- |
+| `gauges.json` | Every score, predictor choice, hindcast series and regulation flag per gauge |
+| `gauge-skill.csv` | One row per gauge, all issue months |
+| `gauge-basin-links.csv` | Gauge to level-12 outlet basin, with area ratio |
+| `basin-gauge-association.csv` | Each level-12 basin to its nearest scored downstream gauge and that gauge's skill |
+| `basin-glacier-cell-share.csv` | Share of each basin under ERA5-Land glacier cells |
+| `basin-predictors.parquet` | 7,445 basins × 76 water years, local and upstream April 1 SWE and Oct–Mar precipitation (gitignored, rebuilt by the script) |
+
 ## Next steps
 
 1. Download the USGS SnowModel release for the Kashkadarya and rerun the four
    gauges with its elevation-band SWE in place of ERA5-Land, to measure how much
-   downscaled snow adds out of sample.
+   downscaled snow adds out of sample. ScienceBase serves its files only to a
+   browser (a Cloudflare challenge blocks scripts), so the yearly
+   `QASH100_swed_wy<year>.nc` and `QASH100_prec_wy<year>.nc` files, `dem.asc` and
+   `projection.wkt` have to be downloaded by hand into `storage/usgs-snowmodel/`.
 2. Replace the ten-year level correction with an explicit cause (glacier area,
    warming or irrigation withdrawals) if one can be shown.
 3. Add real-time issue: the ERA5-Land record already runs to the current month,
@@ -119,7 +173,7 @@ python PIPELINES/build_snow_forecast_study.py --gauge 16290       # ~1.5 min
 python -m pytest TESTS/test_snow_forecast_study.py -q
 ```
 
-Outputs per gauge are in `PUBLISHED/data/case-studies/snow-forecast/{CODE}/`:
+Outputs per gauge are in `RESEARCH/snow-forecast/{CODE}/`:
 `study.json` (all scores, trends and series), `predictors-and-targets.csv` and
 `cells.json`. The daily ERA5-Land cell files are gitignored and rebuilt by the
 extractor.

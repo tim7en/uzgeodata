@@ -9,7 +9,7 @@ import pytest
 from PIPELINES import build_snow_forecast_study as study
 
 ROOT = Path(__file__).resolve().parents[1]
-PSKEM = ROOT / "PUBLISHED/data/case-studies/snow-forecast/16290/study.json"
+PSKEM = ROOT / "RESEARCH/snow-forecast/16290/study.json"
 
 
 def test_mann_kendall_detects_a_trend_and_rejects_noise():
@@ -38,3 +38,23 @@ def test_pskem_april_forecast_beats_climatology_out_of_sample():
     assert april["all"]["skill_corrected"] > 0.4
     assert april["recent"]["skill_corrected"] > 0.2
     assert report["discharge"]["overlap_agreement"]["r"] > 0.99
+
+
+REGION = ROOT / "RESEARCH/snow-forecast/region/gauges.json"
+
+
+@pytest.mark.skipif(not (REGION.exists() and PSKEM.exists()), reason="run the regional and Pskem builds")
+def test_regional_grids_reproduce_the_single_basin_study():
+    """The 40-band regional store must give Pskem the skill its daily-cell study gives."""
+    region = {g["code"]: g for g in json.loads(REGION.read_text())["gauges"]}
+    single = json.loads(PSKEM.read_text())["forecasts"]["operational"]["4"]["meanSWE"]["all"]["skill_corrected"]
+    regional = region["16290"]["issue"]["4"]["operational"]["meanSWE"]["all"]["skill_corrected"]
+    assert abs(regional - single) < .05
+
+
+@pytest.mark.skipif(not REGION.exists(), reason="run build_snow_forecast_region.py")
+def test_april_forecasts_beat_climatology_at_most_gauges():
+    gauges = json.loads(REGION.read_text())["gauges"]
+    april = [g["issue"]["4"]["operational"]["meanSWE"]["all"]["skill_corrected"] for g in gauges]
+    assert len(april) >= 40
+    assert np.mean(np.array(april) > 0) > .85

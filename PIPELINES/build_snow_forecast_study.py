@@ -46,7 +46,7 @@ from scipy import stats
 
 ROOT = Path(__file__).resolve().parents[1]
 GAUGES = ROOT / "GEODATA/ca-discharge-2023/CA-discharge.gpkg"
-FORCING = ROOT / "PUBLISHED/data/case-studies/snow-forecast"
+FORCING = ROOT / "RESEARCH/snow-forecast"
 # Uzhydromet monthly workbooks that extend a CA-discharge record past 2016.
 SUPPLEMENT = {"16290": ROOT / "PUBLISHED/data/hydroclimate/pskem-discharge-monthly.csv"}
 BAND_WIDTH = 200
