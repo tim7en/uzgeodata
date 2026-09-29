@@ -47,7 +47,7 @@ export function mapFrame(report, width = W, height = 880) {
     top: (minY + maxY) * scale / 2 - height / 2, centerY: (minY + maxY) / 2 };
 }
 
-async function basinMap(report) {
+async function basinMap(report, { upstreamFill = null, note = null } = {}) {
   const height = 880, frame = mapFrame(report, W, height);
   if (!frame) return { image: null, note: 'No display geometry is available for this report.' };
   const { canvas, ctx } = surface(height);
@@ -95,7 +95,8 @@ async function basinMap(report) {
       ctx.strokeStyle = stroke; ctx.lineWidth = weight; ctx.stroke();
     }
   }
-  report.upstream_geometry.features.forEach(f => draw(f.geometry, '#087fba', '#148fc12b', 0.4));
+  report.upstream_geometry.features.forEach(f => draw(f.geometry, upstreamFill ? '#4b5d64' : '#087fba',
+    upstreamFill ? upstreamFill(f) : '#148fc12b', upstreamFill ? 0.3 : 0.4));
   report.local_geometry.features.forEach(f => draw(f.geometry, '#ad5400', '#ed9b3b70', 3));
   draw(report.input.geometry, '#6c34a0', null, 3);
   // North is up in Web Mercator; the scale is measured at the map centre.
@@ -111,6 +112,7 @@ async function basinMap(report) {
   ctx.fillStyle = '#ffffffed'; ctx.fillRect(20, height - 86, length + 40, 66);
   ctx.strokeStyle = INK; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(40, height - 50); ctx.lineTo(40 + length, height - 50); ctx.stroke();
   ctx.fillStyle = INK; ctx.textAlign = 'left'; ctx.fillText(metres >= 1000 ? `${fmt(metres / 1000)} km` : `${fmt(metres)} m`, 40, height - 28);
+  if (note) return { image: canvas.toDataURL('image/png'), note: `${note}${missing ? ` ${missing} basemap tiles unavailable.` : ''}` };
   return { image: canvas.toDataURL('image/png'),
     note: `Orange: local basins. Blue: upstream catchment, including local basins. Purple: input location. North up; scale at map centre. Shaded relief © Esri.${missing ? ` ${missing} basemap tiles unavailable; boundaries remain accurate.` : ''}` };
 }
@@ -170,7 +172,7 @@ function monthlyFigure(report, scope, span) {
   draw(r => r.source !== 'observed' ? r.value : null, GOLD, true);
   return { image: canvas.toDataURL('image/png'),
     title: span ? 'Recent conditions · last 36 calendar months' : 'Full monthly record',
-    caption: `${period(rows[0])} to ${period(rows.at(-1))} · ${report.meta.unit}. Teal: observed. Gold: estimated, with held-out p90 error band. Dashed grey: monthly normal${normals ? ` (${normals.firstYear}–${normals.lastYear})` : ''}. Gaps remain unconnected.` };
+    caption: `${period(rows[0])} to ${period(rows.at(-1))} · ${report.meta.unit}. Teal: historical gridded data. Gold: provisional estimate, with held-out p90 error band. Dashed grey: monthly normal${normals ? ` (${normals.firstYear}–${normals.lastYear})` : ''}. Gaps remain unconnected.` };
 }
 
 function droughtFigure(reading, scope) {
@@ -212,6 +214,28 @@ function probabilityFigure(entry, variable) {
   return canvas.toDataURL('image/png');
 }
 
+// The same diverging ramp as the report page: brown drier (colder), teal wetter (warmer).
+const RAMP = ['#8c510a', '#d8b365', '#f1e3bd', '#e8ecea', '#c7eae5', '#5ab4ac', '#01665e'];
+
+function attributionMap(report) {
+  const a = report.upstreamInsights?.attribution;
+  if (!a) return null;
+  const steps = a.extensive ? [-30, -15, -5, 5, 15, 30] : [-1, -0.5, -0.25, 0.25, 0.5, 1];
+  const byId = new Map(a.basins.map(b => [b.id, b]));
+  const upstreamFill = feature => {
+    const basin = byId.get(String(feature.properties.hybas_id));
+    const value = a.extensive ? basin?.percent : basin?.anomaly;
+    if (value === null || value === undefined || !Number.isFinite(value)) return '#cfd8dccc';
+    let i = 0;
+    while (i < steps.length && value > steps[i]) i += 1;
+    return `${RAMP[i]}dd`;
+  };
+  const scale = a.extensive ? '−30, −15, −5, +5, +15, +30%' : '−1, −0.5, −0.25, +0.25, +0.5, +1 °C';
+  return basinMap(report, { upstreamFill, note: `Each upstream sub-basin’s own departure from its ${a.baseline[0]}–${a.baseline[1]} `
+    + `normal in water year ${a.waterYear}: brown ${a.extensive ? 'drier' : 'colder'}, teal ${a.extensive ? 'wetter' : 'warmer'}, `
+    + `class breaks at ${scale}. North up; scale at map centre. Shaded relief © Esri.` });
+}
+
 export async function reportFigures(report) {
   // Fetch the same cached forecast used in the report panel; do not infer it from a screenshot.
   const forecastPromise = report.forecastBasin ? readForecast('/data/atlas/seasonal-forecast/latest.json').catch(() => null) : Promise.resolve(null);
@@ -229,5 +253,6 @@ export async function reportFigures(report) {
         return entry ? [{ variable, entry, image: probabilityFigure(entry, variable) }] : [];
       }),
     }))) : [];
-  return { map, series, drought, seasonal, forecastMissing: !!report.forecastBasin && !seasonal.length };
+  const attribution = await attributionMap(report);
+  return { map, series, drought, seasonal, attribution, forecastMissing: !!report.forecastBasin && !seasonal.length };
 }

@@ -1,6 +1,7 @@
 import { CONDITION_METHOD, reportMonthlyCsv } from './poiModel.js';
 import { CONTINUATION_METHOD, continuationCsv, monthlySeries } from './continuationModel.js';
 import { DROUGHT_METHOD, ordinal } from './droughtModel.js';
+import { baselineNote, ERROR_BOUND_NOTE, trendBasis, trendUnit } from './reportTerms.js';
 import { attributesCsv, dictionaryCsv } from './aoiModel.js';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
 import fontUrl from './assets/NotoSans-Regular.ttf?url';
@@ -89,24 +90,28 @@ export async function reportPdf(report) {
   line('Catchment at a glance', 14);
   line(`Local: ${number(report.local.areaKm2)} km² · ${report.local.ids.length} basin(s). `
     + `Upstream including local: ${number(report.upstream.areaKm2)} km² · ${report.upstream.ids.length} basin(s).`);
-  if (report.coverage) line(`Observed record: ${report.coverage.first}–${report.coverage.last}. `
-    + 'Later modelled months are labelled as estimates; seasonal outlooks are forecasts.', 9);
+  if (report.coverage) line(`Historical gridded data (${report.meta.source_release || report.meta.source}): `
+    + `${report.coverage.first}–${report.coverage.last}. These are modelled grids built from stations, satellites and `
+    + 'reanalysis, not rain-gauge readings at this basin. Later months are provisional model-derived estimates from '
+    + 'ERA5-Land and are marked so; seasonal outlooks are forecasts.', 9);
+  const baseline = report.present?.local?.baseline;
+  if (baseline) line(baselineNote(baseline.firstYear, baseline.lastYear), 9);
   if (report.geometry_missing_ids.length) line(`Map coverage: ${report.geometry_missing_ids.length} upstream basins have statistics but no display boundary.`, 9);
 
   for (const section of figures.series) {
     newPage();
     line(section.scope === 'local' ? '01 / LOCAL BASIN' : '02 / UPSTREAM CATCHMENT', 18);
     line(`${report.meta.label} · ${report.meta.unit}`, 11);
-    line('Monthly values against the observed seasonal normal. Both time windows are included regardless of the on-screen chart selection.', 9);
+    line('Monthly values against the seasonal normal of the gridded record. Both time windows are included regardless of the on-screen chart selection.', 9);
     if (!section.figures.length) line('No monthly values are available for this scope.');
     for (const item of section.figures) figure(item, 57.2);
     if (section.scope === 'upstream' && report.continuation?.upstreamWithheld) {
-      line('Upstream estimates are withheld because the matched catchments overlap. Only the observed upstream record is shown.', 9);
+      line('Upstream provisional estimates are withheld because the matched catchments overlap. Only the gridded upstream record is shown.', 9);
     }
   }
   if (figures.drought.length) {
     newPage(); line('03 / DROUGHT HISTORY', 18);
-    line('Water-year precipitation standardized against the reference climate. Local and upstream records are shown separately.', 10);
+    line('Water-year precipitation as SPI-12, fitted on 1991–2020 - a different baseline from the monthly normals above. Local and upstream records are shown separately.', 10);
     for (const item of figures.drought) figure(item, 53.4);
   }
   for (let i = 0; i < figures.seasonal.length; i++) {
@@ -128,6 +133,7 @@ export async function reportPdf(report) {
     if (i % 2 === 1 || i === figures.seasonal.length - 1) line('Applies to the named level-7 basin or zone. Precipitation and temperature only; not a river-flow forecast.', 8);
   }
   if (figures.forecastMissing) { newPage(); line('Seasonal outlook', 18); line('No seasonal forecast could be loaded for this location at export time.'); }
+  upstreamSection(report.upstreamInsights, figures.attribution);
   newPage(); line('05 / STATISTICS & METHODS', 18);
   line(report.name, 14);
   line(`Generated: ${report.generatedAt} | File: ${report.sourceFile}`);
@@ -137,14 +143,14 @@ export async function reportPdf(report) {
   line(`Source: ${report.meta.source_release || report.meta.source}`);
   if (report.coverage) {
     line(`Record: ${report.coverage.first} to ${report.coverage.last}`
-      + ` · ${report.coverage.observed_months} observed months in a ${report.coverage.frame_months}-month frame`);
+      + ` · ${report.coverage.observed_months} months of gridded data in a ${report.coverage.frame_months}-month frame`);
   }
   for (const scope of ['local', 'upstream']) {
     const data = report[scope];
     line(scope === 'local' ? 'Local basin summary' : 'Upstream catchment summary (including local)', 14);
     line(`${data.ids.length} basins; ${number(data.areaKm2)} km²`);
     // The latest twelve months of the record continued to the present, each
-    // marked observed or estimated: listing the last observed months instead
+    // marked gridded or provisional: listing the last gridded months instead
     // made a report printed in 2026 read as if nothing had happened since 2024.
     const series = monthlySeries(data, report.continuation?.[scope]);
     const observed = new Map(data.rows.map(row => [row.year * 12 + row.month, row]));
@@ -154,10 +160,11 @@ export async function reportPdf(report) {
       for (const row of series.slice(-12)) {
         const source = observed.get(row.year * 12 + row.month);
         line(row.source === 'observed'
-          ? `${period(row)}: mean ${number(row.value)} ${report.meta.unit}; coverage ${number(source?.area_coverage_percent)}%; total ${number(source?.total_full_catchment)} ${data.total.unit || '(not applicable)'}`
-          : `${period(row)}: ${number(row.value)}${row.errorP90 ? ` ±${number(row.errorP90)}` : ''} ${report.meta.unit}, estimated`, 9);
+          ? `${period(row)}: mean ${number(row.value)} ${report.meta.unit}; coverage ${number(source?.area_coverage_percent)}%`
+            + (data.total.unit ? `; ${data.total.label.toLowerCase()} ${number(source?.total_full_catchment)} ${data.total.unit}` : '')
+          : `${period(row)}: ${number(row.value)}${row.errorP90 ? ` ±${number(row.errorP90)}` : ''} ${report.meta.unit}, provisional estimate`, 9);
       }
-    } else line('No observations are available for this variable.');
+    } else line('No values are available for this variable.');
     line(data.total.note, 9);
     conditions(data);
   }
@@ -167,27 +174,73 @@ export async function reportPdf(report) {
     const trend = data.conditions?.trend;
     if (!now) return;
     const unit = report.meta.unit;
-    const estimated = source => (source && source !== 'observed' ? ' (estimated)' : '');
+    const estimated = source => (source && source !== 'observed' ? ' (provisional estimate)' : '');
     const error = value => (value ? ` ±${number(value)}` : '');
     const versus = (anomaly, percent) => (percent === null || percent === undefined
       ? `anomaly ${number(anomaly)} ${unit}` : `${Math.round(percent)}% vs normal`);
     line(`Current conditions, ${now.latest}`, 12);
-    if (now.baseline) line(`Normals: mean of each calendar month over the observed years ${now.baseline.firstYear}-`
-      + `${now.baseline.lastYear}. Observed to ${now.lastObserved}; ${now.estimatedMonths} later months are estimates.`, 9);
+    if (now.baseline) line(`Normals: mean of each calendar month over ${now.baseline.firstYear}-${now.baseline.lastYear} `
+      + `of the gridded record. Gridded data to ${now.lastObserved}; ${now.estimatedMonths} later months are provisional estimates.`, 9);
     const { month, lastTwelveMonths: twelve, waterYearToDate: toDate } = now;
     const sumUnit = now.extensive ? unit.replace(/ per month$/, '') : `${unit} (mean)`;
     line(`Latest month ${month.period}${estimated(month.source)}: ${number(month.value)}${error(month.errorP90)} ${unit}`
       + `; normal ${number(month.normal)}; ${versus(month.anomaly, month.anomalyPercent)}`
       + `${month.withinError ? `; ${month.standing}` : month.percentile === null ? '' : `; ${ordinal(month.percentile)} percentile (${month.standing})`}`);
     if (twelve) line(`Last 12 months ${twelve.from} to ${twelve.to}: ${number(twelve.value)}${error(twelve.errorBound)} ${sumUnit}; `
-      + `${versus(twelve.anomaly, twelve.anomalyPercent)}; ${twelve.estimatedMonths} estimated months`);
+      + `${versus(twelve.anomaly, twelve.anomalyPercent)}; ${twelve.estimatedMonths} provisional months`
+      + `${twelve.errorBound ? ' (± is a conservative bound, see below)' : ''}`);
     if (toDate) line(`Water year ${toDate.waterYear} so far, ${toDate.from} to ${toDate.to}: ${number(toDate.value)}`
       + `${error(toDate.errorBound)} ${sumUnit}; ${versus(toDate.anomaly, toDate.anomalyPercent)}`
       + `${toDate.percentile === null ? '' : `; ${ordinal(toDate.percentile)} percentile of ${toDate.comparedYears} years (${toDate.standing})`}`);
     if (trend) {
-      line(`Trend over the observed record, ${trend.years} complete years: ${trend.direction}`
-        + `; Sen slope ${number(trend.slopePerDecade)} ${unit} per decade; Mann-Kendall p = ${number(trend.p)}`);
-    } else line('Fewer than ten complete observed years: no trend is reported.', 9);
+      line(`Trend in ${trendBasis(now.extensive)} over the gridded record, ${trend.years} complete years: ${trend.direction}`
+        + `; Sen slope ${number(trend.slopePerDecade)} ${trendUnit(unit, now.extensive)}; Mann-Kendall p = ${number(trend.p)}`);
+    } else line('Fewer than ten complete years of gridded data: no trend is reported.', 9);
+    if (twelve?.errorBound || toDate?.errorBound) line(ERROR_BOUND_NOTE, 9);
+  }
+
+  function upstreamSection(insights, map) {
+    if (!insights || (!insights.attribution && !insights.snow && !insights.gauges)) return;
+    newPage(); line('UPSTREAM IN DETAIL', 18);
+    const a = insights.attribution;
+    if (a) {
+      const unit = a.extensive ? insights.unit.replace(/ per month$/, '') : insights.unit;
+      const signed = v => `${v > 0 ? '+' : ''}${number(v)}`;
+      const pct = v => `${v > 0 ? '+' : ''}${Math.round(v)}%`;
+      const mm = v => `${v > 0 ? '+' : ''}${Math.round(v * 10) / 10}`;
+      line(`Where the anomaly came from · water year ${a.waterYear}`, 14);
+      line(`Upstream ${insights.label}: ${number(a.catchment.value)} ${unit} against a ${a.baseline[0]}–${a.baseline[1]} normal of `
+        + `${number(a.catchment.normal)} (${a.catchment.percent === null ? `${signed(a.catchment.anomaly)} ${unit}` : pct(a.catchment.percent)}). `
+        + 'Each sub-basin contributes its area share times its own anomaly, so the contributions add up to the catchment figure.', 9);
+      if (map?.image) figure({ image: map.image, caption: map.note }, 109.4);
+      const describe = g => `Level-7 basin ${g.key}: ${Math.round(g.areaShare * 100)}% of the area, own anomaly `
+        + `${g.percent === null ? `${signed(g.anomaly)} ${unit}` : pct(g.percent)}, contribution ${mm(g.contribution)} ${a.extensive ? 'mm' : unit}`;
+      const wetter = a.groups.filter(g => g.contribution > 0).slice(0, 5);
+      const drier = a.groups.filter(g => g.contribution < 0).slice(-5).reverse();
+      if (wetter.length) { line(a.extensive ? 'Pushed it wetter' : 'Pushed it warmer', 11); wetter.forEach(g => line(describe(g), 9)); }
+      if (drier.length) { line(a.extensive ? 'Pushed it drier' : 'Pushed it colder', 11); drier.forEach(g => line(describe(g), 9)); }
+    }
+    const snow = insights.snow;
+    if (snow) {
+      line('Snow storage upstream', 14);
+      line(`October–March precipitation against the peak monthly snow water equivalent it built, each against its `
+        + `${snow.baseline[0]}–${snow.baseline[1]} mean. Snow water equivalent is TerraClimate v1.1’s modelled snowpack, not a measurement.`, 9);
+      for (const r of snow.rows.slice(-8).reverse()) {
+        line(`WY ${r.waterYear}: winter precipitation ${number(r.winterPrecipitation)} mm`
+          + `${r.rainAnomaly === null ? '' : ` (${r.rainAnomaly > 0 ? '+' : ''}${Math.round(r.rainAnomaly)}%)`}; peak snowpack `
+          + `${number(r.peakSwe)} mm${r.snowAnomaly === null ? '' : ` (${r.snowAnomaly > 0 ? '+' : ''}${Math.round(r.snowAnomaly)}%)`} — ${r.reading}.`, 9);
+      }
+    }
+    const gauges = insights.gauges;
+    if (gauges) {
+      line('River gauges in this catchment', 14);
+      if (!gauges.length) line('No gauge of the CA-discharge compilation lies in these basins; precipitation here cannot yet be set against measured flow.', 9);
+      for (const g of gauges.slice(0, 10)) {
+        line(`${g.name} (${g.code})${g.river ? `, ${g.river}` : ''}: ${g.first && g.last ? `record ${g.first}–${g.last}` : 'no monthly series'}`
+          + `${g.meanDischarge === null ? '' : `, mean ${number(g.meanDischarge)} m³/s`}.`, 9);
+      }
+      line('Gauge series are not yet joined to these reports; runoff figures in the atlas are modelled generation, not measured discharge.', 9);
+    }
   }
 
   function droughtSection(drought) {
@@ -225,16 +278,16 @@ export async function reportPdf(report) {
   }
   droughtSection(report.drought);
   if (report.continuation) {
-    line('Beyond the observed record · estimated', 14);
+    line('Beyond the gridded record · provisional estimates', 14);
     for (const scope of ['local', 'upstream']) {
       const latest = report.continuation[scope]?.latest;
       if (!latest) continue;
       const error = latest.errorP90 === null || latest.errorP90 === undefined ? ''
         : `; held-out p90 error ±${number(latest.errorP90)}`;
       line(`${scope === 'local' ? 'Local basin' : 'Upstream catchment'}: `
-        + `${latest.months} estimated months from ${latest.first}. Latest ${latest.year}-`
+        + `${latest.months} provisional months from ${latest.first}. Latest ${latest.year}-`
         + `${String(latest.month).padStart(2, '0')}: ${number(latest.value)} ${latest.unit}`
-        + `${latest.normal === null ? '' : `; anomaly ${number(latest.anomaly)} against the observed normal`}`
+        + `${latest.normal === null ? '' : `; anomaly ${number(latest.anomaly)} against the gridded-record normal`}`
         + `${error}${latest.withinError ? '; within the model error of normal' : ''}`);
     }
     line(CONTINUATION_METHOD, 9);
@@ -256,7 +309,7 @@ export async function reportPdf(report) {
     doc.setFontSize(8); doc.setTextColor('#163b49'); doc.text('UZGEODATA / BASIN ATLAS', 18, 12);
     doc.setTextColor('#617782'); doc.text(report.generatedAt.slice(0, 10), 192, 12, { align: 'right' });
     doc.setDrawColor('#dfe7eb'); doc.setLineWidth(0.2); doc.line(18, 282, 192, 282);
-    doc.setFontSize(8); doc.text('uzgeodata.uz · Observed / Estimated / Forecast', 18, 289);
+    doc.setFontSize(8); doc.text('uzgeodata.uz · Gridded record / Provisional estimate / Forecast', 18, 289);
     doc.text(`${page} / ${pages}`, 192, 289, { align: 'right' });
   }
   return new Uint8Array(doc.output('arraybuffer'));

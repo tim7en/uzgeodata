@@ -1,4 +1,5 @@
 import { polygonContains, polygonsOf, segmentsCross, toCsv } from './aoiModel.js';
+import { SOURCE_CODE } from './reportTerms.js';
 import { buildUpstreamMap, traceUpstreamFrom } from './basinTrace.js';
 import { aggregateCatchment } from './catchmentStatisticsModel.js';
 
@@ -351,8 +352,11 @@ export const CONDITION_METHOD = 'Normals are the mean of each calendar month ove
   + 'of this record, not a 1991-2020 climate normal, and the years used are stated. Percent anomalies are '
   + 'given only where zero means none of the quantity. Annual figures use complete years only, so a year '
   + 'missing months is left out rather than counted low. The trend is Mann-Kendall with a Sen slope over '
-  + 'those annual values; it describes this record and this catchment, and a variable whose record ends '
-  + 'earlier is not extrapolated to the present.';
+  + 'those annual values - annual totals for fluxes such as precipitation, so the slope is a change in the '
+  + 'annual total per decade, and annual means for temperatures and states. It describes this record and this '
+  + 'catchment, and a variable whose record ends earlier is not extrapolated to the present. The record is '
+  + 'historical gridded data (TerraClimate v1.1 or ERA5-Land), modelled from stations, satellites and '
+  + 'reanalysis, not gauge readings at this basin.';
 
 export const REPORT_METHOD = 'Local: full matched level-12 sub-basins. Upstream: their union plus all connected upstream sub-basins, counted once, including virtual links. Monthly means use local basin area as weights. Full-area means and totals are withheld if any member lacks data. This is basin assignment, not river snapping or catchment delineation at the uploaded coordinate. Polygon results describe whole intersecting basins, not a clipped polygon. Matching uses simplified map outlines; boundary matches can differ from a full-resolution GIS overlay.';
 
@@ -402,7 +406,7 @@ export function reportMonthlyCsv(report) {
         const estimate = observed ? null : estimated.get(row.year * 12 + row.month);
         return [
           scope, report.variable, report.meta.unit, report[scope].total.unit,
-          observed ? 'observed' : estimate ? 'estimated' : 'no observation',
+          observed ? SOURCE_CODE.observed : estimate ? SOURCE_CODE.estimate : SOURCE_CODE.missing,
           ...columns.map(key => row[key]),
           estimate ? estimate.value : null, estimate ? estimate.errorP90 ?? null : null,
         ];

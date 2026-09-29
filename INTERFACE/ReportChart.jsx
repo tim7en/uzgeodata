@@ -116,8 +116,8 @@ export default function ReportChart({ report }) {
       </div>
     </div>
     <ul className="poi-chart-legend">
-      <li><i className="poi-key-observed"/>Observed</li>
-      {hasEstimate && <li><i className="poi-key-estimated"/>Estimated · p90 error band</li>}
+      <li><i className="poi-key-observed"/>Gridded record</li>
+      {hasEstimate && <li><i className="poi-key-estimated"/>Provisional estimate · p90 error band</li>}
       {hasNormal && <li><i className="poi-key-normal"/>Normal {normals.firstYear}–{normals.lastYear}</li>}
     </ul>
     <div ref={ref} className="poi-chart-frame">

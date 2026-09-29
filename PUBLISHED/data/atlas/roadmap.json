@@ -7627,6 +7627,24 @@
   ],
   "updates": [
     {
+      "id": "report-review-20260929",
+      "date": "2026-09-29",
+      "kind": "implementation",
+      "phase": "living",
+      "title": "Basin report corrected after scientific review",
+      "summary": "Volumes are named for what they measure (precipitation volume is not runoff); annual-total trends are stated in mm per year per decade; multi-month error figures are labelled conservative bounds, not calibrated intervals; TerraClimate and ERA5-Land values are historical gridded data and later months provisional estimates; the 2003–2025 anomaly baseline and the 1991–2020 SPI baseline are stated apart.",
+      "source": "CASE_STUDIES/report-review-20260929.md"
+    },
+    {
+      "id": "decision-support-20260929",
+      "date": "2026-09-29",
+      "kind": "plan",
+      "phase": "living",
+      "title": "Next stage: upstream attribution, snow storage and hydrological response",
+      "summary": "Every basin report now shows which upstream sub-basins made the water-year anomaly, whether the winter built snow or fell as rain, and which river gauges measure the catchment. Planned: current-year attribution, MODIS snow persistence and freezing level, published gauge series compared with precipitation and snow, and the pooled runoff model where no gauge exists.",
+      "source": "CASE_STUDIES/report-review-20260929.md"
+    },
+    {
       "id": "regional-plan-20260910",
       "date": "2026-09-10",
       "kind": "implementation",
@@ -7743,5 +7761,5 @@
     "reproduced": 0
   },
   "refresh_policy": "Curated updates and module changes are republished at dev start/build; browser checks every 60 seconds.",
-  "revision": "50a2b7931514b2203d0b3ac62d9676d6ef1864624ea363129f5958466445c27e"
+  "revision": "53f3b2a22f977ea023e392c4c04f5bf68f13325d9c5717f94b8dac3500749450"
 }

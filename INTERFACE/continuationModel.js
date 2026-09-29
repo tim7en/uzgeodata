@@ -24,8 +24,9 @@ export const CONTINUATION_VARIABLES = {
 export const CONTINUATION_METHOD = 'TerraClimate is released once a year. Months after its latest release are '
   + 'estimated from ERA5-Land, mapped basin by basin and month by month onto the record’s own TerraClimate '
   + 'statistic - the principle TerraClimate v1.1 is itself built on - and carry the 90th percentile of their '
-  + 'error on held-out years, in the units of the variable. They are shown as estimates and never merged into the '
-  + 'observed statistics; the producer’s next release replaces them. Anomalies use the observed baseline.';
+  + 'error on held-out years, in the units of the variable. They are provisional model-derived estimates, never '
+  + 'merged into the statistics of the gridded record; the producer’s next release replaces them. Anomalies use '
+  + 'the gridded record’s baseline.';
 
 const FIELD = { year: 0, month: 1, value: 2, coverage: 3, waterEquivalent: 4, errorP90: 5 };
 

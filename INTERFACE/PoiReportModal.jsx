@@ -6,13 +6,16 @@ import { fetchAll } from './aoiModel.js';
 import { BASEMAPS, collectionBounds } from './mapViewModel.js';
 import { formatNumber } from './landingModel.js';
 import ReportChart from './ReportChart.jsx';
-import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
+import { aggregateCatchment, MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
+import { gaugesInCatchment, snowSeasons, upstreamAttribution } from './upstreamModel.js';
+import UpstreamInsights from './UpstreamInsights.jsx';
 import { monthlyNormals } from './poiModel.js';
 import { aggregateLocalContinuation, CONTINUATION_METHOD, CONTINUATION_VARIABLES, continuationFor, continuationLatest, monthlySeries } from './continuationModel.js';
 import { basinUnits, CONDITION_METHOD, makePoiReport, matchPoi, MAX_UPLOAD_BYTES, outletOf, parsePois, REPORT_METHOD, reportMonthlyCsv } from './poiModel.js';
 import { DROUGHT_METHOD, droughtOutlook, nextYearChance, ordinal, presentConditions } from './droughtModel.js';
 import DroughtOutlook from './DroughtOutlook.jsx';
 import SeasonalForecast from './SeasonalForecast.jsx';
+import { baselineNote, ERROR_BOUND_NOTE, RECORD, trendBasis, trendUnit } from './reportTerms.js';
 import { reportFilename, reportPdf, reportZip, shareOrSaveFile } from './poiExports.js';
 import './damModal.css';
 import './poiReport.css';
@@ -111,15 +114,15 @@ function Summary({ report, scope }) {
     <h3>{scope === 'local' ? 'Local basin' : 'Upstream including local'}</h3>
     <p>{formatNumber(data.ids.length)} basins · {formatNumber(data.areaKm2, 2)} km²</p>
     {month ? <>
-      <p>Latest month: {now.latest}{isEstimate(month.source) && ' · estimated'}</p>
+      <p>Latest month: {now.latest}{isEstimate(month.source) && ' · provisional estimate'}</p>
       <strong>{formatNumber(month.value, 2)} {unit}{month.errorP90 ? ` ±${formatNumber(month.errorP90, 2)}` : ''}</strong>
       {month.standing && <p className={`poi-standing poi-standing-${month.withinError ? 'mid' : month.percentile <= 30 ? 'low' : month.percentile >= 70 ? 'high' : 'mid'}`}>
         {month.standing} for {monthName(now.latest)}
         {month.anomalyPercent !== null && ` · ${signed(month.anomalyPercent, 0)}% vs normal`}
         {month.withinError && ` (±${formatNumber(month.errorP90, 1)} error)`}</p>}
-      {now.lastObserved && now.lastObserved !== now.latest && <p className="poi-coverage">Observed to {now.lastObserved};
-        {' '}{now.estimatedMonths} later months estimated.</p>}
-    </> : <p>No observations for this variable.</p>}
+      {now.lastObserved && now.lastObserved !== now.latest && <p className="poi-coverage">Gridded record to {now.lastObserved};
+        {' '}{now.estimatedMonths} later months are provisional estimates.</p>}
+    </> : <p>No values for this variable.</p>}
   </section>;
 }
 
@@ -166,6 +169,36 @@ const extensiveOf = total => total?.factor !== null && total?.factor !== undefin
 function presentOf(report, continuation) {
   return Object.fromEntries(['local', 'upstream'].map(scope => [scope,
     presentConditions(monthlySeries(report[scope], continuation?.[scope]), { extensive: extensiveOf(report[scope].total) })]));
+}
+
+const GAUGES = '/data/research/ca-discharge-stations.geojson';
+
+/**
+ * Upstream taken apart: which sub-basins made the anomaly, whether the winter went
+ * into snow, and which gauges measure the river. Each part is optional - a
+ * headwater basin has nothing upstream to attribute, and a missing file leaves its
+ * part out rather than failing the report.
+ */
+async function upstreamOf(result, values, precipitation, data, variable, signal) {
+  const position = new Map(data.index.ids.map((id, i) => [String(id), i]));
+  const members = result.upstream.ids.map(id => position.get(String(id))).filter(i => i !== undefined);
+  const pfafById = new Map(data.geometry.features.map(f => [String(f.properties.hybas_id), f.properties.pfaf_id]));
+  const attribution = upstreamAttribution(data.index, values, members,
+    { extensive: extensiveOf(result.upstream.total), pfafById });
+  let snow = null;
+  if (data.index.series.swe_mm_s && data.index.series.pre_mm_s) {
+    try {
+      const swe = aggregateCatchment(data.index, await matrix(data.index, 'swe_mm_s', signal), members, 'swe_mm_s');
+      const rows = list => list.map(row => ({ year: row.year, month: row.month, value: row.mean_observed_area }));
+      snow = snowSeasons(rows(precipitation.upstream.rows), rows(swe.rows));
+    } catch { snow = null; }
+  }
+  let gauges = null;
+  try {
+    const stations = await json(GAUGES, signal);
+    gauges = gaugesInCatchment(stations.features, result.upstream_geometry.features);
+  } catch { gauges = null; }
+  return { attribution, snow, gauges, variable, unit: result.meta.unit, label: result.meta.label };
 }
 
 async function droughtRecord(id, signal) {
@@ -217,7 +250,7 @@ function MonthlyTable({ report }) {
   const byMonth = new Map(upstream.map(row => [row.year * 12 + row.month, row]));
   const estimated = local.filter(row => row.source !== 'observed').length;
   return <details><summary>Monthly local and upstream statistics
-    {estimated ? ` · ${local.length} months, ${estimated} estimated` : ` · ${local.length} months observed`}
+    {estimated ? ` · ${local.length} months, ${estimated} provisional` : ` · ${local.length} months, gridded record`}
   </summary>
     <div className="poi-table"><table>
       <thead><tr><th>Month</th><th>Source</th><th>Local</th><th>Local coverage</th><th>Upstream</th></tr></thead>
@@ -225,7 +258,7 @@ function MonthlyTable({ report }) {
         const other = byMonth.get(row.year * 12 + row.month);
         return <tr key={`${row.year}-${row.month}`} className={row.source === 'observed' ? undefined : 'poi-estimated'}>
           <th>{month(row.year, row.month)}</th>
-          <td>{row.source === 'observed' ? 'observed' : 'estimate'}</td>
+          <td>{row.source === 'observed' ? 'gridded record' : 'provisional estimate'}</td>
           <td>{formatNumber(row.value, 2)}{row.errorP90 ? ` ±${formatNumber(row.errorP90, 2)}` : ''}</td>
           <td>{row.coverage === null ? '—' : `${formatNumber(row.coverage * 100, 1)}%`}</td>
           <td>{other ? formatNumber(other.value, 2) : '—'}</td>
@@ -262,15 +295,16 @@ function Conditions({ report }) {
   return <section className="poi-conditions" aria-label="Current conditions against the record">
     <h4>Current conditions · {first.latest}</h4>
     <p className="poi-coverage">
-      {report.coverage && `Observed ${report.coverage.first} to ${first.lastObserved || report.coverage.last}`}
-      {first.lastObserved && first.lastObserved !== first.latest && `, estimated to ${first.latest}`}
-      {first.baseline && ` · normals ${first.baseline.firstYear}–${first.baseline.lastYear}, observed years only`}</p>
+      {report.coverage && `${RECORD[0].toUpperCase()}${RECORD.slice(1)} (${report.meta.source_release || report.meta.source}) `
+        + `${report.coverage.first} to ${first.lastObserved || report.coverage.last}`}
+      {first.lastObserved && first.lastObserved !== first.latest && `; provisional estimates to ${first.latest}`}
+      {first.baseline && ` · normals ${first.baseline.firstYear}–${first.baseline.lastYear}, gridded-record years only`}</p>
     <div className="poi-summaries">{scopes.map(([scope, now, observed]) => {
       const { month, lastTwelveMonths: twelve, waterYearToDate: toDate } = now;
       const trend = observed?.trend;
       return <dl key={scope}>
         <div><dt>{scope === 'local' ? 'Local basin' : 'Upstream catchment'}</dt><dd/></div>
-        <div><dt>{month.period}{isEstimate(month.source) ? ' · estimated' : ''}</dt>
+        <div><dt>{month.period}{isEstimate(month.source) ? ' · provisional estimate' : ''}</dt>
           <dd>{value(month.value, month.errorP90)}</dd></div>
         <div><dt>Normal for {monthName(month.period)}</dt><dd>{month.normal === null ? '—' : value(month.normal)}</dd></div>
         <div><dt>Standing</dt><dd>{[versus(month.anomaly, month.anomalyPercent),
@@ -278,18 +312,21 @@ function Conditions({ report }) {
           month.standing].filter(Boolean).join(' · ') || '—'}</dd></div>
         {twelve && <div><dt>Last 12 months, {twelve.from} to {twelve.to}</dt>
           <dd>{value(twelve.value, twelve.errorBound, now.extensive)}{now.extensive ? '' : ' mean'} · {versus(twelve.anomaly, twelve.anomalyPercent)}
-            {twelve.estimatedMonths ? ` · ${twelve.estimatedMonths} estimated` : ''}</dd></div>}
+            {twelve.estimatedMonths ? ` · ${twelve.estimatedMonths} provisional` : ''}</dd></div>}
         {toDate && <div><dt>Water year {toDate.waterYear} so far, {toDate.from} to {toDate.to}</dt>
           <dd>{value(toDate.value, toDate.errorBound, now.extensive)}{now.extensive ? '' : ' mean'} · {versus(toDate.anomaly, toDate.anomalyPercent)}
             {toDate.percentile !== null && ` · ${toDate.standing}, ${ordinal(toDate.percentile)} percentile of ${toDate.comparedYears} years`}</dd></div>}
-        <div><dt>Trend, observed record{trend ? `, ${trend.years} complete years` : ''}</dt>
+        <div><dt>Trend in {trendBasis(now.extensive)}, gridded record{trend ? `, ${trend.years} complete years` : ''}</dt>
           <dd>{trend ? `${trend.direction}${trend.slopePerDecade === null ? ''
-            : ` · ${formatNumber(trend.slopePerDecade, 2)} ${unit} per decade · p ${formatNumber(trend.p, 3)}`}`
+            : ` · ${formatNumber(trend.slopePerDecade, 2)} ${trendUnit(unit, now.extensive)} · p ${formatNumber(trend.p, 3)}`}`
             : 'fewer than ten complete years'}</dd></div>
       </dl>;
     })}</div>
     {report.variable === 'snw_pc_s' && <p role="note">Snow cover is withdrawn from trend use; the slope above is
       shown for inspection only.</p>}
+    {scopes.some(([, now]) => now.lastTwelveMonths?.estimatedMonths || now.waterYearToDate?.estimatedMonths)
+      && <p className="poi-coverage">{ERROR_BOUND_NOTE}</p>}
+    {first.baseline && <p className="poi-coverage">{baselineNote(first.baseline.firstYear, first.baseline.lastYear)}</p>}
     <Continuation report={report}/>
   </section>;
 }
@@ -427,6 +464,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
         precipitation = { ...rain, present: presentOf(rain, await continuationOf(rain, 'pre_mm_s', data.index, signal)) };
       }
       const drought = await droughtOf(precipitation, data.index, signal).catch(() => null);
+      const upstream = await upstreamOf(result, values, precipitation, data, variable, signal).catch(() => null);
       if (signal.aborted) return;
       // The newest month any variable reaches, so a record that stops short of it
       // can say so without the page naming a date that goes stale next month.
@@ -437,7 +475,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
         : outletOf(result.local.ids, data.index);
       const forecastBasin = basin && Number(basin.basin_level) !== 12 ? basin
         : data.geometry.features.find(feature => String(feature.properties.hybas_id) === outlet)?.properties || null;
-      setReport({ ...result, catalogue: data.catalogue, continuation, present, drought, frontier, forecastBasin,
+      setReport({ ...result, catalogue: data.catalogue, continuation, present, drought, frontier, forecastBasin, upstreamInsights: upstream,
         records: result.local.ids.map(id => records.current.get(id)) });
     })().catch(cause => { if (!signal.aborted) setError(cause.message); })
       .finally(() => { if (!signal.aborted) setLoadingReport(false); });
@@ -530,7 +568,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
               2024, and concludes the atlas is two years behind. */}
           {Object.entries(data.index.series).map(([key, item]) => <option key={key} value={key}>
             {item.meta.label} · {item.meta.unit}{item.coverage ? CONTINUATION_VARIABLES[key]
-              ? ` · observed to ${item.coverage.last}, estimated since` : ` · to ${item.coverage.last}` : ''}</option>)}
+              ? ` · gridded to ${item.coverage.last}, provisional since` : ` · to ${item.coverage.last}` : ''}</option>)}
         </select>
       </label>}
       {loadingReport && <p role="status">Preparing local and upstream statistics…</p>}
@@ -540,6 +578,7 @@ export default function PoiReportModal({ entry, drawn, basin, onClose }) {
         <ReportChart key={`chart-${active}-${variable}`} report={report}/>
         <Conditions report={report}/>
         <DroughtOutlook drought={report.drought} method={DROUGHT_METHOD}/>
+        <UpstreamInsights insights={report.upstreamInsights} geometry={report.upstream_geometry}/>
         <SeasonalForecast basin={report.forecastBasin}/>
         <ReportMap key={`${active}-${variable}`} report={report}/>
         {report.morphology?.traced_area_km2 < report.morphology?.reported_upstream_area_km2 * 0.95 &&

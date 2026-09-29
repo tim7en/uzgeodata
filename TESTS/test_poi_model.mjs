@@ -317,8 +317,8 @@ test('the monthly CSV carries the estimate in its own columns, only where nothin
   };
   const lines = reportMonthlyCsv(report).trim().split(/\r?\n/);
   assert.match(lines[0], /source.*estimated_value,estimated_error_p90$/);
-  assert.match(lines[1], /^local,.*,observed,.*,,$/);
-  assert.match(lines[2], /^local,.*,estimated,.*,5,2$/);
-  // No upstream estimate: the month stays unobserved.
-  assert.match(lines[4], /^upstream,.*,no observation,/);
+  assert.match(lines[1], /^local,.*,historical_gridded,.*,,$/);
+  assert.match(lines[2], /^local,.*,provisional_estimate,.*,5,2$/);
+  // No upstream estimate: the month stays without a value.
+  assert.match(lines[4], /^upstream,.*,no_value,/);
 });

@@ -69,7 +69,7 @@ export function Freshness({ forecast, report }) {
   return <dl className="seas-fresh">
     {recordEnd && <div><dt>TerraClimate v1.1, producer release</dt><dd>2003-01 to {recordEnd}</dd>
       <small>Released once a year; the next yearly file replaces the estimates below.</small></div>}
-    {report && <div><dt>Estimated from ERA5-Land</dt><dd>{report.held_out_years[1] + 1}-01 to {report.continuation_through}</dd>
+    {report && <div><dt>Provisional estimates from ERA5-Land</dt><dd>{report.held_out_years[1] + 1}-01 to {report.continuation_through}</dd>
       <small>{rain ? `Held-out precipitation error ${formatNumber(rain.amu_darya.adjusted.rmse, 1)} (Amu) and `
         + `${formatNumber(rain.syr_darya.adjusted.rmse, 1)} (Syr) mm/month, ${report.held_out_years.join('–')}.` : ''}</small></div>}
     <div><dt>SEAS5 seasonal forecast</dt><dd>started {forecast.init}, six months ahead</dd>

@@ -63,7 +63,7 @@ function Reading({ title, reading, unit, years }) {
     <SpiStrip years={years}/>
     <dl>
       {toDate && <div className={toDate.dry ? 'poi-drought-alert' : undefined}>
-        <dt>Water year {toDate.waterYear} so far · {toDate.from} to {toDate.to}{toDate.estimatedMonths ? ', estimated' : ''}</dt>
+        <dt>Water year {toDate.waterYear} so far · {toDate.from} to {toDate.to}{toDate.estimatedMonths ? ', provisional' : ''}</dt>
         <dd>{formatNumber(toDate.value, 0)} {unit.replace(' per month', '')}
           {toDate.anomalyPercent !== null && ` · ${signed(toDate.anomalyPercent, 0)}% vs normal`}
           {toDate.percentile !== null ? ` · ${toDate.standing} (${ordinal(toDate.percentile)} percentile of ${toDate.comparedYears} years)` : ''}
