@@ -161,7 +161,7 @@ for (const name of (await readdir(path.join(atlasDir, 'releases'))).filter(n => 
     written.add(stated.sha256);
   }
 }
-console.log(`Release objects: ${written.size} content-addressed file(s) for release ${pointer.release_id}.`);
+console.log(`Release objects: ${written.size} content-addressed file(s); promoted release ${pointer.release_id}.`);
 // The review index promises 38 layers. Whatever was not published is removed from
 // it here, so the tool offers what exists instead of erroring a layer at a time.
 const reviewIndex = path.join(output, 'data/review-layers.json');
