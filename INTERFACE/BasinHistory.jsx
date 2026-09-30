@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import Term from './Term.jsx';
 import { AlertTriangle, ArrowUpRight, Download } from 'lucide-react';
 import { formatNumber } from './landingModel.js';
 import {
@@ -174,7 +175,7 @@ export default function BasinHistory({ basin }) {
     <div className="land-sub-filters">
       <div className="land-sub-chips" role="group" aria-label="Choose a variable">
         {names.map(key => <button key={key} type="button" className={key === active ? 'active' : ''}
-          onClick={() => setName(key)}>{seriesLabel(state.history.series[key])}</button>)}
+          onClick={() => setName(key)}><Term id={key}>{seriesLabel(state.history.series[key])}</Term></button>)}
       </div>
     </div>
 

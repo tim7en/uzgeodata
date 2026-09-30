@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Term from './Term.jsx';
 import ThemeToggle, { useTheme } from './ThemeToggle.jsx';
 import { CircleMarker, GeoJSON, MapContainer, ScaleControl, TileLayer, Tooltip, ZoomControl, useMap, useMapEvent } from 'react-leaflet';
 import { ArrowUpRight, BookOpen, Droplets, Layers, Search, X } from 'lucide-react';
@@ -204,7 +205,7 @@ function AttributeModal({ basin, groups, store, catalogue, loading, initialTab, 
           onKeyDown={event => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
             event.preventDefault(); const next = stepTab(tab, event.key, tabs);
             setTab(next); document.getElementById(`basin-tab-${next}`)?.focus();
-          } }}>{label}</button>)}
+          } }}><Term id={`tab_${id}`}>{label}</Term></button>)}
       </div>
       {['original', 'substitutes'].includes(tab) && <div className="land-modal-tools">
         <label><Search size={12}/><input value={filter} onChange={event => setFilter(event.target.value)}
