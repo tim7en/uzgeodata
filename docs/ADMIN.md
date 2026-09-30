@@ -128,3 +128,19 @@ before claiming immutable scientific reproduction.
 For fixed reference editions, review/import a new source version rather than
 automatically recalculating the historical reference. For on-demand products,
 update the underlying observations and select the intended release in the query.
+
+## Publishing a data release
+
+A release is promoted only after the site is shown to serve exactly its bytes:
+
+1. `python PIPELINES/publish_release.py --notes "..."` cuts a release (schema 2) without promoting it.
+2. `npm run publish:r2` runs `qa/version_consistency.py` (stops if a derived product is on another
+   source release, or the promoted release no longer matches its files), builds, and uploads the
+   release manifest and its content-addressed objects (`data/atlas/objects/<sha256>`).
+3. `python PIPELINES/verify_served_release.py --promote` downloads the manifest and every object
+   from the site, checks sizes and digests, and only then moves `latest.json`.
+4. `npm run publish:r2` again serves the new pointer; commit the manifest and `latest.json`.
+
+Objects and manifests are never pruned, so a cited release keeps resolving to its own bytes
+after later releases rebuild the ordinary paths. Digests are of content, with text normalised
+to LF, so a release verifies on any checkout.

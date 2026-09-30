@@ -119,6 +119,12 @@ if (declared) console.log(`Release carries ${declared} declared file(s) beyond t
 files.add('data/variable-inventory.json');
 files.add('data/agent-status.json');
 files.add('data/source-registry.json');
+// Release manifests and the pointer ship as soon as they exist: a pointer that names a
+// manifest the site does not serve is a broken citation, even for the minutes before a commit.
+files.add('data/atlas/latest.json');
+for (const name of await readdir(path.join(published, 'data/atlas/releases'))) {
+  if (/^uz-.*\.json$/.test(name)) files.add(`data/atlas/releases/${name}`);
+}
 for (const name of await readdir(path.join(published, 'data/atlas/history'))) {
   if (/^(?:index|\d+)\.json$/.test(name)) files.add(`data/atlas/history/${name}`);
 }

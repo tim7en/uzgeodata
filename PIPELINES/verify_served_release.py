@@ -48,6 +48,15 @@ def verify(release_id, base):
     if record.get("schema_version", 1) < 2:
         raise SystemExit(f"{record['release_id']} predates content-addressed objects; it cannot be checked this way.")
     problems = []
+    # The manifest itself has to be served, and say the same thing, before anyone is pointed at it.
+    served = subprocess.run(["curl", "-sSfL", f"{base.rstrip('/')}/{releases.RELEASES}/{record['release_id']}.json"],
+                            capture_output=True)
+    try:
+        manifest = json.loads(served.stdout)
+        if manifest.get("files") != record["files"]:
+            problems.append("the served manifest differs from the local one")
+    except ValueError:
+        problems.append(f"the manifest {releases.RELEASES}/{record['release_id']}.json is not served")
     for name, stated in record["files"].items():
         size, digest = fetch_digest(f"{base.rstrip('/')}/{stated['object']}")
         if digest is None:
