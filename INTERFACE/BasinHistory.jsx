@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, ArrowUpRight, Download } from 'lucide-react';
 import { formatNumber } from './landingModel.js';
 import {
-  dateAt, extentOf, extractedLength, gapDrift, pathOf, segments, seriesNames, toCsv, yearRows,
+  dateAt, extentOf, extractedLength, gapDrift, pathOf, productOf, segments, seriesLabel, seriesNames, throughLabel,
+  toCsv, yearRows,
 } from './historyModel.js';
 import { useWidth } from './ReportChart.jsx';
 import { CONTINUATION_VARIABLES, continuationFor } from './continuationModel.js';
@@ -72,7 +73,7 @@ function Plot({ history, name, series, estimate, outer }) {
   const yearStep = Math.max(1, Math.ceil(years / Math.max(1, Math.floor(width / 48))));
   return <figure className="land-hist-figure">
     <svg width={outer} height={CHART.height + 40} role="img"
-      aria-label={`${series.label} for every month from ${history.years[0]} to ${history.years[1]}`}
+      aria-label={`${seriesLabel(series)} for every month from ${history.years[0]} to ${history.years[1]}`}
       onPointerLeave={event => { if (event.pointerType === 'mouse') setHover(null); }}
       onPointerDown={pick} onPointerMove={pick}>
       <g transform={`translate(${CHART.pad} 8)`}>
@@ -105,7 +106,7 @@ function Plot({ history, name, series, estimate, outer }) {
             ? `${dateAt(history, hover).label}: ${formatNumber(estimate[hover].value, 2)} ${series.unit} · estimated`
               + `${estimate[hover].errorP90 ? ` ±${formatNumber(estimate[hover].errorP90, 2)}` : ''}`
             : `${dateAt(history, hover).label}: no source value`
-        : `${series.label} · ${series.unit} · ${history.years[0]}–${history.years[1]}`
+        : `${seriesLabel(series)} · ${series.unit} · ${history.years[0]}–${history.years[1]}`
           + `${estimate ? ' · dashed: estimated past the end of the source' : ''}`}
     </figcaption>
   </figure>;
@@ -173,7 +174,7 @@ export default function BasinHistory({ basin }) {
     <div className="land-sub-filters">
       <div className="land-sub-chips" role="group" aria-label="Choose a variable">
         {names.map(key => <button key={key} type="button" className={key === active ? 'active' : ''}
-          onClick={() => setName(key)}>{state.history.series[key].label}</button>)}
+          onClick={() => setName(key)}>{seriesLabel(state.history.series[key])}</button>)}
       </div>
     </div>
 
@@ -188,6 +189,7 @@ export default function BasinHistory({ basin }) {
       <div className="land-sub-counts">
         <span className="land-sub-key">{state.history.years[0]}–{state.history.years[1]} monthly</span>
         <span>{observed} of {total} months with source values</span>
+        {throughLabel(series) && <span>{productOf(series) || 'Source'} through {throughLabel(series)}</span>}
         <span>{names.length} variables</span>
       </div>
       <p>Monthly gridded estimates and reanalysis for this basin, not field measurements. Their period may differ from the climatologies. A month with no
@@ -212,7 +214,7 @@ export default function BasinHistory({ basin }) {
 
     <table className="land-sub-table land-hist-table">
       <thead><tr>
-        <th>Year</th><th>Observed</th><th>Mean</th><th>Lowest</th><th>Highest</th>
+        <th>Year</th><th>With value</th><th>Mean</th><th>Lowest</th><th>Highest</th>
         <th>Annual total<br/><small>monthly fluxes, whole years only (mm)</small></th>
       </tr></thead>
       <tbody>{rows.map(row => <tr key={row.year} data-substitute-status={row.whole ? 'estimated' : 'empty'}>
@@ -228,8 +230,9 @@ export default function BasinHistory({ basin }) {
     </table>
 
     <p className="land-sub-foot">
-      {series.label} · {series.unit} · {series.asset} · {series.statistic?.replaceAll('_', ' ')} ·
-      method <code>{series.method}</code>. {state.history.note}
+      {seriesLabel(series)} · {series.unit} · {series.asset || series.source_release} · {series.statistic?.replaceAll('_', ' ')}
+      {(series.methods?.length || series.method) && <> · method <code>{series.methods?.join(', ') || series.method}</code></>}
+      {series.reduction && <> · {series.reduction}</>}. {state.history.note}
     </p>
   </>;
 }

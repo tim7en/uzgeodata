@@ -109,7 +109,11 @@ export function snowSeasons(precipitation, snow, { minimumYears = 10 } = {}) {
     const winterPrecipitation = winter.reduce((a, b) => a + b, 0);
     const peak = Math.max(...pack);
     const peakMonth = ((pack.indexOf(peak) + 9) % 12) + 1;
-    seasons.push({ waterYear: year, winterPrecipitation, peakSwe: peak, peakMonth,
+    // Snow still lying at the end of the previous September. TerraClimate's snow model
+    // has no glaciers, so on ice it carries snow from year to year: that store is not
+    // this winter's snow.
+    const carryOver = swe.get((year - 1) * 12 + 9) ?? null;
+    seasons.push({ waterYear: year, winterPrecipitation, peakSwe: peak, peakMonth, carryOver,
       snowShare: winterPrecipitation > 0 ? peak / winterPrecipitation : null });
   }
   if (seasons.length < minimumYears) return null;
@@ -138,7 +142,15 @@ export function snowSeasons(precipitation, snow, { minimumYears = 10 } = {}) {
     }[rainClass][snowClass];
     return { ...season, rainAnomaly, snowAnomaly, rainClass, snowClass, statement, reading };
   });
-  return { normal, baseline: [seasons[0].waterYear, seasons.at(-1).waterYear], rows,
+  const carried = seasons.filter(s => s.carryOver !== null);
+  const carryShare = carried.length && normal.peakSwe > 1
+    ? carried.reduce((sum, s) => sum + s.carryOver, 0) / carried.length / normal.peakSwe : null;
+  const carryNote = carryShare !== null && carryShare >= 0.25
+    ? `On average ${Math.round(carryShare * 100)}% of the peak snow storage here is snow left from earlier years, `
+      + 'mostly on glaciers, where the TerraClimate snow model never melts out. Peak storage and its anomaly '
+      + 'therefore mix this winter’s snow with a multi-year store; read them with care.'
+    : null;
+  return { normal, carryShare, carryNote, baseline: [seasons[0].waterYear, seasons.at(-1).waterYear], rows,
     rule: 'Below, near or above normal means the lowest, middle or highest third of the water years in this record, '
       + 'ranked separately for winter precipitation and peak snow storage.',
     snowDominated: normal.peakSwe > 0.2 * normal.winterPrecipitation };

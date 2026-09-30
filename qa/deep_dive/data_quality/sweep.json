@@ -1,0 +1,967 @@
+{
+ "basins": 7445,
+ "months": 288,
+ "years": [
+  2003,
+  2026
+ ],
+ "coverage": {
+  "aet_mm_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "cwd_mm_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "pds_ix_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "pet_mm_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "pre_mm_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "rtc_mm_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "run_mm_s": {
+   "source_release": "era5_runoff@ECMWF/ERA5_LAND/MONTHLY_AGGR",
+   "declared_through": null,
+   "last_month_with_values": "2026-08",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "snw_pc_s": {
+   "source_release": "modis_myd10a1@061",
+   "declared_through": null,
+   "last_month_with_values": "2024-12",
+   "basins_with_value_in_last_month_pct": 99.97,
+   "missing_pct_up_to_last_month": 0.682,
+   "months_below_99pct_coverage": 94,
+   "first_such_months": [
+    "2006-06",
+    "2006-08",
+    "2007-06",
+    "2007-07",
+    "2007-08",
+    "2007-09",
+    "2008-06",
+    "2008-08",
+    "2009-05",
+    "2009-06",
+    "2009-07",
+    "2009-08"
+   ],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "soil_mm_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "swe_mm_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "tmn_dc_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "tmp_dc_s": {
+   "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
+   "declared_through": null,
+   "last_month_with_values": "2026-08",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "tmx_dc_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  },
+  "vpd_kp_s": {
+   "source_release": "terraclimate-v1.1@climatologylab",
+   "declared_through": "2025-12",
+   "last_month_with_values": "2025-12",
+   "basins_with_value_in_last_month_pct": 100.0,
+   "missing_pct_up_to_last_month": 0.0,
+   "months_below_99pct_coverage": 0,
+   "first_such_months": [],
+   "basins_never_valued": 0,
+   "declared_matches_data": true
+  }
+ },
+ "bounds": {
+  "pre_mm_s": {
+   "bounds": [
+    0,
+    1500
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": 0.0,
+   "max": 517.6783
+  },
+  "aet_mm_s": {
+   "bounds": [
+    0,
+    400
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": 0.0,
+   "max": 136.7172
+  },
+  "pet_mm_s": {
+   "bounds": [
+    0,
+    450
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": 0.0,
+   "max": 325.3641
+  },
+  "cwd_mm_s": {
+   "bounds": [
+    0,
+    450
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": 0.0,
+   "max": 324.8131
+  },
+  "soil_mm_s": {
+   "bounds": [
+    0,
+    1000
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": 0.2,
+   "max": 199.8579
+  },
+  "swe_mm_s": {
+   "bounds": [
+    0,
+    20000
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": 0.0,
+   "max": 11790.1115
+  },
+  "rtc_mm_s": {
+   "bounds": [
+    0,
+    1500
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 1,
+   "min": 0.0,
+   "max": 1659.2528
+  },
+  "run_mm_s": {
+   "bounds": [
+    0,
+    1500
+   ],
+   "values": 2114380,
+   "below": 0,
+   "above": 0,
+   "min": 0.0,
+   "max": 963.4077
+  },
+  "tmn_dc_s": {
+   "bounds": [
+    -60,
+    40
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": -33.9166,
+   "max": 28.097
+  },
+  "tmx_dc_s": {
+   "bounds": [
+    -50,
+    55
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": -23.6264,
+   "max": 44.8521
+  },
+  "tmp_dc_s": {
+   "bounds": [
+    -55,
+    50
+   ],
+   "values": 2114380,
+   "below": 0,
+   "above": 0,
+   "min": -32.7827,
+   "max": 36.7244
+  },
+  "vpd_kp_s": {
+   "bounds": [
+    0,
+    8
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": 0.0,
+   "max": 5.6677
+  },
+  "pds_ix_s": {
+   "bounds": [
+    -12,
+    12
+   ],
+   "values": 2054820,
+   "below": 0,
+   "above": 0,
+   "min": -9.3254,
+   "max": 9.7864
+  },
+  "snw_pc_s": {
+   "bounds": [
+    0,
+    100
+   ],
+   "values": 1952083,
+   "below": 0,
+   "above": 0,
+   "min": 0.0,
+   "max": 100.0
+  }
+ },
+ "consistency": {
+  "tmin_above_tmax": 0,
+  "era5_tmean_minus_terraclimate_midrange_c": {
+   "pairs": 2054820,
+   "mean": -1.014140584820081,
+   "p05": -6.774649999999999,
+   "p95": 2.21515,
+   "basins_mean_bias_beyond_3c": 1356,
+   "note": "ERA5-Land 2 m mean against the TerraClimate (tmin+tmax)/2 of the same basin-month: two products; a basin with a large steady offset shows a product or elevation-support difference, not an error."
+  },
+  "aet_exceeds_pet_mm_gt_0_5": 0,
+  "aet_over_ppt_long_term": {
+   "basins_ratio_above_1_05": 0,
+   "max_ratio": 0.9614057413152167,
+   "note": "TerraClimate's water balance cannot evaporate more than falls over 23 years unless water is added (irrigation, lakes); a ratio above 1 marks such basins."
+  },
+  "runoff_era5_vs_terraclimate_annual": {
+   "basins": 7357,
+   "median_ratio": 0.34190521242517957,
+   "basins_differing_more_than_2x": 6125,
+   "regional_mean_mm_per_year": {
+    "terraclimate_q": 71.89912769760855,
+    "era5_land_ro": 151.8706604981458
+   },
+   "note": "Both are runoff generation in the basin, not river flow; they come from different land models."
+  },
+  "era5_runoff_exceeds_precipitation": {
+   "basins_ratio_above_1": 902,
+   "note": "ERA5-Land runoff against TerraClimate precipitation - different products; above 1 is possible with glacier melt in ERA5-Land but worth showing."
+  },
+  "snow_cover_vs_swe_winter": {
+   "pairs": 490951,
+   "no_cover_but_swe_over_50mm": 544,
+   "full_cover_but_swe_zero": 393
+  }
+ },
+ "history": {
+  "aet_mm_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 41548,
+   "worst_spike": {
+    "z": 38712.9,
+    "basin": "4120594180",
+    "month": "2024-01",
+    "value": 38.7129,
+    "basin_median_same_month": 0.0
+   },
+   "regional_annual_mean": [
+    22.5489,
+    19.7352,
+    18.1155,
+    17.4838,
+    17.0566,
+    16.2945,
+    20.8466,
+    18.8189,
+    16.1047,
+    17.0967,
+    17.7109,
+    17.5044,
+    20.5532,
+    20.0643,
+    18.0003,
+    17.4849,
+    18.9388,
+    17.678,
+    15.0162,
+    18.0948,
+    16.4605,
+    20.3104,
+    14.5367,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2024,
+    "to": 2025,
+    "step": -5.773624983210214,
+    "in_sd": 3.063843141056014
+   }
+  },
+  "cwd_mm_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 78319,
+   "worst_spike": {
+    "z": 67983.9,
+    "basin": "4120545120",
+    "month": "2013-10",
+    "value": 67.9839,
+    "basin_median_same_month": 0.0
+   },
+   "regional_annual_mean": [
+    64.1507,
+    73.5926,
+    73.5893,
+    78.8511,
+    76.8283,
+    80.1162,
+    68.4166,
+    75.3253,
+    78.0157,
+    75.1703,
+    78.0781,
+    75.5561,
+    72.5995,
+    73.5979,
+    78.0206,
+    77.4766,
+    75.4147,
+    75.5417,
+    85.158,
+    79.5445,
+    83.8783,
+    72.8759,
+    88.3152,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2024,
+    "to": 2025,
+    "step": 15.43929943474366,
+    "in_sd": 3.067406481291108
+   }
+  },
+  "pds_ix_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 6,
+   "worst_spike": {
+    "z": 11.7,
+    "basin": "4120417050",
+    "month": "2003-11",
+    "value": 4.2263,
+    "basin_median_same_month": -1.1524
+   },
+   "regional_annual_mean": [
+    1.5538,
+    -0.1239,
+    0.0247,
+    -1.7394,
+    -2.1994,
+    -2.8222,
+    -0.4239,
+    -0.0023,
+    -2.8771,
+    -0.1082,
+    -1.8437,
+    -1.4537,
+    0.1306,
+    -0.7071,
+    0.0781,
+    -2.1597,
+    -1.0928,
+    -2.1405,
+    -3.343,
+    -3.2786,
+    -3.1007,
+    -2.3224,
+    -3.3935,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2010,
+    "to": 2011,
+    "step": -2.874701822252071,
+    "in_sd": 2.0949297106259004
+   }
+  },
+  "pet_mm_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 37098,
+   "worst_spike": {
+    "z": 69400.0,
+    "basin": "4120526610",
+    "month": "2019-04",
+    "value": 69.4,
+    "basin_median_same_month": 0.0
+   },
+   "regional_annual_mean": [
+    86.6997,
+    93.3278,
+    91.7048,
+    96.3349,
+    93.8849,
+    96.4108,
+    89.2632,
+    94.1442,
+    94.1204,
+    92.267,
+    95.789,
+    93.0605,
+    93.1528,
+    93.6622,
+    96.0209,
+    94.9615,
+    94.3536,
+    93.2197,
+    100.1742,
+    97.6392,
+    100.3389,
+    93.1862,
+    102.8519,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2024,
+    "to": 2025,
+    "step": 9.665674814192997,
+    "in_sd": 2.8328345532376815
+   }
+  },
+  "pre_mm_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 27959,
+   "worst_spike": {
+    "z": 14298.8,
+    "basin": "4120521860",
+    "month": "2024-09",
+    "value": 14.2988,
+    "basin_median_same_month": 0.0
+   },
+   "regional_annual_mean": [
+    31.4287,
+    27.079,
+    23.3075,
+    23.4234,
+    22.8872,
+    20.1467,
+    28.3411,
+    25.1735,
+    23.8484,
+    22.8302,
+    22.6224,
+    23.4942,
+    28.5178,
+    26.4878,
+    24.1404,
+    23.0039,
+    24.6918,
+    22.5643,
+    18.7955,
+    24.2445,
+    20.2298,
+    26.9692,
+    18.6126,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2024,
+    "to": 2025,
+    "step": -8.356612070740987,
+    "in_sd": 2.735424628636046
+   }
+  },
+  "rtc_mm_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 62176,
+   "worst_spike": {
+    "z": 21874.8,
+    "basin": "4121262130",
+    "month": "2016-01",
+    "value": 21.8748,
+    "basin_median_same_month": 0.0
+   },
+   "regional_annual_mean": [
+    8.7159,
+    6.7963,
+    7.5071,
+    5.4024,
+    5.3121,
+    4.0754,
+    7.2057,
+    8.5231,
+    3.8887,
+    7.6482,
+    5.2836,
+    5.498,
+    7.4082,
+    5.7079,
+    8.4554,
+    4.6288,
+    6.7013,
+    4.2147,
+    4.7755,
+    5.0201,
+    5.27,
+    5.6713,
+    4.0971,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2010,
+    "to": 2011,
+    "step": -4.634414777255429,
+    "in_sd": 3.1137312946854547
+   }
+  },
+  "run_mm_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 23477,
+   "worst_spike": {
+    "z": 210082.2,
+    "basin": "4120549220",
+    "month": "2006-05",
+    "value": 215.3348,
+    "basin_median_same_month": 0.0005
+   },
+   "regional_annual_mean": [
+    16.1637,
+    14.0675,
+    14.6402,
+    11.856,
+    11.3918,
+    9.0554,
+    15.4659,
+    18.2455,
+    9.8465,
+    14.2285,
+    11.5309,
+    10.9166,
+    13.7982,
+    14.0439,
+    16.125,
+    11.3109,
+    13.2865,
+    10.6303,
+    10.6905,
+    10.438,
+    11.0785,
+    12.7853,
+    9.49,
+    14.0556
+   ],
+   "largest_year_step": {
+    "from": 2010,
+    "to": 2011,
+    "step": -8.399037230803671,
+    "in_sd": 3.5814192397163747
+   }
+  },
+  "snw_pc_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 166316,
+   "worst_spike": {
+    "z": 100000.0,
+    "basin": "4120314970",
+    "month": "2009-01",
+    "value": 100.0,
+    "basin_median_same_month": 0.0
+   },
+   "regional_annual_mean": [
+    20.9696,
+    17.6705,
+    19.8578,
+    21.5019,
+    16.8709,
+    22.4845,
+    19.7596,
+    17.5648,
+    19.3772,
+    22.4053,
+    18.0876,
+    21.4472,
+    17.3582,
+    15.5438,
+    19.816,
+    17.6949,
+    16.9563,
+    17.1834,
+    15.7998,
+    15.9459,
+    14.9487,
+    15.985,
+    null,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2007,
+    "to": 2008,
+    "step": 5.613543303633872,
+    "in_sd": 2.480665146694836
+   }
+  },
+  "soil_mm_s": {
+   "basins_with_24_month_constant_run": 200,
+   "spikes_z_above_10": 26497,
+   "worst_spike": {
+    "z": 187.5,
+    "basin": "4120585560",
+    "month": "2011-11",
+    "value": 15.9106,
+    "basin_median_same_month": 1.5156
+   },
+   "regional_annual_mean": [
+    18.777,
+    17.9956,
+    17.0353,
+    15.768,
+    14.8419,
+    14.2507,
+    17.2809,
+    17.9298,
+    15.9222,
+    17.838,
+    14.9067,
+    15.8556,
+    18.0192,
+    16.3751,
+    16.8482,
+    14.4131,
+    16.1984,
+    14.5451,
+    12.8919,
+    15.27,
+    14.411,
+    14.7957,
+    13.425,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2008,
+    "to": 2009,
+    "step": 3.0302027613610925,
+    "in_sd": 1.9190509101942461
+   }
+  },
+  "swe_mm_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 86061,
+   "worst_spike": {
+    "z": 242720.5,
+    "basin": "4120509530",
+    "month": "2012-02",
+    "value": 242.7205,
+    "basin_median_same_month": 0.0
+   },
+   "regional_annual_mean": [
+    35.8736,
+    33.9065,
+    36.8641,
+    31.3154,
+    26.8076,
+    29.942,
+    36.0339,
+    34.624,
+    28.3558,
+    37.6716,
+    29.7162,
+    31.8673,
+    35.1319,
+    29.4128,
+    38.206,
+    30.1241,
+    32.377,
+    27.0781,
+    28.1426,
+    26.3388,
+    28.0493,
+    26.7643,
+    22.3134,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2011,
+    "to": 2012,
+    "step": 9.315805486903965,
+    "in_sd": 2.2376347666510252
+   }
+  },
+  "tmn_dc_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 2,
+   "worst_spike": {
+    "z": 10.6,
+    "basin": "4120546880",
+    "month": "2008-01",
+    "value": -14.4247,
+    "basin_median_same_month": -0.6994
+   },
+   "regional_annual_mean": [
+    3.3566,
+    4.1735,
+    3.6535,
+    3.966,
+    3.8985,
+    3.3534,
+    3.5346,
+    4.1357,
+    3.4275,
+    2.9121,
+    4.17,
+    2.6708,
+    4.2966,
+    4.9039,
+    4.0622,
+    3.6738,
+    4.4845,
+    3.5173,
+    4.0264,
+    4.7434,
+    4.9147,
+    4.6043,
+    5.2322,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2014,
+    "to": 2015,
+    "step": 1.6257446194313854,
+    "in_sd": 2.558272091547763
+   }
+  },
+  "tmp_dc_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 40,
+   "worst_spike": {
+    "z": 11.9,
+    "basin": "4120551710",
+    "month": "2008-01",
+    "value": -7.2096,
+    "basin_median_same_month": 4.9768
+   },
+   "regional_annual_mean": [
+    8.1913,
+    9.3408,
+    8.8714,
+    9.3485,
+    9.423,
+    8.9614,
+    8.7892,
+    9.5352,
+    8.8008,
+    8.2273,
+    9.4856,
+    8.0775,
+    9.2159,
+    9.8665,
+    9.2028,
+    8.9849,
+    9.547,
+    8.7975,
+    9.6567,
+    9.9375,
+    10.3015,
+    9.5206,
+    10.6724,
+    12.3903
+   ],
+   "largest_year_step": {
+    "from": 2025,
+    "to": 2026,
+    "step": 1.7178845528318796,
+    "in_sd": 1.961803368225655
+   }
+  },
+  "tmx_dc_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 0,
+   "worst_spike": null,
+   "regional_annual_mean": [
+    15.4021,
+    16.6226,
+    16.2277,
+    16.499,
+    16.7091,
+    16.2078,
+    15.8482,
+    16.9091,
+    15.9018,
+    15.5306,
+    16.9021,
+    15.5048,
+    16.327,
+    17.0877,
+    16.4151,
+    16.1043,
+    16.7718,
+    16.0268,
+    17.2242,
+    17.1028,
+    17.883,
+    16.8435,
+    18.3989,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2024,
+    "to": 2025,
+    "step": 1.5554236243563935,
+    "in_sd": 2.172716144337695
+   }
+  },
+  "vpd_kp_s": {
+   "basins_with_24_month_constant_run": 0,
+   "spikes_z_above_10": 140,
+   "worst_spike": {
+    "z": 143.1,
+    "basin": "4120404070",
+    "month": "2007-01",
+    "value": 0.1431,
+    "basin_median_same_month": 0.0
+   },
+   "regional_annual_mean": [
+    0.9341,
+    1.0161,
+    1.0613,
+    1.0911,
+    1.0567,
+    1.1127,
+    0.9663,
+    1.0787,
+    1.0982,
+    1.0758,
+    1.086,
+    1.0862,
+    1.0615,
+    1.0676,
+    1.1159,
+    1.0973,
+    1.1036,
+    1.0702,
+    1.2303,
+    1.144,
+    1.1953,
+    1.0699,
+    1.2391,
+    null
+   ],
+   "largest_year_step": {
+    "from": 2024,
+    "to": 2025,
+    "step": 0.16920914483993754,
+    "in_sd": 2.4826031672276816
+   }
+  }
+ }
+}

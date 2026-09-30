@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T08:17:03.680+00:00",
+  "generated_at": "2026-09-30T06:06:27.472+00:00",
   "basins": 7445,
   "years": [
     2003,
@@ -133,7 +133,8 @@
         "regional-era5_runoff-20260910T135058774673Z",
         "regional-era5_runoff-20260913T172923712238Z",
         "regional-era5_runoff-20260924T132028912519Z"
-      ]
+      ],
+      "extracted_through": "2026-08"
     },
     "snw_pc_s": {
       "label": "snow cover",
@@ -152,7 +153,8 @@
       "run_ids": [
         "regional-snow-20260910T070340280486Z",
         "regional-snow-20260913T174832998639Z"
-      ]
+      ],
+      "extracted_through": "2024-12"
     },
     "soil_mm_s": {
       "label": "soil moisture",
@@ -226,7 +228,8 @@
         "regional-era5_temperature-20260913T173848283162Z",
         "regional-era5_temperature-20260914T065902520397Z",
         "regional-era5_temperature-20260924T134039206889Z"
-      ]
+      ],
+      "extracted_through": "2026-08"
     },
     "tmx_dc_s": {
       "label": "monthly maximum temperature",
@@ -119396,6 +119399,15 @@
       "run_id": "terraclimate-v11-rebase-20260928T081549.932+0000",
       "mode": "rebased: the eleven TerraClimate series replaced end to end by the producer's v1.1",
       "replaced": "TerraClimate v1.0 from Earth Engine (IDAHO_EPSCOR/TERRACLIMATE), through 2024-12"
+    },
+    {
+      "at": "2026-09-30T06:06:27.472+00:00",
+      "mode": "declared extraction ends for series written before extracted_through existed",
+      "declared": {
+        "run_mm_s": "2026-08",
+        "snw_pc_s": "2024-12",
+        "tmp_dc_s": "2026-08"
+      }
     }
   ]
 }

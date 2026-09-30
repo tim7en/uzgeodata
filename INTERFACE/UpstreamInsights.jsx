@@ -95,6 +95,7 @@ function Snow({ snow }) {
     </table></div>
     {recent[0]?.statement && <p><b>Water year {recent[0].waterYear}:</b> {recent[0].statement}</p>}
     <p className="poi-coverage">{snow.rule}</p>
+    {snow.carryNote && <p className="up-caveat">{snow.carryNote}</p>}
     <p className="poi-coverage">Snow water equivalent is TerraClimate v1.1’s modelled snowpack, not a measurement, and at
       four kilometres it smooths the high terrain the melt comes from. Satellite snow-cover persistence and freezing-level
       changes are the next additions; a peak falling earlier than usual is itself a warning sign.</p>

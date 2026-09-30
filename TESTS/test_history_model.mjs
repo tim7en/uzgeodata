@@ -143,3 +143,14 @@ test('months after a series was last fetched are not counted as gaps', async () 
   assert.equal(partial.months.length, 8);
   assert.equal(partial.whole, false, 'a part-year is never totalled');
 });
+
+test('a series label names its product, and says how far it was extracted', async () => {
+  const { seriesLabel, throughLabel, productOf } = await import('../INTERFACE/historyModel.js');
+  const era = { label: 'total runoff', source_release: 'era5_runoff@ECMWF/ERA5_LAND/MONTHLY_AGGR', extracted_through: '2026-08' };
+  const tc = { label: 'TerraClimate runoff', source_release: 'terraclimate-v1.1@climatologylab', extracted_through: '2025-12' };
+  assert.equal(seriesLabel(era), 'total runoff (ERA5-Land)');
+  assert.equal(seriesLabel(tc), 'TerraClimate runoff');
+  assert.equal(productOf(tc), 'TerraClimate v1.1');
+  assert.equal(throughLabel(era), 'Aug 2026');
+  assert.equal(throughLabel({ label: 'x' }), null);
+});

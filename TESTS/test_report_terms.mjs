@@ -8,7 +8,8 @@ test('a precipitation volume is called a precipitation volume, not runoff', () =
   assert.equal(rain.label, 'Precipitation volume');
   assert.match(rain.note, /not runoff/);
   assert.doesNotMatch(rain.note, /runoff volume is generated/);
-  assert.equal(totalDefinition('run_mm_s', 'millimetres per month').label, 'Generated runoff volume');
+  assert.equal(totalDefinition('run_mm_s', 'millimetres per month').label, 'Generated runoff volume (ERA5-Land)');
+  assert.equal(totalDefinition('rtc_mm_s', 'millimetres per month').label, 'Generated runoff volume (TerraClimate)');
   assert.equal(totalDefinition('tmx_dc_s', 'degrees Celsius').factor, null);
 });
 

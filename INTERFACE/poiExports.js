@@ -241,6 +241,7 @@ export async function reportPdf(report) {
           + ` Peak in ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][r.peakMonth - 1]}; ${r.reading}.`, 9);
       }
       line(snow.rule, 8);
+      if (snow.carryNote) line(snow.carryNote, 8);
     }
     const ice = insights.glaciers;
     if (ice) {

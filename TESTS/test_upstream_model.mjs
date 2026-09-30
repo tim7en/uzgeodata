@@ -66,3 +66,21 @@ test('gauges are found inside the catchment basins', () => {
   const found = gaugesInCatchment(gauges, [basin]);
   assert.deepEqual(found.map(g => [g.code, g.basin, g.first, g.last]), [['in', '42', '1990', '2019']]);
 });
+
+test('snow carried over from earlier years is measured and flagged', () => {
+  const rain = [], swe = [];
+  for (let year = 2003; year <= 2016; year++) {
+    for (let month = 1; month <= 12; month++) {
+      rain.push({ year, month, value: 20 });
+      // 400 mm never melts; each winter adds up to 300 mm on top
+      const seasonal = [1, 2, 3].includes(month) ? 300 : [12, 4].includes(month) ? 150 : 0;
+      swe.push({ year, month, value: 400 + seasonal });
+    }
+  }
+  const snow = snowSeasons(rain, swe);
+  assert.ok(Math.abs(snow.carryShare - 400 / 700) < 1e-9);
+  assert.match(snow.carryNote, /57% of the peak snow storage here is snow left from earlier years/);
+  const plain = snowSeasons(rain, swe.map(row => ({ ...row, value: row.value - 400 })));
+  assert.equal(plain.carryShare, 0);
+  assert.equal(plain.carryNote, null);
+});

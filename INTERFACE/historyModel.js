@@ -18,6 +18,36 @@ export function seriesNames(history) {
   return Object.keys(history?.series || {}).sort();
 }
 
+// The product behind a series, named for a reader. Two series can measure one thing
+// with different models (runoff from ERA5-Land and from TerraClimate differ about
+// twofold here), so a label without its product invites reading them as one.
+const PRODUCTS = [
+  [/^terraclimate-v1\.1/, 'TerraClimate v1.1'],
+  [/^terraclimate/, 'TerraClimate'],
+  [/^era5/, 'ERA5-Land'],
+  [/^modis/, 'MODIS'],
+];
+
+export function productOf(series) {
+  const release = series?.source_release || '';
+  return PRODUCTS.find(([pattern]) => pattern.test(release))?.[1] || null;
+}
+
+export function seriesLabel(series) {
+  const label = series?.label || '';
+  const product = productOf(series);
+  if (!product || label.toLowerCase().includes(product.split(' ')[0].toLowerCase())) return label;
+  return `${label} (${product})`;
+}
+
+// "Through Aug 2026": where the extraction of this series stops, so a reader can tell
+// how current each variable is without comparing chart ends.
+export function throughLabel(series) {
+  if (!series?.extracted_through) return null;
+  const [year, month] = series.extracted_through.split('-').map(Number);
+  return `${MONTHS[month - 1]} ${year}`;
+}
+
 // How many months of a series have been fetched. When one source is extended past
 // the others, the rest are null beyond their `extracted_through`: those months have
 // not been looked at yet, which is not the same as looked at and found empty.
