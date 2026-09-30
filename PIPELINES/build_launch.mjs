@@ -148,16 +148,19 @@ const atlasDir = path.join(published, 'data/atlas');
 const pointer = JSON.parse(await readFile(path.join(atlasDir, 'latest.json'), 'utf8'));
 const TEXT_FILE = /\.(?:json|geojson|csv|md|txt)$/i;
 const written = new Set();
-for (const name of (await readdir(path.join(atlasDir, 'releases'))).filter(n => /^uz-.*\.json$/.test(n))) {
+const cut = (await readdir(path.join(atlasDir, 'releases'))).filter(n => /^uz-.*\.json$/.test(n)).sort();
+// The newest release must describe the files; the promoted one may lag until it is verified.
+const newest = cut.at(-1)?.replace(/\.json$/, '');
+for (const name of cut) {
   const record = JSON.parse(await readFile(path.join(atlasDir, 'releases', name), 'utf8'));
   if ((record.schema_version || 1) < 2) continue;
-  const promoted = record.release_id === pointer.release_id;
+  const current = record.release_id === newest;
   for (const [file, stated] of Object.entries(record.files)) {
     if (written.has(stated.sha256)) continue;
     let body = await readFile(path.join(atlasDir, file)).catch(() => null);
     if (body && TEXT_FILE.test(file)) body = Buffer.from(body.toString('latin1').replaceAll('\r\n', '\n'), 'latin1');
     if (!body || createHash('sha256').update(body).digest('hex') !== stated.sha256) {
-      if (promoted) throw Error(`${file} no longer matches the promoted release ${record.release_id}. `
+      if (current) throw Error(`${file} no longer matches the newest release ${record.release_id}. `
         + 'Cut a new release (python PIPELINES/publish_release.py) before building.');
       continue;
     }
@@ -167,7 +170,7 @@ for (const name of (await readdir(path.join(atlasDir, 'releases'))).filter(n => 
     written.add(stated.sha256);
   }
 }
-console.log(`Release objects: ${written.size} content-addressed file(s); promoted release ${pointer.release_id}.`);
+console.log(`Release objects: ${written.size} content-addressed file(s); newest release ${newest}, promoted ${pointer.release_id}.`);
 // The review index promises 38 layers. Whatever was not published is removed from
 // it here, so the tool offers what exists instead of erroring a layer at a time.
 const reviewIndex = path.join(output, 'data/review-layers.json');

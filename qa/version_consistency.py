@@ -13,7 +13,8 @@ Checks:
 1. every family of independent estimates names the same source release as the
    monthly series it is derived from;
 2. the catchment matrices name the same release as the monthly record they package;
-3. the promoted atlas release matches the files it names.
+3. the newest release cut matches the files it names (the promoted one may lag until
+   the newest is verified on the site).
 """
 from __future__ import annotations
 
@@ -61,11 +62,14 @@ def matrices_follow_record(catchments, history):
 
 
 def release_matches_files():
-    try:
-        record = releases.read(ATLAS)
-    except releases.ReleaseError as error:
-        return [str(error)]
-    return [f"release {record['release_id']}: {problem}" for problem in releases.check(ATLAS)[:10]]
+    """The newest release cut must describe the files. The promoted one may lag behind it
+    while the newest awaits verify_served_release.py - that is the publish sequence -
+    but files that no release describes can never be published."""
+    history = releases.history(ATLAS)
+    if not history:
+        return ["no release has been cut"]
+    newest = history[0]["release_id"]
+    return [f"release {newest}: {problem}" for problem in releases.check(ATLAS, newest)[:10]]
 
 
 def run():
