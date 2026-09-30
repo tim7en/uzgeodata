@@ -65,7 +65,22 @@ finding by itself.
 
 ## 2. Portal browser pass
 
-`python qa/deep_dive/data_quality/browse_portal.py [base-url]` → [browse.json](browse.json)
+`python qa/deep_dive/data_quality/browse_portal.py [base-url] [--basin-only]` → [browse.json](browse.json)
 
-Every page at desktop and phone width, then basin 4121292070 opened through the finder and each
-tab clicked. Results are summarised in the research log entry for this date.
+30 pages at desktop (1366 px) and phone (390 px) width against the live site, then basin
+4121292070 opened through the finder on a phone and each of its tabs clicked.
+
+| Check | Result |
+|---|---|
+| Page status, JavaScript errors, failed or HTML-instead-of-data requests | None, apart from the four `/agents` and `/admin` loads below |
+| Leaked programming values (NaN, undefined, [object Object]) | None anywhere |
+| Basin window: 7 tabs opened in turn | Every tab loaded; no console error, failed request or error message |
+| `/agents` and `/admin` on the public site | Each logged a 404 by asking for the local operator API. **Changed:** they ask only on localhost (`INTERFACE/localServer.js`). |
+| Phone width: page scrolls sideways | 8 pages — reservoir monitoring 390 px, hydrography 385, catalogue 274, review 164, trends 148, examples 56, relationships 40, dry spells 12. Causes: tables without a scroll container, header navigation that did not wrap, a wide button, a code block, and a long translated heading. **Changed:** all eight measure 0 px. |
+
+**Not fixed — machine translation changes meaning.** The portal opens in Russian through Google
+Translate. The basin tabs read "Прогноз погоды: снег" ("weather forecast: snow") for *Snow
+forecast*, which is a seasonal river-flow forecast from snow storage, and "Ежемесячный отчет"
+("monthly report") for *Monthly record*. Scientific terms need a reviewed Russian (and Uzbek)
+glossary applied by the site, with those terms marked `translate="no"` for the machine
+translator, rather than translation of the English on the fly.

@@ -278,3 +278,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
   .rt-header nav { margin-left: 0; width: 100%; }
   .rt-controls > * { flex: 1 1 100%; }
 }
+
+@media (max-width: 700px) {
+  .rt-scroll { max-width: 100%; overflow-x: auto; }
+  .rt-header nav { flex-wrap: wrap; }
+}

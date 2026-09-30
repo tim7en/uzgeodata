@@ -7,6 +7,7 @@ import { initTheme } from './ThemeToggle.jsx';
 import LanguageSelect from './LanguageSelect.jsx';
 import { initLang } from './lang.js';
 import { autoHideHeader } from './chrome.js';
+import { onLocalServer } from './localServer.js';
 
 initTheme();
 initLang();
@@ -47,6 +48,7 @@ function Admin() {
   }
   useEffect(() => {
     // The static site has no server: fall back to the published snapshot.
+    if (!onLocalServer()) { setServer(false); load(false); return; }
     json('/api/admin/variables').then(result => { setServer(true); setData(result); setNow(Date.now()); }).catch(() => { setServer(false); load(false); });
   }, []);
   useEffect(() => autoHideHeader(headerRef.current), []);

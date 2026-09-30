@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './agents.css';
+import { onLocalServer } from './localServer.js';
 
 const BASE = import.meta.env.BASE_URL;
 const FALLBACK = `${BASE}data/agent-status.json`;
@@ -21,6 +22,7 @@ function App() {
       return response.json();
     }).then(data => { if (alive) setReviewed(data); }).catch(cause => { if (alive) setError(cause.message); });
     async function refresh() {
+      if (!onLocalServer()) return;
       try {
         const response = await fetch('/api/agents', { cache: 'no-store' });
         if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) throw Error('No local runner');

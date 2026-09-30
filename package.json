@@ -31,7 +31,7 @@
     "test:substitutes": "node --test TESTS/test_substitutes_model.mjs",
     "test:plan": "node --test TESTS/test_atlas_plan_model.mjs",
     "test:raster": "python -m pytest TESTS/test_raster_to_geojson.py -q",
-    "test": "python -m pytest TESTS -q && node --test TESTS/test_basin_trace.mjs TESTS/test_landcover_model.mjs TESTS/test_basin_layers_model.mjs TESTS/test_landing_model.mjs TESTS/test_substitutes_model.mjs TESTS/test_history_model.mjs TESTS/test_catchment_statistics_model.mjs TESTS/test_atlas_plan_model.mjs TESTS/test_ontology_network_model.mjs TESTS/test_ontology_export_model.mjs TESTS/test_poi_model.mjs TESTS/test_drought_model.mjs TESTS/test_seasonal_model.mjs TESTS/test_report_figures.mjs TESTS/test_report_terms.mjs TESTS/test_upstream_model.mjs TESTS/test_assessment_model.mjs TESTS/test_agent_runs.mjs && npm run build",
+    "test": "python -m pytest TESTS -q && node --test TESTS/test_basin_trace.mjs TESTS/test_landcover_model.mjs TESTS/test_basin_layers_model.mjs TESTS/test_landing_model.mjs TESTS/test_substitutes_model.mjs TESTS/test_history_model.mjs TESTS/test_catchment_statistics_model.mjs TESTS/test_atlas_plan_model.mjs TESTS/test_ontology_network_model.mjs TESTS/test_ontology_export_model.mjs TESTS/test_poi_model.mjs TESTS/test_drought_model.mjs TESTS/test_seasonal_model.mjs TESTS/test_report_figures.mjs TESTS/test_report_terms.mjs TESTS/test_upstream_model.mjs TESTS/test_assessment_model.mjs TESTS/test_agent_runs.mjs TESTS/test_local_server.mjs && npm run build",
     "hydrography:basinatlas": "python PIPELINES/extract_uz_basinatlas.py",
     "ontology:hydroatlas": "python PIPELINES/ontology/build_hydroatlas_vocabulary.py",
     "hydrography:atlaslinks": "python PIPELINES/build_atlas_basin_links.py",

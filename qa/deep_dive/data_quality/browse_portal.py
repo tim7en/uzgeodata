@@ -14,7 +14,9 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-BASE = (sys.argv[1] if len(sys.argv) > 1 else "https://uzgeodata.uz").rstrip("/")
+ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
+BASE = (ARGS[0] if ARGS else "https://uzgeodata.uz").rstrip("/")
+BASIN_ONLY = "--basin-only" in sys.argv
 HERE = Path(__file__).resolve().parent
 SHOTS = HERE / "shots"
 PAGES = ["/", "/about", "/guide", "/seasonal", "/drought", "/snow-forecast", "/agents", "/case-studies", "/research",
@@ -75,14 +77,17 @@ def sweep_pages(browser):
 
 
 def sweep_basin(browser):
-    page = browser.new_page(viewport={"width": 1366, "height": 900})
+    # Phone size: the finder is on screen there, while on desktop the panel starts collapsed.
+    page = browser.new_page(viewport={"width": 390, "height": 844})
     log = {"basin": BASIN, "console": [], "failed": [], "tabs": {}}
     watch(page, log)
     page.goto(BASE + "/", wait_until="networkidle", timeout=60000)
-    page.fill("input[aria-label='Search basins by HYBAS or PFAF identifier']", BASIN)
+    # The site may be machine-translated on load, which rewrites labels: find the box by place.
+    page.locator(".land-finder input").first.fill(BASIN)
     page.wait_for_selector(".land-finder-result button", timeout=60000)
     page.click(".land-finder-result > button")
     page.wait_for_timeout(2500)
+    log["language"] = page.evaluate("document.documentElement.lang + ' ' + (document.cookie.match(/googtrans=[^;]*/) || [''])[0]")
     tabs = page.locator("[role=tab], .land-modal-tabs button").all_inner_texts()
     log["tab_names"] = tabs
     for label in tabs:
@@ -110,8 +115,12 @@ def main():
     SHOTS.mkdir(exist_ok=True)
     with sync_playwright() as p:
         browser = p.chromium.launch()
-        pages = sweep_pages(browser)
-        basin = sweep_basin(browser)
+        pages = json.loads((HERE / "browse.json").read_text(encoding="utf-8"))["pages"] if BASIN_ONLY else sweep_pages(browser)
+        (HERE / "browse.json").write_text(json.dumps({"base": BASE, "pages": pages}, indent=1) + "\n", encoding="utf-8")
+        try:
+            basin = sweep_basin(browser)
+        except Exception as error:
+            basin = {"error": str(error)[:400], "tabs": {}}
         browser.close()
     result = {"base": BASE, "pages": pages, "basin": basin}
     (HERE / "browse.json").write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8")

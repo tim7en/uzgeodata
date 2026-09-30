@@ -1,0 +1,634 @@
+{
+ "base": "https://uzgeodata.uz",
+ "pages": [
+  {
+   "page": "/",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "UzGeoData \u2014 \u0433\u0434\u0435 \u043e\u0431\u0440\u0430\u0437\u0443\u044e\u0442\u0441\u044f \u0432\u043e\u0434\u044b",
+   "overflow_px": 0
+  },
+  {
+   "page": "/about",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041e \u043d\u0430\u0441 \u0438 \u0441\u0441\u044b\u043b\u043a\u0430 \u043d\u0430 \u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/guide",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u044f\u0442\u0438\u043c\u0438\u043d\u0443\u0442\u043d\u043e\u0435 \u0440\u0443\u043a\u043e\u0432\u043e\u0434\u0441\u0442\u0432\u043e \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/seasonal",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Seasonal forecast \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/drought",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Drought in the Amu and Syr Darya basins \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/snow-forecast",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Snow forecasts for the irrigation season \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/agents",
+   "viewport": "desktop",
+   "console": [
+    "Failed to load resource: the server responded with a status of 404 ()"
+   ],
+   "failed": [
+    "404 /api/agents"
+   ],
+   "status": 200,
+   "title": "Validation agents \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/case-studies",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u0440\u0438\u043c\u0435\u0440\u044b \u0443\u0441\u043f\u0435\u0448\u043d\u044b\u0445 \u043f\u0440\u043e\u0435\u043a\u0442\u043e\u0432 \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/research",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041d\u0430\u0443\u0447\u043d\u043e-\u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0435 \u0444\u043e\u043d\u0434\u044b \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/examples",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u0440\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u043f\u0440\u0438\u043c\u0435\u0440\u044b \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/data-lineage",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u0440\u043e\u0438\u0441\u0445\u043e\u0436\u0434\u0435\u043d\u0438\u0435 \u0434\u0430\u043d\u043d\u044b\u0445 \u0438 \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/admin",
+   "viewport": "desktop",
+   "console": [
+    "Failed to load resource: the server responded with a status of 404 ()"
+   ],
+   "failed": [
+    "404 /api/admin/variables"
+   ],
+   "status": 200,
+   "title": "\u0410\u043a\u0442\u0443\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0445 \u2014 \u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/roadmap",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u0414\u043e\u0440\u043e\u0436\u043d\u0430\u044f \u043a\u0430\u0440\u0442\u0430 \u0410\u0442\u043b\u0430\u0441\u0430 \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/dynamic-atlas",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Dynamic HydroATLAS \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/catalogue",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Data Catalogue \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/metadata",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Attribute catalogue \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/climate",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Transboundary Hydroclimate Observatory \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/trends",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u0413\u0438\u0434\u0440\u043e\u043a\u043b\u0438\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0442\u0435\u043d\u0434\u0435\u043d\u0446\u0438\u0438 \u0432 \u0434\u0432\u0443\u0445 \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0430\u0445 \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/landcover",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Basin Land-cover Observatory \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/hydrography",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Hydrography Explorer \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/water-flow",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Water withdrawals and downstream deliveries \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/dry-spell",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Dry spells and river flow without gauges \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/reservoir-monitoring",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041d\u0430\u0431\u043b\u044e\u0434\u0435\u043d\u0438\u0435 \u0437\u0430 \u043a\u0430\u0436\u0434\u044b\u043c \u043e\u0437\u0435\u0440\u043e\u043c \u0432 \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0435 \u0441 \u043e\u0440\u0431\u0438\u0442\u044b \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/surrogates",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Open-data surrogates \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/atlas",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Atlas explorer \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/ontology",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Living Ontology \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/relationships",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Relationship Tables \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/project",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u0410\u0442\u043b\u0430\u0441 \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u043e\u0432 \u0426\u0435\u043d\u0442\u0440\u0430\u043b\u044c\u043d\u043e\u0439 \u0410\u0437\u0438\u0438 \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/projects",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u0440\u043e\u0435\u043a\u0442\u044b \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/review",
+   "viewport": "desktop",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Layer Review \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "UzGeoData \u2014 \u0433\u0434\u0435 \u043e\u0431\u0440\u0430\u0437\u0443\u044e\u0442\u0441\u044f \u0432\u043e\u0434\u044b",
+   "overflow_px": 0
+  },
+  {
+   "page": "/about",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041e \u043d\u0430\u0441 \u0438 \u0441\u0441\u044b\u043b\u043a\u0430 \u043d\u0430 \u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/guide",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u044f\u0442\u0438\u043c\u0438\u043d\u0443\u0442\u043d\u043e\u0435 \u0440\u0443\u043a\u043e\u0432\u043e\u0434\u0441\u0442\u0432\u043e \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/seasonal",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Seasonal forecast \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/drought",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Drought in the Amu and Syr Darya basins \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/snow-forecast",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Snow forecasts for the irrigation season \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/agents",
+   "viewport": "phone",
+   "console": [
+    "Failed to load resource: the server responded with a status of 404 ()"
+   ],
+   "failed": [
+    "404 /api/agents"
+   ],
+   "status": 200,
+   "title": "Validation agents \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/case-studies",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u0440\u0438\u043c\u0435\u0440\u044b \u0443\u0441\u043f\u0435\u0448\u043d\u044b\u0445 \u043f\u0440\u043e\u0435\u043a\u0442\u043e\u0432 \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/research",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041d\u0430\u0443\u0447\u043d\u043e-\u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u0438\u0435 \u0444\u043e\u043d\u0434\u044b \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/examples",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u0440\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u043f\u0440\u0438\u043c\u0435\u0440\u044b \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f \u00b7 UzGeoData",
+   "overflow_px": 56
+  },
+  {
+   "page": "/data-lineage",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u0440\u043e\u0438\u0441\u0445\u043e\u0436\u0434\u0435\u043d\u0438\u0435 \u0434\u0430\u043d\u043d\u044b\u0445 \u0438 \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/admin",
+   "viewport": "phone",
+   "console": [
+    "Failed to load resource: the server responded with a status of 404 ()"
+   ],
+   "failed": [
+    "404 /api/admin/variables"
+   ],
+   "status": 200,
+   "title": "\u0410\u043a\u0442\u0443\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0445 \u2014 \u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/roadmap",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Atlas roadmap \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/dynamic-atlas",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Dynamic HydroATLAS \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/catalogue",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Data Catalogue \u2014 UzGeoData",
+   "overflow_px": 274
+  },
+  {
+   "page": "/metadata",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Attribute catalogue \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/climate",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Transboundary Hydroclimate Observatory \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/trends",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u0413\u0438\u0434\u0440\u043e\u043a\u043b\u0438\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0442\u0435\u043d\u0434\u0435\u043d\u0446\u0438\u0438 \u0432 \u0434\u0432\u0443\u0445 \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0430\u0445 \u00b7 UzGeoData",
+   "overflow_px": 148
+  },
+  {
+   "page": "/landcover",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Basin Land-cover Observatory \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/hydrography",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Hydrography Explorer \u2014 UzGeoData",
+   "overflow_px": 385
+  },
+  {
+   "page": "/water-flow",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Water withdrawals and downstream deliveries \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/dry-spell",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Dry spells and river flow without gauges \u00b7 UzGeoData",
+   "overflow_px": 12
+  },
+  {
+   "page": "/reservoir-monitoring",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041d\u0430\u0431\u043b\u044e\u0434\u0435\u043d\u0438\u0435 \u0437\u0430 \u043a\u0430\u0436\u0434\u044b\u043c \u043e\u0437\u0435\u0440\u043e\u043c \u0432 \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0435 \u0441 \u043e\u0440\u0431\u0438\u0442\u044b \u00b7 UzGeoData",
+   "overflow_px": 390
+  },
+  {
+   "page": "/surrogates",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Open-data surrogates \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/atlas",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Atlas explorer \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/ontology",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Living Ontology \u2014 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/relationships",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Relationship Tables \u2014 UzGeoData",
+   "overflow_px": 40
+  },
+  {
+   "page": "/project",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u0410\u0442\u043b\u0430\u0441 \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u043e\u0432 \u0426\u0435\u043d\u0442\u0440\u0430\u043b\u044c\u043d\u043e\u0439 \u0410\u0437\u0438\u0438 \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/projects",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "\u041f\u0440\u043e\u0435\u043a\u0442\u044b \u00b7 UzGeoData",
+   "overflow_px": 0
+  },
+  {
+   "page": "/review",
+   "viewport": "phone",
+   "console": [],
+   "failed": [],
+   "status": 200,
+   "title": "Layer Review \u2014 UzGeoData",
+   "overflow_px": 164
+  }
+ ],
+ "basin": {
+  "basin": "4121292070",
+  "console": [],
+  "failed": [],
+  "tabs": {
+   "\u0430\u0442\u0440\u0438\u0431\u0443\u0442\u044b HydroATLAS": {
+    "leaks": [],
+    "mentions_observed": 0,
+    "loading_left": false,
+    "errors_shown": [],
+    "new_console": [],
+    "new_failed": []
+   },
+   "\u041d\u0435\u0437\u0430\u0432\u0438\u0441\u0438\u043c\u044b\u0435 \u043e\u0446\u0435\u043d\u043a\u0438": {
+    "leaks": [],
+    "mentions_observed": 0,
+    "loading_left": false,
+    "errors_shown": [],
+    "new_console": [],
+    "new_failed": []
+   },
+   "\u0415\u0436\u0435\u043c\u0435\u0441\u044f\u0447\u043d\u044b\u0439 \u043e\u0442\u0447\u0435\u0442": {
+    "leaks": [],
+    "mentions_observed": 1,
+    "loading_left": false,
+    "errors_shown": [],
+    "new_console": [],
+    "new_failed": []
+   },
+   "\u041d\u0435\u0434\u0430\u0432\u043d\u0438\u0435 \u043a\u043b\u0438\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f": {
+    "leaks": [],
+    "mentions_observed": 0,
+    "loading_left": false,
+    "errors_shown": [],
+    "new_console": [],
+    "new_failed": []
+   },
+   "\u0417\u0430\u0441\u0443\u0445\u0430 \u0438 \u043f\u0440\u043e\u0433\u043d\u043e\u0437": {
+    "leaks": [],
+    "mentions_observed": 0,
+    "loading_left": false,
+    "errors_shown": [],
+    "new_console": [],
+    "new_failed": []
+   },
+   "\u041f\u0440\u043e\u0433\u043d\u043e\u0437 \u043f\u043e\u0433\u043e\u0434\u044b: \u0441\u043d\u0435\u0433": {
+    "leaks": [],
+    "mentions_observed": 0,
+    "loading_left": false,
+    "errors_shown": [],
+    "new_console": [],
+    "new_failed": []
+   },
+   "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0432\u043e\u0434\u043e\u0441\u0431\u043e\u0440\u043d\u043e\u0433\u043e \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0430": {
+    "leaks": [],
+    "mentions_observed": 1,
+    "loading_left": false,
+    "errors_shown": [],
+    "new_console": [],
+    "new_failed": []
+   }
+  },
+  "language": "ru googtrans=/en/ru",
+  "tab_names": [
+   "\u0430\u0442\u0440\u0438\u0431\u0443\u0442\u044b HydroATLAS",
+   "\u041d\u0435\u0437\u0430\u0432\u0438\u0441\u0438\u043c\u044b\u0435 \u043e\u0446\u0435\u043d\u043a\u0438",
+   "\u0415\u0436\u0435\u043c\u0435\u0441\u044f\u0447\u043d\u044b\u0439 \u043e\u0442\u0447\u0435\u0442",
+   "\u041d\u0435\u0434\u0430\u0432\u043d\u0438\u0435 \u043a\u043b\u0438\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f",
+   "\u0417\u0430\u0441\u0443\u0445\u0430 \u0438 \u043f\u0440\u043e\u0433\u043d\u043e\u0437",
+   "\u041f\u0440\u043e\u0433\u043d\u043e\u0437 \u043f\u043e\u0433\u043e\u0434\u044b: \u0441\u043d\u0435\u0433",
+   "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0432\u043e\u0434\u043e\u0441\u0431\u043e\u0440\u043d\u043e\u0433\u043e \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0430"
+  ]
+ }
+}

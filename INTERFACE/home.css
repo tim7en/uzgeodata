@@ -116,3 +116,6 @@ a:hover{color:#095a74}
 [data-theme="dark"] .closing .button{background:#101c21;border-color:#24343b;color:#e8eef0}
 [data-theme="dark"] .status-dot{background:#38b6dd}
 h1 em{font-family:var(--display)}
+
+/* Phone: a wide table scrolls inside itself instead of widening the page. */
+@media (max-width:700px){main table{display:block;max-width:100%;overflow-x:auto}h1,h2,h3{overflow-wrap:break-word;hyphens:auto}pre{max-width:100%;overflow-x:auto}.button{max-width:100%;white-space:normal;box-sizing:border-box}main svg{max-width:100%;height:auto}}
