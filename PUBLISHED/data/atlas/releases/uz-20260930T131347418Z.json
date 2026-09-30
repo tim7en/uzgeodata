@@ -1,0 +1,512 @@
+{
+  "schema_version": 2,
+  "release_id": "uz-20260930T131347418Z",
+  "cut_at": "2026-09-30T13:13:47.418+00:00",
+  "commit": "f0153b2431324fdb4c91ec137e201274811e6a72",
+  "span": [
+    "2003-01",
+    "2026-12"
+  ],
+  "rows": 29005720,
+  "supersedes": "uz-20260930T122004061Z",
+  "notes": "Observation store manifest counts refreshed and v1.1 source release registered; no change to values.",
+  "digest_method": "sha256 of the file's content; text files (.csv, .geojson, .json, .md, .txt) with CRLF line endings normalised to LF, so a checkout on any system verifies",
+  "files": {
+    "analysis-layers.md": {
+      "bytes": 9913,
+      "sha256": "0392a3d7d7039152ab9b5ad76bc215c299b3c88d21029556c2b75074f18736da",
+      "object": "objects/0392a3d7d7039152ab9b5ad76bc215c299b3c88d21029556c2b75074f18736da"
+    },
+    "catalogue.json": {
+      "bytes": 257725,
+      "sha256": "ff01be878a1d666983f596b73a2d75a63ffcb67974ef35a787982679d17df95e",
+      "object": "objects/ff01be878a1d666983f596b73a2d75a63ffcb67974ef35a787982679d17df95e"
+    },
+    "cube/index.json": {
+      "bytes": 17922,
+      "sha256": "a6fe7c679a019425cec6eb220c119362fdf8236f6b6c0785817170d29e1c5b99",
+      "object": "objects/a6fe7c679a019425cec6eb220c119362fdf8236f6b6c0785817170d29e1c5b99"
+    },
+    "cube/variable=aet_mm_s/data_0.parquet": {
+      "bytes": 13345206,
+      "sha256": "33ce388a1f2d3ea42115422a39f0ce431e42f79b23550dfef24c441414cee8d4",
+      "object": "objects/33ce388a1f2d3ea42115422a39f0ce431e42f79b23550dfef24c441414cee8d4"
+    },
+    "cube/variable=cwd_mm_s/data_0.parquet": {
+      "bytes": 11240110,
+      "sha256": "f356416453356801cecf4df2ea605cd84e3524cf11ba8bffa03cbf330f7e1056",
+      "object": "objects/f356416453356801cecf4df2ea605cd84e3524cf11ba8bffa03cbf330f7e1056"
+    },
+    "cube/variable=pds_ix_s/data_0.parquet": {
+      "bytes": 15863102,
+      "sha256": "2059e447a1123204195cbb6b144b72a3bf3619a1a97a10606fe819420aa18f98",
+      "object": "objects/2059e447a1123204195cbb6b144b72a3bf3619a1a97a10606fe819420aa18f98"
+    },
+    "cube/variable=pet_mm_s/data_0.parquet": {
+      "bytes": 13483783,
+      "sha256": "4c48d8ea20cfc1460f4e702a75f3076f1e90d9ea45ee7672295105699a78bb29",
+      "object": "objects/4c48d8ea20cfc1460f4e702a75f3076f1e90d9ea45ee7672295105699a78bb29"
+    },
+    "cube/variable=pre_mm_s/data_0.parquet": {
+      "bytes": 14983678,
+      "sha256": "cb25410d6ae6f0a1ce00b92ae80ede30c06a8a56a9a9f9ce7517bbea5f00e284",
+      "object": "objects/cb25410d6ae6f0a1ce00b92ae80ede30c06a8a56a9a9f9ce7517bbea5f00e284"
+    },
+    "cube/variable=rtc_mm_s/data_0.parquet": {
+      "bytes": 12447061,
+      "sha256": "712a920f2a28a9c9a15532495f23104f33a844196f4472d3a1e7597fae6aee5a",
+      "object": "objects/712a920f2a28a9c9a15532495f23104f33a844196f4472d3a1e7597fae6aee5a"
+    },
+    "cube/variable=run_mm_s/data_0.parquet": {
+      "bytes": 14804211,
+      "sha256": "7652bff5ad12372a4247bbce18276628e988487d5fc3c2a55e3ed955ba612fef",
+      "object": "objects/7652bff5ad12372a4247bbce18276628e988487d5fc3c2a55e3ed955ba612fef"
+    },
+    "cube/variable=snw_pc_s/data_0.parquet": {
+      "bytes": 9756990,
+      "sha256": "0517d8d1737bcdb35114273a39126427bd2d8b3d69dc0d1d3c238ca99724aa96",
+      "object": "objects/0517d8d1737bcdb35114273a39126427bd2d8b3d69dc0d1d3c238ca99724aa96"
+    },
+    "cube/variable=soil_mm_s/data_0.parquet": {
+      "bytes": 11707564,
+      "sha256": "5cdaa1a6857fe2f7d43384c7af57828e4e8649a809f48594b80f00cb6c0d228d",
+      "object": "objects/5cdaa1a6857fe2f7d43384c7af57828e4e8649a809f48594b80f00cb6c0d228d"
+    },
+    "cube/variable=swe_mm_s/data_0.parquet": {
+      "bytes": 6010330,
+      "sha256": "2ea494e2d64eb14dece87e522b34d35a21fbf5a9f06d286217c9672c6399aad7",
+      "object": "objects/2ea494e2d64eb14dece87e522b34d35a21fbf5a9f06d286217c9672c6399aad7"
+    },
+    "cube/variable=tmn_dc_s/data_0.parquet": {
+      "bytes": 15684191,
+      "sha256": "5fc93fedb6871e61102ea870185e458fe08ff6e49b47597478042d4e2c936462",
+      "object": "objects/5fc93fedb6871e61102ea870185e458fe08ff6e49b47597478042d4e2c936462"
+    },
+    "cube/variable=tmp_dc_s/data_0.parquet": {
+      "bytes": 16235370,
+      "sha256": "0cb25f08d03454231af936bd2f5da29e7a73001f8cdae1c3755826f2d7689a5c",
+      "object": "objects/0cb25f08d03454231af936bd2f5da29e7a73001f8cdae1c3755826f2d7689a5c"
+    },
+    "cube/variable=tmx_dc_s/data_0.parquet": {
+      "bytes": 15426495,
+      "sha256": "bccb10cefaef7872d3016908e3a2d480cf455e9c862fd825e414004e4cf19a4d",
+      "object": "objects/bccb10cefaef7872d3016908e3a2d480cf455e9c862fd825e414004e4cf19a4d"
+    },
+    "cube/variable=vpd_kp_s/data_0.parquet": {
+      "bytes": 15499525,
+      "sha256": "f8f2eac4170c6cfcc20535149c8b0be3c9d29164c028010ea0eb0a5c2e626bd8",
+      "object": "objects/f8f2eac4170c6cfcc20535149c8b0be3c9d29164c028010ea0eb0a5c2e626bd8"
+    },
+    "observations/manifest.json": {
+      "bytes": 2150,
+      "sha256": "72dfe8e1da982a6f38763d09c8be47143c8cc35116fe0f6b9475e25afe9982ff",
+      "object": "objects/72dfe8e1da982a6f38763d09c8be47143c8cc35116fe0f6b9475e25afe9982ff"
+    },
+    "observations/regional-dmsp_lights-ledger.json": {
+      "bytes": 702,
+      "sha256": "a21233e1dd767925edbb36ad2e807e0a31906a631f348b5fe80a507a18a57ef0",
+      "object": "objects/a21233e1dd767925edbb36ad2e807e0a31906a631f348b5fe80a507a18a57ef0"
+    },
+    "observations/regional-era5_runoff-ledger.json": {
+      "bytes": 13136,
+      "sha256": "f6cd333bb1d758d5a247c9998069499d7241ae0b6ee8f598668e01b08e646399",
+      "object": "objects/f6cd333bb1d758d5a247c9998069499d7241ae0b6ee8f598668e01b08e646399"
+    },
+    "observations/regional-era5_temperature-ledger.json": {
+      "bytes": 12016,
+      "sha256": "e35a54699041de6f045e4e7a9699e742e0d123a864ce91d80d41bcfc4d54d437",
+      "object": "objects/e35a54699041de6f045e4e7a9699e742e0d123a864ce91d80d41bcfc4d54d437"
+    },
+    "observations/regional-gfsad-ledger.json": {
+      "bytes": 641,
+      "sha256": "9479ab3b734e42ec98bb8367392a1a6507b4be7afdc696f44c1263607f3ff7a1",
+      "object": "objects/9479ab3b734e42ec98bb8367392a1a6507b4be7afdc696f44c1263607f3ff7a1"
+    },
+    "observations/regional-ghsl-ledger.json": {
+      "bytes": 658,
+      "sha256": "171fd7e1c3b80ee9c651637901c91203d1fb5f006c644e9e80bc5f295f4df077",
+      "object": "objects/171fd7e1c3b80ee9c651637901c91203d1fb5f006c644e9e80bc5f295f4df077"
+    },
+    "observations/regional-glims-ledger.json": {
+      "bytes": 7024,
+      "sha256": "e59ed7e9600ee8e7c7e948e7ab9a3922dac3ad5d3ec2fb44954e9e78f4e88798",
+      "object": "objects/e59ed7e9600ee8e7c7e948e7ab9a3922dac3ad5d3ec2fb44954e9e78f4e88798"
+    },
+    "observations/regional-gpw-ledger.json": {
+      "bytes": 829,
+      "sha256": "ba4beae400903861ad18d46936b910b73c44a9f4e27a329cc1877f9408637a24",
+      "object": "objects/ba4beae400903861ad18d46936b910b73c44a9f4e27a329cc1877f9408637a24"
+    },
+    "observations/regional-human_modification-ledger.json": {
+      "bytes": 757,
+      "sha256": "8654f43adc720897e887ec2d77b8b163213de426d2807fbee0955b998dd6ce1e",
+      "object": "objects/8654f43adc720897e887ec2d77b8b163213de426d2807fbee0955b998dd6ce1e"
+    },
+    "observations/regional-landcover-ledger.json": {
+      "bytes": 1692,
+      "sha256": "11186599af7723a14f90687b582c4580d75f2ce03583d4f41a206154ed3d5fad",
+      "object": "objects/11186599af7723a14f90687b582c4580d75f2ce03583d4f41a206154ed3d5fad"
+    },
+    "observations/regional-openlandmap_soil-ledger.json": {
+      "bytes": 1023,
+      "sha256": "af556ba8893efe65211260ffb0d55e3264854922d4667b57daaad8aaebccb70f",
+      "object": "objects/af556ba8893efe65211260ffb0d55e3264854922d4667b57daaad8aaebccb70f"
+    },
+    "observations/regional-pnv_biome-ledger.json": {
+      "bytes": 2054,
+      "sha256": "d8e70e903372572892d7cbf4cd930e8eb130e43712d069a5e38a2b2f7d1a38d7",
+      "object": "objects/d8e70e903372572892d7cbf4cd930e8eb130e43712d069a5e38a2b2f7d1a38d7"
+    },
+    "observations/regional-snow-ledger.json": {
+      "bytes": 18138,
+      "sha256": "b737172b629a53336fab23b176c6706b016eea3b8c8435a9302caf83212da40e",
+      "object": "objects/b737172b629a53336fab23b176c6706b016eea3b8c8435a9302caf83212da40e"
+    },
+    "observations/regional-surface_water-ledger.json": {
+      "bytes": 873,
+      "sha256": "5c12862f1cc778fcdf57b0699a4067fca6f0192d0bd53a4c8c65ef4fdc242cb2",
+      "object": "objects/5c12862f1cc778fcdf57b0699a4067fca6f0192d0bd53a4c8c65ef4fdc242cb2"
+    },
+    "observations/regional-terraclimate-ledger.json": {
+      "bytes": 12547,
+      "sha256": "e7fe8d8ad6f760d1f21f3e8530dfa272a7b5c9d801549e5c17dfc9b9cd6f88b6",
+      "object": "objects/e7fe8d8ad6f760d1f21f3e8530dfa272a7b5c9d801549e5c17dfc9b9cd6f88b6"
+    },
+    "observations/regional-terraclimate_moisture-ledger.json": {
+      "bytes": 8071,
+      "sha256": "8415172c6f797b55a4607e5b01548aa7b11bc131d4c3faffcc2da2671942f92a",
+      "object": "objects/8415172c6f797b55a4607e5b01548aa7b11bc131d4c3faffcc2da2671942f92a"
+    },
+    "observations/regional-terraclimate_temperature-ledger.json": {
+      "bytes": 12764,
+      "sha256": "efa69db355f6f31dd3095bd3fe4355f27b361de831f9b3bc32e4376476f92448",
+      "object": "objects/efa69db355f6f31dd3095bd3fe4355f27b361de831f9b3bc32e4376476f92448"
+    },
+    "observations/regional-wdpa-ledger.json": {
+      "bytes": 7007,
+      "sha256": "d32c46e3e6b1db4df566f5aa51f46ae97f16601bd927f38cb246b10d3b67e212",
+      "object": "objects/d32c46e3e6b1db4df566f5aa51f46ae97f16601bd927f38cb246b10d3b67e212"
+    },
+    "regional-coverage.json": {
+      "bytes": 168164,
+      "sha256": "2e17a7a0e2c40d1e4249ae02c087a26deb0652cb3a651fb978cba83b67b79b74",
+      "object": "objects/2e17a7a0e2c40d1e4249ae02c087a26deb0652cb3a651fb978cba83b67b79b74"
+    }
+  },
+  "registry": {
+    "version": 1,
+    "note": "One preferred product per concept, chosen once and in the open. A fallback is named where a second source could answer, and naming it as a fallback says it is not the preferred answer.",
+    "variables": {
+      "uz:aet-monthly-v1": {
+        "id": "uz:aet-monthly-v1",
+        "concept": "actual evapotranspiration",
+        "attribute": "uzgeodata.dated.v1.aet_mm_s",
+        "unit": "millimetres per month",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "why": "Published on the same grid and water balance as precipitation and potential evapotranspiration, so the three can be differenced without crossing models.",
+        "fallback": null,
+        "kind": "flux",
+        "observed_through": "2025-12"
+      },
+      "uz:cwd-monthly-v1": {
+        "id": "uz:cwd-monthly-v1",
+        "concept": "climate water deficit",
+        "attribute": "uzgeodata.dated.v1.cwd_mm_s",
+        "unit": "millimetres per month",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "flux",
+        "why": "Demand the water balance could not meet: PET less AET inside one model, with soil storage accounted for, which the crude precipitation-less-AET balance is not.",
+        "observed_through": "2025-12"
+      },
+      "uz:pds-monthly-v1": {
+        "id": "uz:pds-monthly-v1",
+        "concept": "palmer drought severity index",
+        "attribute": "uzgeodata.dated.v1.pds_ix_s",
+        "unit": "index (dimensionless)",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "state",
+        "why": "A published drought index beside the SPI derived here, computed by the source from its own water balance rather than from precipitation alone.",
+        "caution": "An index already standardised by its source. Averaging it over basins or months is descriptive; it is not re-standardised, and anomalies of it are anomalies of an anomaly.",
+        "observed_through": "2025-12"
+      },
+      "uz:pet-monthly-v1": {
+        "id": "uz:pet-monthly-v1",
+        "concept": "potential evapotranspiration",
+        "attribute": "uzgeodata.dated.v1.pet_mm_s",
+        "unit": "millimetres per month",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "why": "Paired with actual evapotranspiration from one model, which is what makes their ratio a moisture index rather than a comparison of two conventions.",
+        "fallback": null,
+        "kind": "flux",
+        "observed_through": "2025-12"
+      },
+      "uz:pre-monthly-v1": {
+        "id": "uz:pre-monthly-v1",
+        "concept": "precipitation",
+        "attribute": "uzgeodata.dated.v1.pre_mm_s",
+        "unit": "millimetres per month",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "why": "Downscaled to about four kilometres, which matters where a level-12 basin sits in mountain terrain and a coarse cell would average a valley with a ridge.",
+        "fallback": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "fallback_cost": "About eleven kilometres, so a headwater basin may hold a single cell.",
+        "kind": "flux",
+        "observed_through": "2025-12"
+      },
+      "uz:rtc-monthly-v1": {
+        "id": "uz:rtc-monthly-v1",
+        "concept": "terraclimate runoff",
+        "attribute": "uzgeodata.dated.v1.rtc_mm_s",
+        "unit": "millimetres per month",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "flux",
+        "why": "A second runoff to set against ERA5-Land's, from a different model. Asking for 'runoff' still resolves to ERA5-Land; this one has to be asked for by name.",
+        "observed_through": "2025-12"
+      },
+      "uz:run-monthly-v1": {
+        "id": "uz:run-monthly-v1",
+        "concept": "runoff",
+        "attribute": "uzgeodata.dated.v1.run_mm_s",
+        "unit": "millimetres per month",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2026
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "native_resolution_m": 11132,
+        "why": "A land-surface model's runoff, kept as the answer because it was chosen first and the record's analyses use it. It is not discharge: it has not been routed and no gauge has been compared to it.",
+        "fallback": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "fallback_cost": "Published separately as uz:rtc-monthly-v1: a bucket model's surplus rather than a land-surface scheme's, so the two differ in method, not only grid.",
+        "kind": "flux",
+        "observed_through": "2026-08"
+      },
+      "uz:snw-monthly-v1": {
+        "id": "uz:snw-monthly-v1",
+        "concept": "snow cover",
+        "attribute": "uzgeodata.dated.v1.snw_pc_s",
+        "unit": "percent",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2026
+        ],
+        "support": "basin, local",
+        "aggregation": "frequency of snow-covered days in the month",
+        "preferred": "MODIS/061/MYD10A1",
+        "native_resolution_m": 500,
+        "why": "Daily observations aggregated here, rather than the monthly product the atlas cites, so the count of contributing days is known per basin and month.",
+        "fallback": null,
+        "kind": "state",
+        "caution": "Its gaps grow towards the present at constant source coverage, so the series is published for inspection and withdrawn from trend analysis.",
+        "observed_through": "2026-08"
+      },
+      "uz:soil-monthly-v1": {
+        "id": "uz:soil-monthly-v1",
+        "concept": "soil moisture",
+        "attribute": "uzgeodata.dated.v1.soil_mm_s",
+        "unit": "millimetres of soil moisture",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "why": "A modelled column store in millimetres. It is published as what it is and not relabelled as the percentage the atlas attribute holds.",
+        "fallback": null,
+        "kind": "state",
+        "observed_through": "2025-12"
+      },
+      "uz:swe-monthly-v1": {
+        "id": "uz:swe-monthly-v1",
+        "concept": "snow water equivalent",
+        "attribute": "uzgeodata.dated.v1.swe_mm_s",
+        "unit": "millimetres of snow water equivalent",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "state",
+        "why": "The water a snowpack holds, which snow cover cannot give: cover is extent only.",
+        "caution": "Modelled from temperature and precipitation, not observed. It is not a measurement to validate MODIS snow cover against, and in high terrain the four-kilometre grid smooths the pack the melt actually comes from.",
+        "observed_through": "2025-12"
+      },
+      "uz:tmn-monthly-v1": {
+        "id": "uz:tmn-monthly-v1",
+        "concept": "minimum temperature",
+        "attribute": "uzgeodata.dated.v1.tmn_dc_s",
+        "unit": "degrees Celsius",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "state",
+        "why": "The month's daily minima, paired with the maxima from the same model.",
+        "observed_through": "2025-12"
+      },
+      "uz:tmp-monthly-v1": {
+        "id": "uz:tmp-monthly-v1",
+        "concept": "mean temperature",
+        "attribute": "uzgeodata.dated.v1.tmp_dc_s",
+        "unit": "degrees Celsius",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2026
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "ECMWF/ERA5_LAND/MONTHLY_AGGR",
+        "native_resolution_m": 11132,
+        "why": "A true mean of hourly values. TerraClimate publishes only the daily extremes, and their midpoint is a different measurement that happens to carry the same name.",
+        "fallback": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "fallback_cost": "Finer at about four kilometres, but a midpoint of extremes rather than a mean of hours, and about a degree warmer across this region.",
+        "kind": "state",
+        "observed_through": "2026-08"
+      },
+      "uz:tmx-monthly-v1": {
+        "id": "uz:tmx-monthly-v1",
+        "concept": "maximum temperature",
+        "attribute": "uzgeodata.dated.v1.tmx_dc_s",
+        "unit": "degrees Celsius",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "state",
+        "why": "The month's daily maxima. ERA5-Land publishes no daily extreme on this grid.",
+        "observed_through": "2025-12"
+      },
+      "uz:vpd-monthly-v1": {
+        "id": "uz:vpd-monthly-v1",
+        "concept": "vapour pressure deficit",
+        "attribute": "uzgeodata.dated.v1.vpd_kp_s",
+        "unit": "kilopascals",
+        "cadence": "monthly",
+        "coverage": [
+          2003,
+          2025
+        ],
+        "support": "basin, local",
+        "aggregation": "area-weighted mean of the monthly field",
+        "preferred": "TerraClimate v1.1 (Climatology Lab yearly NetCDF)",
+        "native_resolution_m": 4638,
+        "fallback": null,
+        "kind": "state",
+        "why": "Published on the same four-kilometre grid as the temperatures it depends on, rather than derived here from a humidity field this project does not hold.",
+        "observed_through": "2025-12"
+      }
+    },
+    "concepts": {
+      "actual evapotranspiration": "uz:aet-monthly-v1",
+      "climate water deficit": "uz:cwd-monthly-v1",
+      "evapotranspiration": "uz:aet-monthly-v1",
+      "maximum temperature": "uz:tmx-monthly-v1",
+      "mean temperature": "uz:tmp-monthly-v1",
+      "minimum temperature": "uz:tmn-monthly-v1",
+      "palmer drought severity index": "uz:pds-monthly-v1",
+      "pdsi": "uz:pds-monthly-v1",
+      "potential evapotranspiration": "uz:pet-monthly-v1",
+      "precipitation": "uz:pre-monthly-v1",
+      "rainfall": "uz:pre-monthly-v1",
+      "reference evapotranspiration": "uz:pet-monthly-v1",
+      "runoff": "uz:run-monthly-v1",
+      "snow": "uz:snw-monthly-v1",
+      "snow cover": "uz:snw-monthly-v1",
+      "snow water equivalent": "uz:swe-monthly-v1",
+      "soil moisture": "uz:soil-monthly-v1",
+      "swe": "uz:swe-monthly-v1",
+      "temperature": "uz:tmp-monthly-v1",
+      "terraclimate runoff": "uz:rtc-monthly-v1",
+      "vapour pressure deficit": "uz:vpd-monthly-v1",
+      "vpd": "uz:vpd-monthly-v1",
+      "water deficit": "uz:cwd-monthly-v1"
+    },
+    "unavailable": {
+      "discharge": "No gauged or modelled discharge series is published; runoff is a land-surface flux and is not the same quantity.",
+      "drought index": "Ambiguous: two are offered and they are not interchangeable. SPI is derived on demand from published precipitation by products.spi(), with the gamma fit stated; the Palmer index is published as TerraClimate's modelled series (ask for 'palmer drought severity index'). SPEI is not offered.",
+      "land surface temperature": "Air temperature is published; land surface temperature is not, and the two are different measurements.",
+      "ndvi": "No vegetation index is published as a regional dated series.",
+      "surface water": "Published as a long-term climatology, not as a dated monthly series.",
+      "vegetation": "No NDVI or EVI series is published. Nothing here substitutes for it."
+    }
+  },
+  "reading": {
+    "identity": "Cite this release_id. The artefacts it names may be rebuilt at the same paths by a later release; each file's `object` path (under /data/atlas/) serves exactly the bytes its digest names and is never overwritten.",
+    "verification": "Every file carries its size and SHA-256. A consumer that does not check them cannot distinguish a complete download from a truncated one.",
+    "immutability": "This record is never rewritten. A correction is the next release, naming this one in supersedes."
+  }
+}
