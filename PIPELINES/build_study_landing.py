@@ -185,7 +185,7 @@ def main():
     snow_path=DATA/'snow-forecast-card.json'
     snow=json.loads(snow_path.read_text(encoding='utf-8')) if snow_path.exists() else None
     def snow_card():
-        return {'id':'snow-forecast','href':'/snow-forecast','title':'Forecasting the irrigation season from April snow',
+        return {'id':'snow-forecast','href':'/snow-forecast.html','title':'Forecasting the irrigation season from April snow',
          'region':f"AMU DARYA & SYR DARYA · {snow['gauges'] if snow else 52} GAUGES · AFTER BARNHART ET AL.",
          'aim':'April–September flow forecasts from 1 April snow at every long-record gauge, following the USGS and Uzhydromet HMRI Kashkadarya study by Barnhart and colleagues, and tested on years the model never saw.',
          'image':'/data/case-studies/snow-forecast-preview.svg',

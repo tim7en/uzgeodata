@@ -64,6 +64,31 @@ def dated_rows(years):
                "value": None if value is None else float(value)}
 
 
+def record_in_store(years=(2003, 2025), at=None):
+    """The store's own bookkeeping for this run: the source release it cites, and the
+    whole-store counts in its manifest. Without them the store holds rows that point at
+    an unregistered release, and a manifest that undercounts what it holds."""
+    at = at or utc_now()
+    observations.merge_table(STORE / "source_release.csv", [{
+        "source_release_id": RELEASE, "name": "TerraClimate v1.1 (Climatology Lab producer release)",
+        "asset": "https://climate.northwestknowledge.net/TERRACLIMATE/ yearly NetCDF, reduced in "
+                 "PUBLISHED/data/atlas/climate-continuation/terraclimate-v1.1-history",
+        "sha256": "", "epoch": "", "valid_start": f"{years[0]:04d}-01-01", "valid_end": f"{years[1] + 1:04d}-01-01",
+        "retrieved_at": at, "pinned": False}], "source_release_id")
+    path = STORE / "manifest.json"
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    totals = observations.summarise(STORE)
+    manifest.update({
+        "rows": totals["rows"], "current_rows": totals["current_rows"], "by_mode": totals["by_mode"],
+        "by_time_kind": {kind: totals["by_time_kind"].get(kind, 0) for kind in observations.TIME_KINDS},
+        "dated_observations": totals["dated_observations"], "attribute_count": len(totals["attributes"]),
+        "dated_attributes": [a for a in totals["attributes"] if a.startswith("uzgeodata.dated.")],
+        "missing_values": totals["missing_values"], "counts_refreshed_at": at,
+    })
+    write_json(path, manifest)
+    return {"rows": totals["rows"]}
+
+
 def build(years=(2003, 2025), dry_run=False):
     batch, _ = latest_run()
     units = units_by_family(batch)
@@ -114,6 +139,7 @@ def build(years=(2003, 2025), dry_run=False):
         "scientific_release": "not_eligible"}], "run_id")
     observations.merge_table(STORE / "recipe.csv", [{"recipe_version": recipe, "mode": "annual_extension"}],
                              "recipe_version")
+    summary["store"] = record_in_store(years, at)
     return summary
 
 
@@ -121,9 +147,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--years", default="2003-2025")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--record-only", action="store_true",
+                        help="register the release and refresh the manifest counts without re-deriving")
     arguments = parser.parse_args()
     first, _, last = arguments.years.partition("-")
-    print(json.dumps(build((int(first), int(last or first)), arguments.dry_run), indent=2))
+    years = (int(first), int(last or first))
+    print(json.dumps(record_in_store(years) if arguments.record_only else build(years, arguments.dry_run), indent=2))
 
 
 if __name__ == "__main__":

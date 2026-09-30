@@ -74,7 +74,7 @@
   },
   "run_mm_s": {
    "source_release": "era5_runoff@ECMWF/ERA5_LAND/MONTHLY_AGGR",
-   "declared_through": null,
+   "declared_through": "2026-08",
    "last_month_with_values": "2026-08",
    "basins_with_value_in_last_month_pct": 100.0,
    "missing_pct_up_to_last_month": 0.0,
@@ -85,11 +85,11 @@
   },
   "snw_pc_s": {
    "source_release": "modis_myd10a1@061",
-   "declared_through": null,
-   "last_month_with_values": "2024-12",
-   "basins_with_value_in_last_month_pct": 99.97,
-   "missing_pct_up_to_last_month": 0.682,
-   "months_below_99pct_coverage": 94,
+   "declared_through": "2026-08",
+   "last_month_with_values": "2026-08",
+   "basins_with_value_in_last_month_pct": 98.71,
+   "missing_pct_up_to_last_month": 0.697,
+   "months_below_99pct_coverage": 104,
    "first_such_months": [
     "2006-06",
     "2006-08",
@@ -142,7 +142,7 @@
   },
   "tmp_dc_s": {
    "source_release": "era5_temperature@ECMWF/ERA5_LAND/MONTHLY_AGGR",
-   "declared_through": null,
+   "declared_through": "2026-08",
    "last_month_with_values": "2026-08",
    "basins_with_value_in_last_month_pct": 100.0,
    "missing_pct_up_to_last_month": 0.0,
@@ -323,7 +323,7 @@
     0,
     100
    ],
-   "values": 1952083,
+   "values": 2099640,
    "below": 0,
    "above": 0,
    "min": 0.0,
@@ -361,9 +361,9 @@
    "note": "ERA5-Land runoff against TerraClimate precipitation - different products; above 1 is possible with glacier melt in ERA5-Land but worth showing."
   },
   "snow_cover_vs_swe_winter": {
-   "pairs": 490951,
-   "no_cover_but_swe_over_50mm": 544,
-   "full_cover_but_swe_zero": 393
+   "pairs": 513271,
+   "no_cover_but_swe_over_50mm": 560,
+   "full_cover_but_swe_zero": 419
   }
  },
  "history": {
@@ -670,11 +670,11 @@
   },
   "snw_pc_s": {
    "basins_with_24_month_constant_run": 0,
-   "spikes_z_above_10": 166316,
+   "spikes_z_above_10": 183247,
    "worst_spike": {
     "z": 100000.0,
-    "basin": "4120314970",
-    "month": "2009-01",
+    "basin": "4120057270",
+    "month": "2006-01",
     "value": 100.0,
     "basin_median_same_month": 0.0
    },
@@ -701,14 +701,14 @@
     15.9459,
     14.9487,
     15.985,
-    null,
-    null
+    13.2476,
+    15.8713
    ],
    "largest_year_step": {
     "from": 2007,
     "to": 2008,
     "step": 5.613543303633872,
-    "in_sd": 2.480665146694836
+    "in_sd": 2.296375952886074
    }
   },
   "soil_mm_s": {

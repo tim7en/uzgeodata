@@ -1,21 +1,21 @@
 {
   "basin": "4121292070",
   "inputs_sha256": {
-    "PUBLISHED/data/atlas/catchments/index.json": "28c9a0c5fbd0510d17b10e62705b8a056fb5f493b9d609bc8b966aa7d135f5e0",
+    "PUBLISHED/data/atlas/catchments/index.json": "c61d62e5aaf5447009d6e5395403cbdd95aa7af62ff104ad87b308d19f5d5505",
     "PUBLISHED/data/atlas/catchments/morphology.json": "cb7279d1a9985d516a1c603bb4bcf279bbe07e3ee5ab65bf549e3e28b6b20e29",
     "PUBLISHED/data/atlas/catalogue.json": "ff01be878a1d666983f596b73a2d75a63ffcb67974ef35a787982679d17df95e",
     "PUBLISHED/data/atlas/basins/4121292070.json": "36f61c6348b6c42da399ddde5c01101b9c2ba8fc92b2374c6e2815845b8552ee",
-    "PUBLISHED/data/atlas/history/4121292070.json": "81fa28a430422e3dd45d4fd2edf5177127e6a1cc59b6cc5abe17b338b66be68a",
+    "PUBLISHED/data/atlas/history/4121292070.json": "fe82051208d8460a609e668b06ac64964a0f7d9520e72e8ee78dd956e6540975",
     "PUBLISHED/data/atlas/catchments/pre_mm_s-820afd66f08f.bin.gz": "820afd66f08f74623d3432554f98495fb46f6bafa5fc7246a48062510cf9ac03",
-    "PUBLISHED/data/atlas/catchments/snw_pc_s-b3fd5792ee75.bin.gz": "b3fd5792ee7540025d957a3ecdb7080207cbc0381d73769c7d5b24dfb3e9bc7e"
+    "PUBLISHED/data/atlas/catchments/snw_pc_s-e10b5391dcd3.bin.gz": "e10b5391dcd389cc706d8156d2f475cdcb885a11a7a7de7c8728d7cd9623aaea"
   },
   "network": {
     "member_count_including_selected": 89,
     "upstream_count_excluding_selected": 88,
-    "traced_area_km2_recalculated": 11885.500000000002,
+    "traced_area_km2_recalculated": 11885.5,
     "traced_area_km2_published": 11885.499999999998,
     "reported_upstream_area_km2": 11884.8,
-    "difference_traced_minus_reported_km2": 0.7000000000025466
+    "difference_traced_minus_reported_km2": 0.7000000000007276
   },
   "morphology": {
     "relief_m_recalculated": 3674.0,
@@ -50,43 +50,45 @@
         "2003-01": {
           "observed_basins": 89,
           "basin_count": 89,
-          "covered_area_km2": 11885.500000000002,
+          "covered_area_km2": 11885.5,
           "coverage_percent": 100.0,
-          "weighted_mean_observed_area": 64.07140442724327,
-          "full_catchment_total": 761520677.3199999,
-          "covered_area_total": 761520677.3199999,
+          "weighted_mean_observed_area": 64.07140442724328,
+          "full_catchment_total": 761520677.32,
+          "covered_area_total": 761520677.32,
           "subbasin_min": 35.2507,
           "subbasin_max": 104.9335
         },
         "2025-12": {
           "observed_basins": 89,
           "basin_count": 89,
-          "covered_area_km2": 11885.500000000002,
+          "covered_area_km2": 11885.5,
           "coverage_percent": 100.0,
           "weighted_mean_observed_area": 119.03668065457909,
-          "full_catchment_total": 1414810467.92,
-          "covered_area_total": 1414810467.92,
+          "full_catchment_total": 1414810467.9199998,
+          "covered_area_total": 1414810467.9199998,
           "subbasin_min": 68.614,
           "subbasin_max": 175.3185
         }
       }
     },
     "snw_pc_s": {
-      "compressed_sha256": "b3fd5792ee7540025d957a3ecdb7080207cbc0381d73769c7d5b24dfb3e9bc7e",
+      "compressed_sha256": "e10b5391dcd389cc706d8156d2f475cdcb885a11a7a7de7c8728d7cd9623aaea",
       "provenance": [
         {
           "asset": "MODIS/061/MYD10A1",
-          "extracted_through": "2024-12",
+          "extracted_through": "2026-08",
           "geometry_version": "reg-166479294ef8",
           "label": "snow cover",
           "limitation": "Not for trend analysis: regional missing months increase across 2003–2022 and the cause has not been established.",
           "methods": [
+            "dated_snow@6ff9c4fa60f6",
             "dated_snow@ed5216826e7f",
             "dated_snow@f0772072c007"
           ],
           "run_ids": [
             "regional-snow-20260910T070340280486Z",
-            "regional-snow-20260913T174832998639Z"
+            "regional-snow-20260913T174832998639Z",
+            "regional-snow-20260930T115317949407Z"
           ],
           "source": "snow",
           "source_release": "modis_myd10a1@061",
@@ -99,26 +101,26 @@
         "2003-01": {
           "observed_basins": 89,
           "basin_count": 89,
-          "covered_area_km2": 11885.500000000002,
+          "covered_area_km2": 11885.5,
           "coverage_percent": 100.0,
-          "weighted_mean_observed_area": 94.24478416642125,
-          "full_catchment_total": 11201.4638221,
-          "covered_area_total": 11201.4638221,
+          "weighted_mean_observed_area": 94.24478416642124,
+          "full_catchment_total": 11201.463822099997,
+          "covered_area_total": 11201.463822099997,
           "subbasin_min": 32.9123,
           "subbasin_max": 100.0
         },
-        "2025-01": {
-          "observed_basins": 0,
-          "basin_count": 89,
-          "covered_area_km2": 0,
-          "coverage_percent": 0.0,
-          "weighted_mean_observed_area": null,
-          "full_catchment_total": null,
-          "covered_area_total": null,
-          "subbasin_min": null,
-          "subbasin_max": null
-        },
         "2025-12": {
+          "observed_basins": 89,
+          "basin_count": 89,
+          "covered_area_km2": 11885.5,
+          "coverage_percent": 100.0,
+          "weighted_mean_observed_area": 72.2413084279164,
+          "full_catchment_total": 8586.240713200003,
+          "covered_area_total": 8586.240713200003,
+          "subbasin_min": 23.4695,
+          "subbasin_max": 92.3033
+        },
+        "2026-09": {
           "observed_basins": 0,
           "basin_count": 89,
           "covered_area_km2": 0,

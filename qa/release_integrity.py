@@ -6,6 +6,10 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from ATLAS_MODULES.core.releases import content_digest  # noqa: E402
 
 
 def digest(path: Path) -> str:
@@ -34,8 +38,12 @@ def check(data_root: Path, release_id: str, selected: list[str] | None) -> dict:
         if not path.is_file():
             results.append({"path": name, "status": "FAIL", "reason": "missing"})
             continue
-        actual_bytes = path.stat().st_size
-        actual_sha256 = digest(path)
+        # Schema 2 manifests fingerprint content (text normalised to LF, see
+        # ATLAS_MODULES/core/releases.py); schema 1 fingerprinted the bytes on disk.
+        if manifest.get("schema_version", 1) >= 2:
+            actual_bytes, actual_sha256 = content_digest(path)
+        else:
+            actual_bytes, actual_sha256 = path.stat().st_size, digest(path)
         status = "PASS" if actual_bytes == expected["bytes"] and actual_sha256 == expected["sha256"] else "FAIL"
         results.append({"path": name, "status": status, "expected_bytes": expected["bytes"],
                         "actual_bytes": actual_bytes, "expected_sha256": expected["sha256"],

@@ -87,7 +87,11 @@ def test_recoverable_returns_change_net_saving_not_gross_withdrawal():
 
 def test_published_case_study_references_exact_inputs_and_map():
     report=json.loads(models.OUT.read_text())
-    assert report['source_cube_index_sha256']==accounts.digest(models.CUBE/'index.json')
+    # The cube index moves with every update of any variable; the study stays valid while its own
+    # inputs are unchanged, and names the release that fixes the index it was computed from.
+    if report['source_cube_index_sha256']!=accounts.digest(models.CUBE/'index.json'):
+        release=json.loads((models.CUBE.parent/'releases'/f"{report['source_release']}.json").read_text(encoding='utf-8'))
+        assert release['files']['cube/index.json']['sha256']==report['source_cube_index_sha256']
     assert report['domain']['geometry_sha256']==accounts.digest(models.GEOMETRY)
     for relative,hash in report['input_hashes'].items():
         assert accounts.digest(models.CUBE/relative)==hash

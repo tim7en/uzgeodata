@@ -58,12 +58,8 @@
   {
    "page": "/agents",
    "viewport": "desktop",
-   "console": [
-    "Failed to load resource: the server responded with a status of 404 ()"
-   ],
-   "failed": [
-    "404 /api/agents"
-   ],
+   "console": [],
+   "failed": [],
    "status": 200,
    "title": "Validation agents \u2014 UzGeoData",
    "overflow_px": 0
@@ -107,12 +103,8 @@
   {
    "page": "/admin",
    "viewport": "desktop",
-   "console": [
-    "Failed to load resource: the server responded with a status of 404 ()"
-   ],
-   "failed": [
-    "404 /api/admin/variables"
-   ],
+   "console": [],
+   "failed": [],
    "status": 200,
    "title": "\u0410\u043a\u0442\u0443\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0445 \u2014 \u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440 UzGeoData",
    "overflow_px": 0
@@ -336,12 +328,8 @@
   {
    "page": "/agents",
    "viewport": "phone",
-   "console": [
-    "Failed to load resource: the server responded with a status of 404 ()"
-   ],
-   "failed": [
-    "404 /api/agents"
-   ],
+   "console": [],
+   "failed": [],
    "status": 200,
    "title": "Validation agents \u2014 UzGeoData",
    "overflow_px": 0
@@ -371,7 +359,7 @@
    "failed": [],
    "status": 200,
    "title": "\u041f\u0440\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u043f\u0440\u0438\u043c\u0435\u0440\u044b \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f \u00b7 UzGeoData",
-   "overflow_px": 56
+   "overflow_px": 0
   },
   {
    "page": "/data-lineage",
@@ -385,12 +373,8 @@
   {
    "page": "/admin",
    "viewport": "phone",
-   "console": [
-    "Failed to load resource: the server responded with a status of 404 ()"
-   ],
-   "failed": [
-    "404 /api/admin/variables"
-   ],
+   "console": [],
+   "failed": [],
    "status": 200,
    "title": "\u0410\u043a\u0442\u0443\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0445 \u2014 \u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440 UzGeoData",
    "overflow_px": 0
@@ -401,7 +385,7 @@
    "console": [],
    "failed": [],
    "status": 200,
-   "title": "Atlas roadmap \u2014 UzGeoData",
+   "title": "\u0414\u043e\u0440\u043e\u0436\u043d\u0430\u044f \u043a\u0430\u0440\u0442\u0430 \u0410\u0442\u043b\u0430\u0441\u0430 \u2014 UzGeoData",
    "overflow_px": 0
   },
   {
@@ -420,7 +404,7 @@
    "failed": [],
    "status": 200,
    "title": "Data Catalogue \u2014 UzGeoData",
-   "overflow_px": 274
+   "overflow_px": 0
   },
   {
    "page": "/metadata",
@@ -447,7 +431,7 @@
    "failed": [],
    "status": 200,
    "title": "\u0413\u0438\u0434\u0440\u043e\u043a\u043b\u0438\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0442\u0435\u043d\u0434\u0435\u043d\u0446\u0438\u0438 \u0432 \u0434\u0432\u0443\u0445 \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0430\u0445 \u00b7 UzGeoData",
-   "overflow_px": 148
+   "overflow_px": 0
   },
   {
    "page": "/landcover",
@@ -465,7 +449,7 @@
    "failed": [],
    "status": 200,
    "title": "Hydrography Explorer \u2014 UzGeoData",
-   "overflow_px": 385
+   "overflow_px": 0
   },
   {
    "page": "/water-flow",
@@ -483,7 +467,7 @@
    "failed": [],
    "status": 200,
    "title": "Dry spells and river flow without gauges \u00b7 UzGeoData",
-   "overflow_px": 12
+   "overflow_px": 0
   },
   {
    "page": "/reservoir-monitoring",
@@ -492,7 +476,7 @@
    "failed": [],
    "status": 200,
    "title": "\u041d\u0430\u0431\u043b\u044e\u0434\u0435\u043d\u0438\u0435 \u0437\u0430 \u043a\u0430\u0436\u0434\u044b\u043c \u043e\u0437\u0435\u0440\u043e\u043c \u0432 \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0435 \u0441 \u043e\u0440\u0431\u0438\u0442\u044b \u00b7 UzGeoData",
-   "overflow_px": 390
+   "overflow_px": 0
   },
   {
    "page": "/surrogates",
@@ -528,7 +512,7 @@
    "failed": [],
    "status": 200,
    "title": "Relationship Tables \u2014 UzGeoData",
-   "overflow_px": 40
+   "error": "Page.inner_text: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"body\")\n"
   },
   {
    "page": "/project",
@@ -555,7 +539,7 @@
    "failed": [],
    "status": 200,
    "title": "Layer Review \u2014 UzGeoData",
-   "overflow_px": 164
+   "overflow_px": 0
   }
  ],
  "basin": {
@@ -563,7 +547,7 @@
   "console": [],
   "failed": [],
   "tabs": {
-   "\u0430\u0442\u0440\u0438\u0431\u0443\u0442\u044b HydroATLAS": {
+   "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u044b HydroATLAS": {
     "leaks": [],
     "mentions_observed": 0,
     "loading_left": false,
@@ -579,7 +563,7 @@
     "new_console": [],
     "new_failed": []
    },
-   "\u0415\u0436\u0435\u043c\u0435\u0441\u044f\u0447\u043d\u044b\u0439 \u043e\u0442\u0447\u0435\u0442": {
+   "\u041f\u043e\u043c\u0435\u0441\u044f\u0447\u043d\u044b\u0439 \u0440\u044f\u0434 \u0434\u0430\u043d\u043d\u044b\u0445": {
     "leaks": [],
     "mentions_observed": 1,
     "loading_left": false,
@@ -587,7 +571,7 @@
     "new_console": [],
     "new_failed": []
    },
-   "\u041d\u0435\u0434\u0430\u0432\u043d\u0438\u0435 \u043a\u043b\u0438\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f": {
+   "\u041a\u043b\u0438\u043c\u0430\u0442 \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0445 \u043c\u0435\u0441\u044f\u0446\u0435\u0432": {
     "leaks": [],
     "mentions_observed": 0,
     "loading_left": false,
@@ -595,7 +579,7 @@
     "new_console": [],
     "new_failed": []
    },
-   "\u0417\u0430\u0441\u0443\u0445\u0430 \u0438 \u043f\u0440\u043e\u0433\u043d\u043e\u0437": {
+   "\u0417\u0430\u0441\u0443\u0445\u0430 \u0438 \u043f\u0435\u0440\u0441\u043f\u0435\u043a\u0442\u0438\u0432\u044b": {
     "leaks": [],
     "mentions_observed": 0,
     "loading_left": false,
@@ -603,7 +587,7 @@
     "new_console": [],
     "new_failed": []
    },
-   "\u041f\u0440\u043e\u0433\u043d\u043e\u0437 \u043f\u043e\u0433\u043e\u0434\u044b: \u0441\u043d\u0435\u0433": {
+   "\u041f\u0440\u043e\u0433\u043d\u043e\u0437 \u0441\u0442\u043e\u043a\u0430 \u043f\u043e \u0441\u043d\u0435\u0433\u043e\u0437\u0430\u043f\u0430\u0441\u0430\u043c": {
     "leaks": [],
     "mentions_observed": 0,
     "loading_left": false,
@@ -611,7 +595,7 @@
     "new_console": [],
     "new_failed": []
    },
-   "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0432\u043e\u0434\u043e\u0441\u0431\u043e\u0440\u043d\u043e\u0433\u043e \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0430": {
+   "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0432\u043e\u0434\u043e\u0441\u0431\u043e\u0440\u0430": {
     "leaks": [],
     "mentions_observed": 1,
     "loading_left": false,
@@ -622,13 +606,13 @@
   },
   "language": "ru googtrans=/en/ru",
   "tab_names": [
-   "\u0430\u0442\u0440\u0438\u0431\u0443\u0442\u044b HydroATLAS",
+   "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u044b HydroATLAS",
    "\u041d\u0435\u0437\u0430\u0432\u0438\u0441\u0438\u043c\u044b\u0435 \u043e\u0446\u0435\u043d\u043a\u0438",
-   "\u0415\u0436\u0435\u043c\u0435\u0441\u044f\u0447\u043d\u044b\u0439 \u043e\u0442\u0447\u0435\u0442",
-   "\u041d\u0435\u0434\u0430\u0432\u043d\u0438\u0435 \u043a\u043b\u0438\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f",
-   "\u0417\u0430\u0441\u0443\u0445\u0430 \u0438 \u043f\u0440\u043e\u0433\u043d\u043e\u0437",
-   "\u041f\u0440\u043e\u0433\u043d\u043e\u0437 \u043f\u043e\u0433\u043e\u0434\u044b: \u0441\u043d\u0435\u0433",
-   "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0432\u043e\u0434\u043e\u0441\u0431\u043e\u0440\u043d\u043e\u0433\u043e \u0431\u0430\u0441\u0441\u0435\u0439\u043d\u0430"
+   "\u041f\u043e\u043c\u0435\u0441\u044f\u0447\u043d\u044b\u0439 \u0440\u044f\u0434 \u0434\u0430\u043d\u043d\u044b\u0445",
+   "\u041a\u043b\u0438\u043c\u0430\u0442 \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0445 \u043c\u0435\u0441\u044f\u0446\u0435\u0432",
+   "\u0417\u0430\u0441\u0443\u0445\u0430 \u0438 \u043f\u0435\u0440\u0441\u043f\u0435\u043a\u0442\u0438\u0432\u044b",
+   "\u041f\u0440\u043e\u0433\u043d\u043e\u0437 \u0441\u0442\u043e\u043a\u0430 \u043f\u043e \u0441\u043d\u0435\u0433\u043e\u0437\u0430\u043f\u0430\u0441\u0430\u043c",
+   "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0432\u043e\u0434\u043e\u0441\u0431\u043e\u0440\u0430"
   ]
  }
 }
