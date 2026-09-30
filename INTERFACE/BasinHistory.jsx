@@ -180,8 +180,10 @@ export default function BasinHistory({ basin }) {
     </div>
 
     {(active === 'snw_pc_s' || series.trend_use === 'withdrawn') && <p className="land-hist-warn" role="note">
-      <AlertTriangle size={12}/><span>Snow is not for trend analysis. Regional missing months increase
-      across this record; the cause is unresolved. Values remain available for inspection.</span>
+      <AlertTriangle size={12}/><span>Snow cover is not for trend analysis. Its missing months grow across the
+      record, but almost all fall in warm months in small lowland basins where every MODIS cell was masked (cloud,
+      water or no decision) - not in winter, when 99.9% of basin-months have a value. The withdrawal stands until a
+      trend method that accounts for them is reviewed. Values remain available for inspection.</span>
     </p>}
     <Chart history={state.history} name={active} series={series}
       estimate={state.continuation ? estimateFor(state.history, active, state.continuation) : null}/>

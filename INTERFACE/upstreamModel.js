@@ -113,12 +113,22 @@ export function snowSeasons(precipitation, snow, { minimumYears = 10 } = {}) {
     // has no glaciers, so on ice it carries snow from year to year: that store is not
     // this winter's snow.
     const carryOver = swe.get((year - 1) * 12 + 9) ?? null;
-    seasons.push({ waterYear: year, winterPrecipitation, peakSwe: peak, peakMonth, carryOver,
+    // What this winter added: the peak less the snow already lying in September.
+    const seasonalSwe = carryOver === null ? peak : Math.max(peak - carryOver, 0);
+    seasons.push({ waterYear: year, winterPrecipitation, peakSwe: peak, peakMonth, carryOver, seasonalSwe,
       snowShare: winterPrecipitation > 0 ? peak / winterPrecipitation : null });
   }
   if (seasons.length < minimumYears) return null;
   const mean = key => seasons.reduce((sum, s) => sum + s[key], 0) / seasons.length;
-  const normal = { winterPrecipitation: mean('winterPrecipitation'), peakSwe: mean('peakSwe') };
+  const normal = { winterPrecipitation: mean('winterPrecipitation'), peakSwe: mean('peakSwe'), seasonalSwe: mean('seasonalSwe') };
+  const carried = seasons.filter(s => s.carryOver !== null);
+  const carryShare = carried.length && normal.peakSwe > 1
+    ? carried.reduce((sum, s) => sum + s.carryOver, 0) / carried.length / normal.peakSwe : null;
+  // Where snow carried from earlier years is a material part of the peak (glaciers, in
+  // TerraClimate), a winter is judged by what it accumulated, not by the peak: otherwise
+  // a multi-year store that never melts sets the anomaly. Elsewhere the two are the same.
+  const corrected = carryShare !== null && carryShare >= 0.05;
+  const snowKey = corrected ? 'seasonalSwe' : 'peakSwe';
   // A category needs a stated rule, not a feeling for "near normal": each winter is
   // placed in the lowest, middle or highest third of the years this record holds,
   // for precipitation and for the snowpack separately. A peak 21% below the mean
@@ -130,29 +140,27 @@ export function snowSeasons(precipitation, snow, { minimumYears = 10 } = {}) {
   };
   const rows = seasons.map(season => {
     const rainAnomaly = normal.winterPrecipitation > 0 ? (season.winterPrecipitation / normal.winterPrecipitation - 1) * 100 : null;
-    const snowAnomaly = normal.peakSwe > 1 ? (season.peakSwe / normal.peakSwe - 1) * 100 : null;
+    const snowAnomaly = normal[snowKey] > 1 ? (season[snowKey] / normal[snowKey] - 1) * 100 : null;
     const rainClass = third(season.winterPrecipitation, 'winterPrecipitation');
-    const snowClass = third(season.peakSwe, 'peakSwe');
+    const snowClass = third(season[snowKey], snowKey);
     const pct = v => `${Math.abs(Math.round(v))}% ${v >= 0 ? 'above' : 'below'} average`;
     const statement = rainAnomaly === null || snowAnomaly === null ? null
-      : `Winter precipitation was ${pct(rainAnomaly)}, while peak modelled snow storage was ${pct(snowAnomaly)}.`;
+      : `Winter precipitation was ${pct(rainAnomaly)}, while ${corrected ? 'the snow this winter added to modelled storage'
+        : 'peak modelled snow storage'} was ${pct(snowAnomaly)}.`;
     let reading = { below: { below: 'dry winter, low snow storage', near: 'dry winter, snow storage near normal', above: 'dry winter, snow storage held' },
       near: { below: 'near-normal winter, low snow storage', near: 'near-normal winter and snow storage', above: 'near-normal winter, high snow storage' },
       above: { below: 'wet winter, low snow storage - more fell as rain or melted early', near: 'wet winter, snow storage near normal', above: 'wet winter, high snow storage' },
     }[rainClass][snowClass];
     return { ...season, rainAnomaly, snowAnomaly, rainClass, snowClass, statement, reading };
   });
-  const carried = seasons.filter(s => s.carryOver !== null);
-  const carryShare = carried.length && normal.peakSwe > 1
-    ? carried.reduce((sum, s) => sum + s.carryOver, 0) / carried.length / normal.peakSwe : null;
-  const carryNote = carryShare !== null && carryShare >= 0.25
+  const carryNote = corrected
     ? `On average ${Math.round(carryShare * 100)}% of the peak snow storage here is snow left from earlier years, `
-      + 'mostly on glaciers, where the TerraClimate snow model never melts out. Peak storage and its anomaly '
-      + 'therefore mix this winter’s snow with a multi-year store; read them with care.'
+      + 'mostly on glaciers, where the TerraClimate snow model never melts out. Each winter is therefore judged by '
+      + 'the snow it added - peak storage less the snow still lying the previous September - not by the peak.'
     : null;
-  return { normal, carryShare, carryNote, baseline: [seasons[0].waterYear, seasons.at(-1).waterYear], rows,
+  return { normal, carryShare, corrected, carryNote, baseline: [seasons[0].waterYear, seasons.at(-1).waterYear], rows,
     rule: 'Below, near or above normal means the lowest, middle or highest third of the water years in this record, '
-      + 'ranked separately for winter precipitation and peak snow storage.',
+      + `ranked separately for winter precipitation and ${corrected ? 'the snow each winter added' : 'peak snow storage'}.`,
     snowDominated: normal.peakSwe > 0.2 * normal.winterPrecipitation };
 }
 

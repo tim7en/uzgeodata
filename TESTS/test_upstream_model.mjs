@@ -84,3 +84,22 @@ test('snow carried over from earlier years is measured and flagged', () => {
   assert.equal(plain.carryShare, 0);
   assert.equal(plain.carryNote, null);
 });
+
+test('where glacier snow carries over, a winter is judged by the snow it added', () => {
+  const rain = [], swe = [];
+  for (let year = 2003; year <= 2016; year++) {
+    const added = year === 2016 ? 150 : 300;      // the last winter adds half the usual snow
+    for (let month = 1; month <= 12; month++) {
+      rain.push({ year, month, value: 20 });
+      swe.push({ year, month, value: 400 + ([1, 2, 3].includes(month) ? added : 0) });
+    }
+  }
+  const snow = snowSeasons(rain, swe);
+  const last = snow.rows.at(-1);
+  assert.equal(snow.corrected, true);
+  assert.equal(last.seasonalSwe, 150);
+  // judged on the 400 mm store as well, the same winter would look only ~21% low
+  assert.ok(last.snowAnomaly < -45 && last.snowAnomaly > -55, `anomaly ${last.snowAnomaly}`);
+  assert.match(last.statement, /the snow this winter added to modelled storage was 4\d% below average/);
+  assert.match(snow.rule, /the snow each winter added/);
+});
