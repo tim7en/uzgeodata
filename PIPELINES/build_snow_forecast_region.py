@@ -38,6 +38,7 @@ import rasterio
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from PIPELINES import build_snow_forecast_study as study  # noqa: E402
+from PIPELINES import verify_snow_forecast_region as verification  # noqa: E402
 from PIPELINES import extract_regional_climate_grids as grids  # noqa: E402
 from PIPELINES.model_regional_climate_continuation import accumulate_one  # noqa: E402
 
@@ -163,6 +164,38 @@ def score(frame, names):
     result = study.evaluate(frame, "veg", names)
     result["operational"] = {p: study.operational(frame, "veg", p) for p in ("meanSWE", "Prec")}
     return result
+
+
+def attach_operational_inputs(entry, table, veg):
+    """Keep full-precision inputs so a reader can refit every snow hindcast.
+
+    Checkpointed scores are checked against the current inputs before they are
+    reused. This prevents a changed grid or discharge source from silently
+    publishing input rows that cannot reproduce the saved scores.
+    """
+    for issue, result in entry["issue"].items():
+        frame = table.xs(int(issue), level="issue_month").join(veg.rename("veg"), how="inner")
+        frame = frame[["meanSWE", "veg"]].dropna().sort_index()
+        expected = result["operational"]["meanSWE"]
+        actual = study.operational(frame, "veg", "meanSWE")
+        for period in ("all", "recent"):
+            saved, rebuilt = expected[period], actual[period]
+            if (saved is None) != (rebuilt is None):
+                raise ValueError(f"{entry['code']} issue {issue}: {period} availability changed")
+            if saved is None:
+                continue
+            if saved["n"] != rebuilt["n"] or saved["years"] != rebuilt["years"]:
+                raise ValueError(f"{entry['code']} issue {issue}: {period} years changed")
+            for metric in ("skill_raw", "skill_corrected", "rmse_raw", "rmse_corrected",
+                           "rmse_climatology", "bias_raw", "bias_corrected"):
+                if not math.isclose(saved[metric], rebuilt[metric], rel_tol=1e-9, abs_tol=1e-9):
+                    raise ValueError(f"{entry['code']} issue {issue}: {period} {metric} changed")
+        result["operational_inputs"] = {
+            "fields": ["water_year", "mean_swe_mm", "april_september_mean_discharge_m3s"],
+            "rows": [[int(year), float(swe), float(flow)]
+                     for year, swe, flow in frame.itertuples(index=True, name=None)],
+        }
+    return entry
 
 
 # ------------------------------------------------------------------ basins
@@ -367,6 +400,9 @@ def main():
     if "--publish-only" in sys.argv:
         publish()
         return
+    inputs_only = "--inputs-only" in sys.argv
+    previous = json.loads((OUT / "gauges.json").read_text()) if inputs_only else None
+    previous_codes = {g["code"] for g in previous["gauges"]} if previous else None
     OUT.mkdir(parents=True, exist_ok=True)
     CHECKPOINTS.mkdir(parents=True, exist_ok=True)
     transform, width, height, elevation, years, glacier = load_grids()
@@ -379,11 +415,14 @@ def main():
     catchments = catchments[catchments.CODE.astype(str).isin(set(registry.CODE.astype(str)))]
     catchments["CODE"] = catchments.CODE.astype(str)
     cell_sets = weights_for(catchments, "CODE", transform, width, height, "gauges")
-    dams = gpd.read_file(DAMS)
-    level12 = gpd.read_file(LEVEL12)[["HYBAS_ID", "UP_AREA", "geometry"]]
+    if not inputs_only:
+        dams = gpd.read_file(DAMS)
+        level12 = gpd.read_file(LEVEL12)[["HYBAS_ID", "UP_AREA", "geometry"]]
     results, links = [], []
     for gauge in registry.itertuples():
         code = str(gauge.CODE)
+        if inputs_only and code not in previous_codes:
+            continue
         if code not in cell_sets:
             continue
         catchment = catchments[catchments.CODE == code].iloc[0]
@@ -393,16 +432,18 @@ def main():
         veg = veg[veg.index >= FIRST_WY]
         if len(veg) < MIN_YEARS:
             continue
+        cells, weights = cell_sets[code]
+        table = gauge_predictors(cells, weights, elevation, glacier, years)
         cached = CHECKPOINTS / f"{code}.json"
         if cached.exists():
-            entry = json.loads(cached.read_text())
+            entry = attach_operational_inputs(json.loads(cached.read_text()), table, veg)
             results.append(entry)
             links.append({"gauge_code": code, "outlet_hybas_id": entry["outlet_hybas_id"],
                           "outlet_area_ratio": entry["outlet_area_ratio"],
                           "catchment_area_km2": entry["area_km2"], "regulated_since": entry["regulated_since"]})
             continue
-        cells, weights = cell_sets[code]
-        table = gauge_predictors(cells, weights, elevation, glacier, years)
+        if inputs_only:
+            raise FileNotFoundError(f"{cached}: --inputs-only requires existing gauge score checkpoints")
         since, dam_names = regulated_since(catchment.geometry, dams)
         hybas, area_ratio = outlet_basin(gpd.points_from_xy([gauge.LON], [gauge.LAT])[0],
                                          catchment.area_km2, level12)
@@ -425,6 +466,7 @@ def main():
             entry["issue"][str(k)] = scored
         if "4" not in entry["issue"]:
             continue
+        attach_operational_inputs(entry, table, veg)
         a = entry["issue"]["4"]
         print(f"{code} {gauge.NAME_ENG[:28]:28} {entry['area_km2']:8.0f} km2 n={entry['n_years']:2d} "
               f"reg={since or '-':>4} | Apr in {a['in_sample']['adj_r2']:.2f} loyo {a['loyo']['r2']:.2f} "
@@ -437,9 +479,19 @@ def main():
     report = {"generated_at": datetime.now(timezone.utc).isoformat(),
               "predictors": "ERA5-Land native grid, glacier cells screened, 500 m elevation bands",
               "target": "April-September mean discharge (m3/s)",
+              "operational_input_fields": ["water_year", "mean_swe_mm", "april_september_mean_discharge_m3s"],
+              "visibility": "public research; operational inputs permit independent hindcast refitting",
               "scoring": "as build_snow_forecast_study.py: in-sample adj R2 + bootstrap, LOYO with selection inside folds, "
                          "operational expanding-window hindcast with ten-year level correction vs previous 30-year mean",
               "gauges": results}
+    verification.verify(report)
+    if inputs_only:
+        if {g["code"] for g in results} != previous_codes:
+            raise ValueError("--inputs-only gauge set differs from the published regional scores")
+        report["generated_at"] = previous["generated_at"]
+        (OUT / "gauges.json").write_text(json.dumps(clean(report), indent=1, allow_nan=False) + "\n")
+        print(f"Attached full-precision operational inputs for {len(results)} gauges", flush=True)
+        return
     (OUT / "gauges.json").write_text(json.dumps(clean(report), indent=1, allow_nan=False) + "\n")
     pd.DataFrame(links).to_csv(OUT / "gauge-basin-links.csv", index=False)
     summary = [{"code": e["code"], "name": e["name"], "basin": e["basin"], "area_km2": round(e["area_km2"]),

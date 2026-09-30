@@ -145,11 +145,13 @@ October–March precipitation, both locally and accumulated over the upstream ar
 
 | File in `PUBLISHED/data/case-studies/snow-forecast/region/` | Content |
 | --- | --- |
-| `gauges.json` | Every score, predictor choice, hindcast series and regulation flag per gauge |
+| `gauges.json` | Every score, predictor choice, hindcast series, regulation flag and full-precision annual SWE/flow inputs for refitting the operational hindcast per gauge and issue date |
 | `gauge-skill.csv` | One row per gauge, all issue months |
 | `gauge-basin-links.csv` | Gauge to level-12 outlet basin, with area ratio |
 | `basin-gauge-association.csv` | Each level-12 basin to its nearest scored downstream gauge and that gauge's skill |
 | `basin-glacier-cell-share.csv` | Share of each basin under ERA5-Land glacier cells |
+| `verification-manifest.json` | SHA-256 hashes for the source GeoPackage, extracted yearly grids, methods and public regional outputs |
+| `verify-snow-forecast-region.py` | Standalone verifier for the operational scores in `gauges.json` (requires NumPy and pandas) |
 | `basin-predictors.parquet` | 7,445 basins × 76 water years, local and upstream April 1 SWE and Oct–Mar precipitation (gitignored, rebuilt by the script) |
 
 ## Next steps
@@ -177,3 +179,20 @@ Outputs per gauge are in `PUBLISHED/data/case-studies/snow-forecast/{CODE}/`:
 `study.json` (all scores, trends and series), `predictors-and-targets.csv` and
 `cells.json`. The daily ERA5-Land cell files are gitignored and rebuilt by the
 extractor.
+
+For the regional results, run
+`python PIPELINES/build_snow_forecast_region.py --inputs-only` on the computer
+with the cached ERA5-Land regional grids, gauge score checkpoints and
+CA-discharge source. A full `python PIPELINES/build_snow_forecast_region.py` run
+also produces these inputs.
+This attaches `operational_inputs` to every scored issue in `region/gauges.json`,
+including gauges whose score checkpoint was reused. The build rejects a cached
+score if the current SWE or discharge inputs no longer reproduce it. Then run
+`python PIPELINES/verify_snow_forecast_region.py` to refit and check every
+operational hindcast from the published input rows. The rows are full precision;
+the chart-oriented hindcast series remain rounded to two decimal places.
+After a full regional rebuild, run
+`python PIPELINES/build_snow_forecast_manifest.py` to refresh provenance hashes.
+For a public verification without this repository, download `gauges.json` and
+`verify-snow-forecast-region.py` into one directory and run
+`python verify-snow-forecast-region.py` after installing NumPy and pandas.

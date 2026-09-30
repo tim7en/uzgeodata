@@ -25,3 +25,5 @@ data/atlas/seasonal-forecast/
 data/case-studies/seasonal-study-preview.svg
 data/case-studies/snow-forecast/basins/
 data/case-studies/snow-forecast/region/basin-predictors.parquet
+data/case-studies/snow-forecast/region/verification-manifest.json
+data/case-studies/snow-forecast/region/verify-snow-forecast-region.py
