@@ -1,5 +1,6 @@
 // Package saved public evidence only. Never run acquisition or publication here.
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { readFile, writeFile, mkdir, readdir, stat, copyFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -131,6 +132,36 @@ await each(files, 4, async relative => {
     await writeFile(target, JSON.stringify(data));
   } else await copyFile(path.join(published, relative), target);
 });
+// Content-addressed release objects (release schema 2). data/atlas/objects/<sha256> holds
+// exactly the bytes a release digest names - text with LF line endings, as
+// ATLAS_MODULES/core/releases.py hashes it - so a cited release keeps resolving to its
+// own bytes after later releases rebuild the ordinary paths. An object is written only
+// while the file still matches; the promoted release must match in full, or this build
+// is of data no release describes.
+const atlasDir = path.join(published, 'data/atlas');
+const pointer = JSON.parse(await readFile(path.join(atlasDir, 'latest.json'), 'utf8'));
+const TEXT_FILE = /\.(?:json|geojson|csv|md|txt)$/i;
+const written = new Set();
+for (const name of (await readdir(path.join(atlasDir, 'releases'))).filter(n => /^uz-.*\.json$/.test(n))) {
+  const record = JSON.parse(await readFile(path.join(atlasDir, 'releases', name), 'utf8'));
+  if ((record.schema_version || 1) < 2) continue;
+  const promoted = record.release_id === pointer.release_id;
+  for (const [file, stated] of Object.entries(record.files)) {
+    if (written.has(stated.sha256)) continue;
+    let body = await readFile(path.join(atlasDir, file)).catch(() => null);
+    if (body && TEXT_FILE.test(file)) body = Buffer.from(body.toString('latin1').replaceAll('\r\n', '\n'), 'latin1');
+    if (!body || createHash('sha256').update(body).digest('hex') !== stated.sha256) {
+      if (promoted) throw Error(`${file} no longer matches the promoted release ${record.release_id}. `
+        + 'Cut a new release (python PIPELINES/publish_release.py) before building.');
+      continue;
+    }
+    const target = path.join(output, 'data/atlas', stated.object);
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, body);
+    written.add(stated.sha256);
+  }
+}
+console.log(`Release objects: ${written.size} content-addressed file(s) for release ${pointer.release_id}.`);
 // The review index promises 38 layers. Whatever was not published is removed from
 // it here, so the tool offers what exists instead of erroring a layer at a time.
 const reviewIndex = path.join(output, 'data/review-layers.json');
@@ -212,6 +243,8 @@ const release = {
   base, basins: index.basins, history_years: history.years,
   history_generated_at: history.generated_at, variables: Object.keys(history.series),
   independently_reproduced: 0, snow_trend_use: 'withdrawn', files: count, bytes,
+  // The frontend build above and the scientific data below are two identities; name both.
+  atlas_release: pointer.release_id,
 };
 await writeFile(path.join(output, 'release.json'), JSON.stringify(release, null, 2));
 await writeFile(path.join(output, '.nojekyll'), '');

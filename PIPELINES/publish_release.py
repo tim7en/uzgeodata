@@ -96,8 +96,11 @@ def publish(published=PUBLISHED, notes=None, promote=True):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--notes", help="what changed in this release")
-    parser.add_argument("--no-promote", action="store_true",
-                        help="cut and verify without making it the default release")
+    # Promotion waits for the served bytes (PIPELINES/verify_served_release.py --promote).
+    # --promote-unverified is for a local or test tree that is never served.
+    parser.add_argument("--no-promote", action="store_true", help="the default; kept for existing scripts")
+    parser.add_argument("--promote-unverified", action="store_true",
+                        help="promote on the local check alone, without checking what the site serves")
     parser.add_argument("--verify", metavar="RELEASE_ID", nargs="?", const="",
                         help="check an existing release against what is on disk")
     parser.add_argument("--list", action="store_true", help="every release, newest first")
@@ -113,7 +116,7 @@ def main():
         print(json.dumps({"verified": not problems, "problems": problems}, indent=2))
         raise SystemExit(1 if problems else 0)
 
-    print(json.dumps(publish(notes=arguments.notes, promote=not arguments.no_promote),
+    print(json.dumps(publish(notes=arguments.notes, promote=arguments.promote_unverified),
                      indent=2, ensure_ascii=False))
 
 

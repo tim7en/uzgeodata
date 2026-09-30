@@ -29,6 +29,7 @@ Superseding is recorded on the new release rather than erasing the old.
 """
 from __future__ import annotations
 from datetime import datetime, timedelta, timezone
+import hashlib
 import json
 from pathlib import Path
 
@@ -36,7 +37,13 @@ from .runtime import sha256, utc_now, write_json
 
 RELEASES = "releases"
 POINTER = "latest.json"
-SCHEMA = 1
+OBJECTS = "objects"
+# Schema 2: digests are of content, and every file is also served at a path named by
+# that digest (objects/<sha256>), which no later release can overwrite.
+SCHEMA = 2
+TEXT = {".json", ".geojson", ".csv", ".md", ".txt"}
+DIGEST_METHOD = ("sha256 of the file's content; text files (" + ", ".join(sorted(TEXT))
+                 + ") with CRLF line endings normalised to LF, so a checkout on any system verifies")
 
 
 class ReleaseError(Exception):
@@ -61,17 +68,35 @@ def moment(release_id):
     return datetime.strptime(release_id, "uz-%Y%m%dT%H%M%S%fZ").replace(tzinfo=timezone.utc)
 
 
+def content(path):
+    """The bytes a release fingerprints and serves: text with LF line endings.
+
+    Git stores text with LF and a Windows checkout writes CRLF, so hashing the bytes on
+    disk made one release verify on one machine and fail on another.
+    """
+    raw = Path(path).read_bytes()
+    return raw.replace(b"\r\n", b"\n") if Path(path).suffix.lower() in TEXT else raw
+
+
+def content_digest(path):
+    """(bytes, sha256) of a file's content, streaming binary files."""
+    path = Path(path)
+    if path.suffix.lower() in TEXT:
+        data = content(path)
+        return len(data), hashlib.sha256(data).hexdigest()
+    return path.stat().st_size, sha256(path)
+
+
 def describe(paths, base):
-    """Name each artefact with its size and digest, relative to the published root."""
+    """Name each artefact with its size, content digest and immutable object path."""
     described = {}
     for path in sorted(paths):
         path = Path(path)
         if not path.is_file():
             raise ReleaseError(f"{path} is named by the release but is not a file")
+        size, digest = content_digest(path)
         described[path.relative_to(base).as_posix()] = {
-            "bytes": path.stat().st_size,
-            "sha256": sha256(path),
-        }
+            "bytes": size, "sha256": digest, "object": f"{OBJECTS}/{digest}"}
     return described
 
 
@@ -112,12 +137,14 @@ def cut(directory, paths, base, commit=None, span=None, rows=None, registry=None
         "rows": rows,
         "supersedes": supersedes,
         "notes": notes,
+        "digest_method": DIGEST_METHOD,
         "files": describe(paths, base),
         "registry": registry,
         "reading": {
             "identity": "Cite this release_id. The artefacts it names may be rebuilt at "
-                        "the same paths by a later release; only the id fixes which bytes "
-                        "were used.",
+                        "the same paths by a later release; each file's `object` path "
+                        "(under /data/atlas/) serves exactly the bytes its digest names "
+                        "and is never overwritten.",
             "verification": "Every file carries its size and SHA-256. A consumer that does "
                             "not check them cannot distinguish a complete download from a "
                             "truncated one.",
@@ -191,15 +218,17 @@ def check(directory, release_id=None, base=None):
     record = read(directory, release_id)
     base = Path(base) if base else directory
     problems = []
+    by_content = record.get("schema_version", 1) >= 2
     for name, stated in record["files"].items():
         path = base / name
         if not path.is_file():
             problems.append(f"{name} is named by the release but missing")
             continue
-        size = path.stat().st_size
+        # Schema 1 releases fingerprinted the bytes on disk; they are checked that way.
+        size, digest = content_digest(path) if by_content else (path.stat().st_size, None)
         if size != stated["bytes"]:
             problems.append(f"{name} is {size} bytes, the release says {stated['bytes']}")
             continue
-        if sha256(path) != stated["sha256"]:
+        if (digest or sha256(path)) != stated["sha256"]:
             problems.append(f"{name} does not match its recorded digest")
     return problems

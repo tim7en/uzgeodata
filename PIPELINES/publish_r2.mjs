@@ -217,6 +217,16 @@ async function remote() {
   return objects;
 }
 
+// Nothing reaches readers while its parts are on different versions or the promoted
+// release no longer matches its files (qa/version_consistency.py says which). A
+// failure here stops the publish before a single object is written.
+try {
+  execFileSync(process.env.UZGEODATA_PYTHON || 'python', ['-m', 'qa.version_consistency'], { cwd: root, stdio: 'inherit' });
+} catch {
+  throw Error('Version consistency failed (see above). Re-derive the stale products or cut a new release '
+    + '(python PIPELINES/publish_release.py), then publish again.');
+}
+
 if (!flag('skip-build')) {
   // The launch build is invoked as a script rather than through npm: Node refuses
   // to execFile a .cmd shim on Windows, which is where this command is run.
@@ -274,7 +284,10 @@ if (retype) {
   console.log(`${retyped.length} object(s) stored with the wrong content type.`);
 }
 
-const stale = [...published.keys()].filter(key => !files.has(key));
+// Release objects and manifests are never stale: an older release cites its objects
+// after their files have left the current build, and R2 keeps no versions to recover them.
+const permanent = key => key.startsWith('atlas/objects/') || key.startsWith('atlas/releases/');
+const stale = [...published.keys()].filter(key => !files.has(key) && !permanent(key));
 // R2 keeps no object versions, so a deletion here is final. Pruning a quarter of
 // the bucket at once is more likely a mistyped prefix or a half-built release than
 // a real withdrawal, and that is worth having to say twice.
