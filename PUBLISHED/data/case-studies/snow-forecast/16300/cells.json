@@ -1,0 +1,163 @@
+{
+  "gauge": "16300",
+  "basin_area_km2": 863.0111741804869,
+  "source": "ECMWF/ERA5_LAND/DAILY_AGGR",
+  "grid": "native ERA5-Land 0.1 degree",
+  "elevation": "CGIAR SRTM 90 m mean per cell",
+  "cells": [
+    {
+      "cell": 10,
+      "lon": 70.1,
+      "lat": 42.1,
+      "weight": 0.022954359141241106,
+      "elevation_m": 2206.6
+    },
+    {
+      "cell": 11,
+      "lon": 70.2,
+      "lat": 42.1,
+      "weight": 0.06455320559654959,
+      "elevation_m": 2481.1
+    },
+    {
+      "cell": 12,
+      "lon": 70.3,
+      "lat": 42.1,
+      "weight": 0.025456175225256384,
+      "elevation_m": 2787.1
+    },
+    {
+      "cell": 16,
+      "lon": 70.0,
+      "lat": 42.0,
+      "weight": 0.01926950259212738,
+      "elevation_m": 2001.5
+    },
+    {
+      "cell": 17,
+      "lon": 70.1,
+      "lat": 42.0,
+      "weight": 0.09262505261613745,
+      "elevation_m": 2044.7
+    },
+    {
+      "cell": 18,
+      "lon": 70.2,
+      "lat": 42.0,
+      "weight": 0.10647288240281581,
+      "elevation_m": 2178.6
+    },
+    {
+      "cell": 19,
+      "lon": 70.3,
+      "lat": 42.0,
+      "weight": 0.07462429666148726,
+      "elevation_m": 2872.3
+    },
+    {
+      "cell": 22,
+      "lon": 69.9,
+      "lat": 41.9,
+      "weight": 0.0033504347980628578,
+      "elevation_m": 1657.5
+    },
+    {
+      "cell": 23,
+      "lon": 70.0,
+      "lat": 41.9,
+      "weight": 0.10550231046247127,
+      "elevation_m": 1491.5
+    },
+    {
+      "cell": 24,
+      "lon": 70.1,
+      "lat": 41.9,
+      "weight": 0.10664004244666349,
+      "elevation_m": 1970.6
+    },
+    {
+      "cell": 25,
+      "lon": 70.2,
+      "lat": 41.9,
+      "weight": 0.05871807346150741,
+      "elevation_m": 2724.3
+    },
+    {
+      "cell": 26,
+      "lon": 70.3,
+      "lat": 41.9,
+      "weight": 0.0001391907811137675,
+      "elevation_m": 1878.5
+    },
+    {
+      "cell": 28,
+      "lon": 69.8,
+      "lat": 41.8,
+      "weight": 0.00024924968605138963,
+      "elevation_m": 1450.0
+    },
+    {
+      "cell": 29,
+      "lon": 69.9,
+      "lat": 41.8,
+      "weight": 0.05286068894138736,
+      "elevation_m": 1754.9
+    },
+    {
+      "cell": 30,
+      "lon": 70.0,
+      "lat": 41.8,
+      "weight": 0.1017085083162976,
+      "elevation_m": 1828.4
+    },
+    {
+      "cell": 31,
+      "lon": 70.1,
+      "lat": 41.8,
+      "weight": 0.025593383608115992,
+      "elevation_m": 2221.5
+    },
+    {
+      "cell": 32,
+      "lon": 70.2,
+      "lat": 41.8,
+      "weight": 0.0006533156020675202,
+      "elevation_m": 1939.6
+    },
+    {
+      "cell": 35,
+      "lon": 69.8,
+      "lat": 41.7,
+      "weight": 0.000884208991906045,
+      "elevation_m": 1905.3
+    },
+    {
+      "cell": 36,
+      "lon": 69.9,
+      "lat": 41.7,
+      "weight": 0.08136278416393851,
+      "elevation_m": 1426.2
+    },
+    {
+      "cell": 37,
+      "lon": 70.0,
+      "lat": 41.7,
+      "weight": 0.05288008389498755,
+      "elevation_m": 1378.8
+    },
+    {
+      "cell": 43,
+      "lon": 69.9,
+      "lat": 41.6,
+      "weight": 0.001838728346369613,
+      "elevation_m": 1073.8
+    },
+    {
+      "cell": 44,
+      "lon": 70.0,
+      "lat": 41.6,
+      "weight": 0.0016635222634446892,
+      "elevation_m": 1195.3
+    }
+  ]
+}

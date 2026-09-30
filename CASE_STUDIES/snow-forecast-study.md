@@ -1,6 +1,6 @@
 # Seasonal flow forecasts from snow: Pskem, then seven more gauges
 
-**Build date:** 2026-09-29. **Status:** internal research result. Outputs live in `RESEARCH/snow-forecast/` and are deliberately kept off the website.
+**Build date:** 2026-09-29. **Page:** `/snow-forecast`. **Per-basin view:** the **Snow forecast** tab on level-12 basins in the basin explorer. Outputs: `PUBLISHED/data/case-studies/snow-forecast/`.
 
 ## Question
 
@@ -143,7 +143,7 @@ For all 7,445 basins and every water year, the build also stores April 1 SWE and
 October–March precipitation, both locally and accumulated over the upstream area
 (SWE volume in km³). These are inputs for forecasting ungauged basins later.
 
-| File in `RESEARCH/snow-forecast/region/` | Content |
+| File in `PUBLISHED/data/case-studies/snow-forecast/region/` | Content |
 | --- | --- |
 | `gauges.json` | Every score, predictor choice, hindcast series and regulation flag per gauge |
 | `gauge-skill.csv` | One row per gauge, all issue months |
@@ -173,7 +173,7 @@ python PIPELINES/build_snow_forecast_study.py --gauge 16290       # ~1.5 min
 python -m pytest TESTS/test_snow_forecast_study.py -q
 ```
 
-Outputs per gauge are in `RESEARCH/snow-forecast/{CODE}/`:
+Outputs per gauge are in `PUBLISHED/data/case-studies/snow-forecast/{CODE}/`:
 `study.json` (all scores, trends and series), `predictors-and-targets.csv` and
 `cells.json`. The daily ERA5-Land cell files are gitignored and rebuilt by the
 extractor.

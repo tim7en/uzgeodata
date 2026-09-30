@@ -182,6 +182,19 @@ def main():
             'metric_label':'Start months evaluated out of 12',
             'detail':'1993–2016 hindcasts · TerraClimate v1.1 reference',
             'status':'Seasonal outlook · historical skill assessment'}]
+    snow_path=DATA/'snow-forecast-card.json'
+    snow=json.loads(snow_path.read_text(encoding='utf-8')) if snow_path.exists() else None
+    def snow_card():
+        return {'id':'snow-forecast','href':'/snow-forecast','title':'Forecasting the irrigation season from April snow',
+         'region':f"AMU DARYA & SYR DARYA · {snow['gauges'] if snow else 52} GAUGES · AFTER BARNHART ET AL.",
+         'aim':'April–September flow forecasts from 1 April snow at every long-record gauge, following the USGS and Uzhydromet HMRI Kashkadarya study by Barnhart and colleagues, and tested on years the model never saw.',
+         'image':'/data/case-studies/snow-forecast-preview.svg',
+         'image_alt':'Bars of 1 April forecast skill for every gauge, sorted from best to worst, almost all above zero.',
+         'evidence_date':snow['generated_at'] if snow else now,
+         'metric':snow['april_positive'] if snow else 49,
+         'metric_label':'Gauges where the 1 April forecast beats the 30-year mean',
+         'detail':(f"of {snow['gauges']} · median skill {snow['april_median']:.2f}") if snow else 'ERA5-Land snow, operational hindcast',
+         'status':'Seasonal forecast · operational hindcast'}
     payload={'generated_at':now,'source_hashes':hashes,'studies':[
         {'id':'chirchik','href':'/case-studies/chirchik','title':'From mountain snow to river flow',
          'region':'CHIRCHIK / PSKEM','aim':'Test how elevation, snowfall and soil-water storage shape seasonal river flow.',
@@ -217,6 +230,7 @@ def main():
          'status':'GroupKFold by gauge · transfer experiment'},
         reservoir_card(),
         drought_card(),
+        snow_card(),
         *seasonal_cards,
         {'id':'trends','href':'/trends.html','title':'What survives testing properly',
          'region':'AMU DARYA & SYR DARYA','aim':'Mann–Kendall and Sen’s slope for nine variables across every level-12 basin, corrected for persistence and for testing thousands of basins at once.',

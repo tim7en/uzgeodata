@@ -99,6 +99,21 @@
       "image_revision": "6d9ae7351d0a"
     },
     {
+      "id": "snow-forecast",
+      "href": "/snow-forecast",
+      "title": "Forecasting the irrigation season from April snow",
+      "region": "AMU DARYA & SYR DARYA · 52 GAUGES · AFTER BARNHART ET AL.",
+      "aim": "April–September flow forecasts from 1 April snow at every long-record gauge, following the USGS and Uzhydromet HMRI Kashkadarya study by Barnhart and colleagues, and tested on years the model never saw.",
+      "image": "/data/case-studies/snow-forecast-preview.svg",
+      "image_alt": "Bars of 1 April forecast skill for every gauge, sorted from best to worst, almost all above zero.",
+      "evidence_date": "2026-09-29T18:46:44.582749+00:00",
+      "metric": 49,
+      "metric_label": "Gauges where the 1 April forecast beats the 30-year mean",
+      "detail": "of 52 · median skill 0.39",
+      "status": "Seasonal forecast · operational hindcast",
+      "image_revision": "73ee05b199d5"
+    },
+    {
       "id": "seasonal",
       "href": "/seasonal.html",
       "title": "What the next season may bring",

@@ -32,7 +32,7 @@ from shapely.geometry import box
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 GAUGES = ROOT / "GEODATA/ca-discharge-2023/CA-discharge.gpkg"
-OUT = ROOT / "RESEARCH/snow-forecast"
+OUT = ROOT / "PUBLISHED/data/case-studies/snow-forecast"
 CACHE = ROOT / "WORKSPACE/derived/snow-forecast"
 ASSET = "ECMWF/ERA5_LAND/DAILY_AGGR"
 BANDS = (("swe_mm", "snow_depth_water_equivalent", 1000, 0),

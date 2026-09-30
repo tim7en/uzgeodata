@@ -6,7 +6,7 @@ with the single-basin studies. Also writes basin-level predictors for all 7,445
 level-12 basins, locally and accumulated upstream, as input for forecasting
 ungauged basins later.
 
-Everything is written to RESEARCH/snow-forecast/region/, which is never part of
+Everything is written to PUBLISHED/data/case-studies/snow-forecast/region/, which is never part of
 the website release.
 
 Glacier cells: ERA5-Land holds a fixed 10 m of SWE on glacier-covered cells. A
@@ -46,7 +46,7 @@ GAUGES = ROOT / "GEODATA/ca-discharge-2023/CA-discharge.gpkg"
 LOOKUP = ROOT / "PUBLISHED/data/case-studies/gauge_basin_lookup.csv"
 DAMS = ROOT / "PUBLISHED/data/hydroclimate/dams-transboundary.geojson"
 LEVEL12 = ROOT / "GEODATA/transboundary_basins_v2/hydroatlas-level12-full-basins.geojson"
-OUT = ROOT / "RESEARCH/snow-forecast/region"
+OUT = ROOT / "PUBLISHED/data/case-studies/snow-forecast/region"
 CHECKPOINTS = GRIDS / "gauge-results"
 BAND_WIDTH = 500
 GLACIER_SWE_MM = 500
@@ -262,8 +262,111 @@ def associate_basins(results):
     print(f"Basins covered by a scored gauge: {frame.gauge_code.notna().sum():,} of {len(frame):,}", flush=True)
 
 
+def publish():
+    """Website projections of the finished results: page.json and basins/{HYBAS_ID}.json."""
+    report = json.loads((OUT / "gauges.json").read_text())
+    gauges = report["gauges"]
+    base = OUT.parent
+    singles = {}
+    for path in sorted(base.glob("*/study.json")):
+        study_json = json.loads(path.read_text())
+        singles[study_json["gauge"]["code"]] = study_json
+
+    def brief(e):
+        return {"code": e["code"], "name": e["name"], "river": e["river"], "basin": e["basin"],
+                "lon": e["lon"], "lat": e["lat"], "area_km2": round(e["area_km2"]),
+                "n_years": e["n_years"], "veg_years": e["veg_years"], "veg_mean_m3s": round(e["veg_mean_m3s"], 2),
+                "regulated_since": e["regulated_since"], "glacier_cell_share": round(e["glacier_cell_share"], 3),
+                "outlet_hybas_id": e["outlet_hybas_id"],
+                "skill": {k: {"insample": i["in_sample"]["adj_r2"], "loyo": i["loyo"]["r2"],
+                              "operational": i["operational"]["meanSWE"]["all"]["skill_corrected"],
+                              "operational_recent": (i["operational"]["meanSWE"]["recent"] or {}).get("skill_corrected"),
+                              "pre_regulation_loyo": (i.get("pre_regulation") or {}).get("loyo_r2")}
+                          for k, i in e["issue"].items()}}
+
+    pskem = singles.get("16290")
+    page = {"generated_at": report["generated_at"], "gauges": [brief(e) for e in gauges],
+            "single_basin": {code: {"name": s["gauge"]["name"],
+                                    "trends": s["trends"]["discharge"],
+                                    "operational_april": s["forecasts"]["operational"]["4"]["meanSWE"]["all"],
+                                    "operational_april_recent": s["forecasts"]["operational"]["4"]["meanSWE"]["recent"]}
+                             for code, s in singles.items()},
+            "pskem": None if not pskem else {
+                "table": {f: {"predictors": v["predictors"], "insample": v["in_sample"]["adj_r2"],
+                              "bootstrap": v["in_sample"]["bootstrap_adj_r2"], "loyo": v["loyo"]["r2"],
+                              "split_nse": (v["split"] or {}).get("nse"),
+                              "operational": pskem["forecasts"]["operational"][f]["meanSWE"]["all"]["skill_corrected"],
+                              "operational_recent": (pskem["forecasts"]["operational"][f]["meanSWE"]["recent"] or {}).get("skill_corrected")}
+                          for f, v in pskem["forecasts"]["vegetation_season"].items()},
+                "hindcast": pskem["forecasts"]["operational"]["4"]["meanSWE"]["series"],
+                "veg_season": pskem["series"]["vegetation_season_m3s"],
+                "centre_of_volume": pskem["series"]["centre_of_volume_dowy"],
+                "discharge": pskem["discharge"], "snow_trends": pskem["trends"]["snow_and_climate"]}}
+    (OUT / "page.json").write_text(json.dumps(clean(page), separators=(",", ":"), allow_nan=False) + "\n")
+
+    by_code = {e["code"]: e for e in gauges}
+    association = pd.read_csv(OUT / "basin-gauge-association.csv", dtype={"basin_id": str, "gauge_code": str})
+    predictors = pd.read_parquet(OUT / "basin-predictors.parquet")
+    fields = ["water_year", "apr1_swe_mm", "oct_mar_ppt_mm", "up_apr1_swe_mm", "up_apr1_swe_km3", "up_oct_mar_ppt_mm"]
+    dest = OUT.parent / "basins"
+    dest.mkdir(exist_ok=True)
+    gauge_of = dict(zip(association.basin_id, association.gauge_code))
+    count = 0
+    for basin_id, group in predictors.sort_values(["basin_id", "water_year"]).groupby("basin_id", sort=False):
+        normal = group[group.water_year.between(1991, 2020)]
+        code = gauge_of.get(basin_id)
+        code = None if code is None or (isinstance(code, float) and np.isnan(code)) else str(code).split(".")[0]
+        gauge = by_code.get(code) if code else None
+        document = {
+            "basin_id": basin_id, "record_type": "basin_snow_forecast", "fields": fields,
+            "rows": [[None if (isinstance(v, float) and not np.isfinite(v)) else (round(v, 3) if isinstance(v, float) else int(v))
+                      for v in row] for row in group[fields].itertuples(index=False, name=None)],
+            "normal_1991_2020": {"apr1_swe_mm": normal.apr1_swe_mm.mean(), "up_apr1_swe_mm": normal.up_apr1_swe_mm.mean(),
+                                 "up_apr1_swe_km3": normal.up_apr1_swe_km3.mean()},
+            "gauge": None if not gauge else {**brief(gauge),
+                                             "is_outlet": gauge["outlet_hybas_id"] == basin_id,
+                                             "hindcast_april": gauge["issue"]["4"]["operational"]["meanSWE"]["series"]},
+            "study": "/snow-forecast",
+            "note": "ERA5-Land April 1 SWE (glacier cells excluded) and Oct-Mar precipitation. Forecast skill belongs to the nearest scored gauge downstream; it is tested there, not at this basin.",
+        }
+        (dest / f"{basin_id}.json").write_text(json.dumps(clean(document), separators=(",", ":"), allow_nan=False) + "\n")
+        count += 1
+    card_and_preview(page)
+    print(f"Published page.json and {count:,} basin files", flush=True)
+
+
+def card_and_preview(page):
+    """Case-study directory card numbers and a preview: every gauge's 1 April skill, sorted."""
+    skills = sorted((g["skill"]["4"]["operational"] for g in page["gauges"]
+                     if g["skill"].get("4", {}).get("operational") is not None), reverse=True)
+    card = ROOT / "PUBLISHED/data/case-studies/snow-forecast-card.json"
+    card.write_text(json.dumps({"generated_at": page["generated_at"], "gauges": len(skills),
+                                "april_positive": sum(v > 0 for v in skills),
+                                "april_median": float(np.median(skills))}, indent=2) + "\n")
+    width, height, pad = 1080, 552, 70
+    step = (width - 2 * pad) / len(skills)
+    zero = height - 150
+    scale = 300
+    colours = [(0.6, "#74d6c7"), (0.4, "#3f978c"), (0.2, "#2a5450"), (0, "#4d6a68"), (-9, "#a8773a")]
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}">',
+             f'<rect width="{width}" height="{height}" fill="#103d40"/>',
+             f'<text x="{pad}" y="70" fill="#b3d3cb" font-family="Arial" font-size="20" letter-spacing="3">1 APRIL FORECAST SKILL · {len(skills)} GAUGES</text>',
+             f'<line x1="{pad}" x2="{width - pad}" y1="{zero}" y2="{zero}" stroke="#6b8e8a" stroke-width="1"/>']
+    for i, v in enumerate(skills):
+        colour = next(c for lo, c in colours if v >= lo)
+        top = zero - max(v, 0) * scale
+        h = max(2.0, abs(v) * scale)
+        parts.append(f'<rect x="{pad + i * step + 2:.1f}" y="{(top if v >= 0 else zero):.1f}" width="{step - 4:.1f}" height="{h:.1f}" rx="2" fill="{colour}"/>')
+    parts.append(f'<text x="{pad}" y="{height - 60}" fill="#b3d3cb" font-family="Arial" font-size="16">Skill against the previous 30-year mean; above the line beats it</text>')
+    parts.append("</svg>")
+    (ROOT / "PUBLISHED/data/case-studies/snow-forecast-preview.svg").write_text("\n".join(parts) + "\n")
+
+
 # ------------------------------------------------------------------ main
 def main():
+    if "--publish-only" in sys.argv:
+        publish()
+        return
     OUT.mkdir(parents=True, exist_ok=True)
     CHECKPOINTS.mkdir(parents=True, exist_ok=True)
     transform, width, height, elevation, years, glacier = load_grids()
@@ -332,7 +435,6 @@ def main():
         links.append({"gauge_code": code, "outlet_hybas_id": hybas, "outlet_area_ratio": area_ratio,
                       "catchment_area_km2": entry["area_km2"], "regulated_since": since})
     report = {"generated_at": datetime.now(timezone.utc).isoformat(),
-              "visibility": "internal research; never part of the website release",
               "predictors": "ERA5-Land native grid, glacier cells screened, 500 m elevation bands",
               "target": "April-September mean discharge (m3/s)",
               "scoring": "as build_snow_forecast_study.py: in-sample adj R2 + bootstrap, LOYO with selection inside folds, "
@@ -356,6 +458,7 @@ def main():
     table.to_parquet(OUT / "basin-predictors.parquet", compression="zstd", index=False)
     shares.to_csv(OUT / "basin-glacier-cell-share.csv", index=False)
     print(f"Basin predictors: {len(table):,} rows", flush=True)
+    publish()
 
 
 if __name__ == "__main__":

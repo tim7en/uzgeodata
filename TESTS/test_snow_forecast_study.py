@@ -9,7 +9,7 @@ import pytest
 from PIPELINES import build_snow_forecast_study as study
 
 ROOT = Path(__file__).resolve().parents[1]
-PSKEM = ROOT / "RESEARCH/snow-forecast/16290/study.json"
+PSKEM = ROOT / "PUBLISHED/data/case-studies/snow-forecast/16290/study.json"
 
 
 def test_mann_kendall_detects_a_trend_and_rejects_noise():
@@ -40,7 +40,7 @@ def test_pskem_april_forecast_beats_climatology_out_of_sample():
     assert report["discharge"]["overlap_agreement"]["r"] > 0.99
 
 
-REGION = ROOT / "RESEARCH/snow-forecast/region/gauges.json"
+REGION = ROOT / "PUBLISHED/data/case-studies/snow-forecast/region/gauges.json"
 
 
 @pytest.mark.skipif(not (REGION.exists() and PSKEM.exists()), reason="run the regional and Pskem builds")

@@ -130,6 +130,7 @@ PUBLISHED/data/atlas/seasonal-forecast/forecast-*.json
 
 # Snow forecast study: daily ERA5-Land cell forcing is rebuilt by
 # extract_snow_forecast_forcing.py; the per-gauge study.json and cells.json stay tracked.
-RESEARCH/snow-forecast/*/year=*.parquet
-RESEARCH/snow-forecast/*/year=*.json
-RESEARCH/snow-forecast/region/basin-predictors.parquet
+PUBLISHED/data/case-studies/snow-forecast/*/year=*.parquet
+PUBLISHED/data/case-studies/snow-forecast/*/year=*.json
+PUBLISHED/data/case-studies/snow-forecast/region/basin-predictors.parquet
+PUBLISHED/data/case-studies/snow-forecast/basins/

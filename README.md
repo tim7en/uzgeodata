@@ -231,6 +231,16 @@ generation to Uzbekistan's regions. Every level-12 basin also has a **Drought
 [the case study](CASE_STUDIES/drought-study.md). The data is gitignored and
 published to R2 through `PUBLISHED/release-includes.txt`.
 
+### Snow forecast study
+
+`/snow-forecast` forecasts April–September flow from 1 April snow at 52 gauged
+catchments, following the USGS and Uzhydromet HMRI Kashkadarya study by
+Barnhart and colleagues (in review; SnowModel data release
+[doi:10.5066/P1IHVOVG](https://doi.org/10.5066/P1IHVOVG)). It uses ERA5-Land
+snow, and scores each forecast only on years the model had not seen. Each
+level-12 basin has a **Snow forecast** tab linking it to the nearest tested gauge
+downstream. See [the case study](CASE_STUDIES/snow-forecast-study.md).
+
 ### Scaling the ontology and adding AI
 
 Extend the existing contracts: register a concept and product, define units,
