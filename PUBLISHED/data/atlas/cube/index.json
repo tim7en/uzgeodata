@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-28T08:17:12.143+00:00",
-  "rows": 28856820,
+  "generated_at": "2026-09-30T12:13:07.556+00:00",
+  "rows": 29005720,
   "basins": 7445,
   "months": [
     "2003-01",
     "2026-12"
   ],
-  "bytes": 185790167,
+  "bytes": 186487616,
   "base": "/data/atlas/cube/",
   "files": {
     "aet_mm_s": {
@@ -39,7 +39,7 @@
     },
     "snw_pc_s": {
       "path": "/data/atlas/cube/variable=snw_pc_s/data_0.parquet",
-      "bytes": 9059541
+      "bytes": 9756990
     },
     "soil_mm_s": {
       "path": "/data/atlas/cube/variable=soil_mm_s/data_0.parquet",
@@ -228,7 +228,7 @@
         "cadence": "monthly",
         "coverage": [
           2003,
-          2024
+          2026
         ],
         "support": "basin, local",
         "aggregation": "frequency of snow-covered days in the month",
@@ -238,7 +238,7 @@
         "fallback": null,
         "kind": "state",
         "caution": "Its gaps grow towards the present at constant source coverage, so the series is published for inspection and withdrawn from trend analysis.",
-        "observed_through": "2024-12"
+        "observed_through": "2026-08"
       },
       "uz:soil-monthly-v1": {
         "id": "uz:soil-monthly-v1",
@@ -407,6 +407,23 @@
       ],
       "run_id": "terraclimate-v11-rebase-20260928T081549.932+0000",
       "mode": "rebased on TerraClimate v1.1 producer release"
+    },
+    {
+      "at": "2026-09-30T12:12:38.772+00:00",
+      "source": "snow",
+      "months": [
+        "2025-01",
+        "2026-08"
+      ],
+      "run_id": "regional-snow-20260930T115317949407Z",
+      "mode": "appended from Git's published record; observation store not present",
+      "scratch_store": "WORKSPACE/data-updates/stores/snow-20260930T115307Z",
+      "not_rebuilt": [
+        "climatologies",
+        "basin API",
+        "coverage ledger",
+        "release"
+      ]
     }
   ]
 }

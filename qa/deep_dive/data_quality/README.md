@@ -111,3 +111,19 @@ reaches the current year. Catchment statistics cite the gauge ratios for both ru
 **Limits.** Most records end by 2021, so this describes response, not current flow. Reservoir
 operation and withdrawals are not separated. The precipitation is TerraClimate's, whose mountain
 totals are too low; the relation holds for anomalies better than for volumes.
+
+## 4. Follow-up: one version, citable releases, glossary, snow (2026-09-30)
+
+- **Version gate:** `qa/version_consistency.py` runs before every `publish:r2`. Its first real
+  catch: the MODIS extension below changed the cube, and the gate refused to publish until a
+  release described it.
+- **Citable releases:** schema-2 releases fingerprint content (text normalised to LF) and name
+  each file's immutable object `data/atlas/objects/<sha256>`; `verify_served_release.py`
+  downloads every object from the site and only then promotes (see `docs/ADMIN.md`).
+- **Glossary:** `INTERFACE/glossary.js` renders tab names, variables and evidence labels in
+  English, Russian and Uzbek, shielded from Google Translate. Draft; needs review by a
+  hydrologist fluent in both languages.
+- **Snow:** where glacier carry-over is 5%+ of peak storage, reports judge each winter by what it
+  added. MODIS snow cover extended from 2024-12 to 2026-08 (148,900 values); `diagnose_snow_gaps.py`
+  shows the gaps are summer months in 262 small lowland basins, winter 99.9% complete. Trend use
+  stays withdrawn pending a reviewed trend method.

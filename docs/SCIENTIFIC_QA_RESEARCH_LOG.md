@@ -162,3 +162,9 @@ Agents run in this order so each can use the previous agent's persisted evidence
 
 - **Estimates on v1.1:** `PIPELINES/derive_v11_substitutes.py` re-derived the 72 TerraClimate-based estimates from the v1.1 monthly record into the observation store (run `regional-substitutes-v11-20260930T110542927933Z`); `accumulate_upstream_annuals.py` now lets a newer release replace an older one; `build_basin_api.py` republished. The estimates check passes (0.0% vs −9.6%). Release `uz-20260930T112203049Z`.
 - **Gauges:** `PIPELINES/build_gauge_precipitation_response.py` pairs 45 CA-discharge gauges with v1.1 catchment precipitation (median r 0.74, elasticity 1.17); TerraClimate precipitation is too low in the mountains (runoff ratio > 1 at a quarter of gauges); ERA5-Land runoff is 1.23× measured, TerraClimate 0.43×. Reports and the basin assessment now use these results. Details: `qa/deep_dive/data_quality/README.md` §3.
+
+### 2026-09-30 — Version gate, content-addressed releases, glossary, snow
+
+- `qa/version_consistency.py` gates `publish_r2.mjs`; releases are schema 2 (content digests, `objects/<sha256>`), cut without promotion and promoted by `verify_served_release.py` after the served bytes match. First such release `uz-20260930T114016658Z`.
+- Glossary (draft, unreviewed) for tab names, variables and evidence labels in RU/UZ.
+- Snow: seasonal-accumulation anomalies where glacier carry-over ≥ 5%; MODIS extended to 2026-08; gap diagnosis in `qa/deep_dive/data_quality/snow-gaps.json`. The gate refused the extended cube until a new release was cut.

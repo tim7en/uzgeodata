@@ -1,5 +1,5 @@
 {
-  "reviewed_at": "2026-09-30T11:30:00Z",
+  "reviewed_at": "2026-09-30T13:30:00Z",
   "atlas_release": "uz-20260929T143815620Z",
   "checks": [
     {
@@ -67,6 +67,10 @@
     {
       "title": "River flow",
       "text": "At 45 CA-discharge gauges, water-year flow has followed catchment precipitation closely (median r = 0.74; a 10% precipitation shortfall went with about 12% less flow), except where glaciers feed the river. Measured flow exceeds TerraClimate precipitation at a quarter of the gauges, so its mountain precipitation is too low. ERA5-Land runoff is the closer of the two runoff products (1.2 times measured, against 0.4 for TerraClimate). Records end by 2021."
+    },
+    {
+      "title": "Snow",
+      "text": "MODIS snow cover now runs to August 2026. Its gaps (0.7% of basin-months) are warm months in 262 small lowland basins where every cell was masked; winter is 99.9% complete. TerraClimate snow storage carries glacier snow over from year to year, so where that store is 5% or more of the peak, reports judge each winter by the snow it added."
     },
     {
       "title": "Monthly and recent climate",

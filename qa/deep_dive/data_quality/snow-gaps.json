@@ -1,8 +1,8 @@
 {
- "through": "2024-12",
- "missing_basin_months": 13397,
- "basin_months": 1965480,
- "missing_share_pct": 0.682,
+ "through": "2026-08",
+ "missing_basin_months": 14240,
+ "basin_months": 2054820,
+ "missing_share_pct": 0.693,
  "by_year": {
   "2003": 243,
   "2004": 272,
@@ -25,26 +25,27 @@
   "2021": 836,
   "2022": 816,
   "2023": 889,
-  "2024": 743
+  "2024": 743,
+  "2025": 843
  },
  "by_calendar_month": {
-  "1": 88,
-  "2": 173,
-  "3": 420,
-  "4": 1007,
-  "5": 1612,
-  "6": 2127,
-  "7": 2203,
-  "8": 2536,
-  "9": 2034,
-  "10": 857,
-  "11": 182,
-  "12": 158
+  "1": 90,
+  "2": 183,
+  "3": 430,
+  "4": 1092,
+  "5": 1720,
+  "6": 2256,
+  "7": 2325,
+  "8": 2677,
+  "9": 2152,
+  "10": 925,
+  "11": 229,
+  "12": 161
  },
- "winter_nov_mar_complete_pct": 99.875,
+ "winter_nov_mar_complete_pct": 99.872,
  "basins_with_any_gap": 262,
  "median_area_km2_gap_basins": 92.35,
  "median_area_km2_all": 135.7,
- "mean_era5_temperature_at_gaps_c": 21.08038987086661,
+ "mean_era5_temperature_at_gaps_c": 21.086403483146064,
  "reading": "Gaps are months in which every MODIS cell of a basin was masked (cloud, water, night or no decision) all month. They sit in warm months and small basins, where snow is absent; winter months are nearly complete. They are not missing winter snow."
 }
