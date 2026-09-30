@@ -67,3 +67,33 @@ test('land cover describes only the covered part and its change from first to la
   assert.equal(result.coveredShare, 0.5);
   assert.deepEqual(result.change.map(c => [c.name, c.change]), [['Crops', -5], ['Built area', 4]]);
 });
+
+test('a gauge record answers the discharge question for past years, never for this one', async () => {
+  const { attachResponse, responseSentence } = await import('../INTERFACE/upstreamModel.js');
+  const response = { gauges: [{ code: '16290', area_km2: 2518, stats: { years: [1992, 2015], n: 24, r: 0.8, elasticity: 1.3,
+    runoff_ratio: 1.39, dry_years: 5, dry_years_with_low_flow: 4 } }] };
+  const gauges = attachResponse([{ code: '16290', name: 'Pskem - Mullala' }, { code: '1', name: 'Other' }], response);
+  assert.equal(gauges[1].response, undefined);
+  const sentence = responseSentence(gauges[0]);
+  assert.match(sentence, /a 10% precipitation shortfall went with about 13% less flow/);
+  assert.match(sentence, /In 4 of 5 years/);
+  assert.match(sentence, /read its precipitation volumes as a lower bound/);
+  const attribution = { waterYear: 2025, catchment: { percent: -20, anomaly: -1 }, groups: [], baseline: [2003, 2025] };
+  const answers = basinAssessment({ drought: null, forecast: null,
+    insights: { gauges, glaciers: { area: 5000, iceKm2: 0 }, attribution } });
+  const flow = answers.find(a => a.id === 'flow');
+  assert.equal(flow.basis, 'gauges');
+  assert.match(flow.answer, /The gauge measures 50% of this catchment/);
+  assert.match(flow.answer, /roughly 26% less flow than average there - an indication from past years, not a measurement/);
+  assert.match(flow.answer, /latest ends in 2015/);
+});
+
+test('a weak or small gauge is reported without an indication for the year', async () => {
+  const { attachResponse } = await import('../INTERFACE/upstreamModel.js');
+  const gauges = attachResponse([{ code: '9', name: 'Sokh' }], { gauges: [{ code: '9', area_km2: 3068,
+    stats: { years: [1992, 2017], n: 26, r: 0.03, elasticity: 0.1, runoff_ratio: 0.8, dry_years: 0, dry_years_with_low_flow: 0 } }] });
+  const flow = basinAssessment({ insights: { gauges, glaciers: { area: 4000 }, attribution: { waterYear: 2025, catchment: { percent: -20 }, groups: [], baseline: [2003, 2025] } } })
+    .find(a => a.id === 'flow');
+  assert.match(flow.answer, /did not follow the precipitation/);
+  assert.doesNotMatch(flow.answer, /indication/);
+});

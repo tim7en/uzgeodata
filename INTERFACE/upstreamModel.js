@@ -235,3 +235,51 @@ export function gaugesInCatchment(gauges, basins) {
   }
   return [...byCode.values()].sort((a, b) => (b.last || '').localeCompare(a.last || '') || (b.meanDischarge || 0) - (a.meanDischarge || 0));
 }
+
+// Measured flow against catchment precipitation, from
+// PIPELINES/build_gauge_precipitation_response.py, joined to the gauges a report found.
+export function attachResponse(gauges, response) {
+  if (!gauges) return gauges;
+  const byCode = new Map((response?.gauges || []).map(g => [String(g.code), g]));
+  return gauges.map(gauge => {
+    const found = byCode.get(String(gauge.code));
+    return found ? { ...gauge, response: { ...found.stats, area: found.area_km2, modelled: found.modelled_runoff || null } } : gauge;
+  });
+}
+
+const signedRound = value => Math.round(value);
+
+/** One plain sentence on how flow at a gauge has followed its catchment's precipitation. */
+export function responseSentence(gauge) {
+  const r = gauge?.response;
+  if (!r || r.r === null) return null;
+  const span = `water years ${r.years[0]}–${r.years[1]} (${r.n} years)`;
+  const parts = [];
+  if (r.r >= 0.6 && r.elasticity !== null) {
+    parts.push(`Over ${span}, flow at ${gauge.name} followed the precipitation on its catchment (r = ${r.r.toFixed(2)}): `
+      + `a 10% precipitation shortfall went with about ${signedRound(10 * r.elasticity)}% less flow.`);
+  } else if (r.r < 0.3) {
+    parts.push(`Over ${span}, flow at ${gauge.name} did not follow the precipitation on its catchment (r = ${r.r.toFixed(2)}): `
+      + 'glacier melt, reservoirs or withdrawals shape it more than a single year’s precipitation.');
+  } else {
+    parts.push(`Over ${span}, flow at ${gauge.name} followed its catchment’s precipitation only loosely (r = ${r.r.toFixed(2)}).`);
+  }
+  if (r.dry_years === 1) {
+    parts.push(`In the one year with precipitation 15% or more below average, flow was ${r.dry_years_with_low_flow ? '' : 'not '}below its median.`);
+  } else if (r.dry_years) {
+    parts.push(`In ${r.dry_years_with_low_flow} of ${r.dry_years} years with precipitation 15% or more below average, flow was below its median.`);
+  }
+  if (r.runoff_ratio > 1) {
+    parts.push(`Measured flow was ${r.runoff_ratio.toFixed(1)} times the gridded precipitation on the catchment, which cannot be: `
+      + 'TerraClimate underestimates precipitation here, so read its precipitation volumes as a lower bound.');
+  }
+  return parts.join(' ');
+}
+
+/** The gauge whose record says most about the catchment: the longest well-correlated one, else the longest. */
+export function leadingGauge(gauges) {
+  const answered = (gauges || []).filter(g => g.response);
+  if (!answered.length) return null;
+  const strong = answered.filter(g => g.response.r >= 0.6);
+  return (strong.length ? strong : answered).sort((a, b) => b.response.n - a.response.n || b.response.area - a.response.area)[0];
+}

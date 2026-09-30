@@ -84,3 +84,30 @@ forecast*, which is a seasonal river-flow forecast from snow storage, and "Еж�
 ("monthly report") for *Monthly record*. Scientific terms need a reviewed Russian (and Uzbek)
 glossary applied by the site, with those terms marked `translate="no"` for the machine
 translator, rather than translation of the English on the fly.
+
+## 3. Measured river flow against catchment precipitation (gap 1)
+
+`python PIPELINES/build_gauge_precipitation_response.py` →
+`PUBLISHED/data/research/gauge-precipitation-response.json`
+
+CA-discharge records (Marti et al. 2023, CC BY 4.0) against TerraClimate v1.1 precipitation over
+each gauge's own delineated catchment, water year by water year (1992–2021 overlap). 45 gauges
+have 10+ paired years; 35 lie outside the Amu/Syr frame and 53 have too few complete years.
+
+| Result | Value |
+|---|---|
+| Correlation of water-year flow with catchment precipitation | median r = 0.74; 31 gauges r ≥ 0.6; 6 below 0.3 (glacier-fed: Sokh, Kyzylsu West, Akbura …) |
+| Precipitation elasticity of flow (median estimator) | 1.17 — a 10% precipitation shortfall has gone with about 12% less flow |
+| Measured runoff ÷ TerraClimate precipitation | median 0.82; above 1 at a quarter of gauges (Pskem 1.39, Nauvalisoy 1.87) — **TerraClimate underestimates mountain precipitation**; volumes are lower bounds there |
+| TerraClimate v1.1 modelled runoff ÷ measured | median 0.43 over 45 gauges — underestimates by more than half |
+| ERA5-Land modelled runoff ÷ measured | median 1.23 over 44 gauges; 22 within a factor 1.5 — the closer of the two |
+
+**Changed in the portal.** Basin reports join these results to the gauges in each catchment: a
+column and sentences on how flow has followed precipitation, and a basin-assessment answer on
+discharge that states the historical relation, applies it to the latest anomaly only as an
+indication (gauge covers a quarter of the catchment or more, r ≥ 0.6), and says that no record
+reaches the current year. Catchment statistics cite the gauge ratios for both runoff products.
+
+**Limits.** Most records end by 2021, so this describes response, not current flow. Reservoir
+operation and withdrawals are not separated. The precipitation is TerraClimate's, whose mountain
+totals are too low; the relation holds for anomalies better than for volumes.

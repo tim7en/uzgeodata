@@ -157,3 +157,8 @@ Agents run in this order so each can use the previous agent's persisted evidence
 - **2025** is the warmest year of 2003–2025 in both TerraClimate and ERA5-Land and among the driest; read as climate, but the first year of the v1.1 annual release — recheck after the next producer update.
 - **Browser pass:** `browse_portal.py` over 30 pages × 2 widths and the 7 basin tabs: no data or script errors. Fixed: local-API probes on the public site; sideways scrolling on 8 phone pages. Open: Google Translate mistranslates scientific tab names in the default Russian view — needs a reviewed glossary.
 - Details: `qa/deep_dive/data_quality/README.md`.
+
+### 2026-09-30 — Gaps 1 and 2: gauges and one data version
+
+- **Estimates on v1.1:** `PIPELINES/derive_v11_substitutes.py` re-derived the 72 TerraClimate-based estimates from the v1.1 monthly record into the observation store (run `regional-substitutes-v11-20260930T110542927933Z`); `accumulate_upstream_annuals.py` now lets a newer release replace an older one; `build_basin_api.py` republished. The estimates check passes (0.0% vs −9.6%). Release `uz-20260930T112203049Z`.
+- **Gauges:** `PIPELINES/build_gauge_precipitation_response.py` pairs 45 CA-discharge gauges with v1.1 catchment precipitation (median r 0.74, elasticity 1.17); TerraClimate precipitation is too low in the mountains (runoff ratio > 1 at a quarter of gauges); ERA5-Land runoff is 1.23× measured, TerraClimate 0.43×. Reports and the basin assessment now use these results. Details: `qa/deep_dive/data_quality/README.md` §3.

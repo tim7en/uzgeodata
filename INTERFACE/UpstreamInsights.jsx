@@ -3,6 +3,7 @@ import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet';
 import { formatNumber } from './landingModel.js';
 import { BASEMAPS, collectionBounds } from './mapViewModel.js';
 import './upstreamInsights.css';
+import { leadingGauge, responseSentence } from './upstreamModel.js';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const TERRAIN = BASEMAPS.find(entry => entry.id === 'terrain');
@@ -105,6 +106,8 @@ function Snow({ snow }) {
 function Gauges({ gauges }) {
   if (!gauges) return null;
   const recent = gauges.filter(g => g.last && Number(g.last) >= 2010);
+  const lead = leadingGauge(gauges);
+  const answered = [lead, ...gauges.filter(g => g.response && g !== lead).sort((a, b) => b.response.n - a.response.n)].filter(Boolean);
   return <section className="up-block">
     <h4>River gauges in this catchment</h4>
     {gauges.length ? <>
@@ -113,17 +116,22 @@ function Gauges({ gauges }) {
           : 'none has a record past 2010.'} Measured discharge is what separates a meteorological drought from an actual
         shortfall in supply; these are the records a hydrological comparison would be built on.</p>
       <div className="poi-table"><table>
-        <thead><tr><th>Gauge</th><th>River</th><th>Record</th><th>Mean flow</th></tr></thead>
+        <thead><tr><th>Gauge</th><th>River</th><th>Record</th><th>Mean flow</th><th>Flow vs precipitation</th></tr></thead>
         <tbody>{gauges.slice(0, 10).map(g => <tr key={g.code}>
           <th>{g.name}<small>{g.code}</small></th><td>{g.river || '—'}</td>
           <td>{g.first && g.last ? `${g.first}–${g.last}` : 'no monthly series'}</td>
           <td>{g.meanDischarge === null ? '—' : `${formatNumber(g.meanDischarge, 1)} m³/s`}</td>
+          <td>{g.response?.r != null ? `r ${g.response.r.toFixed(2)} · ${g.response.n} yrs` : '—'}</td>
         </tr>)}</tbody>
       </table></div>
+      {answered.slice(0, 3).map(g => <p key={g.code}>{responseSentence(g)}</p>)}
     </> : <p>No gauge of the CA-discharge compilation lies in these basins, so the precipitation here cannot yet be set
       against measured river flow.</p>}
-    <p className="poi-coverage">Gauge series are not yet joined to these reports. Until they are, runoff figures in the
-      atlas are modelled generation, not measured discharge.</p>
+    {answered.length ? <p className="poi-coverage">Flow against precipitation: water-year means from the CA-discharge
+      records (Marti et al. 2023, CC BY 4.0) against TerraClimate v1.1 precipitation over each gauge’s own catchment.
+      Most records end by 2021, so this describes how the river has responded, not this year’s flow.</p>
+      : <p className="poi-coverage">No gauge here has ten water years to set against precipitation, so runoff figures for
+        this catchment remain modelled generation, not measured discharge.</p>}
   </section>;
 }
 

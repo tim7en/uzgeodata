@@ -5,6 +5,8 @@ import { baselineNote, ERROR_BOUND_NOTE, trendBasis, trendUnit } from './reportT
 import { attributesCsv, dictionaryCsv } from './aoiModel.js';
 import { MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
 import fontUrl from './assets/NotoSans-Regular.ttf?url';
+import { responseSentence } from './upstreamModel.js';
+import { BASIS } from './assessmentModel.js';
 
 const number = value => value == null ? 'Not available' : Number(value).toLocaleString('en', { maximumFractionDigits: 3 });
 export const reportFilename = report => `uzgeodata-location-${report.input.id}-${report.variable}`;
@@ -100,11 +102,10 @@ export async function reportPdf(report) {
   if (report.assessment?.length) {
     newPage(); line('BASIN ASSESSMENT', 18);
     line('Generated from the figures in this report. Each answer states what it rests on: historical gridded data, provisional estimates, a seasonal forecast, or nothing yet.', 9);
-    const basis = { gridded: 'Historical gridded data', provisional: 'Provisional estimates', forecast: 'Seasonal forecast', none: 'Not established' };
     for (const item of report.assessment) {
       line(item.question, 12);
       line(item.answer, 10);
-      line(`Basis: ${basis[item.basis] || item.basis}`, 8);
+      line(`Basis: ${BASIS[item.basis] || item.basis}`, 8);
     }
   }
 
@@ -281,7 +282,11 @@ export async function reportPdf(report) {
         line(`${g.name} (${g.code})${g.river ? `, ${g.river}` : ''}: ${g.first && g.last ? `record ${g.first}–${g.last}` : 'no monthly series'}`
           + `${g.meanDischarge === null ? '' : `, mean ${number(g.meanDischarge)} m³/s`}.`, 9);
       }
-      line('Gauge series are not yet joined to these reports; runoff figures in the atlas are modelled generation, not measured discharge.', 9);
+      const answered = gauges.filter(g => g.response).sort((a, b) => b.response.n - a.response.n);
+      for (const g of answered.slice(0, 3)) line(responseSentence(g), 9);
+      line(answered.length
+        ? 'Flow against precipitation: water-year means from CA-discharge (Marti et al. 2023, CC BY 4.0) against TerraClimate v1.1 precipitation over each gauge’s catchment. Most records end by 2021.'
+        : 'No gauge here has ten water years to set against precipitation; runoff figures for this catchment remain modelled generation, not measured discharge.', 8);
     }
   }
 

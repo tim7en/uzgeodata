@@ -7,7 +7,7 @@ import { BASEMAPS, collectionBounds } from './mapViewModel.js';
 import { formatNumber } from './landingModel.js';
 import ReportChart from './ReportChart.jsx';
 import { aggregateCatchment, MORPHOLOGY_FIELDS } from './catchmentStatisticsModel.js';
-import { gaugesInCatchment, glacierSummary, landcoverSummary, snowSeasons, upstreamAttribution } from './upstreamModel.js';
+import { attachResponse, gaugesInCatchment, glacierSummary, landcoverSummary, snowSeasons, upstreamAttribution } from './upstreamModel.js';
 import { basinAssessment } from './assessmentModel.js';
 import { forecastUnits, readForecast } from './seasonalModel.js';
 import BasinAssessment from './BasinAssessment.jsx';
@@ -175,6 +175,7 @@ function presentOf(report, continuation) {
 }
 
 const GAUGES = '/data/research/ca-discharge-stations.geojson';
+const GAUGE_RESPONSE = '/data/research/gauge-precipitation-response.json';
 const GLACIERS = '/data/atlas/glacier-basin-context.json';
 const LANDCOVER_INDEX = '/data/landcover/index.json';
 const LANDCOVER = '/data/landcover/basin-series.json';
@@ -204,6 +205,9 @@ async function upstreamOf(result, rainValues, precipitation, data, signal) {
   try {
     const stations = await json(GAUGES, signal);
     gauges = gaugesInCatchment(stations.features, result.upstream_geometry.features);
+    // How flow at each gauge has followed its catchment's precipitation; optional.
+    const response = await json(GAUGE_RESPONSE, signal).catch(() => null);
+    gauges = attachResponse(gauges, response);
   } catch { gauges = null; }
   const basins = members.map(i => ({ id: String(data.index.ids[i]), area: data.index.areas_km2[i] }));
   const glaciers = await json(GLACIERS, signal).then(context => glacierSummary(context, basins)).catch(() => null);

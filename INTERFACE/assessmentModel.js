@@ -5,6 +5,9 @@
 // "not established" rather than a guess, and each answer says whether it rests on
 // the gridded record, provisional estimates, a forecast or nothing at all.
 
+import { ordinal } from './droughtModel.js';
+import { leadingGauge, responseSentence } from './upstreamModel.js';
+
 const pct = value => `${Math.abs(Math.round(value))}%`;
 const direction = (value, up = 'above', down = 'below') => (value >= 0 ? up : down);
 const share = value => `${Math.round(value * 100)}%`;
@@ -14,6 +17,7 @@ export const BASIS = {
   provisional: 'Provisional estimates',
   forecast: 'Seasonal forecast',
   inventory: 'Survey inventory',
+  gauges: 'Measured river flow (past years)',
   none: 'Not established',
 };
 
@@ -34,7 +38,7 @@ function lastYear(attribution, outlook) {
   }
   if (outlook?.last) {
     parts.push(`Against the longer 1991–2020 reference it was ${spiWords(outlook.last.spi)} (SPI-12 ${outlook.last.spi.toFixed(2)}).`);
-    if (outlook.belowNormalRun > 1) parts.push(`It was the ${outlook.belowNormalRun}th water year in a row below normal.`);
+    if (outlook.belowNormalRun > 1) parts.push(`It was the ${ordinal(outlook.belowNormalRun)} water year in a row below normal.`);
   }
   return { answer: parts.join(' '), basis: 'gridded' };
 }
@@ -96,7 +100,9 @@ function outlookAhead(unit) {
 }
 
 /** Q5: river discharge - what can and cannot be said. */
-function discharge(gauges, glaciers) {
+function discharge(gauges, glaciers, attribution) {
+  const lead = leadingGauge(gauges);
+  if (lead) return withGauge(lead, gauges, glaciers, attribution);
   const parts = ['This report cannot say how much river discharge changed: it contains no measured flow and no calibrated '
     + 'runoff model, so a precipitation or snow deficit cannot yet be translated into a deficit at the river.'];
   if (gauges?.length) {
@@ -113,6 +119,29 @@ function discharge(gauges, glaciers) {
 }
 
 /**
+ * A gauge whose record answers how flow has followed precipitation. Its relation is
+ * applied to the latest anomaly only when the gauge measures a large part of the
+ * catchment and the relation is strong - and then as an indication, never as a figure
+ * for this year's flow, which no record here measures.
+ */
+function withGauge(lead, gauges, glaciers, attribution) {
+  const r = lead.response;
+  const parts = [responseSentence(lead)];
+  const share = glaciers?.area ? r.area / glaciers.area : null;
+  const anomaly = attribution?.catchment.percent;
+  if (r.r >= 0.6 && r.elasticity !== null && share !== null && share >= 0.25 && anomaly !== null && anomaly !== undefined) {
+    const flow = anomaly * r.elasticity;
+    parts.push(`The gauge measures ${Math.round(Math.min(share, 1) * 100)}% of this catchment. Had that relation held in water year `
+      + `${attribution.waterYear}, its ${pct(anomaly)} precipitation ${anomaly < 0 ? 'deficit' : 'surplus'} would mean roughly `
+      + `${pct(flow)} ${flow < 0 ? 'less' : 'more'} flow than average there - an indication from past years, not a measurement.`);
+  }
+  const latest = r.years[1];
+  parts.push(`No gauge record here reaches the current year (the latest ends in ${latest}), so this year's flow is not measured.`);
+  if (glaciers?.iceKm2) parts.push(`Glaciers (${glaciers.iceKm2 < 10 ? glaciers.iceKm2.toFixed(1) : Math.round(glaciers.iceKm2)} km²) can keep flow up in a dry year.`);
+  return { answer: parts.join(' '), basis: 'gauges' };
+}
+
+/**
  * The five answers for a report. `scope` is 'upstream' when the catchment has more
  * than the basin itself, else 'local'.
  */
@@ -124,6 +153,6 @@ export function basinAssessment({ drought, insights, forecast }) {
     { id: 'now', question: 'Where do precipitation and snow storage stand now?', ...current(reading?.toDate, insights?.snow) },
     { id: 'origin', question: 'Where did the main precipitation anomaly come from?', ...origin(insights?.attribution) },
     { id: 'forecast', question: 'What does the seasonal forecast indicate, and how reliable is it?', ...outlookAhead(forecast) },
-    { id: 'flow', question: 'What can and cannot be said about river discharge?', ...discharge(insights?.gauges, insights?.glaciers) },
+    { id: 'flow', question: 'What can and cannot be said about river discharge?', ...discharge(insights?.gauges, insights?.glaciers, insights?.attribution) },
   ];
 }

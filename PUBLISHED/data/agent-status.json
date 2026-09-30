@@ -65,6 +65,10 @@
       "text": "For basin 4121292070 the served drought record is consistent with the v1.1 monthly data and its SPI-12 reproduces with an independent estimator. This checks the arithmetic and the source, not whether TerraClimate itself is right; no rain gauge was compared."
     },
     {
+      "title": "River flow",
+      "text": "At 45 CA-discharge gauges, water-year flow has followed catchment precipitation closely (median r = 0.74; a 10% precipitation shortfall went with about 12% less flow), except where glaciers feed the river. Measured flow exceeds TerraClimate precipitation at a quarter of the gauges, so its mountain precipitation is too low. ERA5-Land runoff is the closer of the two runoff products (1.2 times measured, against 0.4 for TerraClimate). Records end by 2021."
+    },
+    {
       "title": "Monthly and recent climate",
       "text": "Monthly values are gridded estimates (TerraClimate v1.1) and reanalysis (ERA5-Land), not field measurements. Months after December 2025 are provisional estimates from ERA5-Land; their error is a river-system holdout figure, not a basin-specific interval."
     },
