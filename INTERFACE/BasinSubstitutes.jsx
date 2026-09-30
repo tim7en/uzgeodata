@@ -28,19 +28,6 @@ async function json(url) {
 // One expandable row of evidence. Collapsed it shows the two numbers; opened it
 // shows why they differ, which is the part that stops the comparison being read as
 // a reproduction test.
-// Estimates derived from TerraClimate as Earth Engine hosts it (v1.0). The monthly record,
-// drought study and reports moved to the producer's v1.1, which is drier, so the two tabs
-// disagree for these attributes until the estimates are re-derived.
-const TERRACLIMATE_V10 = 'terraclimate@IDAHO_EPSCOR/TERRACLIMATE';
-const onV10 = meta => meta?.substitute?.source_release === TERRACLIMATE_V10;
-
-function VersionNote() {
-  return <p className="land-sub-foot"><Info size={11}/> Derived from TerraClimate v1.0. The Monthly tab, drought
-    study and reports use v1.1; across all 7,445 basins v1.1 annual precipitation normals are about 10% lower
-    (median basin), actual evapotranspiration about 6% lower. Compare this estimate with the HydroATLAS value,
-    not with the Monthly tab, until it is re-derived from v1.1. <a href="/agents.html">Validation</a></p>;
-}
-
 function Evidence({ row }) {
   const { meta, family } = row;
   const resolution = resolutionLabel(family);
@@ -78,7 +65,6 @@ function Evidence({ row }) {
     </div>}
     {family?.resolution?.support_change && <p className="land-sub-foot">
       {family.resolution.resampling}. {family.resolution.support_change}.</p>}
-    {onV10(meta) && <VersionNote/>}
   </div>;
 }
 
@@ -182,7 +168,6 @@ export default function BasinSubstitutes({ basin, filter, kind }) {
         place of it. Different source, different method, different years: agreement between the two
         would not make either a reproduction of the other. Open a row for its sources, resolution
         and known divergences.</p>
-      {rows.some(row => row.value != null && onV10(row.meta)) && <VersionNote/>}
       <p className="land-sub-links">
         <a href={`${state.index.base_url}${basin.hybas_id}.json`} download>Download this basin (JSON)</a>
         <a href="/data/atlas/catalogue.json" download>Attribute catalogue</a>

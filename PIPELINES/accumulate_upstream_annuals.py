@@ -32,6 +32,9 @@ from PIPELINES.extract_regional_means import Weighted, walk
 from PIPELINES.extract_regional_snow import geometry_version, load_frame
 from PIPELINES.stage_pilot_observations import BASIN_LEVEL, STORE
 
+# A release -> the release of the same product that replaces it (see derive_v11_substitutes.py).
+SUPERSEDED_BY = {"terraclimate@IDAHO_EPSCOR/TERRACLIMATE": "terraclimate-v1.1@climatologylab"}
+
 # local annual column -> the upstream column it feeds
 PAIRS = {
     "aet_mm_syr": "aet_mm_uyr",
@@ -68,6 +71,14 @@ def local_values(store):
         key = (row["basin_id"], column, row["source_release_id"])
         if observations.outranks(row, chosen.get(key), ranking):
             chosen[key] = row
+
+    # Two releases of one product are not two measurements to keep apart, as the two
+    # temperature sources are: the newer release replaces the older. Accumulating both
+    # would publish a v1.0 and a v1.1 upstream series under one column.
+    for (basin, column, release) in list(chosen):
+        successor = SUPERSEDED_BY.get(release)
+        if successor and (basin, column, successor) in chosen:
+            del chosen[(basin, column, release)]
 
     found = collections.defaultdict(dict)
     for (basin, column, release), row in chosen.items():

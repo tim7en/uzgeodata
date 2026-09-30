@@ -1,21 +1,84 @@
 {
-  "reviewed_at": "2026-09-29T14:45:00Z",
+  "reviewed_at": "2026-09-30T11:30:00Z",
   "atlas_release": "uz-20260929T143815620Z",
   "checks": [
-    {"id":"release","label":"Release integrity","description":"Check every file of the current atlas release (latest.json) against its manifest digests.","status":"PASS","summary":"All 36 files of release uz-20260929T143815620Z match their digests. It replaces the 24 September release, which no longer described the cube after the TerraClimate v1.1 rebase."},
-    {"id":"topology","label":"Upstream topology","description":"Recalculate Syr Darya level 7 upstream membership and area.","status":"PASS","summary":"35 level-7 units and 95,297.6 km² reproduced."},
-    {"id":"climate","label":"Raster to basin climate","description":"Recalculate one basin-month of ERA5-Land temperature and precipitation.","status":"PASS","summary":"One January 2003 basin-month agreed within 0.01 units."},
-    {"id":"screenshot","label":"Monthly record and provisional estimate","description":"Recalculate AET history, the January 2026 provisional estimate and its 2020–2025 holdout for basin 4121292070.","status":"PASS","summary":"2025 AET sums to 341.846 mm and matches the chart within display rounding; the January 2026 estimate reproduces exactly. Holdout RMSE 13.8 mm/month against 16.6 for a seasonal baseline."},
-    {"id":"drought","label":"Drought record","description":"Check the served water-year totals, 1991–2020 normal, anomalies and SPI-12 for basin 4121292070 with an independent gamma estimator.","status":"PASS","summary":"34 water-year totals match the v1.1 monthly record within 0.001 mm; the 683.77 mm normal, 65 anomalies and 65 SPI-12 values reproduce within 0.001. Water year 2025: −30.4%, SPI −1.78."},
-    {"id":"catchment","label":"Catchment statistics","description":"Retrace the 89-basin catchment of 4121292070 and recalculate its area, relief, shape and monthly coverage.","status":"PASS","summary":"89 basins and 11,885.5 km² retraced; relief and circularity reproduce; precipitation covers 100% of the catchment. MODIS snow cover ends in December 2024 here."},
-    {"id":"estimates","label":"Independent estimates vs monthly record","description":"Recompute 2003–2025 TerraClimate v1.1 normals for all 7,445 basins and compare them with the published independent estimates.","status":"FAIL","summary":"The estimates were derived from TerraClimate v1.0 (Earth Engine); the monthly record is v1.1. Annual precipitation normals differ by −9.6% (median basin), AET by −6.4%, PET by −0.1%."},
-    {"id":"model","label":"Pskem model validation","description":"Refit the published retrospective model and check the held-out baseline.","status":"LIMITED","summary":"Published fit reproduced; held-out RMSE exceeded the climatology baseline."}
+    {
+      "id": "release",
+      "label": "Release integrity",
+      "description": "Check every file of the current atlas release (latest.json) against its manifest digests.",
+      "status": "PASS",
+      "summary": "All 36 files of release uz-20260929T143815620Z match their digests. It replaces the 24 September release, which no longer described the cube after the TerraClimate v1.1 rebase."
+    },
+    {
+      "id": "topology",
+      "label": "Upstream topology",
+      "description": "Recalculate Syr Darya level 7 upstream membership and area.",
+      "status": "PASS",
+      "summary": "35 level-7 units and 95,297.6 km² reproduced."
+    },
+    {
+      "id": "climate",
+      "label": "Raster to basin climate",
+      "description": "Recalculate one basin-month of ERA5-Land temperature and precipitation.",
+      "status": "PASS",
+      "summary": "One January 2003 basin-month agreed within 0.01 units."
+    },
+    {
+      "id": "screenshot",
+      "label": "Monthly record and provisional estimate",
+      "description": "Recalculate AET history, the January 2026 provisional estimate and its 2020–2025 holdout for basin 4121292070.",
+      "status": "PASS",
+      "summary": "2025 AET sums to 341.846 mm and matches the chart within display rounding; the January 2026 estimate reproduces exactly. Holdout RMSE 13.8 mm/month against 16.6 for a seasonal baseline."
+    },
+    {
+      "id": "drought",
+      "label": "Drought record",
+      "description": "Check the served water-year totals, 1991–2020 normal, anomalies and SPI-12 for basin 4121292070 with an independent gamma estimator.",
+      "status": "PASS",
+      "summary": "34 water-year totals match the v1.1 monthly record within 0.001 mm; the 683.77 mm normal, 65 anomalies and 65 SPI-12 values reproduce within 0.001. Water year 2025: −30.4%, SPI −1.78."
+    },
+    {
+      "id": "catchment",
+      "label": "Catchment statistics",
+      "description": "Retrace the 89-basin catchment of 4121292070 and recalculate its area, relief, shape and monthly coverage.",
+      "status": "PASS",
+      "summary": "89 basins and 11,885.5 km² retraced; relief and circularity reproduce; precipitation covers 100% of the catchment. MODIS snow cover ends in December 2024 here."
+    },
+    {
+      "id": "estimates",
+      "label": "Independent estimates vs monthly record",
+      "description": "Recompute 2003–2025 TerraClimate v1.1 normals for all 7,445 basins and compare them with the published independent estimates.",
+      "status": "PASS",
+      "summary": "All 72 TerraClimate-based estimates are re-derived from v1.1, the release the monthly record uses; recomputed normals match them exactly (0.0% median difference, against −9.6% for the earlier v1.0 estimates, which stay on record)."
+    },
+    {
+      "id": "model",
+      "label": "Pskem model validation",
+      "description": "Refit the published retrospective model and check the held-out baseline.",
+      "status": "LIMITED",
+      "summary": "Published fit reproduced; held-out RMSE exceeded the climatology baseline."
+    }
   ],
   "findings": [
-    {"title":"Drought and outlook","text":"For basin 4121292070 the served drought record is consistent with the v1.1 monthly data and its SPI-12 reproduces with an independent estimator. This checks the arithmetic and the source, not whether TerraClimate itself is right; no rain gauge was compared."},
-    {"title":"Monthly and recent climate","text":"Monthly values are gridded estimates (TerraClimate v1.1) and reanalysis (ERA5-Land), not field measurements. Months after December 2025 are provisional estimates from ERA5-Land; their error is a river-system holdout figure, not a basin-specific interval."},
-    {"title":"Independent estimates","text":"Precipitation, evapotranspiration and moisture-index normals in the Independent estimates tab are still on TerraClimate v1.0 and are about 10% wetter than the v1.1 record used everywhere else. Until they are re-derived from v1.1, compare them only with the HydroATLAS originals, not with the Monthly tab."},
-    {"title":"Catchment statistics","text":"Membership, area, relief and shape reproduce exactly for the checked catchment. MODIS snow cover is withdrawn from trend use and ends in December 2024 for this catchment."},
-    {"title":"Model","text":"The Pskem reconstruction had higher held-out error than a training-month climatology baseline. It is retrospective; forecast skill is not established."}
+    {
+      "title": "Drought and outlook",
+      "text": "For basin 4121292070 the served drought record is consistent with the v1.1 monthly data and its SPI-12 reproduces with an independent estimator. This checks the arithmetic and the source, not whether TerraClimate itself is right; no rain gauge was compared."
+    },
+    {
+      "title": "Monthly and recent climate",
+      "text": "Monthly values are gridded estimates (TerraClimate v1.1) and reanalysis (ERA5-Land), not field measurements. Months after December 2025 are provisional estimates from ERA5-Land; their error is a river-system holdout figure, not a basin-specific interval."
+    },
+    {
+      "title": "Independent estimates",
+      "text": "Precipitation, evapotranspiration, soil-water and moisture-index normals in the Independent estimates tab now come from TerraClimate v1.1, like the Monthly tab, catchment statistics and reports. Before 30 September they were on v1.0 and about 10% wetter."
+    },
+    {
+      "title": "Catchment statistics",
+      "text": "Membership, area, relief and shape reproduce exactly for the checked catchment. MODIS snow cover is withdrawn from trend use and ends in December 2024 for this catchment."
+    },
+    {
+      "title": "Model",
+      "text": "The Pskem reconstruction had higher held-out error than a training-month climatology baseline. It is retrospective; forecast skill is not established."
+    }
   ]
 }

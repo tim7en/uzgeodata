@@ -1,0 +1,19 @@
+{
+  "run_id": "regional-substitutes-v11-20260930T110542927933Z",
+  "recipe_version": "derive_climatology@ea786948fb84/2003-2025/v1.1",
+  "source_release": "terraclimate-v1.1@climatologylab",
+  "supersedes_release": "terraclimate@IDAHO_EPSCOR/TERRACLIMATE",
+  "period": [
+    "2003-01-01",
+    "2026-01-01"
+  ],
+  "basins": 7445,
+  "columns": 66,
+  "rows": 491370,
+  "values": 491370,
+  "without_value": 0,
+  "new_rows": 491370,
+  "generated_at": "2026-09-30T11:05:42.927+00:00",
+  "wall_seconds": 301.3440301999999,
+  "meaning": "Independent open-data estimates from TerraClimate v1.1, the release the monthly record uses; they replace the v1.0-derived estimates in publication."
+}
